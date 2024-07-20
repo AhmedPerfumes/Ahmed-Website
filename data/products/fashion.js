@@ -4,7 +4,7 @@ export const products1 = [
     imgSrc: "/assets/images/home/demo1/product-0-1.jpg",
     imgAlt: "Cropped Faux leather Jacket",
     category: "Dresses",
-    title: "Hub Accent Mirror",
+    title: "Oud & Roses",
     price: 17,
   },
   {

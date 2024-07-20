@@ -10,16 +10,16 @@ import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 const images = [
   {
-    imgSrc: "/assets/images/products/product_0.jpg",
+    imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dw200bc326/primary_packshot_3/2024/FRAGRANCE/L__HOMME_IDEAL_-_EDP_100ml-263403.jpg?sw=700&sh=700&sfrm=png",
   },
   {
-    imgSrc: "/assets/images/products/product_0-1.jpg",
+    imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwa899995d/primary_packshot_3/2024/FRAGRANCE/LES-MASCULINS-24_SECONDARY-VISUAL_PDP_KV_LHI.jpg?sw=700&sh=700&sfrm=jpg",
   },
   {
-    imgSrc: "/assets/images/products/product_0-2.jpg",
+    imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwdb8fe874/primary_packshot_3/2024/FRAGRANCE/G030522_3346470305229_H-IDEAL-24-PARFUM-SPR-100ML_1.jpg?sw=700&sh=700&sfrm=png",
   },
   {
-    imgSrc: "/assets/images/products/product_0-3.jpg",
+    imgSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2023/02/hubb-o-salam-3.jpg",
   },
 ];
 import Image from "next/image";
@@ -58,7 +58,7 @@ export default function Slider4() {
                 >
                   {({ ref, open }) => (
                     <>
-                      <Image
+                      <img
                         loading="lazy"
                         className="h-auto w-100"
                         src={elm.imgSrc}
@@ -128,7 +128,7 @@ export default function Slider4() {
               className="swiper-slide product-single__image-item"
               //   style={{ marginBottom: "10px" }}
             >
-              <Image
+              <img
                 loading="lazy"
                 className="h-auto"
                 src={elm.imgSrc}

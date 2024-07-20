@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import ProductSlider1 from "./sliders/ProductSlider1";
+import Slider4 from "./sliders/Slider4";
 import BreadCumb from "./BreadCumb";
 import Star from "../common/Star";
 import Size from "./Size";
@@ -44,7 +44,7 @@ export default function SingleProduct11({ product }) {
     <section className="product-single container product-single__type-9">
       <div className="row">
         <div className="col-lg-7">
-          <ProductSlider1 />
+          <Slider4 />
         </div>
         <div className="col-lg-5">
           <div className="d-flex justify-content-between mb-4 pb-md-2">
@@ -53,45 +53,18 @@ export default function SingleProduct11({ product }) {
             </div>
             {/* <!-- /.breadcrumb --> */}
 
-            <div className="product-single__prev-next d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-              <a className="text-uppercase fw-medium">
-                <svg
-                  className="mb-1px"
-                  width="10"
-                  height="10"
-                  viewBox="0 0 25 25"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_prev_md" />
-                </svg>
-                <span className="menu-link menu-link_us-s">Prev</span>
-              </a>
-              <a className="text-uppercase fw-medium disabled">
-                <span className="menu-link menu-link_us-s">Next</span>
-                <svg
-                  className="mb-1px"
-                  width="10"
-                  height="10"
-                  viewBox="0 0 25 25"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_next_md" />
-                </svg>
-              </a>
-            </div>
-            {/* <!-- /.shop-acs --> */}
           </div>
           <h1 className="product-single__name">{product.title}</h1>
-          <div className="product-single__rating">
+          {/* <div className="product-single__rating">
             <div className="reviews-group d-flex">
               <Star stars={5} />
             </div>
             <span className="reviews-note text-lowercase text-secondary ms-1">
               8k+ reviews
             </span>
-          </div>
+          </div> */}
           <div className="product-single__price">
-            <span className="current-price">${product.price}</span>
+            <span className="current-price"> د.إ {product.price}</span>
           </div>
           <div className="product-single__short-desc">
             <p>
@@ -102,28 +75,6 @@ export default function SingleProduct11({ product }) {
             </p>
           </div>
           <form onSubmit={(e) => e.preventDefault()}>
-            <div className="product-single__swatches">
-              <div className="product-swatch text-swatches">
-                <label>Sizes</label>
-                <div className="swatch-list">
-                  <Size />
-                </div>
-                <a
-                  href="#"
-                  className="sizeguide-link"
-                  data-bs-toggle="modal"
-                  data-bs-target="#sizeGuide"
-                >
-                  Size Guide
-                </a>
-              </div>
-              <div className="product-swatch color-swatches">
-                <label>Color</label>
-                <div className="swatch-list">
-                  <Clolor2 />
-                </div>
-              </div>
-            </div>
             <div className="product-single__addtocart">
               <div className="qty-control position-relative">
                 <input
@@ -186,16 +137,12 @@ export default function SingleProduct11({ product }) {
           </div>
           <div className="product-single__meta-info">
             <div className="meta-item">
-              <label>SKU:</label>
-              <span>N/A</span>
+              <label>Estimated delivery:</label>
+              <span> 3 - 5 days</span>
             </div>
             <div className="meta-item">
-              <label>Categories:</label>
+              <label>Categories: </label>
               <span>Casual & Urban Wear, Jackets, Men</span>
-            </div>
-            <div className="meta-item">
-              <label>Tags:</label>
-              <span>biker, black, bomber, leather</span>
             </div>
           </div>
         </div>
@@ -210,10 +157,6 @@ export default function SingleProduct11({ product }) {
         </h2>
         <div className="product-single__details-list__content">
           <AdditionalInfo />
-        </div>
-        <h2 className="product-single__details-list__title">Reviews (3)</h2>
-        <div className="product-single__details-list__content">
-          <Reviews />
         </div>
       </div>
     </section>
