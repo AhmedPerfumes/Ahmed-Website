@@ -56,7 +56,7 @@ export default function Shop8() {
           </div> */}
           {/* <!-- /.col-size --> */}
 
-          <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
+          {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
           <div className="shop-filter d-flex align-items-center order-0 order-md-3">
             <button
