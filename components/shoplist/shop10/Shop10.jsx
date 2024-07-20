@@ -26,10 +26,10 @@ export default function Shop10() {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
-  const [selectedColView, setSelectedColView] = useState(4);
+  const [selectedColView, setSelectedColView] = useState(3);
   return (
     <section className="shop-main container">
-      <div className="d-flex justify-content-between mb-4 pb-md-2">
+      <div className="d-flex justify-content-between mb-4 pb-md-2 border-bottom border-dark">
         <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
           <BreadCumb />
         </div>
@@ -50,7 +50,7 @@ export default function Shop10() {
 
           <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
 
-          <div className="col-size align-items-center order-1 d-none d-lg-flex">
+          {/* <div className="col-size align-items-center order-1 d-none d-lg-flex">
             <span className="text-uppercase fw-medium me-2">View</span>
             {itemPerRow.map((elm, i) => (
               <button
@@ -63,10 +63,10 @@ export default function Shop10() {
                 {elm}
               </button>
             ))}
-          </div>
+          </div> */}
           {/* <!-- /.col-size --> */}
 
-          <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
+          {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
           <div className="shop-filter d-flex align-items-center order-0 order-md-3">
             <button
@@ -95,7 +95,7 @@ export default function Shop10() {
       {/* <!-- /.d-flex justify-content-between --> */}
 
       <div className="products-grid">
-        <h2 className="section-title fw-normal mb-3 pb-2">List Style v1</h2>
+        {/* <h2 className="section-title fw-normal mb-3 pb-2">Oriental Fragrance</h2>
         <div
           className={`row row-cols-2 row-cols-lg-3 row-cols-xl-${selectedColView}`}
           id="products-grid-1"
@@ -244,31 +244,55 @@ export default function Shop10() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2">List Style v2</h2>
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Oriental Fragrance</h2>
+        <Style2 />
+        <div className="border-bottom"></div>
+
+        <div className="mb-4 mb-xl-5"></div>
+
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Occidental Fragrance</h2>
+        <Style2 />
+        <div className="border-bottom"></div>
+
+        <div className="mb-4 mb-xl-5"></div>
+
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Women Fragrances</h2>
+        <Style2 />
+        <div className="border-bottom"></div>
+
+        <div className="mb-4 mb-xl-5"></div>
+
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Men Fragrances</h2>
+        <Style2 />
+        <div className="border-bottom"></div>
+
+        <div className="mb-4 mb-xl-5"></div>
+
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Unisex Fragrance</h2>
         <Style2 />
 
-        <div className="mb-4 mb-xl-5"></div>
+        {/* <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2">List Style v3</h2>
+        <h2 className="section-title fw-normal mb-3 pb-2">Women Fragrances</h2>
         <Style3 />
 
         <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2">List Style v4</h2>
+        <h2 className="section-title fw-normal mb-3 pb-2">Men Fragrances</h2>
         <Style4 />
 
-        <div className="mb-4 mb-xl-5"></div>
+        <div className="mb-4 mb-xl-5"></div> */}
 
-        <h2 className="section-title fw-normal mb-3 pb-2">List Style v5</h2>
+        {/* <h2 className="section-title fw-normal mb-3 pb-2">Oriental Fragrances</h2>
         <Style5 />
 
-        <div className="mb-4 mb-xl-5"></div>
+        <div className="mb-4 mb-xl-5"></div> */}
 
-        <h2 className="section-title fw-normal mb-3 pb-2">List Style v6</h2>
+        {/* <h2 className="section-title fw-normal mb-3 pb-2">List Style v6</h2>
         <Style6 />
 
         <div className="mb-4 mb-xl-5"></div>
@@ -287,7 +311,7 @@ export default function Shop10() {
         <Style9 />
 
         <h2 className="section-title fw-normal mb-3 pb-2">List Style v10</h2>
-        <Style10 />
+        <Style10 /> */}
       </div>
     </section>
   );
