@@ -17,7 +17,7 @@ export default function Shop8() {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
-  const [selectedColView, setSelectedColView] = useState(4);
+  const [selectedColView, setSelectedColView] = useState(3);
   return (
     <section className="shop-main container">
       <div className="d-flex justify-content-between mb-4 pb-md-2">
@@ -40,7 +40,7 @@ export default function Shop8() {
 
           <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
 
-          <div className="col-size align-items-center order-1 d-none d-lg-flex">
+          {/* <div className="col-size align-items-center order-1 d-none d-lg-flex">
             <span className="text-uppercase fw-medium me-2">View</span>
             {itemPerRow.map((elm, i) => (
               <button
@@ -53,10 +53,10 @@ export default function Shop8() {
                 {elm}
               </button>
             ))}
-          </div>
+          </div> */}
           {/* <!-- /.col-size --> */}
 
-          <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
+          {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
           <div className="shop-filter d-flex align-items-center order-0 order-md-3">
             <button
