@@ -870,7 +870,7 @@ export const shopCategories = [
     imgSrc: "/assets/images/shop/category-item5.png",
     videoSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4",
     imgAlt: "Men Shirts",
-    category: "Oriental Fragrances",
+    category: "Unisex Fragrances",
   },
   // {
   //   id: 6,
