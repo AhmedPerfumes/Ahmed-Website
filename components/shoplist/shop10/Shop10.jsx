@@ -22,7 +22,15 @@ const itemPerRow = [2, 3, 4];
 import Image from "next/image";
 import { openModalShopFilter } from "@/utlis/aside";
 import { sortingOptions } from "@/data/products/productCategories";
+
+import { useSearchParams } from 'next/navigation';
+
 export default function Shop10() {
+
+  const searchParams = useSearchParams();
+  const category = searchParams.get('category');
+  const subcategory = searchParams.get('subcategory');
+
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -248,32 +256,34 @@ export default function Shop10() {
 
         <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Oriental Fragrance</h2>
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">{ subcategory == null ? "Oriental Fragrance" : "" }</h2>
         <Style2 />
-        <div className="border-bottom"></div>
+        { subcategory == null ? 
+          <><div className="border-bottom"></div>
 
-        <div className="mb-4 mb-xl-5"></div>
+          <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Occidental Fragrance</h2>
-        <Style2 />
-        <div className="border-bottom"></div>
+          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Occidental Fragrance</h2>
+          <Style2 />
+          <div className="border-bottom"></div>
 
-        <div className="mb-4 mb-xl-5"></div>
+          <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Women Fragrances</h2>
-        <Style2 />
-        <div className="border-bottom"></div>
+          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Women Fragrances</h2>
+          <Style2 />
+          <div className="border-bottom"></div>
 
-        <div className="mb-4 mb-xl-5"></div>
+          <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Men Fragrances</h2>
-        <Style2 />
-        <div className="border-bottom"></div>
+          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Men Fragrances</h2>
+          <Style2 />
+          <div className="border-bottom"></div>
 
-        <div className="mb-4 mb-xl-5"></div>
+          <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">Unisex Fragrance</h2>
-        <Style2 />
+          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Unisex Fragrance</h2>
+          <Style2 /></> : null
+      }
 
         {/* <div className="mb-4 mb-xl-5"></div>
 

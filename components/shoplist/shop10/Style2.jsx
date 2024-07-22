@@ -14,13 +14,14 @@ export default function Style2() {
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   return (
     <div
-      className="row row-cols-2 row-cols-lg-2 row-cols-xl-3"
+      className="row row-cols--1 row-cols-lg-2 row-cols-xl-3"
       id="products-grid-2"
     >
       {products54.map((elm, i) => (
         <div key={i} className="product-card-wrapper">
           <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-            <div className="pc__img-wrapper">
+            <div className={ i != 1 ? "pc__img-wrapper" : ""}>
+            { i != 1 ?
               <Swiper
                 slidesPerView={1}
                 className="swiper-container background-img js-swiper-slider"
@@ -31,30 +32,30 @@ export default function Style2() {
                   nextEl: `#style-2${elm.id.toString()} .pc__img-next`,
                 }}
               >
-                <SwiperSlide className="swiper-slide">
-                  <Link href={`/product1_simple/${elm.id}`}>
-                    <Image
-                      loading="lazy"
-                      src={elm.imgSrc}
-                      width="330"
-                      height="400"
-                      alt="Cropped Faux leather Jacket"
-                      className="pc__img"
-                    />
-                  </Link>
-                </SwiperSlide>
-                <SwiperSlide className="swiper-slide">
-                  <Link href={`/product1_simple/${elm.id}`}>
-                    <Image
-                      loading="lazy"
-                      src={elm.imgSrc2}
-                      width="330"
-                      height="400"
-                      alt="Cropped Faux leather Jacket"
-                      className="pc__img"
-                    />
-                  </Link>
-                </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
+                <Link href={`/product16_v11/${elm.id}`}>
+                  <Image
+                    loading="lazy"
+                    src={elm.imgSrc}
+                    width="330"
+                    height="400"
+                    alt="Cropped Faux leather Jacket"
+                    className="pc__img"
+                  />
+                </Link>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
+                <Link href={`/product1_simple/${elm.id}`}>
+                  <Image
+                    loading="lazy"
+                    src={elm.imgSrc2}
+                    width="330"
+                    height="400"
+                    alt="Cropped Faux leather Jacket"
+                    className="pc__img"
+                  />
+                </Link>
+              </SwiperSlide>
                 { i != 1 ?
                 <>
                   <span className="cursor-pointer pc__img-prev">
@@ -79,7 +80,31 @@ export default function Style2() {
                   </span>
                   </> : null
                 }
-              </Swiper>
+              </Swiper> : 
+                // <div className="">
+                  // <div className="">
+                  <><Link href='/product16_v11/1'>
+                    <Image
+                      loading="lazy"
+                      src="/assets/images/home/demo7/product-banner.jpg"
+                      width="546"
+                      height="762"
+                      className=""
+                      alt="image"
+                    />
+                  </Link>
+                  <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
+                    <h2 className="fs-40 fw-normal text-uppercase mb-0 font-courgette">
+                      Sportswear
+                    </h2>
+                    <p className="mb-4">Sale Upto 50% On New Coming</p>
+                    <a className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center" href="/product16_v11/1">
+                      <span>Discover Now</span>
+                    </a>
+                  </div></>
+                  // </div>
+                // </div>
+            }
               { i != 1 ?
                 <div className="anim_appear-bottom position-absolute bottom-0 start-0 w-100 d-none d-sm-flex align-items-center">
                   <button
