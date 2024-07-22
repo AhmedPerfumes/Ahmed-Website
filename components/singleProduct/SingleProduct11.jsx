@@ -41,21 +41,21 @@ export default function SingleProduct11({ product }) {
     }
   };
   return (
-    <section className="product-single container product-single__type-9">
-      <div className="row">
-        <div className="col-lg-7">
-          <Slider4 />
-        </div>
-        <div className="col-lg-5">
-          <div className="d-flex justify-content-between mb-4 pb-md-2">
-            <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-              <BreadCumb />
-            </div>
-            {/* <!-- /.breadcrumb --> */}
-
+    <>
+      <section className="product-single container product-single__type-9">
+        <div className="row">
+          <div className="col-lg-7">
+            <Slider4 />
           </div>
-          <h1 className="product-single__name">{product.title}</h1>
-          {/* <div className="product-single__rating">
+          <div className="col-lg-5">
+            <div className="d-flex justify-content-between mb-4 pb-md-2">
+              <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
+                <BreadCumb />
+              </div>
+              {/* <!-- /.breadcrumb --> */}
+            </div>
+            <h1 className="product-single__name">{product.title}</h1>
+            {/* <div className="product-single__rating">
             <div className="reviews-group d-flex">
               <Star stars={5} />
             </div>
@@ -63,102 +63,110 @@ export default function SingleProduct11({ product }) {
               8k+ reviews
             </span>
           </div> */}
-          <div className="product-single__price">
-            <span className="current-price"> د.إ {product.price}</span>
-          </div>
-          <div className="product-single__short-desc">
-            <p>
-              Phasellus sed volutpat orci. Fusce eget lore mauris vehicula
-              elementum gravida nec dui. Aenean aliquam varius ipsum, non
-              ultricies tellus sodales eu. Donec dignissim viverra nunc, ut
-              aliquet magna posuere eget.
-            </p>
-          </div>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="product-single__addtocart">
-              <div className="qty-control position-relative">
-                <input
-                  type="number"
-                  name="quantity"
-                  value={isIncludeCard() ? isIncludeCard().quantity : quantity}
-                  min="1"
-                  onChange={(e) =>
-                    setQuantityCartItem(product.id, e.target.value)
-                  }
-                  className="qty-control__number text-center"
-                />
-                <div
-                  onClick={() =>
-                    setQuantityCartItem(
-                      product.id,
-                      isIncludeCard()?.quantity - 1 || quantity - 1
-                    )
-                  }
-                  className="qty-control__reduce"
-                >
-                  -
+            <div className="product-single__price">
+              <span className="current-price"> د.إ {product.price}</span>
+            </div>
+            <div className="product-single__short-desc">
+              <p>
+                Phasellus sed volutpat orci. Fusce eget lore mauris vehicula
+                elementum gravida nec dui. Aenean aliquam varius ipsum, non
+                ultricies tellus sodales eu. Donec dignissim viverra nunc, ut
+                aliquet magna posuere eget.
+              </p>
+            </div>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <div className="product-single__addtocart">
+                <div className="qty-control position-relative">
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={
+                      isIncludeCard() ? isIncludeCard().quantity : quantity
+                    }
+                    min="1"
+                    onChange={(e) =>
+                      setQuantityCartItem(product.id, e.target.value)
+                    }
+                    className="qty-control__number text-center"
+                  />
+                  <div
+                    onClick={() =>
+                      setQuantityCartItem(
+                        product.id,
+                        isIncludeCard()?.quantity - 1 || quantity - 1
+                      )
+                    }
+                    className="qty-control__reduce"
+                  >
+                    -
+                  </div>
+                  <div
+                    onClick={() =>
+                      setQuantityCartItem(
+                        product.id,
+                        isIncludeCard()?.quantity + 1 || quantity + 1
+                      )
+                    }
+                    className="qty-control__increase"
+                  >
+                    +
+                  </div>
                 </div>
-                <div
-                  onClick={() =>
-                    setQuantityCartItem(
-                      product.id,
-                      isIncludeCard()?.quantity + 1 || quantity + 1
-                    )
-                  }
-                  className="qty-control__increase"
+                {/* <!-- .qty-control --> */}
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-addtocart js-open-aside"
+                  onClick={() => addToCart()}
                 >
-                  +
-                </div>
+                  {isIncludeCard() ? "Already Added" : "Add to Cart"}
+                </button>
               </div>
-              {/* <!-- .qty-control --> */}
-              <button
-                type="submit"
-                className="btn btn-primary btn-addtocart js-open-aside"
-                onClick={() => addToCart()}
-              >
-                {isIncludeCard() ? "Already Added" : "Add to Cart"}
-              </button>
+            </form>
+            <div className="product-single__addtolinks">
+              <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <use href="#icon_heart" />
+                </svg>
+                <span>Add to Wishlist</span>
+              </a>
+              <ShareComponent title={product.title} />
             </div>
-          </form>
-          <div className="product-single__addtolinks">
-            <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <use href="#icon_heart" />
-              </svg>
-              <span>Add to Wishlist</span>
-            </a>
-            <ShareComponent title={product.title} />
-          </div>
-          <div className="product-single__meta-info">
-            <div className="meta-item">
-              <label>Estimated delivery:</label>
-              <span> 3 - 5 days</span>
-            </div>
-            <div className="meta-item">
-              <label>Categories: </label>
-              <span>Casual & Urban Wear, Jackets, Men</span>
+            <div className="product-single__meta-info">
+              <div className="meta-item">
+                <label>Estimated delivery:</label>
+                <span> 3 - 5 days</span>
+              </div>
+              <div className="meta-item">
+                <label>Categories: </label>
+                <span>Casual & Urban Wear, Jackets, Men</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="product-single__details-list">
-        <h2 className="product-single__details-list__title">Description</h2>
-        <div className="product-single__details-list__content">
-          <Description />
+      </section>
+
+      <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
+        <div className="product-single__details-list">
+          <h2 className="product-single__details-list__title text-white">
+            Description
+          </h2>
+          <div className="product-single__details-list__content">
+            <Description />
+          </div>
+          <h2 className="product-single__details-list__title text-white">
+            Fragrance Notes
+          </h2>
+          <div className="product-single__details-list__content">
+            <AdditionalInfo />
+          </div>
         </div>
-        <h2 className="product-single__details-list__title">
-          Additional Information
-        </h2>
-        <div className="product-single__details-list__content">
-          <AdditionalInfo />
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

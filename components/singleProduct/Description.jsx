@@ -3,7 +3,7 @@ import React from "react";
 export default function Description() {
   return (
     <div className="product-single__description">
-      <h3 className="block-title mb-4">
+      <h3 className="block-title mb-4 text-white">
         Sed do eiusmod tempor incididunt ut labore
       </h3>
       <p className="content">
