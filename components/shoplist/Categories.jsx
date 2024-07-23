@@ -5,6 +5,8 @@ import Image from "next/image";
 
 import { useSearchParams } from 'next/navigation';
 
+import Categoriess from "@/components/homes/home-3/Categories";
+
 export default function Categories() {
 
   const searchParams = useSearchParams();
@@ -12,7 +14,7 @@ export default function Categories() {
   const subcategory = searchParams.get('subcategory');
 
   return (
-    <section
+    <><section
       className="full-width_padding"
       // style={{ backgroundColor: "#faf9f8" }}
     >
@@ -23,10 +25,10 @@ export default function Categories() {
         <p className="fs-6 fw-medium mb-4 text-center mw-930">
           Like a drop of perfume behind the ear, at the nape of the neck, on the inner wrists or in the décolleté, where the fragrance blends seamlessly with the skin to create a unique scent. Guerlain has left its mark on the history of modern fragrances with a series of olfactory creations that tell tales both real and imagined, inspired by romantic encounters, literary classics and journeys to distant lands. Examples include Shalimar, Habit Rouge and, more recently, La Petite Robe Noire. An unparalleled range of fragrances to indulge the senses.
         </p>
-        { subcategory == null ? 
-          <div className="shop-categories__list d-flex align-items-center flex-wrap justify-content-center">
-            {shopCategories.map((elm, i) => (
-              <a key={i} href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance" className="shop-categories__item mb-3">
+        {/* { subcategory == null ?  */}
+          {/* <div className="shop-categories__list d-flex align-items-center flex-wrap justify-content-center"> */}
+            {/* {shopCategories.map((elm, i) => (
+              <a key={i} href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance" className="shop-categories__item mb-3 d-none d-lg-block">
                 <video
                   loading="lazy"
                   // src={elm.imgSrc}
@@ -46,11 +48,13 @@ export default function Categories() {
                   {elm.category.split(" ").slice(1).join(" ")}
                 </h6>
               </a>
-            ))}
-          </div> : null
-        }
-      </div>
+            ))} */}
+          </div>
+        {/* : null */}
+        {/* } */}
+      {/* </div> */}
       {/* <!-- /.shop-categories position-relative --> */}
     </section>
+    {subcategory == null ? <Categoriess/> : null }</>
   );
 }

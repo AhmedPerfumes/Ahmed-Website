@@ -64,83 +64,93 @@ export const categories2 = [
   {
     id: 1,
     imageUrl: "/assets/images/home/demo3/category_1.png",
+    videoSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4",
     text: "Women Tops",
+    category: "Oriental Fragrance",
   },
   {
     id: 2,
     imageUrl: "/assets/images/home/demo3/category_2.png",
+    videoSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4",
     text: "Women Pants",
+    category: "Occidental Fragrance",
   },
   {
     id: 3,
     imageUrl: "/assets/images/home/demo3/category_3.png",
+    videoSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2024/03/laathani-short.mp4",
     text: "Women Clothes",
+    category: "Women Fragrances",
   },
   {
     id: 4,
     imageUrl: "/assets/images/home/demo3/category_4.png",
+    videoSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2023/01/video-animation.mp4",
     text: "Men Jeans",
+    category: "Men Fragrances",
   },
   {
     id: 5,
     imageUrl: "/assets/images/home/demo3/category_5.png",
+    videoSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4",
     text: "Men Shirts",
+    category: "Unisex Fragrances",
   },
-  {
-    id: 6,
-    imageUrl: "/assets/images/home/demo3/category_6.png",
-    text: "Men Shoes",
-  },
-  {
-    id: 7,
-    imageUrl: "/assets/images/home/demo3/category_7.png",
-    text: "Women Dresses",
-  },
-  {
-    id: 8,
-    imageUrl: "/assets/images/home/demo3/category_8.png",
-    text: "Kids Tops",
-  },
-  {
-    id: 1,
-    imageUrl: "/assets/images/home/demo3/category_1.png",
-    text: "Women Tops",
-  },
-  {
-    id: 2,
-    imageUrl: "/assets/images/home/demo3/category_2.png",
-    text: "Women Pants",
-  },
-  {
-    id: 3,
-    imageUrl: "/assets/images/home/demo3/category_3.png",
-    text: "Women Clothes",
-  },
-  {
-    id: 4,
-    imageUrl: "/assets/images/home/demo3/category_4.png",
-    text: "Men Jeans",
-  },
-  {
-    id: 5,
-    imageUrl: "/assets/images/home/demo3/category_5.png",
-    text: "Men Shirts",
-  },
-  {
-    id: 6,
-    imageUrl: "/assets/images/home/demo3/category_6.png",
-    text: "Men Shoes",
-  },
-  {
-    id: 7,
-    imageUrl: "/assets/images/home/demo3/category_7.png",
-    text: "Women Dresses",
-  },
-  {
-    id: 8,
-    imageUrl: "/assets/images/home/demo3/category_8.png",
-    text: "Kids Tops",
-  },
+  // {
+  //   id: 6,
+  //   imageUrl: "/assets/images/home/demo3/category_6.png",
+  //   text: "Men Shoes",
+  // },
+  // {
+  //   id: 7,
+  //   imageUrl: "/assets/images/home/demo3/category_7.png",
+  //   text: "Women Dresses",
+  // },
+  // {
+  //   id: 8,
+  //   imageUrl: "/assets/images/home/demo3/category_8.png",
+  //   text: "Kids Tops",
+  // },
+  // {
+  //   id: 1,
+  //   imageUrl: "/assets/images/home/demo3/category_1.png",
+  //   text: "Women Tops",
+  // },
+  // {
+  //   id: 2,
+  //   imageUrl: "/assets/images/home/demo3/category_2.png",
+  //   text: "Women Pants",
+  // },
+  // {
+  //   id: 3,
+  //   imageUrl: "/assets/images/home/demo3/category_3.png",
+  //   text: "Women Clothes",
+  // },
+  // {
+  //   id: 4,
+  //   imageUrl: "/assets/images/home/demo3/category_4.png",
+  //   text: "Men Jeans",
+  // },
+  // {
+  //   id: 5,
+  //   imageUrl: "/assets/images/home/demo3/category_5.png",
+  //   text: "Men Shirts",
+  // },
+  // {
+  //   id: 6,
+  //   imageUrl: "/assets/images/home/demo3/category_6.png",
+  //   text: "Men Shoes",
+  // },
+  // {
+  //   id: 7,
+  //   imageUrl: "/assets/images/home/demo3/category_7.png",
+  //   text: "Women Dresses",
+  // },
+  // {
+  //   id: 8,
+  //   imageUrl: "/assets/images/home/demo3/category_8.png",
+  //   text: "Kids Tops",
+  // },
 ];
 export const categoryBanners = [
   {

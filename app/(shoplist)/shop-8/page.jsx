@@ -2,6 +2,7 @@ import Footer1 from "@/components/footers/Footer1";
 
 import Header14 from "@/components/headers/Header14";
 import Categories from "@/components/shoplist/Categories";
+// import Categories from "@/components/homes/home-3/Categories";
 import Shop10 from "@/components/shoplist/Shop10/Shop10";
 import Banner5 from "@/components/shoplist/Banner5";
 import React from "react";

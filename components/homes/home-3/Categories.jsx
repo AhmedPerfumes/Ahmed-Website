@@ -9,7 +9,7 @@ export default function Categories() {
     autoplay: {
       delay: 5000,
     },
-    slidesPerView: 8,
+    slidesPerView: 4,
     slidesPerGroup: 1,
     effect: "none",
     loop: true,
@@ -20,34 +20,36 @@ export default function Categories() {
     },
     breakpoints: {
       320: {
-        slidesPerView: 2,
-        slidesPerGroup: 2,
-        spaceBetween: 15,
+        slidesPerView: 4,
+        slidesPerGroup: 1,
+        // spaceBetween: 15,
+        pagination: false,
       },
       768: {
         slidesPerView: 4,
-        slidesPerGroup: 4,
-        spaceBetween: 30,
+        slidesPerGroup: 1,
+        // spaceBetween: 30,
+        pagination: false,
       },
       992: {
-        slidesPerView: 6,
+        slidesPerView: 4,
         slidesPerGroup: 1,
-        spaceBetween: 45,
+        // spaceBetween: 45,
         pagination: false,
       },
       1200: {
-        slidesPerView: 8,
-        slidesPerGroup: 1,
-        spaceBetween: 60,
+        slidesPerView: 5,
+        slidesPerGroup: 0,
+        // spaceBetween: 60,
         pagination: false,
       },
     },
   };
   return (
     <section className="category-carousel container">
-      <h2 className="section-title text-center mb-3 pb-xl-2 mb-xl-4">
+      {/* <h2 className="section-title text-center mb-3 pb-xl-2 mb-xl-4">
         You Might Like
-      </h2>
+      </h2> */}
 
       <div className="position-relative">
         <Swiper
@@ -55,30 +57,37 @@ export default function Categories() {
           className="swiper-container js-swiper-slider"
         >
           {categories2.map((elm, i) => (
-            <SwiperSlide key={i} className="swiper-slide">
-              <Image
-                loading="lazy"
-                className="w-100 h-auto mb-3"
-                src={elm.imageUrl}
-                width="124"
-                height="124"
-                alt="image"
-              />
-              <div className="text-center">
-                <a href="#" className="menu-link fw-medium">
-                  {elm.text.split(" ")[0]}
-                  <br />
-                  {elm.text.split(" ")[1]}
+              <SwiperSlide key={i} className="swiper-slide text-center">
+                <a key={i} href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance" className="shop-categories__item mb-3">
+                  <video
+                    loading="lazy"
+                    // src={elm.imgSrc}
+                    width="200"
+                    height="120"
+                    // alt="Women Tops"
+                    className="shop-categories__item-img rounded-circle text-center"
+                    autoPlay
+                    loop
+                    muted
+                  >
+                    <source src={elm.videoSrc} type="video/mp4" width={200}/>
+                  </video>
                 </a>
-              </div>
-            </SwiperSlide>
+                  <div className="text-center">
+                    <a href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance" className="menu-link fw-medium" key={i}>
+                      {elm.category.split(" ")[0]}
+                      <br />
+                      {elm.category.split(" ")[1]}
+                    </a>
+                  </div>
+              </SwiperSlide>
           ))}
 
           {/* <!-- /.swiper-wrapper --> */}
         </Swiper>
         {/* <!-- /.swiper-container js-swiper-slider --> */}
 
-        <div className="cursor-pointer products-carousel__prev products-carousel__prev-1 position-absolute top-50 d-flex align-items-center justify-content-center">
+        {/* <div className="cursor-pointer products-carousel__prev products-carousel__prev-1 position-absolute top-50 d-flex align-items-center justify-content-center">
           <svg
             width="25"
             height="25"
@@ -87,9 +96,9 @@ export default function Categories() {
           >
             <use href="#icon_prev_md" />
           </svg>
-        </div>
+        </div> */}
         {/* <!-- /.products-carousel__prev --> */}
-        <div className="cursor-pointer products-carousel__next products-carousel__next-1 position-absolute top-50 d-flex align-items-center justify-content-center">
+        {/* <div className="cursor-pointer products-carousel__next products-carousel__next-1 position-absolute top-50 d-flex align-items-center justify-content-center">
           <svg
             width="25"
             height="25"
@@ -98,7 +107,7 @@ export default function Categories() {
           >
             <use href="#icon_next_md" />
           </svg>
-        </div>
+        </div> */}
         {/* <!-- /.products-carousel__next --> */}
       </div>
       {/* <!-- /.position-relative --> */}
