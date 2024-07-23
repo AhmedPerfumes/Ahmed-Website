@@ -2478,6 +2478,22 @@ export const products54 = [
     imgSrc: "/assets/images/products/product-29-1.jpeg",
     imgSrc2: "/assets/images/products/product-29-2.jpg",
   },
+  {
+    id: 5699,
+    category: "Dresses",
+    title: "Zessi Dresses",
+    price: 99,
+    imgSrc: "/assets/images/products/product-29-1.jpeg",
+    imgSrc2: "/assets/images/products/product-29-2.jpg",
+  },
+  {
+    id: 5690,
+    category: "Dresses",
+    title: "Zessi Dresses",
+    price: 99,
+    imgSrc: "/assets/images/products/product-29-1.jpeg",
+    imgSrc2: "/assets/images/products/product-29-2.jpg",
+  },
 ];
 
 export const products55 = [
