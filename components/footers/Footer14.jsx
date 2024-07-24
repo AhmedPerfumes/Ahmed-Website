@@ -7,7 +7,7 @@ import {
   footerLinks1,
   footerLinks2,
   footerLinks3,
-  languageOptions,
+  languageOptions2,
   socialLinks,
 } from "@/data/footer";
 
@@ -34,30 +34,7 @@ export default function Footer14() {
                   Fast And Free Delivery
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                  Free delivery for all orders over $140
-                </p>
-              </div>
-            </div>
-            {/* <!-- /.col-md-4 text-center--> */}
-
-            <div className="col-md-4 mb-5 mb-md-0 d-flex align-items-center justify-content-center gap-3">
-              <div className="service-promotion__icon">
-                <svg
-                  width="53"
-                  height="52"
-                  viewBox="0 0 53 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_headphone" />
-                </svg>
-              </div>
-              <div className="service-promotion__content-wrap">
-                <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                  24/7 Customer Support
-                </h3>
-                <p className="service-promotion__content text-secondary mb-0 text-white">
-                  Friendly 24/7 customer support
+                  Free Shipping on all orders above AED 400
                 </p>
               </div>
             </div>
@@ -77,10 +54,34 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                  Money Back Guarantee
+                  Safe & Secure Payment
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                  We return money within 30 days
+                  Our online payment system is operated by a service provider
+                  specializing in secure online payments.
+                </p>
+              </div>
+            </div>
+            {/* <!-- /.col-md-4 text-center--> */}
+
+            <div className="col-md-4 mb-5 mb-md-0 d-flex align-items-center justify-content-center gap-3">
+              <div className="service-promotion__icon">
+                <svg
+                  width="52"
+                  height="52"
+                  viewBox="0 0 52 52"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <use href="#icon_headphone" />
+                </svg>
+              </div>
+              <div className="service-promotion__content-wrap">
+                <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
+                  Cash on Delivery
+                </h3>
+                <p className="service-promotion__content text-secondary mb-0 text-white">
+                  Pay by cash when receiving your order
                 </p>
               </div>
             </div>
@@ -108,14 +109,19 @@ export default function Footer14() {
             </div>
             {/* <!-- /.logo --> */}
             <p className="footer-address">
-              1418 River Drive, Suite 35 Cottonhall, CA 9622 United States
+              Ahmed Al Maghrebi Perfume Manuf L.L.C, <br />
+              Jurf Industrial Zone 3 <br />
+              AJMAN, P. O. Box – 3850 <br />
+              UAE
             </p>
 
             <p className="m-0">
-              <strong className="fw-medium">sale@ahmed.com</strong>
+              <strong className="fw-medium">estore@ahmedalmaghribi.com</strong>
             </p>
             <p>
-              <strong className="fw-medium">+1 246-345-0695</strong>
+              <strong className="fw-medium">
+                +971 67420602 / 67422496 / 67446076
+              </strong>
             </p>
 
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
@@ -216,23 +222,24 @@ export default function Footer14() {
       <div className="footer-bottom container">
         <div className="d-block d-md-flex align-items-center">
           <span className="footer-copyright me-auto">
-            ©{new Date().getFullYear()} AHMED
+            © {new Date().getFullYear()} AHMED AL MAGHRIBI PERFUMES. All rights
+            reserved
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
             <div className="d-flex align-items-center">
-              <label
+              {/* <label
                 htmlFor="footerSettingsLanguage"
                 className="me-2 text-white"
               >
                 Language
-              </label>
+              </label> */}
               <select
                 id="footerSettingsLanguage"
                 className="form-select form-select-sm bg-transparent border-0"
                 aria-label="Default select example"
                 name="store-language"
               >
-                {languageOptions.map((option, index) => (
+                {languageOptions2.map((option, index) => (
                   <option
                     key={index}
                     className="footer-select__option"
@@ -245,12 +252,12 @@ export default function Footer14() {
             </div>
 
             <div className="d-flex align-items-center">
-              <label
+              {/* <label
                 htmlFor="footerSettingsCurrency"
                 className="ms-md-3 me-2 text-white"
               >
                 Currency
-              </label>
+              </label> */}
               <select
                 id="footerSettingsCurrency"
                 className="form-select form-select-sm bg-transparent border-0"

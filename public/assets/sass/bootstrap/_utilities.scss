@@ -466,7 +466,7 @@ $utilities: map-merge(
         lg: $line-height-lg,
       )
     ),
-    "background-color": (
+    "background": (
       property: background-color,
       class: bg,
       values: map-merge(

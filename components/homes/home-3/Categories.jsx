@@ -57,30 +57,38 @@ export default function Categories() {
           className="swiper-container js-swiper-slider"
         >
           {categories2.map((elm, i) => (
-              <SwiperSlide key={i} className="swiper-slide text-center">
-                <a key={i} href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance" className="shop-categories__item mb-3">
-                  <video
-                    loading="lazy"
-                    // src={elm.imgSrc}
-                    width="200"
-                    height="120"
-                    // alt="Women Tops"
-                    className="shop-categories__item-img rounded-circle text-center"
-                    autoPlay
-                    loop
-                    muted
-                  >
-                    <source src={elm.videoSrc} type="video/mp4" width={200}/>
-                  </video>
+            <SwiperSlide key={i} className="swiper-slide text-center">
+              <a
+                key={i}
+                href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                className="shop-categories__item mb-3"
+              >
+                <video
+                  loading="lazy"
+                  // src={elm.imgSrc}
+                  width="200"
+                  height="120"
+                  // alt="Women Tops"
+                  className="shop-categories__item-img rounded-circle text-center"
+                  autoPlay
+                  loop
+                  muted
+                >
+                  <source src={elm.videoSrc} type="video/mp4" width={200} />
+                </video>
+              </a>
+              <div className="text-center">
+                <a
+                  href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                  className="menu-link fw-medium"
+                  key={i}
+                >
+                  {elm.category.split(" ")[0]}
+                  <br />
+                  {elm.category.split(" ")[1]}
                 </a>
-                  <div className="text-center">
-                    <a href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance" className="menu-link fw-medium" key={i}>
-                      {elm.category.split(" ")[0]}
-                      <br />
-                      {elm.category.split(" ")[1]}
-                    </a>
-                  </div>
-              </SwiperSlide>
+              </div>
+            </SwiperSlide>
           ))}
 
           {/* <!-- /.swiper-wrapper --> */}
