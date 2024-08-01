@@ -7,23 +7,21 @@ import Image from "next/image";
 
 export default function Lookbook() {
   return (
-    <section className="lookbook-products position-relative">
-      <Image
-        className="w-100 h-auto"
+    <div className="lookbook-products container position-relative">
+      <img
+        className="h-auto"
         loading="lazy"
-        src="/assets/images/home/demo9/lookbook-bg.jpg"
-        width="1903"
-        height="709"
+        src="https://www.ahmed-perfume.com/wp-content/uploads/2024/05/web-banner.jpg"
         alt="image"
       />
-      <h2
+      {/* <h2
         className="section-title position-absolute position-top-center fw-normal text-center"
         style={{ top: "13.3%" }}
       >
         LIVING ROOM FURNITURE
         <br />
         <span className="h2 fw-normal">Discount 50%</span>
-      </h2>
+      </h2> */}
       {products17.map(({ id, style, imgSrc, price, title }) => (
         <React.Fragment key={id}>
           <button
@@ -39,7 +37,7 @@ export default function Lookbook() {
             render={({ content, activeAnchor }) => (
               <div className="popover-product">
                 <Link href={`/product1_simple/${id}`}>
-                  <Image
+                  <img
                     width={330}
                     height={400}
                     loading="lazy"
@@ -59,6 +57,6 @@ export default function Lookbook() {
           />
         </React.Fragment>
       ))}
-    </section>
+    </div>
   );
 }

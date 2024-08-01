@@ -36,6 +36,9 @@ export default function Header14() {
 
   const containerRef = useRef(null);
 
+  const [isHeaderOpen, setIsHeaderOpen] = useState(false);
+
+
   // const handleClickOutside = (event) => {
   //   if (containerRef.current && !containerRef.current.contains(event.target)) {
   //     setIsPopupOpen(false);
@@ -53,7 +56,18 @@ export default function Header14() {
   // }, []);
 
   return (
-    <header id="header" className="header sticky_disabled w-100 border-bottom">
+    <>
+    <nav className="navigation text-center">
+      <a
+        className="navigation__item"
+        href="#"
+        onClick={() => setIsHeaderOpen(thumb => !thumb)}
+      >
+        MENU
+      </a>
+    </nav>
+    { isHeaderOpen ?
+      <header id="header" className="header sticky_disabled w-100 border-bottom">
       {/* <div className="header-top bg-black">
         <div className="container d-flex container color-white align-items-center">
           <ul className="list-unstyled d-flex flex-1 gap-3 m-0">
@@ -371,6 +385,6 @@ export default function Header14() {
         {/* <!-- /.header-bottom --> */}
       </div>
       {/* <!-- /.header-desk header-desk_type_6 --> */}
-    </header>
+    </header> : null }</>
   );
 }
