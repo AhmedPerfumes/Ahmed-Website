@@ -82,12 +82,13 @@ const Test5 = () => {
             document.body.setAttribute('data-sld', sld.realIndex);
         });
 
-        let headings = gsap.utils.toArray(".text_reveal");
+        let headings = gsap.utils.toArray(".h2");
         headings.forEach((heading, i) => {
+            // console.log(heading);
             gsap.fromTo(heading,
                 {
                     opacity: 0,
-                    y: 50
+                    y: 50,
                 },
                 {
                     opacity: 1,
@@ -95,6 +96,29 @@ const Test5 = () => {
                     scrollTrigger: {
                         trigger: heading,
                         start: 'top 80%', // start the animation when the top of the element is 80% from the top of the viewport
+                        end: 'top 30%', // end the animation when the top of the element is 30% from the top of the viewport
+                        toggleActions: 'play reverse play reverse', // play the animation on scroll down, reverse on scroll up
+                    }
+                }
+            );
+        });
+
+        let parags = gsap.utils.toArray(".p");
+        parags.forEach((parag, i) => {
+            // console.log(parag);
+            gsap.fromTo(parag,
+                {
+                    opacity: 0,
+                    y: 50,
+                    delay: 1,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    delay: 1,
+                    scrollTrigger: {
+                        trigger: parag,
+                        start: 'top 70%', // start the animation when the top of the element is 80% from the top of the viewport
                         end: 'top 20%', // end the animation when the top of the element is 30% from the top of the viewport
                         toggleActions: 'play reverse play reverse', // play the animation on scroll down, reverse on scroll up
                     }
@@ -109,12 +133,12 @@ const Test5 = () => {
                 {
                     scale: 0.85,
                     duration: 2,
-                    delay: 1,
+                    // delay: 1,
                 },
                 {
                 scale: 1,
                 duration: 2,
-                delay: 1,
+                // delay: 1,
                 scrollTrigger: {
                     trigger: img,
                     scrub: true,
@@ -137,9 +161,9 @@ const Test5 = () => {
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png" alt="Section 1"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 1</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 1</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -158,9 +182,9 @@ const Test5 = () => {
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg" alt="Section 2"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 2</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 2</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -312,9 +336,9 @@ const Test5 = () => {
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 3"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 3</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 3</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -334,9 +358,9 @@ const Test5 = () => {
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg" alt="Section 4"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 4</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 4</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -398,9 +422,9 @@ const Test5 = () => {
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 2"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 5</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 5</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>

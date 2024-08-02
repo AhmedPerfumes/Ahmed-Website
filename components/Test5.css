@@ -252,8 +252,8 @@
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center; */
-	opacity: 0;
-	transform: translateY(50px);
+	/* opacity: 0; */
+	/* transform: translateX(50%); */
 	/* font-size: 2rem; */
 	/* text-align: center; */
 }
