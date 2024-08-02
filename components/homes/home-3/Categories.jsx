@@ -3,8 +3,40 @@ import { categories2 } from "@/data/categories";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import React, { useEffect } from "react";
 
 export default function Categories() {
+  const handleMouseOver = (e) => {
+    const tooltip = document.getElementById("video-tooltip");
+    const tooltipVideo = document.getElementById("tooltip-video");
+    const videoSrc = e.target.getAttribute("data-video-src");
+
+    if (tooltip && tooltipVideo) {
+      tooltipVideo.querySelector("source").src = videoSrc;
+      tooltipVideo.load();
+      tooltip.classList.add("show");
+      tooltip.style.display = "block";
+    }
+  };
+
+  const handleMouseOut = (e) => {
+    const tooltip = document.getElementById("video-tooltip");
+
+    if (tooltip) {
+      tooltip.classList.remove("show");
+      tooltip.style.display = "none";
+    }
+  };
+
+  document.addEventListener("mousemove", (e) => {
+    const tooltip = document.getElementById("video-tooltip");
+    if (tooltip && tooltip.classList.contains("show")) {
+      tooltip.style.left = `${e.pageX}px`;
+    }
+  });
+
+  // -----------
+
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -47,12 +79,8 @@ export default function Categories() {
   };
   return (
     <section className="category-carousel container">
-      {/* <h2 className="section-title text-center mb-3 pb-xl-2 mb-xl-4">
-        You Might Like
-      </h2> */}
-
       <div className="position-relative">
-        <Swiper
+        {/* <Swiper
           {...swiperOptions}
           className="swiper-container js-swiper-slider"
         >
@@ -68,7 +96,7 @@ export default function Categories() {
                   // src={elm.imgSrc}
                   width="200"
                   height="120"
-                  // alt="Women Tops"
+                  alt=""
                   className="shop-categories__item-img rounded-circle text-center"
                   autoPlay
                   loop
@@ -90,35 +118,54 @@ export default function Categories() {
               </div>
             </SwiperSlide>
           ))}
+        </Swiper> */}
 
-          {/* <!-- /.swiper-wrapper --> */}
+        <Swiper
+          {...swiperOptions}
+          className="swiper-container js-swiper-slider"
+        >
+          {categories2.map((elm, i) => (
+            <SwiperSlide key={i} className="swiper-slide text-center">
+              <a
+                key={i}
+                href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                className="shop-categories__item mb-3"
+              >
+                <video
+                  loading="lazy"
+                  width="200"
+                  height="120"
+                  className="shop-categories__item-img rounded-circle text-center"
+                  autoPlay
+                  loop
+                  muted
+                  data-video-src={elm.videoSrc}
+                  onMouseOver={(e) => handleMouseOver(e)}
+                  onMouseOut={(e) => handleMouseOut(e)}
+                >
+                  <source src={elm.videoSrc} type="video/mp4" width={200} />
+                </video>
+              </a>
+              <div className="text-center">
+                <a
+                  href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                  className="menu-link fw-medium"
+                  key={i}
+                >
+                  {elm.category.split(" ")[0]}
+                  <br />
+                  {elm.category.split(" ")[1]}
+                </a>
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
-        {/* <!-- /.swiper-container js-swiper-slider --> */}
-
-        {/* <div className="cursor-pointer products-carousel__prev products-carousel__prev-1 position-absolute top-50 d-flex align-items-center justify-content-center">
-          <svg
-            width="25"
-            height="25"
-            viewBox="0 0 25 25"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <use href="#icon_prev_md" />
-          </svg>
-        </div> */}
-        {/* <!-- /.products-carousel__prev --> */}
-        {/* <div className="cursor-pointer products-carousel__next products-carousel__next-1 position-absolute top-50 d-flex align-items-center justify-content-center">
-          <svg
-            width="25"
-            height="25"
-            viewBox="0 0 25 25"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <use href="#icon_next_md" />
-          </svg>
-        </div> */}
-        {/* <!-- /.products-carousel__next --> */}
+        <div id="video-tooltip" className="video-tooltip">
+          <video id="tooltip-video" autoPlay loop muted>
+            <source src="" type="video/mp4" />
+          </video>
+        </div>
       </div>
-      {/* <!-- /.position-relative --> */}
     </section>
   );
 }

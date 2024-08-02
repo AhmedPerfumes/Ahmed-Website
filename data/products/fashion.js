@@ -2449,9 +2449,9 @@ export const products54 = [
   {
     id: 566,
     category: "Oriental Fragrance",
-    title: "Marj",
+    title: "Oud Lavender",
     price: 135,
-    imgSrc: "/assets/images/products/marj-1.png",
+    imgSrc: "/assets/images/products/oud-and-lavender.png",
     imgSrc2: "/assets/images/products/product-26-2.jpg",
   },
   {
@@ -2467,7 +2467,7 @@ export const products54 = [
     category: "Oriental Fragrance",
     title: "Rose Noir",
     price: 150,
-    imgSrc: "/assets/images/products/Rose-Noir.png",
+    imgSrc: "/assets/images/products/musk-ahmed.png",
     imgSrc2: "/assets/images/products/product-28-2.jpg",
   },
   {
@@ -2475,7 +2475,7 @@ export const products54 = [
     category: "Oriental Fragrance",
     title: "Summer Oud",
     price: 99,
-    imgSrc: "/assets/images/products/summer-oud.png",
+    imgSrc: "/assets/images/products/maani.png",
     imgSrc2: "/assets/images/products/product-29-2.jpg",
   },
   {

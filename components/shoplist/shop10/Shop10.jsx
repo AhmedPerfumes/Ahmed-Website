@@ -23,13 +23,12 @@ import Image from "next/image";
 import { openModalShopFilter } from "@/utlis/aside";
 import { sortingOptions } from "@/data/products/productCategories";
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 
 export default function Shop10() {
-
   const searchParams = useSearchParams();
-  const category = searchParams.get('category');
-  const subcategory = searchParams.get('subcategory');
+  const category = searchParams.get("category");
+  const subcategory = searchParams.get("subcategory");
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
@@ -103,187 +102,48 @@ export default function Shop10() {
       {/* <!-- /.d-flex justify-content-between --> */}
 
       <div className="products-grid">
-        {/* <h2 className="section-title fw-normal mb-3 pb-2">Oriental Fragrance</h2>
-        <div
-          className={`row row-cols-2 row-cols-lg-3 row-cols-xl-${selectedColView}`}
-          id="products-grid-1"
-        >
-          {products51.slice(0, 4).map((elm, i) => (
-            <div key={i} className="product-card-wrapper">
-              <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-                <div className="pc__img-wrapper">
-                  <Swiper
-                    className="swiper-container background-img js-swiper-slider"
-                    slidesPerView={1}
-                    modules={[Navigation]}
-                    navigation={{
-                      prevEl: ".prev" + i,
-                      nextEl: ".next" + i,
-                    }}
-                  >
-                    {[elm.imgSrc, elm.imgSrc2].map((elm2, i) => (
-                      <SwiperSlide key={i} className="swiper-slide">
-                        <Link href={`/product1_simple/${elm.id}`}>
-                          <Image
-                            loading="lazy"
-                            src={elm2}
-                            width="330"
-                            height="400"
-                            alt="Cropped Faux leather Jacket"
-                            className="pc__img"
-                          />
-                        </Link>
-                      </SwiperSlide>
-                    ))}
-
-                    <span
-                      className={`cursor-pointer pc__img-prev ${"prev" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_prev_sm" />
-                      </svg>
-                    </span>
-                    <span
-                      className={`cursor-pointer pc__img-next ${"next" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_next_sm" />
-                      </svg>
-                    </span>
-                  </Swiper>
-                  <button
-                    className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm.id)}
-                    title={
-                      isAddedToCartProducts(elm.id)
-                        ? "Already Added"
-                        : "Add to Cart"
-                    }
-                  >
-                    {isAddedToCartProducts(elm.id)
-                      ? "Already Added"
-                      : "Add To Cart"}
-                  </button>
-                </div>
-
-                <div className="pc__info position-relative">
-                  <p className="pc__category">{elm.category}</p>
-                  <h6 className="pc__title">
-                    <Link href={`/product1_simple/${elm.id}`}>{elm.title}</Link>
-                  </h6>
-                  <div className="product-card__price d-flex">
-                    {elm.priceOld ? (
-                      <>
-                        {" "}
-                        <span className="money price price-old">
-                          ${elm.priceOld}
-                        </span>
-                        <span className="money price price-sale">
-                          ${elm.price}
-                        </span>
-                      </>
-                    ) : (
-                      <span className="money price">${elm.price}</span>
-                    )}
-                  </div>
-                  {elm.colors && (
-                    <div className="d-flex align-items-center mt-1">
-                      {" "}
-                      <ColorSelection />{" "}
-                    </div>
-                  )}
-                  {elm.reviews && (
-                    <div className="product-card__review d-flex align-items-center">
-                      <div className="reviews-group d-flex">
-                        <Star stars={elm.rating} />
-                      </div>
-                      <span className="reviews-note text-lowercase text-secondary ms-1">
-                        {elm.reviews}
-                      </span>
-                    </div>
-                  )}
-
-                  <button
-                    className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
-                      isAddedtoWishlist(elm.id) ? "active" : ""
-                    }`}
-                    onClick={() => toggleWishlist(elm.id)}
-                    title="Add To Wishlist"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <use href="#icon_heart" />
-                    </svg>
-                  </button>
-                </div>
-                {elm.discont && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__right ms-auto">
-                      <span className="pc-label pc-label_sale d-block text-white">
-                        -{elm.discont}%
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {elm.isNew && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__left">
-                      <span className="pc-label pc-label_new d-block bg-white">
-                        NEW
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div> */}
-
         <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">{ subcategory == null ? "Oriental Fragrance" : "" }</h2>
+        <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+          {subcategory == null ? "Oriental Fragrance" : ""}
+        </h2>
         <Style2 />
-        { subcategory == null ? 
-          <><div className="border-bottom"></div>
+        {subcategory == null ? (
+          <>
+            <div className="border-bottom"></div>
 
-          <div className="mb-4 mb-xl-5"></div>
+            <div className="mb-4 mb-xl-5"></div>
 
-          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Occidental Fragrance</h2>
-          <Style2 />
-          <div className="border-bottom"></div>
+            <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+              Occidental Fragrance
+            </h2>
+            <Style2 />
+            <div className="border-bottom"></div>
 
-          <div className="mb-4 mb-xl-5"></div>
+            <div className="mb-4 mb-xl-5"></div>
 
-          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Women Fragrances</h2>
-          <Style2 />
-          <div className="border-bottom"></div>
+            <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+              Women Fragrances
+            </h2>
+            <Style2 />
+            <div className="border-bottom"></div>
 
-          <div className="mb-4 mb-xl-5"></div>
+            <div className="mb-4 mb-xl-5"></div>
 
-          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Men Fragrances</h2>
-          <Style2 />
-          <div className="border-bottom"></div>
+            <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+              Men Fragrances
+            </h2>
+            <Style2 />
+            <div className="border-bottom"></div>
 
-          <div className="mb-4 mb-xl-5"></div>
+            <div className="mb-4 mb-xl-5"></div>
 
-          <h2 className="section-title fw-normal mb-3 pb-2 text-center">Unisex Fragrance</h2>
-          <Style2 /></> : null
-      }
+            <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+              Unisex Fragrance
+            </h2>
+            <Style2 />
+          </>
+        ) : null}
 
         {/* <div className="mb-4 mb-xl-5"></div>
 

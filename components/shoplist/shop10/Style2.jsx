@@ -98,15 +98,15 @@ export default function Style2() {
                       />
                     </Link>
                     <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
-                      <h2 className="fs-40 fw-normal text-uppercase mb-0 font-courgette">
-                        Sportswear
+                      <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white">
+                        Laathani
                       </h2>
-                      <p className="mb-4">Sale Upto 50% On New Coming</p>
+                      <p className="mb-4 text-white">Exclusive Launch</p>
                       <a
                         className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
                         href="/product16_v11/1"
                       >
-                        <span>Discover Now</span>
+                        <span>Explore</span>
                       </a>
                     </div>
                   </>

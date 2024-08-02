@@ -186,19 +186,19 @@ $card-image-height: 121.212122%;
   margin: 0;
   margin-bottom: 0.25rem;
   color: $body-color-secondary;
-  font-weight: $font-weight-base;
+  font-weight: $font-weight-heading;
   line-height: $line-height-base;
 }
 
 // Product card title
 .pc__title {
   margin: 0;
-  font-size: $h6-font-size;
-  font-weight: $font-weight-base;
+  font-size: $h4-font-size;
+  font-weight: $font-weight-heading;
 }
 
 .price {
-  font-size: $h6-font-size;
+  font-size: $h5-font-size;
 }
 
 .price-sale {

@@ -96,61 +96,6 @@ export const categories2 = [
     text: "Men Shirts",
     category: "Unisex Fragrances",
   },
-  // {
-  //   id: 6,
-  //   imageUrl: "/assets/images/home/demo3/category_6.png",
-  //   text: "Men Shoes",
-  // },
-  // {
-  //   id: 7,
-  //   imageUrl: "/assets/images/home/demo3/category_7.png",
-  //   text: "Women Dresses",
-  // },
-  // {
-  //   id: 8,
-  //   imageUrl: "/assets/images/home/demo3/category_8.png",
-  //   text: "Kids Tops",
-  // },
-  // {
-  //   id: 1,
-  //   imageUrl: "/assets/images/home/demo3/category_1.png",
-  //   text: "Women Tops",
-  // },
-  // {
-  //   id: 2,
-  //   imageUrl: "/assets/images/home/demo3/category_2.png",
-  //   text: "Women Pants",
-  // },
-  // {
-  //   id: 3,
-  //   imageUrl: "/assets/images/home/demo3/category_3.png",
-  //   text: "Women Clothes",
-  // },
-  // {
-  //   id: 4,
-  //   imageUrl: "/assets/images/home/demo3/category_4.png",
-  //   text: "Men Jeans",
-  // },
-  // {
-  //   id: 5,
-  //   imageUrl: "/assets/images/home/demo3/category_5.png",
-  //   text: "Men Shirts",
-  // },
-  // {
-  //   id: 6,
-  //   imageUrl: "/assets/images/home/demo3/category_6.png",
-  //   text: "Men Shoes",
-  // },
-  // {
-  //   id: 7,
-  //   imageUrl: "/assets/images/home/demo3/category_7.png",
-  //   text: "Women Dresses",
-  // },
-  // {
-  //   id: 8,
-  //   imageUrl: "/assets/images/home/demo3/category_8.png",
-  //   text: "Kids Tops",
-  // },
 ];
 export const categoryBanners = [
   {
