@@ -1,4 +1,4 @@
-import HomePage15 from "./(homes)/home-15/page";
+import HomePage8 from "./(homes)/home-8/page";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -10,7 +10,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <HomePage15 />
+      <HomePage8 />
     </>
   );
 }

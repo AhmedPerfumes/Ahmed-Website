@@ -9,25 +9,26 @@ export default function Categories() {
     autoplay: {
       delay: 5000,
     },
-    slidesPerView: 4,
-    slidesPerGroup: 4,
+    slidesPerView: 5,
+    slidesPerGroup: 5,
     effect: "none",
     loop: true,
     pagination: false,
     navigation: false,
+    grabCursor: true,
     breakpoints: {
       320: {
-        slidesPerView: 2,
+        slidesPerView: 3,
         slidesPerGroup: 2,
         spaceBetween: 14,
       },
       768: {
-        slidesPerView: 3,
+        slidesPerView: 4,
         slidesPerGroup: 3,
         spaceBetween: 24,
       },
       992: {
-        slidesPerView: 4,
+        slidesPerView: 5,
         slidesPerGroup: 1,
         spaceBetween: 30,
         pagination: false,
@@ -50,15 +51,16 @@ export default function Categories() {
         >
           {categories8.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide">
-              <Image
+              <video
                 loading="lazy"
                 className="w-100 mb-3"
-                src={elm.imgSrc}
                 width="330"
                 height="400"
                 style={{ height: "fit-content" }}
-                alt="image"
-              />
+                muted autoPlay loop
+              >
+                <source type="video/mp4" src={elm.videoSrc} />
+              </video>
               <div className="text-center">
                 <Link
                   href="/shop-1"

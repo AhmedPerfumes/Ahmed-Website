@@ -465,41 +465,49 @@ export const categories8 = [
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Lipstick",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
   },
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
     altText: "Foundation",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
   },
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
     altText: "Mascara",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
   },
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
     altText: "Skincare",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/orange-sanguine.mp4",
   },
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Lipstick",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/trefle-pur.mp4",
   },
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
     altText: "Foundation",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
   },
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
     altText: "Mascara",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
   },
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
     altText: "Skincare",
+    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
   },
 ];
 

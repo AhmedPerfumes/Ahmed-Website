@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
     "@popperjs/core": "2.11.8",
     "@react-google-maps/api": "^2.19.3",
     "bootstrap": "^5.0.2",
     "framer-motion": "^11.3.19",
     "gsap": "^3.12.5",
+    "gsap-trial": "^3.12.5",
     "next": "14.2.3",
     "photoswipe": "^5.4.4",
     "rc-slider": "^10.6.2",
