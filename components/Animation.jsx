@@ -8,9 +8,9 @@ import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from 'swiper';
-import './Test5.css';
+import './Animation.css';
 
-const Test5 = () => {
+const Animation = () => {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -476,4 +476,4 @@ const Test5 = () => {
     )
 }
 
-export default Test5;
+export default Animation;
