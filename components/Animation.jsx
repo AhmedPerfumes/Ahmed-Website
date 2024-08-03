@@ -8,9 +8,9 @@ import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from 'swiper';
-import './Test5.css';
+import './Animation.css';
 
-const Test5 = () => {
+const Animation = () => {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -70,91 +70,25 @@ const Test5 = () => {
         ScrollTrigger.addEventListener("refresh", updateSnap);
 
         const swiper = new Swiper('.mySwiper', {
-            // direction: 'horizontal', // Set direction to horizontal
             navigation: {
               nextEl: '.swiper-next-button',
               prevEl: '.swiper-prev-button'
             },
             effect: 'fade',
-            loop: true, // Swiper uses boolean for loop
-            // pagination: {
-            //   el: '.swiper-pagination',
-            //   type: 'fraction',
-            // },
-            // mousewheel: true,
+            loop: true,
         });
       
         swiper.on('slideChange', function (sld) {
             document.body.setAttribute('data-sld', sld.realIndex);
         });
 
-        // let headings = gsap.utils.toArray(".text_reveal");
-        // gsap.set(headings, { yPercent: 200, opacity: 0});
-
-        // headings.forEach((heading, i) => {
-        //     let tl = gsap.timeline({
-        //         scrollTrigger: {
-        //             trigger: "#main2",
-        //             start: 0,
-        //             end: 'max',
-        //             // markers: true,
-        //             scrub: true
-        //       }
-        //     });
-            
-        //     tl.to(heading, { yPercent: 200, opacity: 1})
-        //     .to(heading, { yPercent: -500, opacity: 1}, "+=1")
-        // });
-
-        let headings = gsap.utils.toArray(".text_reveal");
+        let headings = gsap.utils.toArray(".h2");
         headings.forEach((heading, i) => {
             // console.log(heading);
-            // gsap.to(heading, {
-            //     // y: -130,
-            //     // duration: 2,
-            //     // ease: "elastic",
-                
-            //     // opacity: 1,
-            //     // y: 0,
-            //     // duration: 1,
-
-            //     opacity: 1,
-            //     y: 50,
-            //     duration: 2,
-            //     scrollTrigger: {
-            //     trigger: heading,
-            //     // start: "left center",
-            //     // toggleActions: "play none none reset",
-            //     // scrub: true,
-
-            //     // start: "top 80%", // When the top of the element is 80% from the top of the viewport
-            //     // end: "top 50%", // When the top of the element is 50% from the top of the viewport
-            //     // scrub: true, // Smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-
-            //         start: "top 80%", // When the top of the element is 80% from the top of the viewport
-            //         end: "top 20%", // When the top of the element is 20% from the top of the viewport
-            //         // scrub: true, // Smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-            //         toggleActions: "play none none reverse",
-            //     }
-            // });
-
-            // gsap.from(heading, {
-            //     scrollTrigger: {
-            //       trigger: heading,
-            //       start: "top 20%", // When the top of the element is 20% from the top of the viewport
-            //       end: "top 0%", // When the top of the element is 0% from the top of the viewport
-            //     //   scrub: true, // Smooth scrubbing
-            //       toggleActions: "play none none reverse",
-            //     },
-            //     opacity: 0,
-            //     y: 50,
-            //     duration: 2
-            // });
-
             gsap.fromTo(heading,
                 {
                     opacity: 0,
-                    y: 50
+                    y: 50,
                 },
                 {
                     opacity: 1,
@@ -162,10 +96,55 @@ const Test5 = () => {
                     scrollTrigger: {
                         trigger: heading,
                         start: 'top 80%', // start the animation when the top of the element is 80% from the top of the viewport
-                        end: 'top 20%', // end the animation when the top of the element is 30% from the top of the viewport
-                        // scrub: true, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+                        end: 'top 30%', // end the animation when the top of the element is 30% from the top of the viewport
                         toggleActions: 'play reverse play reverse', // play the animation on scroll down, reverse on scroll up
                     }
+                }
+            );
+        });
+
+        let parags = gsap.utils.toArray(".p");
+        parags.forEach((parag, i) => {
+            // console.log(parag);
+            gsap.fromTo(parag,
+                {
+                    opacity: 0,
+                    y: 50,
+                    delay: 1,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    delay: 1,
+                    scrollTrigger: {
+                        trigger: parag,
+                        start: 'top 70%', // start the animation when the top of the element is 80% from the top of the viewport
+                        end: 'top 20%', // end the animation when the top of the element is 30% from the top of the viewport
+                        toggleActions: 'play reverse play reverse', // play the animation on scroll down, reverse on scroll up
+                    }
+                }
+            );
+        });
+
+        let imgs = gsap.utils.toArray(".zoom_img");
+        imgs.forEach((img, i) => {
+            gsap.fromTo(
+                img,
+                {
+                    scale: 0.85,
+                    duration: 2,
+                    // delay: 1,
+                },
+                {
+                scale: 1,
+                duration: 2,
+                // delay: 1,
+                scrollTrigger: {
+                    trigger: img,
+                    scrub: true,
+                    start: "top center",
+                    end: "bottom center",
+                },
                 }
             );
         });
@@ -181,16 +160,19 @@ const Test5 = () => {
         <div id="main2">
             <section className="testsect">
                 <div className="panel2">
-                    <img style={{ width: "100%" }} src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png" alt="Section 1"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 1</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png" alt="Section 1"/>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 1</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
             
             <section id="start" className="testsect">
-                <div className="panel2 d-flex justify-content-center text-center text-white">
+                <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
+                    <h2 className="text-uppercase fw-medium mb-5">
+                        Most Preferred Categories
+                    </h2>
                     <video muted autoPlay loop style={{ width: "50%" }}>
                         <source type="video/mp4" src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4" />
                     </video>
@@ -199,10 +181,10 @@ const Test5 = () => {
 
             <section className="testsect">
                 <div className="panel2">
-                    <img style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg" alt="Section 2"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 2</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg" alt="Section 2"/>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 2</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -353,10 +335,10 @@ const Test5 = () => {
 
             <section className="testsect">
                 <div className="panel2">
-                    <img style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 3"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 3</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 3"/>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 3</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -365,9 +347,9 @@ const Test5 = () => {
             
             <section className="testsect">
                 <div className="panel2 d-flex flex-column justify-content-around">
-                    <Categories />
-
                     <Lookbook />
+                        
+                    <Categories section="section3" />
                 </div>
             </section>
 
@@ -375,10 +357,10 @@ const Test5 = () => {
 
             <section className="testsect">
                 <div className="panel2">
-                    <img style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg" alt="Section 4"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 4</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg" alt="Section 4"/>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 4</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -420,7 +402,7 @@ const Test5 = () => {
                     </div>
 
                     <div className="inner2 mt-5">
-                        <Categories />
+                    <Categories section="section4" />
                     </div>
                 </div>
 
@@ -439,10 +421,10 @@ const Test5 = () => {
 
             <section className="testsect">
                 <div className="panel2">
-                    <img style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 2"/>
-                    <div className="text_reveal position-absolute text-center text-white">
-                        <h2 className="text-white">Section 5</h2>
-                        <p>This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
+                    <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 2"/>
+                    <div className="text_reveal position-absolute">
+                        <h2 className="text-center text-white h2">Section 5</h2>
+                        <p className="text-center text-white p">This panel gets pinned in a similar way, and has a more involved animation that's wrapped in a timeline, fading the background color and animating the transforms of the paragraph in addition to the line, all synced with the scroll position perfectly.</p>
                     </div>
                 </div>
             </section>
@@ -494,4 +476,4 @@ const Test5 = () => {
     )
 }
 
-export default Test5;
+export default Animation;
