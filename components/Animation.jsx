@@ -3,6 +3,9 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Hero from "@/components/homes/home-8/Hero";
+import Footer14 from "@/components/footers/Footer14";
+import Header14 from "@/components/headers/Header14";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
@@ -10,9 +13,8 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 import Swiper from 'swiper';
 import './Animation.css';
 
-const Animation = () => {
 
-    gsap.registerPlugin(ScrollTrigger);
+const Animation = () => {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -135,18 +137,18 @@ const Animation = () => {
                 {
                     scale: 0.85,
                     duration: 2,
-                    delay: 1,
+                    // delay: 1,
                 },
                 {
-                    scale: 1.06,
-                    duration: 2,
-                    delay: 1,
-                    scrollTrigger: {
-                        trigger: img,
-                        start: "top center",
-                        end: "bottom center",
-                        scrub: 0,
-                    },
+                scale: 1,
+                duration: 2,
+                // delay: 1,
+                scrollTrigger: {
+                    trigger: img,
+                    // scrub: true,
+                    start: "top center",
+                    end: "bottom center",
+                },
                 }
             );
         });
@@ -160,6 +162,8 @@ const Animation = () => {
 
     return (
         <div id="main2">
+            <Header14 />
+            <Hero/>
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png" alt="Section 1"/>
@@ -474,6 +478,7 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
+            <Footer14/>
         </div>
     )
 }
