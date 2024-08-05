@@ -3,8 +3,9 @@ import Link from "next/link";
 import { categories8 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-
+import { useEffect, useRef, useState } from "react";
 export default function Categories({ section }) {
+
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -70,7 +71,11 @@ export default function Categories({ section }) {
                 width="330"
                 height="400"
                 style={{ height: "fit-content" }}
-                muted autoPlay loop
+                muted
+                // autoPlay
+                loop
+                onMouseOver={event => event.target.play()}
+                onMouseOut={event => event.target.pause()}
               >
                 <source type="video/mp4" src={elm.videoSrc} />
               </video>
