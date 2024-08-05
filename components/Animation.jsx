@@ -12,6 +12,8 @@ import './Animation.css';
 
 const Animation = () => {
 
+    gsap.registerPlugin(ScrollTrigger);
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
     
@@ -133,18 +135,18 @@ const Animation = () => {
                 {
                     scale: 0.85,
                     duration: 2,
-                    // delay: 1,
+                    delay: 1,
                 },
                 {
-                scale: 1,
-                duration: 2,
-                // delay: 1,
-                scrollTrigger: {
-                    trigger: img,
-                    scrub: true,
-                    start: "top center",
-                    end: "bottom center",
-                },
+                    scale: 1.06,
+                    duration: 2,
+                    delay: 1,
+                    scrollTrigger: {
+                        trigger: img,
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0,
+                    },
                 }
             );
         });
