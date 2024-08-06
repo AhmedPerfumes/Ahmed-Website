@@ -87,9 +87,9 @@ const Animation = () => {
       document.body.setAttribute("data-sld", sld.realIndex);
     });
 
-    // Animate headings
     let headings = gsap.utils.toArray(".h2");
-    headings.forEach((heading) => {
+    headings.forEach((heading, i) => {
+      // console.log(heading);
       gsap.fromTo(
         heading,
         {
@@ -101,37 +101,36 @@ const Animation = () => {
           y: 0,
           scrollTrigger: {
             trigger: heading,
-            start: "top 80%",
-            end: "top 30%",
-            toggleActions: "play reverse play reverse",
+            start: "top 80%", // start the animation when the top of the element is 80% from the top of the viewport
+            end: "top 30%", // end the animation when the top of the element is 30% from the top of the viewport
+            toggleActions: "play reverse play reverse", // play the animation on scroll down, reverse on scroll up
           },
         }
       );
     });
 
-    // Animate paragraphs after headings and images
     let parags = gsap.utils.toArray(".p");
-    parags.forEach((parag) => {
-      ScrollTrigger.create({
-        trigger: parag,
-        start: "top 70%",
-        end: "top 20%",
-        toggleActions: "play reverse play reverse",
-        onEnter: () => {
-          gsap.fromTo(
-            parag,
-            {
-              opacity: 0,
-              y: 50,
-            },
-            {
-              opacity: 1,
-              y: 0,
-              delay: 1,
-            }
-          );
+    parags.forEach((parag, i) => {
+      // console.log(parag);
+      gsap.fromTo(
+        parag,
+        {
+          opacity: 0,
+          y: 50,
+          delay: 1,
         },
-      });
+        {
+          opacity: 1,
+          y: 0,
+          delay: 1,
+          scrollTrigger: {
+            trigger: parag,
+            start: "top 70%", // start the animation when the top of the element is 80% from the top of the viewport
+            end: "top 20%", // end the animation when the top of the element is 30% from the top of the viewport
+            toggleActions: "play reverse play reverse", // play the animation on scroll down, reverse on scroll up
+          },
+        }
+      );
     });
 
     let imgs = gsap.utils.toArray(".zoom_img");
