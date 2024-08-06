@@ -236,4 +236,11 @@ p {
   font-size: 1rem;
 }
 
+.menu-button {
+  left: 47%;
+  z-index: 99;
+  clip-path : polygon(0% 0%, 100% 0%, 50% 100%);
+  background-color:gray;
+  
+}
 

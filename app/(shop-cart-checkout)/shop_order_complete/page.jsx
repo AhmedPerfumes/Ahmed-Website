@@ -1,4 +1,4 @@
-import Footer1 from "@/components/footers/Footer1";
+import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
 
 import ChectoutSteps from "@/components/shopCartandCheckout/ChectoutSteps";
@@ -18,7 +18,7 @@ export default function () {
         </section>
       </main>
       <div className="mb-5 pb-xl-5"></div>
-      <Footer1 />
+      <Footer14 />
     </>
   );
 }

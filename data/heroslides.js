@@ -260,7 +260,7 @@ export const slidesData2 = [
 export const slidesData3 = [
   {
     id: 1,
-    imageSrc: "/assets/images/home/demo8/slider1.jpg",
+    imageSrc: "/assets/images/home/demo8/thaqaf-bnr-image.jpg",
     season: "Summer 2023",
     objectPosition: "50% center",
     title: "New Arrival Men’s",
@@ -268,7 +268,7 @@ export const slidesData3 = [
   },
   {
     id: 2,
-    imageSrc: "/assets/images/home/demo8/slider2.jpg",
+    imageSrc: "/assets/images/home/demo8/thaqaf-bnr.jpg",
     season: "Summer 2023",
     objectPosition: "70% center",
     title: "New Arrival Women’s",
@@ -276,7 +276,7 @@ export const slidesData3 = [
   },
   {
     id: 3,
-    imageSrc: "/assets/images/home/demo8/slider3.jpg",
+    imageSrc: "/assets/images/home/demo8/oud-lavender-bnr.jpg",
     season: "Summer 2023",
     objectPosition: "50% center",
     title: "New Arrival Kid’s",

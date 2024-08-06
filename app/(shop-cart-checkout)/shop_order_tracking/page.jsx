@@ -1,4 +1,4 @@
-import Footer1 from "@/components/footers/Footer1";
+import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
 import OrderTrack from "@/components/shopCartandCheckout/OrderTrack";
 import React from "react";
@@ -12,7 +12,7 @@ export default function () {
         <OrderTrack />
       </main>
       <div className="mb-5 pb-xl-5"></div>
-      <Footer1 />
+      <Footer14 />
     </>
   );
 }

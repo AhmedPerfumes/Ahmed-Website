@@ -1,4 +1,4 @@
-import Footer1 from "@/components/footers/Footer1";
+import Footer14 from "@/components/footers/Footer14";
 
 import Header14 from "@/components/headers/Header14";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
@@ -10,7 +10,7 @@ export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
   description: "Buy Best Perfumes Online Ahmed Perfume",
   icons: {
-    icon: 'https://www.ahmed-perfume.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png',
+    icon: "https://www.ahmed-perfume.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png",
   },
 };
 export default function ProductDetailsPage16({ params }) {
@@ -25,7 +25,7 @@ export default function ProductDetailsPage16({ params }) {
         <SingleProduct11 product={product} />
         <RelatedSlider />
       </main>
-      <Footer1 />
+      <Footer14 />
     </>
   );
 }

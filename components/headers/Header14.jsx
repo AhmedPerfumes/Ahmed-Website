@@ -28,14 +28,12 @@ export default function Header14() {
 
   //Inline style for transitions
   const headerStyle = {
-    transition: 'max-height 0.8s ease-in-out, opacity 0.5s ease-in-out',
-    overflow: isHeaderOpen ? 'visible' : 'hidden',
-    // overflow: 'auto',
-    // overflow:isHeaderOpen ? 'hidden' : '',
-    maxHeight: isHeaderOpen ? '1000px' : '0',
+    transition: "max-height 0.8s ease-in-out, opacity 0.5s ease-in-out",
+    overflow: isHeaderOpen ? "visible" : "hidden",
+    maxHeight: isHeaderOpen ? "1000px" : "0",
     opacity: isHeaderOpen ? 1 : 1,
   };
- 
+
   return (
     <>
       <header
@@ -49,7 +47,11 @@ export default function Header14() {
           style={{ height: "3rem" }}
         >
           {slideData1000.map((elm, i) => (
-            <SwiperSlide key={i} style={{ textTransform: "uppercase", fontSize: "12px" }} className="swiper-slide text-center">
+            <SwiperSlide
+              key={i}
+              style={{ textTransform: "uppercase", fontSize: "12px" }}
+              className="swiper-slide text-center"
+            >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
                 <a className="p animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
                   {elm.description.split(" ").slice(0, 13).join(" ")}
@@ -59,10 +61,20 @@ export default function Header14() {
           ))}
         </Swiper>
 
-        <div ref={containerRef} className={`header-tools__item hover-container ${isPopupOpen ? "js-content_visible" : ""}`}>
+        <div
+          ref={containerRef}
+          className={`header-tools__item hover-container ${
+            isPopupOpen ? "js-content_visible" : ""
+          }`}
+        >
           <div className="search-popup js-hidden-content">
-            <form onSubmit={(e) => e.preventDefault()} className="search-field container">
-              <p className="text-uppercase text-secondary fw-medium mb-4">What are you looking for?</p>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="search-field container"
+            >
+              <p className="text-uppercase text-secondary fw-medium mb-4">
+                What are you looking for?
+              </p>
               <div className="position-relative">
                 <input
                   className="search-field__input search-popup__input w-100 fw-medium"
@@ -71,11 +83,21 @@ export default function Header14() {
                   placeholder="Search products"
                 />
                 <button className="btn-icon search-popup__submit" type="submit">
-                  <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    className="d-block"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <use href="#icon_search" />
                   </svg>
                 </button>
-                <button className="btn-icon btn-close-lg search-popup__reset" type="reset"></button>
+                <button
+                  className="btn-icon btn-close-lg search-popup__reset"
+                  type="reset"
+                ></button>
               </div>
 
               <div className="search-popup__results">
@@ -83,19 +105,29 @@ export default function Header14() {
                   <h6 className="sub-menu__title fs-base">Quicklinks</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <Link href="/shop-2" className="menu-link menu-link_us-s">Marj</Link>
+                      <Link href="/shop-2" className="menu-link menu-link_us-s">
+                        Marj
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">Rose Noir</a>
+                      <a href="#" className="menu-link menu-link_us-s">
+                        Rose Noir
+                      </a>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="/shop-3" className="menu-link menu-link_us-s">Oud Lavender</Link>
+                      <Link href="/shop-3" className="menu-link menu-link_us-s">
+                        Oud Lavender
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">Oud Classic</a>
+                      <a href="#" className="menu-link menu-link_us-s">
+                        Oud Classic
+                      </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">Oud &amp; Roses</a>
+                      <a href="#" className="menu-link menu-link_us-s">
+                        Oud &amp; Roses
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -110,21 +142,39 @@ export default function Header14() {
             <div className="container-fluid d-flex align-items-center my-2 px-5">
               <div className="flex-1 d-flex align-items-center gap-3">
                 <div className="heeader-top__right flex-1 d-flex gap-1">
-                  <select className="form-select form-select-sm bg-transparent color-black" name="store-currency">
+                  <select
+                    className="form-select form-select-sm bg-transparent color-black"
+                    name="store-currency"
+                  >
                     {currencyOptions.map((option, index) => (
-                      <option key={index} className="footer-select__option" value={option.value}>{option.text}</option>
+                      <option
+                        key={index}
+                        className="footer-select__option"
+                        value={option.value}
+                      >
+                        {option.text}
+                      </option>
                     ))}
                   </select>
-                  <select className="form-select form-select-sm bg-transparent color-black" name="store-language">
+                  <select
+                    className="form-select form-select-sm bg-transparent color-black"
+                    name="store-language"
+                  >
                     {languageOptions2.map((option, index) => (
-                      <option key={index} value={option.value}>{option.text}</option>
+                      <option key={index} value={option.value}>
+                        {option.text}
+                      </option>
                     ))}
                   </select>
                 </div>
               </div>
               <div className="logo">
                 <a href="/">
-                  <img src="https://www.ahmed-perfume.com/wp-content/uploads/2022/01/Ahmed-logo.svg" width="200px" alt="Ahmed" />
+                  <img
+                    src="https://www.ahmed-perfume.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
+                    width="200px"
+                    alt="Ahmed"
+                  />
                 </a>
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
@@ -136,9 +186,24 @@ export default function Header14() {
                     placeholder="Search products..."
                     onClick={() => setIsPopupOpen((pre) => !pre)}
                   />
-                  <button className="btn header-search__btn" type="button" onClick={() => setIsPopupOpen((pre) => !pre)}>
-                    <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {isPopupOpen ? <use href="#icon_close" /> : <use href="#icon_search" />}
+                  <button
+                    className="btn header-search__btn"
+                    type="button"
+                    onClick={() => setIsPopupOpen((pre) => !pre)}
+                  >
+                    <svg
+                      className="d-block"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {isPopupOpen ? (
+                        <use href="#icon_close" />
+                      ) : (
+                        <use href="#icon_search" />
+                      )}
                     </svg>
                   </button>
                 </form>
@@ -150,13 +215,30 @@ export default function Header14() {
                 </div>
 
                 <Link className="header-tools__item" href="/account_wishlist">
-                  <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    className="d-block"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <use href="#icon_heart" />
                   </svg>
                 </Link>
 
-                <a onClick={() => openCart()} className="header-tools__item header-tools__cart js-open-aside">
-                  <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <a
+                  onClick={() => openCart()}
+                  className="header-tools__item header-tools__cart js-open-aside"
+                >
+                  <svg
+                    className="d-block"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <use href="#icon_cart" />
                   </svg>
                   <span className="cart-amount d-block position-absolute js-cart-items-count">
@@ -179,8 +261,12 @@ export default function Header14() {
         </div>
       </header>
 
-      <nav className="navigation text-center position-absolute d-none d-lg-block btn" style={{ left: '47%', zIndex: '99', clipPath : 'polygon(0 0, 100% 0, 80% 100%, 20% 100%)',backgroundColor:'gray',height: '2.5rem'}}>
-        <a className="navigation__item" href="#" onClick={() => setIsHeaderOpen(prev => !prev)}>
+      <nav className="navigation text-center position-absolute d-none d-lg-block menu-button btn">
+        <a
+          className="navigation__item"
+          href="#"
+          onClick={() => setIsHeaderOpen((prev) => !prev)}
+        >
           Menu
         </a>
       </nav>

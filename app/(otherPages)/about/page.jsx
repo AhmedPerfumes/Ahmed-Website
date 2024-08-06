@@ -1,4 +1,4 @@
-import Footer1 from "@/components/footers/Footer1";
+import Footer14 from "@/components/footers/Footer14";
 
 import Header1 from "@/components/headers/Header1";
 import About from "@/components/otherPages/about/About";
@@ -21,7 +21,7 @@ export default function AboutPage() {
         <Clients />
       </main>
       <div className="mb-5 pb-xl-5"></div>
-      <Footer1 />
+      <Footer14 />
     </>
   );
 }
