@@ -12,7 +12,7 @@ export const metadata = {
 export default function HomePage8() {
   return (
     <>
-      {/* <Header14 /> */}
+      <Header14 />
       <main>
         {/* <Hero /> */}
         {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}

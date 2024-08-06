@@ -22,7 +22,7 @@ export default function Hero() {
   };
   return (
     <Swiper
-      className="swiper-container js-swiper-slider slideshow minh-100 swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events testsect"
+      className="swiper-container js-swiper-slider slideshow minh-100 swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events"
       {...swiperOptions}
     >
       {slidesData3.map((elm, i) => (

@@ -30,6 +30,16 @@ export default function Categories() {
     }
   };
 
+  // useEffect(() => {
+  //   document.addEventListener("mousemove", (e) => {
+  //     const tooltip = document.getElementById("video-tooltip");
+  //     if (tooltip && tooltip.classList.contains("show")) {
+  //       tooltip.style.left = `${e.pageY}px`;
+  //     }
+  //   });
+  // }, []);
+  // // -----------
+
   const swiperOptions = {
     autoplay: {
       delay: 5000,

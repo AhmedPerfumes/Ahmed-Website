@@ -9,8 +9,12 @@ import { slideData1000 } from "@/data/heroslides";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
+import { usePathname } from 'next/navigation';
 
 export default function Header14() {
+
+  const pathname = usePathname();
+
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -26,22 +30,23 @@ export default function Header14() {
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
   const containerRef = useRef(null);
 
-  //Inline style for transitions
-  const headerStyle = {
-    transition: 'max-height 0.8s ease-in-out, opacity 0.5s ease-in-out',
-    overflow: isHeaderOpen ? 'visible' : 'hidden',
-    // overflow: 'auto',
-    // overflow:isHeaderOpen ? 'hidden' : '',
-    maxHeight: isHeaderOpen ? '1000px' : '0',
-    opacity: isHeaderOpen ? 1 : 1,
-  };
+    //Inline style for transitions
+    const headerStyle = {
+      transition: 'max-height 0.8s ease-in-out, opacity 0.5s ease-in-out',
+      overflow: isHeaderOpen ? 'visible' : 'hidden',
+      // overflow: 'auto',
+      // overflow:isHeaderOpen ? 'hidden' : '',
+      maxHeight: isHeaderOpen ? '1000px' : '0',
+      opacity: isHeaderOpen ? 1 : 1,
+    };
+
  
   return (
     <>
       <header
         id="header"
         className={`header sticky_disabled w-100 border-bottom`}
-        style={headerStyle}
+        style={pathname =='/' ? headerStyle : {}}
       >
         <Swiper
           className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
@@ -178,12 +183,14 @@ export default function Header14() {
           </div>
         </div>
       </header>
-
-      <nav className="navigation text-center position-absolute d-none d-lg-block btn" style={{ left: '47%', zIndex: '99', clipPath : 'polygon(0 0, 100% 0, 80% 100%, 20% 100%)',backgroundColor:'gray',height: '2.5rem'}}>
-        <a className="navigation__item" href="#" onClick={() => setIsHeaderOpen(prev => !prev)}>
-          Menu
-        </a>
-      </nav>
+      {
+        pathname == '/' ?
+          <nav className="navigation text-center position-absolute d-none d-lg-block btn" style={{ left: '47%', zIndex: '99', clipPath : 'polygon(0 0, 100% 0, 80% 100%, 20% 100%)',backgroundColor:'gray',height: '2.5rem'}}>
+            <a className="navigation__item" href="#" onClick={() => setIsHeaderOpen(prev => !prev)}>
+              Menu
+            </a>
+        </nav> : null
+      }
     </>
   );
 }
