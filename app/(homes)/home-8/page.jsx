@@ -14,11 +14,11 @@ export default function HomePage8() {
     <>
       <Header14 />
       <main>
-        <Hero />
-        <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+        {/* <Hero /> */}
+        {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
         <Animation />
       </main>
-      <Footer14 />
+      {/* <Footer14 /> */}
     </>
   );
 }

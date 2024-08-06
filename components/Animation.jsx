@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Link from "next/link";
+import Hero from "@/components/homes/home-8/Hero";
+import Footer14 from "@/components/footers/Footer14";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
@@ -85,75 +87,6 @@ const Animation = () => {
       document.body.setAttribute("data-sld", sld.realIndex);
     });
 
-    // let headings = gsap.utils.toArray(".h2");
-    // headings.forEach((heading, i) => {
-    //   // console.log(heading);
-    //   gsap.fromTo(
-    //     heading,
-    //     {
-    //       opacity: 0,
-    //       y: 50,
-    //     },
-    //     {
-    //       opacity: 1,
-    //       y: 0,
-    //       scrollTrigger: {
-    //         trigger: heading,
-    //         start: "top 80%", // start the animation when the top of the element is 80% from the top of the viewport
-    //         end: "top 30%", // end the animation when the top of the element is 30% from the top of the viewport
-    //         toggleActions: "play reverse play reverse", // play the animation on scroll down, reverse on scroll up
-    //       },
-    //     }
-    //   );
-    // });
-
-    // let parags = gsap.utils.toArray(".p");
-    // parags.forEach((parag, i) => {
-    //   // console.log(parag);
-    //   gsap.fromTo(
-    //     parag,
-    //     {
-    //       opacity: 0,
-    //       y: 50,
-    //       delay: 1,
-    //     },
-    //     {
-    //       opacity: 1,
-    //       y: 0,
-    //       delay: 1,
-    //       scrollTrigger: {
-    //         trigger: parag,
-    //         start: "top 70%", // start the animation when the top of the element is 80% from the top of the viewport
-    //         end: "top 20%", // end the animation when the top of the element is 30% from the top of the viewport
-    //         toggleActions: "play reverse play reverse", // play the animation on scroll down, reverse on scroll up
-    //       },
-    //     }
-    //   );
-    // });
-
-    // let imgs = gsap.utils.toArray(".zoom_img");
-    // imgs.forEach((img, i) => {
-    //   gsap.fromTo(
-    //     img,
-    //     {
-    //       scale: 0.85,
-    //       duration: 2,
-    //       // delay: 1,
-    //     },
-    //     {
-    //       scale: 1.06,
-    //       duration: 2,
-    //       // delay: 1,
-    //       scrollTrigger: {
-    //         trigger: img,
-    //         scrub: 8,
-    //         start: "top center",
-    //         end: "bottom center",
-    //       },
-    //     }
-    //   );
-    // });
-
     // Animate headings
     let headings = gsap.utils.toArray(".h2");
     headings.forEach((heading) => {
@@ -171,26 +104,6 @@ const Animation = () => {
             start: "top 80%",
             end: "top 30%",
             toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-    });
-
-    // Animate images
-    let imgs = gsap.utils.toArray(".zoom_img");
-    imgs.forEach((img) => {
-      gsap.fromTo(
-        img,
-        {
-          scale: 0.85,
-        },
-        {
-          scale: 1.06,
-          scrollTrigger: {
-            trigger: img,
-            scrub: 8,
-            start: "top center",
-            end: "bottom center",
           },
         }
       );
@@ -221,6 +134,29 @@ const Animation = () => {
       });
     });
 
+    let imgs = gsap.utils.toArray(".zoom_img");
+    imgs.forEach((img, i) => {
+      gsap.fromTo(
+        img,
+        {
+          scale: 0.85,
+          duration: 2,
+          delay: 1,
+        },
+        {
+          scale: 1.05,
+          duration: 2,
+          delay: 1,
+          scrollTrigger: {
+            trigger: img,
+            start: "top center",
+            end: "bottom center",
+            scrub: 0,
+          },
+        }
+      );
+    });
+
     // Cleanup on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -230,6 +166,9 @@ const Animation = () => {
 
   return (
     <div id="main2">
+      <section className="testsect">
+        <Hero />
+      </section>
       <section className="testsect">
         <div className="panel2">
           <img
@@ -249,7 +188,7 @@ const Animation = () => {
           </div>
         </div>
       </section>
-
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section id="start" className="testsect">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
           <h2 className="text-uppercase fw-medium mb-5">
@@ -263,7 +202,7 @@ const Animation = () => {
           </video>
         </div>
       </section>
-
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2">
           <img
@@ -283,7 +222,7 @@ const Animation = () => {
           </div>
         </div>
       </section>
-
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2 d-flex justify-content-center align-items-center">
           <div className="contai">
@@ -513,7 +452,7 @@ const Animation = () => {
           </div>
         </div>
       </section>
-
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2">
           <img
@@ -533,9 +472,7 @@ const Animation = () => {
           </div>
         </div>
       </section>
-
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-
       <section className="testsect">
         <div className="panel2 d-flex flex-column justify-content-around">
           <Lookbook />
@@ -543,9 +480,7 @@ const Animation = () => {
           <Categories section="section3" />
         </div>
       </section>
-
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-
       <section className="testsect">
         <div className="panel2">
           <img
@@ -565,7 +500,6 @@ const Animation = () => {
           </div>
         </div>
       </section>
-
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="cont testsect">
         <div className="panel2">
@@ -672,7 +606,6 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-
       <section className="testsect">
         <div className="panel2">
           <img
@@ -692,7 +625,7 @@ const Animation = () => {
           </div>
         </div>
       </section>
-
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section
         id="end"
         className="testsect container d-flex flex-column justify-content-center"
@@ -741,6 +674,10 @@ const Animation = () => {
             />
           </div>
         </div>
+      </section>
+      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+      <section className="testsect" style={{ height: "100%" }}>
+        <Footer14 />
       </section>
     </div>
   );

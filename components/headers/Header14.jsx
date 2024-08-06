@@ -9,8 +9,11 @@ import { slideData1000 } from "@/data/heroslides";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header14() {
+  const pathname = usePathname();
+
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -39,7 +42,7 @@ export default function Header14() {
       <header
         id="header"
         className={`header sticky_disabled w-100 border-bottom`}
-        style={headerStyle}
+        style={pathname == "/" ? headerStyle : {}}
       >
         <Swiper
           className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
