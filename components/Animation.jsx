@@ -435,7 +435,7 @@ const Animation = () => {
                 </div>
             </section>
             
-            <section id="end" className="testsect container d-flex flex-column justify-content-center">
+            <section id="end" className="testsect panel2 container d-flex flex-column justify-content-center">
                 <div className="d-flex flex-row align-items-center justify-content-center mb-5">
                     <div>
                         <video loop muted autoPlay loading="lazy" className='w-100'>
