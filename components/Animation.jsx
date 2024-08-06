@@ -5,7 +5,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import Hero from "@/components/homes/home-8/Hero";
 import Footer14 from "@/components/footers/Footer14";
-import Header14 from "@/components/headers/Header14";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
@@ -137,18 +136,18 @@ const Animation = () => {
                 {
                     scale: 0.85,
                     duration: 2,
-                    // delay: 1,
+                    delay: 1,
                 },
                 {
-                scale: 1,
-                duration: 2,
-                // delay: 1,
-                scrollTrigger: {
-                    trigger: img,
-                    // scrub: true,
-                    start: "top center",
-                    end: "bottom center",
-                },
+                    scale: 1.05,
+                    duration: 2,
+                    delay: 1,
+                    scrollTrigger: {
+                        trigger: img,
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0,
+                    },
                 }
             );
         });
@@ -162,8 +161,9 @@ const Animation = () => {
 
     return (
         <div id="main2">
-            <Header14 />
-            <Hero/>
+            <section className="testsect">
+                <Hero />
+            </section>
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png" alt="Section 1"/>
@@ -173,7 +173,7 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-            
+            {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
             <section id="start" className="testsect">
                 <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
                     <h2 className="text-uppercase fw-medium mb-5">
@@ -184,7 +184,7 @@ const Animation = () => {
                     </video>
                 </div>
             </section>
-
+            {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg" alt="Section 2"/>
@@ -194,7 +194,7 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-            
+            {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
             <section className="testsect">
                 <div className="panel2 d-flex justify-content-center align-items-center">
                     <div className="contai">
@@ -338,7 +338,7 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-
+            {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 3"/>
@@ -348,9 +348,7 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-
             <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-            
             <section className="testsect">
                 <div className="panel2 d-flex flex-column justify-content-around">
                     <Lookbook />
@@ -358,9 +356,7 @@ const Animation = () => {
                     <Categories section="section3" />
                 </div>
             </section>
-
             <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg" alt="Section 4"/>
@@ -370,7 +366,6 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-           
             <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
             <section className="cont testsect">
                 <div className="panel2">
@@ -424,7 +419,6 @@ const Animation = () => {
                 </div>
             </section>
             <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-
             <section className="testsect">
                 <div className="panel2">
                     <img className='zoom_img' style={{ width: "100%" }} src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg" alt="Section 2"/>
@@ -434,8 +428,8 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-            
-            <section id="end" className="testsect panel2 container d-flex flex-column justify-content-center">
+            {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+            <section id="end" className="testsect container d-flex flex-column justify-content-center">
                 <div className="d-flex flex-row align-items-center justify-content-center mb-5">
                     <div>
                         <video loop muted autoPlay loading="lazy" className='w-100'>
@@ -478,7 +472,10 @@ const Animation = () => {
                     </div>
                 </div>
             </section>
-            <Footer14/>
+            <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+            <section className="testsect" style={{ height: "100%" }}>
+                <Footer14 />
+            </section>
         </div>
     )
 }

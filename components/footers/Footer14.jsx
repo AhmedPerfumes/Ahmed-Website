@@ -13,7 +13,7 @@ import {
 
 export default function Footer14() {
   return (
-    <footer className="footer footer_type_1 dark testsect">
+    <footer className="footer footer_type_1 dark">
       <div className="footer-top container py-0">
         <div className="service-promotion horizontal container">
           <div className="row">

@@ -28,13 +28,14 @@ export default function Categories() {
     }
   };
 
-  document.addEventListener("mousemove", (e) => {
-    const tooltip = document.getElementById("video-tooltip");
-    if (tooltip && tooltip.classList.contains("show")) {
-      tooltip.style.left = `${e.pageX}px`;
-    }
-  });
-
+  useEffect(() => {
+    document.addEventListener("mousemove", (e) => {
+      const tooltip = document.getElementById("video-tooltip");
+      if (tooltip && tooltip.classList.contains("show")) {
+        tooltip.style.left = `${e.pageY}px`;
+      }
+    });
+  }, []);
   // -----------
 
   const swiperOptions = {
