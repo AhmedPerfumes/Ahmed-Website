@@ -97,7 +97,7 @@ export default function RootLayout({ children }) {
           <LoginFormPopup />
           <QuickView />
           {/* <NewsLetter /> */}
-          <CookieContainer />
+          {/* <CookieContainer /> */}
           <SizeGuide />
           <Delivery />
           <CartDrawer />
