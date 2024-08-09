@@ -263,7 +263,7 @@ export default function Header14() {
           </div>
         </div>
       </header>
-
+      { pathname == "/" ?
       <nav className="navigation text-center position-absolute d-none d-lg-block menu-button btn">
         <a
           className="navigation__item"
@@ -272,7 +272,7 @@ export default function Header14() {
         >
           Menu
         </a>
-      </nav>
+      </nav> : null }
     </>
   );
 }

@@ -232,8 +232,11 @@ h2, h3 {
   font-size: 3.6rem;
 }
 
-p {
-  font-size: 1rem;
+.p {
+  width: 100%;
+  text-align: center;
+  // padding: 0;
+  // font-size: 1rem;
 }
 
 .menu-button {
@@ -242,4 +245,91 @@ p {
   clip-path : polygon(0% 0%, 100% 0%, 50% 100%);
   background-color:gray;
 }
+.mainnn-wrapper h1{
+  font-size: 65px;
+}
+.mainnn-wrapper h2{
+  font-size: 20px;
+}
 
+.panel2 .zoom_img{
+  object-fit: cover;
+}
+.mobile-vid{
+  width: 50%;
+}
+.mobile-swiper{
+  display: none;
+}
+
+// .text-container {
+//   max-width: 100%; /* Ensures the paragraph uses the available width */
+//   margin: 0 auto; /* Centers the container if needed */
+//   font-size: 16px; /* Adjust the font size for better readability */
+//   line-height: 1.5; /* Adjust line height for better spacing */
+//   padding: 10px;
+//   color: white;
+//   text-align: center;
+// }
+
+/* Media query for devices with a max width of 600px */
+@media (max-width: 600px) {
+  // .text-container {
+  //   font-size: 20px; /* Adjust font size for mobile */
+  //   line-height: 1.4; /* Adjust line height to fit more text in one line */
+  //   word-spacing: 1px;
+  //   text-align: center;
+   
+  //   // text-wrap: nowrap;
+  // }
+  h2,h3{
+    font-size: 3rem;
+  }
+  .text_reveal{
+    margin: 25%;
+    padding-top: 50%;
+  }
+  // .cont{
+  //   display: none;
+  // }
+}
+
+
+
+
+@media (max-width: 768px) {
+  .mainnn-title {
+    font-size: 1.2rem;
+  }
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mainnn-subtitle {
+    font-size: 1rem;
+  }
+
+  .mainnn-content__title, .mainnn-content__subtitle {
+    font-size: 0.8rem;
+  }
+ 
+  .right-side__img .bottle-bg{
+  height: 275px;
+ }
+  .bottle-img{
+    width: 185px;
+    height: 175px;
+  }
+  
+  .mobile-vid{
+    width: 100%;
+  }
+  #end{
+    height: max-content;
+    padding-top: 30px;
+  }
+  
+ 
+}
