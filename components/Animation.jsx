@@ -11,6 +11,8 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from "swiper";
 import "./Animation.css";
+import MobileFooter2 from "./footers/MobileFooter2";
+
 
 const Animation = () => {
   useEffect(() => {
@@ -185,29 +187,37 @@ const Animation = () => {
                 the line, all synced with the scroll position perfectly.
             </p>
         </div>
-       
+        <a
+        href="#footer"
+        className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+        style={{ bottom: "0" }}
+    >
+        Scroll To Discover More
+
+    </a>
+      
     </div>
 </section>
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section id="start" className="testsect">
-  <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
-    <h2 className="text-uppercase fw-medium mb-5">
-      Most Preferred Categories
-    </h2>
-    <div className="w-60 w-md-50">
-      <video muted autoPlay loop className="w-100">
-        <source
-          type="video/mp4"
-          src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
-        />
-      </video>
-    </div>
+      <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
+  <h2 className="mb-4 mb-md-2">
+    Most Preferred Categories
+  </h2>
+  <div className="w-60 w-md-50">
+    <video muted autoPlay loop className="w-100">
+      <source
+        type="video/mp4"
+        src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
+      />
+    </video>
+  </div>
   </div>
 </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -223,18 +233,23 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
             
-          </div>
+        
+          </div> 
+          <a
+        href="#footer"
+        className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+        style={{ bottom: "0" }}
+    >
+        Scroll To Discover More
+    </a>
          
-          
-          
-          
         </div>
         
-      </section>
+             </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2 d-flex justify-content-center align-items-center">
-          <div className="contai">
+          <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
                 <div className="mainnn swiper-slide " id="beach">
@@ -463,7 +478,7 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -480,6 +495,13 @@ const Animation = () => {
             </p>
             
           </div>
+          <a
+        href="#footer"
+        className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+        style={{ bottom: "0" }}
+    >
+        Scroll To Discover More
+    </a>
           
         </div>
       </section>
@@ -493,7 +515,7 @@ const Animation = () => {
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -509,6 +531,14 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+        href="#footer"
+        className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+        style={{ bottom: "0" }}
+    >
+        Scroll To Discover More
+    </a>
+          
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
@@ -563,7 +593,7 @@ const Animation = () => {
 </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -579,6 +609,13 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+        href="#footer"
+        className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+        style={{ bottom: "0" }}
+    >
+        Scroll To Discover More
+    </a>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
@@ -624,11 +661,21 @@ const Animation = () => {
         </div>
     </div>
 </section>
-      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-      <section className="testsect" style={{ height: "100%" }}>
+      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 d-none d-lg-block"></div>
+      <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
+        
       </section>
+    <section className="testsect d-sm-block d-md-none bg-dark pt-5  ">
+      <div className="MobileFooter">
+      
+
+      <MobileFooter2/>
+      </div>
+    </section>
+      
     </div>
+    
   );
 };
 
