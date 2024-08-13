@@ -28,6 +28,18 @@ export default function Header14() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
   const containerRef = useRef(null);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0 && isHeaderOpen) {
+        setIsHeaderOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isHeaderOpen]);
 
   //Inline style for transitions
   const headerStyle = {

@@ -310,6 +310,10 @@ h2, h3 {
   .mainnn-subtitle {
     font-size: 1rem;
   }
+  .mainnn-wrapper h1{
+    font-size: 40px;
+    text-wrap: nowrap;
+  }
 
   .mainnn-content__title, .mainnn-content__subtitle {
     font-size: 0.8rem;
@@ -320,7 +324,7 @@ h2, h3 {
  }
   .bottle-img{
     width: 185px;
-    height: 175px;
+    // height: 175px;
   }
   
   .mobile-vid{
