@@ -11,6 +11,7 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from "swiper";
 import "./Animation.css";
+import MobileFooter2 from "./footers/MobileFooter2";
 
 const Animation = () => {
   useEffect(() => {
@@ -185,15 +186,20 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+            href="#footer"
+            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+            style={{ bottom: "0" }}
+          >
+            Scroll To Discover More
+          </a>
         </div>
       </section>
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section id="start" className="testsect">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
-          <h2 className="text-uppercase fw-medium mb-5">
-            Most Preferred Categories
-          </h2>
+          <h2 className="mb-4 mb-md-2">Most Preferred Categories</h2>
           <div className="w-60 w-md-50">
             <video muted autoPlay loop className="w-100">
               <source
@@ -206,7 +212,7 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -222,12 +228,19 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+            href="#footer"
+            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+            style={{ bottom: "0" }}
+          >
+            Scroll To Discover More
+          </a>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2 d-flex justify-content-center align-items-center">
-          <div className="contai">
+          <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
                 <div className="mainnn swiper-slide " id="beach">
@@ -242,17 +255,28 @@ const Animation = () => {
                         In 20 years, there could be more plastic in our oceans
                         than fish.
                       </div>
-                      <div className="mainnn-content__subtitle pb-4">
+                      <div className="mainnn-content__subtitle">
                         Plastic pollution injures more than 100.000 marine
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
                       <div className="moreee-menu">
-                        <Link
-                          class="btn-link btn-link_lg default-underline text-uppercase fw-bold animate animate_fade animate_btt animate_delay-7"
-                          href="/shop-1"
-                        >
-                          Shop Now
+                        <Link href="">
+                          Shop Now{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.7"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="-5" y1="12" x2="19" y2="12" />
+                            <line x1="15" y1="16" x2="19" y2="12" />
+                            <line x1="15" y1="8" x2="19" y2="12" />
+                          </svg>
                         </Link>
                       </div>
                     </div>
@@ -445,7 +469,7 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -461,6 +485,13 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+            href="#footer"
+            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+            style={{ bottom: "0" }}
+          >
+            Scroll To Discover More
+          </a>
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
@@ -473,7 +504,7 @@ const Animation = () => {
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -489,6 +520,13 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+            href="#footer"
+            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+            style={{ bottom: "0" }}
+          >
+            Scroll To Discover More
+          </a>
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
@@ -593,7 +631,7 @@ const Animation = () => {
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
-        <div className="panel2">
+        <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -609,6 +647,13 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+          <a
+            href="#footer"
+            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+            style={{ bottom: "0" }}
+          >
+            Scroll To Discover More
+          </a>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
@@ -660,9 +705,17 @@ const Animation = () => {
           </div>
         </div>
       </section>
-      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-      <section className="testsect" style={{ height: "100%" }}>
+      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 d-none d-lg-block"></div>
+      <section
+        className="testsect d-none d-lg-block"
+        style={{ height: "100%" }}
+      >
         <Footer14 />
+      </section>
+      <section className="testsect d-sm-block d-md-none bg-dark pt-5  ">
+        <div className="MobileFooter">
+          <MobileFooter2 />
+        </div>
       </section>
     </div>
   );
