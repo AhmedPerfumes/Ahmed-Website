@@ -169,42 +169,41 @@ const Animation = () => {
         <Hero />
       </section>
       <section className="testsect">
-    <div className="panel2 position-relative">
-        <img
+        <div className="panel2 position-relative">
+          <img
             className="zoom_img"
             style={{ width: "100%" }}
             src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png"
             alt="Section 1"
-        />
-        <div className="text_reveal position-absolute">
+          />
+          <div className="text_reveal position-absolute">
             <h2 className="text-center text-white h2">Section 1</h2>
             <p className="text-center text-white p">
-                This panel gets pinned in a similar way, and has a more involved
-                animation that's wrapped in a timeline, fading the background
-                color and animating the transforms of the paragraph in addition to
-                the line, all synced with the scroll position perfectly.
+              This panel gets pinned in a similar way, and has a more involved
+              animation that's wrapped in a timeline, fading the background
+              color and animating the transforms of the paragraph in addition to
+              the line, all synced with the scroll position perfectly.
             </p>
+          </div>
         </div>
-       
-    </div>
-</section>
+      </section>
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section id="start" className="testsect">
-  <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
-    <h2 className="text-uppercase fw-medium mb-5">
-      Most Preferred Categories
-    </h2>
-    <div className="w-60 w-md-50">
-      <video muted autoPlay loop className="w-100">
-        <source
-          type="video/mp4"
-          src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
-        />
-      </video>
-    </div>
-  </div>
-</section>
+        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
+          <h2 className="text-uppercase fw-medium mb-5">
+            Most Preferred Categories
+          </h2>
+          <div className="w-60 w-md-50">
+            <video muted autoPlay loop className="w-100">
+              <source
+                type="video/mp4"
+                src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
+              />
+            </video>
+          </div>
+        </div>
+      </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2">
@@ -222,14 +221,8 @@ const Animation = () => {
               color and animating the transforms of the paragraph in addition to
               the line, all synced with the scroll position perfectly.
             </p>
-            
           </div>
-         
-          
-          
-          
         </div>
-        
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
@@ -249,28 +242,17 @@ const Animation = () => {
                         In 20 years, there could be more plastic in our oceans
                         than fish.
                       </div>
-                      <div className="mainnn-content__subtitle">
+                      <div className="mainnn-content__subtitle pb-4">
                         Plastic pollution injures more than 100.000 marine
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
                       <div className="moreee-menu">
-                        <Link href="">
-                          Shop Now{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.7"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="-5" y1="12" x2="19" y2="12" />
-                            <line x1="15" y1="16" x2="19" y2="12" />
-                            <line x1="15" y1="8" x2="19" y2="12" />
-                          </svg>
+                        <Link
+                          class="btn-link btn-link_lg default-underline text-uppercase fw-bold animate animate_fade animate_btt animate_delay-7"
+                          href="/shop-1"
+                        >
+                          Shop Now
                         </Link>
                       </div>
                     </div>
@@ -478,9 +460,7 @@ const Animation = () => {
               color and animating the transforms of the paragraph in addition to
               the line, all synced with the scroll position perfectly.
             </p>
-            
           </div>
-          
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
@@ -513,54 +493,104 @@ const Animation = () => {
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="cont testsect ">
-    <div className="panel2 mb-4">
-        <div className="inner2">
+        <div className="panel2 mb-4">
+          <div className="inner2">
             <video loop muted autoPlay className="w-100">
-                <source src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4" type="video/mp4" />
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
+                type="video/mp4"
+              />
             </video>
-        </div>
-        <div className="d-flex flex-column align-items-center justify-content-center mt-4">
-            <h3 className="text-center">Carefully <span>selected ingredients</span></h3>
-            <p className="text-center px-3">From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials. While respecting the rhythms of nature, we commit to selecting only the highest-quality ingredients, imparting our perfumes with their rich olfactory facets.</p>
+          </div>
+          <div className="d-flex flex-column align-items-center justify-content-center mt-4">
+            <h3 className="text-center">
+              Carefully <span>selected ingredients</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
             <div className="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center">
-                <img className="p-2 w-100 w-md-auto" src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg" alt="Image 1" />
-                <img className="p-2 w-100 w-md-auto" src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg" alt="Image 2" />
+              <img
+                className="p-2 w-100 w-md-auto"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                alt="Image 1"
+              />
+              <img
+                className="p-2 w-100 w-md-auto"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg"
+                alt="Image 2"
+              />
             </div>
+          </div>
         </div>
-    </div>
 
-    <div className="panel2 mt-5">
-        <div className="inner2">
+        <div className="panel2 mt-5">
+          <div className="inner2">
             <video loop muted autoPlay className="w-100">
-                <source src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4" type="video/mp4" />
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
+                type="video/mp4"
+              />
             </video>
+          </div>
         </div>
-    </div>
 
-    <div className="panel2 mt-5">
-        <div className="d-flex flex-column align-items-center justify-content-center">
-            <h3 className="text-center">Carefully <span>selected ingredients</span></h3>
-            <p className="text-center px-3">From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials. While respecting the rhythms of nature, we commit to selecting only the highest-quality ingredients, imparting our perfumes with their rich olfactory facets.</p>
+        <div className="panel2 mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h3 className="text-center">
+              Carefully <span>selected ingredients</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
             <div className="mt-4">
-                <img className="w-100" src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg" alt="Image 1" />
+              <img
+                className="w-100"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg"
+                alt="Image 1"
+              />
             </div>
-        </div>
-        <div className="inner2 mt-5">
+          </div>
+          <div className="inner2 mt-5">
             <Categories section="section4" />
+          </div>
         </div>
-    </div>
 
-    <div className="panel2 mt-5">
-        <div className="d-flex flex-column align-items-center justify-content-center">
-            <h3 className="text-center">Carefully <span>selected ingredients</span></h3>
-            <p className="text-center px-3">From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials. While respecting the rhythms of nature, we commit to selecting only the highest-quality ingredients, imparting our perfumes with their rich olfactory facets.</p>
+        <div className="panel2 mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h3 className="text-center">
+              Carefully <span>selected ingredients</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
+          </div>
+          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
+            <img
+              className="px-2 w-100 w-md-auto"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt="Image 1"
+            />
+            <img
+              className="px-2 w-100 w-md-auto"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt="Image 2"
+            />
+          </div>
         </div>
-        <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
-            <img className="px-2 w-100 w-md-auto" src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg" alt="Image 1" />
-            <img className="px-2 w-100 w-md-auto" src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg" alt="Image 2" />
-        </div>
-    </div>
-</section>
+      </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
         <div className="panel2">
@@ -582,48 +612,54 @@ const Animation = () => {
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section id="end" className="testsect container d-flex flex-column justify-content-center">
-    <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
-        <div className="order-1 order-md-0">
+      <section
+        id="end"
+        className="testsect container d-flex flex-column justify-content-center"
+      >
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
+          <div className="order-1 order-md-0">
             <video loop muted autoPlay loading="lazy" className="w-100">
-                <source src="https://www.ateliercologne.com/videos/chapters/fifth/art-of-gifting/art-of-boxing-video-16-9.mp4" type="video/mp4" />
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fifth/art-of-gifting/art-of-boxing-video-16-9.mp4"
+                type="video/mp4"
+              />
             </video>
-        </div>
-        <div className="col-lg-7 p-5 text-center order-3 order-md-1">
+          </div>
+          <div className="col-lg-7 p-5 text-center order-3 order-md-1">
             <h3 className="mb-3">The Company</h3>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien
-                dignissim a elementum. Sociis metus, hendrerit mauris id in. Quis
-                sit sit ultrices tincidunt euismod luctus diam. Turpis sodales orci
-                etiam phasellus lacus id leo. Amet turpis nunc, nulla massa est
-                viverra interdum. Praesent auctor nulla morbi non posuere mattis.
-                Arcu eu id maecenas cras.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+              sapien dignissim a elementum. Sociis metus, hendrerit mauris id
+              in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
+              sodales orci etiam phasellus lacus id leo. Amet turpis nunc, nulla
+              massa est viverra interdum. Praesent auctor nulla morbi non
+              posuere mattis. Arcu eu id maecenas cras.
             </p>
+          </div>
         </div>
-    </div>
 
-    <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
-        <div className="col-lg-7 p-5 text-center order-1 order-md-0">
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
+          <div className="col-lg-7 p-5 text-center order-1 order-md-0">
             <h3 className="mb-3">The Company</h3>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien
-                dignissim a elementum. Sociis metus, hendrerit mauris id in. Quis
-                sit sit ultrices tincidunt euismod luctus diam. Turpis sodales orci
-                etiam phasellus lacus id leo. Amet turpis nunc, nulla massa est
-                viverra interdum. Praesent auctor nulla morbi non posuere mattis.
-                Arcu eu id maecenas cras.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+              sapien dignissim a elementum. Sociis metus, hendrerit mauris id
+              in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
+              sodales orci etiam phasellus lacus id leo. Amet turpis nunc, nulla
+              massa est viverra interdum. Praesent auctor nulla morbi non
+              posuere mattis. Arcu eu id maecenas cras.
             </p>
-        </div>
-        <div className="order-0 order-md-1">
+          </div>
+          <div className="order-0 order-md-1">
             <img
-                className="h-auto w-100"
-                loading="lazy"
-                src="https://www.ateliercologne.com/images/chapters/fifth/store-locator/perview@1x.jpg"
-                alt="image"
+              className="h-auto w-100"
+              loading="lazy"
+              src="https://www.ateliercologne.com/images/chapters/fifth/store-locator/perview@1x.jpg"
+              alt="image"
             />
+          </div>
         </div>
-    </div>
-</section>
+      </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect" style={{ height: "100%" }}>
         <Footer14 />
