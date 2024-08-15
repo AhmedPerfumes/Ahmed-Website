@@ -2,8 +2,8 @@ export const servicePromotions = [
   {
     id: 1,
     icon: "#icon_shipping",
-    title: "Fast And Free Delivery",
-    content: "Free delivery for all orders over $140",
+    title: "Fragrance",
+    content: "Made from carefully selected Raw materials",
   },
   {
     id: 2,

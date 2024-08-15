@@ -1,6 +1,6 @@
 import Footer14 from "@/components/footers/Footer14";
 
-import Header1 from "@/components/headers/Header1";
+import Header14 from "@/components/headers/Header14";
 import About from "@/components/otherPages/about/About";
 import Clients from "@/components/otherPages/about/Clients";
 import Services from "@/components/otherPages/about/Services";
@@ -13,15 +13,16 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Header1 />
-      <main className="page-wrapper">
-        <div className="mb-4 pb-4"></div>
+      <Header14 />
+      <main className="">
+        {/* <div className="mb-4 pb-4"></div> */}
         <About />
-        <Services />
-        <Clients />
+        {/* <Services /> */}
+        {/* <Clients /> */}
       </main>
       <div className="mb-5 pb-xl-5"></div>
       <Footer14 />
+      
     </>
   );
 }
