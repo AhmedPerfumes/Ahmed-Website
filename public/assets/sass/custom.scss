@@ -242,8 +242,11 @@ h2, h3 {
 .menu-button {
   left: 47%;
   z-index: 99;
-  clip-path : polygon(0% 0%, 100% 0%, 50% 100%);
-  background-color:gray;
+  // clip-path : polygon(0% 0%, 100% 0%, 50% 100%);
+  clip-path: polygon(0 0, 100% 1%, 100% 60%, 50% 100%, 0 60%);
+  // background-color:rgba(0, 247, 255, 0.699);
+  background-color: rgb(233 194 101);
+
 }
 .mainnn-wrapper h1{
   font-size: 65px;
@@ -310,6 +313,10 @@ h2, h3 {
   .mainnn-subtitle {
     font-size: 1rem;
   }
+  .mainnn-wrapper h1{
+    font-size: 40px;
+    text-wrap: nowrap;
+  }
 
   .mainnn-content__title, .mainnn-content__subtitle {
     font-size: 0.8rem;
@@ -320,7 +327,7 @@ h2, h3 {
  }
   .bottle-img{
     width: 185px;
-    height: 175px;
+    // height: 175px;
   }
   
   .mobile-vid{
