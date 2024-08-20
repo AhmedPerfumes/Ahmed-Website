@@ -142,8 +142,8 @@ export default function About() {
                   <Image
                     src="/assets/images/about/icon1.png"
                     alt="Sample Image 1"
-                    width={100}
-                    height={100}
+                    width={300}
+                    height={300}
                     className="img-fluid"
                   />
                 </div>
@@ -162,8 +162,8 @@ export default function About() {
                   <Image
                     src="/assets/images/about/icon2.png"
                     alt="Sample Image 2"
-                    width={100}
-                    height={100}
+                    width={300}
+                    height={300}
                     className="img-fluid"
                   />
                 </div>
@@ -183,8 +183,8 @@ export default function About() {
                   <Image
                     src="/assets/images/about/icon3.png"
                     alt="Sample Image 3"
-                    width={100}
-                    height={100}
+                    width={300}
+                    height={300}
                     className="img-fluid"
                   />
                 </div>

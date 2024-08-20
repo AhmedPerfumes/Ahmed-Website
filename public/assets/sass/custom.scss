@@ -292,9 +292,9 @@ h2, h3 {
     margin: 25%;
     padding-top: 50%;
   }
-  // .cont{
-  //   display: none;
-  // }
+  .cont{
+    display: none;
+  }
 }
 
 
@@ -339,4 +339,117 @@ h2, h3 {
   }
    
  
+}
+
+.magnifier-container {
+  position: relative;
+  display: inline-block;
+}
+
+.magnifier-glass {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #bb8c1c;
+  cursor: none;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.8);
+  /* Adjust the size of the magnifier */
+  width: 200px;
+  height: 200px;
+  /* Hide the magnifier by default */
+  display: none;
+  transition: all 0.3 ease-in-out;
+}
+
+.magnifier-glass img {
+  width: 100%;
+}
+
+.magnifier-container img {
+  display: block;
+}
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+
+
+
+
+.hero{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.content2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+   width: 100%;
+}
+
+footer {
+  background-color: black;
+  color: white;
+}
+
+.content img{
+  object-fit: cover;
+  height: 100vh;
+}
+.nav-item{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  line-height: 36px;
+  text-decoration: none;
+
+}
+// Mobile Slider css
+
+section{
+	height: 100vh;
+  width:100vw;
+}
+
+.mobilecontainer{
+  position: relative;
+  display:flex;
+  flex-direction:row;
+  width: 100vw;
+  height: 100vh;
+  overflow:hidden;
+}
+
+.mobilepanel{
+  width: 100vw;
+  height:100%;
+  display: flex;
+}
+
+.inner{
+ width:100vw;
+ display: flex;
+ justify-content: center;
+}
+
+
+.orange{
+  background-color:#FFB433;
+}
+.blue{
+  background-color:#8F8FB5;
+}
+.green{
+  background-color:green;
+}
+.red{
+   background-color:#FF4545;
 }

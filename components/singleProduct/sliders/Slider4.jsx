@@ -8,6 +8,7 @@ import "swiper/css";
 import "photoswipe/dist/photoswipe.css";
 
 import { Gallery, Item } from "react-photoswipe-gallery";
+
 const images = [
   {
     imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dw200bc326/primary_packshot_3/2024/FRAGRANCE/L__HOMME_IDEAL_-_EDP_100ml-263403.jpg?sw=700&sh=700&sfrm=png",
@@ -22,6 +23,7 @@ const images = [
     imgSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2023/02/hubb-o-salam-3.jpg",
   },
 ];
+
 import Image from "next/image";
 import tippy from "tippy.js";
 
@@ -29,7 +31,31 @@ export default function Slider4() {
   useEffect(() => {
     tippy("[data-tippy-content]");
   }, []);
+  
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+  const handleMouseMove = (e) => {
+    const magnifier = e.currentTarget.querySelector(".magnifier-glass");
+    const img = e.currentTarget.querySelector("img");
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+
+    magnifier.style.backgroundImage = `url(${img.src})`;
+    magnifier.style.backgroundSize = `${width * 2}px ${height * 2}px`; // Zoom factor (2x in this case)
+    magnifier.style.backgroundPosition = `-${x * 2}px -${y * 2}px`; // Move background position based on mouse
+    magnifier.style.left = `${x - magnifier.offsetWidth / 2}px`;
+    magnifier.style.top = `${y - magnifier.offsetHeight / 2}px`;
+  };
+
+  const handleMouseOut = (e) => {
+    e.currentTarget.querySelector(".magnifier-glass").style.display = "none";
+  };
+
+  const handleMouseOver = (e) => {
+    e.currentTarget.querySelector(".magnifier-glass").style.display = "block";
+  };
+
   return (
     <div
       className="product-single__media horizontal-thumbnail product-media-initialized"
@@ -48,7 +74,10 @@ export default function Slider4() {
             {images.map((elm, i) => (
               <SwiperSlide
                 key={i}
-                className="swiper-slide product-single__image-item"
+                className="swiper-slide product-single__image-item magnifier-container"
+                onMouseMove={handleMouseMove}
+                onMouseOut={handleMouseOut}
+                onMouseOver={handleMouseOver}
               >
                 <Item
                   original={elm.imgSrc}
@@ -70,7 +99,6 @@ export default function Slider4() {
                         ref={ref}
                         onClick={open}
                         data-fancybox="gallery"
-                        // href="/assets/images/products/product_0.jpg"
                         className="item-zoom"
                         data-bs-toggle="tooltip"
                         data-bs-placement="left"
@@ -86,6 +114,7 @@ export default function Slider4() {
                           <use href="#icon_zoom" />
                         </svg>
                       </a>
+                      <div className="magnifier-glass"></div>
                     </>
                   )}
                 </Item>
@@ -126,7 +155,6 @@ export default function Slider4() {
             <SwiperSlide
               key={i}
               className="swiper-slide product-single__image-item"
-              //   style={{ marginBottom: "10px" }}
             >
               <img
                 loading="lazy"

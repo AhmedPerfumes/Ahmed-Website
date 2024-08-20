@@ -5,13 +5,14 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Link from "next/link";
 import Hero from "@/components/homes/home-8/Hero";
 import Footer14 from "@/components/footers/Footer14";
+import MobileFooter2 from "./footers/MobileFooter2";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from "swiper";
 import "./Animation.css";
-import MobileFooter2 from "./footers/MobileFooter2";
+import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 
 const Animation = () => {
@@ -49,6 +50,22 @@ const Animation = () => {
         scrub: 1,
       },
     });
+    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+
+    const mobilepanelTween = gsap.to(mobilepanel, {
+      xPercent: -100 * (mobilepanel.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".mobilecontainer",
+        start: "top top",
+        end: "+=" + window.innerWidth * 5,
+        // markers: true,
+        pin: true,
+        scrub: 1.5,
+      },
+    });
+    
+
 
     // ScrollTrigger for each section to get their positions
     const sectionTriggers = sections.map((section) =>
@@ -459,20 +476,7 @@ const Animation = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            {/* <div className="buttonnn-wrapper">
-                            <div className="swiper-button swiper-prev-button">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </div>
-                            <div className="swiper-button swiper-next-button">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </div>
-                        </div> */}
-            {/* <div className="swiper-pagination"></div> */}
+            </div>         
           </div>
         </div>
       </section>
@@ -590,6 +594,48 @@ const Animation = () => {
             <img className="px-2 w-100 w-md-auto" src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg" alt="Image 2" />
         </div>
     </div>
+</section>
+
+{/* This is the Mobile Slider  */}
+<section className="MobileSlider mobilecontainer d-lg-none">
+<div className="mobilepanel red">
+        <div className="inner"><video loop muted autoPlay className="w-100">
+                <source src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4" type="video/mp4" />
+            </video> </div>
+      </div>
+      <div className="mobilepanel green container py-3 d-flex justify-content-center">
+        <div className="text d-flex flex-column text-center">
+        <h1 className="h4 mb-2 mt-0 fs-1">Your Heading</h1>
+        <p className="h6 mb-0">Your Subheading</p>
+
+        </div>
+      
+  <div className="inner text-center d-flex flex-column">
+   
+  </div>
+</div>
+
+
+
+      <div className="mobilepanel red">
+        <div className="inner"> 
+        <video loop muted autoPlay className="w-100">
+                <source src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4" type="video/mp4" />
+            </video>
+
+        </div>
+      </div>
+      <div className="mobilepanel green">
+        <div className="inner"> </div>
+      </div>
+      <div className="mobilepanel blue">
+        <div className="inner"> </div>
+      </div>
+      <div className="mobilepanel red">
+        <div className="inner"> </div>
+      </div>
+      
+  {/* <MobileSlider/> */}
 </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
