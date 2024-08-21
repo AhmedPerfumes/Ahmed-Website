@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 export default function Categories({ section }) {
-
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -38,16 +37,9 @@ export default function Categories({ section }) {
   };
   return (
     <section className="category-carousel container">
-      {
-        section == 'section3' ?
-        <>
-          <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
-            Most Preferred Categoriesss
-          </h2>
-          <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center">
-            The World's Premium Brands In One Destination.
-          </p>
-        </> : 
+      {section == "section3" ? (
+        <></>
+      ) : (
         <>
           <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
             Most Preferred Categories
@@ -56,7 +48,7 @@ export default function Categories({ section }) {
             The World's Premium Brands In One Destination.
           </p>
         </>
-      }
+      )}
 
       <div className="position-relative">
         <Swiper
@@ -72,19 +64,19 @@ export default function Categories({ section }) {
                 height="400"
                 style={{ height: "fit-content" }}
                 muted
-                // autoPlay
                 loop
-                onMouseOver={event => event.target.play()}
-                onMouseOut={event => event.target.pause()}
+                onMouseOver={(event) => event.target.play()}
+                onMouseOut={(event) => event.target.pause()}
               >
                 <source type="video/mp4" src={elm.videoSrc} />
               </video>
               <div className="text-center">
-                <Link
-                  href="/shop-1"
-                  className="menu-link h6 fw-medium text-uppercase"
-                >
+                <Link href="/shop-1" className="menu-link h6 fw-medium">
                   {elm.altText}
+                  <br />
+                  <span className="fs-14 text-secondary fst-italic">
+                    {elm.subText}
+                  </span>
                 </Link>
               </div>
             </SwiperSlide>
