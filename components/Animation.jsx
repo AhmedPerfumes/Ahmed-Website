@@ -58,10 +58,10 @@ const Animation = () => {
       scrollTrigger: {
         trigger: ".mobilecontainer",
         start: "top top",
-        end: "+=" + window.innerWidth * 5,
-        // markers: true,
+        end: "+=" + window.innerWidth * 3.5,
+        markers: true,
         pin: true,
-        scrub: 1.5,
+        scrub: 3,
       },
     });
     
@@ -598,42 +598,56 @@ const Animation = () => {
 
 {/* This is the Mobile Slider  */}
 <section className="MobileSlider mobilecontainer d-lg-none">
-<div className="mobilepanel red">
+<div className="mobilepanel d-flex align-items-center">
         <div className="inner"><video loop muted autoPlay className="w-100">
                 <source src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4" type="video/mp4" />
             </video> </div>
       </div>
-      <div className="mobilepanel green container py-3 d-flex justify-content-center">
-        <div className="text d-flex flex-column text-center">
-        <h1 className="h4 mb-2 mt-0 fs-1">Your Heading</h1>
-        <p className="h6 mb-0">Your Subheading</p>
-
-        </div>
-      
-  <div className="inner text-center d-flex flex-column">
-   
+      <div className="mobilepanel d-flex justify-content-center">       
+  <div className="inner text-center pt-5 mt-4"> 
+    <h1>Carefully Selected ingredients</h1>
+    <p className="fs-5">From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials. While respecting the rhythms of nature, we commit to selecting only the highest-quality ingredients, imparting our perfumes with their rich olfactory facets</p>
+    
+    <img src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg" alt="" />
   </div>
 </div>
 
 
 
-      <div className="mobilepanel red">
-        <div className="inner"> 
+      <div className="mobilepanel">
+        <div className="inner d-flex align-items-center"> 
         <video loop muted autoPlay className="w-100">
                 <source src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4" type="video/mp4" />
             </video>
 
         </div>
       </div>
-      <div className="mobilepanel green">
-        <div className="inner"> </div>
+      <div className="mobilepanel ">
+        <div className="inner text-center pt-5 mt-4">
+          {/* <h1>Most Preferred Categories</h1>
+          <p className="fs-5">The World's Premium Brands In One destination</p> */}
+          <Categories/>
+          
+           </div>
       </div>
-      <div className="mobilepanel blue">
-        <div className="inner"> </div>
+      <div className="mobilepanel">
+        <div className="inner text-center pt-5 mt-4"> 
+        <h1>Carefully Selected ingredients</h1>
+    <p className="fs-5">From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials. While respecting the rhythms of nature, we commit to selecting only the highest-quality ingredients, imparting our perfumes with their rich olfactory facets</p>
+    
+    <img src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg" alt="" />
+        </div>
       </div>
-      <div className="mobilepanel red">
-        <div className="inner"> </div>
+      <div className="mobilepanel d-flex justify-content-center">
+        <div className="inner text-center pt-5 mt-4">
+        <h1>Carefully Selected ingredients</h1>
+    <p className="fs-5">From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials. While respecting the rhythms of nature, we commit to selecting only the highest-quality ingredients, imparting our perfumes with their rich olfactory facets</p>
+    
+    <img src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg" alt="" />
+           </div>
       </div>
+      
+
       
   {/* <MobileSlider/> */}
 </section>
