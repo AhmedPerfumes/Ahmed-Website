@@ -1,268 +1,216 @@
 "use client";
-import Category from "./filter/Category";
-import Colors from "./filter/Colors";
-import Size from "./filter/Size";
-import Brands from "./filter/Brands";
-import Price from "./filter/Price";
-import BreadCumb from "./BreadCumb";
-import { products52 } from "@/data/products/fashion";
-import { Navigation } from "swiper/modules";
-import { SwiperSlide } from "swiper/react";
-import ColorSelection from "../common/ColorSelection";
-import Star from "../common/Star";
-import Pagination2 from "../common/Pagination2";
-import { Swiper } from "swiper/react";
-
-import { useState } from "react";
-import Link from "next/link";
-import { useContextElement } from "@/context/Context";
-
-const itemPerRow = [2, 3, 4];
-import Image from "next/image";
-import { openModalShopFilter } from "@/utlis/aside";
-import { sortingOptions } from "@/data/products/productCategories";
-import FilterAll from "./filter/FilterAll";
+import { useEffect } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 
 export default function Shop5() {
-  const { toggleWishlist, isAddedtoWishlist } = useContextElement();
-  const { setQuickViewItem } = useContextElement();
-  const { addProductToCart, isAddedToCartProducts } = useContextElement();
-  const [selectedColView, setSelectedColView] = useState(2);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    const sections = document.querySelectorAll("section");
+    const scrolling = {
+      enabled: true,
+      events: "scroll,wheel,touchmove,pointermove".split(","),
+      prevent: (e) => e.preventDefault(),
+      disable() {
+        if (scrolling.enabled) {
+          scrolling.enabled = false;
+          window.addEventListener("scroll", gsap.ticker.tick, { passive: true });
+          scrolling.events.forEach((e, i) =>
+            (i ? document : window).addEventListener(e, scrolling.prevent, {
+              passive: false
+            })
+          );
+        }
+      },
+      enable() {
+        if (!scrolling.enabled) {
+          scrolling.enabled = true;
+          window.removeEventListener("scroll", gsap.ticker.tick);
+          scrolling.events.forEach((e, i) =>
+            (i ? document : window).removeEventListener(e, scrolling.prevent)
+          );
+        }
+      }
+    };
+
+    function goToSection(section, anim) {
+      if (scrolling.enabled) {
+        scrolling.disable();
+        gsap.to(window, {
+          scrollTo: { y: section, autoKill: false },
+          onComplete: scrolling.enable,
+          duration: 0.1
+        });
+
+        anim && anim.restart();
+      }
+    }
+
+    function setOpacity(section, value, duration) {
+      gsap.to(section.querySelector(".content"), {
+        opacity: value,
+        duration: duration
+      });
+    }
+
+    sections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top bottom-=1",
+        end: "bottom top+=1",
+        onEnter: () => {
+          goToSection(section);
+        },
+        onEnterBack: () => {
+          goToSection(section);
+        }
+      });
+
+      ScrollTrigger.create({
+        trigger: section,
+        markers: true,
+        start: "center",
+        end: "center",
+        onEnter: () => {
+          setOpacity(section, 1, 1);
+        },
+        onEnterBack: () => {
+          setOpacity(section, 1, 1);
+        }
+      });
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      scrolling.enable(); // Ensure scrolling is enabled if component unmounts
+    };
+  }, []);
+
   return (
-    <section className="shop-main container d-flex pt-4 pt-xl-5">
-      <div className="shop-sidebar side-sticky bg-body">
-        <div
-          onClick={openModalShopFilter}
-          className="aside-header d-flex d-lg-none align-items-center"
-        >
-          <h3 className="text-uppercase fs-6 mb-0">Filter By</h3>
-          <button className="btn-close-lg js-close-aside btn-close-aside ms-auto"></button>
+    <div>
+      
+    <section id="gift1" className="blue hero hero1 position-relative">
+      <div className="content w-100 h-100 position-relative">
+        <img
+          className="w-100 h-100"
+          src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dwfa0745e9/home_page/2024/Skincare/OI/OI_BLACK/OI-BLACK-LOTION_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg"
+          alt=""
+        />
+        <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-5">
+          <h2 className="text-white ">Your Text Here</h2>
+          <h4 className="text-white">Your Subheading</h4>
+          <button className="btn btn-outline-light rounded-pill">Discover</button>
         </div>
-
-        <div className="pt-4 pt-lg-0"></div>
-
-        <FilterAll />
-      </div>
-
-      <div className="shop-list flex-grow-1">
-        {/* <!-- /.slideshow --> */}
-
-        <div className="d-flex justify-content-between mb-4 pb-md-2">
-          <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-            <BreadCumb />
-          </div>
-          {/* <!-- /.breadcrumb --> */}
-
-          <div className="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-            <select
-              className="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0"
-              aria-label="Sort Items"
-              name="total-number"
-            >
-              {sortingOptions.map((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-
-            <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
-
-            <div className="col-size align-items-center order-1 d-none d-lg-flex">
-              <span className="text-uppercase fw-medium me-2">View</span>
-              {itemPerRow.map((elm, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelectedColView(elm)}
-                  className={`btn-link fw-medium me-2 js-cols-size ${
-                    selectedColView == elm ? "btn-link_active" : ""
-                  } `}
-                >
-                  {elm}
-                </button>
-              ))}
-            </div>
-            {/* <!-- /.col-size --> */}
-
-            <div className="shop-filter d-flex align-items-center order-0 order-md-3 d-lg-none">
-              <button
-                className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
-                onClick={openModalShopFilter}
-              >
-                <svg
-                  className="d-inline-block align-middle me-2"
-                  width="14"
-                  height="10"
-                  viewBox="0 0 14 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_filter" />
-                </svg>
-                <span className="text-uppercase fw-medium d-inline-block align-middle">
-                  Filter
-                </span>
-              </button>
-            </div>
-            {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
-          </div>
-          {/* <!-- /.shop-acs --> */}
-        </div>
-        {/* <!-- /.d-flex justify-content-between --> */}
-
-        <div
-          className={`products-grid row row-cols-2 row-cols-md-3  row-cols-lg-${selectedColView}`}
-          id="products-grid"
-        >
-          {products52.slice(0, 9).map((elm, i) => (
-            <div key={i} className="product-card-wrapper">
-              <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-                <div className="pc__img-wrapper">
-                  <Swiper
-                    className="swiper-container background-img js-swiper-slider"
-                    slidesPerView={1}
-                    modules={[Navigation]}
-                    navigation={{
-                      prevEl: ".prev3" + i,
-                      nextEl: ".next3" + i,
-                    }}
-                  >
-                    {[elm.imgSrc, elm.imgSrc2].map((elm2, i) => (
-                      <SwiperSlide key={i} className="swiper-slide">
-                        <Link href={`/product1_simple/${elm.id}`}>
-                          <Image
-                            loading="lazy"
-                            src={elm2}
-                            width="330"
-                            height="400"
-                            alt="Cropped Faux leather Jacket"
-                            className="pc__img"
-                          />
-                        </Link>
-                      </SwiperSlide>
-                    ))}
-
-                    <span
-                      className={`cursor-pointer pc__img-prev ${"prev3" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_prev_sm" />
-                      </svg>
-                    </span>
-                    <span
-                      className={`cursor-pointer pc__img-next ${"next3" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_next_sm" />
-                      </svg>
-                    </span>
-                  </Swiper>
-                  <button
-                    className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm.id)}
-                    title={
-                      isAddedToCartProducts(elm.id)
-                        ? "Already Added"
-                        : "Add to Cart"
-                    }
-                  >
-                    {isAddedToCartProducts(elm.id)
-                      ? "Already Added"
-                      : "Add To Cart"}
-                  </button>
-                </div>
-
-                <div className="pc__info position-relative">
-                  <p className="pc__category">{elm.category}</p>
-                  <h6 className="pc__title">
-                    <Link href={`/product1_simple/${elm.id}`}>{elm.title}</Link>
-                  </h6>
-                  <div className="product-card__price d-flex">
-                    {elm.priceOld ? (
-                      <>
-                        {" "}
-                        <span className="money price price-old">
-                          ${elm.priceOld}
-                        </span>
-                        <span className="money price price-sale">
-                          ${elm.price}
-                        </span>
-                      </>
-                    ) : (
-                      <span className="money price">${elm.price}</span>
-                    )}
-                  </div>
-                  {elm.colors && (
-                    <div className="d-flex align-items-center mt-1">
-                      {" "}
-                      <ColorSelection />{" "}
-                    </div>
-                  )}
-                  {elm.reviews && (
-                    <div className="product-card__review d-flex align-items-center">
-                      <div className="reviews-group d-flex">
-                        <Star stars={elm.rating} />
-                      </div>
-                      <span className="reviews-note text-lowercase text-secondary ms-1">
-                        {elm.reviews}
-                      </span>
-                    </div>
-                  )}
-
-                  <button
-                    className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
-                      isAddedtoWishlist(elm.id) ? "active" : ""
-                    }`}
-                    onClick={() => toggleWishlist(elm.id)}
-                    title="Add To Wishlist"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <use href="#icon_heart" />
-                    </svg>
-                  </button>
-                </div>
-                {elm.discont && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__right ms-auto">
-                      <span className="pc-label pc-label_sale d-block text-white">
-                        -{elm.discont}%
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {elm.isNew && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__left">
-                      <span className="pc-label pc-label_new d-block bg-white">
-                        NEW
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* <!-- /.products-grid row --> */}
-
-        <Pagination2 />
       </div>
     </section>
+  
+    <section id="gift2" className="blue hero hero1 position-relative">
+      <div className="content w-100 h-100 position-relative">
+        <img
+          className="w-100 h-100"
+          src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dwe07c55fa/home_page/2022/Fragrance/Haute_Parfumerie/AM-OUDS_HOMEPAGE-TILE_HOMEPAGE_DESKTOP_CHERRY.jpg?sfrm=jpg"
+          alt=""
+        />
+        <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4  px-5">
+          <h2 className="text-white">Your Text Here</h2>
+          <button className="btn btn-outline-light rounded-pill">Discover</button>
+        </div>
+      </div>
+    </section>
+  
+    <section id="gift3" className="blue hero hero1 position-relative">
+      <div className="content w-100 h-100 position-relative">
+        <img
+          className="w-100 h-100"
+          src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dw06d07d41/home_page/2024/Fragrance/ABSOLUS_ALLEGORIA/ABSO-ALLEGORIA_HOMEPAGE-TILES_HOMEPAGE_DESKTOP_CUIR.jpg?sfrm=jpg"
+          alt=""
+        />
+        <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-5">
+          <h2 className="text-white">Your Text Here</h2>
+          <button className="btn btn-outline-light rounded-pill">Discover</button>
+        </div>
+      </div>
+    </section>
+  
+    <section id="gift4" className="green hero hero2 position-relative ">
+      <div className="content w-100 position-relative">
+        <img
+          className="w-100"
+          src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dw8c8aa80a/home_page/2024/Skincare/AR/AR-TRIO-24_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg"
+          alt=""
+        />
+        <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-4">
+          <h2 className="text-white">Your Text Here</h2>
+          <button className="btn btn-outline-light rounded-pill">Discover</button>
+        </div>
+      </div>
+    </section>
+  
+    <section id="gift5" className="purple hero hero3 position-relative">
+      <div className="content w-100 position-relative">
+        <img className="w-100" src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dwc771d636/home_page/2024/MAKEUP/terracotta/TERRA-BLUSH_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg" alt=""/>
+        <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-4">
+          <h2 className="text-white">Your Text Here</h2>
+          <button className="btn btn-outline-light rounded-pill">Discover</button>
+        </div>
+      </div>  
+    </section>
+
+    {/* Navigation circle code */}
+    
+    <div className="position-fixed top-50 start-0 translate-middle-y px-5">
+  <ul className="nav flex-column text-center">
+    <li className="nav-item mb-3">
+      <a
+        className="nav-link p-2 text-white"
+        href="#gift1"
+      
+      >
+        
+      </a>
+    </li>
+    <li className="nav-item mb-3">
+      <a
+        className="nav-link p-2 text-white"
+        href="#gift2"
+       
+      >
+        
+      </a>
+    </li>
+    <li className="nav-item mb-3">
+      <a
+        className="nav-link p-2 text-white"
+        href="#gift3"
+      
+      >
+        
+      </a>
+    </li>
+    <li className="nav-item mb-3">
+      <a
+        className="nav-link p-2 text-white"
+        href="#gift4"
+        
+      >
+        
+      </a>
+    </li>
+    <li className="nav-item">
+      <a
+        className="nav-link p-2 text-white"
+        href="#gift5"
+      
+      >
+        
+      </a>
+    </li>
+  </ul>
+</div>
+
+  </div>
+  
   );
 }

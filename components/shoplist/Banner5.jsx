@@ -5,7 +5,7 @@ import BannerLinks from "./BannerLinks";
 
 export default function Banner5() {
   return (
-    <section className="full-width_padding">
+    <section className="full-width_padding ">
       <div className="container-fluid" style={{ borderColor: "#eeeeee" }}>
         <div
           className="shop-banner position-relative"
@@ -21,7 +21,7 @@ export default function Banner5() {
               width="1920"
               height="1000"
               alt="Pattern"
-              className="slideshow-bg__img object-fit-contain"
+              className="slideshow-bg__img object-fit-cover"
             />
           </div>
         </div>

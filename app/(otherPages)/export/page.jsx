@@ -1,23 +1,25 @@
-import Footer1 from "@/components/footers/Footer1";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
+import Export from "@/components/otherPages/Contact/Export"
 
-import Header1 from "@/components/headers/Header1";
+import Header14 from "@/components/headers/Header14";
+import Contact from "@/components/otherPages/Contact/Contact";
+import LocationMap from "@/components/otherPages/Contact/LocationMap";
 
-import Shop5 from "@/components/shoplist/Shop5";
+import React from "react";
 
 export const metadata = {
-  title: "Shop 5 || Uomo eCommerce React Nextjs Template",
+  title: "Contact || Uomo eCommerce React Nextjs Template",
   description: "Uomo eCommerce React Nextjs Template",
 };
-export default function ShopPage5() {
+export default function ContactPage() {
   return (
     <>
-      <Header1 />
-      <main className="page-wrapper">
-        <Shop5 />
-      </main>
-      <div className="mb-5 pb-xl-5"></div>
+      <Header14 />
+      
+      
+      <Export/>
+      
       <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
         
@@ -29,8 +31,6 @@ export default function ShopPage5() {
       <MobileFooter2/>
       </div>
     </section>
-
-      {/* <Footer1 /> */}
     </>
   );
 }

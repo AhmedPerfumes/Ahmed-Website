@@ -4,13 +4,14 @@ export const footerLinks1 = [
   { href: "/about", text: "Affiliates" },
   { href: "/blog_list1", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
+  { href: "/export",text:"Exports"}
 ];
 export const footerLinks2 = [
-  { href: "/shop-2", text: "New Arrivals" },
-  { href: "/shop-3", text: "Accessories" },
-  { href: "/shop-4", text: "Men" },
-  { href: "/shop-5", text: "Women" },
-  { href: "/shop-1", text: "Shop All" },
+  { href: "/shop-2", text: "Eau de Parfum" },
+  { href: "/shop-3", text: "Concentrated Parfum" },
+  { href: "/shop-4", text: "Dhakoon" },
+  { href: "/shop-5", text: "Gift Sets" },
+  { href: "/shop-1", text: "Collections" },
 ];
 export const footerLinks3 = [
   { href: "/about", text: "Customer Service" },

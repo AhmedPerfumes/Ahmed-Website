@@ -5,13 +5,14 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Link from "next/link";
 import Hero from "@/components/homes/home-8/Hero";
 import Footer14 from "@/components/footers/Footer14";
+import MobileFooter2 from "./footers/MobileFooter2";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from "swiper";
 import "./Animation.css";
-import MobileFooter2 from "./footers/MobileFooter2";
+import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
@@ -46,6 +47,20 @@ const Animation = () => {
         // markers: true,
         pin: true,
         scrub: 1,
+      },
+    });
+    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+
+    const mobilepanelTween = gsap.to(mobilepanel, {
+      xPercent: -100 * (mobilepanel.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".mobilecontainer",
+        start: "top top",
+        end: "+=" + window.innerWidth * 3.5,
+        markers: true,
+        pin: true,
+        scrub: 3,
       },
     });
 
@@ -413,19 +428,6 @@ const Animation = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="buttonnn-wrapper">
-                            <div className="swiper-button swiper-prev-button">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </div>
-                            <div className="swiper-button swiper-next-button">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </div>
-                        </div> */}
-            {/* <div className="swiper-pagination"></div> */}
           </div>
         </div>
       </section>
@@ -616,6 +618,90 @@ const Animation = () => {
         </section>
       </div>
 
+      {/* This is the Mobile Slider  */}
+      <section className="MobileSlider mobilecontainer d-lg-none">
+        <div className="mobilepanel d-flex align-items-center">
+          <div className="inner">
+            <video loop muted autoPlay className="w-100">
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
+                type="video/mp4"
+              />
+            </video>{" "}
+          </div>
+        </div>
+        <div className="mobilepanel d-flex justify-content-center">
+          <div className="inner text-center pt-5 mt-4">
+            <h1>Carefully Selected ingredients</h1>
+            <p className="fs-5">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets
+            </p>
+
+            <img
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div className="mobilepanel">
+          <div className="inner d-flex align-items-center">
+            <video loop muted autoPlay className="w-100">
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+        </div>
+        <div className="mobilepanel ">
+          <div className="inner text-center pt-5 mt-4">
+            {/* <h1>Most Preferred Categories</h1>
+          <p className="fs-5">The World's Premium Brands In One destination</p> */}
+            <Categories />
+          </div>
+        </div>
+        <div className="mobilepanel">
+          <div className="inner text-center pt-5 mt-4">
+            <h1>Carefully Selected ingredients</h1>
+            <p className="fs-5">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets
+            </p>
+
+            <img
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+              alt=""
+            />
+          </div>
+        </div>
+        <div className="mobilepanel d-flex justify-content-center">
+          <div className="inner text-center pt-5 mt-4">
+            <h1>Carefully Selected ingredients</h1>
+            <p className="fs-5">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets
+            </p>
+
+            <img
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt=""
+            />
+          </div>
+        </div>
+
+        {/* <MobileSlider/> */}
+      </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
         <div className="panel2 position-relative">
