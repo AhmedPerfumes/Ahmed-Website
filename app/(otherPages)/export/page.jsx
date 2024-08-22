@@ -15,12 +15,12 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <>
-      <Header14 />
+      {/* <Header14 /> */}
       
       
       <Export/>
       
-      <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
+      {/* <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
         
       </section>
@@ -30,7 +30,7 @@ export default function ContactPage() {
 
       <MobileFooter2/>
       </div>
-    </section>
+    </section> */}
     </>
   );
 }
