@@ -12,7 +12,6 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from "swiper";
 import "./Animation.css";
-import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
@@ -20,15 +19,36 @@ const Animation = () => {
 
     // Snapping logic
     let snap = (value) => value; // a snapping function that we'll set later in a "refresh" event listener
+    let snap2 = (value2) => value2;
 
     // ScrollTrigger 1: sections scroll and snap vertically
     const sections = gsap.utils.toArray(".testsect");
+
+    sections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "+=" + window.innerWidth * 3,
+        // onEnter: () => {
+        //   ScrollTrigger.create({
+        //     start: section.offsetTop,
+        //     end: "max",
+        //     snap: {
+        //       snapTo: snap,
+        //       duration: { min: 0.01, max: 2 },
+        //       delay: 0,
+        //     },
+        //     invalidateOnRefresh: true,
+        //   });
+        // },
+      });
+    });
 
     ScrollTrigger.create({
       start: 1,
       end: "max",
       snap: {
-        snapTo: (value, self) => snap(value, self.direction),
+        snapTo: (value2, self) => snap2(value2, self.direction),
         duration: { min: 0.01, max: 2 },
         delay: 0,
       },
@@ -49,6 +69,7 @@ const Animation = () => {
         scrub: 1,
       },
     });
+
     const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
 
     const mobilepanelTween = gsap.to(mobilepanel, {
@@ -57,10 +78,10 @@ const Animation = () => {
       scrollTrigger: {
         trigger: ".mobilecontainer",
         start: "top top",
-        end: "+=" + window.innerWidth * 3.5,
-        markers: true,
+        end: "+=" + window.innerWidth * 3,
+        // markers: true,
         pin: true,
-        scrub: 3,
+        scrub: 1,
       },
     });
 
@@ -74,21 +95,30 @@ const Animation = () => {
     );
 
     // Update snapping function after ScrollTrigger refresh
-    const updateSnap = () => {
-      const start = panelTween.scrollTrigger.start;
-      const end = panelTween.scrollTrigger.end;
-      const each = (end - start) / (panels.length - 1);
-      const max = ScrollTrigger.maxScroll(window);
-      const sectionPositions = sectionTriggers.map(
-        (trigger) => trigger.start / max
-      ); // snapping values must be in ratios
-      panels.forEach((panel2, i) =>
-        sectionPositions.push((start + i * each) / max)
-      ); // add panel2 positions
-      snap = ScrollTrigger.snapDirectional(sectionPositions); // directional snapping function
+    const updateSnap = (panelTween, panels, setSnapFunc) => {
+      if (panelTween && panelTween.scrollTrigger) {
+        const start = panelTween.scrollTrigger.start;
+        const end = panelTween.scrollTrigger.end;
+        const each = (end - start) / (panels.length - 1);
+        const max = ScrollTrigger.maxScroll(window);
+        const sectionPositions = sectionTriggers.map(
+          (trigger) => trigger.start / max
+        );
+        panels.forEach((panel, i) =>
+          sectionPositions.push((start + i * each) / max)
+        );
+        setSnapFunc(ScrollTrigger.snapDirectional(sectionPositions));
+      }
     };
 
-    ScrollTrigger.addEventListener("refresh", updateSnap);
+    ScrollTrigger.addEventListener("refresh", () => {
+      updateSnap(panelTween, panels, (newSnap) => (snap = newSnap));
+      updateSnap(
+        mobilepanelTween,
+        mobilepanel,
+        (newSnap2) => (snap2 = newSnap2)
+      );
+    });
 
     const swiper = new Swiper(".mySwiper", {
       navigation: {
@@ -189,7 +219,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/oud-roses.jpg"
+            src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png"
             alt="Section 1"
           />
           <div className="text_reveal position-absolute">
@@ -215,7 +245,7 @@ const Animation = () => {
       <section id="start" className="testsect">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
           <h2 className="mb-4 mb-md-2">Most Preferred Categories</h2>
-          <div className="w-60 w-md-50 mb-4">
+          <div className="w-60 w-md-50">
             <video muted autoPlay loop className="w-100">
               <source
                 type="video/mp4"
@@ -223,12 +253,6 @@ const Animation = () => {
               />
             </video>
           </div>
-          <Link
-            className="btn-link default-underline text-uppercase fw-medium"
-            href="/shop-1"
-          >
-            Discover More
-          </Link>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
@@ -237,7 +261,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/oud-roses.jpg"
+            src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
             alt="Section 2"
           />
           <div className="text_reveal position-absolute">
@@ -249,13 +273,13 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
-          <Link
+          <a
             href="#footer"
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
             Scroll To Discover More
-          </Link>
+          </a>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
@@ -276,17 +300,28 @@ const Animation = () => {
                         In 20 years, there could be more plastic in our oceans
                         than fish.
                       </div>
-                      <div className="mainnn-content__subtitle mb-4">
+                      <div className="mainnn-content__subtitle">
                         Plastic pollution injures more than 100.000 marine
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
                       <div className="moreee-menu">
-                        <Link
-                          className="btn-link default-underline text-uppercase fw-medium"
-                          href="/shop-1"
-                        >
-                          Discover
+                        <Link href="">
+                          Shop Now{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.7"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="-5" y1="12" x2="19" y2="12" />
+                            <line x1="15" y1="16" x2="19" y2="12" />
+                            <line x1="15" y1="8" x2="19" y2="12" />
+                          </svg>
                         </Link>
                       </div>
                     </div>
@@ -300,7 +335,7 @@ const Animation = () => {
                       />
                       <img
                         className="bottle-img"
-                        src="/assets/images/products/kaaf.png"
+                        src="https://www.designforfinland.com/product-images/Closca_Bottle_Wave_Antarctica_450ml_Close.png/2083089000004207012/1100x1100"
                       />
                     </div>
                   </div>
@@ -317,17 +352,28 @@ const Animation = () => {
                         The Earth’s area affected by desertification is approx
                         11 times India’s size.
                       </div>
-                      <div className="mainnn-content__subtitle mb-4">
+                      <div className="mainnn-content__subtitle">
                         The Savannas act as a carbon sink, absorbing CO2 from
                         the atmosphere and helping to maintain the balance of
                         global temperatures.
                       </div>
                       <div className="moreee-menu">
-                        <Link
-                          className="btn-link default-underline text-uppercase fw-medium"
-                          href="/shop-1"
-                        >
-                          Discover
+                        <Link href="">
+                          Shop Now{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.7"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="-5" y1="12" x2="19" y2="12" />
+                            <line x1="15" y1="16" x2="19" y2="12" />
+                            <line x1="15" y1="8" x2="19" y2="12" />
+                          </svg>
                         </Link>
                       </div>
                     </div>
@@ -341,7 +387,7 @@ const Animation = () => {
                       />
                       <img
                         className="bottle-img"
-                        src="/assets/images/products/rose-noir-product.png"
+                        src="https://fnac.sa/cdn/shop/files/Closca_Bottle_Wave_Sahara_600ml_Close.png?v=1703675684"
                       />
                     </div>
                   </div>
@@ -357,17 +403,28 @@ const Animation = () => {
                       <div className="mainnn-content__title">
                         Glaciers contain 75% of the World's freshwater.
                       </div>
-                      <div className="mainnn-content__subtitle mb-4">
+                      <div className="mainnn-content__subtitle">
                         The effects of melting ice glaciers are biodiversity
                         loss, the rising of the sea level and the deficiency of
                         freshwater, among others.
                       </div>
                       <div className="moreee-menu">
-                        <Link
-                          className="btn-link default-underline text-uppercase fw-medium"
-                          href="/shop-1"
-                        >
-                          Discover
+                        <Link href="">
+                          Shop Now{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.7"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="-5" y1="12" x2="19" y2="12" />
+                            <line x1="15" y1="16" x2="19" y2="12" />
+                            <line x1="15" y1="8" x2="19" y2="12" />
+                          </svg>
                         </Link>
                       </div>
                     </div>
@@ -381,7 +438,7 @@ const Animation = () => {
                       />
                       <img
                         className="bottle-img"
-                        src="/assets/images/products/ignite-oud.png"
+                        src="https://gomagcdn.ro/domains/alty.ro/files/product/original/sticla-reutilizabila-apa-closca-glacier-copie-848-7049.png"
                       />
                     </div>
                   </div>
@@ -403,11 +460,22 @@ const Animation = () => {
                         thousands of marine species.
                       </div>
                       <div className="moreee-menu">
-                        <Link
-                          className="btn-link default-underline text-uppercase fw-medium"
-                          href="/shop-1"
-                        >
-                          Discover More
+                        <Link href="">
+                          Shop Now{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.7"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="-5" y1="12" x2="19" y2="12" />
+                            <line x1="15" y1="16" x2="19" y2="12" />
+                            <line x1="15" y1="8" x2="19" y2="12" />
+                          </svg>
                         </Link>
                       </div>
                     </div>
@@ -437,7 +505,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/bin-shaikh.jpg"
+            src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg"
             alt="Section 3"
           />
           <div className="text_reveal position-absolute">
@@ -462,25 +530,17 @@ const Animation = () => {
       <section className="testsect">
         <div className="panel2 d-flex flex-column justify-content-around">
           <Lookbook />
-          <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-3">
-            Most Preferred Categories <br />
-            <span className="fs-15 text-secondary text-center">
-              The World's Premium Brands In One Destination.
-            </span>
-          </h2>
-          {/* <p className="fs-15 text-secondary text-center">
-            The World's Premium Brands In One Destination.
-          </p> */}
+
           <Categories section="section3" />
         </div>
       </section>
-      <div className="mb-4 pb-4 mb-xl-4 mt-xl-0 pt-xl-3 pb-xl-4"></div>
+      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
         <div className="panel2 position-relative">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/bakhhor-ahmed.jpg"
+            src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg"
             alt="Section 4"
           />
           <div className="text_reveal position-absolute">
@@ -502,121 +562,131 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+      <section className="cont testsect ">
+        <div className="panel2 mb-4">
+          <div className="inner2">
+            <video loop muted autoPlay className="w-100">
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+          <div className="d-flex flex-column align-items-center justify-content-center mt-4">
+            <h3 className="text-center">
+              Carefully <span>selected ingredients</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
+            <div className="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center">
+              <img
+                className="p-2 w-100 w-md-auto"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                alt="Image 1"
+              />
+              <img
+                className="p-2 w-100 w-md-auto"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg"
+                alt="Image 2"
+              />
+            </div>
+          </div>
+        </div>
 
-      {/* Hidden on small screens */}
-      <div className="d-none d-sm-block">
-        <section className="cont testsect">
-          <div className="panel2 mb-4">
-            <div className="inner2">
-              <video loop muted autoPlay className="w-100">
-                <source
-                  src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div className="d-flex flex-column align-items-center justify-content-center mt-4">
-              <h3 className="text-center">
-                Carefully <span>selected ingredients</span>
-              </h3>
-              <p className="text-center px-3">
-                From endemic species to renowned terroirs, we are particularly
-                meticulous when it comes to sourcing our raw materials. While
-                respecting the rhythms of nature, we commit to selecting only
-                the highest-quality ingredients, imparting our perfumes with
-                their rich olfactory facets.
-              </p>
-              <div className="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center">
-                <img
-                  className="p-2 w-100 w-md-auto"
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
-                  alt="Image 1"
-                />
-                <img
-                  className="p-2 w-100 w-md-auto"
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg"
-                  alt="Image 2"
-                />
-              </div>
-              <div className="mt-4 d-flex justify-content-center align-items-center">
-                <Link
-                  className="btn-link default-underline text-uppercase fw-medium"
-                  href="/shop-1"
-                >
-                  Discover More
-                </Link>
-              </div>
-            </div>
+        <div className="panel2 mt-5">
+          <div className="inner2">
+            <video loop muted autoPlay className="w-100">
+              <source
+                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
+                type="video/mp4"
+              />
+            </video>
           </div>
+        </div>
 
-          <div className="d-none d-sm-block">
-            <div className="panel2 mt-5 ">
-              <div className="inner2">
-                <video loop muted autoPlay className="">
-                  <source
-                    src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
-                    type="video/mp4"
-                  />
-                </video>
-              </div>
+        <div className="panel2 mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h3 className="text-center">
+              Carefully <span>selected ingredients</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
+            <div className="mt-4">
+              <img
+                className="w-100"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg"
+                alt="Image 1"
+              />
             </div>
           </div>
-          <div className="d-none d-sm-block">
-            <div className="panel2 mt-5">
-              <div className="d-flex flex-column align-items-center justify-content-center">
-                <h3 className="text-center">
-                  Carefully <span>selected ingredients</span>
-                </h3>
-                <p className="text-center px-3">
-                  From endemic species to renowned terroirs, we are particularly
-                  meticulous when it comes to sourcing our raw materials. While
-                  respecting the rhythms of nature, we commit to selecting only
-                  the highest-quality ingredients, imparting our perfumes with
-                  their rich olfactory facets.
-                </p>
-                <div className="mt-4">
-                  <img
-                    className="w-100"
-                    src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg"
-                    alt="Image 1"
-                  />
-                </div>
-              </div>
-              <div className="inner2 mt-5">
-                <Categories section="section4" />
-              </div>
-            </div>
+          <div className="inner2 mt-5">
+            <Categories section="section4" />
           </div>
-          <div className="d-none d-sm-block">
-            <div className="panel2 mt-5">
-              <div className="d-flex flex-column align-items-center justify-content-center">
-                <h3 className="text-center">
-                  Carefully <span>selected ingredients</span>
-                </h3>
-                <p className="text-center px-3">
-                  From endemic species to renowned terroirs, we are particularly
-                  meticulous when it comes to sourcing our raw materials. While
-                  respecting the rhythms of nature, we commit to selecting only
-                  the highest-quality ingredients, imparting our perfumes with
-                  their rich olfactory facets.
-                </p>
-              </div>
-              <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
-                <img
-                  className="px-2 w-100 w-md-auto"
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
-                  alt="Image 1"
-                />
-                <img
-                  className="px-2 w-100 w-md-auto"
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
-                  alt="Image 2"
-                />
-              </div>
-            </div>
+        </div>
+
+        <div className="panel2 mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h3 className="text-center">
+              Carefully <span>selected ingredientzzz</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
           </div>
-        </section>
-      </div>
+          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
+            <img
+              className="px-2 w-100 w-md-auto"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt="Image 1"
+            />
+            <img
+              className="px-2 w-100 w-md-auto"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt="Image 2"
+            />
+          </div>
+        </div>
+        <div className="panel2 mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h3 className="text-center">
+              Carefully <span>selected ingredientzzz</span>
+            </h3>
+            <p className="text-center px-3">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets.
+            </p>
+          </div>
+          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
+            <img
+              className="px-2 w-100 w-md-auto"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt="Image 1"
+            />
+            <img
+              className="px-2 w-100 w-md-auto"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt="Image 2"
+            />
+          </div>
+        </div>
+      </section>
 
       {/* This is the Mobile Slider  */}
       <section className="MobileSlider mobilecontainer d-lg-none">
@@ -699,6 +769,23 @@ const Animation = () => {
             />
           </div>
         </div>
+        <div className="mobilepanel d-flex justify-content-center">
+          <div className="inner text-center pt-5 mt-4">
+            <h1>Carefully Selected ingredients</h1>
+            <p className="fs-5">
+              From endemic species to renowned terroirs, we are particularly
+              meticulous when it comes to sourcing our raw materials. While
+              respecting the rhythms of nature, we commit to selecting only the
+              highest-quality ingredients, imparting our perfumes with their
+              rich olfactory facets
+            </p>
+
+            <img
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              alt=""
+            />
+          </div>
+        </div>
 
         {/* <MobileSlider/> */}
       </section>
@@ -738,16 +825,14 @@ const Animation = () => {
           <div className="order-1 order-md-0">
             <video loop muted autoPlay loading="lazy" className="w-100">
               <source
-                src="https://www.ahmed-perfume.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4"
+                src="https://www.ateliercologne.com/videos/chapters/fifth/art-of-gifting/art-of-boxing-video-16-9.mp4"
                 type="video/mp4"
               />
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
-            <h3 className="mb-3">
-              The Art of <span className="fs-14 fst-italic">Gifting</span>
-            </h3>
-            <p className="mb-3">
+            <h3 className="mb-3">The Company</h3>
+            <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
               sapien dignissim a elementum. Sociis metus, hendrerit mauris id
               in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
@@ -755,21 +840,13 @@ const Animation = () => {
               massa est viverra interdum. Praesent auctor nulla morbi non
               posuere mattis. Arcu eu id maecenas cras.
             </p>
-            <Link
-              className="btn-link default-underline text-uppercase fw-medium"
-              href="/shop-1"
-            >
-              Discover More
-            </Link>
           </div>
         </div>
 
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
-            <h3 className="mb-3">
-              Crafting <span className="fs-14 fst-italic">Quality</span>
-            </h3>
-            <p className="mb-3">
+            <h3 className="mb-3">The Company</h3>
+            <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
               sapien dignissim a elementum. Sociis metus, hendrerit mauris id
               in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
@@ -777,18 +854,12 @@ const Animation = () => {
               massa est viverra interdum. Praesent auctor nulla morbi non
               posuere mattis. Arcu eu id maecenas cras.
             </p>
-            <Link
-              className="btn-link default-underline text-uppercase fw-medium"
-              href="/shop-1"
-            >
-              Discover More
-            </Link>
           </div>
           <div className="order-0 order-md-1">
             <img
               className="h-auto w-100"
               loading="lazy"
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2021/01/about-ahmed-al-maghribi-perfumes.png"
+              src="https://www.ateliercologne.com/images/chapters/fifth/store-locator/perview@1x.jpg"
               alt="image"
             />
           </div>
