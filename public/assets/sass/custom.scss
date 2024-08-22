@@ -265,6 +265,7 @@ h2, h3 {
   display: none;
 }
 
+
 // .text-container {
 //   max-width: 100%; /* Ensures the paragraph uses the available width */
 //   margin: 0 auto; /* Centers the container if needed */
@@ -291,6 +292,12 @@ h2, h3 {
   .text_reveal{
     margin: 25%;
     padding-top: 50%;
+  }
+  .last-slide{
+    margin-left: 275px;
+  }
+  .first-slide{
+    display: none;
   }
   .cont{
     display: none;
@@ -438,5 +445,8 @@ footer {
  width:100vw;
 //  display: flex;
 //  justify-content: center;
+}
+.page2{
+  height: 100vh;
 }
 

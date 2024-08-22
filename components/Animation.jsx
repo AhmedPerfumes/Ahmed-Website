@@ -12,6 +12,7 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 
 import Swiper from "swiper";
 import "./Animation.css";
+import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
@@ -19,36 +20,15 @@ const Animation = () => {
 
     // Snapping logic
     let snap = (value) => value; // a snapping function that we'll set later in a "refresh" event listener
-    let snap2 = (value2) => value2;
 
     // ScrollTrigger 1: sections scroll and snap vertically
     const sections = gsap.utils.toArray(".testsect");
-
-    sections.forEach((section) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        // onEnter: () => {
-        //   ScrollTrigger.create({
-        //     start: section.offsetTop,
-        //     end: "max",
-        //     snap: {
-        //       snapTo: snap,
-        //       duration: { min: 0.01, max: 2 },
-        //       delay: 0,
-        //     },
-        //     invalidateOnRefresh: true,
-        //   });
-        // },
-      });
-    });
 
     ScrollTrigger.create({
       start: 1,
       end: "max",
       snap: {
-        snapTo: (value2, self) => snap2(value2, self.direction),
+        snapTo: (value, self) => snap(value, self.direction),
         duration: { min: 0.01, max: 2 },
         delay: 0,
       },
@@ -70,6 +50,7 @@ const Animation = () => {
       },
     });
 
+    // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
     const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
 
     const mobilepanelTween = gsap.to(mobilepanel, {
@@ -79,9 +60,10 @@ const Animation = () => {
         trigger: ".mobilecontainer",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        // markers: true,
+        markers: true,
         pin: true,
-        scrub: 1,
+        scrub: 3,
+        // No snap property here
       },
     });
 
@@ -95,30 +77,20 @@ const Animation = () => {
     );
 
     // Update snapping function after ScrollTrigger refresh
-    const updateSnap = (panelTween, panels, setSnapFunc) => {
-      if (panelTween && panelTween.scrollTrigger) {
-        const start = panelTween.scrollTrigger.start;
-        const end = panelTween.scrollTrigger.end;
-        const each = (end - start) / (panels.length - 1);
-        const max = ScrollTrigger.maxScroll(window);
-        const sectionPositions = sectionTriggers.map(
-          (trigger) => trigger.start / max
-        );
-        panels.forEach((panel, i) =>
-          sectionPositions.push((start + i * each) / max)
-        );
-        setSnapFunc(ScrollTrigger.snapDirectional(sectionPositions));
-      }
-    };
-
-    ScrollTrigger.addEventListener("refresh", () => {
-      updateSnap(panelTween, panels, (newSnap) => (snap = newSnap));
-      updateSnap(
-        mobilepanelTween,
-        mobilepanel,
-        (newSnap2) => (snap2 = newSnap2)
-      );
-    });
+    // const updateSnap = () => {
+    //   const start = panelTween.scrollTrigger.start;
+    //   const end = panelTween.scrollTrigger.end;
+    //   const each = (end - start) / (panels.length - 1);
+    //   const max = ScrollTrigger.maxScroll(window);
+    //   const sectionPositions = sectionTriggers.map(
+    //     (trigger) => trigger.start / max
+    //   ); // snapping values must be in ratios
+    //   panels.forEach((panel2, i) =>
+    //     sectionPositions.push((start + i * each) / max)
+    //   ); // add panel2 positions
+    //   snap = ScrollTrigger.snapDirectional(sectionPositions); // directional snapping function
+    // };
+    // ScrollTrigger.addEventListener("refresh", updateSnap);
 
     const swiper = new Swiper(".mySwiper", {
       navigation: {
@@ -135,7 +107,6 @@ const Animation = () => {
 
     let headings = gsap.utils.toArray(".h2");
     headings.forEach((heading, i) => {
-      // console.log(heading);
       gsap.fromTo(
         heading,
         {
@@ -147,9 +118,9 @@ const Animation = () => {
           y: 0,
           scrollTrigger: {
             trigger: heading,
-            start: "top 80%", // start the animation when the top of the element is 80% from the top of the viewport
-            end: "top 30%", // end the animation when the top of the element is 30% from the top of the viewport
-            toggleActions: "play reverse play reverse", // play the animation on scroll down, reverse on scroll up
+            start: "top 80%",
+            end: "top 30%",
+            toggleActions: "play reverse play reverse",
           },
         }
       );
@@ -157,7 +128,6 @@ const Animation = () => {
 
     let parags = gsap.utils.toArray(".p");
     parags.forEach((parag, i) => {
-      // console.log(parag);
       gsap.fromTo(
         parag,
         {
@@ -171,9 +141,9 @@ const Animation = () => {
           delay: 1,
           scrollTrigger: {
             trigger: parag,
-            start: "top 70%", // start the animation when the top of the element is 80% from the top of the viewport
-            end: "top 20%", // end the animation when the top of the element is 30% from the top of the viewport
-            toggleActions: "play reverse play reverse", // play the animation on scroll down, reverse on scroll up
+            start: "top 70%",
+            end: "top 20%",
+            toggleActions: "play reverse play reverse",
           },
         }
       );
@@ -183,20 +153,16 @@ const Animation = () => {
     imgs.forEach((img, i) => {
       gsap.fromTo(
         img,
+        { scale: 0.85 }, // Initial scale
         {
-          scale: 0.85,
-          duration: 2,
-          delay: 1,
-        },
-        {
-          scale: 1.05,
-          duration: 2,
-          delay: 1,
+          scale: 1, // Final scale
           scrollTrigger: {
             trigger: img,
-            start: "top center",
-            end: "bottom center",
-            scrub: 0,
+            start: "top 100%",
+            end: "top top",
+            markers: true,
+            scrub: 1,
+            snap: 1,
           },
         }
       );
@@ -205,7 +171,7 @@ const Animation = () => {
     // Cleanup on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      ScrollTrigger.removeEventListener("refresh", updateSnap);
+      // ScrollTrigger.removeEventListener("refresh", updateSnap);
     };
   }, []);
 
@@ -214,6 +180,20 @@ const Animation = () => {
       <section className="testsect">
         <Hero />
       </section>
+      <section id="start" className="testsect zoom_img">
+        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
+          <h2 className="mb-4 mb-md-2 pt-5">Most Preferred Categories</h2>
+          <div className="w-60 w-md-50">
+            <video muted autoPlay loop className="w-100">
+              <source
+                type="video/mp4"
+                src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
+              />
+            </video>
+          </div>
+        </div>
+      </section>
+
       <section className="testsect">
         <div className="panel2 position-relative">
           <img
@@ -242,19 +222,7 @@ const Animation = () => {
       </section>
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section id="start" className="testsect">
-        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
-          <h2 className="mb-4 mb-md-2">Most Preferred Categories</h2>
-          <div className="w-60 w-md-50">
-            <video muted autoPlay loop className="w-100">
-              <source
-                type="video/mp4"
-                src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
-              />
-            </video>
-          </div>
-        </div>
-      </section>
+
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2 position-relative">
@@ -283,7 +251,7 @@ const Animation = () => {
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect">
+      <section className="testsect zoom_img">
         <div className="panel2 d-flex justify-content-center align-items-center">
           <div className="contai ">
             <div className="mySwiper">
@@ -527,7 +495,7 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-      <section className="testsect">
+      <section className="testsect zoom_img">
         <div className="panel2 d-flex flex-column justify-content-around">
           <Lookbook />
 
@@ -637,33 +605,7 @@ const Animation = () => {
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Carefully <span>selected ingredientzzz</span>
-            </h3>
-            <p className="text-center px-3">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets.
-            </p>
-          </div>
-          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
-            <img
-              className="px-2 w-100 w-md-auto"
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
-              alt="Image 1"
-            />
-            <img
-              className="px-2 w-100 w-md-auto"
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
-              alt="Image 2"
-            />
-          </div>
-        </div>
-        <div className="panel2 mt-5">
-          <div className="d-flex flex-column align-items-center justify-content-center">
-            <h3 className="text-center">
-              Carefully <span>selected ingredientzzz</span>
+              Carefully <span>selected ingredients</span>
             </h3>
             <p className="text-center px-3">
               From endemic species to renowned terroirs, we are particularly
@@ -702,19 +644,31 @@ const Animation = () => {
         </div>
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
-            <h1>Carefully Selected ingredients</h1>
+            <h1>Carefully Selected Ingredients</h1>
             <p className="fs-5">
               From endemic species to renowned terroirs, we are particularly
               meticulous when it comes to sourcing our raw materials. While
               respecting the rhythms of nature, we commit to selecting only the
               highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets
+              rich olfactory facets.
             </p>
 
-            <img
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
-              alt=""
-            />
+            <div className="row justify-content-center">
+              <div className="col-6 col-md-4">
+                <img
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                  alt=""
+                  className="img-fluid"
+                />
+              </div>
+              <div className="col-6 col-md-4">
+                <img
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                  alt=""
+                  className="img-fluid"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -747,43 +701,37 @@ const Animation = () => {
             </p>
 
             <img
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg"
               alt=""
             />
           </div>
         </div>
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
-            <h1>Carefully Selected ingredients</h1>
+            <h1>Carefully Selected Ingredients</h1>
             <p className="fs-5">
               From endemic species to renowned terroirs, we are particularly
               meticulous when it comes to sourcing our raw materials. While
               respecting the rhythms of nature, we commit to selecting only the
               highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets
+              rich olfactory facets.
             </p>
-
-            <img
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="mobilepanel d-flex justify-content-center">
-          <div className="inner text-center pt-5 mt-4">
-            <h1>Carefully Selected ingredients</h1>
-            <p className="fs-5">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets
-            </p>
-
-            <img
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
-              alt=""
-            />
+            <div className="row">
+              <div className="col-6">
+                <img
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+                  alt=""
+                  className="img-fluid"
+                />
+              </div>
+              <div className="col-6">
+                <img
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+                  alt=""
+                  className="img-fluid"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
