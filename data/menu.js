@@ -111,7 +111,7 @@ export const additionalShopPageitems = [
 export const blogmenuItems = [
   {
     id: 1,
-    href: "/shop-8?category=gift-sets&subcategory=gift-sets",
+    href: "/shop-5?category=gift-sets&subcategory=gift-sets",
     title: "Gift Sets",
   },
   // {
