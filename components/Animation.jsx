@@ -159,7 +159,7 @@ const Animation = () => {
           scrollTrigger: {
             trigger: img,
             start: "top 100%",
-            end: "top top",
+            end: "top 7.5%",
             markers: true,
             scrub: 1,
             snap: 1,
@@ -177,24 +177,10 @@ const Animation = () => {
 
   return (
     <div id="main2">
-      <section className="testsect">
+      <section className="testsect hero-banner">
         <Hero />
       </section>
-      <section id="start" className="testsect zoom_img">
-        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
-          <h2 className="mb-4 mb-md-2 pt-5">Most Preferred Categories</h2>
-          <div className="w-60 w-md-50">
-            <video muted autoPlay loop className="w-100">
-              <source
-                type="video/mp4"
-                src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
-              />
-            </video>
-          </div>
-        </div>
-      </section>
-
-      <section className="testsect">
+      <section className="testsect section1">
         <div className="panel2 position-relative">
           <img
             className="zoom_img"
@@ -220,38 +206,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
-
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect">
-        <div className="panel2 position-relative">
-          <img
-            className="zoom_img"
-            style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
-            alt="Section 2"
-          />
-          <div className="text_reveal position-absolute">
-            <h2 className="text-center text-white h2">Section 2</h2>
-            <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
-            </p>
-          </div>
-          <a
-            href="#footer"
-            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
-            style={{ bottom: "0" }}
-          >
-            Scroll To Discover More
-          </a>
-        </div>
-      </section>
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect zoom_img">
+      <section className="testsect zoom_img section2">
         <div className="panel2 d-flex justify-content-center align-items-center">
           <div className="contai ">
             <div className="mySwiper">
@@ -467,6 +422,51 @@ const Animation = () => {
           </div>
         </div>
       </section>
+
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+      <section className="testsect section3">
+        <div className="panel2 position-relative">
+          <img
+            className="zoom_img"
+            style={{ width: "100%" }}
+            src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
+            alt="Section 2"
+          />
+          <div className="text_reveal position-absolute">
+            <h2 className="text-center text-white h2">Section 2</h2>
+            <p className="text-center text-white p">
+              This panel gets pinned in a similar way, and has a more involved
+              animation that's wrapped in a timeline, fading the background
+              color and animating the transforms of the paragraph in addition to
+              the line, all synced with the scroll position perfectly.
+            </p>
+          </div>
+          <a
+            href="#footer"
+            className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
+            style={{ bottom: "0" }}
+          >
+            Scroll To Discover More
+          </a>
+        </div>
+      </section>
+      <section id="start" className="testsect zoom_img section4">
+        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
+          <h2 className="mb-4 mb-md-2 ">Most Preferred Categories</h2>
+          <div className="w-60 w-md-50">
+            <video muted autoPlay loop className="w-100">
+              <source
+                type="video/mp4"
+                src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
+              />
+            </video>
+          </div>
+        </div>
+      </section>
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2 position-relative">
@@ -494,7 +494,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
       <section className="testsect zoom_img">
         <div className="panel2 d-flex flex-column justify-content-around">
           <Lookbook />
@@ -502,7 +502,7 @@ const Animation = () => {
           <Categories section="section3" />
         </div>
       </section>
-      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
         <div className="panel2 position-relative">
           <img
@@ -511,7 +511,7 @@ const Animation = () => {
             src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg"
             alt="Section 4"
           />
-          <div className="text_reveal position-absolute">
+          <div className="text_reveal position-absolute zoom_img">
             <h2 className="text-center text-white h2">Section 4</h2>
             <p className="text-center text-white p">
               This panel gets pinned in a similar way, and has a more involved
@@ -529,10 +529,10 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
+      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
-          <div className="inner2">
+          <div className="inner2 zoom_img">
             <video loop muted autoPlay className="w-100">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
@@ -631,7 +631,7 @@ const Animation = () => {
       </section>
 
       {/* This is the Mobile Slider  */}
-      <section className="MobileSlider mobilecontainer d-lg-none">
+      <section className="MobileSlider mobilecontainer d-lg-none zoom_img">
         <div className="mobilepanel d-flex align-items-center">
           <div className="inner">
             <video loop muted autoPlay className="w-100">
@@ -767,7 +767,7 @@ const Animation = () => {
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section
         id="end"
-        className="testsect container d-flex flex-column justify-content-center"
+        className="testsect container d-flex flex-column justify-content-center zoom_img"
       >
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
@@ -815,7 +815,7 @@ const Animation = () => {
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 d-none d-lg-block"></div>
       <section
-        className="testsect d-none d-lg-block"
+        className="testsect d-none d-lg-block "
         style={{ height: "100%" }}
       >
         <Footer14 />
