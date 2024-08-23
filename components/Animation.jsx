@@ -60,7 +60,7 @@ const Animation = () => {
         trigger: ".mobilecontainer",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        markers: true,
+        // markers: true,
         pin: true,
         scrub: 3,
         // No snap property here
@@ -160,7 +160,7 @@ const Animation = () => {
             trigger: img,
             start: "top 100%",
             end: "top 7.5%",
-            markers: true,
+            // markers: true,
             scrub: 1,
             snap: 1,
           },
