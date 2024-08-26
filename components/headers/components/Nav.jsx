@@ -510,7 +510,7 @@ export default function Nav() {
 
       <li className="navigation__item">
         <a
-          href="/shop-8?category=gift-sets"
+          href="/shop-5"
           className={`navigation__link
            ${isActiveParentMenu(blogmenuItems) ? "menu-active" : ""}
           `}
