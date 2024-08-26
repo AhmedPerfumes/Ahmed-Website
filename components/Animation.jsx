@@ -60,7 +60,7 @@ const Animation = () => {
         trigger: ".mobilecontainer",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        markers: true,
+        // markers: true,
         pin: true,
         scrub: 3,
         // No snap property here
@@ -160,7 +160,7 @@ const Animation = () => {
             trigger: img,
             start: "top 100%",
             end: "top 7.5%",
-            markers: true,
+            // markers: true,
             scrub: 1,
             snap: 1,
           },
@@ -219,18 +219,18 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title">
+                      <div className="mainnn-content__title fs-5">
                         In 20 years, there could be more plastic in our oceans
                         than fish.
                       </div>
-                      <div className="mainnn-content__subtitle">
+                      <div className="mainnn-content__subtitle fs-5">
                         Plastic pollution injures more than 100.000 marine
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
-                      <div className="moreee-menu">
-                        <Link href="">
-                          Shop Now{" "}
+                      <div className="moreee-menu pt-2">
+                        <Link href=""className="fs-4">
+                          Swipe to see more{" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -271,16 +271,16 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title">
+                      <div className="mainnn-content__title fs-5">
                         The Earth’s area affected by desertification is approx
                         11 times India’s size.
                       </div>
-                      <div className="mainnn-content__subtitle">
+                      <div className="mainnn-content__subtitle fs-5">
                         The Savannas act as a carbon sink, absorbing CO2 from
                         the atmosphere and helping to maintain the balance of
                         global temperatures.
                       </div>
-                      <div className="moreee-menu">
+                      <div className="moreee-menu pt-2 fs-4">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -323,15 +323,15 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title">
+                      <div className="mainnn-content__title fs-5">
                         Glaciers contain 75% of the World's freshwater.
                       </div>
-                      <div className="mainnn-content__subtitle">
+                      <div className="mainnn-content__subtitle fs-5">
                         The effects of melting ice glaciers are biodiversity
                         loss, the rising of the sea level and the deficiency of
                         freshwater, among others.
                       </div>
-                      <div className="moreee-menu">
+                      <div className="moreee-menu pt-2 fs-4">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -374,15 +374,15 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title">
+                      <div className="mainnn-content__title fs-5">
                         We will have lost 60% of our coral reefs by 2030.
                       </div>
-                      <div className="mainnn-content__subtitle">
+                      <div className="mainnn-content__subtitle fs-5">
                         Coral reefs are essential to humans, as they protect the
                         shorelines and are a source of nutrients and habitat for
                         thousands of marine species.
                       </div>
-                      <div className="moreee-menu">
+                      <div className="moreee-menu pt-2 fs-4">
                         <Link href="">
                           Shop Now{" "}
                           <svg

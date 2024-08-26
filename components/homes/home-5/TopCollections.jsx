@@ -67,7 +67,7 @@ export default function TopCollections() {
     }
   }, [currentCategory]);
   return (
-    <div className="bg-white">
+    <div className="">
       <div className="mb-4 mb-xl-5 pt-1 pb-5"></div>
 
       <section className="products-carousel container">
@@ -75,7 +75,7 @@ export default function TopCollections() {
           Our Top Collection
         </h2>
 
-        <ul
+        {/* <ul
           className="nav nav-tabs mb-3 mb-xl-5 justify-content-center"
           id="collections-tab"
           role="tablist"
@@ -96,7 +96,7 @@ export default function TopCollections() {
               </a>
             </li>
           ))}
-        </ul>
+        </ul> */}
 
         <div className="tab-content" id="collections-tab-content">
           <div
