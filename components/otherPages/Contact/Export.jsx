@@ -49,7 +49,6 @@ export default function Export() {
   <h3 className="text-center fs-2 text-uppercase">For Distributor's Enquiries</h3>
         <form
           className="needs-validation mx-5"
-          // onSubmit={(e) => e.preventDefault()}
           >
           <h4 className="pt-5 fs-3">Drop us a Line</h4>
           <p className="fs-5">

@@ -20,7 +20,7 @@ export default function ShopPage5() {
         <Shop10/>
       </main>
       <div className="mb-5 pb-xl-5"></div>
-      <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
+      <section className=" d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
         
       </section>

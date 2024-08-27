@@ -143,26 +143,26 @@ export const slides6 = [
   {
     id: 1,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/slider1.jpg",
-    title: "Better Things In a Better Way",
+    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
+    title: "",
   },
   {
     id: 2,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/slider1.jpg",
-    title: "Better Things In a Better Way",
+    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
+    title: "",
   },
   {
     id: 3,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/slider1.jpg",
-    title: "Better Things In a Better Way",
+    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
+    title: "",
   },
   {
     id: 4,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/slider1.jpg",
-    title: "Better Things In a Better Way",
+    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
+    title: "",
   },
 ];
 export const slidesData = [

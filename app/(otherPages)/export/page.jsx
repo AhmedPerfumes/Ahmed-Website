@@ -20,7 +20,7 @@ export default function ContactPage() {
       
       <Export/>
       
-      <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
         
       </section>

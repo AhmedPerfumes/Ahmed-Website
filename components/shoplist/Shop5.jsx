@@ -82,7 +82,7 @@ export default function Shop5() {
 
       ScrollTrigger.create({
         trigger: section,
-        markers: true,
+        // markers: true,
         start: "center",
         end: "center",
         onEnter: () => {

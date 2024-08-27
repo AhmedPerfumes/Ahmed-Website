@@ -52,7 +52,7 @@ export default function Hero() {
                 <br />
                 {elm.title.split(" ").slice(4).join(" ")}
               </h2>
-              <div className="d-flex align-items-center justify-content-center gap-4">
+              {/* <div className="d-flex align-items-center justify-content-center gap-4">
                 <Link
                   href="/shop-1"
                   className="btn-link btn-link_lg color-white fw-medium animate animate_fade animate_btt animate_delay-7"
@@ -65,7 +65,7 @@ export default function Hero() {
                 >
                   Shop Men
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </SwiperSlide>
