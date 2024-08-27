@@ -18,7 +18,6 @@ export default function ShopPage5() {
       <Header14 />
       <main className="page-wrapper">
         <Shop5 />
-        <Shop10/>
       </main>
       <div className="mb-5 pb-xl-5"></div>
       <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
