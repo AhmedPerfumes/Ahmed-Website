@@ -57,6 +57,108 @@ export default function Wedding() {
   </div>
 </div>
 
+<div className="container pt-5">
+    <h2 className='fs-2 text-uppercase text-center mb-5'>Wedding Packages</h2>
+    
+    <div className="row">
+        
+        <div className="col-md-6 text-center">
+            <img width={500} src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-1.png" className="img-fluid mb-3" alt="First Wedding Package"/>
+            <h3 className='fs-2 text-uppercase'>Enchanting Harbor</h3>
+            <h4 className='fs-4 text-uppercase fw-bold'>package 1</h4>
+            <h4 className='fs-4 fw-bold'>6000 Aed</h4>
+            <p className='fs-5'>Classic Wedding Package</p>
+            <div className="d-flex justify-content-center">
+        <Link
+          href="/shop-1"
+          className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+        >
+          Know More
+        </Link>
+      </div>
+        </div>
+        
+        
+        <div className="col-md-6 text-center">
+            <img width={500} src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-2.png" className="img-fluid mb-3" alt="Second Wedding Package"/>
+            <h3 className='fs-2 text-uppercase'>Modern Bliss</h3>
+            <h4 className='fs-4 text-uppercase fw-bold'>package 2</h4>
+            <h4 className='fs-4 fw-bold'>6000 Aed</h4>
+            <p className='fs-5'>Luxury Wedding Package</p>
+            <div className="d-flex justify-content-center">
+        <Link
+          href="/shop-1"
+          className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+        >
+          Know More
+        </Link>
+      </div>
+        </div>
+    </div>
+</div>
+<div className="container pt-5">  
+    <div className="row">
+        
+        <div className="col-md-6 text-center">
+            <img width={500} src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-1.png" className="img-fluid mb-3" alt="First Wedding Package"/>
+            <h3 className='fs-2 text-uppercase'>Enchanting Harbor</h3>
+            <h4 className='fs-4 text-uppercase fw-bold'>package 1</h4>
+            <h4 className='fs-4 fw-bold'>6000 Aed</h4>
+            <p className='fs-5'>Classic Wedding Package</p>
+            <div className="d-flex justify-content-center">
+        <Link
+          href="/shop-1"
+          className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+        >
+          Know More
+        </Link>
+      </div>
+        </div>
+        
+        
+        <div className="col-md-6 text-center">
+            <img width={500} src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-2.png" className="img-fluid mb-3" alt="Second Wedding Package"/>
+            <h3 className='fs-2 text-uppercase'>Modern Bliss</h3>
+            <h4 className='fs-4 text-uppercase fw-bold'>package 2</h4>
+            <h4 className='fs-4 fw-bold'>6000 Aed</h4>
+            <p className='fs-5'>Luxury Wedding Package</p>
+            <div className="d-flex justify-content-center">
+        <Link
+          href="/shop-1"
+          className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+        >
+          Know More
+        </Link>
+      </div>
+        </div>
+    </div>
+</div>
+<div className="container pt-5">
+  <div className="row align-items-center">
+    
+    <div className="col-md-6 px-5 mb-2">
+      <p className='fs-2 text-center text-uppercase'>Indulge in the scent of </p>
+      <p className='fs-6 text-center'>The wedding day is a day that will be remembered forever. And how beautiful it would be if the joy of life was crowned with a breath-taking fragrant and a precious memory that will be remembered at all times.
+      </p>
+      <p className='fs-6 text-center'>Ahmed Al Maghribi Perfumes offers you a wedding service and the possibility of being present at wedding parties with the finest types of incense, luxurious oils, fragrant oud perfumes that are presented in coordination distinctive honoring guests.</p>
+      
+      <div className="d-flex justify-content-center pt-3">
+        <Link
+          href="/shop-1"
+          className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+        >
+          Know More
+        </Link>
+      </div>
+    </div>
+
+   
+    <div className="col-md-6">
+      <img src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/weeding-min.png" className="img-fluid" alt="Description of image"/>
+    </div>
+  </div>
+</div>  
+<div className='pt-5'></div>
 
     </div>
   )

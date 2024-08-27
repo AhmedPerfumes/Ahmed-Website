@@ -1,3 +1,4 @@
+import Footer14 from "@/components/footers/Footer14";
 import Footer5 from "@/components/footers/Footer5";
 import Header14 from "@/components/headers/Header14";
 
@@ -40,7 +41,8 @@ export default function HomePage5() {
         <Features />
         <Cta /> */}
       </main>
-      <Footer5 parentclassName={"footer footer_type_2 dark"} />
+      <Footer14/>
+      {/* <Footer5 parentclassName={"footer footer_type_2 dark"} /> */}
     </>
   );
 }
