@@ -1,23 +1,23 @@
-import Footer1 from "@/components/footers/Footer1";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 
-import Header1 from "@/components/headers/Header1";
-import Shop10 from "@/components/shoplist/shop10/Shop10";
+import Header14 from "@/components/headers/Header14";
 
 import Shop5 from "@/components/shoplist/Shop5";
 
 export const metadata = {
-  title: "Shop 5 || Uomo eCommerce React Nextjs Template",
-  description: "Uomo eCommerce React Nextjs Template",
+  title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
+  description: "Buy Best Perfumes Online Ahmed Perfume",
+  icons: {
+    icon: 'https://www.ahmed-perfume.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png',
+  },
 };
 export default function ShopPage5() {
   return (
     <>
-      <Header1 />
+      <Header14 />
       <main className="page-wrapper">
         <Shop5 />
-        <Shop10/>
       </main>
       <div className="mb-5 pb-xl-5"></div>
       <section className=" d-none d-lg-block" style={{ height: "100%" }}>
