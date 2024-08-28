@@ -14,7 +14,7 @@ export default function Style2() {
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   return (
     <div
-      className="row row-cols--1 row-cols-lg-2 row-cols-xl-3"
+      className="products-grid row row-cols-2 row-cols-md-3 row-cols-lg-3"
       id="products-grid-2"
     >
       {products54.map((elm, i) => (
