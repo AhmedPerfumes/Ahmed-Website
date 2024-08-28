@@ -449,4 +449,25 @@ footer {
 .page2{
   height: 100vh;
 }
+.nav-link {
+  position: relative;
+}
 
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  transition: none;
+}
+
+.map-container{
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+}

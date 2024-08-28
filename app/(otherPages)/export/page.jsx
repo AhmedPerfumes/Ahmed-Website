@@ -9,28 +9,31 @@ import LocationMap from "@/components/otherPages/Contact/LocationMap";
 import React from "react";
 
 export const metadata = {
-  title: "Contact || Uomo eCommerce React Nextjs Template",
-  description: "Uomo eCommerce React Nextjs Template",
+  title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
+  description: "Buy Best Perfumes Online Ahmed Perfume",
+  icons: {
+    icon: 'https://www.ahmed-perfume.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png',
+  },
 };
 export default function ContactPage() {
   return (
     <>
-      {/* <Header14 /> */}
+      <Header14 />
       
       
       <Export/>
       
-      {/* <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
         
       </section>
-      <section className="testsect d-sm-block d-md-none bg-dark pt-5  ">
+      <section className="d-sm-block d-md-none bg-dark pt-5  ">
       <div className="MobileFooter">
       
 
       <MobileFooter2/>
       </div>
-    </section> */}
+    </section>
     </>
   );
 }

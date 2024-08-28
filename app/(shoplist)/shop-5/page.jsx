@@ -2,6 +2,7 @@ import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 import Header14 from "@/components/headers/Header14";
+import Shop10 from "@/components/shoplist/shop10/Shop10";
 
 import Shop5 from "@/components/shoplist/Shop5";
 
@@ -16,11 +17,12 @@ export default function ShopPage5() {
   return (
     <>
       <Header14 />
-      <main className="page-wrapper">
+      <main>
         <Shop5 />
+        <Shop10/>
       </main>
-      <div className="mb-5 pb-xl-5"></div>
-      <section className="testsect d-none d-lg-block" style={{ height: "100%" }}>
+
+      <section className=" d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
         
       </section>
