@@ -6,6 +6,7 @@ import Categories from "@/components/shoplist/Categories";
 import Shop10 from "@/components/shoplist/shop10/Shop10";
 import Banner5 from "@/components/shoplist/Banner5";
 import React from "react";
+import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -25,7 +26,17 @@ export default function ShopPage8() {
         <Shop10 />
       </main>
       <div className="mb-5 pb-xl-5"></div>
-      <Footer14 />
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
+        <Footer14 />
+        
+      </section>
+      <section className="d-sm-block d-md-none bg-dark pt-5  ">
+      <div className="MobileFooter">
+      
+
+      <MobileFooter2/>
+      </div>
+    </section>
     </>
   );
 }

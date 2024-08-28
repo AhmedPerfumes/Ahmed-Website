@@ -814,17 +814,7 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 d-none d-lg-block"></div>
-      <section
-        className="testsect d-none d-lg-block "
-        style={{ height: "100%" }}
-      >
-        <Footer14 />
-      </section>
-      <section className="testsect d-sm-block d-md-none bg-dark pt-5  ">
-        <div className="MobileFooter">
-          <MobileFooter2 />
-        </div>
-      </section>
+      
     </div>
   );
 };

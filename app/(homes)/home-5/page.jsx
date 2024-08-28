@@ -41,7 +41,17 @@ export default function HomePage5() {
         <Features />
         <Cta /> */}
       </main>
-      <Footer14/>
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
+        <Footer14 />
+        
+      </section>
+      <section className="d-sm-block d-md-none bg-dark pt-5  ">
+      <div className="MobileFooter">
+      
+
+      <MobileFooter2/>
+      </div>
+    </section>
       {/* <Footer5 parentclassName={"footer footer_type_2 dark"} /> */}
     </>
   );

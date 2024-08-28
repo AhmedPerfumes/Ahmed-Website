@@ -24,8 +24,11 @@ export default function ContactPage() {
         </section>
       </main>
       <div className="mb-5 pb-xl-5"></div>
-      <Footer14 />
-      <section className="testsect d-sm-block d-md-none bg-dark pt-5  ">
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
+        <Footer14 />
+        
+      </section>
+      <section className="d-sm-block d-md-none bg-dark pt-5  ">
       <div className="MobileFooter">
       
 
