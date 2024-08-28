@@ -16,6 +16,11 @@ import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
+
+    const isMobileDevice = () => {
+      return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    };
+
     gsap.registerPlugin(ScrollTrigger);
 
     // Snapping logic
@@ -162,12 +167,12 @@ const Animation = () => {
             end: "top 7.5%",
             // markers: true,
             scrub: 1,
-            snap: 1,
+            snap: (!isMobileDevice()) ? true : false,
           },
         }
       );
     });
-
+    
     // Cleanup on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
