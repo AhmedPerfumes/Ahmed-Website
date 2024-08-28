@@ -19,7 +19,7 @@ import Button from "@mui/material/Button";
 
 export default function MobileFooter2() {
   return (
-    <div>
+    <div className="mb-5">
       <div className="footer-column footer-newsletter col-12 mb-4 mb-lg-0 d-flex flex-column align-items-center">
         <h6 className="sub-menu__title text-uppercase text-white text-center">
           Subscribe
@@ -28,9 +28,7 @@ export default function MobileFooter2() {
           Be the first to get the latest news about trends, promotions, and much
           more!
         </p>
-        <form
-          className="footer-newsletter__form position-relative bg-body w-75 d-flex "
-        >
+        <form className="footer-newsletter__form position-relative bg-body w-75 d-flex ">
           <input
             className="form-control border-white"
             type="email"
