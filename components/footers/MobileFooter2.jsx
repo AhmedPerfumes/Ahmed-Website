@@ -29,7 +29,6 @@ export default function MobileFooter2() {
           more!
         </p>
         <form
-          onSubmit={(e) => e.preventDefault()}
           className="footer-newsletter__form position-relative bg-body w-75 d-flex "
         >
           <input
