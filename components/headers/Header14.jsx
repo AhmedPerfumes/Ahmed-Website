@@ -53,7 +53,7 @@ export default function Header14() {
     <>
       <header
         id="header"
-        className={`header sticky_disabled w-100 border-bottom`}
+        className={`header sticky_disabled w-100 `}
         style={pathname == "/" ? headerStyle : {}}
       >
         <Swiper
