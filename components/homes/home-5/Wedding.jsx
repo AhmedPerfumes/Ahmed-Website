@@ -209,6 +209,66 @@ export default function Wedding() {
           </div>
         </div>
       </div>
+      <div className="container giveaway pt-5">
+  <h2 className="fs-2 text-uppercase text-center">Giveaways</h2>
+  <div className="row align-items-center mt-4">
+    <div className="col-md-4">
+      <img width={350} src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/memories-1.png" className="img-fluid" alt="Giveaway" />
+    </div>
+    <div className="col-md-8">
+      <div className="row">
+        <div className="col-md-4">
+          <div className="p-3  text-center">
+            <p className="text-uppercase fw-bold">Memory box 1</p>
+            <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
+            Price: 10.50 AED
+            </h4>
+            <div className="d-flex text-center flex-column">
+
+            <span className="fw-bold">Contains</span>
+            <span className="">2 perfume tester 2ml</span>
+            <span className="">1 pc Bakhoor</span>
+            </div>
+           
+          </div>
+        </div>
+        <div className="col-md-4">
+        <div className="p-3  text-center">
+            <p className="text-uppercase fw-bold">Memory box 1</p>
+            <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
+            Price: 10.50 AED
+            </h4>
+            <div className="d-flex text-center flex-column">
+
+            <span className="fw-bold">Contains</span>
+            <span className="">1 perfume tester 2ml</span>
+            <span className="">1 pc Bakhoor</span>
+            <span>1 concentrated oil</span>
+            </div>
+           
+          </div>
+        </div>
+        <div className="col-md-4">
+        <div className="p-3  text-center">
+            <p className="text-uppercase fw-bold">Memory box 1</p>
+            <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
+            Price: 10.50 AED
+            </h4>
+            <div className="d-flex text-center flex-column">
+
+            <span className="fw-bold">Contains</span>
+            <span className="">2 perfume tester 2ml</span>
+            <span className="">1 pc Bakhoor</span>
+            <span>1 concentrated oil</span>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
       <div className="container pt-5">
         <div className="row align-items-center">
           <div className="col-md-6 px-5 mb-2">

@@ -25,7 +25,7 @@ export default function HomePage5() {
       <Header14 />
       <main className="">
         <Hero />
-        <div className="mb-4 mb-xl-5 pt-1 pb-5"></div>
+        {/* <div className="mb-4 mb-xl-5 pt-1 pb-5"></div> */}
         <Wedding/>
         {/* <Categories />
         <div className="mb-4 mb-xl-5 pt-1 pb-5"></div>
