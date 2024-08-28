@@ -16,7 +16,6 @@ import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
-
     const isMobileDevice = () => {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     };
@@ -167,12 +166,12 @@ const Animation = () => {
             end: "top 7.5%",
             // markers: true,
             scrub: 1,
-            snap: (!isMobileDevice()) ? true : false,
+            snap: !isMobileDevice() ? true : false,
           },
         }
       );
     });
-    
+
     // Cleanup on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -190,7 +189,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png"
+            src="/assets/images/home/demo8/top-sellers.jpg"
             alt="Section 1"
           />
           <div className="text_reveal position-absolute">
@@ -234,7 +233,7 @@ const Animation = () => {
                         plastic bottle to decompose.
                       </div>
                       <div className="moreee-menu pt-2">
-                        <Link href=""className="fs-4">
+                        <Link href="" className="fs-4">
                           Swipe to see more{" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -436,7 +435,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
+            src="/assets/images/home/demo8/bin-shaikh.jpg"
             alt="Section 2"
           />
           <div className="text_reveal position-absolute">
@@ -460,7 +459,7 @@ const Animation = () => {
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
           <h2 className="mb-4 mb-md-2 ">Most Preferred Categories</h2>
-          <div className="w-60 w-md-50">
+          <div className="w-50 w-xs-80">
             <video muted autoPlay loop className="w-100">
               <source
                 type="video/mp4"
@@ -819,7 +818,6 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 d-none d-lg-block"></div>
-      
     </div>
   );
 };
