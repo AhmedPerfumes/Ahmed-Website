@@ -67,6 +67,8 @@ export default function Categories({ section }) {
                 loop
                 onMouseOver={(event) => event.target.play()}
                 onMouseOut={(event) => event.target.pause()}
+                preload="none"
+                poster={ elm.imgSrc2 }
               >
                 <source type="video/mp4" src={elm.videoSrc} />
               </video>

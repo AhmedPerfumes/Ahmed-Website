@@ -467,6 +467,7 @@ export const categories8 = [
     altText: "Gift Set 1",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
   },
   {
     id: 2,
@@ -474,6 +475,7 @@ export const categories8 = [
     altText: "Gift Set 2",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
   },
   {
     id: 3,
@@ -481,6 +483,7 @@ export const categories8 = [
     altText: "Gift Set 3",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
   },
   {
     id: 4,
@@ -488,6 +491,7 @@ export const categories8 = [
     altText: "Gift Set 4",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/orange-sanguine.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/orange-sanguine@1x.jpg",
   },
   {
     id: 1,
@@ -495,6 +499,7 @@ export const categories8 = [
     altText: "Gift Set 5",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/trefle-pur.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/trefle-pur@1x.jpg",
   },
   {
     id: 2,
@@ -502,6 +507,7 @@ export const categories8 = [
     altText: "Gift Set 6",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
   },
   {
     id: 3,
@@ -509,6 +515,7 @@ export const categories8 = [
     altText: "Gift Set 7",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
   },
   {
     id: 4,
@@ -516,6 +523,7 @@ export const categories8 = [
     altText: "Gift Set 8",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
+    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
   },
 ];
 

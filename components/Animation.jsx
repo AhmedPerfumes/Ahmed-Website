@@ -461,7 +461,7 @@ const Animation = () => {
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
           <h2 className="mb-4 mb-md-2 ">Most Preferred Categories</h2>
           <div className="w-60 w-md-50">
-            <video muted autoPlay loop className="w-100">
+            <video muted autoPlay loop className="w-100" preload="none">
               <source
                 type="video/mp4"
                 src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
@@ -538,7 +538,7 @@ const Animation = () => {
       <section className="cont testsect ">
         <div className="panel2 mb-4">
           <div className="inner2 zoom_img">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
                 type="video/mp4"
@@ -573,7 +573,7 @@ const Animation = () => {
 
         <div className="panel2 mt-5">
           <div className="inner2">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
                 type="video/mp4"
@@ -620,7 +620,7 @@ const Animation = () => {
               rich olfactory facets.
             </p>
           </div>
-          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
+          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <img
               className="px-2 w-100 w-md-auto"
               src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
@@ -628,7 +628,7 @@ const Animation = () => {
             />
             <img
               className="px-2 w-100 w-md-auto"
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/mixed_collection@1x.jpg"
               alt="Image 2"
             />
           </div>
@@ -639,7 +639,7 @@ const Animation = () => {
       <section className="MobileSlider mobilecontainer d-lg-none zoom_img">
         <div className="mobilepanel d-flex align-items-center">
           <div className="inner">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
                 type="video/mp4"
@@ -679,7 +679,7 @@ const Animation = () => {
 
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
                 type="video/mp4"
@@ -731,7 +731,7 @@ const Animation = () => {
               </div>
               <div className="col-6">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/mixed_collection@1x.jpg"
                   alt=""
                   className="img-fluid"
                 />
@@ -776,7 +776,7 @@ const Animation = () => {
       >
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
-            <video loop muted autoPlay loading="lazy" className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fifth/art-of-gifting/art-of-boxing-video-16-9.mp4"
                 type="video/mp4"
@@ -811,7 +811,6 @@ const Animation = () => {
           <div className="order-0 order-md-1">
             <img
               className="h-auto w-100"
-              loading="lazy"
               src="https://www.ateliercologne.com/images/chapters/fifth/store-locator/perview@1x.jpg"
               alt="image"
             />
