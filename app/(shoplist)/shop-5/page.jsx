@@ -26,7 +26,7 @@ export default function ShopPage5() {
         <Footer14 />
         
       </section>
-      <section className="testsect d-sm-block d-md-none bg-dark pt-5  ">
+      <section className=" d-sm-block d-md-none bg-dark pt-5  ">
       <div className="MobileFooter">
       
 
