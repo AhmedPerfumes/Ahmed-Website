@@ -1,8 +1,6 @@
 "use client";
 import { currencyOptions, languageOptions } from "@/data/footer";
-
 import { socialLinks } from "@/data/socials";
-
 import React, { useEffect, useState } from "react";
 import CartLength from "./components/CartLength";
 import { openCart } from "@/utlis/openCart";
@@ -11,6 +9,7 @@ import Image from "next/image";
 
 export default function MobileHeader() {
   const [scrollDirection, setScrollDirection] = useState("down");
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,14 +42,24 @@ export default function MobileHeader() {
     };
   }, []);
 
+  const handleLinkClick = () => {
+    setTimeout(() => {
+      setIsNavOpen(false);
+    }, 0); // Set to 0ms for immediate closure
+  };
+
   return (
     <div
       className={`header-mobile header_sticky ${
-        scrollDirection == "up" ? "header_sticky-active" : "position-absolute"
-      } `}
+        scrollDirection === "up" ? "header_sticky-active" : "position-absolute"
+      } ${isNavOpen ? "nav-open" : ""}`}
     >
       <div className="container d-flex align-items-center h-100">
-        <a className="mobile-nav-activator d-block position-relative" href="#">
+        <a
+          className="mobile-nav-activator d-block position-relative"
+          href="#"
+          onClick={() => setIsNavOpen(!isNavOpen)}
+        >
           <svg
             className="nav-icon"
             width="25"
@@ -97,7 +106,11 @@ export default function MobileHeader() {
       </div>
       {/* <!-- /.container --> */}
 
-      <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
+      <nav
+        className={`header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto ${
+          isNavOpen ? "open" : ""
+        }`}
+      >
         <div className="container">
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -142,7 +155,7 @@ export default function MobileHeader() {
         <div className="container">
           <div className="overflow-hidden">
             <ul className="navigation__list list-unstyled position-relative">
-              <MobileNav />
+              <MobileNav onLinkClick={handleLinkClick} />
             </ul>
             {/* <!-- /.navigation__list --> */}
           </div>
@@ -212,6 +225,7 @@ export default function MobileHeader() {
                 <a
                   href={link.href}
                   className="footer__social-link d-block color-white"
+                  onClick={handleLinkClick}
                 >
                   <svg
                     className={link.className}

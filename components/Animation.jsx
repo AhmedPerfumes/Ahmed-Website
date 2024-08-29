@@ -224,17 +224,17 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         In 20 years, there could be more plastic in our oceans
                         than fish.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         Plastic pollution injures more than 100.000 marine
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
                       <div className="moreee-menu pt-2">
-                        <Link href=""className="fs-4">
+                        <Link href=""className="">
                           Swipe to see more{" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -276,16 +276,16 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         The Earth’s area affected by desertification is approx
                         11 times India’s size.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         The Savannas act as a carbon sink, absorbing CO2 from
                         the atmosphere and helping to maintain the balance of
                         global temperatures.
                       </div>
-                      <div className="moreee-menu pt-2 fs-4">
+                      <div className="moreee-menu pt-2 ">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -328,15 +328,15 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         Glaciers contain 75% of the World's freshwater.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         The effects of melting ice glaciers are biodiversity
                         loss, the rising of the sea level and the deficiency of
                         freshwater, among others.
                       </div>
-                      <div className="moreee-menu pt-2 fs-4">
+                      <div className="moreee-menu pt-2 ">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -379,15 +379,15 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         We will have lost 60% of our coral reefs by 2030.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         Coral reefs are essential to humans, as they protect the
                         shorelines and are a source of nutrients and habitat for
                         thousands of marine species.
                       </div>
-                      <div className="moreee-menu pt-2 fs-4">
+                      <div className="moreee-menu pt-2 ">
                         <Link href="">
                           Shop Now{" "}
                           <svg

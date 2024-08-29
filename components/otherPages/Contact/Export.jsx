@@ -21,7 +21,7 @@ export default function Export() {
       </div>
       <div className="container pt-5 mt-2">
   <div className="section2 text-center">
-    <h3 className="text-uppercase pt-5 mb-5">Ahmed Al Maghribi Exports</h3>
+    <h3 className="text-uppercase fs-2 pt-5 mb-5">Ahmed Al Maghribi Exports</h3>
   </div>
   <div className="row align-items-center mt-4">
     <div className="col-md-6">
@@ -32,8 +32,8 @@ export default function Export() {
     </div>
     <div className="col-md-6 text-center">
       <h4 className="text-uppercase fs-2">We distribute our product globally</h4>
-      <p className="mt-3 fs-4">Ahmed Al Maghribi Perfume’s International Exports Division is well established to Fulfill International Demands. In just over a decade since its inception, the brands offered through the International Exports Division which is available in more than 45 countries, primarily due to their world-class quality that appeals to Distributors, and more importantly to the end consumers.</p>
-      <p className="mt-3 fs-4">The International Exports Division has worked tirelessly and evolved both strategically and in its product offerings to address the global audience. Presently its products are available and highly successful in major federal retail chain stores and individual perfumery stores across the globe.</p>
+      <p className="mt-3 fs-6">Ahmed Al Maghribi Perfume’s International Exports Division is well established to Fulfill International Demands. In just over a decade since its inception, the brands offered through the International Exports Division which is available in more than 45 countries, primarily due to their world-class quality that appeals to Distributors, and more importantly to the end consumers.</p>
+      <p className="mt-3 fs-6">The International Exports Division has worked tirelessly and evolved both strategically and in its product offerings to address the global audience. Presently its products are available and highly successful in major federal retail chain stores and individual perfumery stores across the globe.</p>
     </div>
   </div>
 </div>
