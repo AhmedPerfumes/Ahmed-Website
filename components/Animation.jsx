@@ -117,6 +117,7 @@ const Animation = () => {
         {
           opacity: 0,
           y: 50,
+          delay:1
         },
         {
           opacity: 1,
@@ -124,7 +125,7 @@ const Animation = () => {
           scrollTrigger: {
             trigger: heading,
             start: "top 80%",
-            end: "top 30%",
+            end: "top -5%",
             toggleActions: "play reverse play reverse",
           },
         }
@@ -147,7 +148,7 @@ const Animation = () => {
           scrollTrigger: {
             trigger: parag,
             start: "top 70%",
-            end: "top 20%",
+            end: "top -5%",
             toggleActions: "play reverse play reverse",
           },
         }
