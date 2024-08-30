@@ -256,20 +256,9 @@ h2, h3 {
   font-size: 20px;
 }
 
-.panel2 img{
-  object-fit: contain;
-}
-
-// @media (max-width: 600px) {
-.panel2 img{
+.panel2 .zoom_img{
   object-fit: cover;
-  object-position: 25%;
 }
-// .panel2 img{
-//   object-fit: cover;
-//   object-position: 80%;
-// }
-// }
 
 .mobile-vid{
   width: 50%;
@@ -277,17 +266,6 @@ h2, h3 {
 .mobile-swiper{
   display: none;
 }
-
-
-// .text-container {
-//   max-width: 100%; /* Ensures the paragraph uses the available width */
-//   margin: 0 auto; /* Centers the container if needed */
-//   font-size: 16px; /* Adjust the font size for better readability */
-//   line-height: 1.5; /* Adjust line height for better spacing */
-//   padding: 10px;
-//   color: white;
-//   text-align: center;
-// }
 
 /* Media query for devices with a max width of 600px */
 @media (max-width: 600px) {
@@ -483,4 +461,22 @@ footer {
   overflow-y: hidden;
   padding: 0;
   margin: 0;
+}
+
+.sec-two-h2 {
+  color: #C58B14;
+}
+
+.sub-title {
+  font-family: Lato, sans-serif, Serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.para-sec {
+  font-family: Lato, sans-serif, Serif;
+    font-size: 1rem;
+    text-align: center;
+    text-wrap: balance;
 }
