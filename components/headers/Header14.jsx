@@ -53,7 +53,7 @@ export default function Header14() {
     <>
       <header
         id="header"
-        className={`header sticky_disabled w-100 border-bottom`}
+        className={`header sticky_disabled w-100 `}
         style={pathname == "/" ? headerStyle : {}}
       >
         <Swiper
@@ -68,7 +68,7 @@ export default function Header14() {
               className="swiper-slide text-center"
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                <a className="p animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
+                <a className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
                   {elm.description.split(" ").slice(0, 13).join(" ")}
                 </a>
               </div>

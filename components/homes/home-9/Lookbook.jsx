@@ -1,17 +1,28 @@
 "use client";
 import { products17 } from "@/data/products/fashion";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import Image from "next/image";
 
 export default function Lookbook() {
+
+  const [isMobile, setIsMobile] = useState(null);
+
+  useEffect(() => {
+    const isMobileDevice = () => {
+      return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    };
+
+    setIsMobile(isMobileDevice());
+  }, []);
+
   return (
     <div className="lookbook-products container position-relative">
       <img
         className="h-auto"
         loading="lazy"
-        src="https://www.ahmed-perfume.com/wp-content/uploads/2024/05/web-banner.jpg"
+        src= { !isMobile ? "https://www.ahmed-perfume.com/wp-content/uploads/2024/05/web-banner.jpg" : "https://www.ahmed-perfume.com/wp-content/uploads/2024/05/giftset-mobile-banner.jpg" }
         alt="image"
       />
       {/* <h2

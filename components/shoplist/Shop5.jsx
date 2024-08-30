@@ -43,19 +43,20 @@ export default function Shop5() {
         gsap.to(window, {
           scrollTo: { y: section, autoKill: false },
           onComplete: scrolling.enable,
-          duration: 0.1
+          duration: 0.1,
+          // ease:"power2.inOut"
         });
 
         anim && anim.restart();
       }
     }
 
-    function setOpacity(section, value, duration) {
-      gsap.to(section.querySelector(".content"), {
-        opacity: value,
-        duration: duration
-      });
-    }
+    // function setOpacity(section, value, duration) {
+    //   gsap.to(section.querySelector(".content"), {
+    //     opacity: 1,
+    //     duration: 0
+    //   });
+    // }
 
     sections.forEach((section, i) => {
       const navLink = navLinks[i];
@@ -80,18 +81,18 @@ export default function Shop5() {
         }
       });
 
-      ScrollTrigger.create({
-        trigger: section,
-        // markers: true,
-        start: "center",
-        end: "center",
-        onEnter: () => {
-          setOpacity(section, 1, 1);
-        },
-        onEnterBack: () => {
-          setOpacity(section, 1, 1);
-        }
-      });
+      // ScrollTrigger.create({
+      //   trigger: section,
+      //   // markers: true,
+      //   start: "center",
+      //   end: "center",
+      //   onEnter: () => {
+      //     setOpacity(section, 1, 1);
+      //   },
+      //   onEnterBack: () => {
+      //     setOpacity(section, 1, 1);
+      //   }
+      // });
     });
 
     // Hide navigation links after the last section
@@ -122,7 +123,7 @@ export default function Shop5() {
             alt=""
           />
           <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-5">
-            <h2 className="text-white ">Your Text Here</h2>
+            <h3 className="text-white text-nowrap">Your Text Here</h3>
             <h4 className="text-white">Your Subheading</h4>
             <button className="btn btn-outline-light rounded-pill">Discover</button>
           </div>
@@ -137,7 +138,7 @@ export default function Shop5() {
             alt=""
           />
           <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4  px-5">
-            <h2 className="text-white">Your Text Here</h2>
+            <h3 className="text-white text-nowrap">Your Text Here</h3>
             <button className="btn btn-outline-light rounded-pill">Discover</button>
           </div>
         </div>
@@ -151,7 +152,7 @@ export default function Shop5() {
             alt=""
           />
           <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-5">
-            <h2 className="text-white">Your Text Here</h2>
+            <h3 className="text-white text-nowrap">Your Text Here</h3>
             <button className="btn btn-outline-light rounded-pill">Discover</button>
           </div>
         </div>
@@ -165,7 +166,7 @@ export default function Shop5() {
             alt=""
           />
           <div className="position-absolute top-50 end-0 translate-middle-y text-end me-4 p-4">
-            <h2 className="text-white">Your Text Here</h2>
+            <h3 className="text-white text-nowrap">Your Text Here</h3>
             <button className="btn btn-outline-light rounded-pill">Discover</button>
           </div>
         </div>
@@ -183,7 +184,7 @@ export default function Shop5() {
 
       {/* Navigation circle code */}
       
-      <div className="position-fixed top-50 start-0 translate-middle-y px-5">
+      <div className="position-fixed top-50 start-0 translate-middle-y px-5 d-none d-lg-block">
         <ul className="nav flex-column text-center">
           <li className="nav-item mb-3">
             <a

@@ -116,6 +116,7 @@ const Animation = () => {
         {
           opacity: 0,
           y: 50,
+          delay: 1,
         },
         {
           opacity: 1,
@@ -123,7 +124,7 @@ const Animation = () => {
           scrollTrigger: {
             trigger: heading,
             start: "top 80%",
-            end: "top 30%",
+            end: "top -5%",
             toggleActions: "play reverse play reverse",
           },
         }
@@ -146,7 +147,7 @@ const Animation = () => {
           scrollTrigger: {
             trigger: parag,
             start: "top 70%",
-            end: "top 20%",
+            end: "top -5%",
             toggleActions: "play reverse play reverse",
           },
         }
@@ -189,7 +190,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/top-sellers.jpg"
+            src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png"
             alt="Section 1"
           />
           <div className="text_reveal position-absolute">
@@ -223,17 +224,17 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         In 20 years, there could be more plastic in our oceans
                         than fish.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         Plastic pollution injures more than 100.000 marine
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
                       <div className="moreee-menu pt-2">
-                        <Link href="" className="fs-4">
+                        <Link href="" className="">
                           Swipe to see more{" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -275,16 +276,16 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         The Earth’s area affected by desertification is approx
                         11 times India’s size.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         The Savannas act as a carbon sink, absorbing CO2 from
                         the atmosphere and helping to maintain the balance of
                         global temperatures.
                       </div>
-                      <div className="moreee-menu pt-2 fs-4">
+                      <div className="moreee-menu pt-2 ">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -327,15 +328,15 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         Glaciers contain 75% of the World's freshwater.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         The effects of melting ice glaciers are biodiversity
                         loss, the rising of the sea level and the deficiency of
                         freshwater, among others.
                       </div>
-                      <div className="moreee-menu pt-2 fs-4">
+                      <div className="moreee-menu pt-2 ">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -378,15 +379,15 @@ const Animation = () => {
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
-                      <div className="mainnn-content__title fs-5">
+                      <div className="mainnn-content__title ">
                         We will have lost 60% of our coral reefs by 2030.
                       </div>
-                      <div className="mainnn-content__subtitle fs-5">
+                      <div className="mainnn-content__subtitle ">
                         Coral reefs are essential to humans, as they protect the
                         shorelines and are a source of nutrients and habitat for
                         thousands of marine species.
                       </div>
-                      <div className="moreee-menu pt-2 fs-4">
+                      <div className="moreee-menu pt-2 ">
                         <Link href="">
                           Shop Now{" "}
                           <svg
@@ -435,7 +436,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/bin-shaikh.jpg"
+            src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
             alt="Section 2"
           />
           <div className="text_reveal position-absolute">
@@ -459,8 +460,8 @@ const Animation = () => {
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
           <h2 className="mb-4 mb-md-2 ">Most Preferred Categories</h2>
-          <div className="w-50 w-xs-80">
-            <video muted autoPlay loop className="w-100">
+          <div className="w-60 w-md-50">
+            <video muted autoPlay loop className="w-100" preload="none">
               <source
                 type="video/mp4"
                 src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
@@ -537,7 +538,7 @@ const Animation = () => {
       <section className="cont testsect ">
         <div className="panel2 mb-4">
           <div className="inner2 zoom_img">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
                 type="video/mp4"
@@ -572,7 +573,7 @@ const Animation = () => {
 
         <div className="panel2 mt-5">
           <div className="inner2">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
                 type="video/mp4"
@@ -619,7 +620,7 @@ const Animation = () => {
               rich olfactory facets.
             </p>
           </div>
-          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-center">
+          <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <img
               className="px-2 w-100 w-md-auto"
               src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
@@ -627,7 +628,7 @@ const Animation = () => {
             />
             <img
               className="px-2 w-100 w-md-auto"
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/mixed_collection@1x.jpg"
               alt="Image 2"
             />
           </div>
@@ -638,14 +639,15 @@ const Animation = () => {
       <section className="MobileSlider mobilecontainer d-lg-none zoom_img">
         <div className="mobilepanel d-flex align-items-center">
           <div className="inner">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
                 type="video/mp4"
               />
-            </video>{" "}
+            </video>
           </div>
         </div>
+        &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
             <h1>Carefully Selected Ingredients</h1>
@@ -675,10 +677,10 @@ const Animation = () => {
             </div>
           </div>
         </div>
-
+        &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <video loop muted autoPlay className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
                 type="video/mp4"
@@ -730,7 +732,7 @@ const Animation = () => {
               </div>
               <div className="col-6">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/mixed_collection@1x.jpg"
                   alt=""
                   className="img-fluid"
                 />
@@ -738,7 +740,6 @@ const Animation = () => {
             </div>
           </div>
         </div>
-
         {/* <MobileSlider/> */}
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
@@ -775,7 +776,7 @@ const Animation = () => {
       >
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
-            <video loop muted autoPlay loading="lazy" className="w-100">
+            <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="https://www.ateliercologne.com/videos/chapters/fifth/art-of-gifting/art-of-boxing-video-16-9.mp4"
                 type="video/mp4"
@@ -810,7 +811,6 @@ const Animation = () => {
           <div className="order-0 order-md-1">
             <img
               className="h-auto w-100"
-              loading="lazy"
               src="https://www.ateliercologne.com/images/chapters/fifth/store-locator/perview@1x.jpg"
               alt="image"
             />
