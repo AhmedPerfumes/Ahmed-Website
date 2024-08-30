@@ -645,9 +645,9 @@ const Animation = () => {
                 src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
                 type="video/mp4"
               />
-            </video>{" "}
+            </video>
           </div>
-        </div>
+        </div>&nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
             <h1>Carefully Selected Ingredients</h1>
@@ -676,7 +676,7 @@ const Animation = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>&nbsp;&nbsp;&nbsp;
 
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
