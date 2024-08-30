@@ -213,7 +213,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/section-1-banner.jpg"
+            src="/assets/images/home/demo8/best-sellers.jpg"
             alt="Section 1"
           />
           <div className="text_reveal position-absolute">
