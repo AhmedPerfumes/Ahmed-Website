@@ -480,3 +480,39 @@ footer {
     text-align: center;
     text-wrap: balance;
 }
+/* Progress Bar Container */
+.free-shipping-progress {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.free-shipping-progress p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Progress Bar */
+.progress {
+  background-color: #cacaca;
+  border-radius: 25px;
+  height: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background-color: #f8cb62; 
+  width: 100%; 
+  background-image: linear-gradient(
+        45deg, #e4a921 25%, 
+        transparent 25%, transparent 50%, 
+        #e4a921 50%, #e4a921 75%,
+        transparent 75%, transparent); 
+  animation: progressAnimationStrike 6s;
+}
+
+.success {
+  font-size: 14px;
+  color: #af4c4c; /* Same green color as the progress bar */
+}

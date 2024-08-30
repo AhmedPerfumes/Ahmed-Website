@@ -9,19 +9,31 @@ export default function Export() {
   return (
   <>
 
-<div className="container-fluid p-0">
+<div className="container-fluid p-0 pt-2">
         <Image
           loading="lazy"
-          className="w-100 h-auto d-block"
+          className="w-100 h-auto d-none d-lg-block"
           src="/assets/images/about/map.jpg"
           alt="image"
           width={1500}
           height={550}
         />
       </div>
+      <div className="">
+        
+      <Image
+          loading="lazy"
+          className="w-100 h-auto d-lg-none pt-5"
+          src="/assets/images/about/mobilemap.jpg"
+          alt="image"
+          width={500}
+          height={500}
+        />
+
+      </div>
       <div className="container pt-5 mt-2">
   <div className="section2 text-center">
-    <h3 className="text-uppercase fs-2 pt-5 mb-5">Ahmed Al Maghribi Exports</h3>
+    <h3 className="text-uppercase fs-2 mb-5">Ahmed Al Maghribi Exports</h3>
   </div>
   <div className="row align-items-center mt-4">
     <div className="col-md-6">
@@ -30,7 +42,7 @@ export default function Export() {
         Your browser does not support the video tag.
       </video>
     </div>
-    <div className="col-md-6 text-center">
+    <div className="col-md-6 text-center pt-5">
       <h4 className="text-uppercase fs-2">We distribute our product globally</h4>
       <p className="mt-3 fs-6">Ahmed Al Maghribi Perfume’s International Exports Division is well established to Fulfill International Demands. In just over a decade since its inception, the brands offered through the International Exports Division which is available in more than 45 countries, primarily due to their world-class quality that appeals to Distributors, and more importantly to the end consumers.</p>
       <p className="mt-3 fs-6">The International Exports Division has worked tirelessly and evolved both strategically and in its product offerings to address the global audience. Presently its products are available and highly successful in major federal retail chain stores and individual perfumery stores across the globe.</p>
@@ -39,10 +51,16 @@ export default function Export() {
 </div>
 <TopCollections/>
 
-<div className="container d-flex justify-content-center ">
-  <video width={800} src="https://www.ahmed-perfume.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4"autoPlay loop muted>
-  </video>
+<div className="container d-flex justify-content-center">
+  <video
+    className="w-75 w-md-50 w-lg-25"
+    src="https://www.ahmed-perfume.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4"
+    autoPlay
+    loop
+    muted
+  ></video>
 </div>
+
 
 <div className="container d-flex justify-content-center pt-5">
 <div className="contact-us__form ">
