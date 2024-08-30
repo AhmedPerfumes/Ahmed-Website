@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-
 import { useContextElement } from "@/context/Context";
 import React, { useEffect } from "react";
 import Image from "next/image";
@@ -31,6 +30,13 @@ export default function CartDrawer() {
   useEffect(() => {
     closeCart();
   }, [pathname]);
+
+  // Calculate progress towards free shipping
+  const freeShippingThreshold = 400;
+  const progressPercentage = Math.min(
+    (totalPrice / freeShippingThreshold) * 100,
+    100
+  );
 
   return (
     <>
@@ -116,28 +122,47 @@ export default function CartDrawer() {
                     className="btn-close-xs position-absolute top-0 end-0 js-cart-item-remove"
                   ></button>
                 </div>
-                {/* <!-- /.cart-drawer-item d-flex --> */}
-
                 <hr className="cart-drawer-divider" />
               </React.Fragment>
             ))}
 
-            {/* <!-- /.cart-drawer-item d-flex --> */}
+            {/* Free Shipping Progress Bar */}
+           
           </div>
         ) : (
           <div className="fs-18 mt-5 px-5">
             Your cart is empty. Start shopping!
           </div>
         )}
-        {/* <!-- /.aside-content --> */}
-
+        
         <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
+        <div className="free-shipping-progress mt-3">
+              {totalPrice < freeShippingThreshold ? (
+                <div>
+                  <p>
+                    Spend ${freeShippingThreshold - totalPrice} more to get free
+                    shipping! ⛟
+                  </p>
+                  <div className="progress">
+                    <div
+                      className="progress-bar"
+                      role="progressbar"
+                      style={{ width: `${progressPercentage}%` }}
+                      aria-valuenow={progressPercentage}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+              ) : (
+                <h4 className="success">☆ Congratulations! You qualify for free shipping!</h4>
+              )}
+            </div>
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">SUBTOTAL:</h6>
             <span className="cart-subtotal fw-medium">${totalPrice}</span>
           </div>
-          {/* <!-- /.d-flex justify-content-between --> */}
           {cartProducts.length ? (
             <>
               <Link href="/shop_cart" className="btn btn-light mt-3 d-block">
@@ -156,7 +181,6 @@ export default function CartDrawer() {
             </Link>
           )}
         </div>
-        {/* <!-- /.aside-content --> */}
       </div>
       <div
         id="cartDrawerOverlay"
