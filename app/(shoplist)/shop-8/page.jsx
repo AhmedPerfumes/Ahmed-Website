@@ -7,6 +7,7 @@ import Shop10 from "@/components/shoplist/shop10/Shop10";
 import Banner5 from "@/components/shoplist/Banner5";
 import React from "react";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
+import Loader from "@/components/loader/Loader";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -18,6 +19,7 @@ export const metadata = {
 export default function ShopPage8() {
   return (
     <>
+    <Loader/>
       <Header14 />
       <Banner5 />
       <main className="page-wrapper pt-0">

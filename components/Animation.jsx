@@ -16,6 +16,7 @@ import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
+    
 
     const isMobileDevice = () => {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -81,22 +82,6 @@ const Animation = () => {
       })
     );
 
-    // Update snapping function after ScrollTrigger refresh
-    // const updateSnap = () => {
-    //   const start = panelTween.scrollTrigger.start;
-    //   const end = panelTween.scrollTrigger.end;
-    //   const each = (end - start) / (panels.length - 1);
-    //   const max = ScrollTrigger.maxScroll(window);
-    //   const sectionPositions = sectionTriggers.map(
-    //     (trigger) => trigger.start / max
-    //   ); // snapping values must be in ratios
-    //   panels.forEach((panel2, i) =>
-    //     sectionPositions.push((start + i * each) / max)
-    //   ); // add panel2 positions
-    //   snap = ScrollTrigger.snapDirectional(sectionPositions); // directional snapping function
-    // };
-    // ScrollTrigger.addEventListener("refresh", updateSnap);
-
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -108,6 +93,34 @@ const Animation = () => {
 
     swiper.on("slideChange", function (sld) {
       document.body.setAttribute("data-sld", sld.realIndex);
+    });
+    swiper.on('slideChange', function () {
+      const activeIndex = swiper.realIndex;
+      updateNavCircle(activeIndex);
+    });
+  
+    function updateNavCircle(activeIndex) {
+      // Remove 'active' class from all circles
+      const circles = document.querySelectorAll('.nav-circle');
+      circles.forEach((circle) => {
+        circle.classList.remove('active');
+      });
+  
+      // Add 'active' class to the current circle
+      const activeCircle = document.querySelectorAll('.nav-circle')[activeIndex];
+      if (activeCircle) {
+        activeCircle.classList.add('active');
+      }
+    }
+  
+    function handleNavCircleClick(index) {
+      swiper.slideTo(index);
+    }
+  
+    // Attach click event listeners to the navigation circles
+    const navCircles = document.querySelectorAll('.nav-circle');
+    navCircles.forEach((circle, index) => {
+      circle.addEventListener('click', () => handleNavCircleClick(index));
     });
 
     let headings = gsap.utils.toArray(".h2");
@@ -177,7 +190,6 @@ const Animation = () => {
     // Cleanup on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      // ScrollTrigger.removeEventListener("refresh", updateSnap);
     };
   }, []);
 
@@ -268,6 +280,7 @@ const Animation = () => {
                       />
                     </div>
                   </div>
+                  
                 </div>
                 <div className="mainnn swiper-slide" id="savanna">
                   <div className="left-sideee">
@@ -425,7 +438,14 @@ const Animation = () => {
                 </div>
               </div>
             </div>
+            <div className="nav-circle-container">
+   <div className="nav-circle" data-target="#beach"></div>
+   <div className="nav-circle" data-target="#savanna"></div>
+   <div className="nav-circle" data-target="#glacier"></div>
+   <div className="nav-circle" data-target="#coral"></div>
+</div>
           </div>
+          
         </div>
       </section>
 

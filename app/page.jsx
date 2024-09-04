@@ -1,3 +1,4 @@
+import Loader from "@/components/loader/Loader";
 import HomePage8 from "./(homes)/home-8/page";
 
 export const metadata = {
@@ -10,6 +11,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+    <Loader/>
       <HomePage8 />
       
     </>
