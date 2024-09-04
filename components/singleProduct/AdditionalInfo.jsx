@@ -9,7 +9,7 @@ export default function AdditionalInfo() {
             style={{ height: "fit-content" }}
             className="h-auto"
             loading="lazy"
-            src="https://www.ahmed-perfume.com/wp-content/uploads/2024/03/Top-Notes-1.jpg"
+            src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/Top-Notes-1.jpg"
             alt="image"
           />
         </div>
@@ -43,7 +43,7 @@ export default function AdditionalInfo() {
             style={{ height: "fit-content" }}
             className="h-auto"
             loading="lazy"
-            src="https://www.ahmed-perfume.com/wp-content/uploads/2024/03/middle-notes.jpg"
+            src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/middle-notes.jpg"
             alt="image"
           />
         </div>
@@ -55,7 +55,7 @@ export default function AdditionalInfo() {
             style={{ height: "fit-content" }}
             className="h-auto"
             loading="lazy"
-            src="https://www.ahmed-perfume.com/wp-content/uploads/2024/03/Base-Notes.jpg"
+            src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/Base-Notes.jpg"
             alt="image"
           />
         </div>
@@ -85,7 +85,7 @@ export default function AdditionalInfo() {
             loop
             muted
             controls
-            src="https://www.ahmed-perfume.com/laathani.mp4"
+            src="https://www.ahmedalmaghribi.com/laathani.mp4"
             alt=""
           />
         </div>

@@ -186,7 +186,7 @@ export default function Header14() {
               <div className="logo">
                 <a href="/">
                   <img
-                    src="https://www.ahmed-perfume.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
+                    src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
                     width="200px"
                     alt="Ahmed"
                   />

@@ -66,7 +66,7 @@ export default function MobileHeader() {
         <div className="logo">
           <a href="/">
             <Image
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
               width={200}
               height={28}
               alt="Ahmed"

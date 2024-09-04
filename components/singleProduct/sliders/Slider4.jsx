@@ -20,7 +20,7 @@ const images = [
     imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwdb8fe874/primary_packshot_3/2024/FRAGRANCE/G030522_3346470305229_H-IDEAL-24-PARFUM-SPR-100ML_1.jpg?sw=700&sh=700&sfrm=png",
   },
   {
-    imgSrc: "https://www.ahmed-perfume.com/wp-content/uploads/2023/02/hubb-o-salam-3.jpg",
+    imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2023/02/hubb-o-salam-3.jpg",
   },
 ];
 

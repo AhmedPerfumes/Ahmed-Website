@@ -38,7 +38,7 @@ export default function Export() {
   <div className="row align-items-center mt-4">
     <div className="col-md-6">
       <video className="w-100"autoPlay loop muted>
-        <source src="https://www.ahmed-perfume.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4" type="video/mp4" />
+        <source src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -54,7 +54,7 @@ export default function Export() {
 <div className="container d-flex justify-content-center">
   <video
     className="w-75 w-md-50 w-lg-25"
-    src="https://www.ahmed-perfume.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4"
+    src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4"
     autoPlay
     loop
     muted

@@ -226,19 +226,19 @@ const Test = () => {
 
       {/* <div className='containerrrr' ref={containerRef}>
         <section className="panel">
-          <img src="https://www.ahmed-perfume.com/wp-content/uploads/elementor/thumbs/Summer-Collection-Pearl-Oud-Web-Banner--qqk4eslfgvaoav5ye2bqy6speyygsurz6r5o78xg7s.jpg" alt="Test Image 1"/>
+          <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/elementor/thumbs/Summer-Collection-Pearl-Oud-Web-Banner--qqk4eslfgvaoav5ye2bqy6speyygsurz6r5o78xg7s.jpg" alt="Test Image 1"/>
         </section>
         <section className="panel">
-          <img src="https://www.ahmed-perfume.com/wp-content/uploads/elementor/thumbs/Wholesale-Banner--qqw8f9da9ekpar681y53k8nfyp2ou6npx1pmtbmezc.jpg" alt="Test Image 2"/>
+          <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/elementor/thumbs/Wholesale-Banner--qqw8f9da9ekpar681y53k8nfyp2ou6npx1pmtbmezc.jpg" alt="Test Image 2"/>
         </section>
         <section className="panel">
-          <img src="https://www.ahmed-perfume.com/wp-content/uploads/elementor/thumbs/laathani-website-banner-qlv6f9inql5p7sh8jk7cccerut6g81dp5armakjmfs.jpg" alt="Test Image 3"/>
+          <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/elementor/thumbs/laathani-website-banner-qlv6f9inql5p7sh8jk7cccerut6g81dp5armakjmfs.jpg" alt="Test Image 3"/>
         </section>
         <section className="panel">
-          <img src="https://www.ahmed-perfume.com/wp-content/uploads/elementor/thumbs/banner-qrmci5d54yxs9ghlcq1bq3scoxs7k4kxjslyt0fmmw.jpg" alt="Test Image 4"/>
+          <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/elementor/thumbs/banner-qrmci5d54yxs9ghlcq1bq3scoxs7k4kxjslyt0fmmw.jpg" alt="Test Image 4"/>
         </section>
         <section className="panel">
-          <img src="https://www.ahmed-perfume.com/wp-content/uploads/elementor/thumbs/Summer-Collection-Pearl-Oud-Web-Banner--qqk4eslfgvaoav5ye2bqy6speyygsurz6r5o78xg7s.jpg" alt="Test Image 5"/>
+          <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/elementor/thumbs/Summer-Collection-Pearl-Oud-Web-Banner--qqk4eslfgvaoav5ye2bqy6speyygsurz6r5o78xg7s.jpg" alt="Test Image 5"/>
         </section>
       </div> */}
     </>
