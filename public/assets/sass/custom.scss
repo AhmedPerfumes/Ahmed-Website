@@ -268,7 +268,7 @@ h2, h3 {
 }
 
 /* Media query for devices with a max width of 600px */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   // .text-container {
   //   font-size: 20px; /* Adjust font size for mobile */
   //   line-height: 1.4; /* Adjust line height to fit more text in one line */
@@ -278,7 +278,8 @@ h2, h3 {
   //   // text-wrap: nowrap;
   // }
   h2,h3{
-    font-size: 3rem;
+    font-size: 38px;
+    
   }
   .text_reveal{
     margin: 25%;
@@ -293,6 +294,10 @@ h2, h3 {
   .cont{
     display: none;
   }
+}
+.s-font{
+  font-style: italic;
+  font-weight: 100;
 }
 
 
@@ -464,6 +469,7 @@ footer {
 }
 
 .sec-two-h2 {
+  font-style: italic;
   color: #C58B14;
 }
 

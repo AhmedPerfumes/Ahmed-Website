@@ -464,18 +464,27 @@ const Animation = () => {
         </div>
       </section>
       <section id="start" className="testsect zoom_img section4">
-        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
-          <h2 className="fw-lighter sec-two-h2">
+        <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
+          <h2 className="fw-lighter sec-two-h2 pt-5">
             Crafted for the Discerning Few
           </h2>
-          <div className="w-50 pt-5">
-            <video muted autoPlay loop className="w-100" preload="none">
+          <div className="d-none d-lg-block pt-5">
+            <video muted autoPlay loop className="w-75" preload="none">
               <source
                 type="video/mp4"
                 src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
               />
             </video>
           </div>
+          <div className="d-block d-lg-none pt-5">
+  <video muted autoPlay loop className="w-100" preload="none">
+    <source
+      type="video/mp4"
+      src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
+    />
+  </video>
+</div>
+
           <Link
             href="/shop-1"
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
@@ -562,8 +571,8 @@ const Animation = () => {
             </video>
           </div>
           <div className="d-flex flex-column align-items-center justify-content-center mt-4">
-            <h3 className="text-center">
-              Carefully <span>selected ingredients</span>
+            <h3 className="text-center ">
+              Carefully <span className="s-font">selected ingredients</span>
             </h3>
             <p className="text-center px-3">
               From endemic species to renowned terroirs, we are particularly
@@ -577,6 +586,11 @@ const Animation = () => {
                 className="p-2 w-100 w-md-auto"
                 src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
                 alt="Image 1"
+              />
+              <img
+                className="p-2 w-100 w-md-auto"
+                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg"
+                alt="Image 2"
               />
               <img
                 className="p-2 w-100 w-md-auto"
@@ -684,6 +698,13 @@ const Animation = () => {
                 />
               </div>
               <div className="col-6 col-md-4">
+                <img
+                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                  alt=""
+                  className="img-fluid"
+                />
+              </div>
+              <div className="col-6 col-md-4 pt-2">
                 <img
                   src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
                   alt=""
