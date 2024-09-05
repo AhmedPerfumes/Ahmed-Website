@@ -105,18 +105,18 @@ const Animation = () => {
       circles.forEach((circle) => {
         circle.classList.remove('active');
       });
-  
+    
       // Add 'active' class to the current circle
       const activeCircle = document.querySelectorAll('.nav-circle')[activeIndex];
       if (activeCircle) {
         activeCircle.classList.add('active');
       }
     }
-  
+    
     function handleNavCircleClick(index) {
       swiper.slideTo(index);
     }
-  
+    
     // Attach click event listeners to the navigation circles
     const navCircles = document.querySelectorAll('.nav-circle');
     navCircles.forEach((circle, index) => {

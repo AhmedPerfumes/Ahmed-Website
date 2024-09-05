@@ -7,6 +7,7 @@ import Contact from "@/components/otherPages/Contact/Contact";
 import LocationMap from "@/components/otherPages/Contact/LocationMap";
 
 import React from "react";
+import Loader from "@/components/loader/Loader";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -18,6 +19,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <>
+    <Loader/>
       <Header14 />
       
       

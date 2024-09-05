@@ -5,7 +5,7 @@ import TopCollections from "@/components/homes/home-5/TopCollections";
 import Image from "next/image";
 import React from 'react'
 
-export default function Export() {
+export default function Export() {  
   return (
   <>
 
