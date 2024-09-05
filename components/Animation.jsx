@@ -16,8 +16,6 @@ import MobileSlider from "./singleProduct/sliders/MobileSlider";
 
 const Animation = () => {
   useEffect(() => {
-    
-
     const isMobileDevice = () => {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     };
@@ -130,7 +128,7 @@ const Animation = () => {
         {
           opacity: 0,
           y: 50,
-          delay:1
+          delay: 1,
         },
         {
           opacity: 1,
@@ -168,6 +166,29 @@ const Animation = () => {
       );
     });
 
+    let subtitles = gsap.utils.toArray(".sub-title");
+    subtitles.forEach((subtitle, i) => {
+      gsap.fromTo(
+        subtitle,
+        {
+          opacity: 0,
+          y: 50,
+          delay: 1,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          delay: 1,
+          scrollTrigger: {
+            trigger: subtitle,
+            start: "top 80%",
+            end: "top -5%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+    });
+
     let imgs = gsap.utils.toArray(".zoom_img");
     imgs.forEach((img, i) => {
       gsap.fromTo(
@@ -181,12 +202,12 @@ const Animation = () => {
             end: "top 7.5%",
             // markers: true,
             scrub: 1,
-            snap: (!isMobileDevice()) ? true : false,
+            snap: !isMobileDevice() ? true : false,
           },
         }
       );
     });
-    
+
     // Cleanup on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -199,15 +220,18 @@ const Animation = () => {
         <Hero />
       </section>
       <section className="testsect section1">
-        <div className="panel2 position-relative">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/us_en/images/chapters/first/background-video-scroll.png"
+            src="/assets/images/home/demo8/best-sellers.jpg"
             alt="Section 1"
           />
           <div className="text_reveal position-absolute">
-            <h2 className="text-center text-white h2">Section 1</h2>
+            <div className="text-center text-white sub-title">Best Sellers</div>
+            <h2 className="text-center text-white h2">
+              Fragrances Loved by All
+            </h2>
             <p className="text-center text-white p">
               This panel gets pinned in a similar way, and has a more involved
               animation that's wrapped in a timeline, fading the background
@@ -215,6 +239,7 @@ const Animation = () => {
               the line, all synced with the scroll position perfectly.
             </p>
           </div>
+
           <a
             href="#footer"
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
@@ -246,23 +271,12 @@ const Animation = () => {
                         animals every year.It takes around 450 years for one
                         plastic bottle to decompose.
                       </div>
-                      <div className="moreee-menu pt-2">
-                        <Link href=""className="">
-                          Swipe to see more{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.7"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="-5" y1="12" x2="19" y2="12" />
-                            <line x1="15" y1="16" x2="19" y2="12" />
-                            <line x1="15" y1="8" x2="19" y2="12" />
-                          </svg>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop-1"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
                         </Link>
                       </div>
                     </div>
@@ -299,23 +313,12 @@ const Animation = () => {
                         the atmosphere and helping to maintain the balance of
                         global temperatures.
                       </div>
-                      <div className="moreee-menu pt-2 ">
-                        <Link href="">
-                          Shop Now{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.7"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="-5" y1="12" x2="19" y2="12" />
-                            <line x1="15" y1="16" x2="19" y2="12" />
-                            <line x1="15" y1="8" x2="19" y2="12" />
-                          </svg>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop-1"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
                         </Link>
                       </div>
                     </div>
@@ -350,23 +353,12 @@ const Animation = () => {
                         loss, the rising of the sea level and the deficiency of
                         freshwater, among others.
                       </div>
-                      <div className="moreee-menu pt-2 ">
-                        <Link href="">
-                          Shop Now{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.7"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="-5" y1="12" x2="19" y2="12" />
-                            <line x1="15" y1="16" x2="19" y2="12" />
-                            <line x1="15" y1="8" x2="19" y2="12" />
-                          </svg>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop-1"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
                         </Link>
                       </div>
                     </div>
@@ -401,23 +393,12 @@ const Animation = () => {
                         shorelines and are a source of nutrients and habitat for
                         thousands of marine species.
                       </div>
-                      <div className="moreee-menu pt-2 ">
-                        <Link href="">
-                          Shop Now{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.7"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="-5" y1="12" x2="19" y2="12" />
-                            <line x1="15" y1="16" x2="19" y2="12" />
-                            <line x1="15" y1="8" x2="19" y2="12" />
-                          </svg>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop-1"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
                         </Link>
                       </div>
                     </div>
@@ -460,8 +441,12 @@ const Animation = () => {
             src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
             alt="Section 2"
           />
+
           <div className="text_reveal position-absolute">
-            <h2 className="text-center text-white h2">Section 2</h2>
+            <div className="text-center text-white sub-title">
+              Where Luxury Meets Your Senses
+            </div>
+            <h2 className="text-center text-white h2">Exclusive Collection</h2>
             <p className="text-center text-white p">
               This panel gets pinned in a similar way, and has a more involved
               animation that's wrapped in a timeline, fading the background
@@ -480,8 +465,10 @@ const Animation = () => {
       </section>
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center">
-          <h2 className="mb-4 mb-md-2 ">Most Preferred Categories</h2>
-          <div className="w-60 w-md-50">
+          <h2 className="fw-lighter sec-two-h2">
+            Crafted for the Discerning Few
+          </h2>
+          <div className="w-50 pt-5">
             <video muted autoPlay loop className="w-100" preload="none">
               <source
                 type="video/mp4"
@@ -489,13 +476,19 @@ const Animation = () => {
               />
             </video>
           </div>
+          <Link
+            href="/shop-1"
+            className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+          >
+            Discover More
+          </Link>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
-        <div className="panel2 position-relative">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -503,6 +496,7 @@ const Animation = () => {
             alt="Section 3"
           />
           <div className="text_reveal position-absolute">
+            <div className="text-center text-white sub-title">Best Sellers</div>
             <h2 className="text-center text-white h2">Section 3</h2>
             <p className="text-center text-white p">
               This panel gets pinned in a similar way, and has a more involved
@@ -530,7 +524,7 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect">
-        <div className="panel2 position-relative">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -538,6 +532,7 @@ const Animation = () => {
             alt="Section 4"
           />
           <div className="text_reveal position-absolute zoom_img">
+            <div className="text-center text-white sub-title">Best Sellers</div>
             <h2 className="text-center text-white h2">Section 4</h2>
             <p className="text-center text-white p">
               This panel gets pinned in a similar way, and has a more involved
@@ -667,7 +662,8 @@ const Animation = () => {
               />
             </video>
           </div>
-        </div>&nbsp;&nbsp;&nbsp;
+        </div>
+        &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
             <h1>Carefully Selected Ingredients</h1>
@@ -696,8 +692,8 @@ const Animation = () => {
               </div>
             </div>
           </div>
-        </div>&nbsp;&nbsp;&nbsp;
-
+        </div>
+        &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
             <video loop muted autoPlay className="w-100" preload="none">
@@ -760,7 +756,6 @@ const Animation = () => {
             </div>
           </div>
         </div>
-
         {/* <MobileSlider/> */}
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
@@ -799,20 +794,20 @@ const Animation = () => {
           <div className="order-1 order-md-0">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
-                src="https://www.ateliercologne.com/videos/chapters/fifth/art-of-gifting/art-of-boxing-video-16-9.mp4"
+                src="https://www.ahmedalmaghribi.com/wp-content/uploads/2021/08/OUD-SCULPTING.mp4"
                 type="video/mp4"
               />
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
-            <h3 className="mb-3">The Company</h3>
+            <h3 className="mb-3">Quality Since 20+ Years</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
-              sapien dignissim a elementum. Sociis metus, hendrerit mauris id
-              in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
-              sodales orci etiam phasellus lacus id leo. Amet turpis nunc, nulla
-              massa est viverra interdum. Praesent auctor nulla morbi non
-              posuere mattis. Arcu eu id maecenas cras.
+              Quality is of prime importance at Al Maghribi Perfumes. We
+              consider to take the same approach to fragrances that connoisseurs
+              take. Careful consideration is given when bringing together
+              different elements that emit exquisite aromas. At each stage of
+              our production process, we have austere quality control checks
+              that ensure our lofty benchmarks are being met.
             </p>
           </div>
         </div>
@@ -839,7 +834,6 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 d-none d-lg-block"></div>
-      
     </div>
   );
 };

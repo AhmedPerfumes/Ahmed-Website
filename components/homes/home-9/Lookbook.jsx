@@ -22,7 +22,7 @@ export default function Lookbook() {
       <img
         className="h-auto"
         loading="lazy"
-        src= { !isMobile ? "https://www.ahmed-perfume.com/wp-content/uploads/2024/05/web-banner.jpg" : "https://www.ahmed-perfume.com/wp-content/uploads/2024/05/giftset-mobile-banner.jpg" }
+        src= { !isMobile ? "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/05/web-banner.jpg" : "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/05/giftset-mobile-banner.jpg" }
         alt="image"
       />
       {/* <h2

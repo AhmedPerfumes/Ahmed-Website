@@ -15,7 +15,7 @@ export default function Wedding() {
         <div className="row align-items-center">
           <div className="col-md-6">
             <img
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/multiple-products-1.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/multiple-products-1.png"
               className="img-fluid"
               alt="Description of image"
             />
@@ -77,7 +77,7 @@ export default function Wedding() {
 
           <div className="col-md-6">
             <img
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/multiple-products-2.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/multiple-products-2.png"
               className="img-fluid"
               alt="Description of image"
             />
@@ -94,7 +94,7 @@ export default function Wedding() {
           <div className="col-md-6 text-center">
             <img
               width={500}
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-1.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-1.png"
               className="img-fluid mb-3"
               alt="First Wedding Package"
             />
@@ -124,7 +124,7 @@ export default function Wedding() {
           <div className="col-md-6 text-center">
             <img
               width={500}
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-2.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-2.png"
               className="img-fluid mb-3"
               alt="Second Wedding Package"
             />
@@ -155,7 +155,7 @@ export default function Wedding() {
           <div className="col-md-6 text-center">
             <img
               width={500}
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-1.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-1.png"
               className="img-fluid mb-3"
               alt="First Wedding Package"
             />
@@ -183,7 +183,7 @@ export default function Wedding() {
           <div className="col-md-6 text-center">
             <img
               width={500}
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/setup-2.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-2.png"
               className="img-fluid mb-3"
               alt="Second Wedding Package"
             />
@@ -213,7 +213,7 @@ export default function Wedding() {
   <h2 className="fs-2 text-uppercase text-center">Giveaways</h2>
   <div className="row align-items-center mt-4">
     <div className="col-md-4">
-      <img width={350} src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/memories-1.png" className="img-fluid" alt="Giveaway" />
+      <img width={350} src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/memories-1.png" className="img-fluid" alt="Giveaway" />
     </div>
     <div className="col-md-8">
       <div className="row">
@@ -300,7 +300,7 @@ export default function Wedding() {
 
           <div className="col-md-6">
             <img
-              src="https://www.ahmed-perfume.com/wp-content/uploads/2023/11/weeding-min.png"
+              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/weeding-min.png"
               className="img-fluid"
               alt="Description of image"
             />

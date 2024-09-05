@@ -293,7 +293,7 @@ export default function Checkout() {
                   >
                     PayTabs - Credit / Debit Card
                     <Image
-                      src="https://www.ahmed-perfume.com/wp-content/plugins/paytabs-woocommerce/icons/creditcard.svg"
+                      src="https://www.ahmedalmaghribi.com/wp-content/plugins/paytabs-woocommerce/icons/creditcard.svg"
                       width="100"
                       height="20"
                       alt="Cropped Faux leather Jacket"
