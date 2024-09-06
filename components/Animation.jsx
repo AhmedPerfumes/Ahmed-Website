@@ -615,7 +615,7 @@ const Animation = () => {
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Carefully <span>selected ingredients</span>
+              Carefully <span className="s-font">selected ingredients</span>
             </h3>
             <p className="text-center px-3">
               From endemic species to renowned terroirs, we are particularly
@@ -640,7 +640,9 @@ const Animation = () => {
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Carefully <span>selected ingredients</span>
+              Carefully <span className="s-font
+              
+              ">selected ingredients</span>
             </h3>
             <p className="text-center px-3">
               From endemic species to renowned terroirs, we are particularly
