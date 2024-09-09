@@ -33,7 +33,7 @@ const Animation = () => {
       end: "max",
       snap: {
         snapTo: (value, self) => snap(value, self.direction),
-        duration: { min: 0.01, max: 2 },
+        duration: { min: 0.01, max: 0.3 },
         delay: 0,
       },
     });
