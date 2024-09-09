@@ -37,49 +37,45 @@ const Animation = () => {
         delay: 0,
       },
     });
+ // ScrollTrigger 2: horizontal scroll in section ".container"
+ const panels = gsap.utils.toArray(".cont .panel2");
 
-    // ScrollTrigger 2: horizontal scroll in section ".container"
-    const panels = gsap.utils.toArray(".cont .panel2");
+ const panelTween = gsap.to(panels, {
+   xPercent: -100 * (panels.length - 1),
+   ease: "none",
+   scrollTrigger: {
+     trigger: ".cont",
+     start: "top top",
+     end: "+=" + window.innerWidth * 3,
+     // markers: true,
+     pin: true,
+     scrub: 1,
+   },
+ });
+  // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
+  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
 
-    const panelTween = gsap.to(panels, {
-      xPercent: -100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cont",
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        // markers: true,
-        pin: true,
-        scrub: 1,
-      },
-    });
-
-    // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
-    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
-
-    const mobilepanelTween = gsap.to(mobilepanel, {
-      xPercent: -100 * (mobilepanel.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".mobilecontainer",
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        // markers: true,
-        pin: true,
-        scrub: 3,
-        // No snap property here
-      },
-    });
-
-    // ScrollTrigger for each section to get their positions
-    const sectionTriggers = sections.map((section) =>
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        refreshPriority: -1,
-      })
-    );
-
+  const mobilepanelTween = gsap.to(mobilepanel, {
+    xPercent: -100 * (mobilepanel.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".mobilecontainer",
+      start: "top top",
+      end: "+=" + window.innerWidth * 3,
+      // markers: true,
+      pin: true,
+      scrub: 3,
+      // No snap property here
+    },
+  });
+// ScrollTrigger for each section to get their positions
+const sectionTriggers = sections.map((section) =>
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    refreshPriority: -1,
+  })
+);
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
