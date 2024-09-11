@@ -7,9 +7,9 @@ export default function LoginRegister() {
     <section className="login-register container">
       <h2 className="d-none">Login & Register</h2>
       <ul className="nav nav-tabs mb-5" id="login_register" role="tablist">
-        <li className="nav-item" role="presentation">
+        <li className="nav-items" role="presentation">
           <a
-            className="nav-link nav-link_underscore active"
+            className="nav-links nav-link_underscore active"
             id="login-tab"
             data-bs-toggle="tab"
             href="#tab-item-login"
@@ -20,9 +20,9 @@ export default function LoginRegister() {
             Login
           </a>
         </li>
-        <li className="nav-item" role="presentation">
+        <li className="nav-items" role="presentation">
           <a
-            className="nav-link nav-link_underscore"
+            className="nav-links nav-link_underscore"
             id="register-tab"
             data-bs-toggle="tab"
             href="#tab-item-register"
