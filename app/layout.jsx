@@ -82,11 +82,6 @@ export default function RootLayout({ children }) {
         /> */}
       </head>
       <body className={myFont.className}
-        style={{
-          backgroundImage: `url(
-            https://www.ateliercologne.com/us_en/images/backgrounds/background-ivory.jpg
-          )`,
-        }}
       >
         <Svgs />
         <Context>

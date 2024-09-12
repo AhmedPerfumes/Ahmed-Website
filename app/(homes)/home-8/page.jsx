@@ -12,7 +12,10 @@ export const metadata = {
 };
 export default function HomePage8() {
   return (
-    <>
+    <div style={{
+      backgroundImage : `url(
+        https://www.ateliercologne.com/us_en/images/backgrounds/background-ivory.jpg)`
+      }}>
       <Header14 />
       <main>
         {/* <Hero /> */}
@@ -29,8 +32,8 @@ export default function HomePage8() {
 
       <MobileFooter2/>
       </div>
-    </section>
+      </section>
       {/* <Footer14 /> */}
-    </>
+    </div>
   );
 }

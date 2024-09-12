@@ -18,9 +18,12 @@ export default function Header14() {
  const [isLoggedIn, setIsLoggedIn] = useState(false);
  const router = useRouter();
 
+ const [error, setError] = useState(null);
+ const [categoriesSubCategories, setCategoriesSubCategories] = useState([]);
+
  useEffect(() => {
   const token = localStorage.getItem('token');
-  console.log(token);
+  // console.log(token);
   if (token) {
     setIsLoggedIn(true);
   }
@@ -69,6 +72,39 @@ export default function Header14() {
     router.push('/'); // Redirect to login page
   };
 
+  useEffect(() => {
+    getCategoriesSubCategories();
+  }, []);
+
+  async function getCategoriesSubCategories() {
+    
+    try {
+      const response = await fetch('http://localhost/farmart/public/api/productCategories', {
+        method: 'GET',
+      })
+ 
+      if (!response.ok) {
+        throw new Error('Failed to submit the data. Please try again.');
+      }
+ 
+      // Handle response if necessary
+      const data = await response.json();
+      if(data.length > 0) {
+        setError(null);
+        setCategoriesSubCategories(data);
+      } else {
+        setCategoriesSubCategories(null);
+        setError(data);
+      }
+      // console.log(data);
+    } catch (error) {
+      // Capture the error message to display to the user
+      setError(error.message);
+      console.error(error);
+    } finally {
+    }
+  }
+
   return (
     <>
       <header
@@ -88,9 +124,9 @@ export default function Header14() {
               className="swiper-slide text-center"
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                <a className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
+                <Link href="#" className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
                   {elm.description.split(" ").slice(0, 13).join(" ")}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}
@@ -145,9 +181,9 @@ export default function Header14() {
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">
+                      <Link href="#" className="menu-link menu-link_us-s">
                         Rose Noir
-                      </a>
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
                       <Link href="/shop-3" className="menu-link menu-link_us-s">
@@ -155,14 +191,14 @@ export default function Header14() {
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">
+                      <Link href="#" className="menu-link menu-link_us-s">
                         Oud Classic
-                      </a>
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">
+                      <Link href="#" className="menu-link menu-link_us-s">
                         Oud &amp; Roses
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -204,13 +240,13 @@ export default function Header14() {
                 </div>
               </div>
               <div className="logo">
-                <a href="/">
+                <Link href="/">
                   <img
                     src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
                     width="200px"
                     alt="Ahmed"
                   />
-                </a>
+                </Link>
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
                 <form className="header-search search-field d-none d-xxl-flex mx-4">
@@ -244,9 +280,9 @@ export default function Header14() {
                 </form>
 
                 <div className="header-tools__item hover-container">
-                  { !isLoggedIn ? <a className="js-open-aside" href="#">
+                  { !isLoggedIn ? <Link className="js-open-aside" href="#">
                     <User />
-                  </a> : <a href="#" onClick={handleLogout}><FiLogOut size={20}/></a> }
+                  </Link> : <Link href="#" onClick={handleLogout}><FiLogOut size={20}/></Link> }
                 </div>
 
                 <Link className="header-tools__item" href="/account_wishlist">
@@ -288,7 +324,7 @@ export default function Header14() {
             <div className="container">
               <nav className="navigation w-100 d-flex align-items-center justify-content-center py-2">
                 <ul className="navigation__list list-unstyled d-flex my-1">
-                  <Nav />
+                  <Nav categoriesSubCategories={ categoriesSubCategories }/>
                 </ul>
               </nav>
             </div>
@@ -302,27 +338,26 @@ export default function Header14() {
           href="#"
           onClick={() => setIsHeaderOpen((prev) => !prev)}
         >
-<svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z"
-    fill="currentColor"
-  />
-  <path
-    d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z"
-    fill="currentColor"
-  />
-  <path
-    d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z"
-    fill="currentColor"
-  />
-</svg>
-          
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z"
+              fill="currentColor"
+            />
+            <path
+              d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z"
+              fill="currentColor"
+            />
+            <path
+              d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z"
+              fill="currentColor"
+            />
+          </svg>
         </a>
       </nav> : null }
     </>

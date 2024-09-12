@@ -23,12 +23,12 @@ import Image from "next/image";
 import { openModalShopFilter } from "@/utlis/aside";
 import { sortingOptions } from "@/data/products/productCategories";
 
-import { useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Shop10() {
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category");
-  const subcategory = searchParams.get("subcategory");
+  const pathname = usePathname();
+  const category = pathname.split("/")[2];
+  const subcategory = pathname.split("/")[3];
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();

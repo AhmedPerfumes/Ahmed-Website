@@ -32,7 +32,7 @@ const Loader = () => {
 
   return (
     <div className="preloader">
-      <img src="assets/images/preloader.gif" alt="loading" className="preloader-gif" />
+      <img src="/assets/images/preloader.gif" alt="loading" className="preloader-gif" />
     </div>
   );
 };
