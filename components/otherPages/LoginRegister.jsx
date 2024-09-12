@@ -1,8 +1,91 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 export default function LoginRegister() {
+
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+ 
+  async function onRegister(event) {
+    event.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+ 
+    try {
+      const formData = new FormData(event.currentTarget)
+      const response = await fetch('http://localhost/farmart/public/api/signup', {
+        method: 'POST',
+        body: formData,
+      })
+ 
+      if (!response.ok) {
+        throw new Error('Failed to submit the data. Please try again.');
+      }
+ 
+      // Handle response if necessary
+      const data = await response.json();
+      if(data.message.split(' ')[0] != 'OTP') {
+        setError(data.message);
+        setSuccess(null);
+      } else {
+        setSuccess(data.message);
+        setError(null);
+        setTimeout(() => router.push('/verify_otp'), 1000);
+      }
+      console.log(data);
+    } catch (error) {
+      // Capture the error message to display to the user
+      setError(error.message);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function onLogin(event) {
+    event.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+ 
+    try {
+      const formData = new FormData(event.currentTarget)
+      const response = await fetch('http://localhost/farmart/public/api/signin', {
+        method: 'POST',
+        body: formData,
+      })
+ 
+      if (!response.ok) {
+        throw new Error('Failed to submit the data. Please try again.');
+      }
+ 
+      // Handle response if necessary
+      const data = await response.json();
+      if(data.message.split(' ')[0] != 'Login') {
+        setError(data.message);
+        setSuccess(null);
+      } else {
+        setSuccess(data.message);
+        setError(null);
+        localStorage.setItem('token', data.access_token);
+        setTimeout(() => router.push('/'), 1000);
+      }
+      console.log(data);
+    } catch (error) {
+      // Capture the error message to display to the user
+      setError(error.message);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <section className="login-register container">
       <h2 className="d-none">Login & Register</h2>
@@ -41,37 +124,41 @@ export default function LoginRegister() {
           role="tabpanel"
           aria-labelledby="login-tab"
         >
+          {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
+
+          <div className="pb-3"></div>
+
           <div className="login-form">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={onLogin}
               className="needs-validation"
             >
               <div className="form-floating mb-3">
                 <input
-                  name="login_email"
-                  type="email"
+                  name="mobile"
+                  type="number"
                   className="form-control form-control_gray"
-                  placeholder="Email address *"
+                  placeholder="Mobile Number *"
                   required
                 />
-                <label>Email address *</label>
+                <label>Mobile Number *</label>
               </div>
 
               <div className="pb-3"></div>
 
               <div className="form-floating mb-3">
                 <input
-                  name="login_password"
+                  name="password"
                   type="password"
                   className="form-control form-control_gray"
                   id="customerPasswodInput"
-                  placeholder="Password *"
+                  placeholder="********"
                   required
                 />
                 <label htmlFor="customerPasswodInput">Password *</label>
               </div>
 
-              <div className="d-flex align-items-center mb-3 pb-2">
+              {/* <div className="d-flex align-items-center mb-3 pb-2">
                 <div className="form-check mb-0">
                   <input
                     name="remember"
@@ -86,21 +173,22 @@ export default function LoginRegister() {
                 <Link href="/reset_password" className="btn-text ms-auto">
                   Lost password?
                 </Link>
-              </div>
+              </div> */}
 
               <button
                 className="btn btn-primary w-100 text-uppercase"
                 type="submit"
+                disabled={isLoading}
               >
-                Log In
+                {isLoading ? 'Loading...' : 'Login'}
               </button>
 
-              <div className="customer-option mt-4 text-center">
+              {/* <div className="customer-option mt-4 text-center">
                 <span className="text-secondary">No account yet?</span>{" "}
                 <a href="#register-tab" className="btn-text js-show-register">
                   Create Account
                 </a>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
@@ -110,32 +198,37 @@ export default function LoginRegister() {
           role="tabpanel"
           aria-labelledby="register-tab"
         >
+
+          {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
+
+          <div className="pb-3"></div>
+
           <div className="register-form">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={onRegister}
               className="needs-validation"
             >
               <div className="form-floating mb-3">
                 <input
-                  name="register_username"
+                  name="name"
                   type="text"
                   className="form-control form-control_gray"
                   id="customerNameRegisterInput"
-                  placeholder="Username"
+                  placeholder="User Name"
                   required
                 />
-                <label htmlFor="customerNameRegisterInput">Username</label>
+                <label htmlFor="customerNameRegisterInput">User Name</label>
               </div>
 
               <div className="pb-3"></div>
 
               <div className="form-floating mb-3">
                 <input
-                  name="register_email"
+                  name="email"
                   type="email"
                   className="form-control form-control_gray"
                   id="customerEmailRegisterInput"
-                  placeholder="Email address *"
+                  placeholder="Email Address *"
                   required
                 />
                 <label htmlFor="customerEmailRegisterInput">
@@ -147,11 +240,23 @@ export default function LoginRegister() {
 
               <div className="form-floating mb-3">
                 <input
-                  name="register_password"
+                  name="mobile"
+                  type="number"
+                  className="form-control form-control_gray"
+                  id="customerMobileInput"
+                  placeholder="Mobile Number *"
+                  required
+                />
+                <label htmlFor="customerMobileInput">Mobile Number *</label>
+              </div>
+
+              <div className="form-floating mb-3">
+                <input
+                  name="password"
                   type="password"
                   className="form-control form-control_gray"
                   id="customerPasswodRegisterInput"
-                  placeholder="Password *"
+                  placeholder="********"
                   required
                 />
                 <label htmlFor="customerPasswodRegisterInput">Password *</label>
@@ -168,8 +273,9 @@ export default function LoginRegister() {
               <button
                 className="btn btn-primary w-100 text-uppercase"
                 type="submit"
+                disabled={isLoading}
               >
-                Register
+                {isLoading ? 'Loading...' : 'Register'}
               </button>
             </form>
           </div>

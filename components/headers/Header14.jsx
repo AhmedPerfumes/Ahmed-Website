@@ -10,8 +10,22 @@ import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { FiLogOut } from "react-icons/fi";
+import { useRouter } from 'next/navigation';
 
 export default function Header14() {
+
+ const [isLoggedIn, setIsLoggedIn] = useState(false);
+ const router = useRouter();
+
+ useEffect(() => {
+  const token = localStorage.getItem('token');
+  console.log(token);
+  if (token) {
+    setIsLoggedIn(true);
+  }
+ }, [isLoggedIn]);
+
   const pathname = usePathname();
 
   const swiperOptions = {
@@ -47,6 +61,12 @@ export default function Header14() {
     overflow: isHeaderOpen ? "visible" : "hidden",
     maxHeight: isHeaderOpen ? "1000px" : "0",
     opacity: isHeaderOpen ? 1 : 1,
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    router.push('/'); // Redirect to login page
   };
 
   return (
@@ -224,9 +244,9 @@ export default function Header14() {
                 </form>
 
                 <div className="header-tools__item hover-container">
-                  <a className="js-open-aside" href="#">
+                  { !isLoggedIn ? <a className="js-open-aside" href="#">
                     <User />
-                  </a>
+                  </a> : <a href="#" onClick={handleLogout}><FiLogOut size={20}/></a> }
                 </div>
 
                 <Link className="header-tools__item" href="/account_wishlist">
