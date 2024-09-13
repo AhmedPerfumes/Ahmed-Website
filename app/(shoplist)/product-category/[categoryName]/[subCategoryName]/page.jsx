@@ -38,7 +38,7 @@ const ShopPage8 = async ({ params }) => {
         <main className="page-wrapper pt-0">
           <Categories description={ data.description }/>
           <div className="mb-4 pb-lg-3"></div>
-          <Shop10 />
+          <Shop10 products={ data.products }/>
         </main>
         <div className="mb-5 pb-xl-5"></div>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>

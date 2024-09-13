@@ -3,8 +3,12 @@ import { categories2 } from "@/data/categories";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
-export default function Categories() {
+export default function Categories({ params, subCategories }) {
+
+  const categoryName = usePathname().split("/")[2];
+
   const handleMouseOver = (e) => {
     const tooltip = document.getElementById("video-tooltip");
     const tooltipVideo = document.getElementById("tooltip-video");
@@ -81,11 +85,11 @@ export default function Categories() {
     <section className="category-carousel container">
       <div className="position-relative">
         <Swiper {...swiperOptions} className="swiper-container js-swiper-slider">
-          {categories2.map((elm, i) => (
+          {subCategories.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide text-center">
               <a
                 key={i}
-                href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                href={`/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
                 className="shop-categories__item mb-3"
               >
                 <video
@@ -96,22 +100,20 @@ export default function Categories() {
                   autoPlay
                   loop
                   muted
-                  data-video-src={elm.videoSrc}
+                  data-video-src={`http://localhost/farmart/public/storage/${ elm.video}`}
                   onMouseOver={(e) => handleMouseOver(e)}
                   onMouseOut={handleMouseOut}
                 >
-                  <source src={elm.videoSrc} type="video/mp4" width={200} />
+                  <source src={`http://localhost/farmart/public/storage/${ elm.video}`} type="video/mp4" width={200} />
                 </video>
               </a>
               <div className="text-center">
                 <a
-                  href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                  href={`/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
                   className="menu-link fw-medium"
                   key={i}
                 >
-                  {elm.category.split(" ")[0]}
-                  <br />
-                  {elm.category.split(" ")[1]}
+                  {elm.name}
                 </a>
               </div>
             </SwiperSlide>

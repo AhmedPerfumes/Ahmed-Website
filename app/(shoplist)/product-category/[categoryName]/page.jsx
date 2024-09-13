@@ -17,7 +17,7 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName) {
-  const response = await fetch(`http://localhost/farmart/public/api/products?category=${categoryName.split("-").join(" ").toUpperCase()}`);
+  const response = await fetch(`http://localhost/farmart/public/api/products?category=${categoryName.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
@@ -36,9 +36,9 @@ const ShopPage8 = async ({ params }) => {
         <Header14 />
         <Banner5 image={ data.image }/>
         <main className="page-wrapper pt-0">
-          <Categories description={ data.description }/>
+          <Categories description={ data.description } subCategories={ data.productSubCategories }/>
           <div className="mb-4 pb-lg-3"></div>
-          <Shop10 />
+          <Shop10 subCategories={ data.productSubCategories }/>
         </main>
         <div className="mb-5 pb-xl-5"></div>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>

@@ -25,7 +25,7 @@ import { sortingOptions } from "@/data/products/productCategories";
 
 import { usePathname } from "next/navigation";
 
-export default function Shop10() {
+export default function Shop10({ subCategories, products }) {
   const pathname = usePathname();
   const category = pathname.split("/")[2];
   const subcategory = pathname.split("/")[3];
@@ -104,23 +104,31 @@ export default function Shop10() {
       <div className="products-grid">
         <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+        {/* <h2 className="section-title fw-normal mb-3 pb-2 text-center">
           {subcategory == null ? "Oriental Fragrance" : ""}
         </h2>
-        <Style2 />
-        {subcategory == null ? (
+        <Style2 /> */}
+        {/* {subcategory == null ? ( */}
           <>
-            <div className="border-bottom"></div>
+            {/* <div className="border-bottom"></div> */}
+          { subCategories && subCategories.map((subCategory, ind) => {
+              return (
+                <div key={ind}><div className="mb-4 mb-xl-5"></div>
+                <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+                  { subCategory.name }
+                </h2>
+                <Style2 products={ subCategory.products }/>
+                <div className="border-bottom"></div></div>
+              )
+            })
+          }
 
-            <div className="mb-4 mb-xl-5"></div>
-
-            <h2 className="section-title fw-normal mb-3 pb-2 text-center">
-              Occidental Fragrance
-            </h2>
-            <Style2 />
-            <div className="border-bottom"></div>
-
-            <div className="mb-4 mb-xl-5"></div>
+          { products &&
+                <><div className="mb-4 mb-xl-5"></div>
+                <Style2 products={ products }/>
+                <div className="border-bottom"></div></>
+          }
+            {/* <div className="mb-4 mb-xl-5"></div>
 
             <h2 className="section-title fw-normal mb-3 pb-2 text-center">
               Women Fragrances
@@ -141,9 +149,9 @@ export default function Shop10() {
             <h2 className="section-title fw-normal mb-3 pb-2 text-center">
               Unisex Fragrance
             </h2>
-            <Style2 />
+            <Style2 /> */}
           </>
-        ) : null}
+        {/*) : null}*/}
 
         {/* <div className="mb-4 mb-xl-5"></div>
 

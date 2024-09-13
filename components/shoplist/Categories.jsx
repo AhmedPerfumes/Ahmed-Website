@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 import Categoriess from "@/components/homes/home-3/Categories";
 
-export default function Categories({ description }) {
+export default function Categories({ description, subCategories }) {
   const pathname = usePathname();
   const category = pathname.split("/")[2];
   const subcategory = pathname.split("/")[3];
@@ -26,7 +26,7 @@ export default function Categories({ description }) {
           </div>
         </div>
       </section>
-      {subcategory == null ? <Categoriess /> : null}
+      {subcategory == null ? <Categoriess subCategories={ subCategories }/> : null}
     </>
   );
 }
