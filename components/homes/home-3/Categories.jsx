@@ -100,11 +100,11 @@ export default function Categories({ params, subCategories }) {
                   autoPlay
                   loop
                   muted
-                  data-video-src={`http://localhost/farmart/public/storage/${ elm.video}`}
+                  data-video-src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.video}`}
                   onMouseOver={(e) => handleMouseOver(e)}
                   onMouseOut={handleMouseOut}
                 >
-                  <source src={`http://localhost/farmart/public/storage/${ elm.video}`} type="video/mp4" width={200} />
+                  <source src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.video}`} type="video/mp4" width={200} />
                 </video>
               </a>
               <div className="text-center">

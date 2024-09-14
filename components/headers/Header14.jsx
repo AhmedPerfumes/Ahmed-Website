@@ -11,36 +11,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
+import { useMenu } from '../../context/MenuContext';
+import { useUser } from '../../context/UserContext';
+
 
 export default function Header14() {
-
- const [isLoggedIn, setIsLoggedIn] = useState(false);
- const router = useRouter();
-
- const [error, setError] = useState(null);
- const [categoriesSubCategories, setCategoriesSubCategories] = useState([]);
-
- useEffect(() => {
-  const token = localStorage.getItem('token');
-  // console.log(token);
-  if (token) {
-    setIsLoggedIn(true);
-  }
- }, [isLoggedIn]);
-
-  const pathname = usePathname();
-
-  const swiperOptions = {
-    autoplay: {
-      delay: 5000,
-    },
-    modules: [Autoplay, Navigation, EffectFade],
-    pagination: false,
-    slidesPerView: 1,
-    effect: "fade",
-    loop: true,
-  };
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
@@ -58,6 +34,49 @@ export default function Header14() {
     };
   }, [isHeaderOpen]);
 
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     // console.log(token);
+//     if (token) {
+//       setIsLoggedIn(true);
+//     }
+//  }, [isLoggedIn]);
+
+//  const router = useRouter();
+
+const handleLogout = (e) => {
+  e.preventDefault();
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '/';
+};
+
+ const pathname = usePathname();
+
+ const { isLoggedIn } = useUser();
+
+ const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
+
+  if (isMenuLoading) {
+    return <div></div>;
+  }
+  if (error) {
+    return <div>{ error }</div>;
+  }
+
+  const swiperOptions = {
+    autoplay: {
+      delay: 5000,
+    },
+    modules: [Autoplay, Navigation, EffectFade],
+    pagination: false,
+    slidesPerView: 1,
+    effect: "fade",
+    loop: true,
+  };
+
   //Inline style for transitions
   const headerStyle = {
     transition: "max-height 0.8s ease-in-out, opacity 0.5s ease-in-out",
@@ -65,45 +84,6 @@ export default function Header14() {
     maxHeight: isHeaderOpen ? "1000px" : "0",
     opacity: isHeaderOpen ? 1 : 1,
   };
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem('token');
-    router.push('/'); // Redirect to login page
-  };
-
-  useEffect(() => {
-    getCategoriesSubCategories();
-  }, []);
-
-  async function getCategoriesSubCategories() {
-    
-    try {
-      const response = await fetch('http://localhost/farmart/public/api/productCategories', {
-        method: 'GET',
-      })
- 
-      if (!response.ok) {
-        throw new Error('Failed to submit the data. Please try again.');
-      }
- 
-      // Handle response if necessary
-      const data = await response.json();
-      if(data.length > 0) {
-        setError(null);
-        setCategoriesSubCategories(data);
-      } else {
-        setCategoriesSubCategories(null);
-        setError(data);
-      }
-      // console.log(data);
-    } catch (error) {
-      // Capture the error message to display to the user
-      setError(error.message);
-      console.error(error);
-    } finally {
-    }
-  }
 
   return (
     <>

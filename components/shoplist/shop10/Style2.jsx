@@ -29,7 +29,7 @@ export default function Style2({ products }) {
   
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
-  const { setQuickViewItem } = useContextElement();
+  const { addProductToQuickView } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   return (
     <div
@@ -57,7 +57,7 @@ export default function Style2({ products }) {
                         <Link href={`/product16_v11/${elm.product_id}`}>
                           <Image
                             loading="lazy"
-                            src={`http://localhost/farmart/public/storage/${image}`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
                             width="330"
                             height="400"
                             alt="Cropped Faux leather Jacket"
@@ -97,7 +97,7 @@ export default function Style2({ products }) {
                     <Link href={`/product16_v11/${elm.product_id}`}>
                       <Image
                         loading="lazy"
-                        src={`http://localhost/farmart/public/storage/${elm.image}`}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
                         width="500"
                         height="0"
                         layout="intrinsic"
@@ -112,7 +112,7 @@ export default function Style2({ products }) {
                       <p className="mb-4 text-white">Exclusive Launch</p>
                       <a
                         className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
-                        href="/product16_v11/1"
+                        href={`/product16_v11/${elm.product_id}`}
                       >
                         <span>Explore</span>
                       </a>
@@ -122,25 +122,27 @@ export default function Style2({ products }) {
               }
               {i != 1 ? (
                 <div className="anim_appear-bottom position-absolute bottom-0 start-0 w-100 d-none d-sm-flex align-items-center">
-                  <button
-                    className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm.product_id)}
-                    title={
-                      isAddedToCartProducts(elm.product_id)
-                        ? "Already Added"
-                        : "Add to Cart"
-                    }
-                  >
-                    {isAddedToCartProducts(elm.product_id)
-                      ? "Already Added"
-                      : "Add To Cart"}
-                  </button>
+                  {
+                    isAddedToCartProducts(elm.product_id) ? 
+                      <button
+                        className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                        title="Already Added"
+                      >
+                      Already Added
+                    </button> : <button
+                      className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                      onClick={() => addProductToCart(elm)}
+                      title="Add to Cart"
+                    >
+                      Add To Cart
+                    </button>
+                  }
                   <button
                     className="btn btn-primary flex-grow-1 fs-base ps-0 pe-3 pe-xxl-4 border-0 text-uppercase fw-medium js-quick-view"
                     data-bs-toggle="modal"
                     data-bs-target="#quickView"
                     title="Quick view"
-                    onClick={() => setQuickViewItem(elm)}
+                    onClick={() => addProductToQuickView(elm)}
                   >
                     Quick View
                   </button>
@@ -151,7 +153,7 @@ export default function Style2({ products }) {
                   className={`pc__btn-wl position-absolute bg-body rounded-circle border-0 text-primary js-add-wishlist ${
                     isAddedtoWishlist(elm.product_id) ? "active" : ""
                   }`}
-                  onClick={() => toggleWishlist(elm.product_id)}
+                  onClick={() => toggleWishlist(elm)}
                   title="Add To Wishlist"
                 >
                   <svg
@@ -170,7 +172,7 @@ export default function Style2({ products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <Link href={`/product1_simple/${elm.product_id}`}>{elm.product_name}</Link>
+                  <Link href={`/product16_v11/${elm.product_id}`}>{elm.product_name.split("&amp;").join(" ")}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   <span className="money price">{elm.price}د.إ</span>

@@ -19,22 +19,24 @@ export default function Context({ children }) {
     setTotalPrice(subtotal);
   }, [cartProducts]);
 
-  const addProductToCart = (id) => {
-    if (!cartProducts.filter((elm) => elm.id == id)[0]) {
-      const item = {
-        ...allProducts.filter((elm) => elm.id == id)[0],
-        quantity: 1,
-      };
-      setCartProducts((pre) => [...pre, item]);
+  const addProductToQuickView = (product) => {
+    setQuickViewItem(product);
+  };
 
-      document
-        .getElementById("cartDrawerOverlay")
-        .classList.add("page-overlay_visible");
-      document.getElementById("cartDrawer").classList.add("aside_visible");
-    }
+  const addProductToCart = (product) => {
+    const item = {
+      ...product,
+      quantity: 1,
+    };
+    setCartProducts((prevCart) => [...prevCart, item]);
+
+    document
+      .getElementById("cartDrawerOverlay")
+      .classList.add("page-overlay_visible");
+    document.getElementById("cartDrawer").classList.add("aside_visible");
   };
   const isAddedToCartProducts = (id) => {
-    if (cartProducts.filter((elm) => elm.id == id)[0]) {
+    if (cartProducts.filter((elm) => elm.product_id == id)[0]) {
       return true;
     }
     return false;
@@ -85,6 +87,7 @@ export default function Context({ children }) {
     quickViewItem,
     wishList,
     setQuickViewItem,
+    addProductToQuickView
   };
   return (
     <dataContext.Provider value={contextElement}>

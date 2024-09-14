@@ -9,6 +9,8 @@ import LoginFormPopup from "@/components/common/LoginFormPopup";
 import { useEffect } from "react";
 import ScrollTop from "@/components/common/ScrollTop";
 import Context from "@/context/Context";
+import { MenuProvider } from '@/context/MenuContext';
+import { UserProvider } from '@/context/UserContext';
 import QuickView from "@/components/modals/QuickView";
 import CartDrawer from "@/components/shopCartandCheckout/CartDrawer";
 import SiteMap from "@/components/modals/SiteMap";
@@ -85,23 +87,27 @@ export default function RootLayout({ children }) {
       >
         <Svgs />
         <Context>
-          <MobileHeader />
-          {children}
-          <MobileFooter1 />
-          {/* //modals and asides */}
-          <LoginFormPopup />
-          <QuickView />
-          {/* <NewsLetter /> */}
-          {/* <CookieContainer /> */}
-          <SizeGuide />
-          <Delivery />
-          <CartDrawer />
-          <SiteMap />
-          <CustomerLogin />
-          <ShopFilter />
-          <ProductDescription />
-          <ProductAdditionalInformation />
-          <ProductReviews />
+          <UserProvider>
+            <MenuProvider>
+              <MobileHeader />
+              {children}
+              <MobileFooter1 />
+              {/* //modals and asides */}
+              <LoginFormPopup />
+              <QuickView />
+              {/* <NewsLetter /> */}
+              {/* <CookieContainer /> */}
+              <SizeGuide />
+              <Delivery />
+              <CartDrawer />
+              <SiteMap />
+              <CustomerLogin />
+              <ShopFilter />
+              <ProductDescription />
+              <ProductAdditionalInformation />
+              <ProductReviews />
+            </MenuProvider>
+          </UserProvider>
         </Context>
         <div className="page-overlay" id="pageOverlay"></div>
         <ScrollTop />

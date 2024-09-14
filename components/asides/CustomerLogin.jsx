@@ -3,7 +3,7 @@
 import { closeModalUserlogin } from "@/utlis/aside";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 export default function CustomerLogin() {
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function CustomerLogin() {
     };
   }, []);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ export default function CustomerLogin() {
  
     try {
       const formData = new FormData(event.currentTarget)
-      const response = await fetch('http://localhost/farmart/public/api/signup', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signup`, {
         method: 'POST',
         body: formData,
       })
@@ -67,7 +67,7 @@ export default function CustomerLogin() {
  
     try {
       const formData = new FormData(event.currentTarget)
-      const response = await fetch('http://localhost/farmart/public/api/signin', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signin`, {
         method: 'POST',
         body: formData,
       })
@@ -85,7 +85,8 @@ export default function CustomerLogin() {
         setSuccess(data.message);
         setError(null);
         localStorage.setItem('token', data.access_token);
-        setTimeout(() => router.push('/'), 1000);
+        localStorage.setItem('user', btoa(JSON.stringify(data.data)));
+        setTimeout(() => window.location.href='/', 1000);
       }
       console.log(data);
     } catch (error) {

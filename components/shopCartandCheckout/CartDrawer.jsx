@@ -16,7 +16,7 @@ export default function CartDrawer() {
   };
   const setQuantity = (id, quantity) => {
     if (quantity >= 1) {
-      const item = cartProducts.filter((elm) => elm.id == id)[0];
+      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
       const items = [...cartProducts];
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
@@ -25,7 +25,7 @@ export default function CartDrawer() {
     }
   };
   const removeItem = (id) => {
-    setCartProducts((pre) => [...pre.filter((elm) => elm.id != id)]);
+    setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };
   useEffect(() => {
     closeCart();
@@ -69,27 +69,27 @@ export default function CartDrawer() {
                       width={330}
                       height={400}
                       style={{ height: "fit-content" }}
-                      src={elm.imgSrc}
+                      src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
                       alt="image"
                     />
                   </div>
                   <div className="cart-drawer-item__info flex-grow-1">
                     <h6 className="cart-drawer-item__title fw-normal">
-                      {elm.title}
+                      {elm.product_name}
                     </h6>
-                    <p className="cart-drawer-item__option text-secondary">
+                    {/* <p className="cart-drawer-item__option text-secondary">
                       Color: Yellow
                     </p>
                     <p className="cart-drawer-item__option text-secondary">
                       Size: L
-                    </p>
+                    </p> */}
                     <div className="d-flex align-items-center justify-content-between mt-1">
                       <div className="qty-control position-relative">
                         <input
                           type="number"
                           name="quantity"
                           onChange={(e) =>
-                            setQuantity(elm.id, e.target.value / 1)
+                            setQuantity(elm.product_id, e.target.value / 1)
                           }
                           value={elm.quantity}
                           min="1"
@@ -97,14 +97,14 @@ export default function CartDrawer() {
                         />
                         <div
                           onClick={() => {
-                            setQuantity(elm.id, elm.quantity - 1);
+                            setQuantity(elm.product_id, elm.quantity - 1);
                           }}
                           className="qty-control__reduce text-start"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.id, elm.quantity + 1)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1)}
                           className="qty-control__increase text-end"
                         >
                           +
@@ -112,13 +112,13 @@ export default function CartDrawer() {
                       </div>
 
                       <span className="cart-drawer-item__price money price">
-                        ${elm.price * elm.quantity}
+                        {elm.price * elm.quantity}د.إ
                       </span>
                     </div>
                   </div>
 
                   <button
-                    onClick={() => removeItem(elm.id)}
+                    onClick={() => removeItem(elm.product_id)}
                     className="btn-close-xs position-absolute top-0 end-0 js-cart-item-remove"
                   ></button>
                 </div>
@@ -140,7 +140,7 @@ export default function CartDrawer() {
               {totalPrice < freeShippingThreshold ? (
                 <div>
                   <p>
-                    Spend ${freeShippingThreshold - totalPrice} more to get free
+                    Spend {freeShippingThreshold - totalPrice}د.إ more to get free
                     shipping! ⛟
                   </p>
                   <div className="progress">
@@ -161,7 +161,7 @@ export default function CartDrawer() {
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">SUBTOTAL:</h6>
-            <span className="cart-subtotal fw-medium">${totalPrice}</span>
+            <span className="cart-subtotal fw-medium">{totalPrice}د.إ</span>
           </div>
           {cartProducts.length ? (
             <>

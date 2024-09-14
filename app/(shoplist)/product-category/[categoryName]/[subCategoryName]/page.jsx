@@ -17,7 +17,7 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName, subCategoryName) {
-  const response = await fetch(`http://localhost/farmart/public/api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

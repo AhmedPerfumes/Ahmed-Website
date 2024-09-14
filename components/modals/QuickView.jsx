@@ -26,22 +26,22 @@ export default function QuickView() {
     },
   };
   const swiperSlideItems = [
-    quickViewItem.imgSrc,
-    quickViewItem.imgSrc,
-    quickViewItem.imgSrc,
-    quickViewItem.imgSrc,
+    // quickViewItem.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${quickViewItem.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(quickViewItem.images)[0]}`,
+    // quickViewItem.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${quickViewItem.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(quickViewItem.images)[0]}`,
+    // quickViewItem.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${quickViewItem.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(quickViewItem.images)[0]}`,
+    // quickViewItem.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${quickViewItem.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(quickViewItem.images)[0]}`,
   ];
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
 
   const isIncludeCard = () => {
-    const item = cartProducts.filter((elm) => elm.id == quickViewItem.id)[0];
+    const item = cartProducts.filter((elm) => elm.product_id == quickViewItem.product_id)[0];
     return item;
   };
   const setQuantityCartItem = (id, quantity) => {
     if (isIncludeCard()) {
       if (quantity >= 1) {
-        const item = cartProducts.filter((elm) => elm.id == id)[0];
+        const item = cartProducts.filter((elm) => elm.product_id == id)[0];
         const items = [...cartProducts];
         const itemIndex = items.indexOf(item);
         item.quantity = quantity;
@@ -76,7 +76,7 @@ export default function QuickView() {
                   {...swiperOptions}
                   className="swiper-container js-swiper-slider"
                 >
-                  {swiperSlideItems.map((elm, i) => (
+                  {JSON.parse(quickViewItem.images).map((image, i) => (
                     <SwiperSlide
                       key={i}
                       className="swiper-slide product-single__image-item"
@@ -90,7 +90,7 @@ export default function QuickView() {
                           height: "100%",
                           objectFit: "contain",
                         }}
-                        src={elm}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
                         alt="image"
                       />
                     </SwiperSlide>
@@ -120,20 +120,16 @@ export default function QuickView() {
               </div>
             </div>
             <div className="product-single__detail">
-              <h1 className="product-single__name">{quickViewItem.title}</h1>
+              <h1 className="product-single__name">{quickViewItem.product_name.split("&amp;").join(" ")}</h1>
               <div className="product-single__price">
-                <span className="current-price">${quickViewItem.price}</span>
+                <span className="current-price">{quickViewItem.price}د.إ</span>
               </div>
               <div className="product-single__short-desc">
-                <p>
-                  Phasellus sed volutpat orci. Fusce eget lore mauris vehicula
-                  elementum gravida nec dui. Aenean aliquam varius ipsum, non
-                  ultricies tellus sodales eu. Donec dignissim viverra nunc, ut
-                  aliquet magna posuere eget.
-                </p>
+                <div dangerouslySetInnerHTML={{ __html: quickViewItem.description }}>
+                </div>
               </div>
               <form onSubmit={(e) => e.preventDefault()}>
-                <div className="product-single__swatches">
+                {/* <div className="product-single__swatches">
                   <div className="product-swatch text-swatches">
                     <label>Sizes</label>
                     <div className="swatch-list">
@@ -154,7 +150,7 @@ export default function QuickView() {
                       <Colors />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="product-single__addtocart">
                   <div className="qty-control position-relative">
                     <input
@@ -166,14 +162,14 @@ export default function QuickView() {
                       readOnly
                       min="1"
                       onChange={(e) =>
-                        setQuantityCartItem(quickViewItem.id, e.target.value)
+                        setQuantityCartItem(quickViewItem.product_id, e.target.value)
                       }
                       className="qty-control__number text-center"
                     />
                     <div
                       onClick={() =>
                         setQuantityCartItem(
-                          quickViewItem.id,
+                          quickViewItem.product_id,
                           isIncludeCard()?.quantity - 1 || quantity - 1
                         )
                       }
@@ -184,7 +180,7 @@ export default function QuickView() {
                     <div
                       onClick={() =>
                         setQuantityCartItem(
-                          quickViewItem.id,
+                          quickViewItem.product_id,
                           isIncludeCard()?.quantity + 1 || quantity + 1
                         )
                       }
@@ -198,7 +194,7 @@ export default function QuickView() {
                     onClick={() => addToCart()}
                     className="btn btn-primary btn-addtocart js-open-aside"
                   >
-                    {isAddedToCartProducts(quickViewItem.id)
+                    {isAddedToCartProducts(quickViewItem.product_id)
                       ? "Already Added"
                       : "Add To Cart"}
                   </button>
@@ -208,9 +204,9 @@ export default function QuickView() {
                 <a
                   href="#"
                   className={`menu-link menu-link_us-s add-to-wishlist  ${
-                    isAddedtoWishlist(quickViewItem.id) ? "active" : ""
+                    isAddedtoWishlist(quickViewItem.product_id) ? "active" : ""
                   }`}
-                  onClick={() => toggleWishlist(quickViewItem.id)}
+                  onClick={() => toggleWishlist(quickViewItem.product_id)}
                 >
                   <svg
                     width="16"
@@ -223,9 +219,9 @@ export default function QuickView() {
                   </svg>
                   <span>Add to Wishlist</span>
                 </a>
-                <ShareComponent title={quickViewItem.title} />
+                <ShareComponent title={quickViewItem.product_name.split("&amp;").join(" ")} />
               </div>
-              <div className="product-single__meta-info mb-0">
+              {/* <div className="product-single__meta-info mb-0">
                 <div className="meta-item">
                   <label>SKU:</label>
                   <span>N/A</span>
@@ -238,7 +234,7 @@ export default function QuickView() {
                   <label>Tags:</label>
                   <span>biker, black, bomber, leather</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

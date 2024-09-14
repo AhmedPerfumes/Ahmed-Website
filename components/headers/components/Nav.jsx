@@ -60,7 +60,7 @@ export default function Nav({ categoriesSubCategories }) {
     return (
       <li className="navigation__item" key={i}>
         <Link
-          href={`/product-category/${item.name.split(' ').join('-').toLowerCase()}`}
+          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
           className={`navigation__link
           ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           `}
@@ -78,7 +78,7 @@ export default function Nav({ categoriesSubCategories }) {
                   {item.productSubCategories.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
                       <Link
-                        href={`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`}
+                        href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
                         className={`menu-link menu-link_us-s ${
                           isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                         }`}
@@ -96,7 +96,7 @@ export default function Nav({ categoriesSubCategories }) {
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
-                      src={`http://localhost/farmart/public/storage/${item.icon_image}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.icon_image}`}
                       width={902}
                       height={990}
                       style={{ height: "fit-content" }}
@@ -112,7 +112,7 @@ export default function Nav({ categoriesSubCategories }) {
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
-                      src={`http://localhost/farmart/public/storage/${item.menu_image2}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.menu_image2}`}
                       width={902}
                       height={990}
                       style={{ height: "fit-content" }}

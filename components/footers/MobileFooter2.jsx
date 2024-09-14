@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionActions from "@mui/material/AccordionActions";
@@ -17,7 +19,19 @@ import {
 
 import Button from "@mui/material/Button";
 
+import { useMenu } from '../../context/MenuContext';
+
 export default function MobileFooter2() {
+
+  const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
+
+  if (isMenuLoading) {
+    return <div></div>;
+  }
+  if (error) {
+    return <div>{ error }</div>;
+  }
+
   return (
     <div className="mb-5">
       <div className="footer-column footer-newsletter col-12 mb-4 mb-lg-0 d-flex flex-column align-items-center">
@@ -145,13 +159,13 @@ export default function MobileFooter2() {
           }}
         >
           <ul className="sub-menu__list list-unstyled">
-            {footerLinks2.map((elm, i) => (
+            {categoriesSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
                 <Link
-                  href={elm.href}
+                  href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
                   className="menu-link menu-link_us-s text-white"
                 >
-                  {elm.text}
+                  {elm.name}
                 </Link>
               </li>
             ))}

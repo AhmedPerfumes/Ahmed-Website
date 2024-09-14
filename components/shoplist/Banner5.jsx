@@ -17,7 +17,7 @@ export default function Banner5({ image }) {
           >
             <Image
               loading="lazy"
-              src={`http://localhost/farmart/public/storage/${image}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
               width="1920"
               height="1000"
               alt="Pattern"
