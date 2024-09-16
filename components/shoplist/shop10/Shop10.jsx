@@ -30,6 +30,8 @@ export default function Shop10({ subCategories, products }) {
   const category = pathname.split("/")[2];
   const subcategory = pathname.split("/")[3];
 
+  // console.log('0000111', category, subcategory);
+
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -117,7 +119,7 @@ export default function Shop10({ subCategories, products }) {
                 <h2 className="section-title fw-normal mb-3 pb-2 text-center">
                   { subCategory.name }
                 </h2>
-                <Style2 products={ subCategory.products }/>
+                <Style2 category={ category } subcategory={ subCategory.name } products={ subCategory.products }/>
                 <div className="border-bottom"></div></div>
               )
             })
@@ -125,7 +127,7 @@ export default function Shop10({ subCategories, products }) {
 
           { products &&
                 <><div className="mb-4 mb-xl-5"></div>
-                <Style2 products={ products }/>
+                <Style2 category={ category } subcategory={ subcategory } products={ products }/>
                 <div className="border-bottom"></div></>
           }
             {/* <div className="mb-4 mb-xl-5"></div>

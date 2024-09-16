@@ -9,25 +9,25 @@ import "photoswipe/dist/photoswipe.css";
 
 import { Gallery, Item } from "react-photoswipe-gallery";
 
-const images = [
-  {
-    imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dw200bc326/primary_packshot_3/2024/FRAGRANCE/L__HOMME_IDEAL_-_EDP_100ml-263403.jpg?sw=700&sh=700&sfrm=png",
-  },
-  {
-    imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwa899995d/primary_packshot_3/2024/FRAGRANCE/LES-MASCULINS-24_SECONDARY-VISUAL_PDP_KV_LHI.jpg?sw=700&sh=700&sfrm=jpg",
-  },
-  {
-    imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwdb8fe874/primary_packshot_3/2024/FRAGRANCE/G030522_3346470305229_H-IDEAL-24-PARFUM-SPR-100ML_1.jpg?sw=700&sh=700&sfrm=png",
-  },
-  {
-    imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2023/02/hubb-o-salam-3.jpg",
-  },
-];
+// const images = [
+//   {
+//     imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dw200bc326/primary_packshot_3/2024/FRAGRANCE/L__HOMME_IDEAL_-_EDP_100ml-263403.jpg?sw=700&sh=700&sfrm=png",
+//   },
+//   {
+//     imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwa899995d/primary_packshot_3/2024/FRAGRANCE/LES-MASCULINS-24_SECONDARY-VISUAL_PDP_KV_LHI.jpg?sw=700&sh=700&sfrm=jpg",
+//   },
+//   {
+//     imgSrc: "https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Sites-GSA_master_catalog/default/dwdb8fe874/primary_packshot_3/2024/FRAGRANCE/G030522_3346470305229_H-IDEAL-24-PARFUM-SPR-100ML_1.jpg?sw=700&sh=700&sfrm=png",
+//   },
+//   {
+//     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2023/02/hubb-o-salam-3.jpg",
+//   },
+// ];
 
 import Image from "next/image";
 import tippy from "tippy.js";
 
-export default function Slider4() {
+export default function Slider4({ product }) {
   useEffect(() => {
     tippy("[data-tippy-content]");
   }, []);
@@ -71,7 +71,7 @@ export default function Slider4() {
             className="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events"
             style={{ maxWidth: "100%", overflow: "hidden" }}
           >
-            {images.map((elm, i) => (
+            {JSON.parse(product.images).map((elm, i) => (
               <SwiperSlide
                 key={i}
                 className="swiper-slide product-single__image-item magnifier-container"
@@ -80,8 +80,8 @@ export default function Slider4() {
                 onMouseOver={handleMouseOver}
               >
                 <Item
-                  original={elm.imgSrc}
-                  thumbnail={elm.imgSrc}
+                  original={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm}`}
+                  thumbnail={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm}`}
                   width="674"
                   height="674"
                 >
@@ -90,7 +90,7 @@ export default function Slider4() {
                       <img
                         loading="lazy"
                         className="h-auto w-100"
-                        src={elm.imgSrc}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm}`}
                         width="674"
                         height="674"
                         alt="image"
@@ -151,7 +151,7 @@ export default function Slider4() {
           onSwiper={setThumbsSwiper}
           slidesPerView={4}
         >
-          {images.map((elm, i) => (
+          {JSON.parse(product.images).map((elm, i) => (
             <SwiperSlide
               key={i}
               className="swiper-slide product-single__image-item"
@@ -159,7 +159,7 @@ export default function Slider4() {
               <img
                 loading="lazy"
                 className="h-auto"
-                src={elm.imgSrc}
+                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm}`}
                 width="104"
                 height="104"
                 alt="image"

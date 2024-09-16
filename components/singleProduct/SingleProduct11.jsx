@@ -11,18 +11,18 @@ import Clolor2 from "./Clolor2";
 import Link from "next/link";
 import ShareComponent from "../common/ShareComponent";
 import { useContextElement } from "@/context/Context";
-export default function SingleProduct11({ product }) {
+export default function SingleProduct11({ category, subcategory, product }) {
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
 
   const isIncludeCard = () => {
-    const item = cartProducts.filter((elm) => elm.id == product.id)[0];
+    const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
     return item;
   };
   const setQuantityCartItem = (id, quantity) => {
     if (isIncludeCard()) {
       if (quantity >= 1) {
-        const item = cartProducts.filter((elm) => elm.id == id)[0];
+        const item = cartProducts.filter((elm) => elm.product_id == id)[0];
         const items = [...cartProducts];
         const itemIndex = items.indexOf(item);
         item.quantity = quantity;
@@ -45,16 +45,16 @@ export default function SingleProduct11({ product }) {
       <section className="product-single container product-single__type-9">
         <div className="row">
           <div className="col-lg-7">
-            <Slider4 />
+            <Slider4 product={ product }/>
           </div>
           <div className="col-lg-5">
             <div className="d-flex justify-content-between mb-4 pb-md-2">
               <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-                <BreadCumb />
+                <BreadCumb category={ category } subcategory={ subcategory }/>
               </div>
               {/* <!-- /.breadcrumb --> */}
             </div>
-            <h1 className="product-single__name">{product.title}</h1>
+            <h1 className="product-single__name">{product.product_name}</h1>
             {/* <div className="product-single__rating">
             <div className="reviews-group d-flex">
               <Star stars={5} />
@@ -64,15 +64,10 @@ export default function SingleProduct11({ product }) {
             </span>
           </div> */}
             <div className="product-single__price">
-              <span className="current-price"> د.إ {product.price}</span>
+              <span className="current-price"> {product.price}د.إ</span>
             </div>
             <div className="product-single__short-desc">
-              <p>
-                Phasellus sed volutpat orci. Fusce eget lore mauris vehicula
-                elementum gravida nec dui. Aenean aliquam varius ipsum, non
-                ultricies tellus sodales eu. Donec dignissim viverra nunc, ut
-                aliquet magna posuere eget.
-              </p>
+              <div dangerouslySetInnerHTML={{ __html: product.description }}></div>
             </div>
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="product-single__addtocart">
@@ -85,14 +80,14 @@ export default function SingleProduct11({ product }) {
                     }
                     min="1"
                     onChange={(e) =>
-                      setQuantityCartItem(product.id, e.target.value)
+                      setQuantityCartItem(product.product_id, e.target.value)
                     }
                     className="qty-control__number text-center"
                   />
                   <div
                     onClick={() =>
                       setQuantityCartItem(
-                        product.id,
+                        product.product_id,
                         isIncludeCard()?.quantity - 1 || quantity - 1
                       )
                     }
@@ -144,7 +139,7 @@ export default function SingleProduct11({ product }) {
               </div>
               <div className="meta-item">
                 <label>Categories: </label>
-                <span>Casual & Urban Wear, Jackets, Men</span>
+                <span>{ category.split('-').join(' ').toUpperCase() }, { subcategory.split('-').join(' ').toUpperCase() }</span>
               </div>
             </div>
           </div>

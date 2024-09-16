@@ -12,11 +12,13 @@ export default function Context({ children }) {
   const [wishList, setWishList] = useState([]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [freeShippingFlag, setFreeShippingFlag] = useState(false);
   useEffect(() => {
     const subtotal = cartProducts.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
+    setFreeShippingFlag(subtotal >= 400 ? true : false);
   }, [cartProducts]);
 
   const addProductToQuickView = (product) => {
@@ -87,7 +89,8 @@ export default function Context({ children }) {
     quickViewItem,
     wishList,
     setQuickViewItem,
-    addProductToQuickView
+    addProductToQuickView,
+    freeShippingFlag,
   };
   return (
     <dataContext.Provider value={contextElement}>

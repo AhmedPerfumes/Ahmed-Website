@@ -8,7 +8,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
-export default function Style2({ products }) {
+export default function Style2({ category, subcategory, products }) {
 
   const indexToSwap = 1;
   let objectFound = false;
@@ -54,7 +54,7 @@ export default function Style2({ products }) {
                   >
                     {JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <Link href={`/product16_v11/${elm.product_id}`}>
+                        <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.includes(' &amp; ') ? elm.product_name.split(' &amp; ').join('-').toLowerCase() : elm.product_name.split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -94,7 +94,7 @@ export default function Style2({ products }) {
                   </Swiper>
                 ) : (
                   <>
-                    <Link href={`/product16_v11/${elm.product_id}`}>
+                    <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.includes(' &amp; ') ? elm.product_name.split(' &amp; ').join('-').toLowerCase() : elm.product_name.split(' ').join('-').toLowerCase()}`}>
                       <Image
                         loading="lazy"
                         src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
@@ -172,7 +172,7 @@ export default function Style2({ products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <Link href={`/product16_v11/${elm.product_id}`}>{elm.product_name.split("&amp;").join(" ")}</Link>
+                  <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.includes(' &amp; ') ? elm.product_name.split(' &amp; ').join('-').toLowerCase() : elm.product_name.split(' ').join('-').toLowerCase()}`}>{elm.product_name.split(" &amp; ").join(" ")}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   <span className="money price">{elm.price}د.إ</span>

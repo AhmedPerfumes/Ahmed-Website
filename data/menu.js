@@ -46,7 +46,7 @@ export const shopList = [
   // },
   // {
   //   id: 5,
-  //   href: "/shop-5",
+  //   href: "/product-category/gift-sets",
   //   title: "Shop List V5",
   // },
   // {
@@ -111,7 +111,7 @@ export const additionalShopPageitems = [
 export const blogmenuItems = [
   {
     id: 1,
-    href: "/shop-5?category=gift-sets&subcategory=gift-sets",
+    href: "/product-category/gift-sets?category=gift-sets&subcategory=gift-sets",
     title: "Gift Sets",
   },
   // {

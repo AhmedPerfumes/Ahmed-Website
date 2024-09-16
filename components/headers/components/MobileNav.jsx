@@ -169,7 +169,7 @@ export default function MobileNav() {
     return (
       <li key={i} className="navigation__item">
         <Link
-          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
+          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
           className={`navigation__link js-nav-right d-flex align-items-center
             ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           }`}
@@ -205,7 +205,7 @@ export default function MobileNav() {
             {item.productSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
                 <Link
-                  href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
+                  href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
                   className={`menu-link menu-link_us-s ${
                     isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                   }`}

@@ -60,7 +60,7 @@ export default function Nav({ categoriesSubCategories }) {
     return (
       <li className="navigation__item" key={i}>
         <Link
-          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
+          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
           className={`navigation__link
           ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           `}
@@ -78,7 +78,7 @@ export default function Nav({ categoriesSubCategories }) {
                   {item.productSubCategories.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
                       <Link
-                        href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
+                        href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
                         className={`menu-link menu-link_us-s ${
                           isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                         }`}
@@ -92,7 +92,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <Link href="/product16_v11/1">
+                  <Link href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
@@ -108,7 +108,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <Link href="/product16_v11/1">
+                  <Link href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"

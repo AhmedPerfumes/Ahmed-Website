@@ -162,7 +162,7 @@ export default function MobileFooter2() {
             {categoriesSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
                 <Link
-                  href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/shop-5'}
+                  href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
                   className="menu-link menu-link_us-s text-white"
                 >
                   {elm.name}

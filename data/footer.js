@@ -10,7 +10,7 @@ export const footerLinks2 = [
   { href: "/shop-2", text: "Eau de Parfum" },
   { href: "/shop-3", text: "Concentrated Parfum" },
   { href: "/shop-4", text: "Dhakoon" },
-  { href: "/shop-5", text: "Gift Sets" },
+  { href: "/product-category/gift-sets", text: "Gift Sets" },
   { href: "/shop-1", text: "Collections" },
 ];
 export const footerLinks3 = [
