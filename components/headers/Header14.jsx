@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
+import { IoLocationOutline  } from "react-icons/io5";
 // import { useRouter } from 'next/navigation';
 import { useMenu } from '../../context/MenuContext';
 import { useUser } from '../../context/UserContext';
@@ -265,8 +266,8 @@ const handleLogout = (e) => {
                   </Link> : <Link href="#" onClick={handleLogout}><FiLogOut size={20}/></Link> }
                 </div>
 
-                <Link className="header-tools__item" href="/account_wishlist">
-                  <svg
+                <Link className="header-tools__item" href="#">
+                  {/* <svg
                     className="d-block"
                     width="20"
                     height="20"
@@ -275,7 +276,8 @@ const handleLogout = (e) => {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <use href="#icon_heart" />
-                  </svg>
+                  </svg> */}
+                  <IoLocationOutline size={20}/>
                 </Link>
 
                 <a

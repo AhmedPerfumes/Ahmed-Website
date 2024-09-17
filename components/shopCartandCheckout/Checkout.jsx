@@ -13,6 +13,8 @@ import { useContextElement } from "@/context/Context";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import he from 'he';
+
 export default function Checkout() {
   const { cartProducts, totalPrice } = useContextElement();
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -231,7 +233,7 @@ export default function Checkout() {
                     {cartProducts.map((elm, i) => (
                       <tr key={i}>
                         <td>
-                          {elm.title} x {elm.quantity}
+                          {he.decode(elm.product_name)} x {elm.quantity}
                         </td>
                         <td>${elm.price * elm.quantity}</td>
                       </tr>
@@ -266,6 +268,7 @@ export default function Checkout() {
                     type="radio"
                     name="checkout_payment_method"
                     id="checkout_payment_method_3"
+                    checked
                   />
                   <label
                     className="form-check-label"

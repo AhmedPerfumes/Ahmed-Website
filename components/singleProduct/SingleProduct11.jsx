@@ -11,9 +11,12 @@ import Clolor2 from "./Clolor2";
 import Link from "next/link";
 import ShareComponent from "../common/ShareComponent";
 import { useContextElement } from "@/context/Context";
+import he from 'he';
+
 export default function SingleProduct11({ category, subcategory, product }) {
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState(null);
 
   const isIncludeCard = () => {
     const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
@@ -21,16 +24,25 @@ export default function SingleProduct11({ category, subcategory, product }) {
   };
   const setQuantityCartItem = (id, quantity) => {
     if (isIncludeCard()) {
-      if (quantity >= 1) {
+      if (quantity >= 1 && quantity <= product.product_qty) {
+        setError(null);
         const item = cartProducts.filter((elm) => elm.product_id == id)[0];
         const items = [...cartProducts];
         const itemIndex = items.indexOf(item);
         item.quantity = quantity;
         items[itemIndex] = item;
         setCartProducts(items);
+      } else {
+        setError("Quantity is more than available quantity");
       }
     } else {
-      setQuantity(quantity - 1 ? quantity : 1);
+      setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
+      setError(null);
+      if(quantity > product.product_qty) {
+        setError("Quantity is more than available quantity");
+      } else {
+        setError(null);
+      }
     }
   };
   const addToCart = () => {
@@ -54,7 +66,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               </div>
               {/* <!-- /.breadcrumb --> */}
             </div>
-            <h1 className="product-single__name">{product.product_name}</h1>
+            <h1 className="product-single__name">{he.decode(product.product_name)}</h1>
             {/* <div className="product-single__rating">
             <div className="reviews-group d-flex">
               <Star stars={5} />
@@ -69,6 +81,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             <div className="product-single__short-desc">
               <div dangerouslySetInnerHTML={{ __html: product.description }}></div>
             </div>
+            <h6 style={{ color: "red" }}>{error && error}</h6>
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="product-single__addtocart">
                 <div className="qty-control position-relative">
@@ -83,6 +96,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                       setQuantityCartItem(product.product_id, e.target.value)
                     }
                     className="qty-control__number text-center"
+                    readOnly
                   />
                   <div
                     onClick={() =>
@@ -98,7 +112,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                   <div
                     onClick={() =>
                       setQuantityCartItem(
-                        product.id,
+                        product.product_id,
                         isIncludeCard()?.quantity + 1 || quantity + 1
                       )
                     }
@@ -118,7 +132,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               </div>
             </form>
             <div className="product-single__addtolinks">
-              <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
+              {/* <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
                 <svg
                   width="16"
                   height="16"
@@ -129,7 +143,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                   <use href="#icon_heart" />
                 </svg>
                 <span>Add to Wishlist</span>
-              </a>
+              </a> */}
               <ShareComponent title={product.title} />
             </div>
             <div className="product-single__meta-info">

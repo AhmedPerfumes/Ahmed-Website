@@ -7,6 +7,7 @@ import { useContextElement } from "@/context/Context";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import he from 'he';
 
 export default function Style2({ category, subcategory, products }) {
 
@@ -54,7 +55,7 @@ export default function Style2({ category, subcategory, products }) {
                   >
                     {JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.includes(' &amp; ') ? elm.product_name.split(' &amp; ').join('-').toLowerCase() : elm.product_name.split(' ').join('-').toLowerCase()}`}>
+                        <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -94,7 +95,7 @@ export default function Style2({ category, subcategory, products }) {
                   </Swiper>
                 ) : (
                   <>
-                    <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.includes(' &amp; ') ? elm.product_name.split(' &amp; ').join('-').toLowerCase() : elm.product_name.split(' ').join('-').toLowerCase()}`}>
+                    <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
                       <Image
                         loading="lazy"
                         src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
@@ -148,7 +149,7 @@ export default function Style2({ category, subcategory, products }) {
                   </button>
                 </div>
               ) : null}
-              {i != 1 ? (
+              {/* {i != 1 ? (
                 <button
                   className={`pc__btn-wl position-absolute bg-body rounded-circle border-0 text-primary js-add-wishlist ${
                     isAddedtoWishlist(elm.product_id) ? "active" : ""
@@ -166,13 +167,13 @@ export default function Style2({ category, subcategory, products }) {
                     <use href="#icon_heart" />
                   </svg>
                 </button>
-              ) : null}
+              ) : null} */}
             </div>
             {i != 1 ? (
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.includes(' &amp; ') ? elm.product_name.split(' &amp; ').join('-').toLowerCase() : elm.product_name.split(' ').join('-').toLowerCase()}`}>{elm.product_name.split(" &amp; ").join(" ")}</Link>
+                  <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>{he.decode(elm.product_name)}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   <span className="money price">{elm.price}د.إ</span>

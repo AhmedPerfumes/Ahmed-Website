@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import he from 'he';
 
 export default function CartDrawer() {
+  const [error, setError] = useState(null);
   const { cartProducts, setCartProducts, totalPrice } = useContextElement();
   const pathname = usePathname();
   const closeCart = () => {
@@ -14,14 +16,17 @@ export default function CartDrawer() {
       .classList.remove("page-overlay_visible");
     document.getElementById("cartDrawer").classList.remove("aside_visible");
   };
-  const setQuantity = (id, quantity) => {
-    if (quantity >= 1) {
+  const setQuantity = (id, quantity, productQty) => {
+    if (quantity >= 1 && quantity <= productQty) {
+      setError(null);
       const item = cartProducts.filter((elm) => elm.product_id == id)[0];
       const items = [...cartProducts];
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
       items[itemIndex] = item;
       setCartProducts(items);
+    } else {
+      setError("Quantity is more than available quantity");
     }
   };
   const removeItem = (id) => {
@@ -57,6 +62,7 @@ export default function CartDrawer() {
             className="btn-close-lg js-close-aside btn-close-aside ms-auto"
           ></button>
         </div>
+        <h6 style={{ color: "red" }}>{error && error}</h6>
         {cartProducts.length ? (
           <div className="aside-content cart-drawer-items-list">
             {cartProducts.map((elm, i) => (
@@ -75,7 +81,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="cart-drawer-item__info flex-grow-1">
                     <h6 className="cart-drawer-item__title fw-normal">
-                      {elm.product_name}
+                      {he.decode(elm.product_name)}
                     </h6>
                     {/* <p className="cart-drawer-item__option text-secondary">
                       Color: Yellow
@@ -89,22 +95,23 @@ export default function CartDrawer() {
                           type="number"
                           name="quantity"
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
                           }
                           value={elm.quantity}
                           min="1"
                           className="qty-control__number border-0 text-center"
+                          readOnly
                         />
                         <div
                           onClick={() => {
-                            setQuantity(elm.product_id, elm.quantity - 1);
+                            setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty);
                           }}
                           className="qty-control__reduce text-start"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
                           className="qty-control__increase text-end"
                         >
                           +

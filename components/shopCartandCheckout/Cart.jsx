@@ -1,20 +1,23 @@
 "use client";
-
 import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 
 export default function Cart() {
+  const [error, setError] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
-  const setQuantity = async (id, quantity) => {
-    if (quantity >= 1) {
+  const setQuantity = async (id, quantity, productQty) => {
+    if (quantity >= 1 && quantity <= productQty) {
+      setError(null);
       const item = cartProducts.filter((elm) => elm.product_id == id)[0];
       const items = [...cartProducts];
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
       items[itemIndex] = item;
       setCartProducts(items);
+    } else {
+      setError("Quantity is more than available quantity");
     }
   };
   const removeItem = async(id) => {
@@ -40,6 +43,7 @@ export default function Cart() {
       <div className="cart-table__wrapper">
         {cartProducts.length ? (
           <>
+            <h6 style={{ color: "red" }}>{error && error}</h6>
             <table className="cart-table">
               <thead>
                 <tr>
@@ -87,18 +91,18 @@ export default function Cart() {
                           value={elm.quantity}
                           min={1}
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
                           }
                           className="qty-control__number text-center"
                         />
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
                           className="qty-control__reduce"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
                           className="qty-control__increase"
                         >
                           +
@@ -192,7 +196,11 @@ export default function Cart() {
                         </label>
                       </div>
                       {
-                        freeShippingFlag ? null :
+                        freeShippingFlag ? <div className="form-check">
+                          <label className="form-check-label" htmlFor="flat_rate">
+                            You Got Free Shipping
+                          </label>
+                        </div> :
                         <div className="form-check">
                           <label className="form-check-label" htmlFor="flat_rate">
                             Shipping Cost: 20د.إ
@@ -214,12 +222,12 @@ export default function Cart() {
                           Local pickup: $8
                         </label>
                       </div> */}
-                      <div>Shipping to AL.</div>
-                      <div>
+                      {/* <div>Shipping to AL.</div> */}
+                      {/* <div>
                         <a href="#" className="menu-link menu-link_us-s">
                           CHANGE ADDRESS
                         </a>
-                      </div>
+                      </div> */}
                     </td>
                   </tr>
                   <tr>
@@ -229,7 +237,7 @@ export default function Cart() {
                   <tr>
                     <th>Total</th>
                     <td>
-                      {!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ
+                      {!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (including VAT)
                     </td>
                   </tr>
                 </tbody>
@@ -237,9 +245,9 @@ export default function Cart() {
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
-                <button className="btn btn-primary btn-checkout">
+                <Link href="/shop_checkout" className="btn btn-primary btn-checkout">
                   PROCEED TO CHECKOUT
-                </button>
+                </Link>
               </div>
             </div>
           </div>

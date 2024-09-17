@@ -7,6 +7,7 @@ import Colors from "../singleProduct/Colors";
 import Image from "next/image";
 import ShareComponent from "../common/ShareComponent";
 import { useState } from "react";
+import he from 'he';
 
 export default function QuickView() {
   const { quickViewItem } = useContextElement();
@@ -33,6 +34,7 @@ export default function QuickView() {
   ];
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState(null);
 
   const isIncludeCard = () => {
     const item = cartProducts.filter((elm) => elm.product_id == quickViewItem.product_id)[0];
@@ -40,16 +42,25 @@ export default function QuickView() {
   };
   const setQuantityCartItem = (id, quantity) => {
     if (isIncludeCard()) {
-      if (quantity >= 1) {
+      if (quantity >= 1 && quantity <= quickViewItem.product_qty) {
+        setError(null);
         const item = cartProducts.filter((elm) => elm.product_id == id)[0];
         const items = [...cartProducts];
         const itemIndex = items.indexOf(item);
         item.quantity = quantity;
         items[itemIndex] = item;
         setCartProducts(items);
+      } else {
+        setError("Quantity is more than available quantity");
       }
     } else {
-      setQuantity(quantity - 1 ? quantity : 1);
+      setQuantity((quantity <= quickViewItem.product_qty && quantity >= 1) ? quantity : quickViewItem.product_qty);
+      setError(null);
+      if(quantity > quickViewItem.product_qty) {
+        setError("Quantity is more than available quantity");
+      } else {
+        setError(null);
+      }
     }
   };
   const addToCart = () => {
@@ -120,7 +131,7 @@ export default function QuickView() {
               </div>
             </div>
             <div className="product-single__detail">
-              <h1 className="product-single__name">{quickViewItem.product_name.split("&amp;").join(" ")}</h1>
+              <h1 className="product-single__name">{he.decode(quickViewItem.product_name)}</h1>
               <div className="product-single__price">
                 <span className="current-price">{quickViewItem.price}د.إ</span>
               </div>
@@ -128,6 +139,7 @@ export default function QuickView() {
                 <div dangerouslySetInnerHTML={{ __html: quickViewItem.description }}>
                 </div>
               </div>
+              <h6 style={{ color: "red" }}>{error && error}</h6>
               <form onSubmit={(e) => e.preventDefault()}>
                 {/* <div className="product-single__swatches">
                   <div className="product-swatch text-swatches">
@@ -201,7 +213,7 @@ export default function QuickView() {
                 </div>
               </form>
               <div className="product-single__addtolinks">
-                <a
+                {/* <a
                   href="#"
                   className={`menu-link menu-link_us-s add-to-wishlist  ${
                     isAddedtoWishlist(quickViewItem.product_id) ? "active" : ""
@@ -218,8 +230,8 @@ export default function QuickView() {
                     <use href="#icon_heart" />
                   </svg>
                   <span>Add to Wishlist</span>
-                </a>
-                <ShareComponent title={quickViewItem.product_name.split("&amp;").join(" ")} />
+                </a> */}
+                <ShareComponent title={he.decode(quickViewItem.product_name)} />
               </div>
               {/* <div className="product-single__meta-info mb-0">
                 <div className="meta-item">
