@@ -94,6 +94,7 @@ export default function Cart() {
                             setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
                           }
                           className="qty-control__number text-center"
+                          readOnly
                         />
                         <div
                           onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
@@ -237,7 +238,7 @@ export default function Cart() {
                   <tr>
                     <th>Total</th>
                     <td>
-                      {!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (including VAT)
+                      {!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)
                     </td>
                   </tr>
                 </tbody>

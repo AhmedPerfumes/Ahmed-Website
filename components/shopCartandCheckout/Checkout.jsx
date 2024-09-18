@@ -14,16 +14,179 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import he from 'he';
+import { products1 } from "@/data/products/fashion";
+import { useRouter } from 'next/navigation';
 
 export default function Checkout() {
-  const { cartProducts, totalPrice } = useContextElement();
-  const [selectedRegion, setSelectedRegion] = useState("");
+  const router = useRouter();
+  const { cartProducts, totalPrice, freeShippingFlag } = useContextElement();
+  // const [selectedRegion, setSelectedRegion] = useState("");
   const [idDDActive, setIdDDActive] = useState(false);
-  const [shippingAdd, setShippingAdd] = useState(false);
+  // const [shippingAdd, setShippingAdd] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOption, setSelectedOption] = useState('cod');
+  const [formData, setFormData] = useState({
+    shippingAddress: {
+      first_name: '',
+      last_name: '',
+      mobile: '',
+      email: '',
+      country: 'United Arab Emirates',
+      area: '',
+      building: '',
+      emirates: ''
+    },
+    billingAddress: {
+      first_name: '',
+      last_name: '',
+      mobile: '',
+      email: '',
+      country: 'United Arab Emirates',
+      area: '',
+      building: '',
+      emirates: ''
+    },
+    shippingAdd: false,
+    notes: ''
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  const handleRadioChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name.startsWith('shipping') || name.startsWith('billing')) {
+      const addressField = name.startsWith('shipping') ? 'shippingAddress' : 'billingAddress';
+      const fieldName = name.split('.')[1]; // Get the specific field (e.g., street, city)
+      setFormData((prevData) => ({
+        ...prevData,
+        [addressField]: {
+          ...prevData[addressField],
+          [fieldName]: value,
+        },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleCheckboxChange = () => {
+    setFormData((prevData) => {
+      const newSameAsShipping = !prevData.shippingAdd;
+      return {
+        ...prevData,
+        shippingAdd: newSameAsShipping,
+        shippingAddress: { first_name: '', last_name: '', mobile: '', email: '', area: '', building: '', emirates: '' }
+      }
+    });
+  };
+
+  const handleEmiratesChange = (event, emirates) => {
+    const { id } = event.target;
+    // console.log(id, emirates);
+    if (id.startsWith('shipping') || id.startsWith('billing')) {
+      const addressField = id.startsWith('shipping') ? 'shippingAddress' : 'billingAddress';
+      const fieldName = id.split('.')[1]; // Get the specific field (e.g., street, city)
+      setFormData((prevData) => {
+        return {
+          ...prevData,
+          [addressField]: {
+            ...prevData[addressField],
+            [fieldName]: emirates,
+          },
+        };
+      });
+    }
+  };
+ 
+  async function onOrder(event) {
+    event.preventDefault();
+    console.log('Order submitted:', formData);
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    const shippingPrice = freeShippingFlag ? 0 : 20;
+    const finalPrice = !freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3
+
+    const additionalFields = {
+      ...formData,
+      products : cartProducts,
+      payment_method: selectedOption,
+      shippingPrice,
+      totalPrice,
+      finalPrice
+    }
+ 
+    try {
+      // const formDataa = new FormData(additionalFields);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/storeOrder`, {
+        method: 'POST',
+        body: JSON.stringify(additionalFields),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+ 
+      if (!response.ok) {
+        throw new Error('Failed to submit the data. Please try again.');
+      }
+ 
+      // Handle response if necessary
+      const data = await response.json();
+      if(data.message.split(' ')[0] != 'Order') {
+        setError(data.message);
+        setSuccess(null);
+      } else {
+        setSuccess(data.message);
+        setError(null);
+        setFormData({
+          shippingAddress: {
+            first_name: '',
+            last_name: '',
+            mobile: '',
+            email: '',
+            // country: '',
+            area: '',
+            building: '',
+            emirates: ''
+          },
+          billingAddress: {
+            first_name: '',
+            last_name: '',
+            mobile: '',
+            email: '',
+            // country: '',
+            area: '',
+            building: '',
+            emirates: ''
+          },
+          shippingAdd: false,
+        });
+        setTimeout(() => router.push('/shop_order_complete'), 1000);
+      }
+      console.log(data);
+    } catch (error) {
+      // Capture the error message to display to the user
+      setError(error.message);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={onOrder}>
         <div className="checkout-form">
           <div className="billing-info__wrapper">
             <h4>BILLING DETAILS</h4>
@@ -35,6 +198,10 @@ export default function Checkout() {
                     className="form-control"
                     id="checkout_first_name"
                     placeholder="First Name"
+                    name="billingAddress.first_name"
+                    value={formData.billingAddress.first_name}
+                    onChange={handleChange}
+                    required
                   />
                   <label htmlFor="checkout_first_name">First Name</label>
                 </div>
@@ -46,6 +213,10 @@ export default function Checkout() {
                     className="form-control"
                     id="checkout_last_name"
                     placeholder="Last Name"
+                    name="billingAddress.last_name"
+                    value={formData.billingAddress.last_name}
+                    onChange={handleChange}
+                    required
                   />
                   <label htmlFor="checkout_last_name">Last Name</label>
                 </div>
@@ -65,7 +236,7 @@ export default function Checkout() {
                         type="text"
                         className="form-control form-control-lg search-field__actor"
                         id="country"
-                        name="search-keyword"
+                        name="billingAddress.country"
                         value="United Arab Emirates"
                         readOnly
                         placeholder="United Arab Emirates"
@@ -81,6 +252,10 @@ export default function Checkout() {
                     className="form-control"
                     id="checkout_street_address"
                     placeholder="Area / Mantaqa *"
+                    name="billingAddress.area"
+                    value={formData.billingAddress.area}
+                    onChange={handleChange}
+                    required
                   />
                   <label htmlFor="checkout_company_name">
                     Area / Mantaqa *
@@ -92,6 +267,10 @@ export default function Checkout() {
                     className="form-control"
                     id="checkout_street_address_2"
                     placeholder="Building / Villa / Apartment"
+                    name="billingAddress.building"
+                    value={formData.billingAddress.building}
+                    onChange={handleChange}
+                    required
                   />
                   <label htmlFor="checkout_company_name">
                     Building / Villa / Apartment
@@ -114,11 +293,12 @@ export default function Checkout() {
                         type="text"
                         className="form-control form-control-lg search-field__actor search-field__arrow-down"
                         id="search-dropdown"
-                        name="search-keyword"
-                        value={selectedRegion}
+                        name="billingAddress.emirates"
+                        value={formData.billingAddress.emirates}
                         readOnly
                         placeholder="Select Emirate..."
                         onClick={() => setIdDDActive((pre) => !pre)}
+                        required
                       />
                     </div>
                     <div className="filters-container js-hidden-content mt-2">
@@ -141,8 +321,9 @@ export default function Checkout() {
                           )
                           .map((elm, i) => (
                             <li
-                              onClick={() => {
-                                setSelectedRegion(elm);
+                              id="billingAddress.emirates"
+                              onClick={(e) => {
+                                handleEmiratesChange(e, elm);
                                 setIdDDActive(false);
                               }}
                               key={i}
@@ -163,6 +344,10 @@ export default function Checkout() {
                     className="form-control"
                     id="checkout_phone"
                     placeholder="Phone *"
+                    name="billingAddress.mobile"
+                    value={formData.billingAddress.mobile}
+                    onChange={handleChange}
+                    required
                   />
                   <label htmlFor="checkout_phone">Phone *</label>
                 </div>
@@ -172,14 +357,18 @@ export default function Checkout() {
                   <input
                     type="email"
                     className="form-control"
-                    id="checkout_email"
+                    id="billingAddress.email"
                     placeholder="Your Mail *"
+                    name="billingAddress.email"
+                    value={formData.billingAddress.email}
+                    onChange={handleChange}
+                    required
                   />
                   <label htmlFor="checkout_email">Email Address *</label>
                 </div>
               </div>
               <div className="col-md-12">
-                <div className="form-check mt-3">
+                {/* <div className="form-check mt-3">
                   <input
                     className="form-check-input form-check-input_fill"
                     type="checkbox"
@@ -189,14 +378,15 @@ export default function Checkout() {
                   <label className="form-check-label" htmlFor="create_account">
                     CREATE AN ACCOUNT?
                   </label>
-                </div>
+                </div> */}
                 <div className="form-check mb-3">
                   <input
                     className="form-check-input form-check-input_fill"
                     type="checkbox"
                     defaultValue=""
                     id="ship_different_address"
-                    onClick={() => setShippingAdd((pre) => !pre)}
+                    onClick={handleCheckboxChange}
+                    name="shipping"
                   />
                   <label
                     className="form-check-label"
@@ -214,6 +404,9 @@ export default function Checkout() {
                   placeholder="Order Notes (optional)"
                   cols="30"
                   rows="8"
+                  name="notes"
+                  onChange={handleChange}
+                  value={ formData.notes }
                 ></textarea>
               </div>
             </div>
@@ -235,7 +428,7 @@ export default function Checkout() {
                         <td>
                           {he.decode(elm.product_name)} x {elm.quantity}
                         </td>
-                        <td>${elm.price * elm.quantity}</td>
+                        <td>{elm.price * elm.quantity}د.إ</td>
                       </tr>
                     ))}
                   </tbody>
@@ -244,19 +437,19 @@ export default function Checkout() {
                   <tbody>
                     <tr>
                       <th>SUBTOTAL</th>
-                      <td>${totalPrice}</td>
+                      <td>{totalPrice}د.إ</td>
                     </tr>
                     <tr>
                       <th>SHIPPING</th>
-                      <td>Free shipping</td>
+                      <td>{freeShippingFlag ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
                     </tr>
                     <tr>
-                      <th>VAT</th>
-                      <td>${totalPrice && 19}</td>
+                    <th>SERVICE FEE</th>
+                    <td>3د.إ</td>
                     </tr>
                     <tr>
                       <th>TOTAL</th>
-                      <td>${totalPrice && totalPrice + 19}</td>
+                      <td>{!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -268,7 +461,9 @@ export default function Checkout() {
                     type="radio"
                     name="checkout_payment_method"
                     id="checkout_payment_method_3"
-                    checked
+                    value={'cod'}
+                    checked={selectedOption === 'cod'}
+                    onChange={handleRadioChange}
                   />
                   <label
                     className="form-check-label"
@@ -289,6 +484,9 @@ export default function Checkout() {
                     type="radio"
                     name="checkout_payment_method"
                     id="checkout_payment_method_4"
+                    value={'paytabs'}
+                    checked={selectedOption === 'paytabs'}
+                    onChange={handleRadioChange}
                   />
                   <label
                     className="form-check-label"
@@ -319,16 +517,21 @@ export default function Checkout() {
                   .
                 </div>
               </div>
-              <button className="btn btn-primary btn-checkout">
-                PLACE ORDER
+              {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
+              <button
+                className="btn btn-primary w-100 text-uppercase"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Loading...' : 'Place Order'}
               </button>
             </div>
           </div>
         </div>
-      </form>
+      {/* </form> */}
 
-      {shippingAdd == true ? (
-        <form className="col-md-8" onSubmit={(e) => e.preventDefault()}>
+      {formData.shippingAdd == true ? (
+        // <form className="col-md-8" onSubmit={(e) => e.preventDefault()}>
           <div className="checkout-form">
             <div className="billing-info__wrapper">
               <h4>SHIPPING DETAILS</h4>
@@ -340,6 +543,10 @@ export default function Checkout() {
                       className="form-control"
                       id="checkout_first_name"
                       placeholder="First Name"
+                      name="shippingAddress.first_name"
+                      value={formData.shippingAddress.first_name}
+                      onChange={handleChange}
+                      required
                     />
                     <label htmlFor="checkout_first_name">First Name</label>
                   </div>
@@ -351,6 +558,10 @@ export default function Checkout() {
                       className="form-control"
                       id="checkout_last_name"
                       placeholder="Last Name"
+                      name="shippingAddress.last_name"
+                      value={formData.shippingAddress.last_name}
+                      onChange={handleChange}
+                      required
                     />
                     <label htmlFor="checkout_last_name">Last Name</label>
                   </div>
@@ -370,7 +581,7 @@ export default function Checkout() {
                           type="text"
                           className="form-control form-control-lg search-field__actor"
                           id="country"
-                          name="search-keyword"
+                          name="shippingAddress.country"
                           value="United Arab Emirates"
                           readOnly
                           placeholder="United Arab Emirates"
@@ -386,6 +597,10 @@ export default function Checkout() {
                       className="form-control"
                       id="checkout_street_address"
                       placeholder="Address *"
+                      name="shippingAddress.area"
+                      value={formData.shippingAddress.area}
+                      onChange={handleChange}
+                      required
                     />
                     <label htmlFor="checkout_company_name">
                       Area / Mantaqa *
@@ -397,6 +612,10 @@ export default function Checkout() {
                       className="form-control"
                       id="checkout_street_address_2"
                       placeholder="Building / Villa / Apartment"
+                      name="shippingAddress.building"
+                      value={formData.shippingAddress.building}
+                      onChange={handleChange}
+                      required
                     />
                     <label htmlFor="checkout_company_name">
                       Building / Villa / Apartment
@@ -419,11 +638,12 @@ export default function Checkout() {
                           type="text"
                           className="form-control form-control-lg search-field__actor search-field__arrow-down"
                           id="search-dropdown"
-                          name="search-keyword"
-                          value={selectedRegion}
+                          name="shippingAddress.emirates"
+                          value={formData.shippingAddress.emirates}
                           readOnly
                           placeholder="Select Emirate..."
                           onClick={() => setIdDDActive((pre) => !pre)}
+                          required
                         />
                       </div>
                       <div className="filters-container js-hidden-content mt-2">
@@ -446,8 +666,9 @@ export default function Checkout() {
                             )
                             .map((elm, i) => (
                               <li
-                                onClick={() => {
-                                  setSelectedRegion(elm);
+                              id="shippingAddress.emirates"
+                                onClick={(e) => {
+                                  handleEmiratesChange(e, elm);
                                   setIdDDActive(false);
                                 }}
                                 key={i}
@@ -468,6 +689,10 @@ export default function Checkout() {
                       className="form-control"
                       id="checkout_phone"
                       placeholder="Phone *"
+                      name="shippingAddress.mobile"
+                      value={formData.shippingAddress.mobile}
+                      onChange={handleChange}
+                      required
                     />
                     <label htmlFor="checkout_phone">Phone *</label>
                   </div>
@@ -479,6 +704,10 @@ export default function Checkout() {
                       className="form-control"
                       id="checkout_email"
                       placeholder="Your Mail *"
+                      name="shippingAddress.email"
+                      value={formData.shippingAddress.email}
+                      onChange={handleChange}
+                      required
                     />
                     <label htmlFor="checkout_email">Email Address *</label>
                   </div>
@@ -486,8 +715,8 @@ export default function Checkout() {
               </div>
             </div>
           </div>
-        </form>
       ) : null}
+        </form>
     </>
   );
 }

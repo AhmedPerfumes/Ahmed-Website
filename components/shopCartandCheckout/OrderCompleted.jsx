@@ -2,9 +2,10 @@
 
 import { useContextElement } from "@/context/Context";
 import { useEffect, useState } from "react";
+import he from 'he';
 
 export default function OrderCompleted() {
-  const { cartProducts, totalPrice } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag } = useContextElement();
   const [showDate, setShowDate] = useState(false);
   useEffect(() => {
     setShowDate(true);
@@ -41,7 +42,7 @@ export default function OrderCompleted() {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>${totalPrice && totalPrice + 19}</span>
+          <span>{!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)</span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -62,9 +63,9 @@ export default function OrderCompleted() {
               {cartProducts.map((elm, i) => (
                 <tr key={i}>
                   <td>
-                    {elm.title} x {elm.quantity}
+                    {he.decode(elm.product_name)} x {elm.quantity}
                   </td>
-                  <td>${elm.price}</td>
+                  <td>{elm.price}د.إ</td>
                 </tr>
               ))}
             </tbody>
@@ -73,19 +74,19 @@ export default function OrderCompleted() {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>${totalPrice}</td>
+                <td>{totalPrice}د.إ</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>Free shipping</td>
+                <td>{freeShippingFlag ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
               </tr>
               <tr>
-                <th>VAT</th>
-                <td>${totalPrice && 19}</td>
+                <th>SERVICE FEE</th>
+                <td>3د.إ</td>
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>${totalPrice && totalPrice + 19}</td>
+                <td>{!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)</td>
               </tr>
             </tbody>
           </table>

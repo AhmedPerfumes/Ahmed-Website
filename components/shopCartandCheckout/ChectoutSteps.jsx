@@ -40,7 +40,7 @@ export default function ChectoutSteps() {
       {steps.map((elm, i) => (
         <Link
           key={i}
-          href={elm.href}
+          href={elm.id == 3 ? '#' : elm.href}
           className={`checkout-steps__item  ${
             activePathIndex >= i ? "active" : ""
           }`}
