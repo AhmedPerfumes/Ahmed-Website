@@ -3,12 +3,15 @@
 import { useContextElement } from "@/context/Context";
 import { useEffect, useState } from "react";
 import he from 'he';
+import Link from "next/link";
 
 export default function OrderCompleted() {
-  const { cartProducts, totalPrice, freeShippingFlag } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts } = useContextElement();
   const [showDate, setShowDate] = useState(false);
   useEffect(() => {
     setShowDate(true);
+    localStorage.setItem('cartList', []);
+    setCartProducts([]);
   }, []);
 
   return (
@@ -33,7 +36,7 @@ export default function OrderCompleted() {
       <div className="order-info">
         <div className="order-info__item">
           <label>Order Number</label>
-          <span>13119</span>
+          <span>{ orderDetails.order_id }</span>
         </div>
         <div className="order-info__item">
           <label>Date</label>
@@ -42,11 +45,11 @@ export default function OrderCompleted() {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)</span>
+          <span>{orderDetails.total}د.إ (includes { !freeShippingFlag ? ((20 + orderDetails.sub_total) / 100) * 5 : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
-          <span>Direct Bank Transfer</span>
+          <span>{ orderDetails.payment_method }</span>
         </div>
       </div>
       <div className="checkout__totals-wrapper">
@@ -60,12 +63,12 @@ export default function OrderCompleted() {
               </tr>
             </thead>
             <tbody>
-              {cartProducts.map((elm, i) => (
+              {orderDetails?.products?.map((elm, i) => (
                 <tr key={i}>
                   <td>
-                    {he.decode(elm.product_name)} x {elm.quantity}
+                    {he.decode(elm.name)} x {elm.qty}
                   </td>
-                  <td>{elm.price}د.إ</td>
+                  <td>{elm.price * elm.qty}د.إ</td>
                 </tr>
               ))}
             </tbody>
@@ -74,11 +77,11 @@ export default function OrderCompleted() {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>{totalPrice}د.إ</td>
+                <td>{orderDetails.sub_total}د.إ</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{freeShippingFlag ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
+                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
@@ -86,12 +89,17 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)</td>
+                <td>{orderDetails.total}د.إ (includes { !freeShippingFlag ? ((20 + orderDetails.sub_total) / 100) * 5 : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
+        <Link href='/'
+          className="btn btn-primary w-100 text-uppercase"
+        >
+          Continue Shopping
+        </Link>
+      </div>      
     </div>
   );
 }

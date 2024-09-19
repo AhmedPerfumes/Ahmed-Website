@@ -13,6 +13,8 @@ export default function Context({ children }) {
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [freeShippingFlag, setFreeShippingFlag] = useState(false);
+  const [orderDetails, setOrderDetails] = useState({});
+
   useEffect(() => {
     const subtotal = cartProducts.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
@@ -58,7 +60,7 @@ export default function Context({ children }) {
     return false;
   };
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cartList"));
+    const items = localStorage.getItem("cartList") && JSON.parse(localStorage.getItem("cartList"));
     if (items?.length) {
       setCartProducts(items);
     }
@@ -91,6 +93,8 @@ export default function Context({ children }) {
     setQuickViewItem,
     addProductToQuickView,
     freeShippingFlag,
+    setOrderDetails,
+    orderDetails,
   };
   return (
     <dataContext.Provider value={contextElement}>

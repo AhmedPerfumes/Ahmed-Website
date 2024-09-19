@@ -21,7 +21,7 @@ export default function () {
         <div className="mb-4 pb-4"></div>
         <section className="shop-checkout container">
           <h2 className="page-title">ORDER RECEIVED</h2>
-          <ChectoutSteps />
+          {/* <ChectoutSteps /> */}
           <OrderCompleted />
         </section>
       </main>

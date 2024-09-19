@@ -157,30 +157,30 @@ const handleLogout = (e) => {
                   <h6 className="sub-menu__title fs-base">Quicklinks</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <Link href="/shop-2" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/oriental-fragrance/marj" className="menu-link menu-link_us-s">
                         Marj
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="#" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/occidental-fragrance/rose-noir" className="menu-link menu-link_us-s">
                         Rose Noir
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="/shop-3" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender" className="menu-link menu-link_us-s">
                         Oud Lavender
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="#" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/occidental-fragrance/oud-classic" className="menu-link menu-link_us-s">
                         Oud Classic
                       </Link>
                     </li>
-                    <li className="sub-menu__item">
-                      <Link href="#" className="menu-link menu-link_us-s">
+                    {/* <li className="sub-menu__item">
+                      <Link href="/shop/eau-de-parfum/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
                         Oud &amp; Roses
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
                 <div className="search-result row row-cols-5"></div>

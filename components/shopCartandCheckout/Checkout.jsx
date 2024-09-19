@@ -10,6 +10,7 @@ const countries = [
   "Umm Al Quwain",
 ];
 import { useContextElement } from "@/context/Context";
+import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,7 +20,8 @@ import { useRouter } from 'next/navigation';
 
 export default function Checkout() {
   const router = useRouter();
-  const { cartProducts, totalPrice, freeShippingFlag } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, setOrderDetails } = useContextElement();
+  const { isLoggedIn } = useUser();
   // const [selectedRegion, setSelectedRegion] = useState("");
   const [idDDActive, setIdDDActive] = useState(false);
   // const [shippingAdd, setShippingAdd] = useState(false);
@@ -31,7 +33,7 @@ export default function Checkout() {
       last_name: '',
       mobile: '',
       email: '',
-      country: 'United Arab Emirates',
+      country: 'AE',
       area: '',
       building: '',
       emirates: ''
@@ -41,17 +43,19 @@ export default function Checkout() {
       last_name: '',
       mobile: '',
       email: '',
-      country: 'United Arab Emirates',
+      country: 'AE',
       area: '',
       building: '',
       emirates: ''
     },
     shippingAdd: false,
-    notes: ''
+    note: '',
+    password: '',
   });
+  const [createAccount, setCreateAccount] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState({});
   const [success, setSuccess] = useState(null);
 
   const handleRadioChange = (event) => {
@@ -118,13 +122,20 @@ export default function Checkout() {
     const shippingPrice = freeShippingFlag ? 0 : 20;
     const finalPrice = !freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3
 
+    let userJson = null;
+    if(isLoggedIn) {
+      const user = atob(localStorage.getItem('user'));
+      userJson = JSON.parse(user);
+    }
+
     const additionalFields = {
       ...formData,
       products : cartProducts,
       payment_method: selectedOption,
       shippingPrice,
       totalPrice,
-      finalPrice
+      finalPrice,
+      customer_id: userJson ? userJson.id : null,
     }
  
     try {
@@ -143,12 +154,10 @@ export default function Checkout() {
  
       // Handle response if necessary
       const data = await response.json();
-      if(data.message.split(' ')[0] != 'Order') {
-        setError(data.message);
-        setSuccess(null);
-      } else {
+      if(data.message && data.message.split(' ')[0] == 'Order') {
         setSuccess(data.message);
         setError(null);
+        setOrderDetails(data);
         setFormData({
           shippingAddress: {
             first_name: '',
@@ -173,6 +182,9 @@ export default function Checkout() {
           shippingAdd: false,
         });
         setTimeout(() => router.push('/shop_order_complete'), 1000);
+      } else {
+        setError(data);
+        setSuccess(null);
       }
       console.log(data);
     } catch (error) {
@@ -343,13 +355,13 @@ export default function Checkout() {
                     type="number"
                     className="form-control"
                     id="checkout_phone"
-                    placeholder="Phone *"
+                    placeholder="Eg. 971500000000 *"
                     name="billingAddress.mobile"
                     value={formData.billingAddress.mobile}
                     onChange={handleChange}
                     required
                   />
-                  <label htmlFor="checkout_phone">Phone *</label>
+                  <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
                 </div>
               </div>
               <div className="col-md-12">
@@ -368,17 +380,19 @@ export default function Checkout() {
                 </div>
               </div>
               <div className="col-md-12">
-                {/* <div className="form-check mt-3">
+                {!isLoggedIn && <div className="form-check mt-3">
                   <input
                     className="form-check-input form-check-input_fill"
                     type="checkbox"
                     defaultValue=""
                     id="create_account"
+                    onClick={(prev) => setCreateAccount(!createAccount)}
+                    name="create_account"
                   />
                   <label className="form-check-label" htmlFor="create_account">
                     CREATE AN ACCOUNT?
                   </label>
-                </div> */}
+                </div>}
                 <div className="form-check mb-3">
                   <input
                     className="form-check-input form-check-input_fill"
@@ -404,12 +418,27 @@ export default function Checkout() {
                   placeholder="Order Notes (optional)"
                   cols="30"
                   rows="8"
-                  name="notes"
+                  name="note"
                   onChange={handleChange}
-                  value={ formData.notes }
+                  value={ formData.note }
                 ></textarea>
               </div>
             </div>
+            {createAccount && <div className="col-md-12">
+              <div className="form-floating my-3">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  placeholder="Password *"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="checkout_email">Password *</label>
+              </div>
+            </div>}
           </div>
           <div className="checkout__totals-wrapper">
             <div className="sticky-content">
@@ -688,13 +717,13 @@ export default function Checkout() {
                       type="number"
                       className="form-control"
                       id="checkout_phone"
-                      placeholder="Phone *"
+                      placeholder="Eg. 971500000000 *"
                       name="shippingAddress.mobile"
                       value={formData.shippingAddress.mobile}
                       onChange={handleChange}
                       required
                     />
-                    <label htmlFor="checkout_phone">Phone *</label>
+                    <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
                   </div>
                 </div>
                 <div className="col-md-12">

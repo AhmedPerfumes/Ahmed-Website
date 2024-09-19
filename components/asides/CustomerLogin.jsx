@@ -47,7 +47,7 @@ export default function CustomerLogin() {
       } else {
         setSuccess(data.message);
         setError(null);
-        setTimeout(() => window.location.href='/verify_otp', 1000);
+        setTimeout(() => window.location.href='/verify-otp', 1000);
       }
       console.log(data);
     } catch (error) {
