@@ -45,7 +45,7 @@ export default function Footer17() {
           </li>
           <li className="sub-menu__item">
             <Link
-              href="/shop_order_tracking"
+              href="/shop-order-tracking"
               className="menu-link menu-link_us-s"
             >
               Track Your Order

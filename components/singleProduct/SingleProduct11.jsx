@@ -52,9 +52,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
       setCartProducts((pre) => [...pre, item]);
     }
   };
+
   return (
     <>
-      <section className="product-single container product-single__type-9">
+      {Object.keys(product).length > 0 ? <><section className="product-single container product-single__type-9">
         <div className="row">
           <div className="col-lg-7">
             <Slider4 product={ product }/>
@@ -66,7 +67,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               </div>
               {/* <!-- /.breadcrumb --> */}
             </div>
-            <h1 className="product-single__name">{he.decode(product.product_name)}</h1>
+            <h1 className="product-single__name">{product?.product_name && he.decode(product?.product_name)}</h1>
             {/* <div className="product-single__rating">
             <div className="reviews-group d-flex">
               <Star stars={5} />
@@ -175,7 +176,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             <AdditionalInfo />
           </div>
         </div>
-      </section>
+      </section></> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
     </>
   );
 }

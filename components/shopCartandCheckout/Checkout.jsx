@@ -55,7 +55,7 @@ export default function Checkout() {
   const [createAccount, setCreateAccount] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({});
+  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
   const handleRadioChange = (event) => {
@@ -181,9 +181,32 @@ export default function Checkout() {
           },
           shippingAdd: false,
         });
-        setTimeout(() => router.push('/shop_order_complete'), 1000);
+        setTimeout(() => router.push('/shop-order-complete'), 1000);
       } else {
-        setError(data);
+        if(data.products) {
+          setError(data.products);
+        }
+        if(data['billingAddress.first_name']) {
+          setError(data['billingAddress.first_name']);
+        }
+        if(data['billingAddress.last_name']) {
+          setError(data['billingAddress.last_name']);
+        }
+        if(data['billingAddress.email']) {
+          setError(data['billingAddress.email']);
+        }
+        if(data['billingAddress.mobile']) {
+          setError(data['billingAddress.mobile']);
+        }
+        if(data['billingAddress.area']) {
+          setError(data['billingAddress.area']);
+        }
+        if(data['billingAddress.building']) {
+          setError(data['billingAddress.building']);
+        }
+        if(data['billingAddress.emirates']) {
+          setError(data['billingAddress.emirates']);
+        }
         setSuccess(null);
       }
       console.log(data);

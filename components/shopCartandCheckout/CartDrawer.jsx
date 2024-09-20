@@ -75,13 +75,13 @@ export default function CartDrawer() {
                       width={330}
                       height={400}
                       style={{ height: "fit-content" }}
-                      src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                      src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${elm?.images && JSON.parse(elm.images)[0]}`}
                       alt="image"
                     />
                   </div>
                   <div className="cart-drawer-item__info flex-grow-1">
                     <h6 className="cart-drawer-item__title fw-normal">
-                      {he.decode(elm.product_name)}
+                      {elm?.product_name && he.decode(elm.product_name)}
                     </h6>
                     {/* <p className="cart-drawer-item__option text-secondary">
                       Color: Yellow
@@ -172,11 +172,11 @@ export default function CartDrawer() {
           </div>
           {cartProducts.length ? (
             <>
-              <Link href="/shop_cart" className="btn btn-light mt-3 d-block">
+              <Link href="/shop-cart" className="btn btn-light mt-3 d-block">
                 View Cart
               </Link>
               <Link
-                href="/shop_checkout"
+                href="/shop-checkout"
                 className="btn btn-primary mt-3 d-block"
               >
                 Checkout

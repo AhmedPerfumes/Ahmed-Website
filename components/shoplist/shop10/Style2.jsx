@@ -15,7 +15,7 @@ export default function Style2({ category, subcategory, products }) {
   let objectFound = false;
 
   for (let index = 0; index < products.length; index++) {
-    if (products[index].name === 'New Launch') {
+    if (products[index] && products[index].collection_name === 'New Launch') {
         // Swap only if the condition is met and not the same index
         if (index !== indexToSwap) {
             // Perform the swap
@@ -28,6 +28,7 @@ export default function Style2({ category, subcategory, products }) {
     }
 }
   
+console.log(products);
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { addProductToQuickView } = useContextElement();
@@ -47,13 +48,13 @@ export default function Style2({ category, subcategory, products }) {
                     slidesPerView={1}
                     className="swiper-container background-img js-swiper-slider"
                     modules={[Navigation]}
-                    id={`style-2${elm.product_id.toString()}`}
+                    id={`style-2${elm?.product_id.toString()}`}
                     navigation={{
-                      prevEl: `#style-2${elm.product_id.toString()} .pc__img-prev`,
-                      nextEl: `#style-2${elm.product_id.toString()} .pc__img-next`,
+                      prevEl: `#style-2${elm?.product_id.toString()} .pc__img-prev`,
+                      nextEl: `#style-2${elm?.product_id.toString()} .pc__img-next`,
                     }}
                   >
-                    {JSON.parse(elm.images).map((image, ind) => (
+                    {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
                         <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
                           <Image
@@ -65,6 +66,11 @@ export default function Style2({ category, subcategory, products }) {
                             className="pc__img"
                           />
                         </Link>
+                        {elm?.label_name && (
+                        <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                          { elm?.label_name }
+                        </div>
+                      )}
                       </SwiperSlide>
                     ))}
                     
@@ -124,7 +130,7 @@ export default function Style2({ category, subcategory, products }) {
               {i != 1 ? (
                 <div className="anim_appear-bottom position-absolute bottom-0 start-0 w-100 d-none d-sm-flex align-items-center">
                   {
-                    isAddedToCartProducts(elm.product_id) ? 
+                    isAddedToCartProducts(elm?.product_id) ? 
                       <button
                         className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
                         title="Already Added"
@@ -173,10 +179,10 @@ export default function Style2({ category, subcategory, products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>{he.decode(elm.product_name)}</Link>
+                  <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm?.product_name.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
-                  <span className="money price">{elm.price}د.إ</span>
+                  <span className="money price">{elm?.price}د.إ</span>
                 </div>
               </div>
             ) : null}

@@ -7,21 +7,21 @@ import { useEffect, useState } from "react";
 const steps = [
   {
     id: 1,
-    href: "/shop_cart",
+    href: "/shop-cart",
     number: "01",
     title: "Shopping Bag",
     description: "Manage Your Items List",
   },
   {
     id: 2,
-    href: "/shop_checkout",
+    href: "/shop-checkout",
     number: "02",
     title: "Shipping and Checkout",
     description: "Checkout Your Items List",
   },
   {
     id: 3,
-    href: "/shop_order_complete",
+    href: "/shop-order-complete",
     number: "03",
     title: "Confirmation",
     description: "Review And Submit Your Order",

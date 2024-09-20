@@ -15,7 +15,8 @@ export default function OrderCompleted() {
   }, []);
 
   return (
-    <div className="order-complete">
+    <>
+    {Object.keys(orderDetails).length ? <><div className="order-complete">
       <div className="order-complete__message">
         <svg
           width="80"
@@ -100,6 +101,7 @@ export default function OrderCompleted() {
           Continue Shopping
         </Link>
       </div>      
-    </div>
+    </div></> :  <Link href='/' className="btn btn-primary w-100 text-uppercase">Continue Shopping</Link> }
+    </>
   );
 }

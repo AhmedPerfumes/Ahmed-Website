@@ -246,7 +246,7 @@ export default function Cart() {
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
-                <Link href="/shop_checkout" className="btn btn-primary btn-checkout">
+                <Link href="/shop-checkout" className="btn btn-primary btn-checkout">
                   PROCEED TO CHECKOUT
                 </Link>
               </div>

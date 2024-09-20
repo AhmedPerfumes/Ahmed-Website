@@ -71,7 +71,7 @@ export default function Slider4({ product }) {
             className="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events"
             style={{ maxWidth: "100%", overflow: "hidden" }}
           >
-            {JSON.parse(product.images).map((elm, i) => (
+            {product?.images && JSON.parse(product.images).map((elm, i) => (
               <SwiperSlide
                 key={i}
                 className="swiper-slide product-single__image-item magnifier-container"
@@ -151,7 +151,7 @@ export default function Slider4({ product }) {
           onSwiper={setThumbsSwiper}
           slidesPerView={4}
         >
-          {JSON.parse(product.images).map((elm, i) => (
+          {product?.images && JSON.parse(product.images).map((elm, i) => (
             <SwiperSlide
               key={i}
               className="swiper-slide product-single__image-item"
