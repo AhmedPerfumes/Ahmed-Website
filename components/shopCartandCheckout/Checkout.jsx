@@ -567,7 +567,9 @@ export default function Checkout() {
                     privacy policy
                   </Link>
                   .
-                </div>
+                </div><br/>
+                <input type="checkbox" required/>&nbsp;&nbsp;
+                  <span>I have read and agree to the website <a href="https://www.ahmedalmaghribi.com/terms-and-condition/" target="_blank">terms and conditions</a> </span>*
               </div>
               {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
               <button
