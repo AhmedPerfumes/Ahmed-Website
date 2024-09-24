@@ -228,7 +228,7 @@ export default function Header11() {
 
             <nav className="navigation flex-grow-1">
               <ul className="navigation__list list-unstyled d-flex">
-                <Nav />
+                <Nav categoriesSubCategories={ null }/>
 
                 <li className="navigation__item ms-auto">
                   <a href="#" className="navigation__link">

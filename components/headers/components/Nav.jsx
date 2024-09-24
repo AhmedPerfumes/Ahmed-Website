@@ -56,7 +56,7 @@ export default function Nav({ categoriesSubCategories }) {
     });
   }, []);
 
-  let categoriesSubCategoriesBody = categoriesSubCategories.map((item, i) => {
+  let categoriesSubCategoriesBody = categoriesSubCategories?.map((item, i) => {
     return (
       <li className="navigation__item" key={i}>
         <Link

@@ -226,7 +226,7 @@ export default function Header13() {
 
             <nav className="navigation flex-grow-1">
               <ul className="navigation__list list-unstyled d-flex">
-                <Nav />
+                <Nav categoriesSubCategories={ null }/>
 
                 <li className="navigation__item ms-auto">
                   <span className="fw-semi-bold text-uppercase">

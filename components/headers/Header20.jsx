@@ -88,7 +88,7 @@ export default function Header20() {
       <div className="header-desk header-desk_type_2 container">
         <nav className="navigation d-flex no-underline">
           <ul className="navigation__list nav-20 list-unstyled d-flex theme-color">
-            <Nav />
+            <Nav categoriesSubCategories={ null }/>
           </ul>
           {/* <!-- /.navigation__list --> */}
         </nav>

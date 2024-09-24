@@ -67,10 +67,15 @@ console.log(products);
                           />
                         </Link>
                         {elm?.label_name && (
-                        <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                          { elm?.label_name }
-                        </div>
-                      )}
+                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            { elm?.label_name }
+                          </div>
+                        )}
+                        {elm.product_qty <= 0 && (
+                          <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            Out Of Stock
+                          </div>
+                        )}
                       </SwiperSlide>
                     ))}
                     
@@ -131,12 +136,12 @@ console.log(products);
                 <div className="anim_appear-bottom position-absolute bottom-0 start-0 w-100 d-none d-sm-flex align-items-center">
                   {
                     isAddedToCartProducts(elm?.product_id) ? 
-                      <button
+                    elm.product_qty > 0 && <button
                         className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
                         title="Already Added"
                       >
                       Already Added
-                    </button> : <button
+                    </button> : elm.product_qty > 0 && <button
                       className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
                       onClick={() => addProductToCart(elm)}
                       title="Add to Cart"

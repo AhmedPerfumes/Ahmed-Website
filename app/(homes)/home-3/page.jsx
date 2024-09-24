@@ -21,7 +21,7 @@ export default function HomePage3() {
         <Hero />
         <div className="container mw-1620 bg-white border-radius-10">
           <div className="mb-3 mb-xl-5 pt-1 pb-4"></div>
-          <Categories />
+          <Categories subCategories= { null }/>
           <div className="mb-3 mb-xl-5 pt-1 pb-4"></div>
           <HotDeals />
           <div className="mb-3 mb-xl-5 pt-1 pb-4"></div>

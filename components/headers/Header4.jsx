@@ -138,7 +138,7 @@ export default function Header4() {
 
         <nav className="navigation">
           <ul className="navigation__list list-unstyled d-flex">
-            <Nav />
+            <Nav categoriesSubCategories={ null }/>
           </ul>
           {/* <!-- /.navigation__list --> */}
         </nav>

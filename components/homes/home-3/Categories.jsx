@@ -85,7 +85,7 @@ export default function Categories({ params, subCategories }) {
     <section className="category-carousel container">
       <div className="position-relative">
         <Swiper {...swiperOptions} className="swiper-container js-swiper-slider">
-          {subCategories.map((elm, i) => (
+          {subCategories?.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide text-center">
               <a
                 key={i}

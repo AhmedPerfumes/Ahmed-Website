@@ -163,6 +163,7 @@ export default function QuickView() {
                     </div>
                   </div>
                 </div> */}
+                {quickViewItem.product_qty > 0 &&
                 <div className="product-single__addtocart">
                   <div className="qty-control position-relative">
                     <input
@@ -211,6 +212,7 @@ export default function QuickView() {
                       : "Add To Cart"}
                   </button>
                 </div>
+                }
               </form>
               <div className="product-single__addtolinks">
                 {/* <a

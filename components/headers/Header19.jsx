@@ -92,7 +92,7 @@ export default function Header19() {
 
           <nav className="navigation mx-auto mx-xxl-0">
             <ul className="navigation__list list-unstyled d-flex">
-              <Nav />
+              <Nav categoriesSubCategories={ null }/>
             </ul>
           </nav>
 

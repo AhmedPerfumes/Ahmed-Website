@@ -226,7 +226,7 @@ export default function Header21() {
 
             <nav className="navigation flex-grow-1">
               <ul className="navigation__list list-unstyled d-flex color-body">
-                <Nav />
+                <Nav categoriesSubCategories={ null }/>
                 <li className="navigation__item ms-auto">
                   <span className="fw-semi-bold text-uppercase color-body">
                     Need help? 0020 500

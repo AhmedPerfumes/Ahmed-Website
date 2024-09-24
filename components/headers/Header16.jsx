@@ -52,7 +52,7 @@ export default function Header16() {
       <div className="header-desk header-desk_type_2">
         <nav className="navigation d-flex">
           <ul className="navigation__list list-unstyled d-flex">
-            <Nav />
+            <Nav categoriesSubCategories={ null }/>
           </ul>
           {/* <!-- /.navigation__list --> */}
         </nav>

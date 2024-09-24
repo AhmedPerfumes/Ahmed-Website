@@ -55,8 +55,11 @@ export default function Checkout() {
   const [createAccount, setCreateAccount] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  const [isSendOTPLoading, setIsSendOTPLoading] = useState(false);
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
@@ -181,7 +184,7 @@ export default function Checkout() {
           shippingAdd: false,
         });
         setTimeout(() => router.push('/shop-order-complete'), 1000);
-      } else if(data.message && data.message.split(' ')[0] == 'Payment') {
+      } else if(data.message && data.message.split(' ')[0] == 'Redirecting') {
         setSuccess(data.message);
         setError(null);
         localStorage.setItem('orderData', btoa(JSON.stringify(data)));
@@ -213,6 +216,59 @@ export default function Checkout() {
         }
         setSuccess(null);
       }
+    } catch (error) {
+      // Capture the error message to display to the user
+      setError(error.message);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleOTPClick(e) {
+    e.preventDefault();
+    console.log('OTP submitted:', formData.billingAddress.mobile);
+    // return;
+    setIsSendOTPLoading(true);
+    if(formData.billingAddress.mobile == '') {
+      setError('Mobile Number is Required');
+      setSuccess(null);
+      setIsSendOTPLoading(false);
+      return;
+    }
+    const regex = /^\d{12}$/;
+    if(!regex.test(formData.billingAddress.mobile)) {
+      setError('Invalid Mobile Number');
+      setSuccess(null);
+      setIsSendOTPLoading(false);
+      return;
+    }
+    setError(null);
+    setIsSendOTPLoading(true);
+    // return false;
+    
+    try {
+      const formData = new FormData(formData.billingAddress.mobile)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signup`, {
+        method: 'POST',
+        body: formData,
+      })
+ 
+      if (!response.ok) {
+        throw new Error('Failed to submit the data. Please try again.');
+      }
+ 
+      // Handle response if necessary
+      const data = await response.json();
+      if(data.message.split(' ')[0] != 'OTP') {
+        setError(data.message);
+        setSuccess(null);
+      } else {
+        setSuccess(data.message);
+        setError(null);
+        setTimeout(() => window.location.href='/verify-otp', 1000);
+      }
+      console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
@@ -378,21 +434,6 @@ export default function Checkout() {
               <div className="col-md-12">
                 <div className="form-floating my-3">
                   <input
-                    type="number"
-                    className="form-control"
-                    id="checkout_phone"
-                    placeholder="Eg. 971500000000 *"
-                    name="billingAddress.mobile"
-                    value={formData.billingAddress.mobile}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
-                </div>
-              </div>
-              <div className="col-md-12">
-                <div className="form-floating my-3">
-                  <input
                     type="email"
                     className="form-control"
                     id="billingAddress.email"
@@ -404,6 +445,29 @@ export default function Checkout() {
                   />
                   <label htmlFor="checkout_email">Email Address *</label>
                 </div>
+              </div>
+              <div className="col-md-12">
+                <div className="form-floating my-3">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="checkout_phone"
+                    placeholder="Eg. 971500000000 *"
+                    name="billingAddress.mobile"
+                    value={formData.billingAddress.mobile}
+                    onChange={handleChange}
+                    required
+                  />
+                  <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
+                </div>
+                <button
+                  className="btn btn-primary w-100 text-uppercase"
+                  type="button"
+                  disabled={isSendOTPLoading}
+                  onClick={handleOTPClick}
+              >
+                  {isSendOTPLoading ? 'Loading...' : 'Send OTP'}
+                </button>
               </div>
               <div className="col-md-12">
                 {!isLoggedIn && <div className="form-check mt-3">
@@ -578,7 +642,7 @@ export default function Checkout() {
               <button
                 className="btn btn-primary w-100 text-uppercase"
                 type="submit"
-                disabled={isLoading}
+                disabled={isDisabled}
               >
                 {isLoading ? 'Loading...' : 'Place Order'}
               </button>
@@ -742,21 +806,6 @@ export default function Checkout() {
                 <div className="col-md-12">
                   <div className="form-floating my-3">
                     <input
-                      type="number"
-                      className="form-control"
-                      id="checkout_phone"
-                      placeholder="Eg. 971500000000 *"
-                      name="shippingAddress.mobile"
-                      value={formData.shippingAddress.mobile}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="form-floating my-3">
-                    <input
                       type="email"
                       className="form-control"
                       id="checkout_email"
@@ -767,6 +816,21 @@ export default function Checkout() {
                       required
                     />
                     <label htmlFor="checkout_email">Email Address *</label>
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <div className="form-floating my-3">
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="checkout_phone"
+                      placeholder="Eg. 971500000000 *"
+                      name="shippingAddress.mobile"
+                      value={formData.shippingAddress.mobile}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
                   </div>
                 </div>
               </div>

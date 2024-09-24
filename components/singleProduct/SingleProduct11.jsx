@@ -84,6 +84,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <h6 style={{ color: "red" }}>{error && error}</h6>
             <form onSubmit={(e) => e.preventDefault()}>
+              {product.product_qty > 0 &&
               <div className="product-single__addtocart">
                 <div className="qty-control position-relative">
                   <input
@@ -131,6 +132,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                   {isIncludeCard() ? "Already Added" : "Add to Cart"}
                 </button>
               </div>
+              }
             </form>
             <div className="product-single__addtolinks">
               {/* <a href="#" className="menu-link menu-link_us-s add-to-wishlist">

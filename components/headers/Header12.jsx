@@ -118,7 +118,7 @@ export default function Header12() {
           <div className="container d-flex align-items-center">
             <nav className="navigation">
               <ul className="navigation__list list-unstyled d-flex">
-                <Nav />
+                <Nav categoriesSubCategories={ null }/>
               </ul>
               {/* <!-- /.navigation__list --> */}
             </nav>

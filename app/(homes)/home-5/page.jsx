@@ -1,7 +1,7 @@
 import Footer14 from "@/components/footers/Footer14";
 import Footer5 from "@/components/footers/Footer5";
 import Header14 from "@/components/headers/Header14";
-
+import MobileFooter2 from "@/components/footers/MobileFooter2";
 import Header5 from "@/components/headers/Header5";
 import BestSeller from "@/components/homes/home-5/BestSeller";
 import Blogs from "@/components/homes/home-5/Blogs";

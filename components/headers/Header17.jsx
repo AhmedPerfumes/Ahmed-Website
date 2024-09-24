@@ -105,7 +105,7 @@ export default function Header17() {
 
             <nav className="navigation flex-grow-1 fs-15 fw-semi-bold">
               <ul className="navigation__list list-unstyled d-flex">
-                <Nav />
+                <Nav categoriesSubCategories={ null }/>
               </ul>
               {/* <!-- /.navigation__list --> */}
             </nav>
