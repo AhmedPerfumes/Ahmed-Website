@@ -11,13 +11,13 @@ import {
   collections
 } from "@/data/menu";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useMenu } from '../../../context/MenuContext';
 export default function MobileNav() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const category = searchParams.get('category');
-  const subcategory = searchParams.get('subcategory');
+  // const searchParams = useSearchParams();
+  // const category = searchParams.get('category');
+  // const subcategory = searchParams.get('subcategory');
   
   const isMenuActive = (menu) => {
     return menu.split("/")[3] == pathname.split("/")[3];
@@ -154,7 +154,8 @@ export default function MobileNav() {
       }
     };
     removeMenu();
-  }, [pathname, category, subcategory]);
+  // }, [pathname, category, subcategory]);
+  }, [pathname]);
 
   const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
 

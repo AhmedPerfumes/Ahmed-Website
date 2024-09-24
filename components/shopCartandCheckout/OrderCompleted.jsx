@@ -6,12 +6,16 @@ import he from 'he';
 import Link from "next/link";
 
 export default function OrderCompleted() {
-  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
   const [showDate, setShowDate] = useState(false);
+  const [orderData, setorderData] = useState(null);
   useEffect(() => {
     setShowDate(true);
     localStorage.setItem('cartList', []);
     setCartProducts([]);
+    setOrderDetails(localStorage.getItem('orderData').length > 0 && JSON.parse(atob(localStorage.getItem('orderData'))));
+    localStorage.setItem('orderData', '');
+    // console.log('...', localStorage.getItem('orderData').length);
   }, []);
 
   return (

@@ -154,6 +154,7 @@ export default function Checkout() {
  
       // Handle response if necessary
       const data = await response.json();
+      console.log(data);
       if(data.message && data.message.split(' ')[0] == 'Order') {
         setSuccess(data.message);
         setError(null);
@@ -164,7 +165,6 @@ export default function Checkout() {
             last_name: '',
             mobile: '',
             email: '',
-            // country: '',
             area: '',
             building: '',
             emirates: ''
@@ -174,7 +174,6 @@ export default function Checkout() {
             last_name: '',
             mobile: '',
             email: '',
-            // country: '',
             area: '',
             building: '',
             emirates: ''
@@ -182,6 +181,11 @@ export default function Checkout() {
           shippingAdd: false,
         });
         setTimeout(() => router.push('/shop-order-complete'), 1000);
+      } else if(data.message && data.message.split(' ')[0] == 'Payment') {
+        setSuccess(data.message);
+        setError(null);
+        localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+        router.push(data.redirect_url);
       } else {
         if(data.products) {
           setError(data.products);
@@ -209,7 +213,6 @@ export default function Checkout() {
         }
         setSuccess(null);
       }
-      console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
