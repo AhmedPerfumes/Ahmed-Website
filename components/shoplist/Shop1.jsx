@@ -16,22 +16,22 @@ import {
   menuCategories,
   sortingOptions,
 } from "@/data/products/productCategories";
-export default function Shop1() {
+export default function Shop1({ products }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
-  const [selectedColView, setSelectedColView] = useState(4);
+  const [selectedColView, setSelectedColView] = useState(3);
 
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   const [currentCategory, setCurrentCategory] = useState(menuCategories[0]);
-  const [filtered, setFiltered] = useState(products51);
-  useEffect(() => {
-    if (currentCategory == "All") {
-      setFiltered(products51);
-    } else {
-      setFiltered(
-        products51.filter((elm) => elm.filterCategory2 == currentCategory)
-      );
-    }
-  }, [currentCategory]);
+  // const [filtered, setFiltered] = useState(products51);
+  // useEffect(() => {
+  //   if (currentCategory == "All") {
+  //     setFiltered(products51);
+  //   } else {
+  //     setFiltered(
+  //       products51.filter((elm) => elm.filterCategory2 == currentCategory)
+  //     );
+  //   }
+  // }, [currentCategory]);
 
   return (
     <>
@@ -55,7 +55,7 @@ export default function Shop1() {
               />
             </div>
 
-            <div className="shop-banner__content container position-absolute start-50 top-50 translate-middle">
+            {/* <div className="shop-banner__content container position-absolute start-50 top-50 translate-middle">
               <h2 className="stroke-text h1 smooth-16 text-uppercase fw-bold mb-3 mb-xl-4 mb-xl-5">
                 Shop
               </h2>
@@ -73,7 +73,7 @@ export default function Shop1() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
             {/* <!-- /.shop-banner__content --> */}
           </div>
           {/* <!-- /.shop-banner position-relative --> */}
@@ -84,7 +84,7 @@ export default function Shop1() {
       <section className="shop-main container">
         <div className="d-flex justify-content-between mb-4 pb-md-2">
           <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-            <BreadCumb />
+            <BreadCumb category={null} subcategory={null}/>
           </div>
 
           <div className="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
@@ -100,7 +100,7 @@ export default function Shop1() {
               ))}
             </select>
 
-            <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
+            {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
 
             <div className="col-size align-items-center order-1 d-none d-lg-flex">
               <span className="text-uppercase fw-medium me-2">View</span>
@@ -115,7 +115,7 @@ export default function Shop1() {
                   {elm}
                 </button>
               ))}
-            </div>
+            </div> */}
             {/* <!-- /.col-size --> */}
 
             <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
@@ -150,7 +150,7 @@ export default function Shop1() {
           className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}
           id="products-grid"
         >
-          {products51.map((elm, i) => (
+          {products.map((elm, i) => (
             <div key={i} className="product-card-wrapper">
               <div className="product-card mb-3 mb-md-4 mb-xxl-5">
                 <div className="pc__img-wrapper">
@@ -163,18 +163,28 @@ export default function Shop1() {
                       nextEl: ".next" + i,
                     }}
                   >
-                    {[elm.imgSrc, elm.imgSrc2].map((elm2, i) => (
+                    {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={i} className="swiper-slide">
-                        <Link href={`/product1_simple/${elm.id}`}>
+                        <Link href={`/shop/${elm.category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
-                            src={elm2}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
                             width="330"
                             height="400"
                             alt="Cropped Faux leather Jacket"
                             className="pc__img"
                           />
                         </Link>
+                        {elm?.label_name && (
+                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            { elm?.label_name }
+                          </div>
+                        )}
+                        {elm.product_qty <= 0 && (
+                          <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            Out Of Stock
+                          </div>
+                        )}
                       </SwiperSlide>
                     ))}
 
@@ -205,14 +215,14 @@ export default function Shop1() {
                   </Swiper>
                   <button
                     className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm.id)}
+                    onClick={() => addProductToCart(elm.product_id)}
                     title={
-                      isAddedToCartProducts(elm.id)
+                      isAddedToCartProducts(elm.product_id)
                         ? "Already Added"
                         : "Add to Cart"
                     }
                   >
-                    {isAddedToCartProducts(elm.id)
+                    {isAddedToCartProducts(elm.product_id)
                       ? "Already Added"
                       : "Add To Cart"}
                   </button>
@@ -221,14 +231,14 @@ export default function Shop1() {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category}</p>
                   <h6 className="pc__title">
-                    <Link href={`/product1_simple/${elm.id}`}>{elm.title}</Link>
+                    <Link href={`/shop/${elm.category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>{elm.product_name}</Link>
                   </h6>
                   <div className="product-card__price d-flex">
-                    {elm.priceOld ? (
+                    {elm.price ? (
                       <>
                         {" "}
                         <span className="money price price-old">
-                          ${elm.priceOld}
+                          ${elm.price}
                         </span>
                         <span className="money price price-sale">
                           ${elm.price}
@@ -238,7 +248,7 @@ export default function Shop1() {
                       <span className="money price">${elm.price}</span>
                     )}
                   </div>
-                  {elm.colors && (
+                  {/* {elm.colors && (
                     <div className="d-flex align-items-center mt-1">
                       {" "}
                       <ColorSelection />{" "}
@@ -253,16 +263,16 @@ export default function Shop1() {
                         {elm.reviews}
                       </span>
                     </div>
-                  )}
+                  )} */}
 
                   <button
                     className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
-                      isAddedtoWishlist(elm.id) ? "active" : ""
+                      isAddedtoWishlist(elm.product_id) ? "active" : ""
                     }`}
-                    onClick={() => toggleWishlist(elm.id)}
+                    onClick={() => toggleWishlist(elm.product_id)}
                     title="Add To Wishlist"
                   >
-                    <svg
+                    {/* <svg
                       width="16"
                       height="16"
                       viewBox="0 0 20 20"
@@ -270,7 +280,7 @@ export default function Shop1() {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <use href="#icon_heart" />
-                    </svg>
+                    </svg> */}
                   </button>
                 </div>
                 {elm.discont && (
@@ -297,14 +307,14 @@ export default function Shop1() {
         </div>
         {/* <!-- /.products-grid row --> */}
 
-        <p className="mb-5 text-center fw-medium">SHOWING 36 of 497 items</p>
+        {/* <p className="mb-5 text-center fw-medium">SHOWING 36 of 497 items</p>
         <Pagination1 />
 
         <div className="text-center">
           <a className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
             Show More
           </a>
-        </div>
+        </div> */}
       </section>
     </>
   );

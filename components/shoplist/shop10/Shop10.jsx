@@ -40,7 +40,7 @@ export default function Shop10({ subCategories, products }) {
     <section className="shop-main container">
       <div className="d-flex justify-content-between mb-4 pb-md-2 border-bottom border-dark">
         <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-          <BreadCumb />
+          <BreadCumb category={ category } subcategory={ subcategory }/>
         </div>
         {/* <!-- /.breadcrumb --> */}
 
@@ -57,7 +57,7 @@ export default function Shop10({ subCategories, products }) {
             ))}
           </select>
 
-          <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
+          {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div> */}
 
           {/* <div className="col-size align-items-center order-1 d-none d-lg-flex">
             <span className="text-uppercase fw-medium me-2">View</span>
@@ -77,7 +77,7 @@ export default function Shop10({ subCategories, products }) {
 
           {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
-          <div className="shop-filter d-flex align-items-center order-0 order-md-3">
+          {/* <div className="shop-filter d-flex align-items-center order-0 order-md-3">
             <button
               className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
               onClick={openModalShopFilter}
@@ -96,7 +96,7 @@ export default function Shop10({ subCategories, products }) {
                 Filter
               </span>
             </button>
-          </div>
+          </div> */}
           {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
         </div>
         {/* <!-- /.shop-acs --> */}

@@ -28,7 +28,7 @@ export default function Style2({ category, subcategory, products }) {
     }
 }
   
-console.log(products);
+// console.log(products);
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { addProductToQuickView } = useContextElement();

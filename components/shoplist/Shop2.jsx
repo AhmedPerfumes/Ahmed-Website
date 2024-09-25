@@ -92,7 +92,7 @@ export default function Shop2() {
             onClick={openModalShopFilter}
             className="aside-header d-flex d-lg-none align-items-center"
           >
-            <h3 className="text-uppercase fs-6 mb-0">Filter By</h3>
+            <h3 className="text-uppercase fs-6 mb-0">Filter</h3>
             <button className="btn-close-lg js-close-aside btn-close-aside ms-auto"></button>
           </div>
 

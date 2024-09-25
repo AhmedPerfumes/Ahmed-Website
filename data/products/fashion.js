@@ -2128,6 +2128,7 @@ export const products51 = [
     category: "Dresses",
     title: "Cropped Faux Leather Jacket",
     price: 29,
+    priceOld: 10,
     imgSrc: "/assets/images/products/product_1.jpg",
     imgSrc2: "/assets/images/products/product_1-1.jpg",
     reviews: "8k+ reviews",

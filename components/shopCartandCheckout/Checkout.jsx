@@ -51,6 +51,7 @@ export default function Checkout() {
     shippingAdd: false,
     note: '',
     password: '',
+    otp: ''
   });
   const [createAccount, setCreateAccount] = useState(false);
 
@@ -60,6 +61,8 @@ export default function Checkout() {
   const [success, setSuccess] = useState(null);
 
   const [isSendOTPLoading, setIsSendOTPLoading] = useState(false);
+  const [isOTPButton, setIsOTPButton] = useState(true);
+  const [isOTPVerified, setIsOTPVerified] = useState(false);
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
@@ -225,9 +228,9 @@ export default function Checkout() {
     }
   }
 
-  async function handleOTPClick(e) {
+  async function sendOTP(e) {
     e.preventDefault();
-    console.log('OTP submitted:', formData.billingAddress.mobile);
+    console.log('Mobile:', formData.billingAddress.mobile);
     // return;
     setIsSendOTPLoading(true);
     if(formData.billingAddress.mobile == '') {
@@ -248,10 +251,13 @@ export default function Checkout() {
     // return false;
     
     try {
-      const formData = new FormData(formData.billingAddress.mobile)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signup`, {
+      const mobile = formData.billingAddress.mobile;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/sendOTP`, {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({mobile}),
+        headers: {
+          'Content-Type': 'application/json', // Specify the content type
+        }
       })
  
       if (!response.ok) {
@@ -260,13 +266,15 @@ export default function Checkout() {
  
       // Handle response if necessary
       const data = await response.json();
-      if(data.message.split(' ')[0] != 'OTP') {
-        setError(data.message);
-        setSuccess(null);
-      } else {
+      if(data.message && data.message.split(' ')[0] == 'OTP') {
         setSuccess(data.message);
         setError(null);
-        setTimeout(() => window.location.href='/verify-otp', 1000);
+        setIsOTPButton(false);
+      } else {
+        if(data['mobile']) {
+          setError(data['mobile']);
+        }
+        setSuccess(null);
       }
       console.log(data);
     } catch (error) {
@@ -274,7 +282,74 @@ export default function Checkout() {
       setError(error.message);
       console.error(error);
     } finally {
-      setIsLoading(false);
+      setIsSendOTPLoading(false);
+    }
+  }
+
+  async function verifyOTP(e) {
+    e.preventDefault();
+    console.log('Mobile:', formData.billingAddress.mobile);
+    console.log('OTP:', formData.otp);
+    // return;
+    setIsSendOTPLoading(true);
+    if(formData.otp == '') {
+      setError('OTP is Required');
+      setSuccess(null);
+      setIsSendOTPLoading(false);
+      return;
+    }
+    const regex = /^\d+$/;
+    if(!regex.test(formData.otp)) {
+      setError('Invalid OTP');
+      setSuccess(null);
+      setIsSendOTPLoading(false);
+      return;
+    }
+    setError(null);
+    setIsSendOTPLoading(true);
+    // return false;
+    
+    try {
+      const mobile = formData.billingAddress.mobile;
+      const otp = formData.otp;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`, {
+        method: 'POST',
+        body: JSON.stringify({mobile, otp, flag: 'checkout'}),
+        headers: {
+          'Content-Type': 'application/json', // Specify the content type
+        }
+      })
+ 
+      if (!response.ok) {
+        throw new Error('Failed to submit the data. Please try again.');
+      }
+ 
+      // Handle response if necessary
+      const data = await response.json();
+      if(data.message && data.message.split(' ')[0] == 'Invalid') {
+        setSuccess(null);
+        setError(data.message);
+      } else if(data.message && data.message.split(' ')[0] == 'OTP') {
+        setSuccess(data.message);
+        setIsOTPVerified(true);
+        setIsDisabled(false);
+        setError(null);
+      } else {
+        if(data['mobile']) {
+          setError(data['mobile']);
+        }
+        if(data['otp']) {
+          setError(data['otp']);
+        }
+        setSuccess(null);
+      }
+      console.log(data);
+    } catch (error) {
+      // Capture the error message to display to the user
+      setError(error.message);
+      console.error(error);
+    } finally {
+      setIsSendOTPLoading(false);
     }
   }
 
@@ -460,14 +535,33 @@ export default function Checkout() {
                   />
                   <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
                 </div>
-                <button
-                  className="btn btn-primary w-100 text-uppercase"
-                  type="button"
-                  disabled={isSendOTPLoading}
-                  onClick={handleOTPClick}
-              >
+                  {isOTPButton ? <button
+                    className="btn btn-primary w-100 text-uppercase"
+                    type="button"
+                    disabled={isSendOTPLoading}
+                    onClick={sendOTP}
+                  >
                   {isSendOTPLoading ? 'Loading...' : 'Send OTP'}
-                </button>
+                  </button> : <>{!isOTPVerified && <><div className="form-floating my-3">
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="otp"
+                      placeholder="Eg. 1234 *"
+                      name="otp"
+                      value={formData.otp}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="checkout_phone">OTP (Eg. 1234)*</label>
+                  </div>
+                  <button
+                    className="btn btn-primary w-100 text-uppercase"
+                    type="button"
+                    disabled={isSendOTPLoading}
+                    onClick={verifyOTP}
+                  >
+                {isSendOTPLoading ? 'Loading...' : 'Verify OTP'}
+                </button></>}</>}
               </div>
               <div className="col-md-12">
                 {!isLoggedIn && <div className="form-check mt-3">
