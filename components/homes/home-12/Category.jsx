@@ -48,7 +48,7 @@ export default function Category() {
           <h2 className="section-title fw-normal">Shop By Category</h2>
           <Link
             className="btn-link btn-link_md default-underline text-uppercase fw-medium"
-            href="/shop-12"
+            href="/shop"
           >
             Shop All Categories
           </Link>

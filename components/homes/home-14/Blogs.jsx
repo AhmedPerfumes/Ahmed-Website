@@ -44,7 +44,7 @@ export default function Blogs() {
 
         <Link
           className="btn-link btn-link_md default-underline text-uppercase fw-semi-bold theme-color"
-          href="/blog_list1"
+          href="/blog"
         >
           View All Posts
         </Link>

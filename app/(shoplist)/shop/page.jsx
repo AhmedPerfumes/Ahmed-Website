@@ -13,21 +13,12 @@ export const metadata = {
   },
 };
 
-async function getAllProducts() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?limit=6}`, { cache: 'no-store' });
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-}
 const ShopPage = async() => {
-  const data = await getAllProducts();
-  console.log(data);
   return (
     <>
       <Header14 />
       <main>
-        <Shop1 products={ data }/>
+        <Shop1 />
       </main>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <Footer14 />

@@ -26,10 +26,10 @@ async function getCategorySubCategory(categoryName) {
 // export default function ShopPage8() {
 const ShopPage8 = async ({ params }) => {
   const { categoryName } = params;
-
+  // console.log(categoryName);
   try {
     const data = await getCategorySubCategory(categoryName);
-    console.log(data);
+    // console.log(data);
     return (
       <>
       <Loader/>
@@ -56,7 +56,7 @@ const ShopPage8 = async ({ params }) => {
     );
   } catch (error) {
     console.error(error);
-    return <p>Failed to load user data.</p>;
+    return <p>Failed to load data.</p>;
   }
 }
 

@@ -2,7 +2,7 @@ export const footerLinks1 = [
   { href: "/about", text: "About Us" },
   { href: "/about", text: "Careers" },
   { href: "/about", text: "Affiliates" },
-  { href: "/blog_list1", text: "Blog" },
+  { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
   { href: "/export",text:"Exports"}
 ];
@@ -11,7 +11,7 @@ export const footerLinks2 = [
   { href: "/shop-3", text: "Concentrated Parfum" },
   { href: "/shop-4", text: "Dhakoon" },
   { href: "/product-category/gift-sets", text: "Gift Sets" },
-  { href: "/shop-1", text: "Collections" },
+  { href: "/shop", text: "Collections" },
 ];
 export const footerLinks3 = [
   { href: "/about", text: "Customer Service" },

@@ -15,7 +15,7 @@ export default function Banner() {
         <h2 className="text-white fw-bold">New Season</h2>
         <p className="text-white mb-4">New Collection Release</p>
         <Link
-          href="/shop-1"
+          href="/shop"
           className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
         >
           <span className="text_dash_half">Shop Now</span>

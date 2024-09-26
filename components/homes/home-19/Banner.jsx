@@ -24,7 +24,7 @@ export default function Banner() {
               </p>
               <h3 className="fs-60 fw-normal">Summer Collection</h3>
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link default-underline text-uppercase fw-medium mt-3"
               >
                 Shop Now

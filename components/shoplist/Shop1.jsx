@@ -16,12 +16,14 @@ import {
   menuCategories,
   sortingOptions,
 } from "@/data/products/productCategories";
-export default function Shop1({ products }) {
+import he from 'he';
+
+export default function Shop1() {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
 
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
-  const [currentCategory, setCurrentCategory] = useState(menuCategories[0]);
+  // const [currentCategory, setCurrentCategory] = useState(menuCategories[0]);
   // const [filtered, setFiltered] = useState(products51);
   // useEffect(() => {
   //   if (currentCategory == "All") {
@@ -32,6 +34,42 @@ export default function Shop1({ products }) {
   //     );
   //   }
   // }, [currentCategory]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1); // Pagination state
+  const limit = 6; // Number of items per page
+  const [totalPages, setTotalPages] = useState(null);
+  const [currentPage, setCurrentPage] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchData = async (page) => {
+    setLoading(true);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}}`);
+    const newData = await res.json();
+    const { data, total, to } = newData;
+    if (data.length === 0) {
+      setHasMore(false);
+    }
+    // console.log(...data);
+    setProducts((prevData) => [...prevData, ...data]); // Append new data
+    setTotalPages(total);
+    setCurrentPage(to);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page, limit]); // Fetch data on page change
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading || !hasMore) return;
+      setPage((prevPage) => prevPage + 1); // Load next page
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading]); // Clean up on component unmount
 
   return (
     <>
@@ -150,7 +188,7 @@ export default function Shop1({ products }) {
           className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}
           id="products-grid"
         >
-          {products.map((elm, i) => (
+          {products?.map((elm, i) => (
             <div key={i} className="product-card-wrapper">
               <div className="product-card mb-3 mb-md-4 mb-xxl-5">
                 <div className="pc__img-wrapper">
@@ -164,8 +202,8 @@ export default function Shop1({ products }) {
                     }}
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
-                      <SwiperSlide key={i} className="swiper-slide">
-                        <Link href={`/shop/${elm.category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
+                      <SwiperSlide key={ind} className="swiper-slide">
+                        <Link href={`/shop/${elm.category_name.split(' ').join('-').toLowerCase()}/${elm.subcategory?.subcategory_name.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -213,9 +251,24 @@ export default function Shop1({ products }) {
                       </svg>
                     </span>
                   </Swiper>
-                  <button
+                  {
+                    isAddedToCartProducts(elm?.product_id) ? 
+                    elm.product_qty > 0 && <button
+                        className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                        title="Already Added"
+                      >
+                      Already Added
+                    </button> : elm.product_qty > 0 && <button
+                      className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                      onClick={() => addProductToCart(elm)}
+                      title="Add to Cart"
+                    >
+                      Add To Cart
+                    </button>
+                  }
+                  {/* {elm.product_qty > 0 && <button
                     className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm.product_id)}
+                    onClick={() => addProductToCart(elm)}
                     title={
                       isAddedToCartProducts(elm.product_id)
                         ? "Already Added"
@@ -225,16 +278,16 @@ export default function Shop1({ products }) {
                     {isAddedToCartProducts(elm.product_id)
                       ? "Already Added"
                       : "Add To Cart"}
-                  </button>
+                  </button>} */}
                 </div>
 
                 <div className="pc__info position-relative">
-                  <p className="pc__category">{elm.category}</p>
+                  <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <Link href={`/shop/${elm.category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>{elm.product_name}</Link>
+                    <Link href={`/shop/${elm.category_name}/${elm.subcategory?.subcategory_name.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                   </h6>
                   <div className="product-card__price d-flex">
-                    {elm.price ? (
+                    {/* {elm.price ? (
                       <>
                         {" "}
                         <span className="money price price-old">
@@ -244,9 +297,9 @@ export default function Shop1({ products }) {
                           ${elm.price}
                         </span>
                       </>
-                    ) : (
+                    ) : ( */}
                       <span className="money price">${elm.price}</span>
-                    )}
+                    {/* )} */}
                   </div>
                   {/* {elm.colors && (
                     <div className="d-flex align-items-center mt-1">
@@ -265,14 +318,14 @@ export default function Shop1({ products }) {
                     </div>
                   )} */}
 
-                  <button
+                  {/* <button
                     className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
                       isAddedtoWishlist(elm.product_id) ? "active" : ""
                     }`}
                     onClick={() => toggleWishlist(elm.product_id)}
                     title="Add To Wishlist"
                   >
-                    {/* <svg
+                    <svg
                       width="16"
                       height="16"
                       viewBox="0 0 20 20"
@@ -280,8 +333,8 @@ export default function Shop1({ products }) {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <use href="#icon_heart" />
-                    </svg> */}
-                  </button>
+                    </svg>
+                  </button> */}
                 </div>
                 {elm.discont && (
                   <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
@@ -306,11 +359,11 @@ export default function Shop1({ products }) {
           ))}
         </div>
         {/* <!-- /.products-grid row --> */}
+        {/* {loading && <p>Loading...</p>} */}
+        {!loading && <p className="mb-5 text-center fw-medium">SHOWING {currentPage} {currentPage? 'of': ''} {totalPages} items</p>}
+        {loading && <Pagination1 />}
 
-        {/* <p className="mb-5 text-center fw-medium">SHOWING 36 of 497 items</p>
-        <Pagination1 />
-
-        <div className="text-center">
+        {/* <div className="text-center">
           <a className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
             Show More
           </a>

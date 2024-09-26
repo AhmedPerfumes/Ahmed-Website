@@ -39,12 +39,9 @@ export default function FilterAll() {
   }, [searchQuery]);
   const [price, setPrice] = useState([500, 0]);
 
-  // price range handler
-
-  // price range handler
   const handleOnChange = (value) => {
     console.log(value);
-    // setPrice(value);
+    setPrice(value);
   };
   return (
     <>

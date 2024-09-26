@@ -1,7 +1,6 @@
 import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
-import Cart from "@/components/shopCartandCheckout/Cart";
-import ChectoutSteps from "@/components/shopCartandCheckout/ChectoutSteps";
+import OrderTrack from "@/components/shopCartandCheckout/OrderTrack";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 import React from "react";
@@ -20,11 +19,7 @@ export default function () {
       <Header14 />
       <main className="page-wrapper">
         <div className="mb-4 pb-4"></div>
-        <section className="shop-checkout container">
-          <h2 className="page-title">Cart</h2>
-          <ChectoutSteps />
-          <Cart />
-        </section>
+        <OrderTrack />
       </main>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />

@@ -16,7 +16,7 @@ export default function NewArrival() {
           NEW ARRIVALS
         </h2>
         <Link
-          href="/shop-1"
+          href="/shop"
           className="btn btn-outline-primary border-0 fs-13 text-uppercase fw-semi-bold btn-50 d-inline-flex align-items-center justify-content-center"
         >
           <span>Shop Now</span>

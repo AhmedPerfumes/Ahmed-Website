@@ -22,7 +22,7 @@ export default function Products3() {
             <strong>Spring</strong> Collection
           </h3>
           <Link
-            href="/shop-1"
+            href="/shop"
             className="btn-link default-underline text-uppercase fw-medium mt-3"
           >
             Shop Now

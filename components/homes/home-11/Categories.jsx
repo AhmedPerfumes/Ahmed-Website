@@ -50,7 +50,7 @@ export default function Categories() {
         <h2 className="section-title fw-bold">Featured Categories</h2>
         <Link
           className="btn-link btn-link_md default-underline text-uppercase fw-medium"
-          href="/shop-12"
+          href="/shop"
         >
           Shop All Categories
         </Link>

@@ -39,7 +39,7 @@ export default function Blogs() {
         <h2 className="section-title fw-normal text-center">Latest News</h2>
         <Link
           className="btn-link btn-link_md default-underline text-uppercase fw-medium"
-          href="/blog_list1"
+          href="/blog"
         >
           Read all articles
         </Link>

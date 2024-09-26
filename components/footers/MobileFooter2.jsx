@@ -212,12 +212,7 @@ export default function MobileFooter2() {
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center text-white">
             <div className="d-flex align-items-center text-white">
-              {/* <label
-                htmlFor="footerSettingsLanguage"
-                className="me-2 text-white"
-              >
-                Language
-              </label> */}
+              <Link className="text-white" href={"/order-tracking"}>Track Order</Link>
             </div>
           </div>
           {/* <!-- /.footer-settings --> */}

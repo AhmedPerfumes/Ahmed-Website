@@ -71,12 +71,12 @@ export const shopList = [
   // },
   // {
   //   id: 10,
-  //   href: "/shop-10",
+  //   href: "/shop",
   //   title: "Shop Item Style",
   // },
   // {
   //   id: 11,
-  //   href: "/shop-11",
+  //   href: "/shop",
   //   title: "Horizontal Scroll",
   // },
 ];

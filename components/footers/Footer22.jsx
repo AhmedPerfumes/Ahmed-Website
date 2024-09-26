@@ -51,7 +51,7 @@ export default function Footer22() {
                 </Link>
               </li>
               <li className="sub-menu__item">
-                <Link href="/blog_list1" className="menu-link menu-link_us-s">
+                <Link href="/blog" className="menu-link menu-link_us-s">
                   Blog
                 </Link>
               </li>

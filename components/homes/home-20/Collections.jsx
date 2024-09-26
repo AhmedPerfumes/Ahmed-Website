@@ -21,7 +21,7 @@ export default function Collections() {
             <div className="text-center mb-3 mb-xl-5">
               <h3>
                 <Link
-                  href="/shop-1"
+                  href="/shop"
                   className="theme-color fw-bold text-uppercase"
                 >
                   baby boy collectıon
@@ -44,7 +44,7 @@ export default function Collections() {
               <div className="text-center mb-3 mb-xl-5">
                 <h3>
                   <Link
-                    href="/shop-1"
+                    href="/shop"
                     className="theme-color fw-bold text-uppercase"
                   >
                     baby gırl colectıon

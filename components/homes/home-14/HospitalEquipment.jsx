@@ -52,7 +52,7 @@ export default function HospitalEquipment() {
 
         <Link
           className="btn-link btn-link_md default-underline text-uppercase fw-semi-bold theme-color"
-          href="/shop-1"
+          href="/shop"
         >
           See All Products
         </Link>

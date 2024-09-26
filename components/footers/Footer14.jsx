@@ -238,6 +238,7 @@ export default function Footer14() {
             reserved
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
+            <Link className="text-white" href={"/order-tracking"}>Track Order</Link>
             <div className="d-flex align-items-center">
               {/* <label
                 htmlFor="footerSettingsLanguage"

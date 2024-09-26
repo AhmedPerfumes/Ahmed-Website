@@ -59,6 +59,8 @@ export default function Checkout() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [OTPError, setOTPError] = useState(null);
+  const [OTPSuccess, setOTPSuccess] = useState(null);
 
   const [isSendOTPLoading, setIsSendOTPLoading] = useState(false);
   const [isOTPButton, setIsOTPButton] = useState(true);
@@ -234,19 +236,19 @@ export default function Checkout() {
     // return;
     setIsSendOTPLoading(true);
     if(formData.billingAddress.mobile == '') {
-      setError('Mobile Number is Required');
-      setSuccess(null);
+      setOTPError('Mobile Number is Required');
+      setOTPSuccess(null);
       setIsSendOTPLoading(false);
       return;
     }
-    const regex = /^\d{12}$/;
+    const regex = /^\d{9}$/;
     if(!regex.test(formData.billingAddress.mobile)) {
-      setError('Invalid Mobile Number');
-      setSuccess(null);
+      setOTPError('Invalid Mobile Number');
+      setOTPSuccess(null);
       setIsSendOTPLoading(false);
       return;
     }
-    setError(null);
+    setOTPError(null);
     setIsSendOTPLoading(true);
     // return false;
     
@@ -267,19 +269,19 @@ export default function Checkout() {
       // Handle response if necessary
       const data = await response.json();
       if(data.message && data.message.split(' ')[0] == 'OTP') {
-        setSuccess(data.message);
-        setError(null);
+        setOTPSuccess(data.message);
+        setOTPError(null);
         setIsOTPButton(false);
       } else {
         if(data['mobile']) {
-          setError(data['mobile']);
+          setOTPSuccess(data['mobile']);
         }
-        setSuccess(null);
+        setOTPSuccess(null);
       }
       console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
-      setError(error.message);
+      setOTPSuccess(error.message);
       console.error(error);
     } finally {
       setIsSendOTPLoading(false);
@@ -293,19 +295,19 @@ export default function Checkout() {
     // return;
     setIsSendOTPLoading(true);
     if(formData.otp == '') {
-      setError('OTP is Required');
-      setSuccess(null);
+      setOTPError('OTP is Required');
+      setOTPSuccess(null);
       setIsSendOTPLoading(false);
       return;
     }
     const regex = /^\d+$/;
     if(!regex.test(formData.otp)) {
-      setError('Invalid OTP');
-      setSuccess(null);
+      setOTPError('Invalid OTP');
+      setOTPSuccess(null);
       setIsSendOTPLoading(false);
       return;
     }
-    setError(null);
+    setOTPError(null);
     setIsSendOTPLoading(true);
     // return false;
     
@@ -327,26 +329,26 @@ export default function Checkout() {
       // Handle response if necessary
       const data = await response.json();
       if(data.message && data.message.split(' ')[0] == 'Invalid') {
-        setSuccess(null);
-        setError(data.message);
+        setOTPSuccess(null);
+        setOTPError(data.message);
       } else if(data.message && data.message.split(' ')[0] == 'OTP') {
-        setSuccess(data.message);
+        setOTPSuccess(data.message);
         setIsOTPVerified(true);
         setIsDisabled(false);
-        setError(null);
+        setOTPError(null);
       } else {
         if(data['mobile']) {
-          setError(data['mobile']);
+          setOTPError(data['mobile']);
         }
         if(data['otp']) {
-          setError(data['otp']);
+          setOTPError(data['otp']);
         }
-        setSuccess(null);
+        setOTPSuccess(null);
       }
       console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
-      setError(error.message);
+      setOTPError(error.message);
       console.error(error);
     } finally {
       setIsSendOTPLoading(false);
@@ -526,15 +528,16 @@ export default function Checkout() {
                   <input
                     type="number"
                     className="form-control"
-                    id="checkout_phone"
-                    placeholder="Eg. 971500000000 *"
+                    id="checkout_otp"
+                    placeholder="Eg. 500000000 *"
                     name="billingAddress.mobile"
                     value={formData.billingAddress.mobile}
                     onChange={handleChange}
                     required
                   />
-                  <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
+                  <label htmlFor="checkout_phone">Phone (Eg. 500000000)*</label>
                 </div>
+                  {OTPError ? <div style={{ color: 'red' }}>{OTPError}</div> : <div style={{ color: 'green' }}>{OTPSuccess}</div>}
                   {isOTPButton ? <button
                     className="btn btn-primary w-100 text-uppercase"
                     type="button"
@@ -552,7 +555,7 @@ export default function Checkout() {
                       value={formData.otp}
                       onChange={handleChange}
                     />
-                    <label htmlFor="checkout_phone">OTP (Eg. 1234)*</label>
+                    <label htmlFor="checkout_otp">OTP (Eg. 1234)*</label>
                   </div>
                   <button
                     className="btn btn-primary w-100 text-uppercase"
@@ -596,7 +599,7 @@ export default function Checkout() {
               </div>
             </div>
             <div className="col-md-12">
-              <div className="mt-3">
+              <div className="mt-3 mb-3">
                 <textarea
                   className="form-control form-control_gray"
                   placeholder="Order Notes (optional)"
@@ -736,7 +739,7 @@ export default function Checkout() {
               <button
                 className="btn btn-primary w-100 text-uppercase"
                 type="submit"
-                disabled={isDisabled}
+                disabled={isDisabled || isLoading}
               >
                 {isLoading ? 'Loading...' : 'Place Order'}
               </button>
@@ -918,13 +921,13 @@ export default function Checkout() {
                       type="number"
                       className="form-control"
                       id="checkout_phone"
-                      placeholder="Eg. 971500000000 *"
+                      placeholder="Eg. 500000000 *"
                       name="shippingAddress.mobile"
                       value={formData.shippingAddress.mobile}
                       onChange={handleChange}
                       required
                     />
-                    <label htmlFor="checkout_phone">Phone (Eg. 971500000000)*</label>
+                    <label htmlFor="checkout_phone">Phone (Eg. 500000000)*</label>
                   </div>
                 </div>
               </div>

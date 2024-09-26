@@ -161,7 +161,7 @@ export default function Cart() {
             <div className="fs-20">Shop cart is empty</div>
 
             <button className="btn mt-3 btn-light">
-              <Link href={"/shop-1"}>Explore Products</Link>
+              <Link href={"/shop"}>Explore Products</Link>
             </button>
           </>
         )}
@@ -180,7 +180,7 @@ export default function Cart() {
                   <tr>
                     <th>Shipping</th>
                     <td>
-                      <div className="form-check">
+                      {/* <div className="form-check">
                         <input
                           className="form-check-input form-check-input_fill"
                           type="checkbox"
@@ -195,7 +195,7 @@ export default function Cart() {
                         >
                           Free shipping
                         </label>
-                      </div>
+                      </div> */}
                       {
                         freeShippingFlag ? <div className="form-check">
                           <label className="form-check-label" htmlFor="flat_rate">

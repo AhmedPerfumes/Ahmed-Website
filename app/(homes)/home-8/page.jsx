@@ -2,9 +2,9 @@ import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
 import Hero from "@/components/homes/home-8/Hero";
 import Animation from "@/components/Animation";
+import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 import React from "react";
-import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
