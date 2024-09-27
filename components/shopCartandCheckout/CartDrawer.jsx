@@ -119,7 +119,7 @@ export default function CartDrawer() {
                       </div>
 
                       <span className="cart-drawer-item__price money price">
-                        {elm.price * elm.quantity}د.إ
+                        {(elm.price * elm.quantity).toFixed(2)}د.إ
                       </span>
                     </div>
                   </div>
@@ -147,7 +147,7 @@ export default function CartDrawer() {
               {totalPrice < freeShippingThreshold ? (
                 <div>
                   <p>
-                    Spend {freeShippingThreshold - totalPrice}د.إ more to get free
+                    Spend {(freeShippingThreshold - totalPrice).toFixed(2)}د.إ more to get free
                     shipping! ⛟
                   </p>
                   <div className="progress">
@@ -168,7 +168,7 @@ export default function CartDrawer() {
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">SUBTOTAL:</h6>
-            <span className="cart-subtotal fw-medium">{totalPrice}د.إ</span>
+            <span className="cart-subtotal fw-medium">{totalPrice.toFixed(2)}د.إ</span>
           </div>
           {cartProducts.length ? (
             <>

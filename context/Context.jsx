@@ -20,7 +20,7 @@ export default function Context({ children }) {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
-    setFreeShippingFlag(subtotal >= 400 ? true : false);
+    setFreeShippingFlag((subtotal).toFixed(2) >= 400 ? true : false);
   }, [cartProducts]);
 
   const addProductToQuickView = (product) => {

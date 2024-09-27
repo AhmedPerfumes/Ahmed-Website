@@ -30,6 +30,20 @@ export default function Style2({ category, subcategory, products }) {
   
 // console.log(products);
 
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
+
+
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { addProductToQuickView } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -56,7 +70,7 @@ export default function Style2({ category, subcategory, products }) {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
+                        <Link href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcategory && removeSpecialCharactersAndAmp(subcategory).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -106,7 +120,7 @@ export default function Style2({ category, subcategory, products }) {
                   </Swiper>
                 ) : (
                   <>
-                    <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
+                    <Link href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcategory && removeSpecialCharactersAndAmp(subcategory).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                       <Image
                         loading="lazy"
                         src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
@@ -119,15 +133,15 @@ export default function Style2({ category, subcategory, products }) {
                     </Link>
                     <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
                       <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white">
-                        { elm.product_name }
+                        { elm?.product_name && he.decode(elm?.product_name) }
                       </h2>
                       <p className="mb-4 text-white">Exclusive Launch</p>
-                      <a
+                      <Link
                         className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
-                        href={`/product16_v11/${elm.product_id}`}
+                        href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcategory && removeSpecialCharactersAndAmp(subcategory).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}
                       >
                         <span>Explore</span>
-                      </a>
+                      </Link>
                     </div>
                   </>
                 )
@@ -184,7 +198,7 @@ export default function Style2({ category, subcategory, products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <Link href={`/shop/${category}/${subcategory?.split(" ").join('-').toLowerCase()}/${elm?.product_name.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                  <Link href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcategory && removeSpecialCharactersAndAmp(subcategory).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm?.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   <span className="money price">{elm?.price}د.إ</span>

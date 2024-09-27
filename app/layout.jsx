@@ -38,6 +38,15 @@ export default function RootLayout({ children }) {
       });
     }
   }, []);
+
+  useEffect(() => {
+    // Clear all local storage when the app starts
+    localStorage.setItem('token', '');
+    localStorage.setItem('user', '');
+    localStorage.setItem('orderData', '');
+    localStorage.setItem('cartList', []);
+    localStorage.setItem('wishList', []);
+  }, []);
   return (
     <html lang="en">
       <head>

@@ -30,7 +30,7 @@ export default function Shop10({ subCategories, products }) {
   const category = pathname.split("/")[2];
   const subcategory = pathname.split("/")[3];
 
-  // console.log('0000111', category, subcategory);
+  // console.log('0000111', JSON.stringify(subCategories), products);
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();

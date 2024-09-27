@@ -112,7 +112,7 @@ export default function Cart() {
                     </td>
                     <td>
                       <span className="shopping-cart__subtotal">
-                        {elm.price * elm.quantity}د.إ
+                        {(elm.price * elm.quantity).toFixed(2)}د.إ
                       </span>
                     </td>
                     <td>
@@ -175,7 +175,7 @@ export default function Cart() {
                 <tbody>
                   <tr>
                     <th>Subtotal</th>
-                    <td>{totalPrice}د.إ</td>
+                    <td>{totalPrice.toFixed(2)}د.إ</td>
                   </tr>
                   <tr>
                     <th>Shipping</th>
@@ -238,7 +238,7 @@ export default function Cart() {
                   <tr>
                     <th>Total</th>
                     <td>
-                      {!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)
+                      {!freeShippingFlag ? (20 + totalPrice + 3).toFixed(2) : (0 + totalPrice + 3).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((20 + totalPrice) / 100) * 5).toFixed(2) : (((0 + totalPrice) / 100) * 5).toFixed(2) }د.إ VAT)
                     </td>
                   </tr>
                 </tbody>

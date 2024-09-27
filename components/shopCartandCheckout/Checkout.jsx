@@ -644,7 +644,7 @@ export default function Checkout() {
                         <td>
                           {he.decode(elm.product_name)} x {elm.quantity}
                         </td>
-                        <td>{elm.price * elm.quantity}د.إ</td>
+                        <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>
                       </tr>
                     ))}
                   </tbody>
@@ -653,7 +653,7 @@ export default function Checkout() {
                   <tbody>
                     <tr>
                       <th>SUBTOTAL</th>
-                      <td>{totalPrice}د.إ</td>
+                      <td>{totalPrice.toFixed(2)}د.إ</td>
                     </tr>
                     <tr>
                       <th>SHIPPING</th>
@@ -665,7 +665,7 @@ export default function Checkout() {
                     </tr>
                     <tr>
                       <th>TOTAL</th>
-                      <td>{!freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3}د.إ (includes { !freeShippingFlag ? ((20 + totalPrice) / 100) * 5 : ((0 + totalPrice) / 100) * 5 }د.إ VAT)</td>
+                      <td>{!freeShippingFlag ? (20 + totalPrice + 3).toFixed(2) : (0 + totalPrice + 3).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((20 + totalPrice) / 100) * 5).toFixed(2) : (((0 + totalPrice) / 100) * 5).toFixed(2) }د.إ VAT)</td>
                     </tr>
                   </tbody>
                 </table>

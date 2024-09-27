@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
+  // console.log('...', freeShippingFlag);
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function OrderCompleted() {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{orderDetails.total}د.إ (includes { !freeShippingFlag ? ((20 + orderDetails.sub_total) / 100) * 5 : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</span>
+          <span>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((20 + orderDetails.sub_total) / 100) * 5).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * 5).toFixed(2) }د.إ VAT)</span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -75,7 +76,7 @@ export default function OrderCompleted() {
                   <td>
                     {he.decode(elm.name)} x {elm.qty}
                   </td>
-                  <td>{elm.price * elm.qty}د.إ</td>
+                  <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
                 </tr>
               ))}
             </tbody>
@@ -84,11 +85,11 @@ export default function OrderCompleted() {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>{orderDetails.sub_total}د.إ</td>
+                <td>{(orderDetails.sub_total).toFixed(2)}د.إ</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
+                <td>{(orderDetails.sub_total).toFixed(2) >= 400 ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
@@ -96,18 +97,18 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{orderDetails.total}د.إ (includes { !freeShippingFlag ? ((20 + orderDetails.sub_total) / 100) * 5 : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</td>
+                <td>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((20 + orderDetails.sub_total) / 100) * 5).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * 5).toFixed(2) }د.إ VAT)</td>
               </tr>
             </tbody>
           </table>
         </div>
         <Link href='/'
-          className="btn btn-primary w-100 text-uppercase"
+          className="btn btn-primary w-100 text-uppercase mb-3"
         >
           Continue Shopping
         </Link>
       </div>      
-    </div></> :  <Link href='/' className="btn btn-primary w-100 text-uppercase">Continue Shopping</Link> }
+    </div></> :  <Link href='/' className="btn btn-primary w-100 text-uppercase mb-3">Continue Shopping</Link> }
     </>
   );
 }
