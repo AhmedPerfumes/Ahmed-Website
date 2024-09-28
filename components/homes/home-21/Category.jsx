@@ -78,9 +78,9 @@ export default function Category() {
                   <li key={i}>{elm}</li>
                 ))}
               </ul>
-              <a href="#" className="theme-color btn-link btn-link_md">
+              <Link href="#" className="theme-color btn-link btn-link_md">
                 See All Products
-              </a>
+              </Link>
             </SwiperSlide>
           ))}
 

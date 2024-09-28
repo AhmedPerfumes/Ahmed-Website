@@ -86,7 +86,7 @@ export default function SingleProduct13({ product }) {
             </div>
           </form>
           <div className="product-single__addtolinks">
-            <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
+            <Link href="#" className="menu-link menu-link_us-s add-to-wishlist">
               <svg
                 width="16"
                 height="16"
@@ -97,7 +97,7 @@ export default function SingleProduct13({ product }) {
                 <use href="#icon_heart" />
               </svg>
               <span>Add to Wishlist</span>
-            </a>
+            </Link>
             <ShareComponent title={product.title} />
           </div>
           <div className="product-single__meta-info">

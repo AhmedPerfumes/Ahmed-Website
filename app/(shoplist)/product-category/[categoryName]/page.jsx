@@ -7,6 +7,8 @@ import Banner5 from "@/components/shoplist/Banner5";
 import React from "react";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import Loader from "@/components/loader/Loader";
+import RelatedSlider from "@/components/singleProduct/RelatedSlider";
+import Link from "next/link";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -17,6 +19,7 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName) {
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}`);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -26,7 +29,7 @@ async function getCategorySubCategory(categoryName) {
 // export default function ShopPage8() {
 const ShopPage8 = async ({ params }) => {
   const { categoryName } = params;
-  // console.log(categoryName);
+  console.log(categoryName);
   try {
     const data = await getCategorySubCategory(categoryName);
     // console.log(data);
@@ -56,7 +59,19 @@ const ShopPage8 = async ({ params }) => {
     );
   } catch (error) {
     console.error(error);
-    return <p>Failed to load data.</p>;
+    return <><Header14 />
+            <main className="page-wrapper">
+              <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Category Found</h2>
+              <RelatedSlider />
+            </main>
+            <section className="d-none d-lg-block" style={{ height: "100%" }}>
+              <Footer14 />
+            </section>
+            <section className="d-sm-block d-md-none bg-dark pt-5  ">
+              <div className="MobileFooter">
+                <MobileFooter2/>
+              </div>
+            </section></>;
   }
 }
 

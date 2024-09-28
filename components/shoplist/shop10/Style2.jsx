@@ -151,7 +151,7 @@ export default function Style2({ category, subcategory, products }) {
                   {
                     isAddedToCartProducts(elm?.product_id) ? 
                     elm.product_qty > 0 && <button
-                        className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                        className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium"
                         title="Already Added"
                       >
                       Already Added

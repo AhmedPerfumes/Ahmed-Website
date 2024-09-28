@@ -19,14 +19,14 @@ export default function Header17() {
         <div className="container d-flex align-items-center">
           <ul className="list-unstyled d-flex flex-1 gap-3 m-0">
             <li>
-              <a href="#" className="menu-link menu-link_us-s fs-13">
+              <Link href="#" className="menu-link menu-link_us-s fs-13">
                 Shipping
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="menu-link menu-link_us-s fs-13">
+              <Link href="#" className="menu-link menu-link_us-s fs-13">
                 FAQ
-              </a>
+              </Link>
             </li>
             <li>
               <Link href="/contact" className="menu-link menu-link_us-s fs-13">
@@ -34,16 +34,16 @@ export default function Header17() {
               </Link>
             </li>
             <li>
-              <a href="#" className="menu-link menu-link_us-s fs-13">
+              <Link href="#" className="menu-link menu-link_us-s fs-13">
                 Track Order
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="heeader-top__right flex-1 d-flex gap-1 justify-content-end">
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <a
+                  <Link
                     href={link.href}
                     className="footer__social-link d-block color-white"
                   >
@@ -56,7 +56,7 @@ export default function Header17() {
                     >
                       <use href={link.icon} />
                     </svg>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -119,9 +119,9 @@ export default function Header17() {
               </div>
 
               <div className="header-tools__item hover-container">
-                <a className="header-tools__item js-open-aside" href="#">
+                <Link className="header-tools__item js-open-aside" href="#">
                   <User />
-                </a>
+                </Link>
               </div>
 
               <Link className="header-tools__item" href="/account_wishlist">
@@ -187,54 +187,54 @@ export default function Header17() {
               </h3>
               <ul className="categories-nav__list list-unstyled border-radius-10">
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Electronics
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Computers
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Audio & Video
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Mobiles & Tablets
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     TV & Audio
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Car & Motorbike
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Hmoe & Garden
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Toys & Kids
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Sporting Goods
-                  </a>
+                  </Link>
                 </li>
                 <li className="categories-nav__item">
-                  <a className="text-primary" href="#">
+                  <Link className="text-primary" href="#">
                     Pet Supplies
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

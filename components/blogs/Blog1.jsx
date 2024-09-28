@@ -27,6 +27,7 @@ export default function Blog1() {
 
   const fetchData = async (page) => {
     setLoading(true);
+    // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/blogs?page=${page}&limit=${limit}}`);
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/blogs?page=${page}&limit=${limit}}`);
     const newData = await res.json();
     const { data, total, to } = newData;
@@ -53,6 +54,19 @@ export default function Blog1() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading]); // Clean up on component unmount
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
 
   return (
     <>
@@ -106,12 +120,12 @@ export default function Blog1() {
                   <span className="blog-grid__item-meta__date">{new Date(elm.created_at).toLocaleDateString()}</span>
                 </div>
                 <div className="blog-grid__item-title">
-                  <Link href={`/blog/${elm.name.replace(/[?:.]/g, '').split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
+                  <Link href={`/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
                 </div>
                 <div className="blog-grid__item-content">
                   <p>{elm.description}</p>
                   <Link
-                    href={`/blog/${elm.name.replace(/[?:.]/g, '').split(' ').join('-').toLowerCase()}`}
+                    href={`/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                     className="readmore-link"
                   >
                     Continue Reading
@@ -125,9 +139,9 @@ export default function Blog1() {
         {loading && <Pagination1 />}
 
         {/* <div className="text-center">
-          <a className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
+          <Link className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
             Show More
-          </a>
+          </Link>
         </div> */}
       </section>
     </>

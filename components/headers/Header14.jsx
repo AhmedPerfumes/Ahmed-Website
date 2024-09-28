@@ -12,7 +12,7 @@ import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
 import { IoLocationOutline  } from "react-icons/io5";
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useMenu } from '../../context/MenuContext';
 import { useUser } from '../../context/UserContext';
 
@@ -45,7 +45,13 @@ export default function Header14() {
 //     }
 //  }, [isLoggedIn]);
 
-//  const router = useRouter();
+ const router = useRouter();
+
+const [searchKeyWord, setSearchKeyWord] = useState('');
+
+const handleChange = (event) => {
+  setSearchKeyWord(event.target.value);
+};
 
 const handleLogout = (e) => {
   e.preventDefault();
@@ -86,6 +92,24 @@ const handleLogout = (e) => {
     opacity: isHeaderOpen ? 1 : 1,
   };
 
+  const onSearch = (event) => {
+    event.preventDefault();
+    window.location.href = `/shop?q=${removeSpecialCharactersAndAmp(searchKeyWord).split(' ').join('-')}`;
+  };
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
+
   return (
     <>
       <header
@@ -121,7 +145,7 @@ const handleLogout = (e) => {
         >
           <div className="search-popup js-hidden-content">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={onSearch}
               className="search-field container"
             >
               <p className="text-uppercase text-secondary fw-medium mb-4">
@@ -133,6 +157,8 @@ const handleLogout = (e) => {
                   type="text"
                   name="search-keyword"
                   placeholder="Search products"
+                  value={searchKeyWord}
+                  onChange={handleChange}
                 />
                 <button className="btn-icon search-popup__submit" type="submit">
                   <svg
@@ -230,13 +256,15 @@ const handleLogout = (e) => {
                 </Link>
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
-                <form className="header-search search-field d-none d-xxl-flex mx-4">
+                <div className="header-search search-field d-none d-xxl-flex mx-4">
                   <input
                     className="header-search__input w-100"
                     type="text"
                     name="search-keyword"
                     placeholder="Search products..."
                     onClick={() => setIsPopupOpen((pre) => !pre)}
+                    value={searchKeyWord}
+                    onChange={handleChange}
                   />
                   <button
                     className="btn header-search__btn"
@@ -258,7 +286,7 @@ const handleLogout = (e) => {
                       )}
                     </svg>
                   </button>
-                </form>
+                </div>
 
                 <div className="header-tools__item hover-container">
                   { !isLoggedIn ? <Link className="js-open-aside" href="#">

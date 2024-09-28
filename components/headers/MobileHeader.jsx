@@ -8,7 +8,7 @@ import CartLength from "./components/CartLength";
 import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
-
+import Link from "next/link";
 export default function MobileHeader() {
   const [scrollDirection, setScrollDirection] = useState("down");
 
@@ -50,7 +50,7 @@ export default function MobileHeader() {
       } `}
     >
       <div className="container d-flex align-items-center h-100">
-        <a className="mobile-nav-activator d-block position-relative" href="#">
+        <Link className="mobile-nav-activator d-block position-relative" href="#">
           <svg
             className="nav-icon"
             width="25"
@@ -61,10 +61,10 @@ export default function MobileHeader() {
             <use href="#icon_nav" />
           </svg>
           <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
-        </a>
+        </Link>
 
         <div className="logo">
-          <a href="/">
+          <Link href="/">
             <Image
               src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
               width={200}
@@ -72,7 +72,7 @@ export default function MobileHeader() {
               alt="Ahmed"
               className="logo__image d-block"
             />
-          </a>
+          </Link>
         </div>
         {/* <!-- /.logo --> */}
 
@@ -209,7 +209,7 @@ export default function MobileHeader() {
           <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">
             {socialLinks.map((link, index) => (
               <li key={index}>
-                <a
+                <Link
                   href={link.href}
                   className="footer__social-link d-block color-white"
                 >
@@ -222,7 +222,7 @@ export default function MobileHeader() {
                   >
                     <use href={link.icon} />
                   </svg>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

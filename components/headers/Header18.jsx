@@ -92,9 +92,9 @@ export default function Header18() {
           </form>
 
           <div className="header-tools__item hover-container">
-            <a className="header-tools__item js-open-aside" href="#">
+            <Link className="header-tools__item js-open-aside" href="#">
               <User />
-            </a>
+            </Link>
           </div>
 
           <Link className="header-tools__item" href="/account_wishlist">

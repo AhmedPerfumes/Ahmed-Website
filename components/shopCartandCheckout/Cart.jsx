@@ -225,9 +225,9 @@ export default function Cart() {
                       </div> */}
                       {/* <div>Shipping to AL.</div> */}
                       {/* <div>
-                        <a href="#" className="menu-link menu-link_us-s">
+                        <Link href="#" className="menu-link menu-link_us-s">
                           CHANGE ADDRESS
-                        </a>
+                        </Link>
                       </div> */}
                     </td>
                   </tr>

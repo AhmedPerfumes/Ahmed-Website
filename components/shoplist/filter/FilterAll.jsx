@@ -81,9 +81,9 @@ export default function FilterAll() {
               <ul className="list list-inline row row-cols-2 mb-0">
                 {categories.map((category, index) => (
                   <li key={index} className="list-item">
-                    <a href="#" className="menu-link py-1">
+                    <Link href="#" className="menu-link py-1">
                       {category}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -134,7 +134,7 @@ export default function FilterAll() {
                       activeColor == swatch ? "swatch_active" : ""
                     }`}
                     style={{ color: swatch.color }}
-                  />
+                  ></a>
                 ))}
               </div>
             </div>

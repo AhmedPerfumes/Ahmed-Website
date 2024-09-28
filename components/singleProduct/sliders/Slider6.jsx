@@ -24,6 +24,7 @@ const images = [
 ];
 import Image from "next/image";
 import tippy from "tippy.js";
+
 export default function Slider6() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   useEffect(() => {

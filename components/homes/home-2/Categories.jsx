@@ -3,6 +3,7 @@ import { categories } from "@/data/categories";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Categories() {
   const swiperOptions = {
@@ -62,9 +63,9 @@ export default function Categories() {
                 alt="image"
               />
               <div className="text-center">
-                <a href="#" className="menu-link menu-link_us-s text-uppercase">
+                <Link href="#" className="menu-link menu-link_us-s text-uppercase">
                   {elm.name}
-                </a>
+                </Link>
                 <p className="mb-0 text-secondary">
                   {elm.productCount} Products
                 </p>

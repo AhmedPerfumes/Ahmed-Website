@@ -92,7 +92,7 @@ export default function LoginRegister() {
       <h2 className="d-none">Login & Register</h2>
       <ul className="nav nav-tabs mb-5" id="login_register" role="tablist">
         <li className="nav-items" role="presentation">
-          <a
+          <Link
             className="nav-links nav-link_underscore active"
             id="login-tab"
             data-bs-toggle="tab"
@@ -102,10 +102,10 @@ export default function LoginRegister() {
             aria-selected="true"
           >
             Login
-          </a>
+          </Link>
         </li>
         <li className="nav-items" role="presentation">
-          <a
+          <Link
             className="nav-links nav-link_underscore"
             id="register-tab"
             data-bs-toggle="tab"
@@ -115,7 +115,7 @@ export default function LoginRegister() {
             aria-selected="false"
           >
             Register
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="tab-content pt-2" id="login_register_tab_content">
@@ -186,9 +186,9 @@ export default function LoginRegister() {
 
               {/* <div className="customer-option mt-4 text-center">
                 <span className="text-secondary">No account yet?</span>{" "}
-                <a href="#register-tab" className="btn-text js-show-register">
+                <Link href="#register-tab" className="btn-text js-show-register">
                   Create Account
-                </a>
+                </Link>
               </div> */}
             </form>
           </div>

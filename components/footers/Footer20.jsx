@@ -70,7 +70,7 @@ export default function Footer20() {
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="footer__social-link d-block">
+                  <Link href={link.href} className="footer__social-link d-block">
                     <svg
                       className={link.className}
                       width={link.width}
@@ -84,7 +84,7 @@ export default function Footer20() {
                         link.icon
                       )}
                     </svg>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -1,30 +1,31 @@
 import React from "react";
+import Link from "next/link";
 
 export default function BreadCumb({ category, subcategory }) {
   // console.log(category, subcategory);
   return (
     <>
-      <a href="/" className="menu-link menu-link_us-s text-uppercase fw-medium">
+      <Link href="/" className="menu-link menu-link_us-s text-uppercase fw-medium">
         Home
-      </a>
+      </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
         /
       </span>
-      <a href="/shop" className="menu-link menu-link_us-s text-uppercase fw-medium">
+      <Link href="/shop" className="menu-link menu-link_us-s text-uppercase fw-medium">
         Shop
-      </a>
+      </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
       {category ? `/` : ``}
       </span>
-      <a href={subcategory ? `/product-category/${category}` : `#`} className="menu-link menu-link_us-s text-uppercase fw-medium">
+      <Link href={subcategory ? `/product-category/${category}` : `#`} className="menu-link menu-link_us-s text-uppercase fw-medium">
         {category?.split("-").join(" ")}
-      </a>
+      </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
       {subcategory ? `/` : ``}
       </span>
-      <a href="#" className="menu-link menu-link_us-s text-uppercase fw-medium">
+      <Link href="#" className="menu-link menu-link_us-s text-uppercase fw-medium">
         {subcategory && subcategory.split("-").join(" ")}
-      </a>
+      </Link>
     </>
   );
 }

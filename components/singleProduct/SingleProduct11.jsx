@@ -8,7 +8,6 @@ import Description from "./Description";
 import AdditionalInfo from "./AdditionalInfo";
 import Reviews from "./Reviews";
 import Clolor2 from "./Clolor2";
-import Link from "next/link";
 import ShareComponent from "../common/ShareComponent";
 import { useContextElement } from "@/context/Context";
 import he from 'he';
@@ -50,6 +49,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
       const item = product;
       item.quantity = quantity;
       setCartProducts((pre) => [...pre, item]);
+      document
+      .getElementById("cartDrawerOverlay")
+      .classList.add("page-overlay_visible");
+      document.getElementById("cartDrawer").classList.add("aside_visible");
     }
   };
 
@@ -68,14 +71,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
               {/* <!-- /.breadcrumb --> */}
             </div>
             <h1 className="product-single__name">{product?.product_name && he.decode(product?.product_name)}</h1>
-            {/* <div className="product-single__rating">
-            <div className="reviews-group d-flex">
-              <Star stars={5} />
-            </div>
-            <span className="reviews-note text-lowercase text-secondary ms-1">
-              8k+ reviews
-            </span>
-          </div> */}
             <div className="product-single__price">
               <span className="current-price"> {product.price}د.إ</span>
             </div>
@@ -135,18 +130,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
               }
             </form>
             <div className="product-single__addtolinks">
-              {/* <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_heart" />
-                </svg>
-                <span>Add to Wishlist</span>
-              </a> */}
               <ShareComponent title={product.title} />
             </div>
             <div className="product-single__meta-info">

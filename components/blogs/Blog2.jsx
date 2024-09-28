@@ -88,9 +88,9 @@ export default function Blog2() {
         <Pagination1 />
 
         <div className="text-center">
-          <a className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
+          <Link className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
             Show More
-          </a>
+          </Link>
         </div>
       </section>{" "}
     </>

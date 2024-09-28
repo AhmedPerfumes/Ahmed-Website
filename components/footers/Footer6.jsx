@@ -52,7 +52,7 @@ export default function Footer6() {
           <ul className="social-links list-unstyled d-flex flex-wrap align-items-center justify-content-center mb-5">
             {socialLinks.map((link, index) => (
               <li key={index}>
-                <a href={link.href} className="footer__social-link d-block">
+                <Link href={link.href} className="footer__social-link d-block">
                   <svg
                     className={link.className}
                     width={link.width}
@@ -66,7 +66,7 @@ export default function Footer6() {
                       link.icon
                     )}
                   </svg>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

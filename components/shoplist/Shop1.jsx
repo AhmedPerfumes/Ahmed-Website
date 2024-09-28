@@ -18,7 +18,7 @@ import {
 } from "@/data/products/productCategories";
 import he from 'he';
 
-export default function Shop1() {
+export default function Shop1({ search }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
 
@@ -44,7 +44,8 @@ export default function Shop1() {
 
   const fetchData = async (page) => {
     setLoading(true);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}}`);
+    console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
     const newData = await res.json();
     const { data, total, to } = newData;
     if (data.length === 0) {
@@ -70,6 +71,19 @@ export default function Shop1() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading]); // Clean up on component unmount
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
 
   return (
     <>
@@ -203,7 +217,7 @@ export default function Shop1() {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <Link href={`/shop/${elm.category_name.split(' ').join('-').toLowerCase()}/${elm.subcategory?.subcategory_name.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>
+                        <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -284,7 +298,7 @@ export default function Shop1() {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <Link href={`/shop/${elm.category_name}/${elm.subcategory?.subcategory_name.split(" ").join('-').toLowerCase()}/${elm.product_name.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                    <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (
@@ -298,7 +312,7 @@ export default function Shop1() {
                         </span>
                       </>
                     ) : ( */}
-                      <span className="money price">${elm.price}</span>
+                      <span className="money price">{elm.price}د.إ</span>
                     {/* )} */}
                   </div>
                   {/* {elm.colors && (
@@ -364,9 +378,9 @@ export default function Shop1() {
         {loading && <Pagination1 />}
 
         {/* <div className="text-center">
-          <a className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
+          <Link className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
             Show More
-          </a>
+          </Link>
         </div> */}
       </section>
     </>

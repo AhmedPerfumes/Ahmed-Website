@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function ShareComponent({ title = "title" }) {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function ShareComponent({ title = "title" }) {
     }
   };
   return (
-    <a href="#" onClick={shareContent} className="menu-link menu-link_us-s ">
+    <Link href="#" onClick={shareContent} className="menu-link menu-link_us-s ">
       <svg
         width="16"
         height="19"
@@ -45,6 +46,6 @@ export default function ShareComponent({ title = "title" }) {
         <use href="#icon_sharing" />
       </svg>
       <span>Share</span>
-    </a>
+    </Link>
   );
 }

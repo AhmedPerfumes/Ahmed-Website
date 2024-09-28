@@ -8,6 +8,7 @@ import Image from "next/image";
 import ShareComponent from "../common/ShareComponent";
 import { useState } from "react";
 import he from 'he';
+import Link from "next/link";
 
 export default function QuickView() {
   const { quickViewItem } = useContextElement();
@@ -68,6 +69,10 @@ export default function QuickView() {
       const item = quickViewItem;
       item.quantity = quantity;
       setCartProducts((pre) => [...pre, item]);
+      document
+      .getElementById("cartDrawerOverlay")
+      .classList.add("page-overlay_visible");
+      document.getElementById("cartDrawer").classList.add("aside_visible");
     }
   };
   return (
@@ -215,7 +220,7 @@ export default function QuickView() {
                 }
               </form>
               <div className="product-single__addtolinks">
-                {/* <a
+                {/* <Link
                   href="#"
                   className={`menu-link menu-link_us-s add-to-wishlist  ${
                     isAddedtoWishlist(quickViewItem.product_id) ? "active" : ""
@@ -232,7 +237,7 @@ export default function QuickView() {
                     <use href="#icon_heart" />
                   </svg>
                   <span>Add to Wishlist</span>
-                </a> */}
+                </Link> */}
                 <ShareComponent title={he.decode(quickViewItem.product_name)} />
               </div>
               {/* <div className="product-single__meta-info mb-0">

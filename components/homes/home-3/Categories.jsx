@@ -4,6 +4,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function Categories({ params, subCategories }) {
 
@@ -81,6 +82,19 @@ export default function Categories({ params, subCategories }) {
     },
   };
 
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
+
   return (
     <section className="category-carousel container">
       <div className="position-relative">
@@ -89,7 +103,7 @@ export default function Categories({ params, subCategories }) {
             <SwiperSlide key={i} className="swiper-slide text-center">
               <a
                 key={i}
-                href={`/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
+                href={`/product-category/${removeSpecialCharactersAndAmp(categoryName)}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                 className="shop-categories__item mb-3"
               >
                 <video
@@ -108,13 +122,13 @@ export default function Categories({ params, subCategories }) {
                 </video>
               </a>
               <div className="text-center">
-                <a
+                <Link
                   href={`/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
                   className="menu-link fw-medium"
                   key={i}
                 >
                   {elm.name}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}

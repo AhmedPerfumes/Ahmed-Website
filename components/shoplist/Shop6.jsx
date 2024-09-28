@@ -82,21 +82,21 @@ export default function Shop6() {
       <section className="shop-main container">
         <div className="d-flex justify-content-between mb-4 pb-md-2">
           <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-            <a
+            <Link
               href="#"
               className="menu-link menu-link_us-s text-uppercase fw-medium"
             >
               Home
-            </a>
+            </Link>
             <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
               /
             </span>
-            <a
+            <Link
               href="#"
               className="menu-link menu-link_us-s text-uppercase fw-medium"
             >
               The Shop
-            </a>
+            </Link>
           </div>
 
           <div className="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
@@ -313,9 +313,9 @@ export default function Shop6() {
         <Pagination1 />
 
         <div className="text-center">
-          <a className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
+          <Link className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
             Show More
-          </a>
+          </Link>
         </div>
       </section>{" "}
     </>

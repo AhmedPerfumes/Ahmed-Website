@@ -72,11 +72,11 @@ export default function Categories() {
                 alt="image"
               />
               <div className="text-center">
-                <a href="#" className="menu-link fw-medium">
+                <Link href="#" className="menu-link fw-medium">
                   {elm.category.split(" ")[0]}
                   <br />
                   {elm.category.split(" ").slice(1).join(" ")}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}

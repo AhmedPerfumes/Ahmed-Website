@@ -76,9 +76,9 @@ export default function Header10() {
           {/* <!-- /.header-tools__item hover-container --> */}
 
           <div className="header-tools__item hover-container">
-            <a className="header-tools__item js-open-aside" href="#">
+            <Link className="header-tools__item js-open-aside" href="#">
               <User />
-            </a>
+            </Link>
           </div>
 
           <Link className="header-tools__item" href="/account_wishlist">
@@ -112,7 +112,7 @@ export default function Header10() {
             </span>
           </a>
 
-          <a
+          <Link
             className="header-tools__item"
             href="#"
             data-bs-toggle="modal"
@@ -129,7 +129,7 @@ export default function Header10() {
               <rect y="8" width="20" height="2" />
               <rect y="16" width="25" height="2" />
             </svg>
-          </a>
+          </Link>
         </div>
         {/* <!-- /.header__tools --> */}
       </div>

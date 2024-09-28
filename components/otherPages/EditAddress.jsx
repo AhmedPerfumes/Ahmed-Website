@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function EditAddress() {
   return (
@@ -11,7 +12,7 @@ export default function EditAddress() {
           <div className="my-account__address-item">
             <div className="my-account__address-item__title">
               <h5>Billing Address</h5>
-              <a href="#">Edit</a>
+              <Link href="#">Edit</Link>
             </div>
             <div className="my-account__address-item__detail">
               <p>Daniel Robinson</p>
@@ -25,7 +26,7 @@ export default function EditAddress() {
           <div className="my-account__address-item">
             <div className="my-account__address-item__title">
               <h5>Shipping Address</h5>
-              <a href="#">Edit</a>
+              <Link href="#">Edit</Link>
             </div>
             <div className="my-account__address-item__detail">
               <p>Daniel Robinson</p>

@@ -13,12 +13,14 @@ export const metadata = {
   },
 };
 
-const ShopPage = async() => {
+const ShopPage = async({ searchParams }) => {
+  const search = searchParams.q;
+  // console.log('000', search);
   return (
     <>
       <Header14 />
       <main>
-        <Shop1 />
+        <Shop1 search={search}/>
       </main>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <Footer14 />

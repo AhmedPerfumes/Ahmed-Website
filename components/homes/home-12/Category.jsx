@@ -70,9 +70,9 @@ export default function Category() {
                   alt="image"
                 />
                 <div className="text-center">
-                  <a href="#" className="menu-link fw-medium pb-0">
+                  <Link href="#" className="menu-link fw-medium pb-0">
                     {elm.name}
-                  </a>
+                  </Link>
                   {elm.productCount && (
                     <p className="mb-0 text-secondary">
                       {elm.productCount} Products

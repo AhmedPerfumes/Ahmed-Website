@@ -1,10 +1,11 @@
 import Blog3 from "@/components/blogs/Blog3";
 import BlogDetails from "@/components/blogs/BlogDetails";
-import Footer1 from "@/components/footers/Footer1";
+import Footer14 from "@/components/footers/Footer14";
 
-import Header1 from "@/components/headers/Header1";
+import Header14 from "@/components/headers/Header14";
 import { allBlogs } from "@/data/blogs";
 import React from "react";
+import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -26,19 +27,28 @@ async function getBlog(blogName) {
 
 const BlogDetailsPage = async({ params }) => {
   const { blogName } = params;
-  // console.log(blogName);
+  console.log(blogName);
   try {
-    const data = await getBlog(blogName[0]);
-    console.log('000', data);
+    const data = await getBlog(blogName);
+    console.log(data);
     return (
       <>
-        <Header1 />
+        <Header14 />
         <main className="page-wrapper">
           <div className="mb-4 pb-4"></div>
           <BlogDetails blog={data} />
         </main>
-        <div className="mb-5 pb-xl-5"></div>
-        <Footer1 />
+        <section className="d-none d-lg-block" style={{ height: "100%" }}>
+          <Footer14 />
+          
+        </section>
+        <section className="d-sm-block d-md-none bg-dark pt-5  ">
+        <div className="MobileFooter">
+        
+
+        <MobileFooter2/>
+        </div>
+      </section>
       </>
     );
   } catch (error) {

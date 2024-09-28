@@ -56,13 +56,26 @@ export default function Nav({ categoriesSubCategories }) {
     });
   }, []);
 
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
+
   let categoriesSubCategoriesBody = categoriesSubCategories?.map((item, i) => {
     return (
       <li className="navigation__item" key={i}>
         <Link
-          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+          href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
           className={`navigation__link
-          ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
+          ${isActiveParentMenu(`/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           `}
         >
           { item.name }
@@ -78,7 +91,7 @@ export default function Nav({ categoriesSubCategories }) {
                   {item.productSubCategories.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
                       <Link
-                        href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+                        href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
                         className={`menu-link menu-link_us-s ${
                           isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                         }`}
@@ -92,7 +105,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <Link href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
+                  <Link href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
@@ -108,7 +121,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <Link href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
+                  <Link href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
