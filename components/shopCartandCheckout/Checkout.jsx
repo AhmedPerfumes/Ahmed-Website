@@ -122,7 +122,7 @@ export default function Checkout() {
  
   async function onOrder(event) {
     event.preventDefault();
-    console.log('Order submitted:', formData);
+    // console.log('Order submitted:', formData);
     setIsLoading(true);
     setError(null);
     setSuccess(null);
@@ -162,7 +162,7 @@ export default function Checkout() {
  
       // Handle response if necessary
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       if(data.message && data.message.split(' ')[0] == 'Order') {
         setSuccess(data.message);
         setError(null);
@@ -232,7 +232,7 @@ export default function Checkout() {
 
   async function sendOTP(e) {
     e.preventDefault();
-    console.log('Mobile:', formData.billingAddress.mobile);
+    // console.log('Mobile:', formData.billingAddress.mobile);
     // return;
     setIsSendOTPLoading(true);
     if(formData.billingAddress.mobile == '') {
@@ -278,7 +278,7 @@ export default function Checkout() {
         }
         setOTPSuccess(null);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setOTPSuccess(error.message);
@@ -290,8 +290,8 @@ export default function Checkout() {
 
   async function verifyOTP(e) {
     e.preventDefault();
-    console.log('Mobile:', formData.billingAddress.mobile);
-    console.log('OTP:', formData.otp);
+    // console.log('Mobile:', formData.billingAddress.mobile);
+    // console.log('OTP:', formData.otp);
     // return;
     setIsSendOTPLoading(true);
     if(formData.otp == '') {
@@ -345,7 +345,7 @@ export default function Checkout() {
         }
         setOTPSuccess(null);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setOTPError(error.message);

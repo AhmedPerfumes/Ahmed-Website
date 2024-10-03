@@ -40,7 +40,7 @@ export default function FilterAll() {
   const [price, setPrice] = useState([500, 0]);
 
   const handleOnChange = (value) => {
-    console.log(value);
+    // console.log(value);
     setPrice(value);
   };
   return (

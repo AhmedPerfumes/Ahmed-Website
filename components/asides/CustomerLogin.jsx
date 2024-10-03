@@ -49,7 +49,7 @@ export default function CustomerLogin() {
         setError(null);
         setTimeout(() => window.location.href='/verify-otp', 1000);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
@@ -88,7 +88,7 @@ export default function CustomerLogin() {
         localStorage.setItem('user', btoa(JSON.stringify(data.data)));
         setTimeout(() => window.location.href='/', 1000);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);

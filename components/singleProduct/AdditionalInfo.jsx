@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function AdditionalInfo() {
+export default function AdditionalInfo({ video, notes, title }) {
   return (
     <>
-      <div className="d-lg-flex align-items-lg-center mb-5">
+      {/* <div className="d-lg-flex align-items-lg-center mb-5">
         <div className="image-wrapper col-lg-6">
           <img
             style={{ height: "fit-content" }}
@@ -70,12 +70,12 @@ export default function AdditionalInfo() {
             Arcu eu id maecenas cras.
           </p>
         </div>
-      </div>
-
+      </div> */}
+      <div dangerouslySetInnerHTML={{ __html: notes }}></div>
       <div className="align-items-lg-center mb-5">
         <div className="col-lg-12 d-flex align-items-center justify-content-center mb-5">
           <h2 className="mb-3 text-white">
-            LES PARFUMS, A SPELLBINDING INTENSITY
+            { title }
           </h2>
         </div>
         <div className="image-wrapper col-lg-12">
@@ -85,7 +85,7 @@ export default function AdditionalInfo() {
             loop
             muted
             controls
-            src="https://www.ahmedalmaghribi.com/laathani.mp4"
+            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ video}`} type="video/mp4" width={200}
             alt=""
           />
         </div>

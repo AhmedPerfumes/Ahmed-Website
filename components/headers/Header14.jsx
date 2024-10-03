@@ -39,7 +39,7 @@ export default function Header14() {
 
 //   useEffect(() => {
 //     const token = localStorage.getItem('token');
-//     // console.log(token);
+//     console.log(token);
 //     if (token) {
 //       setIsLoggedIn(true);
 //     }

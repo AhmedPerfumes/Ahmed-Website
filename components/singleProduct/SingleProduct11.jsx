@@ -130,7 +130,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               }
             </form>
             <div className="product-single__addtolinks">
-              <ShareComponent title={product.title} />
+              <ShareComponent title={product.product_name} />
             </div>
             <div className="product-single__meta-info">
               <div className="meta-item">
@@ -152,13 +152,13 @@ export default function SingleProduct11({ category, subcategory, product }) {
             Description
           </h2>
           <div className="product-single__details-list__content">
-            <Description />
+            <Description content={ product.content }/>
           </div>
           <h2 className="product-single__details-list__title text-white">
             Fragrance Notes
           </h2>
           <div className="product-single__details-list__content">
-            <AdditionalInfo />
+            <AdditionalInfo video={ product.video && JSON.parse(product.video)[0][0].value } notes={ product.fragrance_notes } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
           </div>
         </div>
       </section></> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}

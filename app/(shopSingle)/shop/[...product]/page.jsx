@@ -16,7 +16,7 @@ export const metadata = {
 };
 
 async function getproduct(categoryName, subCategoryName, product) {
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}&product=${product.split("-").join(" ").toUpperCase()}`);
+  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}&product=${product.split("-").join(" ").toUpperCase()}`);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}&product=${product.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -28,14 +28,14 @@ const ProductDetailsPage16 = async({ params }) => {
   // console.log(params);
   try {
     const data = await getproduct(categoryName, subCategoryName, product);
-    console.log(data);
+    // console.log(data);
     return (
       <>
         <Header14 />
         <main className="page-wrapper">
           <div className="mb-md-1 pb-md-3"></div>
           <SingleProduct11 category={ categoryName } subcategory={ subCategoryName } product={ data } />
-          <RelatedSlider />
+          <RelatedSlider relatedProds={ data.related_prods }/>
         </main>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <Footer14 />

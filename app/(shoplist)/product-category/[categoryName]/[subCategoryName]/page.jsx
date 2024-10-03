@@ -19,7 +19,7 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName, subCategoryName) {
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`);
+  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -32,7 +32,7 @@ const ShopPage8 = async ({ params }) => {
 
   try {
     const data = await getCategorySubCategory(categoryName, subCategoryName);
-    console.log(data);
+    // console.log(data);
     return (
       <>
       <Loader/>

@@ -44,7 +44,7 @@ export default function Shop1({ search }) {
 
   const fetchData = async (page) => {
     setLoading(true);
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
+    // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
     const newData = await res.json();
     const { data, total, to } = newData;

@@ -39,7 +39,7 @@ export default function VerifyOTP() {
         localStorage.setItem('token', data.access_token);
         setTimeout(() => router.push('/'), 1000);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);

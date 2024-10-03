@@ -27,10 +27,10 @@ async function getBlog(blogName) {
 
 const BlogDetailsPage = async({ params }) => {
   const { blogName } = params;
-  console.log(blogName);
+  // console.log(blogName);
   try {
     const data = await getBlog(blogName);
-    console.log(data);
+    // console.log(data);
     return (
       <>
         <Header14 />

@@ -17,7 +17,7 @@ const AutoScrollSection = () => {
             start: 'top center', // Adjust trigger position as needed
             end: 'bottom center',
             onEnter: () => {
-                console.log('00000');
+                // console.log('00000');
                 gsap.to(window, {
                 scrollTo: {
                     y: '#target-section',

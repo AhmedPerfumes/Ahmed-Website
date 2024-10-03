@@ -48,7 +48,7 @@ export default function OrderTrack() {
         setSuccess(null);
         setShowDetails(false);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
