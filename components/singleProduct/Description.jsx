@@ -38,7 +38,7 @@ export default function Description({ content }) {
       </div>
       <h3 className="block-title mb-0">Lining</h3>
       <p className="content">100% Polyester, Main: 100% Polyester.</p> */}
-      <div dangerouslySetInnerHTML={{ __html: content }}></div>
+      {content && <div dangerouslySetInnerHTML={{ __html: content }}></div>}
     </div>
   );
 }

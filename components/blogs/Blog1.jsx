@@ -106,7 +106,7 @@ export default function Blog1() {
                 <Image
                   loading="lazy"
                   className="h-auto"
-                  src={elm.image ? elm.image : '/assets/images/blog/blog-1.jpg'}
+                  src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : '/assets/images/blog/blog-1.jpg'}
                   width="690"
                   height="500"
                   alt="image"

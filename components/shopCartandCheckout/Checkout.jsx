@@ -535,7 +535,7 @@ export default function Checkout() {
                     onChange={handleChange}
                     required
                   />
-                  <label htmlFor="checkout_phone">Phone (Eg. 500000000)*</label>
+                  <label htmlFor="checkout_phone">Mobile Number (Eg. 500000000)*</label>
                 </div>
                   {OTPError ? <div style={{ color: 'red' }}>{OTPError}</div> : <div style={{ color: 'green' }}>{OTPSuccess}</div>}
                   {isOTPButton ? <button

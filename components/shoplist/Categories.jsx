@@ -22,8 +22,8 @@ export default function Categories({ description, subCategories }) {
           <h2 className="h3 pb-3 mb-4 fw-normal text-uppercase text-center">
             {subcategory == null ? category.split("-").join(" ").toUpperCase() : subcategory.split("-").join(" ").toUpperCase()}
           </h2>
-          <div dangerouslySetInnerHTML={{ __html: description }} className="fs-6 fw-medium mb-4 text-center mw-930">
-          </div>
+          {description && <div dangerouslySetInnerHTML={{ __html: description }} className="fs-6 fw-medium mb-4 text-center mw-930">
+          </div>}
         </div>
       </section>
       {subcategory == null ? <Categoriess subCategories={ subCategories }/> : null}

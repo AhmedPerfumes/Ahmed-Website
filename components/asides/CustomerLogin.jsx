@@ -21,10 +21,29 @@ export default function CustomerLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [mobile, setMobile] = useState('');
+
+  const validateMobile = (event) => {
+    const { value } = event.currentTarget;
+    setMobile(value);
+  };
  
   async function onRegister(event) {
     event.preventDefault();
     setIsLoading(true);
+    if(mobile == '') {
+      setError('Mobile Number is Required');
+      setSuccess(null);
+      setIsLoading(false);
+      return;
+    }
+    const regex = /^\d{9}$/;
+    if(!regex.test(mobile)) {
+      setError('Invalid Mobile Number');
+      setSuccess(null);
+      setIsLoading(false);
+      return;
+    }
     setError(null);
     setSuccess(null);
  
@@ -62,6 +81,19 @@ export default function CustomerLogin() {
   async function onLogin(event) {
     event.preventDefault();
     setIsLoading(true);
+    if(mobile == '') {
+      setError('Mobile Number is Required');
+      setSuccess(null);
+      setIsLoading(false);
+      return;
+    }
+    const regex = /^\d{9}$/;
+    if(!regex.test(mobile)) {
+      setError('Invalid Mobile Number');
+      setSuccess(null);
+      setIsLoading(false);
+      return;
+    }
     setError(null);
     setSuccess(null);
  
@@ -120,9 +152,10 @@ export default function CustomerLogin() {
                 type="number"
                 className="form-control form-control_gray"
                 placeholder="Mobile Number"
+                onChange={validateMobile}
                 required
               />
-              <label>Mobile Number *</label>
+              <label>Mobile Number (Eg. 500000000)*</label>
             </div>
             <div className="pb-3" />
             <div className="form-label-fixed mb-3">
@@ -204,8 +237,10 @@ export default function CustomerLogin() {
                 type="number"
                 className="form-control form-control_gray"
                 placeholder="Mobile Number"
+                onChange={validateMobile}
+                required
               />
-              <label>Mobile Number *</label>
+              <label>Mobile Number (Eg. 500000000)*</label>
             </div>
 
             <div className="pb-1" />

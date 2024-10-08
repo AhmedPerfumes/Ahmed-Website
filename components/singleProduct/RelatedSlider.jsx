@@ -70,7 +70,7 @@ export default function RelatedSlider({ relatedProds }) {
           className="swiper-container js-swiper-slider"
           data-settings=""
         >
-          {relatedProds.map((elm, i) => (
+          {relatedProds && relatedProds.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide product-card">
               <div className="pc__img-wrapper">
                 <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>

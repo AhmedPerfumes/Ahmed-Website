@@ -71,7 +71,7 @@ export default function AdditionalInfo({ video, notes, title }) {
           </p>
         </div>
       </div> */}
-      <div dangerouslySetInnerHTML={{ __html: notes }}></div>
+      {notes && <div dangerouslySetInnerHTML={{ __html: notes }}></div>}
       <div className="align-items-lg-center mb-5">
         <div className="col-lg-12 d-flex align-items-center justify-content-center mb-5">
           <h2 className="mb-3 text-white">

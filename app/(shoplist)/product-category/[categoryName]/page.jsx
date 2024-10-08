@@ -62,7 +62,7 @@ const ShopPage8 = async ({ params }) => {
     return <><Header14 />
             <main className="page-wrapper">
               <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Category Found</h2>
-              <RelatedSlider />
+              <RelatedSlider relatedProds={ null }/>
             </main>
             <section className="d-none d-lg-block" style={{ height: "100%" }}>
               <Footer14 />
