@@ -36,61 +36,16 @@ export default function RootLayout({ children }) {
       import("bootstrap/dist/js/bootstrap.esm").then(() => {
         // Module is imported, you can access any exported functionality if
       });
+
+      localStorage.setItem('orderData', '');
+      localStorage.setItem('cartList', []);
+      localStorage.setItem('wishList', []);
     }
   }, []);
 
-  useEffect(() => {
-    // Clear all local storage when the app starts
-    // localStorage.setItem('token', '');
-    // localStorage.setItem('user', '');
-    localStorage.setItem('orderData', '');
-    localStorage.setItem('cartList', []);
-    localStorage.setItem('wishList', []);
-  }, []);
   return (
     <html lang="en">
       <head>
-        {/* <link
-          href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&family=Lora:wght@400;500;600;700&family=Poppins:wght@400&display=swap"
-          rel="stylesheet"
-        />
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Average+Sans:400"
-          rel="stylesheet"
-          property="stylesheet"
-          media="all"
-          type="text/css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        /> */}
       </head>
       <body className={myFont.className}
       >

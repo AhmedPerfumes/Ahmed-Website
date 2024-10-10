@@ -3,12 +3,13 @@ const nextConfig = {
     images: {
         remotePatterns: [
           {
-            protocol: 'http',
-            hostname: 'localhost',
+            protocol: 'https',
+            hostname: 'phpstack-667016-4904984.cloudwaysapps.com',
             port: '',
           },
         ],
       },
+      productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;
