@@ -12,8 +12,12 @@ export function MenuProvider({ children }) {
     
         try {
           const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategories`, {
-            method: 'GET',
-          })
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({}), // Add any data you want to send in the body, if needed
+          });
      
           if (!response.ok) {
             throw new Error('Failed to submit the data. Please try again.');

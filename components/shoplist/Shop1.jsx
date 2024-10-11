@@ -45,8 +45,18 @@ export default function Shop1({ search }) {
   const fetchData = async (page) => {
     setLoading(true);
     // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
-    const newData = await res.json();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        page: page,
+        limit: limit,
+        search: search ? search.split('-').join(' ') : '',
+      }),
+    });
+    const newData = await response.json();
     const { data, total, to } = newData;
     if (data.length === 0) {
       setHasMore(false);

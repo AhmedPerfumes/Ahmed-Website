@@ -23,13 +23,10 @@ export default function BlogPage1() {
       </main>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <Footer14 />
-          
         </section>
         <section className="d-sm-block d-md-none bg-dark pt-5  ">
         <div className="MobileFooter">
-        
-
-        <MobileFooter2/>
+          <MobileFooter2/>
         </div>
       </section>
     </>

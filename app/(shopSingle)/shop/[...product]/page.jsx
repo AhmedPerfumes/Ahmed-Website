@@ -17,7 +17,18 @@ export const metadata = {
 
 async function getproduct(categoryName, subCategoryName, product) {
   // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}&product=${product.split("-").join(" ").toUpperCase()}`);
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}&product=${product.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      category: categoryName.split("-").join(" ").toUpperCase(),
+      subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
+      product: product.split("-").join(" ").toUpperCase(),
+    }),
+    cache: 'no-store',
+  });
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

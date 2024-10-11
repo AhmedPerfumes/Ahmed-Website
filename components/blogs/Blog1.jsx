@@ -28,8 +28,17 @@ export default function Blog1() {
   const fetchData = async (page) => {
     setLoading(true);
     // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/blogs?page=${page}&limit=${limit}}`);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/blogs?page=${page}&limit=${limit}}`);
-    const newData = await res.json();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/blogs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        page: page,
+        limit: limit,
+      }),
+    });
+    const newData = await response.json();
     const { data, total, to } = newData;
     if (data.length === 0) {
       setHasMore(false);

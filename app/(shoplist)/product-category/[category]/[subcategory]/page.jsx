@@ -20,7 +20,17 @@ export const metadata = {
 
 async function getCategorySubCategory(categoryName, subCategoryName) {
   // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`);
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`, { cache: 'no-store' });
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      category: categoryName.split("-").join(" ").toUpperCase(),
+      subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
+    }),
+    cache: 'no-store',
+  });
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
@@ -28,10 +38,10 @@ async function getCategorySubCategory(categoryName, subCategoryName) {
 }
 // export default function ShopPage8() {
 const ShopPage8 = async ({ params }) => {
-  const { categoryName, subCategoryName } = params;
+  const { category, subcategory } = params;
 
   try {
-    const data = await getCategorySubCategory(categoryName, subCategoryName);
+    const data = await getCategorySubCategory(category, subcategory);
     // console.log(data);
     return (
       <>
