@@ -23,7 +23,7 @@ export default function Products1() {
                   <strong>Women</strong> Collection
                 </h3>
                 <Link
-                  href="/shop-1"
+                  href="/shop"
                   className="btn-link default-underline text-uppercase fw-medium"
                 >
                   Shop Now
@@ -48,7 +48,7 @@ export default function Products1() {
                   <strong>Men</strong> Collection
                 </h3>
                 <Link
-                  href="/shop-1"
+                  href="/shop"
                   className="btn-link default-underline text-uppercase fw-medium"
                 >
                   Shop Now
@@ -73,7 +73,7 @@ export default function Products1() {
                         <strong>Kids</strong> Collection
                       </h3>
                       <Link
-                        href="/shop-1"
+                        href="/shop"
                         className="btn-link default-underline text-uppercase fw-medium"
                       >
                         Shop Now
@@ -100,7 +100,7 @@ export default function Products1() {
                         really want.
                       </p>
                       <Link
-                        href="/shop-1"
+                        href="/shop"
                         className="btn-link default-underline text-uppercase fw-medium"
                       >
                         Shop Now

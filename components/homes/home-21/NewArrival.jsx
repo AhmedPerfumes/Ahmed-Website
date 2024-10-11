@@ -60,7 +60,7 @@ export default function NewArrival() {
                     Equipment
                   </h3>
                   <Link
-                    href="/shop-1"
+                    href="/shop"
                     className="btn btn-outline-primary border-0 fs-12 fw-semi-bold btn-40 text-uppercase py-1 px-4 mb-3 d-inline-flex align-items-center"
                   >
                     <span>Shop Now</span>

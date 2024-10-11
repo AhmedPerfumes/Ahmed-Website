@@ -52,7 +52,7 @@ export default function Header16() {
       <div className="header-desk header-desk_type_2">
         <nav className="navigation d-flex">
           <ul className="navigation__list list-unstyled d-flex">
-            <Nav />
+            <Nav categoriesSubCategories={ null }/>
           </ul>
           {/* <!-- /.navigation__list --> */}
         </nav>
@@ -74,9 +74,9 @@ export default function Header16() {
           {/* <!-- /.header-tools__item hover-container --{'>'} */}
 
           <div className="header-tools__item hover-container">
-            <a className="js-open-aside" href="#">
+            <Link className="js-open-aside" href="#">
               <User />
-            </a>
+            </Link>
           </div>
 
           <Link className="header-tools__item" href="/account_wishlist">

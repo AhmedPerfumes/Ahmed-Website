@@ -71,15 +71,15 @@ export default function SingleProduct7({ product }) {
             </div>
           </div>
           <div className="product-single__additional-info">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#deliveryModal">
+            <Link href="#" data-bs-toggle="modal" data-bs-target="#deliveryModal">
               Composition and Care
-            </a>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#deliveryModal">
+            </Link>
+            <Link href="#" data-bs-toggle="modal" data-bs-target="#deliveryModal">
               In-Store Availability
-            </a>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#deliveryModal">
+            </Link>
+            <Link href="#" data-bs-toggle="modal" data-bs-target="#deliveryModal">
               Delivery and Return
-            </a>
+            </Link>
           </div>
         </div>
         <div className="col-lg-5">
@@ -145,14 +145,14 @@ export default function SingleProduct7({ product }) {
                   <div className="swatch-list">
                     <Size />
                   </div>
-                  <a
+                  <Link
                     href="#"
                     className="sizeguide-link"
                     data-bs-toggle="modal"
                     data-bs-target="#sizeGuide"
                   >
                     Size Guide
-                  </a>
+                  </Link>
                 </div>
                 <div className="product-swatch color-swatches">
                   <label>Color</label>
@@ -209,7 +209,7 @@ export default function SingleProduct7({ product }) {
               </div>
             </form>
             <div className="product-single__addtolinks">
-              <a href="#" className="menu-link menu-link_us-s add-to-wishlist">
+              <Link href="#" className="menu-link menu-link_us-s add-to-wishlist">
                 <svg
                   width="16"
                   height="16"
@@ -220,7 +220,7 @@ export default function SingleProduct7({ product }) {
                   <use href="#icon_heart" />
                 </svg>
                 <span>Add to Wishlist</span>
-              </a>
+              </Link>
               <ShareComponent title={product.title} />
             </div>
             <div className="product-single__meta-info">
@@ -238,27 +238,27 @@ export default function SingleProduct7({ product }) {
               </div>
             </div>
             <div className="product-single__details">
-              <a
+              <Link
                 href="#"
                 className="js-open-aside"
                 onClick={openModalProductDescription}
               >
                 Description
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="js-open-aside"
                 onClick={openModalProductAdditionalInformation}
               >
                 Additional Information
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="js-open-aside"
                 onClick={openModalProductReviews}
               >
                 Reviews (3)
-              </a>
+              </Link>
             </div>
           </div>
         </div>

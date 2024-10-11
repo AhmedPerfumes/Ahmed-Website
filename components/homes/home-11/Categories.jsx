@@ -50,7 +50,7 @@ export default function Categories() {
         <h2 className="section-title fw-bold">Featured Categories</h2>
         <Link
           className="btn-link btn-link_md default-underline text-uppercase fw-medium"
-          href="/shop-12"
+          href="/shop"
         >
           Shop All Categories
         </Link>
@@ -72,11 +72,11 @@ export default function Categories() {
                 alt="image"
               />
               <div className="text-center">
-                <a href="#" className="menu-link fw-medium">
+                <Link href="#" className="menu-link fw-medium">
                   {elm.category.split(" ")[0]}
                   <br />
                   {elm.category.split(" ").slice(1).join(" ")}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}

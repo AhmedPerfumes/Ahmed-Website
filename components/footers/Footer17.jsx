@@ -45,7 +45,7 @@ export default function Footer17() {
           </li>
           <li className="sub-menu__item">
             <Link
-              href="/shop_order_tracking"
+              href="/shop-order-tracking"
               className="menu-link menu-link_us-s"
             >
               Track Your Order
@@ -61,7 +61,7 @@ export default function Footer17() {
         <ul className="social-links list-unstyled d-flex flex-wrap mb-0 align-items-center justify-content-center">
           {socialLinks.map((link, index) => (
             <li key={index}>
-              <a href={link.href} className="footer__social-link d-block">
+              <Link href={link.href} className="footer__social-link d-block">
                 <svg
                   className={link.className}
                   width={link.width}
@@ -75,7 +75,7 @@ export default function Footer17() {
                     link.icon
                   )}
                 </svg>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

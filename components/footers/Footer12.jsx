@@ -17,7 +17,7 @@ export default function Footer12() {
           </li>
           <li className="sub-menu__item px-3">
             <Link
-              href="/shop-1"
+              href="/shop"
               className="menu-link menu-link_us-s text-uppercase fw-semi-bold"
             >
               Shop
@@ -25,7 +25,7 @@ export default function Footer12() {
           </li>
           <li className="sub-menu__item px-3">
             <Link
-              href="/blog_list1"
+              href="/blog"
               className="menu-link menu-link_us-s text-uppercase fw-semi-bold"
             >
               Blog
@@ -61,7 +61,7 @@ export default function Footer12() {
           <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
             {socialLinks.map((link, index) => (
               <li key={index}>
-                <a href={link.href} className="footer__social-link d-block p">
+                <Link href={link.href} className="footer__social-link d-block p">
                   <svg
                     className={link.className}
                     width={link.width}
@@ -75,7 +75,7 @@ export default function Footer12() {
                       link.icon
                     )}
                   </svg>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

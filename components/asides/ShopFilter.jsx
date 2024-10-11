@@ -19,7 +19,7 @@ export default function ShopFilter() {
   return (
     <div className="aside-filters aside aside_right" id="shopFilterAside">
       <div className="aside-header d-flex align-items-center">
-        <h3 className="text-uppercase fs-6 mb-0">Filter By</h3>
+        <h3 className="text-uppercase fs-6 mb-0">Filter</h3>
         <button
           onClick={() => closeModalShopFilter()}
           className="btn-close-lg js-close-aside btn-close-aside ms-auto"

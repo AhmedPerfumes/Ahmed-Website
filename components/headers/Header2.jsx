@@ -54,24 +54,24 @@ export default function Header2() {
       <div className="header-top d-flex bg-black color-white align-items-center">
         <ul className="list-unstyled d-flex flex-1 gap-3 m-0">
           <li>
-            <a href="#" className="menu-link menu-link_us-s color-white">
+            <Link href="#" className="menu-link menu-link_us-s color-white">
               Shipping
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="menu-link menu-link_us-s color-white">
+            <Link href="#" className="menu-link menu-link_us-s color-white">
               FAQ
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="menu-link menu-link_us-s color-white">
+            <Link href="#" className="menu-link menu-link_us-s color-white">
               Contact
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="menu-link menu-link_us-s color-white">
+            <Link href="#" className="menu-link menu-link_us-s color-white">
               Track Order
-            </a>
+            </Link>
           </li>
         </ul>
         <p className="mx-auto mb-0">FREE SHIPPING WORLDWIDE</p>
@@ -79,7 +79,7 @@ export default function Header2() {
           <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
             {socialLinks.map((link, index) => (
               <li key={index}>
-                <a
+                <Link
                   href={link.href}
                   className="footer__social-link d-block color-white"
                 >
@@ -92,7 +92,7 @@ export default function Header2() {
                   >
                     <use href={link.icon} />
                   </svg>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -124,7 +124,7 @@ export default function Header2() {
       </div>
       <div className="header-desk header-desk_type_2">
         <nav className="navigation d-flex">
-          <a
+          <Link
             className="navigation__item"
             href="#"
             data-bs-toggle="modal"
@@ -139,10 +139,10 @@ export default function Header2() {
               <rect width="30" height="2" />
               <rect y="9" width="25" height="2" />
             </svg>
-          </a>
+          </Link>
 
           <ul className="navigation__list list-unstyled d-flex">
-            <Nav />
+            <Nav categoriesSubCategories={ null }/>
           </ul>
           {/* <!-- /.navigation__list --> */}
         </nav>
@@ -166,9 +166,9 @@ export default function Header2() {
           {/* <!-- /.header-tools__item hover-container --> */}
 
           <div className="header-tools__item hover-container">
-            <a className="js-open-aside" href="#">
+            <Link className="js-open-aside" href="#">
               <User />
-            </a>
+            </Link>
           </div>
 
           <Link className="header-tools__item" href="/account_wishlist">

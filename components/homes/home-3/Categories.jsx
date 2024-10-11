@@ -3,8 +3,13 @@ import { categories2 } from "@/data/categories";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-export default function Categories() {
+export default function Categories({ params, subCategories }) {
+
+  const categoryName = usePathname().split("/")[2];
+
   const handleMouseOver = (e) => {
     const tooltip = document.getElementById("video-tooltip");
     const tooltipVideo = document.getElementById("tooltip-video");
@@ -77,15 +82,28 @@ export default function Categories() {
     },
   };
 
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
+
   return (
     <section className="category-carousel container">
       <div className="position-relative">
         <Swiper {...swiperOptions} className="swiper-container js-swiper-slider">
-          {categories2.map((elm, i) => (
+          {subCategories?.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide text-center">
-              <a
+              <Link
                 key={i}
-                href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                href={`/product-category/${removeSpecialCharactersAndAmp(categoryName)}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                 className="shop-categories__item mb-3"
               >
                 <video
@@ -96,23 +114,21 @@ export default function Categories() {
                   autoPlay
                   loop
                   muted
-                  data-video-src={elm.videoSrc}
+                  data-video-src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.video}`}
                   onMouseOver={(e) => handleMouseOver(e)}
                   onMouseOut={handleMouseOut}
                 >
-                  <source src={elm.videoSrc} type="video/mp4" width={200} />
+                  <source src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.video}`} type="video/mp4" width={200} />
                 </video>
-              </a>
+              </Link>
               <div className="text-center">
-                <a
-                  href="/shop-8?category=eau-de-parfum&subcategory=oriental-fragrance"
+                <Link
+                  href={`/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
                   className="menu-link fw-medium"
                   key={i}
                 >
-                  {elm.category.split(" ")[0]}
-                  <br />
-                  {elm.category.split(" ")[1]}
-                </a>
+                  {elm.name}
+                </Link>
               </div>
             </SwiperSlide>
           ))}

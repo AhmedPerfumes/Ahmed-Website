@@ -17,7 +17,7 @@ export default function Products4() {
               </h6>
               <h3 className="text-white mb-3">Women's T-Shirts</h3>
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link default-underline text-uppercase text-white fw-medium"
               >
                 Shop Now
@@ -38,7 +38,7 @@ export default function Products4() {
               <h6 className="text-uppercase fw-medium mb-3">Starting At $39</h6>
               <h3 className="mb-3">Men's Sportswear</h3>
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link default-underline text-uppercase fw-medium"
               >
                 Shop Now

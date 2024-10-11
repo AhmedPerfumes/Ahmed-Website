@@ -1,28 +1,31 @@
 "use client";
-
 import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 
 export default function Cart() {
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
-  const setQuantity = (id, quantity) => {
-    if (quantity >= 1) {
-      const item = cartProducts.filter((elm) => elm.id == id)[0];
+  const [error, setError] = useState(null);
+  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
+  const setQuantity = async (id, quantity, productQty) => {
+    if (quantity >= 1 && quantity <= productQty) {
+      setError(null);
+      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
       const items = [...cartProducts];
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
       items[itemIndex] = item;
       setCartProducts(items);
+    } else {
+      setError("Quantity is more than available quantity");
     }
   };
-  const removeItem = (id) => {
-    setCartProducts((pre) => [...pre.filter((elm) => elm.id != id)]);
+  const removeItem = async(id) => {
+    setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };
 
   const [checkboxes, setCheckboxes] = useState({
-    free_shipping: false,
+    free_shipping: freeShippingFlag,
     flat_rate: false,
     local_pickup: false,
   });
@@ -40,6 +43,7 @@ export default function Cart() {
       <div className="cart-table__wrapper">
         {cartProducts.length ? (
           <>
+            <h6 style={{ color: "red" }}>{error && error}</h6>
             <table className="cart-table">
               <thead>
                 <tr>
@@ -58,7 +62,7 @@ export default function Cart() {
                       <div className="shopping-cart__product-item">
                         <Image
                           loading="lazy"
-                          src={elm.imgSrc}
+                          src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
                           width="120"
                           height="120"
                           alt="image"
@@ -67,16 +71,16 @@ export default function Cart() {
                     </td>
                     <td>
                       <div className="shopping-cart__product-item__detail">
-                        <h4>{elm.title}</h4>
-                        <ul className="shopping-cart__product-item__options">
+                        <h4>{elm.product_name}</h4>
+                        {/* <ul className="shopping-cart__product-item__options">
                           <li>Color: Yellow</li>
                           <li>Size: L</li>
-                        </ul>
+                        </ul> */}
                       </div>
                     </td>
                     <td>
                       <span className="shopping-cart__product-price">
-                        ${elm.price}
+                        {elm.price}د.إ
                       </span>
                     </td>
                     <td>
@@ -87,18 +91,19 @@ export default function Cart() {
                           value={elm.quantity}
                           min={1}
                           onChange={(e) =>
-                            setQuantity(elm.id, e.target.value / 1)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
                           }
                           className="qty-control__number text-center"
+                          readOnly
                         />
                         <div
-                          onClick={() => setQuantity(elm.id, elm.quantity - 1)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
                           className="qty-control__reduce"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.id, elm.quantity + 1)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
                           className="qty-control__increase"
                         >
                           +
@@ -107,12 +112,12 @@ export default function Cart() {
                     </td>
                     <td>
                       <span className="shopping-cart__subtotal">
-                        ${elm.price * elm.quantity}
+                        {(elm.price * elm.quantity).toFixed(2)}د.إ
                       </span>
                     </td>
                     <td>
                       <a
-                        onClick={() => removeItem(elm.id)}
+                        onClick={() => removeItem(elm.product_id)}
                         className="remove-cart"
                       >
                         <svg
@@ -148,7 +153,7 @@ export default function Cart() {
                   defaultValue="APPLY COUPON"
                 />
               </form>
-              <button className="btn btn-light">UPDATE CART</button>
+              {/* <button className="btn btn-light">UPDATE CART</button> */}
             </div>
           </>
         ) : (
@@ -156,7 +161,7 @@ export default function Cart() {
             <div className="fs-20">Shop cart is empty</div>
 
             <button className="btn mt-3 btn-light">
-              <Link href={"/shop-1"}>Explore Products</Link>
+              <Link href={"/shop"}>Explore Products</Link>
             </button>
           </>
         )}
@@ -170,18 +175,19 @@ export default function Cart() {
                 <tbody>
                   <tr>
                     <th>Subtotal</th>
-                    <td>${totalPrice}</td>
+                    <td>{totalPrice.toFixed(2)}د.إ</td>
                   </tr>
                   <tr>
                     <th>Shipping</th>
                     <td>
-                      <div className="form-check">
+                      {/* <div className="form-check">
                         <input
                           className="form-check-input form-check-input_fill"
                           type="checkbox"
                           id="free_shipping"
-                          checked={checkboxes.free_shipping}
+                          checked={freeShippingFlag}
                           onChange={handleCheckboxChange}
+                          disabled
                         />
                         <label
                           className="form-check-label"
@@ -189,20 +195,20 @@ export default function Cart() {
                         >
                           Free shipping
                         </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input form-check-input_fill"
-                          type="checkbox"
-                          id="flat_rate"
-                          checked={checkboxes.flat_rate}
-                          onChange={handleCheckboxChange}
-                        />
-                        <label className="form-check-label" htmlFor="flat_rate">
-                          Flat rate: $49
-                        </label>
-                      </div>
-                      <div className="form-check">
+                      </div> */}
+                      {
+                        freeShippingFlag ? <div className="form-check">
+                          <label className="form-check-label" htmlFor="flat_rate">
+                            You Got Free Shipping
+                          </label>
+                        </div> :
+                        <div className="form-check">
+                          <label className="form-check-label" htmlFor="flat_rate">
+                            Shipping Cost: 20د.إ
+                          </label>
+                        </div>
+                      }
+                      {/* <div className="form-check">
                         <input
                           className="form-check-input form-check-input_fill"
                           type="checkbox"
@@ -216,27 +222,23 @@ export default function Cart() {
                         >
                           Local pickup: $8
                         </label>
-                      </div>
-                      <div>Shipping to AL.</div>
-                      <div>
-                        <a href="#" className="menu-link menu-link_us-s">
+                      </div> */}
+                      {/* <div>Shipping to AL.</div> */}
+                      {/* <div>
+                        <Link href="#" className="menu-link menu-link_us-s">
                           CHANGE ADDRESS
-                        </a>
-                      </div>
+                        </Link>
+                      </div> */}
                     </td>
                   </tr>
                   <tr>
-                    <th>VAT</th>
-                    <td>$19</td>
+                    <th>SERVICE FEE</th>
+                    <td>3د.إ</td>
                   </tr>
                   <tr>
                     <th>Total</th>
                     <td>
-                      $
-                      {49 * checkboxes.flat_rate +
-                        8 * checkboxes.local_pickup +
-                        totalPrice +
-                        19}
+                      {!freeShippingFlag ? (20 + totalPrice + 3).toFixed(2) : (0 + totalPrice + 3).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((20 + totalPrice) / 100) * 5).toFixed(2) : (((0 + totalPrice) / 100) * 5).toFixed(2) }د.إ VAT)
                     </td>
                   </tr>
                 </tbody>
@@ -244,9 +246,9 @@ export default function Cart() {
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
-                <button className="btn btn-primary btn-checkout">
+                <Link href="/shop-checkout" className="btn btn-primary btn-checkout">
                   PROCEED TO CHECKOUT
-                </button>
+                </Link>
               </div>
             </div>
           </div>

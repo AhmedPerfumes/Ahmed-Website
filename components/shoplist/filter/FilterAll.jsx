@@ -37,17 +37,15 @@ export default function FilterAll() {
       ),
     ]);
   }, [searchQuery]);
-  const [price, setPrice] = useState([20, 70987]);
+  const [price, setPrice] = useState([500, 0]);
 
-  // price range handler
-
-  // price range handler
   const handleOnChange = (value) => {
+    // console.log(value);
     setPrice(value);
   };
   return (
     <>
-      <div className="accordion" id="categories-list">
+      {/* <div className="accordion" id="categories-list">
         <div className="accordion-item mb-4">
           <h5 className="accordion-header" id="accordion-heading-11">
             <button
@@ -83,19 +81,18 @@ export default function FilterAll() {
               <ul className="list list-inline row row-cols-2 mb-0">
                 {categories.map((category, index) => (
                   <li key={index} className="list-item">
-                    <a href="#" className="menu-link py-1">
+                    <Link href="#" className="menu-link py-1">
                       {category}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
-        {/* /.accordion-item */}
-      </div>
+        </div> 
+      </div> */}
       {/* /.accordion-item */}
-      <div className="accordion" id="color-filters">
+      {/* <div className="accordion" id="color-filters">
         <div className="accordion-item mb-4">
           <h5 className="accordion-header" id="accordion-heading-1">
             <button
@@ -137,16 +134,15 @@ export default function FilterAll() {
                       activeColor == swatch ? "swatch_active" : ""
                     }`}
                     style={{ color: swatch.color }}
-                  />
+                  ></a>
                 ))}
               </div>
             </div>
           </div>
         </div>
-        {/* /.accordion-item */}
-      </div>
+      </div> */}
       {/* /.accordion */}
-      <div className="accordion" id="size-filters">
+      {/* <div className="accordion" id="size-filters">
         <div className="accordion-item mb-4">
           <h5 className="accordion-header" id="accordion-heading-size">
             <button
@@ -195,10 +191,9 @@ export default function FilterAll() {
             </div>
           </div>
         </div>
-        {/* /.accordion-item */}
-      </div>
+      </div> */}
       {/* /.accordion */}
-      <div className="accordion" id="brand-filters">
+      {/* <div className="accordion" id="brand-filters">
         <div className="accordion-item mb-4">
           <h5 className="accordion-header" id="accordion-heading-brand">
             <button
@@ -263,8 +258,7 @@ export default function FilterAll() {
             </div>
           </div>
         </div>
-        {/* /.accordion-item */}
-      </div>
+      </div> */}
       {/* /.accordion */}
       <div className="accordion" id="price-filters">
         <div className="accordion-item mb-4">
@@ -301,7 +295,7 @@ export default function FilterAll() {
             <Slider
               range
               formatLabel={() => ``}
-              max={100000}
+              max={500}
               min={0}
               defaultValue={price}
               onChange={(value) => handleOnChange(value)}
@@ -309,20 +303,19 @@ export default function FilterAll() {
             />
             <div className="price-range__info d-flex align-items-center mt-2">
               <div className="me-auto">
-                <span className="text-secondary">Min Price: </span>
-                <span className="price-range__min">${price[0]}</span>
+                <span className="text-secondary">Max Price: </span>
+                <span className="price-range__max">{price[1]}د.إ</span>
               </div>
               <div>
-                <span className="text-secondary">Max Price: </span>
-                <span className="price-range__max">${price[1]}</span>
+                <span className="text-secondary">Min Price: </span>
+                <span className="price-range__min">{price[0]}د.إ</span>
               </div>
             </div>
           </div>
         </div>
-        {/* /.accordion-item */}
       </div>
       {/* /.accordion */}
-      <div className="filter-active-tags pt-2">
+      {/* <div className="filter-active-tags pt-2">
         {filterFacts.map((filter) => (
           <button
             onClick={() =>
@@ -338,7 +331,7 @@ export default function FilterAll() {
           </button>
         ))}
         <div></div>
-      </div>
+      </div> */}
     </>
   );
 }

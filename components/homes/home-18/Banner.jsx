@@ -33,7 +33,7 @@ export default function Banner() {
             </p>
             <p className="mb-0">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_md default-underline text-uppercase fw-semi-bold fs-13"
               >
                 View More

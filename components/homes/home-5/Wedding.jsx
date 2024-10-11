@@ -39,7 +39,7 @@ export default function Wedding() {
 
             <div className="d-flex justify-content-center">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
@@ -67,7 +67,7 @@ export default function Wedding() {
 
             <div className="d-flex justify-content-center">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
@@ -113,7 +113,7 @@ export default function Wedding() {
 
             <div className="d-flex justify-content-center pt-4">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium "
               >
                 Know More
@@ -141,7 +141,7 @@ export default function Wedding() {
             <p className="lh-sm">2 types of scented oud</p>
             <div className="d-flex justify-content-center pt-4">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
@@ -172,7 +172,7 @@ export default function Wedding() {
             <p className="lh-sm">2 types of scented oud</p>
             <div className="d-flex justify-content-center pt-4">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
@@ -200,7 +200,7 @@ export default function Wedding() {
             <p className="lh-sm">2 types of scented oud</p>
             <div className="d-flex justify-content-center pt-4">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
@@ -290,7 +290,7 @@ export default function Wedding() {
 
             <div className="d-flex justify-content-center pt-3">
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More

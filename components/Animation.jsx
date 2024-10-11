@@ -33,7 +33,7 @@ const Animation = () => {
       end: "max",
       snap: {
         snapTo: (value, self) => snap(value, self.direction),
-        duration: { min: 0.01, max: 2 },
+        duration: { min: 0.01, max: 0.3 },
         delay: 0,
       },
     });
@@ -269,7 +269,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -311,7 +311,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -351,7 +351,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -391,7 +391,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -482,7 +482,7 @@ const sectionTriggers = sections.map((section) =>
 </div>
 
           <Link
-            href="/shop-1"
+            href="/shop"
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
             Discover More

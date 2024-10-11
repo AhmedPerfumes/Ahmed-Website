@@ -73,7 +73,7 @@ export default function Categories({ section }) {
                 <source type="video/mp4" src={elm.videoSrc} />
               </video>
               <div className="text-center">
-                <Link href="/shop-1" className="menu-link h6 fw-medium">
+                <Link href="/shop" className="menu-link h6 fw-medium">
                   {elm.altText}
                   <br />
                   <span className="fs-14 text-secondary fst-italic">

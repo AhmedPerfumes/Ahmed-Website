@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BannerLinks from "./BannerLinks";
 
-export default function Banner5() {
+export default function Banner5({ image }) {
   return (
     <section className="full-width_padding ">
       <div className="container-fluid" style={{ borderColor: "#eeeeee" }}>
@@ -17,7 +17,7 @@ export default function Banner5() {
           >
             <Image
               loading="lazy"
-              src="/assets/images/laathani-banner.jpg"
+              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
               width="1920"
               height="1000"
               alt="Pattern"

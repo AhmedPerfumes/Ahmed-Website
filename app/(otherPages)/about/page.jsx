@@ -9,8 +9,11 @@ import Services from "@/components/otherPages/about/Services";
 import React from "react";
 
 export const metadata = {
-  title: "About || Uomo eCommerce React Nextjs Template",
-  description: "Uomo eCommerce React Nextjs Template",
+  title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
+  description: "Buy Best Perfumes Online Ahmed Perfume",
+  icons: {
+    icon: 'https://www.ahmedalmaghribi.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png',
+  },
 };
 export default function AboutPage() {
   return (

@@ -23,12 +23,14 @@ import Image from "next/image";
 import { openModalShopFilter } from "@/utlis/aside";
 import { sortingOptions } from "@/data/products/productCategories";
 
-import { useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
-export default function Shop10() {
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category");
-  const subcategory = searchParams.get("subcategory");
+export default function Shop10({ subCategories, products }) {
+  const pathname = usePathname();
+  const category = pathname.split("/")[2];
+  const subcategory = pathname.split("/")[3];
+
+  // console.log('0000111', JSON.stringify(subCategories), products);
 
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
@@ -38,7 +40,7 @@ export default function Shop10() {
     <section className="shop-main container">
       <div className="d-flex justify-content-between mb-4 pb-md-2 border-bottom border-dark">
         <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-          <BreadCumb />
+          <BreadCumb category={ category } subcategory={ subcategory }/>
         </div>
         {/* <!-- /.breadcrumb --> */}
 
@@ -55,7 +57,7 @@ export default function Shop10() {
             ))}
           </select>
 
-          <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
+          {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div> */}
 
           {/* <div className="col-size align-items-center order-1 d-none d-lg-flex">
             <span className="text-uppercase fw-medium me-2">View</span>
@@ -75,7 +77,7 @@ export default function Shop10() {
 
           {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
-          <div className="shop-filter d-flex align-items-center order-0 order-md-3">
+          {/* <div className="shop-filter d-flex align-items-center order-0 order-md-3">
             <button
               className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
               onClick={openModalShopFilter}
@@ -94,7 +96,7 @@ export default function Shop10() {
                 Filter
               </span>
             </button>
-          </div>
+          </div> */}
           {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
         </div>
         {/* <!-- /.shop-acs --> */}
@@ -104,23 +106,31 @@ export default function Shop10() {
       <div className="products-grid">
         <div className="mb-4 mb-xl-5"></div>
 
-        <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+        {/* <h2 className="section-title fw-normal mb-3 pb-2 text-center">
           {subcategory == null ? "Oriental Fragrance" : ""}
         </h2>
-        <Style2 />
-        {subcategory == null ? (
+        <Style2 /> */}
+        {/* {subcategory == null ? ( */}
           <>
-            <div className="border-bottom"></div>
+            {/* <div className="border-bottom"></div> */}
+          { subCategories && subCategories.map((subCategory, ind) => {
+              return (
+                <div key={ind}><div className="mb-4 mb-xl-5"></div>
+                <h2 className="section-title fw-normal mb-3 pb-2 text-center">
+                  { subCategory.name }
+                </h2>
+                <Style2 category={ category } subcategory={ subCategory.name } products={ subCategory.products }/>
+                <div className="border-bottom"></div></div>
+              )
+            })
+          }
 
-            <div className="mb-4 mb-xl-5"></div>
-
-            <h2 className="section-title fw-normal mb-3 pb-2 text-center">
-              Occidental Fragrance
-            </h2>
-            <Style2 />
-            <div className="border-bottom"></div>
-
-            <div className="mb-4 mb-xl-5"></div>
+          { products &&
+                <><div className="mb-4 mb-xl-5"></div>
+                <Style2 category={ category } subcategory={ subcategory } products={ products }/>
+                <div className="border-bottom"></div></>
+          }
+            {/* <div className="mb-4 mb-xl-5"></div>
 
             <h2 className="section-title fw-normal mb-3 pb-2 text-center">
               Women Fragrances
@@ -141,9 +151,9 @@ export default function Shop10() {
             <h2 className="section-title fw-normal mb-3 pb-2 text-center">
               Unisex Fragrance
             </h2>
-            <Style2 />
+            <Style2 /> */}
           </>
-        ) : null}
+        {/*) : null}*/}
 
         {/* <div className="mb-4 mb-xl-5"></div>
 

@@ -36,9 +36,9 @@ export default function Category() {
             <ul className="list list-inline mb-0">
               {categories.map((category, index) => (
                 <li key={index} className="list-item">
-                  <a href="#" className="menu-link py-1">
+                  <Link href="#" className="menu-link py-1">
                     {category}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

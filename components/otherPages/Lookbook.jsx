@@ -4,135 +4,46 @@ import Image from "next/image";
 export default function Lookbook() {
   return (
     <>
-      <section className="lookbook container">
-        <h2 className="page-title">LOOKBOOK</h2>
-      </section>
-      <section className="lookbook-collection">
-        <div className="container">
+      <div id="smsa-order">
+        <img
+          src="https://www.ahmedalmaghribi.com/wp-content/plugins/smsa-shipping-official/images/logoEn.png"
+          width={150}
+          height={35}
+          alt="logo"
+        />
+        <h3 class="wp-heading-inline fs-2 text-center">Orders Dashboard</h3>
+        <div id="example_wrapper">
           <div className="row">
-            <div className="col-lg-6 d-flex flex-column">
-              <a
-                href="#"
-                className="lookbook-collection__item position-relative flex-grow-1 mb-4 effect border-plus"
-              >
-                <div className="lookbook-collection__item-image">
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/lookbook/lookbook-1.jpg"
-                    width="690"
-                    height="399"
-                    alt="image"
-                  />
-                </div>
-                <div className="content_abs content_bottom content_left content_bottom-md content_left-md">
-                  <p className="text-uppercase mb-1 white-color">
-                    STARTING AT $19
-                  </p>
-                  <h3 className="white-color">Women’s T-Shirts</h3>
-                </div>
-              </a>
-              <a
-                href="#"
-                className="lookbook-collection__item position-relative flex-grow-1 mt-1 mb-4 effect border-plus"
-              >
-                <div className="lookbook-collection__item-image">
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/lookbook/lookbook-2.jpg"
-                    width="690"
-                    height="399"
-                    alt="image"
-                  />
-                </div>
-                <div className="content_abs content_bottom content_left content_bottom-md content_left-md">
-                  <p className="text-uppercase mb-1">STARTING AT $21</p>
-                  <h3>Slim Fit Cotton Shorts</h3>
-                </div>
-              </a>
-            </div>
-            <div className="col-lg-6">
-              <a
-                href="#"
-                className="lookbook-collection__item size-lg position-relative mb-4 effect border-plus"
-              >
-                <div className="lookbook-collection__item-image">
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/lookbook/lookbook-3.jpg"
-                    width="690"
-                    height="826"
-                    alt="image"
-                  />
-                </div>
-                <div className="content_abs content_bottom content_left content_bottom-md content_left-md">
-                  <p className="text-uppercase mb-1">STARTİNG AT $39</p>
-                  <h3>Men’s Sportswear</h3>
-                </div>
-              </a>
+            <div className="col-sm-12 col-md-6">
+              <div className="table_length d-flex align-items-center">
+                <label className="me-2">
+                  Show
+                  <select className="text-dark ms-2 " name="50" id="">
+                    <option className="text-black " value="10">
+                      10
+                    </option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  Entries
+                </label>
+              </div>
             </div>
 
-            <div className="col-lg-6">
-              <a
-                href="#"
-                className="lookbook-collection__item size-lg position-relative mt-1 mb-4 effect border-plus"
-              >
-                <div className="lookbook-collection__item-image">
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/lookbook/lookbook-4.jpg"
-                    width="690"
-                    height="826"
-                    alt="image"
-                  />
-                </div>
-                <div className="content_abs content_bottom content_left content_bottom-md content_left-md">
-                  <p className="text-uppercase mb-1">STARTİNG AT $39</p>
-                  <h3>Knee-length Cotton Shorts</h3>
-                </div>
-              </a>
-            </div>
-
-            <div className="col-lg-6 d-flex flex-column">
-              <a
-                href="#"
-                className="lookbook-collection__item position-relative flex-grow-1 mt-1 mb-4 effect border-plus"
-              >
-                <div className="lookbook-collection__item-image">
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/lookbook/lookbook-5.jpg"
-                    width="690"
-                    height="399"
-                    alt="image"
-                  />
-                </div>
-                <div className="content_abs content_bottom content_left content_bottom-md content_left-md">
-                  <p className="text-uppercase mb-1">STARTING AT $19</p>
-                  <h3>Canvas Trainers</h3>
-                </div>
-              </a>
-              <a
-                href="#"
-                className="lookbook-collection__item position-relative flex-grow-1 mt-1 mb-4 effect border-plus"
-              >
-                <div className="lookbook-collection__item-image">
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/lookbook/lookbook-6.jpg"
-                    width="690"
-                    height="399"
-                    alt="image"
-                  />
-                </div>
-                <div className="content_abs content_bottom content_left content_bottom-md content_left-md">
-                  <p className="text-uppercase mb-1">STARTING AT $21</p>
-                  <h3>Slim Fit Cotton Shorts</h3>
-                </div>
-              </a>
+            <div className="col-sm-12 col-md-6">
+              <div className="search_box d-flex justify-content-md-end">
+                <input
+                  type="text"
+                  className="form-control w-25"
+                  placeholder="Search"
+                />
+              </div>
             </div>
           </div>
+
         </div>
-      </section>
+      </div>
     </>
   );
 }

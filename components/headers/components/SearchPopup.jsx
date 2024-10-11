@@ -29,7 +29,7 @@ export default function SearchPopup() {
       }`}
     >
       <div className="js-hover__open position-relative">
-        <a
+        <Link
           onClick={() => setIsPopupOpen((pre) => !pre)}
           className="js-search-popup search-field__actor"
           href="#"
@@ -45,7 +45,7 @@ export default function SearchPopup() {
             <use href="#icon_search" />
           </svg>
           <i className="btn-icon btn-close-lg"></i>
-        </a>
+        </Link>
       </div>
 
       <div className="search-popup js-hidden-content">
@@ -91,9 +91,9 @@ export default function SearchPopup() {
                   </Link>
                 </li>
                 <li className="sub-menu__item">
-                  <a href="#" className="menu-link menu-link_us-s">
+                  <Link href="#" className="menu-link menu-link_us-s">
                     Dresses
-                  </a>
+                  </Link>
                 </li>
                 <li className="sub-menu__item">
                   <Link href="/shop-3" className="menu-link menu-link_us-s">
@@ -101,14 +101,14 @@ export default function SearchPopup() {
                   </Link>
                 </li>
                 <li className="sub-menu__item">
-                  <a href="#" className="menu-link menu-link_us-s">
+                  <Link href="#" className="menu-link menu-link_us-s">
                     Footwear
-                  </a>
+                  </Link>
                 </li>
                 <li className="sub-menu__item">
-                  <a href="#" className="menu-link menu-link_us-s">
+                  <Link href="#" className="menu-link menu-link_us-s">
                     Sweatshirt
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

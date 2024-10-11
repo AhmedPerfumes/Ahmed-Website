@@ -64,7 +64,7 @@ export default function Header15() {
 
         <nav className="navigation">
           <ul className="navigation__list list-unstyled d-flex">
-            <Nav />
+            <Nav categoriesSubCategories={ null }/>
           </ul>
           {/* <!-- /.navigation__list --> */}
         </nav>
@@ -97,9 +97,9 @@ export default function Header15() {
           {/* <!-- /.header-search --> */}
 
           <div className="header-tools__item hover-container">
-            <a className="header-tools__item js-open-aside" href="#">
+            <Link className="header-tools__item js-open-aside" href="#">
               <User />
-            </a>
+            </Link>
           </div>
 
           <Link className="header-tools__item" href="/account_wishlist">

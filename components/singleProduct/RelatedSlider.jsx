@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import he from 'he';
 
-export default function RelatedSlider() {
+export default function RelatedSlider({ relatedProds }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -44,6 +45,19 @@ export default function RelatedSlider() {
       },
     },
   };
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
   return (
     <section className="products-carousel container">
       <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">
@@ -56,57 +70,71 @@ export default function RelatedSlider() {
           className="swiper-container js-swiper-slider"
           data-settings=""
         >
-          {products51.map((elm, i) => (
+          {relatedProds && relatedProds.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide product-card">
               <div className="pc__img-wrapper">
-                <Link href={`/product1_simple/${elm.id}`}>
-                  <Image
-                    loading="lazy"
-                    src={elm.imgSrc}
-                    width="330"
-                    height="400"
-                    alt="Cropped Faux leather Jacket"
-                    className="pc__img"
-                  />
-                  <Image
-                    loading="lazy"
-                    src={elm.imgSrc2}
-                    width="330"
-                    height="400"
-                    alt="Cropped Faux leather Jacket"
-                    className="pc__img pc__img-second"
-                  />
+                <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                  {elm?.images && JSON.parse(elm.images).map((image, ind) => (
+                      <Image
+                        loading="lazy"
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
+                        width="330"
+                        height="400"
+                        alt="Cropped Faux leather Jacket"
+                        className="pc__img"
+                      />
+                    ))}
+                    {/* <Image
+                      loading="lazy"
+                      src="/assets/images/products/product_1-1.jpg"
+                      width="330"
+                      height="400"
+                      alt="Cropped Faux leather Jacket"
+                      className="pc__img pc__img-second"
+                    /> */}
                 </Link>
-                <button
-                  className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                  onClick={() => addProductToCart(elm.id)}
-                  title={
-                    isAddedToCartProducts(elm.id)
-                      ? "Already Added"
-                      : "Add to Cart"
+                  {elm?.label_name && (
+                  <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                    { elm?.label_name }
+                  </div>
+                )}
+                {elm.product_qty <= 0 && (
+                  <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                    Out Of Stock
+                  </div>
+                )}
+                {
+                  isAddedToCartProducts(elm?.product_id) ? 
+                  elm.product_qty > 0 && <button
+                      className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                      title="Already Added"
+                    >
+                    Already Added
+                  </button> : elm.product_qty > 0 && <button
+                    className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                    onClick={() => addProductToCart(elm)}
+                    title="Add to Cart"
+                  >
+                    Add To Cart
+                  </button>
                   }
-                >
-                  {isAddedToCartProducts(elm.id)
-                    ? "Already Added"
-                    : "Add To Cart"}
-                </button>
               </div>
 
               <div className="pc__info position-relative">
-                <p className="pc__category">{elm.category}</p>
+                <p className="pc__category">{elm.category_name}</p>
                 <h6 className="pc__title">
-                  <Link href={`/product1_simple/${elm.id}`}>{elm.title}</Link>
+                  <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
-                  <span className="money price">${elm.price}</span>
+                  <span className="money price">{elm.price}د.إ</span>
                 </div>
 
-                <button
+                {/* <button
                   className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
-                    isAddedtoWishlist(elm.id) ? "active" : ""
+                    isAddedtoWishlist(elm.product_id) ? "active" : ""
                   }`}
                   title="Add To Wishlist"
-                  onClick={() => toggleWishlist(elm.id)}
+                  onClick={() => toggleWishlist(elm.product_id)}
                 >
                   <svg
                     width="16"
@@ -117,7 +145,7 @@ export default function RelatedSlider() {
                   >
                     <use href="#icon_heart" />
                   </svg>
-                </button>
+                </button> */}
               </div>
             </SwiperSlide>
           ))}

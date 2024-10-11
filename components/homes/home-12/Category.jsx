@@ -48,7 +48,7 @@ export default function Category() {
           <h2 className="section-title fw-normal">Shop By Category</h2>
           <Link
             className="btn-link btn-link_md default-underline text-uppercase fw-medium"
-            href="/shop-12"
+            href="/shop"
           >
             Shop All Categories
           </Link>
@@ -70,9 +70,9 @@ export default function Category() {
                   alt="image"
                 />
                 <div className="text-center">
-                  <a href="#" className="menu-link fw-medium pb-0">
+                  <Link href="#" className="menu-link fw-medium pb-0">
                     {elm.name}
-                  </a>
+                  </Link>
                   {elm.productCount && (
                     <p className="mb-0 text-secondary">
                       {elm.productCount} Products

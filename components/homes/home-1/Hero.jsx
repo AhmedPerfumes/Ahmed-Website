@@ -86,7 +86,7 @@ export default function Hero() {
                 ""
               )}
               <Link
-                href="/shop-1"
+                href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
               >
                 Discover More
@@ -104,7 +104,7 @@ export default function Hero() {
         <ul className="social-links list-unstyled mb-0 text-secondary">
           {socialLinks.map((link, index) => (
             <li key={index}>
-              <a href={link.href} className="footer__social-link d-block">
+              <Link href={link.href} className="footer__social-link d-block">
                 <svg
                   className={link.className}
                   width={link.width}
@@ -114,7 +114,7 @@ export default function Hero() {
                 >
                   <use href={link.icon} />
                 </svg>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

@@ -10,20 +10,14 @@ import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { FiLogOut } from "react-icons/fi";
+import { IoLocationOutline  } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
+import { useMenu } from '../../context/MenuContext';
+import { useUser } from '../../context/UserContext';
+
 
 export default function Header14() {
-  const pathname = usePathname();
-
-  const swiperOptions = {
-    autoplay: {
-      delay: 5000,
-    },
-    modules: [Autoplay, Navigation, EffectFade],
-    pagination: false,
-    slidesPerView: 1,
-    effect: "fade",
-    loop: true,
-  };
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
@@ -41,6 +35,55 @@ export default function Header14() {
     };
   }, [isHeaderOpen]);
 
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     console.log(token);
+//     if (token) {
+//       setIsLoggedIn(true);
+//     }
+//  }, [isLoggedIn]);
+
+ const router = useRouter();
+
+const [searchKeyWord, setSearchKeyWord] = useState('');
+
+const handleChange = (event) => {
+  setSearchKeyWord(event.target.value);
+};
+
+const handleLogout = (e) => {
+  e.preventDefault();
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '/';
+};
+
+ const pathname = usePathname();
+
+ const { isLoggedIn } = useUser();
+
+ const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
+
+  if (isMenuLoading) {
+    return <div></div>;
+  }
+  if (error) {
+    return <div>{ error }</div>;
+  }
+
+  const swiperOptions = {
+    autoplay: {
+      delay: 5000,
+    },
+    modules: [Autoplay, Navigation, EffectFade],
+    pagination: false,
+    slidesPerView: 1,
+    effect: "fade",
+    loop: true,
+  };
+
   //Inline style for transitions
   const headerStyle = {
     transition: "max-height 0.8s ease-in-out, opacity 0.5s ease-in-out",
@@ -48,6 +91,24 @@ export default function Header14() {
     maxHeight: isHeaderOpen ? "1000px" : "0",
     opacity: isHeaderOpen ? 1 : 1,
   };
+
+  const onSearch = (event) => {
+    event.preventDefault();
+    window.location.href = `/shop?q=${removeSpecialCharactersAndAmp(searchKeyWord).split(' ').join('-')}`;
+  };
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
 
   return (
     <>
@@ -68,9 +129,9 @@ export default function Header14() {
               className="swiper-slide text-center"
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                <a className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
+                <Link href="#" className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
                   {elm.description.split(" ").slice(0, 13).join(" ")}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}
@@ -84,7 +145,7 @@ export default function Header14() {
         >
           <div className="search-popup js-hidden-content">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={onSearch}
               className="search-field container"
             >
               <p className="text-uppercase text-secondary fw-medium mb-4">
@@ -96,6 +157,8 @@ export default function Header14() {
                   type="text"
                   name="search-keyword"
                   placeholder="Search products"
+                  value={searchKeyWord}
+                  onChange={handleChange}
                 />
                 <button className="btn-icon search-popup__submit" type="submit">
                   <svg
@@ -120,30 +183,30 @@ export default function Header14() {
                   <h6 className="sub-menu__title fs-base">Quicklinks</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <Link href="/shop-2" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/oriental-fragrance/marj" className="menu-link menu-link_us-s">
                         Marj
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/occidental-fragrance/rose-noir" className="menu-link menu-link_us-s">
                         Rose Noir
-                      </a>
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="/shop-3" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender" className="menu-link menu-link_us-s">
                         Oud Lavender
                       </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">
+                      <Link href="/shop/eau-de-parfum/occidental-fragrance/oud-classic" className="menu-link menu-link_us-s">
                         Oud Classic
-                      </a>
+                      </Link>
                     </li>
-                    <li className="sub-menu__item">
-                      <a href="#" className="menu-link menu-link_us-s">
+                    {/* <li className="sub-menu__item">
+                      <Link href="/shop/eau-de-parfum/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
                         Oud &amp; Roses
-                      </a>
-                    </li>
+                      </Link>
+                    </li> */}
                   </ul>
                 </div>
                 <div className="search-result row row-cols-5"></div>
@@ -184,22 +247,24 @@ export default function Header14() {
                 </div>
               </div>
               <div className="logo">
-                <a href="/">
+                <Link href="/">
                   <img
                     src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
                     width="200px"
                     alt="Ahmed"
                   />
-                </a>
+                </Link>
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
-                <form className="header-search search-field d-none d-xxl-flex mx-4">
+                <div className="header-search search-field d-none d-xxl-flex mx-4">
                   <input
                     className="header-search__input w-100"
                     type="text"
                     name="search-keyword"
                     placeholder="Search products..."
                     onClick={() => setIsPopupOpen((pre) => !pre)}
+                    value={searchKeyWord}
+                    onChange={handleChange}
                   />
                   <button
                     className="btn header-search__btn"
@@ -221,16 +286,16 @@ export default function Header14() {
                       )}
                     </svg>
                   </button>
-                </form>
-
-                <div className="header-tools__item hover-container">
-                  <a className="js-open-aside" href="#">
-                    <User />
-                  </a>
                 </div>
 
-                <Link className="header-tools__item" href="/account_wishlist">
-                  <svg
+                <div className="header-tools__item hover-container">
+                  { !isLoggedIn ? <Link className="js-open-aside" href="#">
+                    <User />
+                  </Link> : <Link href="#" onClick={handleLogout}><FiLogOut size={20}/></Link> }
+                </div>
+
+                <Link className="header-tools__item" href="#">
+                  {/* <svg
                     className="d-block"
                     width="20"
                     height="20"
@@ -239,7 +304,8 @@ export default function Header14() {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <use href="#icon_heart" />
-                  </svg>
+                  </svg> */}
+                  <IoLocationOutline size={20}/>
                 </Link>
 
                 <a
@@ -268,7 +334,7 @@ export default function Header14() {
             <div className="container">
               <nav className="navigation w-100 d-flex align-items-center justify-content-center py-2">
                 <ul className="navigation__list list-unstyled d-flex my-1">
-                  <Nav />
+                  <Nav categoriesSubCategories={ categoriesSubCategories }/>
                 </ul>
               </nav>
             </div>
@@ -282,27 +348,26 @@ export default function Header14() {
           href="#"
           onClick={() => setIsHeaderOpen((prev) => !prev)}
         >
-<svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z"
-    fill="currentColor"
-  />
-  <path
-    d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z"
-    fill="currentColor"
-  />
-  <path
-    d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z"
-    fill="currentColor"
-  />
-</svg>
-          
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z"
+              fill="currentColor"
+            />
+            <path
+              d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z"
+              fill="currentColor"
+            />
+            <path
+              d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z"
+              fill="currentColor"
+            />
+          </svg>
         </a>
       </nav> : null }
     </>

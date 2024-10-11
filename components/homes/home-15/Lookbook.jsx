@@ -26,7 +26,7 @@ export default function Lookbook() {
             Get styled with the high-fashion products and transform yourself.
           </p>
           <Link
-            href="/shop-1"
+            href="/shop"
             className="btn-link btn-link_md default-underline text-uppercase fw-medium"
           >
             Shop Now

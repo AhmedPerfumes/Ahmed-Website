@@ -28,7 +28,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Women’s Collection</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -51,7 +51,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Newest Women Clothes</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -74,7 +74,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Slouchy Colorblock Tunic Sweater</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -97,7 +97,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Jackets & Coats</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -122,7 +122,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Men’s Spring Collection 2020</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -145,7 +145,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Fresh Dresses</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -168,7 +168,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Shirt in Vintage Plaid</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now
@@ -192,7 +192,7 @@ export default function CategoryMassonry() {
             </div>
             <h2>Sleeve Bags</h2>
             <Link
-              href="/shop-1"
+              href="/shop"
               className="btn-link btn-link_md default-underline text-uppercase fw-medium"
             >
               Discover Now

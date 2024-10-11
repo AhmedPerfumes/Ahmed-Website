@@ -16,14 +16,14 @@ export default function Header11() {
         <div className="container d-flex align-items-center">
           <ul className="list-unstyled d-flex flex-1 gap-3 m-0">
             <li>
-              <a href="#" className="menu-link menu-link_us-s">
+              <Link href="#" className="menu-link menu-link_us-s">
                 Shipping
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="menu-link menu-link_us-s">
+              <Link href="#" className="menu-link menu-link_us-s">
                 FAQ
-              </a>
+              </Link>
             </li>
             <li>
               <Link href="/contact" className="menu-link menu-link_us-s">
@@ -31,9 +31,9 @@ export default function Header11() {
               </Link>
             </li>
             <li>
-              <a href="#" className="menu-link menu-link_us-s">
+              <Link href="#" className="menu-link menu-link_us-s">
                 Track Order
-              </a>
+              </Link>
             </li>
           </ul>
           <p className="mx-auto mb-0 d-none d-xl-block">
@@ -43,7 +43,7 @@ export default function Header11() {
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="footer__social-link d-block">
+                  <Link href={link.href} className="footer__social-link d-block">
                     <svg
                       className={link.className}
                       width={link.width}
@@ -53,7 +53,7 @@ export default function Header11() {
                     >
                       <use href={link.icon} />
                     </svg>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -128,9 +128,9 @@ export default function Header11() {
 
             <div className="header-tools d-flex align-items-center">
               <div className="header-tools__item hover-container">
-                <a className="header-tools__item js-open-aside" href="#">
+                <Link className="header-tools__item js-open-aside" href="#">
                   <User />
-                </a>
+                </Link>
               </div>
 
               <Link className="header-tools__item" href="/account_wishlist">
@@ -164,7 +164,7 @@ export default function Header11() {
                 </span>
               </a>
 
-              <a
+              <Link
                 className="header-tools__item"
                 href="#"
                 data-bs-toggle="modal"
@@ -181,7 +181,7 @@ export default function Header11() {
                   <rect y="8" width="20" height="2" />
                   <rect y="16" width="25" height="2" />
                 </svg>
-              </a>
+              </Link>
             </div>
             {/* <!-- /.header__tools --> */}
           </div>
@@ -194,51 +194,51 @@ export default function Header11() {
               <h3 className="categories-nav__title">Browse Categories</h3>
               <ul className="categories-nav__list list-unstyled">
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Electronics</Link>
+                  <Link href="/shop">Electronics</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Computers</Link>
+                  <Link href="/shop">Computers</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Audio & Video</Link>
+                  <Link href="/shop">Audio & Video</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Mobiles & Tablets</Link>
+                  <Link href="/shop">Mobiles & Tablets</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">TV & Audio</Link>
+                  <Link href="/shop">TV & Audio</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Car & Motorbike</Link>
+                  <Link href="/shop">Car & Motorbike</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Hmoe & Garden</Link>
+                  <Link href="/shop">Hmoe & Garden</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Toys & Kids</Link>
+                  <Link href="/shop">Toys & Kids</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Sporting Goods</Link>
+                  <Link href="/shop">Sporting Goods</Link>
                 </li>
                 <li className="categories-nav__item">
-                  <Link href="/shop-1">Pet Supplies</Link>
+                  <Link href="/shop">Pet Supplies</Link>
                 </li>
               </ul>
             </div>
 
             <nav className="navigation flex-grow-1">
               <ul className="navigation__list list-unstyled d-flex">
-                <Nav />
+                <Nav categoriesSubCategories={ null }/>
 
                 <li className="navigation__item ms-auto">
-                  <a href="#" className="navigation__link">
+                  <Link href="#" className="navigation__link">
                     Special Offer
-                  </a>
+                  </Link>
                 </li>
                 <li className="navigation__item">
-                  <a href="#" className="navigation__link">
+                  <Link href="#" className="navigation__link">
                     Purchase Theme
-                  </a>
+                  </Link>
                 </li>
               </ul>
               {/* <!-- /.navigation__list --> */}

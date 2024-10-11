@@ -20,9 +20,9 @@ export default function ProductsGrid() {
             <div className="content_abs content_top content_left content_bottom-lg content_left-lg">
               <h2 className="fs-40 fw-normal text-uppercase mb-0">Laathani</h2>
               <p className="mb-4">Sale Upto 50% On New Coming</p>
-              <a className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center">
+              <Link href='#' className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center">
                 <span>Discover Now</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

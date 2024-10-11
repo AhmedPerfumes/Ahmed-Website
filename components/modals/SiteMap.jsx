@@ -24,7 +24,7 @@ export default function SiteMap() {
               <div className="modal-header">
                 <ul className="nav nav-pills" id="pills-tab" role="tablist">
                   <li className="nav-item" role="presentation">
-                    <a
+                    <Link
                       className="nav-link active rounded-1 text-uppercase"
                       id="pills-item-1-tab"
                       data-bs-toggle="pill"
@@ -34,10 +34,10 @@ export default function SiteMap() {
                       aria-selected="true"
                     >
                       WOMEN
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item" role="presentation">
-                    <a
+                    <Link
                       className="nav-link rounded-1 text-uppercase"
                       id="pills-item-2-tab"
                       data-bs-toggle="pill"
@@ -47,10 +47,10 @@ export default function SiteMap() {
                       aria-selected="false"
                     >
                       MEN
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item" role="presentation">
-                    <a
+                    <Link
                       className="nav-link rounded-1 text-uppercase"
                       id="pills-item-3-tab"
                       data-bs-toggle="pill"
@@ -60,7 +60,7 @@ export default function SiteMap() {
                       aria-selected="false"
                     >
                       KIDS
-                    </a>
+                    </Link>
                   </li>
                 </ul>
                 <button
@@ -89,7 +89,7 @@ export default function SiteMap() {
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a
+                          <Link
                             className="nav-link nav-link_rline active"
                             id="tab-item-1-tab"
                             data-bs-toggle="tab"
@@ -99,13 +99,13 @@ export default function SiteMap() {
                             aria-selected="true"
                           >
                             <span className="rline-content">WOMEN</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a
+                          <Link
                             className="nav-link nav-link_rline"
                             id="tab-item-2-tab"
                             data-bs-toggle="tab"
@@ -115,13 +115,13 @@ export default function SiteMap() {
                             aria-selected="false"
                           >
                             <span className="rline-content">MAN</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a
+                          <Link
                             className="nav-link nav-link_rline"
                             id="tab-item-3-tab"
                             data-bs-toggle="tab"
@@ -131,74 +131,74 @@ export default function SiteMap() {
                             aria-selected="false"
                           >
                             <span className="rline-content">KIDS</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">HOME</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">COLLECTION</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a
+                          <Link
                             className="nav-link nav-link_rline text-red"
                             href="#"
                           >
                             SALE UP TO 50% OFF
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">NEW</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">SHOES</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">ACCESSORIES</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">JOIN LIFE</span>
-                          </a>
+                          </Link>
                         </li>
                         <li
                           className="nav-item position-relative"
                           role="presentation"
                         >
-                          <a className="nav-link nav-link_rline" href="#">
+                          <Link className="nav-link nav-link_rline" href="#">
                             <span className="rline-content">#UOMOSTYLE</span>
-                          </a>
+                          </Link>
                         </li>
                       </ul>
 
@@ -211,79 +211,79 @@ export default function SiteMap() {
                         >
                           <ul className="sub-menu list-unstyled">
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 New
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Best Sellers
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Collaborations®
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Sets
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Denim
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Jackets & Coats
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Overshirts
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Trousers
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Jeans
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Dresses
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Sweatshirts and Hoodies
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 T-shirts & Tops
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shirts & Blouses
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shorts and Bermudas
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shoes
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
                               <Link
@@ -294,9 +294,9 @@ export default function SiteMap() {
                               </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Bags
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
                               <Link
@@ -317,59 +317,59 @@ export default function SiteMap() {
                         >
                           <ul className="sub-menu list-unstyled">
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Best Sellers
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 New
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Sets
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Denim
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Collaborations®
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Trousers
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Jackets & Coats
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Overshirts
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Dresses
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Jeans
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Sweatshirts and Hoodies
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
                               <Link
@@ -380,19 +380,19 @@ export default function SiteMap() {
                               </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shirts & Blouses
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 T-shirts & Tops
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shorts and Bermudas
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
                               <Link
@@ -403,14 +403,14 @@ export default function SiteMap() {
                               </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shoes
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Bags
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                           {/* <!-- /.sub-menu --> */}
@@ -431,59 +431,59 @@ export default function SiteMap() {
                               </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Collaborations®
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Sets
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Denim
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 New
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Best Sellers
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Overshirts
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Jackets & Coats
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Jeans
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Trousers
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shorts and Bermudas
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Shoes
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
                               <Link
@@ -494,14 +494,14 @@ export default function SiteMap() {
                               </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Dresses
-                              </a>
+                              </Link>
                             </li>
                             <li className="sub-menu__item">
-                              <a href="#" className="menu-link menu-link_us-s">
+                              <Link href="#" className="menu-link menu-link_us-s">
                                 Bags
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                           {/* <!-- /.sub-menu --> */}
