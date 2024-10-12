@@ -260,7 +260,7 @@ export const slidesData2 = [
 export const slidesData3 = [
   {
     id: 1,
-    imageSrc: "/assets/images/home/demo8/section1.jpg",
+    imageSrc: "/assets/images/home/demo8/avif/Ignite-rose-web-Banner.avif",
     season: "Summer 2023",
     objectPosition: "50% center",
     title: "Scented Art",
@@ -268,20 +268,20 @@ export const slidesData3 = [
   },
   {
     id: 2,
-    imageSrc: "/assets/images/home/demo8/maliki-banner.jpg",
+    imageSrc: "/assets/images/home/demo8/avif/thaqaf-banner.avif",
     season: "Summer 2023",
     objectPosition: "70% center",
     title: "Crafted from Nature",
     subtitle: "Collection",
   },
-  {
-    id: 3,
-    imageSrc: "/assets/images/home/demo8/thaqaf-bnr.jpg",
-    season: "Summer 2023",
-    objectPosition: "50% center",
-    title: "New Arrival Kid’s",
-    subtitle: "Collection",
-  },
+  // {
+  //   id: 3,
+  //   imageSrc: "/assets/images/home/demo8/thaqaf-bnr.jpg",
+  //   season: "Summer 2023",
+  //   objectPosition: "50% center",
+  //   title: "New Arrival Kid’s",
+  //   subtitle: "Collection",
+  // },
 ];
 export const slidesData4 = [
   {
