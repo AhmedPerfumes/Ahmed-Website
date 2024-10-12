@@ -24,7 +24,7 @@ export default function Blog1() {
   const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
   const [hasMore, setHasMore] = useState(true);
-
+  const offset = 1000;
   const fetchData = async (page) => {
     setLoading(true);
     // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/blogs?page=${page}&limit=${limit}}`);
@@ -56,7 +56,7 @@ export default function Blog1() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading || !hasMore) return;
+      if (window.innerHeight + document.documentElement.scrollTop + offset < document.documentElement.offsetHeight || loading || !hasMore) return;
       setPage((prevPage) => prevPage + 1); // Load next page
     };
 
