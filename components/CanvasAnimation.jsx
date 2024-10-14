@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const ballTextRef = useRef(null);
-  const frameCount = 354;
+  const frameCount = 359;
   let images = [];
   let ball = { frame: 0 };
 
@@ -19,7 +19,7 @@ const CanvasAnimation = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/final/${(index + 10001).toString()}.jpg`;
+    const currentFrame = (index) => `/assets/final/${(index + 100000).toString()}.jpg`;
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
