@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const categories = [
   {
     id: 1,
@@ -464,67 +466,144 @@ export const categories8 = [
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Gift Set 1",
+    altText: "Antee Gift Set",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
+    videoSrc: "/assets/videos/giftsets/antee.mp4",
+    imgSrc2: "/assets/videos/giftsets/thumbnails/antee.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/aayah"
   },
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
-    altText: "Gift Set 2",
+    altText: "The Dukhoon Collection",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
+    videoSrc: "/assets/videos/giftsets/dakhoon-collection.mp4",
+    imgSrc2: "/assets/videos/giftsets/thumbnails/dukhoon-collection.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
   },
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Gift Set 3",
+    altText: "Ihda Khas Gift Set",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
+    videoSrc: "/assets/videos/giftsets/ihdakhas.mp4",
+    imgSrc2: "/assets/videos/giftsets/thumbnails/ihda-khas.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
   },
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
-    altText: "Gift Set 4",
+    altText: "Oud & Roses Gift Set",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/orange-sanguine.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/orange-sanguine@1x.jpg",
+    videoSrc: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
+    imgSrc2: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
   },
+  {
+    id: 5,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "Shauque Al Shuyookh Gift Set",
+    subText: "by Ahmed Al Maghribi Perfumer",
+    videoSrc: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
+    imgSrc2: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
+    link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+  },
+  // {
+  //   id: 6,
+  //   imgSrc: "/assets/images/home/demo15/category-2.jpg",
+  //   altText: "Gift Set 6",
+  //   subText: "by Ahmed Al Maghribi Perfumer",
+  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
+  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
+  // },
+  // {
+  //   id: 7,
+  //   imgSrc: "/assets/images/home/demo15/category-3.jpg",
+  //   altText: "Gift Set 7",
+  //   subText: "by Ahmed Al Maghribi Perfumer",
+  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
+  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
+  // },
+  // {
+  //   id: 8,
+  //   imgSrc: "/assets/images/home/demo15/category-4.jpg",
+  //   altText: "Gift Set 8",
+  //   subText: "by Ahmed Al Maghribi Perfumer",
+  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
+  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
+  // },
+];
+
+export const categories88 = [
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Gift Set 5",
+    altText: "Asateen",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/trefle-pur.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/trefle-pur@1x.jpg",
+    videoSrc: "/assets/videos/dakhoon/asateen.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/antee.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/aayah"
   },
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
-    altText: "Gift Set 6",
+    altText: "Bakhoor Hind",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
+    videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/dukhoon-collection.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
   },
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Gift Set 7",
+    altText: "Oud Ma'attar Khususi",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
+    videoSrc: "/assets/videos/dakhoon/khususi.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/ihda-khas.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
   },
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
-    altText: "Gift Set 8",
+    altText: "Oud Ma'attar Maliki",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
-    imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
+    videoSrc: "/assets/videos/dakhoon/maliki.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/oud-roses-giftset.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
   },
+  {
+    id: 5,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "Oud",
+    subText: "by Ahmed Al Maghribi Perfumer",
+    videoSrc: "/assets/videos/dakhoon/oud.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/shauque-al-shuyookh.jpg",
+    link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+  },
+  // {
+  //   id: 6,
+  //   imgSrc: "/assets/images/home/demo15/category-2.jpg",
+  //   altText: "Gift Set 6",
+  //   subText: "by Ahmed Al Maghribi Perfumer",
+  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
+  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
+  // },
+  // {
+  //   id: 7,
+  //   imgSrc: "/assets/images/home/demo15/category-3.jpg",
+  //   altText: "Gift Set 7",
+  //   subText: "by Ahmed Al Maghribi Perfumer",
+  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
+  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
+  // },
+  // {
+  //   id: 8,
+  //   imgSrc: "/assets/images/home/demo15/category-4.jpg",
+  //   altText: "Gift Set 8",
+  //   subText: "by Ahmed Al Maghribi Perfumer",
+  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
+  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
+  // },
 ];
 
 export const categories9 = [
