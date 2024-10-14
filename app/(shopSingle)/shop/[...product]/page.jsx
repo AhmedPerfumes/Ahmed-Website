@@ -16,7 +16,17 @@ export const metadata = {
 };
 
 async function getproduct(categoryName, subCategoryName, product) {
-  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}&product=${product.split("-").join(" ").toUpperCase()}`);
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      category: categoryName.split("-").join(" ").toUpperCase(),
+      subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
+      product: product.split("-").join(" ").toUpperCase(),
+    })
+  });
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
     method: 'POST',
     headers: {
@@ -36,10 +46,10 @@ async function getproduct(categoryName, subCategoryName, product) {
 }
 const ProductDetailsPage16 = async({ params }) => {
   const [ categoryName, subCategoryName, product ] = params.product;
-  // console.log(params);
+  console.log(categoryName, subCategoryName, product);
   try {
     const data = await getproduct(categoryName, subCategoryName, product);
-    // console.log(data);
+    console.log(data);
     return (
       <>
         <Header14 />

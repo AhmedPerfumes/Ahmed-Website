@@ -19,7 +19,15 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName) {
-  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}`);
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      category: categoryName.split("-").join(" ").toUpperCase(),
+    })
+  });
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
     headers: {
@@ -51,18 +59,15 @@ const ShopPage8 = async ({ params }) => {
         <main className="page-wrapper pt-0">
           <Categories description={ data.description } subCategories={ data.productSubCategories }/>
           <div className="mb-4 pb-lg-3"></div>
-          <Shop10 subCategories={ data.productSubCategories }/>
+          <Shop10 subCategories={ data.productSubCategories } products={ data.products }/>
         </main>
         <div className="mb-5 pb-xl-5"></div>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <Footer14 />
-          
         </section>
         <section className="d-sm-block d-md-none bg-dark pt-5  ">
         <div className="MobileFooter">
-        
-
-        <MobileFooter2/>
+          <MobileFooter2/>
         </div>
       </section>
       </>

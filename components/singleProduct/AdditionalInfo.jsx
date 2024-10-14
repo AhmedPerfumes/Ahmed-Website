@@ -78,7 +78,7 @@ export default function AdditionalInfo({ video, notes, title }) {
             { title }
           </h2>
         </div>
-        <div className="image-wrapper col-lg-12">
+        {video && <div className="image-wrapper col-lg-12">
           <video
             className="h-auto w-100"
             autoPlay
@@ -88,7 +88,7 @@ export default function AdditionalInfo({ video, notes, title }) {
             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ video}`} type="video/mp4" width={200}
             alt=""
           />
-        </div>
+        </div>}
       </div>
     </>
   );
