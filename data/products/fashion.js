@@ -1682,12 +1682,74 @@ export const products17 = [
     id: 184,
     style: {
       left: "85%",
-      top: "75%",
+      top: "60%",
     },
     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2022/03/Front-box-with-product.png",
     price: 129,
     title: "The Dukhoon Collection",
   },
+  // {
+  //   id: 185,
+  //   style: {
+  //     left: "88%",
+  //     top: "79%",
+  //   },
+  //   imgSrc: "/assets/images/home/demo7/product-10.jpg",
+  //   price: 129,
+  //   title: "Cableknit Shawl",
+  // },
+];
+export const products17mob = [
+  {
+    id: 180,
+    style: {
+      left: "17%",
+      top: "50%",
+    },
+    imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/oud-roses-2.png",
+    price: 123,
+    title: "Oud & Roses Gift Set",
+  },
+  {
+    id: 181,
+    style: {
+      left: "48%",
+      top: "32%",
+    },
+    imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/antee.png",
+    price: 129,
+    title: "Antee Gift Set",
+  },
+  {
+    id: 182,
+    style: {
+      left: "74%",
+      top: "43%",
+    },
+    imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/01/antee.png",
+    price: 129,
+    title: "Antee Gift Set",
+  },
+  // {
+  //   id: 183,
+  //   style: {
+  //     left: "63%",
+  //     top: "38%",
+  //   },
+  //   imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/01/antee.png",
+  //   price: 129,
+  //   title: "Antee Gift Set",
+  // },
+  // {
+  //   id: 184,
+  //   style: {
+  //     left: "85%",
+  //     top: "75%",
+  //   },
+  //   imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2022/03/Front-box-with-product.png",
+  //   price: 129,
+  //   title: "The Dukhoon Collection",
+  // },
   // {
   //   id: 185,
   //   style: {
