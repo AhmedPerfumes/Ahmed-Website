@@ -18,15 +18,15 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName) {
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      category: categoryName.split("-").join(" ").toUpperCase(),
-    })
-  });
+  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     category: categoryName.split("-").join(" ").toUpperCase(),
+  //   })
+  // });
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
     headers: {
