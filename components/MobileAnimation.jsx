@@ -19,7 +19,7 @@ const MobileAnimation = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/mobilescreen2/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) => `/assets/mobilescreen/${(index + 1).toString()}.jpg`;
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();

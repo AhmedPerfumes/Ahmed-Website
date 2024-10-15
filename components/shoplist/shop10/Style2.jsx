@@ -132,7 +132,7 @@ export default function Style2({ category, subcategory, products }) {
                       />
                     </Link>
                     <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
-                      <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white">
+                      <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white cat-title">
                         { elm?.product_name && he.decode(elm?.product_name) }
                       </h2>
                       <p className="mb-4 text-white">Exclusive Launch</p>
