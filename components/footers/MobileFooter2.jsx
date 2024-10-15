@@ -172,7 +172,7 @@ export default function MobileFooter2() {
           </ul>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
           sx={{
@@ -203,7 +203,7 @@ export default function MobileFooter2() {
             ))}
           </ul>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
       <div className="footer-bottom container text-white text-center">
         <div className="d-block d-md-flex align-items-center flex-nowrap">
           <span className="footer-copyright me-auto d-flex flex-nowrap">

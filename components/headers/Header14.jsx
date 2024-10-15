@@ -234,7 +234,7 @@ const handleLogout = (e) => {
                       </option>
                     ))}
                   </select>
-                  <select
+                  {/* <select
                     className="form-select form-select-sm bg-transparent color-black"
                     name="store-language"
                   >
@@ -243,7 +243,7 @@ const handleLogout = (e) => {
                         {option.text}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                 </div>
               </div>
               <div className="logo">
