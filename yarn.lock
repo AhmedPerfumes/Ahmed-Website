@@ -1361,6 +1361,18 @@ jiti@^1.21.0:
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.21.6.tgz"
   integrity sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==
 
+jquery-scrollify@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.npmjs.org/jquery-scrollify/-/jquery-scrollify-1.0.21.tgz"
+  integrity sha512-uh/ltqmyIV8h1AvuQH0foZdSWVNqJglV0+WL84qOJMYWfvB7OxXDFfmfKUUOHSi1WnhYlKbi6QeRRb7x0pJJbQ==
+  dependencies:
+    jquery ">=1.7"
+
+jquery@^3.7.1, jquery@>=1.7:
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
+  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -1966,6 +1978,11 @@ scheduler@^0.23.2:
   dependencies:
     loose-envify "^1.1.0"
 
+scrollify@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/scrollify/-/scrollify-1.0.0.tgz"
+  integrity sha512-bsE9e2eoJ1xOR3Fqt9thSQZLDP5hxR+1XLuMqY+474835T3GNVG+itUWyCT2vPw2Fa/2L4RyT5DwIM6ooNmJew==
+
 semver@^7.6.3:
   version "7.6.3"
   resolved "https://registry.npmjs.org/semver/-/semver-7.6.3.tgz"
@@ -2222,10 +2239,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-swiper@^11.1.1:
-  version "11.1.4"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-11.1.4.tgz"
-  integrity sha512-1n7kbYJB2dFEpUHRFszq7gys/ofIBrMNibwTiMvPHwneKND/t9kImnHt6CfGPScMHgI+dWMbGTycCKGMoOO1KA==
+swiper@^11.1.14:
+  version "11.1.14"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-11.1.14.tgz"
+  integrity sha512-VbQLQXC04io6AoAjIUWuZwW4MSYozkcP9KjLdrsG/00Q/yiwvhz9RQyt0nHXV10hi9NVnDNy1/wv7Dzq1lkOCQ==
 
 swr@^2.2.5:
   version "2.2.5"

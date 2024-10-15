@@ -37,45 +37,45 @@ const Animation = () => {
         delay: 0,
       },
     });
- // ScrollTrigger 2: horizontal scroll in section ".container"
- const panels = gsap.utils.toArray(".cont .panel2");
+    // ScrollTrigger 2: horizontal scroll in section ".container"
+    const panels = gsap.utils.toArray(".cont .panel2");
 
- const panelTween = gsap.to(panels, {
-   xPercent: -100 * (panels.length - 1),
-   ease: "none",
-   scrollTrigger: {
-     trigger: ".cont",
-     start: "top top",
-     end: "+=" + window.innerWidth * 3,
-     // markers: true,
-     pin: true,
-     scrub: 1,
-   },
- });
-  // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
-  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+    const panelTween = gsap.to(panels, {
+      xPercent: -100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".cont",
+        start: "top top",
+        end: "+=" + window.innerWidth * 3,
+        // markers: true,
+        pin: true,
+        scrub: 1,
+      },
+    });
+    // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
+    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
 
-  const mobilepanelTween = gsap.to(mobilepanel, {
-    xPercent: -100 * (mobilepanel.length - 1),
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".mobilecontainer",
-      start: "top top",
-      end: "+=" + window.innerWidth * 3,
-      // markers: true,
-      pin: true,
-      scrub: 3,
-      // No snap property here
-    },
-  });
-// ScrollTrigger for each section to get their positions
-const sectionTriggers = sections.map((section) =>
-  ScrollTrigger.create({
-    trigger: section,
-    start: "top top",
-    refreshPriority: -1,
-  })
-);
+    const mobilepanelTween = gsap.to(mobilepanel, {
+      xPercent: -100 * (mobilepanel.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".mobilecontainer",
+        start: "top top",
+        end: "+=" + window.innerWidth * 3,
+        // markers: true,
+        pin: true,
+        scrub: 3,
+        // No snap property here
+      },
+    });
+    // ScrollTrigger for each section to get their positions
+    const sectionTriggers = sections.map((section) =>
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        refreshPriority: -1,
+      })
+    );
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -88,33 +88,34 @@ const sectionTriggers = sections.map((section) =>
     swiper.on("slideChange", function (sld) {
       document.body.setAttribute("data-sld", sld.realIndex);
     });
-    swiper.on('slideChange', function () {
+    swiper.on("slideChange", function () {
       const activeIndex = swiper.realIndex;
       updateNavCircle(activeIndex);
     });
-  
+
     function updateNavCircle(activeIndex) {
       // Remove 'active' class from all circles
-      const circles = document.querySelectorAll('.nav-circle');
+      const circles = document.querySelectorAll(".nav-circle");
       circles.forEach((circle) => {
-        circle.classList.remove('active');
+        circle.classList.remove("active");
       });
-    
+
       // Add 'active' class to the current circle
-      const activeCircle = document.querySelectorAll('.nav-circle')[activeIndex];
+      const activeCircle =
+        document.querySelectorAll(".nav-circle")[activeIndex];
       if (activeCircle) {
-        activeCircle.classList.add('active');
+        activeCircle.classList.add("active");
       }
     }
-    
+
     function handleNavCircleClick(index) {
       swiper.slideTo(index);
     }
-    
+
     // Attach click event listeners to the navigation circles
-    const navCircles = document.querySelectorAll('.nav-circle');
+    const navCircles = document.querySelectorAll(".nav-circle");
     navCircles.forEach((circle, index) => {
-      circle.addEventListener('click', () => handleNavCircleClick(index));
+      circle.addEventListener("click", () => handleNavCircleClick(index));
     });
 
     let headings = gsap.utils.toArray(".h2");
@@ -220,7 +221,7 @@ const sectionTriggers = sections.map((section) =>
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="/assets/images/home/demo8/best-sellers.jpg"
+            src="/assets/images/home/demo8/avif/multiple-products-banner.avif"
             alt="Section 1"
           />
           <div className="text_reveal position-absolute">
@@ -253,8 +254,8 @@ const sectionTriggers = sections.map((section) =>
                 <div className="mainnn swiper-slide " id="beach">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">EAU DE PARFUM</h3>
-                      <h1 className="mainnn-title">Oriental Fragrance</h1>
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Bin Shaikh</h1>
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
@@ -269,7 +270,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop-1"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -281,22 +282,21 @@ const sectionTriggers = sections.map((section) =>
                     <div className="right-side__img">
                       <img
                         className="bottle-bg"
-                        src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=2902&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="assets/images/home/demo8/top/bin-shaikh.jpg"
                         alt=""
                       />
                       <img
                         className="bottle-img"
-                        src="https://www.designforfinland.com/product-images/Closca_Bottle_Wave_Antarctica_450ml_Close.png/2083089000004207012/1100x1100"
+                        src="assets/images/home/demo8/top/bottles/bin-shaikh.png"
                       />
                     </div>
                   </div>
-                  
                 </div>
                 <div className="mainnn swiper-slide" id="savanna">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">CONCENTRATED PARFUM</h3>
-                      <h1 className="mainnn-title">Dehn Al Oud</h1>
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Ignite Oud</h1>
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
@@ -311,7 +311,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop-1"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -323,12 +323,12 @@ const sectionTriggers = sections.map((section) =>
                     <div className="right-side__img">
                       <img
                         className="bottle-bg"
-                        src="https://images.unsplash.com/photo-1613109526778-27605f1f27d2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
+                        src="assets/images/home/demo8/top/ignite-oud.jpg"
                         alt=""
                       />
                       <img
                         className="bottle-img"
-                        src="https://fnac.sa/cdn/shop/files/Closca_Bottle_Wave_Sahara_600ml_Close.png?v=1703675684"
+                        src="assets/images/home/demo8/top/bottles/ignite-oud.png"
                       />
                     </div>
                   </div>
@@ -336,8 +336,8 @@ const sectionTriggers = sections.map((section) =>
                 <div className="mainnn swiper-slide" id="glacier">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">DHAKOON</h3>
-                      <h1 className="mainnn-title">Bakhoor</h1>
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Kaaf</h1>
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
@@ -351,7 +351,7 @@ const sectionTriggers = sections.map((section) =>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop-1"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -363,12 +363,12 @@ const sectionTriggers = sections.map((section) =>
                     <div className="right-side__img">
                       <img
                         className="bottle-bg"
-                        src="https://www.discover-the-world.com/app/uploads/2018/05/chile-patagonia-calving-glacier-is-1150x863-c-default.jpg"
+                        src="assets/images/home/demo8/top/kaaf.jpg"
                         alt=""
                       />
                       <img
                         className="bottle-img"
-                        src="https://gomagcdn.ro/domains/alty.ro/files/product/original/sticla-reutilizabila-apa-closca-glacier-copie-848-7049.png"
+                        src="assets/images/home/demo8/top/bottles/kaaf.png"
                       />
                     </div>
                   </div>
@@ -376,8 +376,48 @@ const sectionTriggers = sections.map((section) =>
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">GIFT SETS</h3>
-                      <h1 className="mainnn-title">GIFT SETS</h1>
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Laathani</h1>
+                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                    </div>
+                    <div className="mainnn-content">
+                      <div className="mainnn-content__title ">
+                        We will have lost 60% of our coral reefs by 2030.
+                      </div>
+                      <div className="mainnn-content__subtitle ">
+                        Coral reefs are essential to humans, as they protect the
+                        shorelines and are a source of nutrients and habitat for
+                        thousands of marine species.
+                      </div>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop-1"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="centerrr">
+                    <div className="right-side__img">
+                      <img
+                        className="bottle-bg"
+                        src="assets/images/home/demo8/top/laathani.jpg"
+                        alt=""
+                      />
+                      <img
+                        className="bottle-img"
+                        src="assets/images/home/demo8/top/bottles/laathani.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mainnn swiper-slide" id="coral">
+                  <div className="left-sideee">
+                    <div className="mainnn-wrapper">
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Marj</h1>
                       <h2 className="mainnn-subtitle">AED 39.90</h2>
                     </div>
                     <div className="mainnn-content">
@@ -403,12 +443,212 @@ const sectionTriggers = sections.map((section) =>
                     <div className="right-side__img">
                       <img
                         className="bottle-bg"
-                        src="https://images.unsplash.com/photo-1546500840-ae38253aba9b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3260&q=80"
+                        src="assets/images/home/demo8/top/marj.jpg"
                         alt=""
                       />
                       <img
                         className="bottle-img"
-                        src="https://fnac.sa/cdn/shop/files/Closca_Bottle_Wave_Arizona_600ml_Close.png?v=1703675684&width=1946"
+                        src="assets/images/home/demo8/top/bottles/marj.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mainnn swiper-slide" id="coral">
+                  <div className="left-sideee">
+                    <div className="mainnn-wrapper">
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Musk & Roses</h1>
+                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                    </div>
+                    <div className="mainnn-content">
+                      <div className="mainnn-content__title ">
+                        We will have lost 60% of our coral reefs by 2030.
+                      </div>
+                      <div className="mainnn-content__subtitle ">
+                        Coral reefs are essential to humans, as they protect the
+                        shorelines and are a source of nutrients and habitat for
+                        thousands of marine species.
+                      </div>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="centerrr">
+                    <div className="right-side__img">
+                      <img
+                        className="bottle-bg"
+                        src="assets/images/home/demo8/top/musk-and-roses.jpg"
+                        alt=""
+                      />
+                      <img
+                        className="bottle-img"
+                        src="assets/images/home/demo8/top/bottles/musk-and-roses.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mainnn swiper-slide" id="coral">
+                  <div className="left-sideee">
+                    <div className="mainnn-wrapper">
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Oud & Roses</h1>
+                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                    </div>
+                    <div className="mainnn-content">
+                      <div className="mainnn-content__title ">
+                        We will have lost 60% of our coral reefs by 2030.
+                      </div>
+                      <div className="mainnn-content__subtitle ">
+                        Coral reefs are essential to humans, as they protect the
+                        shorelines and are a source of nutrients and habitat for
+                        thousands of marine species.
+                      </div>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="centerrr">
+                    <div className="right-side__img">
+                      <img
+                        className="bottle-bg"
+                        src="assets/images/home/demo8/top/oud-and-roses.jpg"
+                        alt=""
+                      />
+                      <img
+                        className="bottle-img"
+                        src="assets/images/home/demo8/top/bottles/oud-and-roses.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mainnn swiper-slide" id="coral">
+                  <div className="left-sideee">
+                    <div className="mainnn-wrapper">
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Oud Lavender</h1>
+                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                    </div>
+                    <div className="mainnn-content">
+                      <div className="mainnn-content__title ">
+                        We will have lost 60% of our coral reefs by 2030.
+                      </div>
+                      <div className="mainnn-content__subtitle ">
+                        Coral reefs are essential to humans, as they protect the
+                        shorelines and are a source of nutrients and habitat for
+                        thousands of marine species.
+                      </div>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="centerrr">
+                    <div className="right-side__img">
+                      <img
+                        className="bottle-bg"
+                        src="assets/images/home/demo8/top/oud-lavender.jpg"
+                        alt=""
+                      />
+                      <img
+                        className="bottle-img"
+                        src="assets/images/home/demo8/top/bottles/oud-lavender.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mainnn swiper-slide" id="coral">
+                  <div className="left-sideee">
+                    <div className="mainnn-wrapper">
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Rose Noir</h1>
+                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                    </div>
+                    <div className="mainnn-content">
+                      <div className="mainnn-content__title ">
+                        We will have lost 60% of our coral reefs by 2030.
+                      </div>
+                      <div className="mainnn-content__subtitle ">
+                        Coral reefs are essential to humans, as they protect the
+                        shorelines and are a source of nutrients and habitat for
+                        thousands of marine species.
+                      </div>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="centerrr">
+                    <div className="right-side__img">
+                      <img
+                        className="bottle-bg"
+                        src="assets/images/home/demo8/top/rose-noir.jpg"
+                        alt=""
+                      />
+                      <img
+                        className="bottle-img"
+                        src="assets/images/home/demo8/top/bottles/rose-noir.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mainnn swiper-slide" id="coral">
+                  <div className="left-sideee">
+                    <div className="mainnn-wrapper">
+                      <h3 className="mainnn-header">BEST SELLERS</h3>
+                      <h1 className="mainnn-title">Summer Oud</h1>
+                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                    </div>
+                    <div className="mainnn-content">
+                      <div className="mainnn-content__title ">
+                        We will have lost 60% of our coral reefs by 2030.
+                      </div>
+                      <div className="mainnn-content__subtitle ">
+                        Coral reefs are essential to humans, as they protect the
+                        shorelines and are a source of nutrients and habitat for
+                        thousands of marine species.
+                      </div>
+                      <div className="moreee-menu pt-5">
+                        <Link
+                          href="/shop"
+                          className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
+                        >
+                          Shop Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="centerrr">
+                    <div className="right-side__img">
+                      <img
+                        className="bottle-bg"
+                        src="assets/images/home/demo8/top/summer-oud.jpg"
+                        alt=""
+                      />
+                      <img
+                        className="bottle-img"
+                        src="assets/images/home/demo8/top/bottles/summer-oud.png"
                       />
                     </div>
                   </div>
@@ -416,13 +656,18 @@ const sectionTriggers = sections.map((section) =>
               </div>
             </div>
             <div className="nav-circle-container">
-   <div className="nav-circle" data-target="#beach"></div>
-   <div className="nav-circle" data-target="#savanna"></div>
-   <div className="nav-circle" data-target="#glacier"></div>
-   <div className="nav-circle" data-target="#coral"></div>
-</div>
+              <div className="nav-circle" data-target="#beach"></div>
+              <div className="nav-circle" data-target="#savanna"></div>
+              <div className="nav-circle" data-target="#glacier"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+              <div className="nav-circle" data-target="#coral"></div>
+            </div>
           </div>
-          
         </div>
       </section>
 
@@ -434,8 +679,8 @@ const sectionTriggers = sections.map((section) =>
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/images/chapters/second/introduction/background@1x.jpg"
-            alt="Section 2"
+            src="/assets/images/home/demo8/avif/collection-bnr.avif"
+            alt="Exclusive Collection"
           />
 
           <div className="text_reveal position-absolute">
@@ -466,23 +711,20 @@ const sectionTriggers = sections.map((section) =>
           </h2>
           <div className="d-none d-lg-block pt-5">
             <video muted autoPlay loop className="w-75" preload="none">
-              <source
-                type="video/mp4"
-                src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
-              />
+              <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
             </video>
           </div>
           <div className="d-block d-lg-none pt-5">
-  <video muted autoPlay loop className="w-100" preload="none">
-    <source
-      type="video/mp4"
-      src="https://www.ateliercologne.com/videos/chapters/first/heritage-16-9.mp4"
-    />
-  </video>
-</div>
+            <video muted autoPlay loop className="w-100" preload="none">
+              <source
+                type="video/mp4"
+                src="/assets/videos/multi-product-mobile.mp4"
+              />
+            </video>
+          </div>
 
           <Link
-            href="/shop"
+            href="/shop-1"
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
             Discover More
@@ -497,7 +739,7 @@ const sectionTriggers = sections.map((section) =>
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg"
+            src="/assets/images/home/demo8/avif/giftset-bnr.avif"
             alt="Section 3"
           />
           <div className="text_reveal position-absolute">
@@ -533,7 +775,7 @@ const sectionTriggers = sections.map((section) =>
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/images/chapters/fourth/introduction/background@1x.jpg"
+            src="/assets/images/home/demo8/avif/dakhoon-bnr.avif"
             alt="Section 4"
           />
           <div className="text_reveal position-absolute zoom_img">
@@ -561,7 +803,7 @@ const sectionTriggers = sections.map((section) =>
           <div className="inner2 zoom_img">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
-                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
+                src="/assets/videos/ignite-rose-slideshow.mp4"
                 type="video/mp4"
               />
             </video>
@@ -601,7 +843,7 @@ const sectionTriggers = sections.map((section) =>
           <div className="inner2">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
-                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
+                src="/assets/videos/ignite-rose-video.mp4"
                 type="video/mp4"
               />
             </video>
@@ -621,11 +863,20 @@ const sectionTriggers = sections.map((section) =>
               rich olfactory facets.
             </p>
             <div className="mt-4">
-              <img
-                className="w-100"
-                src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg"
-                alt="Image 1"
-              />
+              <Link href="#">
+                <img
+                  className="w-50 px-1"
+                  src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                  alt="Image 1"
+                />
+              </Link>
+              <Link href="#">
+                <img
+                  className="w-50 px-1"
+                  src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                  alt="Image 1"
+                />
+              </Link>
             </div>
           </div>
           <div className="inner2 mt-5">
@@ -636,12 +887,17 @@ const sectionTriggers = sections.map((section) =>
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Carefully <span className="s-font
+              Carefully{" "}
+              <span
+                className="s-font
               
-              ">selected ingredients</span>
+              "
+              >
+                selected ingredients
+              </span>
             </h3>
             <p className="text-center px-3">
-              From endemic species to renowned terroirs, we are particularly
+              From sadendemic species to renowned terroirs, we are particularly
               meticulous when it comes to sourcing our raw materials. While
               respecting the rhythms of nature, we commit to selecting only the
               highest-quality ingredients, imparting our perfumes with their
@@ -651,12 +907,12 @@ const sectionTriggers = sections.map((section) =>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <img
               className="px-2 w-100 w-md-auto"
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+              src="/assets/images/home/demo8/export/aqua-oud.jpg"
               alt="Image 1"
             />
             <img
               className="px-2 w-100 w-md-auto"
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/mixed_collection@1x.jpg"
+              src="/assets/images/home/demo8/export/endless.jpg"
               alt="Image 2"
             />
           </div>
@@ -812,10 +1068,7 @@ const sectionTriggers = sections.map((section) =>
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
             <video loop muted autoPlay className="w-100" preload="none">
-              <source
-                src="https://www.ahmedalmaghribi.com/wp-content/uploads/2021/08/OUD-SCULPTING.mp4"
-                type="video/mp4"
-              />
+              <source src="/assets/videos/shop-video.mp4" type="video/mp4" />
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">

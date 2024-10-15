@@ -346,7 +346,10 @@ const handleLogout = (e) => {
         <a
           className="navigation__item"
           href="#"
-          onClick={() => setIsHeaderOpen((prev) => !prev)}
+          onClick={(e) => {
+            e.preventDefault(); // Prevents the default anchor behavior
+            setIsHeaderOpen((prev) => !prev); // Toggles the header
+          }}
         >
           <svg
             width="24"
