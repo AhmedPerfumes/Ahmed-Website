@@ -541,8 +541,8 @@ export const categories88 = [
     altText: "Asateen",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "/assets/videos/dakhoon/asateen.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/antee.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/aayah"
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
+    link: "#"
   },
   {
     id: 2,
@@ -550,7 +550,7 @@ export const categories88 = [
     altText: "Bakhoor Hind",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/dukhoon-collection.jpg",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
   },
   {
@@ -559,7 +559,7 @@ export const categories88 = [
     altText: "Oud Ma'attar Khususi",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "/assets/videos/dakhoon/khususi.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/ihda-khas.jpg",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
   },
   {
@@ -568,7 +568,7 @@ export const categories88 = [
     altText: "Oud Ma'attar Maliki",
     subText: "by Ahmed Al Maghribi Perfumer",
     videoSrc: "/assets/videos/dakhoon/maliki.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/oud-roses-giftset.jpg",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
   },
   {
@@ -576,8 +576,8 @@ export const categories88 = [
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Oud",
     subText: "by Ahmed Al Maghribi Perfumer",
-    videoSrc: "/assets/videos/dakhoon/oud.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/shauque-al-shuyookh.jpg",
+    videoSrc: "/assets/videos/dakhoon/oud.mov",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
     link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
   },
   // {

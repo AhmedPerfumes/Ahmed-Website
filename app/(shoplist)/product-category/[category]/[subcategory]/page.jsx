@@ -6,7 +6,7 @@ import Shop10 from "@/components/shoplist/shop10/Shop10";
 import Banner5 from "@/components/shoplist/Banner5";
 import React from "react";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
-import Loader from "@/components/loader/Loader";
+// import Loader from "@/components/loader/Loader";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 import Link from "next/link";
 
@@ -45,7 +45,7 @@ const ShopPage8 = async ({ params }) => {
     // console.log(data);
     return (
       <>
-      <Loader/>
+      {/* <Loader/> */}
         <Header14 />
         <Banner5 image={ data.image }/>
         <main className="page-wrapper pt-0">

@@ -222,18 +222,20 @@ const Animation = () => {
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/multiple-products-banner.avif"
-            alt="Section 1"
+            alt="Signature Selections"
           />
           <div className="text_reveal position-absolute">
-            <div className="text-center text-white sub-title">Best Sellers</div>
+            <div className="text-center text-white sub-title">
+              Signature Selections
+            </div>
             <h2 className="text-center text-white h2">
-              Fragrances Loved by All
+              Fragrances Adored by All
             </h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+              Explore our bestsellers, a collection of high-quality fragrances
+              designed to cater to diverse tastes. From timeless classics to
+              modern blends, each scent is crafted with precision, offering
+              something special for every fragrance lover.
             </p>
           </div>
 
@@ -689,10 +691,10 @@ const Animation = () => {
             </div>
             <h2 className="text-center text-white h2">Exclusive Collection</h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+              Explore our unique selection of exquisite scents. Every fragrance
+              is expertly created using the best ingredients to convey elegance
+              and originality. Discover a variety of unique scents that
+              complement your sense of style and leave a lasting impression.
             </p>
           </div>
           <a
@@ -706,16 +708,24 @@ const Animation = () => {
       </section>
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
-          <h2 className="fw-lighter sec-two-h2 pt-5">
+          {/* <h2 className="fw-lighter sec-two-h2 pt-5">
             Crafted for the Discerning Few
-          </h2>
-          <div className="d-none d-lg-block pt-5">
-            <video muted autoPlay loop className="w-75" preload="none">
+          </h2> */}
+          {/* For Large Screens */}
+          <div className="d-none d-lg-block pt-2">
+            <h2 className="fw-lighter sec-two-h2 pt-2">
+              Crafted for the Discerning Few
+            </h2>
+            <video muted autoPlay loop className="w-75 pt-5" preload="none">
               <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
             </video>
           </div>
-          <div className="d-block d-lg-none pt-5">
-            <video muted autoPlay loop className="w-100" preload="none">
+          {/* For small screens */}
+          <div className="d-block d-lg-none pt-2">
+            <h2 className="fw-lighter sec-two-h2 pt-2 s-font">
+              Crafted for the Discerning Few
+            </h2>
+            <video muted autoPlay loop className="w-75 pt-2" preload="none">
               <source
                 type="video/mp4"
                 src="/assets/videos/multi-product-mobile.mp4"
@@ -776,16 +786,22 @@ const Animation = () => {
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/dakhoon-bnr.avif"
-            alt="Section 4"
+            alt="Ethereal Essence"
           />
           <div className="text_reveal position-absolute zoom_img">
-            <div className="text-center text-white sub-title">Best Sellers</div>
-            <h2 className="text-center text-white h2">Section 4</h2>
+            <div className="text-center text-white sub-title">
+              Explore a selection of exquisite Arabic fragrances
+            </div>
+            <h2 className="text-center text-white h2">Ethereal Essence</h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+              Delve into our illustrious collection of artisanal Arabic
+              perfumes, where heritage intertwines with mastery. Each elixir is
+              an homage to the age-old traditions of perfumery, crafted with the
+              utmost care from premium, all-natural ingredients. Experience the
+              opulence and complexity of our unique scents, inviting you to
+              embark on a sensory journey that resonates with your spirit. Find
+              your signature fragrance and embrace the allure of authentic
+              Arabic artistry.
             </p>
           </div>
           <a
@@ -821,19 +837,23 @@ const Animation = () => {
             </p>
             <div className="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center">
               <img
-                className="p-2 w-100 w-md-auto"
-                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
-                alt="Image 1"
+                className="p-2 w-25 w-md-auto"
+                src="/assets/images/home/demo8/notes/ignite-rose-top-note.jpg"
+                alt="Top Note"
+                subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
+              />
+
+              <img
+                className="p-2 w-25 w-md-auto"
+                src="/assets/images/home/demo8/notes/ignite-rose-middle-note.jpg"
+                alt="Middle Note"
+                subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
               />
               <img
-                className="p-2 w-100 w-md-auto"
-                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg"
-                alt="Image 2"
-              />
-              <img
-                className="p-2 w-100 w-md-auto"
-                src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_2-Desktop@1x.jpg"
-                alt="Image 2"
+                className="p-2 w-25 w-md-auto"
+                src="/assets/images/home/demo8/notes/ignite-rose-base-note.jpg"
+                alt="Base Note"
+                subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
               />
             </div>
           </div>
@@ -925,7 +945,7 @@ const Animation = () => {
           <div className="inner">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
-                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/collection.mp4"
+                src="/assets/videos/ignite-rose-slideshow.mp4"
                 type="video/mp4"
               />
             </video>
@@ -946,21 +966,21 @@ const Animation = () => {
             <div className="row justify-content-center">
               <div className="col-6 col-md-4">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                  src="/assets/images/home/demo8/notes/ignite-rose-top-note.jpg"
                   alt=""
                   className="img-fluid"
                 />
               </div>
               <div className="col-6 col-md-4">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                  src="/assets/images/home/demo8/notes/ignite-rose-middle-note.jpg"
                   alt=""
                   className="img-fluid"
                 />
               </div>
               <div className="col-6 col-md-4 pt-2">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/first/ingredients_1-Desktop@1x.jpg"
+                  src="/assets/images/home/demo8notes/ignite-rose-base-note.jpg"
                   alt=""
                   className="img-fluid"
                 />
@@ -973,7 +993,7 @@ const Animation = () => {
           <div className="inner d-flex align-items-center">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
-                src="https://www.ateliercologne.com/videos/chapters/fourth/stories/second/intotheglassatelier_16x9.mp4"
+                src="/assets/videos/ignite-rose-mobile.mp4"
                 type="video/mp4"
               />
             </video>
@@ -988,7 +1008,7 @@ const Animation = () => {
         </div>
         <div className="mobilepanel">
           <div className="inner text-center pt-5 mt-4">
-            <h1>Carefully Selected ingredients</h1>
+            <h1>Carefullyyyyy Selected ingredients</h1>
             <p className="fs-5">
               From endemic species to renowned terroirs, we are particularly
               meticulous when it comes to sourcing our raw materials. While
@@ -997,10 +1017,7 @@ const Animation = () => {
               rich olfactory facets
             </p>
 
-            <img
-              src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/content/into-glass@1x.jpg"
-              alt=""
-            />
+            <img src="assets/images/home/demo8/Bakhoor-Ahmed.jpg" alt="" />
           </div>
         </div>
         <div className="mobilepanel d-flex justify-content-center">
@@ -1016,14 +1033,14 @@ const Animation = () => {
             <div className="row">
               <div className="col-6">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/into-glass@1x.jpg"
+                  src="assets/images/home/demo8/export/aqua-oud.jpg"
                   alt=""
                   className="img-fluid"
                 />
               </div>
               <div className="col-6">
                 <img
-                  src="https://www.ateliercologne.com/images/chapters/fourth/stories/second/visual/mixed_collection@1x.jpg"
+                  src="assets/images/home/demo8/export/endless.jpg"
                   alt=""
                   className="img-fluid"
                 />
@@ -1039,7 +1056,7 @@ const Animation = () => {
           <img
             className="zoom_img"
             style={{ width: "100%" }}
-            src="https://www.ateliercologne.com/images/chapters/third/introduction/background@1x.jpg"
+            src="/assets/images/home/demo8/avif/production.avif"
             alt="Section 2"
           />
           <div className="text_reveal position-absolute">
@@ -1068,7 +1085,7 @@ const Animation = () => {
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
             <video loop muted autoPlay className="w-100" preload="none">
-              <source src="/assets/videos/shop-video.mp4" type="video/mp4" />
+              <source src="/assets/videos/production.mp4" type="video/mp4" />
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
@@ -1099,7 +1116,7 @@ const Animation = () => {
           <div className="order-0 order-md-1">
             <img
               className="h-auto w-100"
-              src="https://www.ateliercologne.com/images/chapters/fifth/store-locator/perview@1x.jpg"
+              src="/assets/images/home/demo8/shop.jpg"
               alt="image"
             />
           </div>

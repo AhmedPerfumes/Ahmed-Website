@@ -127,7 +127,7 @@ export default function Shop10({ subCategories, products }) {
 
           { products &&
                 <><div className="mb-4 mb-xl-5"></div>
-                <Style2 category={ category } subcategory={ subcategory } products={ products }/>
+                <Style2 category={ category } subcategory={ subcategory ? subcategory : null } products={ products }/>
                 <div className="border-bottom"></div></>
           }
             {/* <div className="mb-4 mb-xl-5"></div>

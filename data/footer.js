@@ -1,10 +1,12 @@
 export const footerLinks1 = [
-  { href: "/about", text: "About Us" },
-  { href: "/about", text: "Careers" },
-  { href: "/about", text: "Affiliates" },
+  { href: "/about", text: "Company Information" },
+  { href: "#", text: "Privacy Policy" },
+  { href: "#", text: "Terms & Conditions" },
   { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
-  { href: "/export",text:"Exports"}
+  { href: "/export", text:"Exports"},
+  { href: "#", text:"Shipping & Delivery"},
+  { href: "#", text:"Refund Policy"}
 ];
 export const footerLinks2 = [
   { href: "/shop-2", text: "Eau de Parfum" },

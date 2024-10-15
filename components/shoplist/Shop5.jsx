@@ -12,12 +12,7 @@ const Shop5 = () => {
     if (swiperRef.current) {
       const { activeIndex, slides } = swiperRef.current.swiper;
       // Check if the active slide is the last one
-      if (activeIndex === slides.length
-
-
-
-        
-      ) {
+      if (activeIndex === slides.length) {
         // Disable mousewheel interaction on the last slide
         swiperRef.current.swiper.mousewheel.disable();
       } else {
@@ -44,16 +39,28 @@ const Shop5 = () => {
         onSlideChange={handleSlideChange} // Handle slide change event
       >
         <SwiperSlide className="panel">
-          <img src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dwd0093650/home_page/2024/Fragrance/SHALIMAR-JASMIN_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg" alt="Image 1" />
+          <img
+            src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
+            alt="Oud and Roses Gift Set"
+          />
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <img src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dwd393eaa6/home_page/2024/Skincare/OI/OI-SPA-MORPHO_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg" alt="Image 2" />
+          <img
+            src="/assets/images/home/demo8/gift-sets/shauque-al-shuyookh-bnr.jpg"
+            alt="Shauque Al Shuyookh Gift Set"
+          />
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <img src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dw8c8aa80a/home_page/2024/Skincare/AR/AR-TRIO-24_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg" alt="Image 3" />
+          <img
+            src="/assets/images/home/demo8/gift-sets/bidun-esam-giftset-bnr.jpg"
+            alt="Bidun Esam Gift Set"
+          />
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <img src="https://www.guerlain.com/dw/image/v2/BDCZ_PRD/on/demandware.static/-/Library-Sites-Guerlain_SharedLibrary/default/dwc82c03fe/home_page/2024/Fragrance/A&M/AM-PATCHOULI_HOMEPAGE-TILES_HOMEPAGE_DESKTOP.jpg?sfrm=jpg" alt="Image 4" />
+          <img
+            src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
+            alt="The Dukhoon Collection"
+          />
         </SwiperSlide>
       </Swiper>
 
