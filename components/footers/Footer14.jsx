@@ -188,7 +188,7 @@ export default function Footer14() {
           </div>
           {/* <!-- /.footer-column --> */}
 
-          <div className="footer-column footer-menu mb-4 mb-lg-0">
+          {/* <div className="footer-column footer-menu mb-4 mb-lg-0">
             <h6 className="sub-menu__title text-uppercase">Help</h6>
             <ul className="sub-menu__list list-unstyled">
               {footerLinks3.map((elm, i) => (
@@ -199,7 +199,7 @@ export default function Footer14() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           {/* <!-- /.footer-column --> */}
 
           <div className="footer-column footer-newsletter col-12 mb-4 mb-lg-0">
@@ -239,13 +239,13 @@ export default function Footer14() {
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
             <Link className="text-white" href={"/order-tracking"}>Track Order</Link>
-            <div className="d-flex align-items-center">
-              {/* <label
+            {/* <div className="d-flex align-items-center">
+               <label
                 htmlFor="footerSettingsLanguage"
                 className="me-2 text-white"
               >
                 Language
-              </label> */}
+              </label> 
               <select
                 id="footerSettingsLanguage"
                 className="form-select form-select-sm bg-transparent border-0"
@@ -262,7 +262,7 @@ export default function Footer14() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
             <div className="d-flex align-items-center">
               {/* <label

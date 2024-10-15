@@ -167,7 +167,7 @@ export default function MobileHeader() {
             </span>
           </div>
 
-          <div className="container d-flex align-items-center">
+          {/* <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
             <select
               className="form-select form-select-sm bg-transparent border-0"
@@ -184,10 +184,10 @@ export default function MobileHeader() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="container d-flex align-items-center">
-            <label className="me-2 text-secondary">Currency</label>
+            <label className="me-2 text-secondary">Country</label>
             <select
               className="form-select form-select-sm bg-transparent border-0"
               aria-label="Default select example"
