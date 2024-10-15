@@ -151,13 +151,13 @@ export default function SingleProduct11({ category, subcategory, product }) {
           <h2 className="product-single__details-list__title text-white">
             Description
           </h2>
-          <div className="product-single__details-list__content">
+          <div className="product-single__details-list__content text-white">
             <Description content={ product.content }/>
           </div>
           <h2 className="product-single__details-list__title text-white">
             Fragrance Notes
           </h2>
-          <div className="product-single__details-list__content">
+          <div className="product-single__details-list__content text-white">
             <AdditionalInfo video={ product.video && JSON.parse(product.video)[0][0].value } notes={ product.fragrance_notes } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
           </div>
         </div>
