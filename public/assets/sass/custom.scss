@@ -307,6 +307,9 @@ h2, h3 {
   .mainnn-title {
     font-size: 1.2rem;
   }
+  .cat-title{
+    font-size: 18px;
+  }
   .swiper-slide {
     display: flex;
     flex-direction: column;
@@ -556,7 +559,7 @@ footer {
   z-index: 9999;
 }
 .preloader-gif {
-  width: 100px; /* Adjust the size as needed */
+  width: 75px; /* Adjust the size as needed */
   height: auto;
 }
 .loader {

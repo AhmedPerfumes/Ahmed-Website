@@ -144,12 +144,12 @@ export default function Style2({ category, subcategory, products }) {
                       />
                     </Link>
                     <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
-                      <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white">
+                      <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white cat-title">
                         { elm?.product_name && he.decode(elm?.product_name) }
                       </h2>
                       <p className="mb-4 text-white">Exclusive Launch</p>
                       <Link
-                        className="btn btn-outline-primary border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
+                        className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-40 d-inline-flex align-items-center"
                         href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}
                       >
                         <span>Explore</span>

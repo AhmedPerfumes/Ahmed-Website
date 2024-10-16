@@ -11,13 +11,13 @@ const Shop5 = () => {
   const handleSlideChange = () => {
     if (swiperRef.current) {
       const { activeIndex, slides } = swiperRef.current.swiper;
-      // Check if the active slide is the last one
-      if (activeIndex === slides.length) {
-        // Disable mousewheel interaction on the last slide
+
+      // Enable mousewheel interaction by default
+      swiperRef.current.swiper.mousewheel.enable();
+
+      // Disable mousewheel interaction on the last slide
+      if (activeIndex === slides.length - 1) {
         swiperRef.current.swiper.mousewheel.disable();
-      } else {
-        // Enable mousewheel interaction on other slides
-        swiperRef.current.swiper.mousewheel.enable();
       }
     }
   };
@@ -37,6 +37,7 @@ const Shop5 = () => {
         }}
         style={{ height: "100vh" }} // Make sure Swiper takes full height
         onSlideChange={handleSlideChange} // Handle slide change event
+        onInit={handleSlideChange} // Call handleSlideChange on Swiper initialization
       >
         <SwiperSlide className="panel">
           <img
@@ -64,11 +65,6 @@ const Shop5 = () => {
         </SwiperSlide>
       </Swiper>
 
-      {/* Content of the next section */}
-      <div className="next-section">
-        <h2>Next Section</h2>
-        <p>This is the content of the next section.</p>
-      </div>
     </div>
   );
 };

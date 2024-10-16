@@ -160,8 +160,8 @@ export default function Slider4({ product }) {
                 loading="lazy"
                 className="h-auto"
                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm}`}
-                width="104"
-                height="104"
+                width="200"
+                height="200"
                 alt="image"
               />
             </SwiperSlide>

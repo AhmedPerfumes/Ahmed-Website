@@ -1118,7 +1118,7 @@ const Animation = () => {
           <div className="order-0 order-md-1">
             <img
               className="h-auto w-100"
-              src="/assets/images/home/demo8/shop.jpg"
+              src="/assets/images/home/demo8/Shop.jpg"
               alt="image"
             />
           </div>
