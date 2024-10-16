@@ -29,7 +29,7 @@ export default function HomePage8() {
           <MobileAnimation/>
 
         </div>
-      <main>
+      <main id="animation-section">
         
       <Header14 />
         <Animation />
