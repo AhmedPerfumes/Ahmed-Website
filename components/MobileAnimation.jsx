@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const MobileAnimation = () => {
   const canvasRef = useRef(null);
   const ballTextRef = useRef(null);
-  const frameCount = 330;
+  const frameCount = 365;
   let images = [];
   let ball = { frame: 0 };
 
