@@ -29,7 +29,7 @@ export default function HomePage8() {
         {/* MobileAnimation will render for small screens */}
         <MobileAnimation />
       </div>
-      <main id="">
+      <main id="animation-section">
         <Header14 />
         {/* Animation component will render after CanvasAnimation */}
         <Animation />

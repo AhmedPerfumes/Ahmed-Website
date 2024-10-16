@@ -149,7 +149,7 @@ export default function Style2({ category, subcategory, products }) {
                       </h2>
                       <p className="mb-4 text-white">Exclusive Launch</p>
                       <Link
-                        className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
+                        className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-40 d-inline-flex align-items-center"
                         href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}
                       >
                         <span>Explore</span>
