@@ -5,7 +5,7 @@ import TopCollections from "@/components/homes/home-5/TopCollections";
 import Image from "next/image";
 import React from 'react'
 
-export default function Export() {  
+export default function Export({ products }) {  
   return (
   <>
 
@@ -49,9 +49,9 @@ export default function Export() {
     </div>
   </div>
 </div>
-<TopCollections/>
+<TopCollections products={products}/>
 
-<div className="container d-flex justify-content-center">
+{/* <div className="container d-flex justify-content-center">
   <video
     className="w-75 w-md-50 w-lg-25"
     src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/07/Ahmed-Perfume-Street-View.mp4"
@@ -59,7 +59,7 @@ export default function Export() {
     loop
     muted
   ></video>
-</div>
+</div> */}
 
 
 <div className="container d-flex justify-content-center pt-5">

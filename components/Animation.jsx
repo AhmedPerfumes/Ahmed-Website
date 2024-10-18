@@ -194,7 +194,7 @@ const Animation = () => {
           end: 'bottom 90%',
           
           scrub: 1.5,
-          markers: true
+          // markers: true
         }
       });
     

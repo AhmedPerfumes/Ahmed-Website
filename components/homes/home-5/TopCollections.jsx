@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import he from 'he';
 
-export default function TopCollections() {
+export default function TopCollections({ products }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -66,6 +67,19 @@ export default function TopCollections() {
       ]);
     }
   }, [currentCategory]);
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str?.replace(/&amp;/g, '');
+
+    // Remove all special characters
+    cleanedStr = cleanedStr?.replace(/[^\w\s-]/g, '');
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr?.replace(/\s+/g, ' ').trim();
+
+    return cleanedStr;
+  }
   return (
     <div className="">
       <div className="mb-4 mb-xl-5 pt-1 pb-5"></div>
@@ -110,33 +124,35 @@ export default function TopCollections() {
                 className="swiper-container js-swiper-slider"
                 {...swiperOptions}
               >
-                {filtered.map((elm, i) => (
+                {products.map((elm, i) => (
                   <SwiperSlide key={i} className="swiper-slide product-card">
                     <div className="pc__img-wrapper">
-                      <Link href={`/product1_simple/${elm.id}`}>
-                        <Image
-                          loading="lazy"
-                          src={elm.imgSrc}
-                          width="260"
-                          height="315"
-                          alt="Cropped Faux leather Jacket"
-                          className="pc__img"
-                        />
-                      </Link>
+                      {elm?.images && JSON.parse(elm.images).map((image, ind) => (
+                        <a key={ind} href={`/shop/collections/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>
+                          <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
+                            width="260"
+                            height="315"
+                            alt="Cropped Faux leather Jacket"
+                            className="pc__img"
+                          />
+                        </a>
+                      ))}
                       <button
                         className="pc__atc btn btn-lg anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                        onClick={() => addProductToCart(elm.id)}
+                        onClick={() => addProductToCart(elm)}
                         title={
-                          isAddedToCartProducts(elm.id)
+                          isAddedToCartProducts(elm.product_id)
                             ? "Already Added"
                             : "Add to Cart"
                         }
                       >
-                        {isAddedToCartProducts(elm.id)
+                        {isAddedToCartProducts(elm.product_id)
                           ? "Already Added"
                           : "Add To Cart"}
                       </button>
-                      <div className="anim_appear-right position-absolute top-0 mt-2 me-2">
+                      {/* <div className="anim_appear-right position-absolute top-0 mt-2 me-2">
                         <button
                           className="btn btn-round-sm btn-hover-red d-block border-0 text-uppercase mb-2 js-quick-view"
                           data-bs-toggle="modal"
@@ -156,9 +172,9 @@ export default function TopCollections() {
                         </button>
                         <button
                           className={`btn btn-round-sm btn-hover-red d-block border-0 text-uppercase js-add-wishlist ${
-                            isAddedtoWishlist(elm.id) ? "active" : ""
+                            isAddedtoWishlist(elm.product_id) ? "active" : ""
                           }`}
-                          onClick={() => toggleWishlist(elm.id)}
+                          onClick={() => toggleWishlist(elm.product_id)}
                           title="Add To Wishlist"
                         >
                           <svg
@@ -171,29 +187,27 @@ export default function TopCollections() {
                             <use href="#icon_heart" />
                           </svg>
                         </button>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="pc__info position-relative">
-                      <p className="pc__category">{elm.category}</p>
+                      {/* <p className="pc__category">{elm.category}</p> */}
                       <h6 className="pc__title">
-                        <Link href={`/product1_simple/${elm.id}`}>
-                          {elm.title}
-                        </Link>
+                      <a href={`/shop/collections/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                       </h6>
                       <div className="product-card__price d-flex">
                         {elm.priceOld && (
                           <>
                             <span className="money price price-old">
-                              ${elm.priceOld}
+                              {elm.priceOld}د.إ
                             </span>
                             <span className="money price price-sale">
-                              ${elm.price}
+                              {elm.price}د.إ
                             </span>
                           </>
                         )}
                         {!elm.priceOld && (
-                          <span className="money price">${elm.price}</span>
+                          <span className="money price">{elm.price}د.إ</span>
                         )}
                       </div>
                     </div>
