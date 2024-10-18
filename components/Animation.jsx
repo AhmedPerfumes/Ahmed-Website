@@ -810,7 +810,8 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
       <section className="testsect zoom_img">
-        <div className="panel2 d-flex flex-column justify-content-around">
+        <div className="panel2 d-flex flex-column justify-content-around
+        gap-5">
           <Lookbook />
 
           <Categories section="section3" />
