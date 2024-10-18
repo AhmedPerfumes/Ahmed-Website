@@ -784,16 +784,19 @@ const Animation = () => {
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/giftset-bnr.avif"
-            alt="Section 3"
+            alt="Art of Gifting"
           />
           <div className="text_reveal position-absolute">
-            <div className="text-center text-white sub-title">Best Sellers</div>
-            <h2 className="text-center text-white h2">Section 3</h2>
+            <div className="text-center text-white sub-title">
+              Elegant Treasures for Every Occasion
+            </div>
+            <h2 className="text-center text-white h2">The Art of Gifting</h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+              Delight in our exquisite fragrance gift sets, each thoughtfully
+              curated to celebrate special moments. Elegantly presented, these
+              sets feature a selection of our finest scents, making them the
+              perfect gift for loved ones. Elevate any occasion with the luxury
+              of captivating aromas that linger in memory.
             </p>
           </div>
           <a
@@ -824,18 +827,17 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute zoom_img">
             <div className="text-center text-white sub-title">
-              Explore a selection of exquisite Arabic fragrances
+              Ancient Aromas
             </div>
-            <h2 className="text-center text-white h2">Ethereal Essence</h2>
+            <h2 className="text-center text-white h2">
+              The Essence of Arabic Dakhoon
+            </h2>
             <p className="text-center text-white p">
-              Delve into our illustrious collection of artisanal Arabic
-              perfumes, where heritage intertwines with mastery. Each elixir is
-              an homage to the age-old traditions of perfumery, crafted with the
-              utmost care from premium, all-natural ingredients. Experience the
-              opulence and complexity of our unique scents, inviting you to
-              embark on a sensory journey that resonates with your spirit. Find
-              your signature fragrance and embrace the allure of authentic
-              Arabic artistry.
+              Discover the rich heritage of Arabic Dakhoon, crafted from the
+              finest natural ingredients. Each blend creates a warm and inviting
+              atmosphere, perfect for your home or special occasions. Light our
+              Dakhoon to enjoy long-lasting fragrances that reflect Middle
+              Eastern tradition.
             </p>
           </div>
           <a
@@ -1020,7 +1022,7 @@ const Animation = () => {
               </div>
               <div className="col-6 col-md-4 pt-2">
                 <img
-                  src="/assets/images/home/demo8notes/ignite-rose-base-note.jpg"
+                  src="/assets/images/home/demo8/notes/ignite-rose-base-note.jpg"
                   alt=""
                   className="img-fluid"
                 />
