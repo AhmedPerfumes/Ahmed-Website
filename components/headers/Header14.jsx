@@ -25,7 +25,7 @@ export default function Header14() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0 && isHeaderOpen) {
-        setIsHeaderOpen(false);
+        setIsHeaderOpen(true);
       }
     };
 
@@ -114,7 +114,7 @@ const handleLogout = (e) => {
     <>
       <header
         id="header"
-        className={`header sticky_disabled w-100 `}
+        className={`header header_sticky position-sticky w-100 `}
         style={pathname == "/" ? headerStyle : {}}
       >
         <Swiper
@@ -342,7 +342,7 @@ const handleLogout = (e) => {
         </div>
       </header>
       { pathname == "/" ?
-      <nav className="navigation text-center position-absolute d-none d-lg-block menu-button btn">
+      <nav className="navigation text-center d-none d-lg-block menu-button btn">
         <a
           className="navigation__item"
           href="#"

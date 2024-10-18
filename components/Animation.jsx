@@ -13,6 +13,7 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 import Swiper from "swiper";
 import "./Animation.css";
 import MobileSlider from "./singleProduct/sliders/MobileSlider";
+import { duration } from "@mui/material";
 
 const Animation = () => {
   useEffect(() => {
@@ -28,15 +29,15 @@ const Animation = () => {
     // ScrollTrigger 1: sections scroll and snap vertically
     const sections = gsap.utils.toArray(".testsect");
 
-    ScrollTrigger.create({
-      start: 1,
-      end: "max",
-      snap: {
-        snapTo: (value, self) => snap(value, self.direction),
-        duration: { min: 0.01, max: 0.3 },
-        delay: 0,
-      },
-    });
+    // ScrollTrigger.create({
+    //   start: 1,
+    //   end: "max",
+    //   snap: {
+    //     snapTo: (value, self) => snap(value, self.direction),
+    //     duration: { min: 0.01, max: 0.3 },
+    //     delay: 0,
+    //   },
+    // });
     // ScrollTrigger 2: horizontal scroll in section ".container"
     const panels = gsap.utils.toArray(".cont .panel2");
 
@@ -69,13 +70,13 @@ const Animation = () => {
       },
     });
     // ScrollTrigger for each section to get their positions
-    const sectionTriggers = sections.map((section) =>
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        refreshPriority: -1,
-      })
-    );
+    // const sectionTriggers = sections.map((section) =>
+    //   ScrollTrigger.create({
+    //     trigger: section,
+    //     start: "top top",
+    //     refreshPriority: -1,
+    //   })
+    // );
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -118,88 +119,121 @@ const Animation = () => {
       circle.addEventListener("click", () => handleNavCircleClick(index));
     });
 
-    let headings = gsap.utils.toArray(".h2");
-    headings.forEach((heading, i) => {
-      gsap.fromTo(
-        heading,
-        {
-          opacity: 0,
-          y: 50,
-          delay: 1,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scrollTrigger: {
-            trigger: heading,
-            start: "top 80%",
-            end: "top -5%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-    });
+    // let headings = gsap.utils.toArray(".h2");
+    // headings.forEach((heading, i) => {
+    //   gsap.fromTo(
+    //     heading,
+    //     {
+    //       opacity: 0,
+    //       y: 50,
+    //       delay: 1,
+    //     },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       scrollTrigger: {
+    //         trigger: heading,
+    //         start: "top 80%",
+    //         end: "top -5%",
+    //         toggleActions: "play reverse play reverse",
+    //       },
+    //     }
+    //   );
+    // });
 
-    let parags = gsap.utils.toArray(".p");
-    parags.forEach((parag, i) => {
-      gsap.fromTo(
-        parag,
-        {
-          opacity: 0,
-          y: 50,
-          delay: 1,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          delay: 1,
-          scrollTrigger: {
-            trigger: parag,
-            start: "top 70%",
-            end: "top -5%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-    });
+    // let parags = gsap.utils.toArray(".p");
+    // parags.forEach((parag, i) => {
+    //   gsap.fromTo(
+    //     parag,
+    //     {
+    //       opacity: 0,
+    //       y: 50,
+    //       delay: 1,
+    //     },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       delay: 1,
+    //       scrollTrigger: {
+    //         trigger: parag,
+    //         start: "top 70%",
+    //         end: "top -5%",
+    //         toggleActions: "play reverse play reverse",
+    //       },
+    //     }
+    //   );
+    // });
 
-    let subtitles = gsap.utils.toArray(".sub-title");
-    subtitles.forEach((subtitle, i) => {
-      gsap.fromTo(
-        subtitle,
-        {
-          opacity: 0,
-          y: 50,
-          delay: 1,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          delay: 1,
-          scrollTrigger: {
-            trigger: subtitle,
-            start: "top 80%",
-            end: "top -5%",
-            toggleActions: "play reverse play reverse",
-          },
+    // let subtitles = gsap.utils.toArray(".sub-title");
+    // subtitles.forEach((subtitle, i) => {
+    //   gsap.fromTo(
+    //     subtitle,
+    //     {
+    //       opacity: 0,
+    //       y: 50,
+    //       delay: 1,
+    //     },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       delay: 1,
+    //       scrollTrigger: {
+    //         trigger: subtitle,
+    //         start: "top 80%",
+    //         end: "top -5%",
+    //         toggleActions: "play reverse play reverse",
+    //       },
+    //     }
+    //   );
+    // });
+    gsap.utils.toArray('.testsect').forEach((section) => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: section, // use individual section as trigger
+          start: 'top 65px',
+          end: 'bottom 90%',
+          
+          scrub: 1.5,
+          markers: true
         }
+      });
+    
+      timeline.to(section.querySelector('.sub-title'), {
+        opacity: 1,
+        duration: 0.8
+      });
+    
+      timeline.fromTo(section.querySelector('.h2'), 
+        { y: 50, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 2.75 }
       );
+    
+      timeline.fromTo(section.querySelector('.p'), 
+        { y: 60, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 2.85 }
+      );
+    
+      timeline.to(section.querySelector('.panel2'), {
+        yPercent: -5,
+        duration: 1
+      });
     });
+    
 
     let imgs = gsap.utils.toArray(".zoom_img");
     imgs.forEach((img, i) => {
       gsap.fromTo(
         img,
-        { scale: 0.85 }, // Initial scale
+        { scale: 0.75 }, // Initial scale
         {
           scale: 1, // Final scale
           scrollTrigger: {
             trigger: img,
-            start: "top 100%",
+            start: "top 70%",
             end: "top 7.5%",
             // markers: true,
             scrub: 1,
-            snap: !isMobileDevice() ? true : false,
+            // snap: !isMobileDevice() ? true : false,
           },
         }
       );
@@ -213,7 +247,7 @@ const Animation = () => {
 
   return (
     <div id="main2">
-      <section className="testsect hero-banner">
+      <section className="vh-100 hero-banner">
         <Hero />
       </section>
       <section className="testsect section1">
@@ -750,16 +784,19 @@ const Animation = () => {
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/giftset-bnr.avif"
-            alt="Section 3"
+            alt="Art of Gifting"
           />
           <div className="text_reveal position-absolute">
-            <div className="text-center text-white sub-title">Best Sellers</div>
-            <h2 className="text-center text-white h2">Section 3</h2>
+            <div className="text-center text-white sub-title">
+              Elegant Treasures for Every Occasion
+            </div>
+            <h2 className="text-center text-white h2">The Art of Gifting</h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+              Delight in our exquisite fragrance gift sets, each thoughtfully
+              curated to celebrate special moments. Elegantly presented, these
+              sets feature a selection of our finest scents, making them the
+              perfect gift for loved ones. Elevate any occasion with the luxury
+              of captivating aromas that linger in memory.
             </p>
           </div>
           <a
@@ -773,14 +810,15 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
       <section className="testsect zoom_img">
-        <div className="panel2 d-flex flex-column justify-content-around">
+        <div className="panel2 d-flex flex-column justify-content-around
+        gap-5">
           <Lookbook />
 
           <Categories section="section3" />
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect">
+      <section className="testsect section4">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
@@ -790,18 +828,17 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute zoom_img">
             <div className="text-center text-white sub-title">
-              Explore a selection of exquisite Arabic fragrances
+              Ancient Aromas
             </div>
-            <h2 className="text-center text-white h2">Ethereal Essence</h2>
+            <h2 className="text-center text-white h2">
+              The Essence of Arabic Dakhoon
+            </h2>
             <p className="text-center text-white p">
-              Delve into our illustrious collection of artisanal Arabic
-              perfumes, where heritage intertwines with mastery. Each elixir is
-              an homage to the age-old traditions of perfumery, crafted with the
-              utmost care from premium, all-natural ingredients. Experience the
-              opulence and complexity of our unique scents, inviting you to
-              embark on a sensory journey that resonates with your spirit. Find
-              your signature fragrance and embrace the allure of authentic
-              Arabic artistry.
+              Discover the rich heritage of Arabic Dakhoon, crafted from the
+              finest natural ingredients. Each blend creates a warm and inviting
+              atmosphere, perfect for your home or special occasions. Light our
+              Dakhoon to enjoy long-lasting fragrances that reflect Middle
+              Eastern tradition.
             </p>
           </div>
           <a
@@ -816,7 +853,10 @@ const Animation = () => {
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
-          <div className="inner2 zoom_img">
+        <div className="inner2 mt-5 d-flex align-items-center">
+            <Categories section="section4" />
+          </div>
+          {/* <div className="inner2 zoom_img">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="/assets/videos/ignite-rose-slideshow.mp4"
@@ -856,7 +896,7 @@ const Animation = () => {
                 subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="panel2 mt-5">
@@ -941,7 +981,7 @@ const Animation = () => {
 
       {/* This is the Mobile Slider  */}
       <section className="MobileSlider mobilecontainer d-lg-none zoom_img">
-        <div className="mobilepanel d-flex align-items-center">
+        {/* <div className="mobilepanel d-flex align-items-center">
           <div className="inner">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
@@ -950,10 +990,13 @@ const Animation = () => {
               />
             </video>
           </div>
-        </div>
+        </div> */}
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
-          <div className="inner text-center pt-5 mt-4">
+        <div className="inner text-center pt-5 mt-4">
+            <Categories />
+          </div>
+          {/* <div className="inner text-center pt-5 mt-4">
             <h1>Carefully Selected Ingredients</h1>
             <p className="fs-5">
               From endemic species to renowned terroirs, we are particularly
@@ -980,13 +1023,13 @@ const Animation = () => {
               </div>
               <div className="col-6 col-md-4 pt-2">
                 <img
-                  src="/assets/images/home/demo8notes/ignite-rose-base-note.jpg"
+                  src="/assets/images/home/demo8/notes/ignite-rose-base-note.jpg"
                   alt=""
                   className="img-fluid"
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
@@ -1001,8 +1044,6 @@ const Animation = () => {
         </div>
         <div className="mobilepanel ">
           <div className="inner text-center pt-5 mt-4">
-            {/* <h1>Most Preferred Categories</h1>
-          <p className="fs-5">The World's Premium Brands In One destination</p> */}
             <Categories />
           </div>
         </div>
@@ -1116,7 +1157,7 @@ const Animation = () => {
           <div className="order-0 order-md-1">
             <img
               className="h-auto w-100"
-              src="/assets/images/home/demo8/shop.jpg"
+              src="/assets/images/home/demo8/Shop.jpg"
               alt="image"
             />
           </div>

@@ -9,8 +9,8 @@ import LoginFormPopup from "@/components/common/LoginFormPopup";
 import { useEffect } from "react";
 import ScrollTop from "@/components/common/ScrollTop";
 import Context from "@/context/Context";
-import { MenuProvider } from '@/context/MenuContext';
-import { UserProvider } from '@/context/UserContext';
+import { MenuProvider } from "@/context/MenuContext";
+import { UserProvider } from "@/context/UserContext";
 import QuickView from "@/components/modals/QuickView";
 import CartDrawer from "@/components/shopCartandCheckout/CartDrawer";
 import SiteMap from "@/components/modals/SiteMap";
@@ -25,9 +25,11 @@ import ProductDescription from "@/components/asides/ProductDescription";
 import ProductAdditionalInformation from "@/components/asides/ProductAdditionalInformation";
 import ProductReviews from "@/components/asides/ProductReviews";
 import MobileFooter1 from "@/components/footers/MobileFooter1";
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
 
-const myFont = localFont({ src: '../public/assets/fonts/wulkan/WulkanDisplayMedium.woff' })
+const myFont = localFont({
+  src: "../public/assets/fonts/wulkan/WulkanDisplayMedium.woff",
+});
 
 export default function RootLayout({ children }) {
   useEffect(() => {
@@ -37,18 +39,16 @@ export default function RootLayout({ children }) {
         // Module is imported, you can access any exported functionality if
       });
 
-      localStorage.setItem('orderData', '');
-      localStorage.setItem('cartList', []);
-      localStorage.setItem('wishList', []);
+      localStorage.setItem("orderData", "");
+      localStorage.setItem("cartList", []);
+      localStorage.setItem("wishList", []);
     }
   }, []);
 
   return (
     <html lang="en">
-      <head>
-      </head>
-      <body className={myFont.className}
-      >
+      <head></head>
+      <body className={myFont.className}>
         <Svgs />
         <Context>
           <UserProvider>
@@ -59,7 +59,7 @@ export default function RootLayout({ children }) {
               {/* //modals and asides */}
               <LoginFormPopup />
               <QuickView />
-              {/* <NewsLetter /> */}
+              <NewsLetter />
               {/* <CookieContainer /> */}
               <SizeGuide />
               <Delivery />

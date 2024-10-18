@@ -45,7 +45,7 @@ export default function NewsLetter() {
                   height={550}
                   style={{ height: "fit-content" }}
                   loading="lazy"
-                  src="/assets/images/newsletter-popup.jpg"
+                  src="/assets/images/home/demo8/zumar.jpg"
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"
                 />
@@ -53,10 +53,13 @@ export default function NewsLetter() {
             </div>
             <div className="col-md-6 p-0 d-flex align-items-center">
               <div className="block-newsletter w-100">
-                <h3 className="block__title">Sign Up to Our Newsletter</h3>
+                <h3 className="section-title fw-normal mb-3 pb-2">
+                  Exclusive Launch
+                </h3>
                 <p>
-                  Be the first to get the latest news about trends, promotions,
-                  and much more!
+                  Be the first to embrace the elegance of <b>Zumar</b>, our
+                  exclusive, limited-edition fragrance. <br />
+                  <b className="sub-title">Don't miss out.</b>
                 </p>
                 <form
                   onSubmit={(e) => e.preventDefault()}
@@ -71,7 +74,7 @@ export default function NewsLetter() {
                   <input
                     className="btn-link fw-medium bg-transparent position-absolute top-0 end-0 h-100"
                     type="submit"
-                    defaultValue="JOIN"
+                    defaultValue="OPT IN"
                   />
                 </form>
               </div>
