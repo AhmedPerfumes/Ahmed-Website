@@ -13,6 +13,7 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 import Swiper from "swiper";
 import "./Animation.css";
 import MobileSlider from "./singleProduct/sliders/MobileSlider";
+import { duration } from "@mui/material";
 
 const Animation = () => {
   useEffect(() => {
@@ -28,15 +29,15 @@ const Animation = () => {
     // ScrollTrigger 1: sections scroll and snap vertically
     const sections = gsap.utils.toArray(".testsect");
 
-    ScrollTrigger.create({
-      start: 1,
-      end: "max",
-      snap: {
-        snapTo: (value, self) => snap(value, self.direction),
-        duration: { min: 0.01, max: 0.3 },
-        delay: 0,
-      },
-    });
+    // ScrollTrigger.create({
+    //   start: 1,
+    //   end: "max",
+    //   snap: {
+    //     snapTo: (value, self) => snap(value, self.direction),
+    //     duration: { min: 0.01, max: 0.3 },
+    //     delay: 0,
+    //   },
+    // });
     // ScrollTrigger 2: horizontal scroll in section ".container"
     const panels = gsap.utils.toArray(".cont .panel2");
 
@@ -69,13 +70,13 @@ const Animation = () => {
       },
     });
     // ScrollTrigger for each section to get their positions
-    const sectionTriggers = sections.map((section) =>
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        refreshPriority: -1,
-      })
-    );
+    // const sectionTriggers = sections.map((section) =>
+    //   ScrollTrigger.create({
+    //     trigger: section,
+    //     start: "top top",
+    //     refreshPriority: -1,
+    //   })
+    // );
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -118,88 +119,121 @@ const Animation = () => {
       circle.addEventListener("click", () => handleNavCircleClick(index));
     });
 
-    let headings = gsap.utils.toArray(".h2");
-    headings.forEach((heading, i) => {
-      gsap.fromTo(
-        heading,
-        {
-          opacity: 0,
-          y: 50,
-          delay: 1,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scrollTrigger: {
-            trigger: heading,
-            start: "top 80%",
-            end: "top -5%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-    });
+    // let headings = gsap.utils.toArray(".h2");
+    // headings.forEach((heading, i) => {
+    //   gsap.fromTo(
+    //     heading,
+    //     {
+    //       opacity: 0,
+    //       y: 50,
+    //       delay: 1,
+    //     },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       scrollTrigger: {
+    //         trigger: heading,
+    //         start: "top 80%",
+    //         end: "top -5%",
+    //         toggleActions: "play reverse play reverse",
+    //       },
+    //     }
+    //   );
+    // });
 
-    let parags = gsap.utils.toArray(".p");
-    parags.forEach((parag, i) => {
-      gsap.fromTo(
-        parag,
-        {
-          opacity: 0,
-          y: 50,
-          delay: 1,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          delay: 1,
-          scrollTrigger: {
-            trigger: parag,
-            start: "top 70%",
-            end: "top -5%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-    });
+    // let parags = gsap.utils.toArray(".p");
+    // parags.forEach((parag, i) => {
+    //   gsap.fromTo(
+    //     parag,
+    //     {
+    //       opacity: 0,
+    //       y: 50,
+    //       delay: 1,
+    //     },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       delay: 1,
+    //       scrollTrigger: {
+    //         trigger: parag,
+    //         start: "top 70%",
+    //         end: "top -5%",
+    //         toggleActions: "play reverse play reverse",
+    //       },
+    //     }
+    //   );
+    // });
 
-    let subtitles = gsap.utils.toArray(".sub-title");
-    subtitles.forEach((subtitle, i) => {
-      gsap.fromTo(
-        subtitle,
-        {
-          opacity: 0,
-          y: 50,
-          delay: 1,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          delay: 1,
-          scrollTrigger: {
-            trigger: subtitle,
-            start: "top 80%",
-            end: "top -5%",
-            toggleActions: "play reverse play reverse",
-          },
+    // let subtitles = gsap.utils.toArray(".sub-title");
+    // subtitles.forEach((subtitle, i) => {
+    //   gsap.fromTo(
+    //     subtitle,
+    //     {
+    //       opacity: 0,
+    //       y: 50,
+    //       delay: 1,
+    //     },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       delay: 1,
+    //       scrollTrigger: {
+    //         trigger: subtitle,
+    //         start: "top 80%",
+    //         end: "top -5%",
+    //         toggleActions: "play reverse play reverse",
+    //       },
+    //     }
+    //   );
+    // });
+    gsap.utils.toArray('.testsect').forEach((section) => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: section, // use individual section as trigger
+          start: 'top 65px',
+          end: 'bottom 90%',
+          
+          scrub: 1.5,
+          markers: true
         }
+      });
+    
+      timeline.to(section.querySelector('.sub-title'), {
+        opacity: 1,
+        duration: 0.8
+      });
+    
+      timeline.fromTo(section.querySelector('.h2'), 
+        { y: 50, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 2.75 }
       );
+    
+      timeline.fromTo(section.querySelector('.p'), 
+        { y: 60, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 2.85 }
+      );
+    
+      timeline.to(section.querySelector('.panel2'), {
+        yPercent: -5,
+        duration: 1
+      });
     });
+    
 
     let imgs = gsap.utils.toArray(".zoom_img");
     imgs.forEach((img, i) => {
       gsap.fromTo(
         img,
-        { scale: 0.85 }, // Initial scale
+        { scale: 0.75 }, // Initial scale
         {
           scale: 1, // Final scale
           scrollTrigger: {
             trigger: img,
-            start: "top 100%",
+            start: "top 70%",
             end: "top 7.5%",
             // markers: true,
             scrub: 1,
-            snap: !isMobileDevice() ? true : false,
+            // snap: !isMobileDevice() ? true : false,
           },
         }
       );
@@ -213,7 +247,7 @@ const Animation = () => {
 
   return (
     <div id="main2">
-      <section className="testsect hero-banner">
+      <section className="vh-100 hero-banner">
         <Hero />
       </section>
       <section className="testsect section1">
@@ -780,7 +814,7 @@ const Animation = () => {
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect">
+      <section className="testsect section4">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
@@ -816,7 +850,10 @@ const Animation = () => {
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
-          <div className="inner2 zoom_img">
+        <div className="inner2 mt-5 d-flex align-items-center">
+            <Categories section="section4" />
+          </div>
+          {/* <div className="inner2 zoom_img">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
                 src="/assets/videos/ignite-rose-slideshow.mp4"
@@ -856,7 +893,7 @@ const Animation = () => {
                 subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="panel2 mt-5">
@@ -941,7 +978,7 @@ const Animation = () => {
 
       {/* This is the Mobile Slider  */}
       <section className="MobileSlider mobilecontainer d-lg-none zoom_img">
-        <div className="mobilepanel d-flex align-items-center">
+        {/* <div className="mobilepanel d-flex align-items-center">
           <div className="inner">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
@@ -950,10 +987,13 @@ const Animation = () => {
               />
             </video>
           </div>
-        </div>
+        </div> */}
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
-          <div className="inner text-center pt-5 mt-4">
+        <div className="inner text-center pt-5 mt-4">
+            <Categories />
+          </div>
+          {/* <div className="inner text-center pt-5 mt-4">
             <h1>Carefully Selected Ingredients</h1>
             <p className="fs-5">
               From endemic species to renowned terroirs, we are particularly
@@ -986,7 +1026,7 @@ const Animation = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
@@ -1001,8 +1041,6 @@ const Animation = () => {
         </div>
         <div className="mobilepanel ">
           <div className="inner text-center pt-5 mt-4">
-            {/* <h1>Most Preferred Categories</h1>
-          <p className="fs-5">The World's Premium Brands In One destination</p> */}
             <Categories />
           </div>
         </div>

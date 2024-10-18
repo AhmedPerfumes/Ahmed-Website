@@ -21,6 +21,7 @@ export default function HomePage8() {
         backgroundImage: `url(https://www.ateliercologne.com/us_en/images/backgrounds/background-ivory.jpg)`,
       }}
     >
+        <Header14 />
       <div className="d-none d-lg-block">
         {/* CanvasAnimation will render first for large screens */}
         <CanvasAnimation />
@@ -30,7 +31,6 @@ export default function HomePage8() {
         <MobileAnimation />
       </div>
       <main id="animation-section">
-        <Header14 />
         {/* Animation component will render after CanvasAnimation */}
         <Animation />
       </main>
