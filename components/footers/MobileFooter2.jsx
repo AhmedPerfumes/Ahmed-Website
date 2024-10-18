@@ -58,7 +58,7 @@ export default function MobileFooter2() {
       </div>
       <div className="footer-column footer-store-info col-12 mb-4 mb-lg-0">
         <div className="logo d-flex justify-content-center">
-          <Link href="/">
+          <a href="/">
             <Image
               src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
               width={200}
@@ -66,7 +66,7 @@ export default function MobileFooter2() {
               alt="Ahmed"
               className="logo__image d-block"
             />
-          </Link>
+          </a>
         </div>
         {/* <!-- /.logo --> */}
         <p className="footer-address text-white text-center">
@@ -88,7 +88,7 @@ export default function MobileFooter2() {
         <ul className="social-links list-unstyled d-flex flex-wrap mb-0 text-white justify-content-center">
           {socialLinks.map((link, index) => (
             <li key={index}>
-              <Link href={link.href} className="footer__social-link d-block">
+              <a href={link.href} className="footer__social-link d-block">
                 <svg
                   className={link.className}
                   width={link.width}
@@ -102,7 +102,7 @@ export default function MobileFooter2() {
                     link.icon
                   )}
                 </svg>
-              </Link>
+              </a>
             </li>
           ))}
         </ul>
@@ -129,12 +129,12 @@ export default function MobileFooter2() {
           <ul className="sub-menu__list list-unstyled text-white">
             {footerLinks1.map((elm, i) => (
               <li key={i} className="sub-menu__item text-white">
-                <Link
+                <a
                   href={elm.href}
                   className="menu-link menu-link_us-s text-white"
                 >
                   {elm.text}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -161,12 +161,12 @@ export default function MobileFooter2() {
           <ul className="sub-menu__list list-unstyled">
             {categoriesSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
-                <Link
+                <a
                   href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
                   className="menu-link menu-link_us-s text-white"
                 >
                   {elm.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -193,12 +193,12 @@ export default function MobileFooter2() {
           <ul className="sub-menu__list list-unstyled">
             {footerLinks3.map((elm, i) => (
               <li key={i} className="sub-menu__item">
-                <Link
+                <a
                   href={elm.href}
                   className="menu-link menu-link_us-s text-white"
                 >
                   {elm.text}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -212,7 +212,7 @@ export default function MobileFooter2() {
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center text-white">
             <div className="d-flex align-items-center text-white">
-              <Link className="text-white" href={"/order-tracking"}>Track Order</Link>
+              <a className="text-white" href={"/order-tracking"}>Track Order</a>
             </div>
           </div>
           {/* <!-- /.footer-settings --> */}

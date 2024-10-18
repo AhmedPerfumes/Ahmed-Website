@@ -129,9 +129,9 @@ const handleLogout = (e) => {
               className="swiper-slide text-center"
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                <Link href="#" className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
+                <a href="#" className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
                   {elm.description.split(" ").slice(0, 13).join(" ")}
-                </Link>
+                </a>
               </div>
             </SwiperSlide>
           ))}
@@ -183,29 +183,29 @@ const handleLogout = (e) => {
                   <h6 className="sub-menu__title fs-base">Quicklinks</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <Link href="/shop/eau-de-parfum/oriental-fragrance/marj" className="menu-link menu-link_us-s">
+                      <a href="/shop/eau-de-parfum/oriental-fragrance/marj" className="menu-link menu-link_us-s">
                         Marj
-                      </Link>
+                      </a>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="/shop/eau-de-parfum/occidental-fragrance/rose-noir" className="menu-link menu-link_us-s">
+                      <a href="/shop/eau-de-parfum/occidental-fragrance/rose-noir" className="menu-link menu-link_us-s">
                         Rose Noir
-                      </Link>
+                      </a>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender" className="menu-link menu-link_us-s">
+                      <a href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender" className="menu-link menu-link_us-s">
                         Oud Lavender
-                      </Link>
+                      </a>
                     </li>
                     <li className="sub-menu__item">
-                      <Link href="/shop/eau-de-parfum/occidental-fragrance/oud-classic" className="menu-link menu-link_us-s">
+                      <a href="/shop/eau-de-parfum/occidental-fragrance/oud-classic" className="menu-link menu-link_us-s">
                         Oud Classic
-                      </Link>
+                      </a>
                     </li>
                     {/* <li className="sub-menu__item">
-                      <Link href="/shop/eau-de-parfum/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
+                      <a href="/shop/eau-de-parfum/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
                         Oud &amp; Roses
-                      </Link>
+                      </a>
                     </li> */}
                   </ul>
                 </div>
@@ -247,13 +247,13 @@ const handleLogout = (e) => {
                 </div>
               </div>
               <div className="logo">
-                <Link href="/">
+                <a href="/">
                   <img
                     src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
                     width="200px"
                     alt="Ahmed"
                   />
-                </Link>
+                </a>
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
                 <div className="header-search search-field d-none d-xxl-flex mx-4">

@@ -192,7 +192,7 @@ export default function Checkout() {
       } else if(data.message && data.message.split(' ')[0] == 'Redirecting') {
         setSuccess(data.message);
         setError(null);
-        localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+        // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
         router.push(data.redirect_url);
       } else {
         if(data.products) {
@@ -241,7 +241,7 @@ export default function Checkout() {
       setIsSendOTPLoading(false);
       return;
     }
-    const regex = /^\d{9}$/;
+    const regex = /^\d{10}$/;
     if(!regex.test(formData.billingAddress.mobile)) {
       setOTPError('Invalid Mobile Number');
       setOTPSuccess(null);
@@ -526,16 +526,16 @@ export default function Checkout() {
               <div className="col-md-12">
                 <div className="form-floating my-3">
                   <input
-                    type="number"
+                    type="tel"
                     className="form-control"
                     id="checkout_otp"
-                    placeholder="Eg. 500000000 *"
+                    placeholder="Eg. 0500000000 *"
                     name="billingAddress.mobile"
                     value={formData.billingAddress.mobile}
                     onChange={handleChange}
                     required
                   />
-                  <label htmlFor="checkout_phone">Mobile Number (Eg. 500000000)*</label>
+                  <label htmlFor="checkout_phone">Mobile Number (Eg. 0500000000)*</label>
                 </div>
                   {OTPError ? <div style={{ color: 'red' }}>{OTPError}</div> : <div style={{ color: 'green' }}>{OTPSuccess}</div>}
                   {isOTPButton ? <button
@@ -921,13 +921,13 @@ export default function Checkout() {
                       type="number"
                       className="form-control"
                       id="checkout_phone"
-                      placeholder="Eg. 500000000 *"
+                      placeholder="Eg. 0500000000 *"
                       name="shippingAddress.mobile"
                       value={formData.shippingAddress.mobile}
                       onChange={handleChange}
                       required
                     />
-                    <label htmlFor="checkout_phone">Phone (Eg. 500000000)*</label>
+                    <label htmlFor="checkout_phone">Phone (Eg. 0500000000)*</label>
                   </div>
                 </div>
               </div>

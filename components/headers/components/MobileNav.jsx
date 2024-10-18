@@ -169,7 +169,7 @@ export default function MobileNav() {
   let categoriesSubCategoriesBody = categoriesSubCategories.map((item, i) => {
     return (
       <li key={i} className="navigation__item">
-        <Link
+        <a
           href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
           className={`navigation__link js-nav-right d-flex align-items-center
             ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
@@ -185,9 +185,9 @@ export default function MobileNav() {
           >
             <use href="#icon_next_sm" />
           </svg> */}
-        </Link>
+        </a>
         <div className="sub-menu position-absolute top-0 start-100 w-100 d-none">
-          <Link
+          <a
             href="#"
             className="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"
           >
@@ -201,18 +201,18 @@ export default function MobileNav() {
               <use href="#icon_prev_sm" />
             </svg>
             { item.name }
-          </Link>
+          </a>
           <ul className="list-unstyled">
             {item.productSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
-                <Link
+                <a
                   href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
                   className={`menu-link menu-link_us-s ${
                     isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                   }`}
                 >
                   {elm.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

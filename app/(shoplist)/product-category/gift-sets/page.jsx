@@ -35,7 +35,6 @@ async function getCategorySubCategory(categoryName) {
     body: JSON.stringify({
       category: categoryName.split("-").join(" ").toUpperCase(),
     }),
-    cache: 'no-store'
   });
   if (!response.ok) {
     throw new Error('Network response was not ok');

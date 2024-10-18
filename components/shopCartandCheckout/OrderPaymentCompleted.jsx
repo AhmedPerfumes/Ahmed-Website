@@ -1,29 +1,22 @@
 "use client";
 
 import { useContextElement } from "@/context/Context";
-import { useEffect, useState } from "react";
 import he from 'he';
-import Link from "next/link";
+import { useState, useEffect } from 'react';
 
-export default function OrderCompleted() {
-  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
-  // console.log('...', freeShippingFlag);
+export default function OrderPaymentCompleted({ orderDetails }) {
+  const { setCartProducts } = useContextElement();
   const [showDate, setShowDate] = useState(false);
-  const [orderData, setorderData] = useState(null);
+
   useEffect(() => {
     setShowDate(true);
     localStorage.setItem('cartList', []);
     setCartProducts([]);
-    if(localStorage.getItem('orderData').length > 0) {
-      setOrderDetails(JSON.parse(atob(localStorage.getItem('orderData'))));
-      // localStorage.setItem('orderData', '');
-    }
-    // console.log('...', localStorage.getItem('orderData').length);
   }, []);
 
   return (
     <>
-    {Object.keys(orderDetails).length ? <><div className="order-complete">
+    {orderDetails.order_id ? <><div className="order-complete">
       <div className="order-complete__message">
         <svg
           width="80"
@@ -74,7 +67,7 @@ export default function OrderCompleted() {
               {orderDetails?.products?.map((elm, i) => (
                 <tr key={i}>
                   <td>
-                    {he.decode(elm.name)} x {elm.qty}
+                    {he.decode(elm.product_name)} x {elm.qty}
                   </td>
                   <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
                 </tr>

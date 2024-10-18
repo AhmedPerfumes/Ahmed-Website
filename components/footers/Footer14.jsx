@@ -109,7 +109,7 @@ export default function Footer14() {
         <div className="row row-cols-lg-5 row-cols-2">
           <div className="footer-column footer-store-info col-12 mb-4 mb-lg-0">
             <div className="logo">
-              <Link href="/">
+              <a href="/">
                 <Image
                   src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
                   width={200}
@@ -117,7 +117,7 @@ export default function Footer14() {
                   alt="Ahmed"
                   className="logo__image d-block"
                 />
-              </Link>
+              </a>
             </div>
             {/* <!-- /.logo --> */}
             <p className="footer-address">
@@ -139,7 +139,7 @@ export default function Footer14() {
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <Link href={link.href} className="footer__social-link d-block">
+                  <a href={link.href} className="footer__social-link d-block">
                     <svg
                       className={link.className}
                       width={link.width}
@@ -153,7 +153,7 @@ export default function Footer14() {
                         link.icon
                       )}
                     </svg>
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -165,9 +165,9 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {footerLinks1.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <Link href={elm.href} className="menu-link menu-link_us-s">
+                  <a href={elm.href} className="menu-link menu-link_us-s">
                     {elm.text}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -179,9 +179,9 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {categoriesSubCategories.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <Link href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'} className="menu-link menu-link_us-s">
+                  <a href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'} className="menu-link menu-link_us-s">
                     {elm.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -193,9 +193,9 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {footerLinks3.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <Link href={elm.href} className="menu-link menu-link_us-s">
+                  <a href={elm.href} className="menu-link menu-link_us-s">
                     {elm.text}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -238,7 +238,7 @@ export default function Footer14() {
             reserved
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
-            <Link className="text-white" href={"/order-tracking"}>Track Order</Link>
+            <a className="text-white" href={"/order-tracking"}>Track Order</a>
             {/* <div className="d-flex align-items-center">
                <label
                 htmlFor="footerSettingsLanguage"

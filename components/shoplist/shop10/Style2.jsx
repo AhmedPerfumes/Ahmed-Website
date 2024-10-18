@@ -82,7 +82,7 @@ export default function Style2({ category, subcategory, products }) {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <Link href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -91,7 +91,7 @@ export default function Style2({ category, subcategory, products }) {
                             alt="Cropped Faux leather Jacket"
                             className="pc__img"
                           />
-                        </Link>
+                        </a>
                         {elm?.label_name && (
                           <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                             { elm?.label_name }
@@ -132,7 +132,7 @@ export default function Style2({ category, subcategory, products }) {
                   </Swiper>
                 ) : (
                   <>
-                    <Link href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                    <a href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
                       <Image
                         loading="lazy"
                         src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
@@ -142,18 +142,18 @@ export default function Style2({ category, subcategory, products }) {
                         className=""
                         alt="image"
                       />
-                    </Link>
+                    </a>
                     <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
                       <h2 className="fs-40 fw-normal text-uppercase mb-0 text-white cat-title">
                         { elm?.product_name && he.decode(elm?.product_name) }
                       </h2>
                       <p className="mb-4 text-white">Exclusive Launch</p>
-                      <Link
+                      <a
                         className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
-                        href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}
+                        href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}
                       >
                         <span>Explore</span>
-                      </Link>
+                      </a>
                     </div>
                   </>
                 )
@@ -210,7 +210,7 @@ export default function Style2({ category, subcategory, products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <Link href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                  <a href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                 </h6>
                 <div className="product-card__price d-flex">
                   <span className="money price">{elm?.price}د.إ</span>

@@ -227,7 +227,7 @@ export default function Shop1({ search }) {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -236,7 +236,7 @@ export default function Shop1({ search }) {
                             alt="Cropped Faux leather Jacket"
                             className="pc__img"
                           />
-                        </Link>
+                        </a>
                         {elm?.label_name && (
                           <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                             { elm?.label_name }
@@ -308,7 +308,7 @@ export default function Shop1({ search }) {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <Link href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                    <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (

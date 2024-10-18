@@ -177,11 +177,11 @@ export default function OrderTrack() {
               </tbody>
             </table>
           </div>
-          <Link href='/'
+          <a href='/'
             className="btn btn-primary w-100 text-uppercase"
           >
             Continue Shopping
-          </Link>
+          </a>
         </div>      
       </div>}
     </section>
