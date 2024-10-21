@@ -42,6 +42,8 @@ export default function Shop1({ search }) {
   const [currentPage, setCurrentPage] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const offset = 1500;
+  const [sortOption, setSortOption] = useState('popularity');
+  
   const fetchData = async (page) => {
     setLoading(true);
     // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
@@ -62,7 +64,8 @@ export default function Shop1({ search }) {
       setHasMore(false);
     }
     // console.log(...data);
-    setProducts((prevData) => [...prevData, ...data]); // Append new data
+    // setProducts((prevData) => [...prevData, ...data]); // Append new data
+    setProducts((prevData) => sortItems([...prevData, ...data], sortOption));
     setTotalPages(total);
     setCurrentPage(to);
     setLoading(false);
@@ -94,6 +97,31 @@ export default function Shop1({ search }) {
 
     return cleanedStr;
   }
+
+   // Sorting function
+   const sortItems = (items, option) => {
+    console.log(items, option);
+    switch (option) {
+      case 'popularity':
+        return [...items].sort((a, b) => b.sales - a.sales);
+      case 'date':
+        return [...items].sort((a, b) => b.product_id - a.product_id);
+      case 'price':
+        return [...items].sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return [...items].sort((a, b) => b.price - a.price);
+      default:
+        return items;
+    }
+  };
+
+  const handleSortChange = (event) => {
+    setLoading(true);
+    setSortOption(event.target.value);
+    setProducts(sortItems(products, event.target.value));
+    setLoading(false);
+  };
+
 
   return (
     <>
@@ -154,6 +182,8 @@ export default function Shop1({ search }) {
               className="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0"
               aria-label="Sort Items"
               name="total-number"
+              value={sortOption}
+              onChange={handleSortChange}
             >
               {sortingOptions.map((option, index) => (
                 <option key={index} value={option.value}>

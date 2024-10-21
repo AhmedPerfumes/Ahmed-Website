@@ -42,7 +42,7 @@ const ShopPage8 = async ({ params }) => {
 
   try {
     const data = await getCategorySubCategory(category, subcategory);
-    // console.log(data);
+    console.log(data);
     return (
       <>
       {/* <Loader/> */}

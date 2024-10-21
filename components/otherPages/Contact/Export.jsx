@@ -5,51 +5,48 @@ import TopCollections from "@/components/homes/home-5/TopCollections";
 import Image from "next/image";
 import React from 'react'
 
-export default function Export({ products }) {  
+export default function Export() {  
   return (
   <>
-
-<div className="container-fluid p-0 pt-2">
-        <Image
-          loading="lazy"
-          className="w-100 h-auto d-none d-lg-block"
-          src="/assets/images/about/map.jpg"
-          alt="image"
-          width={1500}
-          height={550}
-        />
-      </div>
-      <div className="">
-        
+    <div className="container-fluid p-0 pt-2">
       <Image
-          loading="lazy"
-          className="w-100 h-auto d-lg-none pt-5"
-          src="/assets/images/about/mobilemap.jpg"
-          alt="image"
-          width={500}
-          height={500}
-        />
-
+        loading="lazy"
+        className="w-100 h-auto d-none d-lg-block"
+        src="/assets/images/about/map.jpg"
+        alt="image"
+        width={1500}
+        height={550}
+      />
+    </div>
+    <div className="">
+      <Image
+        loading="lazy"
+        className="w-100 h-auto d-lg-none pt-5"
+        src="/assets/images/about/mobilemap.jpg"
+        alt="image"
+        width={500}
+        height={500}
+      />
+    </div>
+    <div className="container pt-5 mt-2">
+      <div className="section2 text-center">
+        <h3 className="text-uppercase fs-2 mb-5">Ahmed Al Maghribi Exports</h3>
       </div>
-      <div className="container pt-5 mt-2">
-  <div className="section2 text-center">
-    <h3 className="text-uppercase fs-2 mb-5">Ahmed Al Maghribi Exports</h3>
-  </div>
-  <div className="row align-items-center mt-4">
-    <div className="col-md-6">
-      <video className="w-100"autoPlay loop muted>
-        <source src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <div className="row align-items-center mt-4">
+        <div className="col-md-6">
+          <video className="w-100"autoPlay loop muted>
+            <source src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+          </video>
+        </div>
+        <div className="col-md-6 text-center pt-5">
+          <h4 className="text-uppercase fs-2">We distribute our product globally</h4>
+          <p className="mt-3 fs-6">Ahmed Al Maghribi Perfume’s International Exports Division is well established to Fulfill International Demands. In just over a decade since its inception, the brands offered through the International Exports Division which is available in more than 45 countries, primarily due to their world-class quality that appeals to Distributors, and more importantly to the end consumers.</p>
+          <p className="mt-3 fs-6">The International Exports Division has worked tirelessly and evolved both strategically and in its product offerings to address the global audience. Presently its products are available and highly successful in major federal retail chain stores and individual perfumery stores across the globe.</p>
+        </div>
+      </div>
     </div>
-    <div className="col-md-6 text-center pt-5">
-      <h4 className="text-uppercase fs-2">We distribute our product globally</h4>
-      <p className="mt-3 fs-6">Ahmed Al Maghribi Perfume’s International Exports Division is well established to Fulfill International Demands. In just over a decade since its inception, the brands offered through the International Exports Division which is available in more than 45 countries, primarily due to their world-class quality that appeals to Distributors, and more importantly to the end consumers.</p>
-      <p className="mt-3 fs-6">The International Exports Division has worked tirelessly and evolved both strategically and in its product offerings to address the global audience. Presently its products are available and highly successful in major federal retail chain stores and individual perfumery stores across the globe.</p>
-    </div>
-  </div>
-</div>
-<TopCollections products={products}/>
+    <TopCollections />
 
 {/* <div className="container d-flex justify-content-center">
   <video
@@ -120,9 +117,6 @@ export default function Export({ products }) {
         </form>
       </div>
 </div>
-
-
-
   </>
     
   )

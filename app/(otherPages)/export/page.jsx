@@ -17,74 +17,22 @@ export const metadata = {
   },
 };
 
-async function getExportProducts(category_id) {
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      category_id,
-    })
-  });
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/exportProducts`, { 
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      category_id,
-    }),
-    cache: 'no-store'
-  });
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-}
-
-const ExportPage = async() => {
-  const category = 19;
-  console.log(category);
-  try {
-    const data = await getExportProducts(category);
-    console.log(data);
-      return data && (
-      <>
+const ExportPage = () => {
+  return (
+    <>
       <Loader/>
-        <Header14 />
-        
-        
-        <Export products={data} />
-        
-        <section className="d-none d-lg-block" style={{ height: "100%" }}>
-          <Footer14 />
-          
-        </section>
-        <section className="d-sm-block d-md-none bg-dark pt-5  ">
+      <Header14 />
+      <Export />
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
+        <Footer14 />
+      </section>
+      <section className="d-sm-block d-md-none bg-dark pt-5  ">
         <div className="MobileFooter">
-        
-
-        <MobileFooter2/>
+          <MobileFooter2/>
         </div>
       </section>
-      </>
-    );
-  } catch (error) {
-    console.error(error);
-    return <><Header14 />
-            <main className="page-wrapper">
-              <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Products Found</h2>
-            </main>
-            <section className="d-none d-lg-block" style={{ height: "100%" }}>
-              <Footer14 />
-            </section>
-            <section className="d-sm-block d-md-none bg-dark pt-5  ">
-              <div className="MobileFooter">
-                <MobileFooter2/>
-              </div>
-            </section></>;
-  }
+    </>
+  );
 }
 
 export default ExportPage;

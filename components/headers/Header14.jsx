@@ -266,7 +266,7 @@ const handleLogout = (e) => {
                     value={searchKeyWord}
                     onChange={handleChange}
                   />
-                  <button
+                  {/* <button
                     className="btn header-search__btn"
                     type="button"
                     onClick={() => setIsPopupOpen((pre) => !pre)}
@@ -285,7 +285,7 @@ const handleLogout = (e) => {
                         <use href="#icon_search" />
                       )}
                     </svg>
-                  </button>
+                  </button> */}
                 </div>
 
                 <div className="header-tools__item hover-container">

@@ -8,11 +8,14 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from 'he';
+import Pagination1 from "../../common/Pagination1";
 
-export default function TopCollections({ products }) {
+export default function TopCollections() {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -68,6 +71,29 @@ export default function TopCollections({ products }) {
     }
   }, [currentCategory]);
 
+  useEffect(async() => {
+    async function getExportProducts() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/exportProducts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category_id: 19,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }
+
+    const data = await getExportProducts();
+    console.log(data);
+    setProducts(data);
+    setLoading(false);
+  },[]);
+
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
     let cleanedStr = str?.replace(/&amp;/g, '');
@@ -80,7 +106,8 @@ export default function TopCollections({ products }) {
 
     return cleanedStr;
   }
-  return (
+
+  return loading ? <Pagination1 /> : (
     <div className="">
       <div className="mb-4 mb-xl-5 pt-1 pb-5"></div>
 
