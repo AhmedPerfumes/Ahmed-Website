@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
               <CartDrawer />
               <SiteMap />
               <CustomerLogin />
-              <ShopFilter />
+              {/* <ShopFilter /> */}
               <ProductDescription />
               <ProductAdditionalInformation />
               <ProductReviews />

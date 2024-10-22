@@ -17,6 +17,7 @@ import {
   sortingOptions,
 } from "@/data/products/productCategories";
 import he from 'he';
+import Slider from "rc-slider";
 
 export default function Shop1({ search }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
@@ -43,6 +44,8 @@ export default function Shop1({ search }) {
   const [hasMore, setHasMore] = useState(true);
   const offset = 1500;
   const [sortOption, setSortOption] = useState('popularity');
+  const [price, setPrice] = useState([500, 0]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   
   const fetchData = async (page) => {
     setLoading(true);
@@ -122,6 +125,14 @@ export default function Shop1({ search }) {
     setLoading(false);
   };
 
+  const handleFilterChange = (value) => {
+    // console.log(value);
+    setPrice(value);
+    const filtProducts = products.filter(product => {
+      return product.price >= value[0] && product.price <= value[1];
+    });
+    // setProducts(filteredProducts);
+  };
 
   return (
     <>
@@ -210,28 +221,45 @@ export default function Shop1({ search }) {
             </div> */}
             {/* <!-- /.col-size --> */}
 
-            <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
+            {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
-            <div className="shop-filter d-flex align-items-center order-0 order-md-3">
-              <button
-                className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
-                onClick={openModalShopFilter}
-              >
-                <svg
-                  className="d-inline-block align-middle me-2"
-                  width="14"
-                  height="10"
-                  viewBox="0 0 14 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_filter" />
-                </svg>
-                <span className="text-uppercase fw-medium d-inline-block align-middle">
-                  Filter
-                </span>
-              </button>
+            <div
+              id="accordion-filter-price"
+              className="accordion-collapse collapse show border-0"
+              aria-labelledby="accordion-heading-price"
+              data-bs-parent="#price-filters"
+            >
+              {/* <div className="shop-sidebar side-sticky bg-body"> */}
+                <div className="pt-4 pt-lg-0"></div>
+                  <Slider
+                  range
+                  formatLabel={() => ``}
+                  max={500}
+                  min={0}
+                  defaultValue={price}
+                  onChange={(value) => handleFilterChange(value)}
+                  id="slider"
+                />
+                <div className="price-range__info d-flex align-items-center mt-2">
+                  <div className="me-auto">
+                    <span className="text-secondary">Max Price: </span>
+                    <span className="price-range__max">{price[1]}د.إ</span>
+                  </div>
+                  <div>
+                    <span className="text-secondary">Min Price: </span>
+                    <span className="price-range__min">{price[0]}د.إ</span>
+                  </div>
+                </div>
+              {/* </div> */}
             </div>
+            {/* <div
+            id="accordion-filter-price"
+            className="accordion-collapse collapse show border-0"
+            aria-labelledby="accordion-heading-price"
+            data-bs-parent="#price-filters"
+          >
+            
+          </div> */}
             {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
           </div>
           {/* <!-- /.shop-acs --> */}
@@ -243,6 +271,176 @@ export default function Shop1({ search }) {
           id="products-grid"
         >
           {products?.map((elm, i) => (
+            <div key={i} className="product-card-wrapper">
+              <div className="product-card mb-3 mb-md-4 mb-xxl-5">
+                <div className="pc__img-wrapper">
+                  <Swiper
+                    className="swiper swiper-container swiper-initialized swiper-horizontal swiper-backface-hidden background-img js-swiper-slider"
+                    slidesPerView={1}
+                    modules={[Navigation]}
+                    navigation={{
+                      prevEl: ".prev" + i,
+                      nextEl: ".next" + i,
+                    }}
+                  >
+                    {elm?.images && JSON.parse(elm.images).map((image, ind) => (
+                      <SwiperSlide key={ind} className="swiper-slide">
+                        <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                          <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
+                            width="330"
+                            height="400"
+                            alt="Cropped Faux leather Jacket"
+                            className="pc__img"
+                          />
+                        </a>
+                        {elm?.label_name && (
+                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            { elm?.label_name }
+                          </div>
+                        )}
+                        {elm.product_qty <= 0 && (
+                          <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            Out Of Stock
+                          </div>
+                        )}
+                      </SwiperSlide>
+                    ))}
+
+                    <span
+                      className={`cursor-pointer pc__img-prev ${"prev" + i} `}
+                    >
+                      <svg
+                        width="7"
+                        height="11"
+                        viewBox="0 0 7 11"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <use href="#icon_prev_sm" />
+                      </svg>
+                    </span>
+                    <span
+                      className={`cursor-pointer pc__img-next ${"next" + i} `}
+                    >
+                      <svg
+                        width="7"
+                        height="11"
+                        viewBox="0 0 7 11"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <use href="#icon_next_sm" />
+                      </svg>
+                    </span>
+                  </Swiper>
+                  {
+                    isAddedToCartProducts(elm?.product_id) ? 
+                    elm.product_qty > 0 && <button
+                        className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                        title="Already Added"
+                      >
+                      Already Added
+                    </button> : elm.product_qty > 0 && <button
+                      className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                      onClick={() => addProductToCart(elm)}
+                      title="Add to Cart"
+                    >
+                      Add To Cart
+                    </button>
+                  }
+                  {/* {elm.product_qty > 0 && <button
+                    className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                    onClick={() => addProductToCart(elm)}
+                    title={
+                      isAddedToCartProducts(elm.product_id)
+                        ? "Already Added"
+                        : "Add to Cart"
+                    }
+                  >
+                    {isAddedToCartProducts(elm.product_id)
+                      ? "Already Added"
+                      : "Add To Cart"}
+                  </button>} */}
+                </div>
+
+                <div className="pc__info position-relative">
+                  <p className="pc__category">{elm.category_name}</p>
+                  <h6 className="pc__title">
+                    <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                  </h6>
+                  <div className="product-card__price d-flex">
+                    {/* {elm.price ? (
+                      <>
+                        {" "}
+                        <span className="money price price-old">
+                          ${elm.price}
+                        </span>
+                        <span className="money price price-sale">
+                          ${elm.price}
+                        </span>
+                      </>
+                    ) : ( */}
+                      <span className="money price">{elm.price}د.إ</span>
+                    {/* )} */}
+                  </div>
+                  {/* {elm.colors && (
+                    <div className="d-flex align-items-center mt-1">
+                      {" "}
+                      <ColorSelection />{" "}
+                    </div>
+                  )}
+                  {elm.reviews && (
+                    <div className="product-card__review d-flex align-items-center">
+                      <div className="reviews-group d-flex">
+                        <Star stars={elm.rating} />
+                      </div>
+                      <span className="reviews-note text-lowercase text-secondary ms-1">
+                        {elm.reviews}
+                      </span>
+                    </div>
+                  )} */}
+
+                  {/* <button
+                    className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
+                      isAddedtoWishlist(elm.product_id) ? "active" : ""
+                    }`}
+                    onClick={() => toggleWishlist(elm.product_id)}
+                    title="Add To Wishlist"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <use href="#icon_heart" />
+                    </svg>
+                  </button> */}
+                </div>
+                {elm.discont && (
+                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
+                    <div className="pc-labels__right ms-auto">
+                      <span className="pc-label pc-label_sale d-block text-white">
+                        -{elm.discont}%
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {elm.isNew && (
+                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
+                    <div className="pc-labels__left">
+                      <span className="pc-label pc-label_new d-block bg-white">
+                        NEW
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {filteredProducts?.map((elm, i) => (
             <div key={i} className="product-card-wrapper">
               <div className="product-card mb-3 mb-md-4 mb-xxl-5">
                 <div className="pc__img-wrapper">
