@@ -10,7 +10,7 @@ import Style8 from "./Style8";
 import Style9 from "./Style9";
 import Style10 from "./Style10";
 import { products51 } from "@/data/products/fashion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Navigation } from "swiper/modules";
 import { SwiperSlide, Swiper } from "swiper/react";
@@ -36,6 +36,62 @@ export default function Shop10({ subCategories, products }) {
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
+
+  const [sortOption, setSortOption] = useState('popularity');
+  const [productss, setProductss] = useState([]);
+
+  useEffect(() => {
+    if(subcategory) {
+      setProductss(sortSubCategory(products, sortOption));
+    } else {
+      setProductss(sortCategory(subCategories, sortOption));
+    }
+  }, []);
+
+  const sortCategory = (items, option) => {
+    // console.log('Cat', items, option);
+    switch (option) {
+      case 'popularity':
+        return [...items].sort((a, b) => b.products.sales - a.products.sales);
+      case 'date':
+        return [...items].sort((a, b) => b.products.product_id - a.products.product_id);
+      case 'price':
+        return [...items].sort((a, b) => a.products.price - b.products.price);
+      case 'price-desc':
+        return [...items].sort((a, b) => b.products.price - a.products.price);
+      default:
+        return items;
+    }
+  };
+  
+   const sortSubCategory = (items, option) => {
+    // console.log('SubCat', items, option);
+    switch (option) {
+      case 'popularity':
+        return [...items].sort((a, b) => b.sales - a.sales);
+      case 'date':
+        return [...items].sort((a, b) => b.product_id - a.product_id);
+      case 'price':
+        return [...items].sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return [...items].sort((a, b) => b.price - a.price);
+      default:
+        return items;
+    }
+  };
+
+  const handleSortChange = (event) => {
+    // setLoading(true);
+    // console.log(productss);
+    setSortOption(event.target.value);
+    if(subcategory) {
+      setProductss(sortSubCategory(productss, event.target.value));
+    } else {
+      setProductss(sortCategory(productss, event.target.value));
+    }
+    // setLoading(false);
+  };
+
   return (
     <section className="shop-main container">
       <div className="d-flex justify-content-between mb-4 pb-md-2 border-bottom border-dark">
@@ -49,6 +105,8 @@ export default function Shop10({ subCategories, products }) {
             className="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0"
             aria-label="Sort Items"
             name="total-number"
+            value={sortOption}
+            onChange={handleSortChange}
           >
             {sortingOptions.map((option, index) => (
               <option key={index} value={option.value}>
@@ -127,7 +185,7 @@ export default function Shop10({ subCategories, products }) {
 
           { products &&
                 <><div className="mb-4 mb-xl-5"></div>
-                <Style2 category={ category } subcategory={ subcategory ? subcategory : null } products={ products }/>
+                <Style2 category={ category } subcategory={ subcategory ? subcategory : null } products={ productss }/>
                 <div className="border-bottom"></div></>
           }
             {/* <div className="mb-4 mb-xl-5"></div>

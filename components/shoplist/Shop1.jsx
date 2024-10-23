@@ -46,47 +46,61 @@ export default function Shop1({ search }) {
   const [sortOption, setSortOption] = useState('popularity');
   const [price, setPrice] = useState([500, 0]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  
-  const fetchData = async (page) => {
-    setLoading(true);
-    // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        page: page,
-        limit: limit,
-        search: search ? search.split('-').join(' ') : '',
-      }),
-    });
-    const newData = await response.json();
-    const { data, total, to } = newData;
-    if (data.length === 0) {
-      setHasMore(false);
-    }
-    // console.log(...data);
-    // setProducts((prevData) => [...prevData, ...data]); // Append new data
-    setProducts((prevData) => sortItems([...prevData, ...data], sortOption));
-    setTotalPages(total);
-    setCurrentPage(to);
-    setLoading(false);
-  };
 
   useEffect(() => {
+    const fetchData = async (page) => {
+      setLoading(true);
+      // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page: page,
+          limit: limit,
+          search: search ? search.split('-').join(' ') : '',
+        }),
+      });
+      const newData = await response.json();
+      const { data, total, to } = newData;
+      if (data.length === 0) {
+        setHasMore(false);
+      }
+      console.log('Data', data);
+      // setProducts((prevData) => [...prevData, ...data]); // Append new data
+      setProducts((prevData) => {
+        // console.log('Products', ...prevData);
+        return sortItems([...prevData, ...data], sortOption)
+      });
+
+      const filtered = data.filter(product => {
+        console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
+        return product.price <= price[0] && product.price >= price[1]
+      });
+      console.log('filteredData', filtered);
+
+      setFilteredProducts((prevDataa) => {
+        // console.log('FilteredProducts', ...prevData);
+        return sortItems([...prevDataa, ...filtered], sortOption)
+      });
+      setTotalPages(total);
+      setCurrentPage(to);
+      setLoading(false);
+    };
+
     fetchData(page);
   }, [page, limit]); // Fetch data on page change
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop + offset < document.documentElement.offsetHeight || loading || !hasMore) return;
-      setPage((prevPage) => prevPage + 1); // Load next page
-    };
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + offset < document.documentElement.offsetHeight || loading || !hasMore) return;
+    setPage((prevPage) => prevPage + 1); // Load next page
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading]); // Clean up on component unmount
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, [loading]); // Clean up on component unmount
 
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
@@ -119,19 +133,21 @@ export default function Shop1({ search }) {
   };
 
   const handleSortChange = (event) => {
-    setLoading(true);
+    // setLoading(true);
     setSortOption(event.target.value);
     setProducts(sortItems(products, event.target.value));
-    setLoading(false);
+    setFilteredProducts(sortItems(filteredProducts, event.target.value));
+    // setLoading(false);
   };
 
   const handleFilterChange = (value) => {
     // console.log(value);
     setPrice(value);
-    const filtProducts = products.filter(product => {
-      return product.price >= value[0] && product.price <= value[1];
-    });
-    // setProducts(filteredProducts);
+
+    const filtered = products.filter(product => 
+      product.price >= value[0] && product.price <= value[1]
+    );
+    setFilteredProducts(filtered);
   };
 
   return (
@@ -270,176 +286,6 @@ export default function Shop1({ search }) {
           className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}
           id="products-grid"
         >
-          {products?.map((elm, i) => (
-            <div key={i} className="product-card-wrapper">
-              <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-                <div className="pc__img-wrapper">
-                  <Swiper
-                    className="swiper swiper-container swiper-initialized swiper-horizontal swiper-backface-hidden background-img js-swiper-slider"
-                    slidesPerView={1}
-                    modules={[Navigation]}
-                    navigation={{
-                      prevEl: ".prev" + i,
-                      nextEl: ".next" + i,
-                    }}
-                  >
-                    {elm?.images && JSON.parse(elm.images).map((image, ind) => (
-                      <SwiperSlide key={ind} className="swiper-slide">
-                        <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
-                          <Image
-                            loading="lazy"
-                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
-                            width="330"
-                            height="400"
-                            alt="Cropped Faux leather Jacket"
-                            className="pc__img"
-                          />
-                        </a>
-                        {elm?.label_name && (
-                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                            { elm?.label_name }
-                          </div>
-                        )}
-                        {elm.product_qty <= 0 && (
-                          <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                            Out Of Stock
-                          </div>
-                        )}
-                      </SwiperSlide>
-                    ))}
-
-                    <span
-                      className={`cursor-pointer pc__img-prev ${"prev" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_prev_sm" />
-                      </svg>
-                    </span>
-                    <span
-                      className={`cursor-pointer pc__img-next ${"next" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_next_sm" />
-                      </svg>
-                    </span>
-                  </Swiper>
-                  {
-                    isAddedToCartProducts(elm?.product_id) ? 
-                    elm.product_qty > 0 && <button
-                        className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                        title="Already Added"
-                      >
-                      Already Added
-                    </button> : elm.product_qty > 0 && <button
-                      className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                      onClick={() => addProductToCart(elm)}
-                      title="Add to Cart"
-                    >
-                      Add To Cart
-                    </button>
-                  }
-                  {/* {elm.product_qty > 0 && <button
-                    className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm)}
-                    title={
-                      isAddedToCartProducts(elm.product_id)
-                        ? "Already Added"
-                        : "Add to Cart"
-                    }
-                  >
-                    {isAddedToCartProducts(elm.product_id)
-                      ? "Already Added"
-                      : "Add To Cart"}
-                  </button>} */}
-                </div>
-
-                <div className="pc__info position-relative">
-                  <p className="pc__category">{elm.category_name}</p>
-                  <h6 className="pc__title">
-                    <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
-                  </h6>
-                  <div className="product-card__price d-flex">
-                    {/* {elm.price ? (
-                      <>
-                        {" "}
-                        <span className="money price price-old">
-                          ${elm.price}
-                        </span>
-                        <span className="money price price-sale">
-                          ${elm.price}
-                        </span>
-                      </>
-                    ) : ( */}
-                      <span className="money price">{elm.price}د.إ</span>
-                    {/* )} */}
-                  </div>
-                  {/* {elm.colors && (
-                    <div className="d-flex align-items-center mt-1">
-                      {" "}
-                      <ColorSelection />{" "}
-                    </div>
-                  )}
-                  {elm.reviews && (
-                    <div className="product-card__review d-flex align-items-center">
-                      <div className="reviews-group d-flex">
-                        <Star stars={elm.rating} />
-                      </div>
-                      <span className="reviews-note text-lowercase text-secondary ms-1">
-                        {elm.reviews}
-                      </span>
-                    </div>
-                  )} */}
-
-                  {/* <button
-                    className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
-                      isAddedtoWishlist(elm.product_id) ? "active" : ""
-                    }`}
-                    onClick={() => toggleWishlist(elm.product_id)}
-                    title="Add To Wishlist"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <use href="#icon_heart" />
-                    </svg>
-                  </button> */}
-                </div>
-                {elm.discont && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__right ms-auto">
-                      <span className="pc-label pc-label_sale d-block text-white">
-                        -{elm.discont}%
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {elm.isNew && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__left">
-                      <span className="pc-label pc-label_new d-block bg-white">
-                        NEW
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-
           {filteredProducts?.map((elm, i) => (
             <div key={i} className="product-card-wrapper">
               <div className="product-card mb-3 mb-md-4 mb-xxl-5">
@@ -612,7 +458,7 @@ export default function Shop1({ search }) {
         </div>
         {/* <!-- /.products-grid row --> */}
         {/* {loading && <p>Loading...</p>} */}
-        {!loading && <p className="mb-5 text-center fw-medium">SHOWING {currentPage} {currentPage? 'of': ''} {totalPages} items</p>}
+        {!loading && <p className="mb-5 text-center fw-medium">SHOWING {currentPage ? currentPage : filteredProducts.length} {currentPage ? 'of': 'of'} {totalPages} items</p>}
         {loading && <Pagination1 />}
 
         {/* <div className="text-center">
