@@ -14,6 +14,8 @@ export default function Style2({ category, subcategory, products }) {
   const indexToSwap = 1;
   let objectFound = false;
 
+  console.log(products);
+  
   for (let index = 0; index < products.length; index++) {
     if (products[index] && products[index].collection_name === 'New Launch') {
         // Swap only if the condition is met and not the same index
@@ -26,10 +28,8 @@ export default function Style2({ category, subcategory, products }) {
         }
         break; // Stop the loop after the swap
     }
-}
+  }
   
-// console.log(products);
-
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
     let cleanedStr = str?.replace(/&amp;/g, '');
