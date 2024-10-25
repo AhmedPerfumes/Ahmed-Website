@@ -27,7 +27,7 @@ const Animation = () => {
     let snap = (value) => value; // a snapping function that we'll set later in a "refresh" event listener
 
     // ScrollTrigger 1: sections scroll and snap vertically
-    const sections = gsap.utils.toArray(".testsect");
+    // const sections = gsap.utils.toArray(".testsect");
 
     // ScrollTrigger.create({
     //   start: 1,
@@ -140,10 +140,10 @@ const Animation = () => {
         { y: 0, opacity: 1, duration: 2.85 }
       );
     
-      timeline.to(section.querySelector('.panel2'), {
-        yPercent: -5,
-        duration: 1
-      });
+      // timeline.to(section.querySelector('.panel2'), {
+      //   yPercent: -5,
+      //   duration: 1
+      // });
     });
     
 
@@ -212,8 +212,8 @@ const Animation = () => {
       </section>
 
       {/* Top 10 Products */}
-      <section className="zoom_img section2">
-        <div className="panel2 d-flex justify-content-center align-items-center">
+      <section className="testsect zoom_img section2 d-flex">
+        <div className="panel2 pt-4 d-flex justify-content-center align-items-center">
           <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
@@ -735,7 +735,7 @@ const Animation = () => {
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
-      <section className="zoom_img">
+      <section className="testsect d-flex zoom_img">
         <div className="panel2 d-flex flex-column justify-content-around
         gap-5">
           <Lookbook />

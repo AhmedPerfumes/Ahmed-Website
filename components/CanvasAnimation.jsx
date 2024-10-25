@@ -71,6 +71,7 @@ const CanvasAnimation = () => {
     
       <canvas ref={canvasRef} className="canvas"></canvas>
       
+      
     </div>
   );
 };
