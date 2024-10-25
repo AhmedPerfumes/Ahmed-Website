@@ -53,7 +53,7 @@ export default function Shop10({ subCategories, products }) {
     console.log('Cat', items, option);
     switch (option) {
       case 'popularity':
-        // console.log('sortedPopularity', [...items]);
+        console.log('sortedPopularity');
         // console.log([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.sales - a.sales)})));
           // Assuming 'a' and 'b' are categories containing a 'products' array
           // const totalSalesA = a.products.reduce((sum, product) => sum + product.sales, 0);
@@ -62,34 +62,37 @@ export default function Shop10({ subCategories, products }) {
           // return totalSalesB - totalSalesA; // Sort in descending order
       case 'date':
         console.log('sortedDate');
-        return [...items].sort((a, b) => {
-          // Assuming 'a' and 'b' are categories containing a 'products' array
-          const totalDateA = a.products.reduce((sum, product) => sum + product.product_id, 0);
-          const totalDateB = b.products.reduce((sum, product) => sum + product.product_id, 0);
+        // return [...items].sort((a, b) => {
+        //   // Assuming 'a' and 'b' are categories containing a 'products' array
+        //   const totalDateA = a.products.reduce((sum, product) => sum + product.product_id, 0);
+        //   const totalDateB = b.products.reduce((sum, product) => sum + product.product_id, 0);
           
-          return totalDateB - totalDateA; // Sort in descending order
-        });
+        //   return totalDateB - totalDateA; // Sort in descending order
+        // });
         // return [...items].sort((a, b) => b.product_id - a.product_id);
+        return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.product_id - a.product_id)})));
       case 'price':
         console.log('sortedPrice');
-        return [...items].sort((a, b) => {
-          // Assuming 'a' and 'b' are categories containing a 'products' array
-          const totalPriceA = a.products.reduce((sum, product) => sum + product.price, 0);
-          const totalPriceB = b.products.reduce((sum, product) => sum + product.price, 0);
+        // return [...items].sort((a, b) => {
+        //   // Assuming 'a' and 'b' are categories containing a 'products' array
+        //   const totalPriceA = a.products.reduce((sum, product) => sum + product.price, 0);
+        //   const totalPriceB = b.products.reduce((sum, product) => sum + product.price, 0);
           
-          return totalPriceA - totalPriceB; // Sort in ascending order
-        });
+        //   return totalPriceA - totalPriceB; // Sort in ascending order
+        // });
         // return [...items].sort((a, b) => a.price - b.price);
+        return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => a.price - b.price)})));
       case 'price-desc':
         console.log('sortedPriceDesc');
-        return [...items].sort((a, b) => {
-          // Assuming 'a' and 'b' are categories containing a 'products' array
-          const totalPriceA = a.products.reduce((sum, product) => sum + product.price, 0);
-          const totalPriceB = b.products.reduce((sum, product) => sum + product.price, 0);
+        // return [...items].sort((a, b) => {
+        //   // Assuming 'a' and 'b' are categories containing a 'products' array
+        //   const totalPriceA = a.products.reduce((sum, product) => sum + product.price, 0);
+        //   const totalPriceB = b.products.reduce((sum, product) => sum + product.price, 0);
           
-          return totalPriceB - totalPriceA; // Sort in descending order
-        });
+        //   return totalPriceB - totalPriceA; // Sort in descending order
+        // });
         // return [...items].sort((a, b) => b.price - a.price);
+        return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.price - a.price)})));
       default:
         return items;
     }
