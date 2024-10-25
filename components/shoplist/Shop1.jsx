@@ -5,7 +5,7 @@ import Star from "../common/Star";
 import ColorSelection from "../common/ColorSelection";
 import { Navigation } from "swiper/modules";
 import Pagination1 from "../common/Pagination1";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import BreadCumb from "./BreadCumb";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
@@ -18,23 +18,14 @@ import {
 } from "@/data/products/productCategories";
 import he from 'he';
 import Slider from "rc-slider";
+import Price from "./filter/Price";
 
 export default function Shop1({ search }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
 
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
-  // const [currentCategory, setCurrentCategory] = useState(menuCategories[0]);
-  // const [filtered, setFiltered] = useState(products51);
-  // useEffect(() => {
-  //   if (currentCategory == "All") {
-  //     setFiltered(products51);
-  //   } else {
-  //     setFiltered(
-  //       products51.filter((elm) => elm.filterCategory2 == currentCategory)
-  //     );
-  //   }
-  // }, [currentCategory]);
+  
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1); // Pagination state
@@ -42,10 +33,12 @@ export default function Shop1({ search }) {
   const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
   const [hasMore, setHasMore] = useState(true);
-  const offset = 1500;
+  const offset = 2500;
   const [sortOption, setSortOption] = useState('popularity');
   const [price, setPrice] = useState([500, 0]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isDDActive, setIsDDActive] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
     const fetchData = async (page) => {
@@ -101,6 +94,23 @@ useEffect(() => {
   window.addEventListener('scroll', handleScroll);
   return () => window.removeEventListener('scroll', handleScroll);
 }, [loading]); // Clean up on component unmount
+
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    // Check if the click is outside the referenced element
+    if (ref.current && !ref.current.contains(event.target)) {
+      setIsDDActive(false);
+    }
+  };
+
+  // Add event listener to document
+  document.addEventListener("click", handleClickOutside);
+
+  // Clean up the event listener on component unmount
+  return () => {
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, []);
 
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
@@ -239,15 +249,32 @@ useEffect(() => {
 
             {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
 
+            
+            {/* <div
+            id="accordion-filter-price"
+            className="accordion-collapse collapse show border-0"
+            aria-labelledby="accordion-heading-price"
+            data-bs-parent="#price-filters"
+          >
+            
+          </div> */}
+            {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
+          <div
+            ref={ref}
+            className={`position-relative hover-container d-none d-lg-block  px-1 ${
+              isDDActive ? "js-content_visible" : ""
+            }`}
+          >
             <div
-              id="accordion-filter-price"
-              className="accordion-collapse collapse show border-0"
-              aria-labelledby="accordion-heading-price"
-              data-bs-parent="#price-filters"
+              onClick={() => setIsDDActive((pre) => !pre)}
+              className="js-hover__open"
             >
-              {/* <div className="shop-sidebar side-sticky bg-body"> */}
-                <div className="pt-4 pt-lg-0"></div>
-                  <Slider
+              <span className="multi-select__actor fw-medium text-uppercase js-no-update">
+                Price
+              </span>
+            </div>
+            <div className="filters-container js-hidden-content mt-2">
+                <Slider
                   range
                   formatLabel={() => ``}
                   max={500}
@@ -266,18 +293,9 @@ useEffect(() => {
                     <span className="price-range__min">{price[0]}د.إ</span>
                   </div>
                 </div>
-              {/* </div> */}
             </div>
-            {/* <div
-            id="accordion-filter-price"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-price"
-            data-bs-parent="#price-filters"
-          >
-            
-          </div> */}
-            {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
           </div>
+        </div>
           {/* <!-- /.shop-acs --> */}
         </div>
         {/* <!-- /.d-flex justify-content-between --> */}
