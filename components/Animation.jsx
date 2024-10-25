@@ -69,14 +69,7 @@ const Animation = () => {
         // No snap property here
       },
     });
-    // ScrollTrigger for each section to get their positions
-    // const sectionTriggers = sections.map((section) =>
-    //   ScrollTrigger.create({
-    //     trigger: section,
-    //     start: "top top",
-    //     refreshPriority: -1,
-    //   })
-    // );
+   
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -119,88 +112,22 @@ const Animation = () => {
       circle.addEventListener("click", () => handleNavCircleClick(index));
     });
 
-    // let headings = gsap.utils.toArray(".h2");
-    // headings.forEach((heading, i) => {
-    //   gsap.fromTo(
-    //     heading,
-    //     {
-    //       opacity: 0,
-    //       y: 50,
-    //       delay: 1,
-    //     },
-    //     {
-    //       opacity: 1,
-    //       y: 0,
-    //       scrollTrigger: {
-    //         trigger: heading,
-    //         start: "top 80%",
-    //         end: "top -5%",
-    //         toggleActions: "play reverse play reverse",
-    //       },
-    //     }
-    //   );
-    // });
-
-    // let parags = gsap.utils.toArray(".p");
-    // parags.forEach((parag, i) => {
-    //   gsap.fromTo(
-    //     parag,
-    //     {
-    //       opacity: 0,
-    //       y: 50,
-    //       delay: 1,
-    //     },
-    //     {
-    //       opacity: 1,
-    //       y: 0,
-    //       delay: 1,
-    //       scrollTrigger: {
-    //         trigger: parag,
-    //         start: "top 70%",
-    //         end: "top -5%",
-    //         toggleActions: "play reverse play reverse",
-    //       },
-    //     }
-    //   );
-    // });
-
-    // let subtitles = gsap.utils.toArray(".sub-title");
-    // subtitles.forEach((subtitle, i) => {
-    //   gsap.fromTo(
-    //     subtitle,
-    //     {
-    //       opacity: 0,
-    //       y: 50,
-    //       delay: 1,
-    //     },
-    //     {
-    //       opacity: 1,
-    //       y: 0,
-    //       delay: 1,
-    //       scrollTrigger: {
-    //         trigger: subtitle,
-    //         start: "top 80%",
-    //         end: "top -5%",
-    //         toggleActions: "play reverse play reverse",
-    //       },
-    //     }
-    //   );
-    // });
+   
     gsap.utils.toArray('.testsect').forEach((section) => {
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section, // use individual section as trigger
-          start: 'top 65px',
-          end: 'bottom 90%',
+          start: 'top 110px',
+          end: 'bottom 95%',
           
-          scrub: 1.5,
+          scrub: 4,
           // markers: true
         }
       });
     
       timeline.to(section.querySelector('.sub-title'), {
         opacity: 1,
-        duration: 0.8
+        duration: 1
       });
     
       timeline.fromTo(section.querySelector('.h2'), 
@@ -231,6 +158,7 @@ const Animation = () => {
             trigger: img,
             start: "top 70%",
             end: "top 7.5%",
+            
             // markers: true,
             scrub: 1,
             // snap: !isMobileDevice() ? true : false,
@@ -282,7 +210,9 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      <section className="testsect zoom_img section2">
+
+      {/* Top 10 Products */}
+      <section className="zoom_img section2">
         <div className="panel2 d-flex justify-content-center align-items-center">
           <div className="contai ">
             <div className="mySwiper">
@@ -742,9 +672,7 @@ const Animation = () => {
       </section>
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
-          {/* <h2 className="fw-lighter sec-two-h2 pt-5">
-            Crafted for the Discerning Few
-          </h2> */}
+         
           {/* For Large Screens */}
           <div className="d-none d-lg-block pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2">
@@ -775,9 +703,7 @@ const Animation = () => {
           </Link>
         </div>
       </section>
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+      
       <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
@@ -809,7 +735,7 @@ const Animation = () => {
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
-      <section className="testsect zoom_img">
+      <section className="zoom_img">
         <div className="panel2 d-flex flex-column justify-content-around
         gap-5">
           <Lookbook />
@@ -817,7 +743,7 @@ const Animation = () => {
           <Categories section="section3" />
         </div>
       </section>
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+      {/* Arabian Dakhoon Section */}
       <section className="testsect section4">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
@@ -850,53 +776,12 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+      {/* Full screen vertical Scroll Slider */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
         <div className="inner2 mt-5 d-flex align-items-center">
             <Categories section="section4" />
           </div>
-          {/* <div className="inner2 zoom_img">
-            <video loop muted autoPlay className="w-100" preload="none">
-              <source
-                src="/assets/videos/ignite-rose-slideshow.mp4"
-                type="video/mp4"
-              />
-            </video>
-          </div>
-          <div className="d-flex flex-column align-items-center justify-content-center mt-4">
-            <h3 className="text-center ">
-              Carefully <span className="s-font">selected ingredients</span>
-            </h3>
-            <p className="text-center px-3">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets.
-            </p>
-            <div className="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center">
-              <img
-                className="p-2 w-25 w-md-auto"
-                src="/assets/images/home/demo8/notes/ignite-rose-top-note.jpg"
-                alt="Top Note"
-                subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
-              />
-
-              <img
-                className="p-2 w-25 w-md-auto"
-                src="/assets/images/home/demo8/notes/ignite-rose-middle-note.jpg"
-                alt="Middle Note"
-                subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
-              />
-              <img
-                className="p-2 w-25 w-md-auto"
-                src="/assets/images/home/demo8/notes/ignite-rose-base-note.jpg"
-                alt="Base Note"
-                subtitle="From endemic species to renowned terroirs, we are particularly meticulous when it comes to sourcing our raw materials."
-              />
-            </div>
-          </div> */}
         </div>
 
         <div className="panel2 mt-5">
@@ -996,40 +881,7 @@ const Animation = () => {
         <div className="inner text-center pt-5 mt-4">
             <Categories />
           </div>
-          {/* <div className="inner text-center pt-5 mt-4">
-            <h1>Carefully Selected Ingredients</h1>
-            <p className="fs-5">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets.
-            </p>
-
-            <div className="row justify-content-center">
-              <div className="col-6 col-md-4">
-                <img
-                  src="/assets/images/home/demo8/notes/ignite-rose-top-note.jpg"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-              <div className="col-6 col-md-4">
-                <img
-                  src="/assets/images/home/demo8/notes/ignite-rose-middle-note.jpg"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-              <div className="col-6 col-md-4 pt-2">
-                <img
-                  src="/assets/images/home/demo8/notes/ignite-rose-base-note.jpg"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-            </div>
-          </div> */}
+          
         </div>
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
@@ -1089,7 +941,7 @@ const Animation = () => {
             </div>
           </div>
         </div>
-        {/* <MobileSlider/> */}
+        
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
@@ -1118,7 +970,8 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
+
+     {/* Company Information Section */}
       <section
         id="end"
         className="testsect container d-flex flex-column justify-content-center zoom_img"
