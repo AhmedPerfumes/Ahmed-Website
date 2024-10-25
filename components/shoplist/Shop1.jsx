@@ -60,18 +60,18 @@ export default function Shop1({ search }) {
       if (data.length === 0) {
         setHasMore(false);
       }
-      console.log('Data', data);
+      // console.log('Data', data);
       // setProducts((prevData) => [...prevData, ...data]); // Append new data
       setProducts((prevData) => {
         // console.log('Products', ...prevData);
         return sortItems([...prevData, ...data], sortOption)
       });
 
-      const filtered = data.filter(product => {
-        console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
+      const filtered = [...products, ...data].filter(product => {
+        // console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
         return product.price <= price[0] && product.price >= price[1]
       });
-      console.log('filteredData', filtered);
+      // console.log('filteredData', filtered);
 
       setFilteredProducts((prevDataa) => {
         // console.log('FilteredProducts', ...prevData);
@@ -127,7 +127,7 @@ useEffect(() => {
 
    // Sorting function
    const sortItems = (items, option) => {
-    console.log(items, option);
+    // console.log(items, option);
     switch (option) {
       case 'popularity':
         return [...items].sort((a, b) => b.sales - a.sales);
@@ -285,12 +285,12 @@ useEffect(() => {
                 />
                 <div className="price-range__info d-flex align-items-center mt-2">
                   <div className="me-auto">
-                    <span className="text-secondary">Max Price: </span>
-                    <span className="price-range__max">{price[1]}د.إ</span>
+                    <span className="text-secondary">Min Price: </span>
+                    <span className="price-range__max">{price[0]}د.إ</span>
                   </div>
                   <div>
-                    <span className="text-secondary">Min Price: </span>
-                    <span className="price-range__min">{price[0]}د.إ</span>
+                    <span className="text-secondary">Max Price: </span>
+                    <span className="price-range__min">{price[1]}د.إ</span>
                   </div>
                 </div>
             </div>
