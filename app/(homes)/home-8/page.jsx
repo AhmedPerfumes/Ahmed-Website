@@ -6,6 +6,7 @@ import React from "react";
 import CanvasAnimation from "@/components/CanvasAnimation";
 import MobileAnimation from "@/components/MobileAnimation";
 
+
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
   description: "Buy Best Perfumes Online Ahmed Perfume",
@@ -30,7 +31,7 @@ export default function HomePage8() {
         {/* MobileAnimation will render for small screens */}
         <MobileAnimation />
       </div>
-      <main id="animation-section">
+      <main id="">
         {/* Animation component will render after CanvasAnimation */}
         <Animation />
       </main>

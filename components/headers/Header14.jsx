@@ -114,7 +114,7 @@ const handleLogout = (e) => {
     <>
       <header
         id="header"
-        className={`header header_sticky position-sticky w-100 `}
+        className={`header header_sticky position-sticky w-100 bg-white`}
         style={pathname == "/" ? headerStyle : {}}
       >
         <Swiper
