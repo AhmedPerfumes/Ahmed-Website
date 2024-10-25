@@ -41,57 +41,24 @@ export default function Shop10({ subCategories, products }) {
   const [catProducts, setCatProducts] = useState(subCategories);
   const [subCatProducts, setSubCatProducts] = useState(products);
 
-  // useEffect(() => {
-  //   if(subcategory) {
-  //     setSubCatProducts(sortSubCategory(products, sortOption));
-  //   } else {
-  //     setCatProducts(sortCategory(subCategories, sortOption));
-  //   }
-  // }, []);
+  useEffect(() => {
+    if(subcategory || category == 'hair-mist' || category == 'gift-sets') {
+      setSubCatProducts(sortSubCategory(subCatProducts, sortOption));
+    } else {
+      setCatProducts(sortCategory(catProducts, sortOption));
+    }
+  }, []);
 
   const sortCategory = (items, option) => {
-    console.log('Cat', items, option);
+    // console.log('Cat', items, option);
     switch (option) {
       case 'popularity':
-        console.log('sortedPopularity');
-        // console.log([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.sales - a.sales)})));
-          // Assuming 'a' and 'b' are categories containing a 'products' array
-          // const totalSalesA = a.products.reduce((sum, product) => sum + product.sales, 0);
-          // const totalSalesB = b.products.reduce((sum, product) => sum + product.sales, 0);
-          return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.sales - a.sales)})));
-          // return totalSalesB - totalSalesA; // Sort in descending order
+        return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.sales - a.sales)})));
       case 'date':
-        console.log('sortedDate');
-        // return [...items].sort((a, b) => {
-        //   // Assuming 'a' and 'b' are categories containing a 'products' array
-        //   const totalDateA = a.products.reduce((sum, product) => sum + product.product_id, 0);
-        //   const totalDateB = b.products.reduce((sum, product) => sum + product.product_id, 0);
-          
-        //   return totalDateB - totalDateA; // Sort in descending order
-        // });
-        // return [...items].sort((a, b) => b.product_id - a.product_id);
         return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.product_id - a.product_id)})));
       case 'price':
-        console.log('sortedPrice');
-        // return [...items].sort((a, b) => {
-        //   // Assuming 'a' and 'b' are categories containing a 'products' array
-        //   const totalPriceA = a.products.reduce((sum, product) => sum + product.price, 0);
-        //   const totalPriceB = b.products.reduce((sum, product) => sum + product.price, 0);
-          
-        //   return totalPriceA - totalPriceB; // Sort in ascending order
-        // });
-        // return [...items].sort((a, b) => a.price - b.price);
         return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => a.price - b.price)})));
       case 'price-desc':
-        console.log('sortedPriceDesc');
-        // return [...items].sort((a, b) => {
-        //   // Assuming 'a' and 'b' are categories containing a 'products' array
-        //   const totalPriceA = a.products.reduce((sum, product) => sum + product.price, 0);
-        //   const totalPriceB = b.products.reduce((sum, product) => sum + product.price, 0);
-          
-        //   return totalPriceB - totalPriceA; // Sort in descending order
-        // });
-        // return [...items].sort((a, b) => b.price - a.price);
         return ([...items].map((item) => ({...item, products: [...item.products].sort((a, b) => b.price - a.price)})));
       default:
         return items;
@@ -102,19 +69,12 @@ export default function Shop10({ subCategories, products }) {
     console.log('SubCat', items, option);
     switch (option) {
       case 'popularity':
-        console.log('sortedPopularity');
-        return [...items].sort((a, b) => {
-          console.log(a, b);
-          return b.sales - a.sales
-        });
+        return [...items].sort((a, b) => b.sales - a.sales);
       case 'date':
-        console.log('sortedDate');
         return [...items].sort((a, b) => b.product_id - a.product_id);
       case 'price':
-        console.log('sortedPrice');
         return [...items].sort((a, b) => a.price - b.price);
       case 'price-desc':
-        console.log('sortedPriceDesc');
         return [...items].sort((a, b) => b.price - a.price);
       default:
         return items;
@@ -122,19 +82,12 @@ export default function Shop10({ subCategories, products }) {
   };
 
   const handleSortChange = (event) => {
-    // setLoading(true);
-    // console.log(productss);
     setSortOption(event.target.value);
-    if(subcategory) {
-      // console.log('if', subCatProducts);
-      // sortSubCategory(subCatProducts, event.target.value);
+    if(subcategory || category == 'hair-mist' || category == 'gift-sets') {
       setSubCatProducts(sortSubCategory(subCatProducts, event.target.value));
     } else {
-      // console.log('else', catProducts);
-      // sortCategory(catProducts, event.target.value);
       setCatProducts(sortCategory(catProducts, event.target.value));
     }
-    // setLoading(false);
   };
 
   return (

@@ -13,8 +13,6 @@ export default function Style2({ category, subcategory, products }) {
 
   const indexToSwap = 1;
   let objectFound = false;
-
-  console.log(products);
   
   for (let index = 0; index < products.length; index++) {
     if (products[index] && products[index].collection_name === 'New Launch') {
