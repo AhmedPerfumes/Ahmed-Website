@@ -6,7 +6,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import he from 'he';
 
+import { useLocale } from "next-intl";
+
 export default function CartDrawer() {
+  
+  const locale = useLocale();
   const [error, setError] = useState(null);
   const { cartProducts, setCartProducts, totalPrice } = useContextElement();
   const pathname = usePathname();
@@ -172,18 +176,18 @@ export default function CartDrawer() {
           </div>
           {cartProducts.length ? (
             <>
-              <a href="/shop-cart" className="btn btn-light mt-3 d-block">
+              <a href={`/${locale}/shop-cart`} className="btn btn-light mt-3 d-block">
                 View Cart
               </a>
               <a
-                href="/shop-checkout"
+                href={`/${locale}/shop-checkout`}
                 className="btn btn-primary mt-3 d-block"
               >
                 Checkout
               </a>
             </>
           ) : (
-            <a href="/shop" className="btn btn-light mt-3 d-block">
+            <a href={`/${locale}/shop`} className="btn btn-light mt-3 d-block">
               Explore shop
             </a>
           )}

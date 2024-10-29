@@ -25,16 +25,13 @@ export const footerLinks3 = [
 ];
 
 export const languageOptions = [
-  { value: "", text: "United Kingdom | English", selected: true },
-  { value: "1", text: "United States | English" },
-  { value: "2", text: "German" },
-  { value: "3", text: "French" },
-  { value: "4", text: "Swedish" },
+  { value: "en", text: "English" },
+  { value: "ar", text: "Arabic" },
 ];
 
 export const languageOptions2 = [
-  { value: "english", text: "English", selected: true },
-  { value: "arabic", text: "Arabic" },
+  { value: "en", text: "English" },
+  { value: "ar", text: "Arabic" },
   // { value: "french", text: "French" },
   // { value: "swedish", text: "Swedish" },
 ];

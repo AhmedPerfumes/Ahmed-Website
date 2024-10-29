@@ -9,8 +9,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from 'he';
 
+import { useLocale } from "next-intl";
+
 export default function Style2({ category, subcategory, products }) {
 
+  const locale = useLocale();
   const indexToSwap = 1;
   let objectFound = false;
   
@@ -80,7 +83,7 @@ export default function Style2({ category, subcategory, products }) {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <a href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -130,7 +133,7 @@ export default function Style2({ category, subcategory, products }) {
                   </Swiper>
                 ) : (
                   <>
-                    <a href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
+                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
                       <Image
                         loading="lazy"
                         src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
@@ -148,7 +151,7 @@ export default function Style2({ category, subcategory, products }) {
                       <p className="mb-4 text-white">Exclusive Launch</p>
                       <a
                         className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-55 d-inline-flex align-items-center"
-                        href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}
+                        href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}
                       >
                         <span>Explore</span>
                       </a>
@@ -208,7 +211,7 @@ export default function Style2({ category, subcategory, products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <a href={`/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                  <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                 </h6>
                 <div className="product-card__price d-flex">
                   <span className="money price">{elm?.price}د.إ</span>

@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 // import { useRouter } from 'next/navigation';
 
+import { useLocale } from "next-intl";
+
 export default function LoginRegister() {
 
   // const router = useRouter();
-
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -55,7 +57,7 @@ export default function LoginRegister() {
       } else {
         setSuccess(data.message);
         setError(null);
-        setTimeout(() => window.location.href='/verify-otp', 1000);
+        setTimeout(() => window.location.href=`/${locale}/verify-otp`, 1000);
       }
       // console.log(data);
     } catch (error) {

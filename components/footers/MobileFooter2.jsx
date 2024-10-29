@@ -19,9 +19,13 @@ import {
 
 import Button from "@mui/material/Button";
 
+import { useLocale } from "next-intl";
+
 import { useMenu } from '../../context/MenuContext';
 
 export default function MobileFooter2() {
+
+  const locale = useLocale();
 
   const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
 
@@ -130,7 +134,7 @@ export default function MobileFooter2() {
             {footerLinks1.map((elm, i) => (
               <li key={i} className="sub-menu__item text-white">
                 <a
-                  href={elm.href}
+                  href={`/${locale}${elm.href}`}
                   className="menu-link menu-link_us-s text-white"
                 >
                   {elm.text}
@@ -162,7 +166,7 @@ export default function MobileFooter2() {
             {categoriesSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
                 <a
-                  href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+                  href={elm.name != 'Gift Sets' ? `/${locale}/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
                   className="menu-link menu-link_us-s text-white"
                 >
                   {elm.name}
@@ -212,7 +216,7 @@ export default function MobileFooter2() {
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center text-white">
             <div className="d-flex align-items-center text-white">
-              <a className="text-white" href={"/order-tracking"}>Track Order</a>
+              <a className="text-white" href={`/${locale}/order-tracking`}>Track Order</a>
             </div>
           </div>
           {/* <!-- /.footer-settings --> */}

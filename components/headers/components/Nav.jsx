@@ -13,15 +13,19 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import { useLocale, useTranslations } from "next-intl";
+
 export default function Nav({ categoriesSubCategories }) {
 
+  const locale = useLocale();
+  const t = useTranslations();
   const pathname = usePathname();
   // console.log(searchParams.get('category'));
   const isMenuActive = (menu) => {
-    return menu.split("/")[3] == pathname.split("/")[3];
+    return menu.split("/")[3] == pathname.split("/")[4];
   };
   const isActiveParentMenu = (menu) => {
-    return menu.split("/")[2] == pathname.split("/")[2];
+    return menu.split("/")[2] == pathname.split("/")[3];
   };
 
   useEffect(() => {
@@ -73,12 +77,12 @@ export default function Nav({ categoriesSubCategories }) {
     return (
       <li className="navigation__item" key={i}>
         <a
-          href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+          href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
           className={`navigation__link
           ${isActiveParentMenu(`/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           `}
         >
-          { item.name }
+          { t(item.name) }
         </a>
         { item.name != 'Hair Mist' &&
           <div className="mega-menu">
@@ -91,7 +95,7 @@ export default function Nav({ categoriesSubCategories }) {
                   {item.productSubCategories.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
                       <a
-                        href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+                        href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
                         className={`menu-link menu-link_us-s ${
                           isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                         }`}
@@ -105,7 +109,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <a href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
+                  <a href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
@@ -121,7 +125,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <a href={item.name != 'Gift Sets' ? `/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}>
+                  <a href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"

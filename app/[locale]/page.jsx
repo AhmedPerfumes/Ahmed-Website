@@ -1,5 +1,6 @@
 import Loader from "@/components/loader/Loader";
 import HomePage8 from "./(homes)/home-8/page";
+import {useTranslations} from 'next-intl';
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -9,9 +10,11 @@ export const metadata = {
   },
 };
 export default function Home() {
+  const t = useTranslations();
   return (
     <>
     <Loader/>
+      {/* <h1>{t('title')}</h1> */}
       <HomePage8 />
       
     </>

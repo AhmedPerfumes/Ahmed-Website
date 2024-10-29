@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useLocale } from "next-intl";
+
 const steps = [
   {
     id: 1,
@@ -28,6 +30,7 @@ const steps = [
   },
 ];
 export default function ChectoutSteps() {
+  const locale = useLocale();
   const [activePathIndex, setactivePathIndex] = useState(0);
   const pathname = usePathname();
   useEffect(() => {
@@ -40,7 +43,7 @@ export default function ChectoutSteps() {
       {steps.map((elm, i) => (
         <Link
           key={i}
-          href={elm.id == 3 ? '#' : elm.href}
+          href={elm.id == 3 ? '#' : `/${locale}${elm.href}`}
           className={`checkout-steps__item  ${
             activePathIndex >= i ? "active" : ""
           }`}

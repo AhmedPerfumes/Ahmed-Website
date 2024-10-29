@@ -1,3 +1,4 @@
+'use client';
 import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
