@@ -28,7 +28,7 @@ import MobileFooter1 from "@/components/footers/MobileFooter1";
 import localFont from "next/font/local";
 
 const myFont = localFont({
-  src: "../public/assets/fonts/wulkan/WulkanDisplayMedium.woff",
+  src: "../public/assets/fonts/kanit/Kanit-Medium.ttf",
 });
 
 export default function RootLayout({ children }) {
