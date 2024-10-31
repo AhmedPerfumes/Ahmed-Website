@@ -89,7 +89,7 @@ export default function Nav({ categoriesSubCategories }) {
             <div className="container d-flex">
               <div className="col pe-4">
                 <p href="#" className="sub-menu__title">
-                PRODUCT TYPES
+                {t("PRODUCT TYPES")}
                 </p>
                 <ul className="sub-menu__list list-unstyled">
                   {item.productSubCategories.map((elm, ind) => (
@@ -100,7 +100,7 @@ export default function Nav({ categoriesSubCategories }) {
                           isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                         }`}
                       >
-                        {elm.name}
+                        {t(elm.name)}
                       </a>
                     </li>
                   ))}

@@ -10,7 +10,7 @@ import MobileNav from "./components/MobileNav";
 import Image from "next/image";
 import Link from "next/link";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 export default function MobileHeader() {
   const locale = useLocale();

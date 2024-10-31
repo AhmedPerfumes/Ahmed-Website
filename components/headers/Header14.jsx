@@ -167,7 +167,7 @@ const handleLangChange = (e) => {
                   className="search-field__input search-popup__input w-100 fw-medium"
                   type="text"
                   name="search-keyword"
-                  placeholder="Search products"
+                  placeholder={t("Search Products")}
                   value={searchKeyWord}
                   onChange={handleChange}
                 />
@@ -191,26 +191,26 @@ const handleLangChange = (e) => {
 
               <div className="search-popup__results">
                 <div className="sub-menu search-suggestion">
-                  <h6 className="sub-menu__title fs-base">Quicklinks</h6>
+                  <h6 className="sub-menu__title fs-base">{t("Quicklinks")}</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
                       <a href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/marj`} className="menu-link menu-link_us-s">
-                        Marj
+                        {t("Marj")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
                       <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`} className="menu-link menu-link_us-s">
-                        Rose Noir
+                        {t("Rose Noir")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
                       <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`} className="menu-link menu-link_us-s">
-                        Oud Lavender
+                        {t("Oud Lavender")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
                       <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-classic`} className="menu-link menu-link_us-s">
-                        Oud Classic
+                        {t("Oud Classic")}
                       </a>
                     </li>
                     {/* <li className="sub-menu__item">
@@ -274,7 +274,7 @@ const handleLangChange = (e) => {
                     className="header-search__input w-100"
                     type="text"
                     name="search-keyword"
-                    placeholder="Search products..."
+                    placeholder={t("Search Products")}
                     onClick={() => setIsPopupOpen((pre) => !pre)}
                     value={searchKeyWord}
                     onChange={handleChange}

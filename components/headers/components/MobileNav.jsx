@@ -14,10 +14,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMenu } from '../../../context/MenuContext';
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 export default function MobileNav() {
 
   const locale = useLocale();
+  const t = useTranslations();
   const pathname = usePathname();
   // const searchParams = useSearchParams();
   // const category = searchParams.get('category');
@@ -179,7 +180,7 @@ export default function MobileNav() {
             ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           }`}
         >
-          { item.name }
+          { t(item.name) }
           {/* <svg
             className="ms-auto"
             width="7"
@@ -204,7 +205,7 @@ export default function MobileNav() {
             >
               <use href="#icon_prev_sm" />
             </svg>
-            { item.name }
+            { t(item.name) }
           </a>
           <ul className="list-unstyled">
             {item.productSubCategories.map((elm, i) => (
@@ -215,7 +216,7 @@ export default function MobileNav() {
                     isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                   }`}
                 >
-                  {elm.name}
+                  {t(elm.name)}
                 </a>
               </li>
             ))}

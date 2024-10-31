@@ -19,13 +19,14 @@ import {
 
 import Button from "@mui/material/Button";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { useMenu } from '../../context/MenuContext';
 
 export default function MobileFooter2() {
 
   const locale = useLocale();
+  const t = useTranslations();
 
   const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
 
@@ -169,7 +170,7 @@ export default function MobileFooter2() {
                   href={elm.name != 'Gift Sets' ? `/${locale}/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
                   className="menu-link menu-link_us-s text-white"
                 >
-                  {elm.name}
+                  {t(elm.name)}
                 </a>
               </li>
             ))}

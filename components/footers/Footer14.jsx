@@ -13,12 +13,13 @@ import {
 
 import { useMenu } from '../../context/MenuContext';
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 
 export default function Footer14() {
 
   const locale = useLocale();
+  const t = useTranslations();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -192,7 +193,7 @@ export default function Footer14() {
               {categoriesSubCategories.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
                   <a href={elm.name != 'Gift Sets' ? `/${locale}/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`} className="menu-link menu-link_us-s">
-                    {elm.name}
+                    {t(elm.name)}
                   </a>
                 </li>
               ))}
