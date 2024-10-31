@@ -116,12 +116,13 @@ const Animation = () => {
     gsap.utils.toArray('.testsect').forEach((section) => {
       const timeline = gsap.timeline({
         scrollTrigger: {
+          markers: true,
           trigger: section, // use individual section as trigger
-          start: 'top 110px',
+          start: 'top 400px',
           end: 'bottom 95%',
           
           scrub: 4,
-          // markers: true
+          
         }
       });
     

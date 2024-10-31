@@ -1,16 +1,16 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
 import "./Canvas.css"
 
-gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
-  const ballTextRef = useRef(null);
+  const [showSkipButton, setShowSkipButton] = useState(false);
   const frameCount = 349;
   let images = [];
   let ball = { frame: 0 };
@@ -34,7 +34,6 @@ const CanvasAnimation = () => {
       context.canvas.height = images[0].height;
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.drawImage(images[ball.frame], 0, 0);
-     
     };
 
     images[0].onload = render;
@@ -47,31 +46,31 @@ const CanvasAnimation = () => {
         scrub: 1,
         pin: canvas,
         end: '250%',
-        // onLeave: () => {
-        //   // Snap to the next section when the last frame is reached
-        //   gsap.to(window, {
-        //     scrollTo: { y: "#animation-section", autoKill: false }, // Smooth scroll to the section
-        //     duration: 0.5,
-        //     ease: "power2.inOut",
-        //   });
-        // },
+        onEnter: () => setShowSkipButton(true),
+        onLeave: () => setShowSkipButton(false),
       },
       onUpdate: render,
     });
-
- 
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
+  const skipAnimation = () => {
+    gsap.to(window, {
+      scrollTo: { y: "#main2", autoKill: false },
+      duration: 0.5,
+      ease: "power2.inOut",
+    });
+  };
+
   return (
     <div>
-    
       <canvas ref={canvasRef} className="canvas"></canvas>
-      
-      
+      {showSkipButton && (
+        <button onClick={skipAnimation} className="skip-button">Skip</button>
+      )}
     </div>
   );
 };
