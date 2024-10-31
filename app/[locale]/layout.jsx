@@ -31,7 +31,7 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 
 const myFont = localFont({
-  src: "../../public/assets/fonts/wulkan/WulkanDisplayMedium.woff",
+  src: "../../public/assets/fonts/kanit/Kanit-Medium.ttf",
 });
 
 export default async  function LocaleLayout({ children, params: {locale} }) {

@@ -149,6 +149,9 @@ $card-image-height: 121.212122%;
 // Product card information
 .pc__info {
   margin-top: 1rem;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
 
   &.hover__content {
     margin-top: 0;

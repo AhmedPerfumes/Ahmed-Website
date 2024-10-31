@@ -48,11 +48,11 @@ const MobileAnimation = () => {
         end: '250%',
         onLeave: () => {
           // Snap to the next section when the last frame is reached
-          gsap.to(window, {
-            scrollTo: { y: "#animation-section", autoKill: false }, // Smooth scroll to the section
-            duration: 0.5,
-            ease: "power2.inOut",
-          });
+          // gsap.to(window, {
+          //   scrollTo: { y: "#animation-section", autoKill: false }, // Smooth scroll to the section
+          //   duration: 0.5,
+          //   ease: "power2.inOut",
+          // });
         },
       },
       onUpdate: render,
