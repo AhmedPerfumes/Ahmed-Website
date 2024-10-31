@@ -69,7 +69,7 @@ const Animation = () => {
         // No snap property here
       },
     });
-   
+
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -112,8 +112,7 @@ const Animation = () => {
       circle.addEventListener("click", () => handleNavCircleClick(index));
     });
 
-   
-    gsap.utils.toArray('.testsect').forEach((section) => {
+    gsap.utils.toArray(".testsect").forEach((section) => {
       const timeline = gsap.timeline({
         scrollTrigger: {
           markers: true,
@@ -125,28 +124,29 @@ const Animation = () => {
           
         }
       });
-    
-      timeline.to(section.querySelector('.sub-title'), {
+
+      timeline.to(section.querySelector(".sub-title"), {
         opacity: 1,
-        duration: 1
+        duration: 1,
       });
-    
-      timeline.fromTo(section.querySelector('.h2'), 
-        { y: 50, opacity: 0 }, 
+
+      timeline.fromTo(
+        section.querySelector(".h2"),
+        { y: 50, opacity: 0 },
         { y: 0, opacity: 1, duration: 2.75 }
       );
-    
-      timeline.fromTo(section.querySelector('.p'), 
-        { y: 60, opacity: 0 }, 
+
+      timeline.fromTo(
+        section.querySelector(".p"),
+        { y: 60, opacity: 0 },
         { y: 0, opacity: 1, duration: 2.85 }
       );
-    
+
       // timeline.to(section.querySelector('.panel2'), {
       //   yPercent: -5,
       //   duration: 1
       // });
     });
-    
 
     let imgs = gsap.utils.toArray(".zoom_img");
     imgs.forEach((img, i) => {
@@ -159,7 +159,7 @@ const Animation = () => {
             trigger: img,
             start: "top 70%",
             end: "top 7.5%",
-            
+
             // markers: true,
             scrub: 1,
             // snap: !isMobileDevice() ? true : false,
@@ -673,7 +673,6 @@ const Animation = () => {
       </section>
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
-         
           {/* For Large Screens */}
           <div className="d-none d-lg-block pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2">
@@ -704,7 +703,7 @@ const Animation = () => {
           </Link>
         </div>
       </section>
-      
+
       <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
@@ -737,8 +736,10 @@ const Animation = () => {
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
       <section className="testsect d-flex zoom_img">
-        <div className="panel2 d-flex flex-column justify-content-around
-        gap-5">
+        <div
+          className="panel2 d-flex flex-column justify-content-around
+        gap-5"
+        >
           <Lookbook />
 
           <Categories section="section3" />
@@ -780,7 +781,7 @@ const Animation = () => {
       {/* Full screen vertical Scroll Slider */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
-        <div className="inner2 mt-5 d-flex align-items-center">
+          <div className="inner2 mt-5 d-flex align-items-center">
             <Categories section="section4" />
           </div>
         </div>
@@ -879,10 +880,9 @@ const Animation = () => {
         </div> */}
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
-        <div className="inner text-center pt-5 mt-4">
+          <div className="inner text-center pt-5 mt-4">
             <Categories />
           </div>
-          
         </div>
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
@@ -942,7 +942,6 @@ const Animation = () => {
             </div>
           </div>
         </div>
-        
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
       <section className="testsect">
@@ -972,7 +971,7 @@ const Animation = () => {
         </div>
       </section>
 
-     {/* Company Information Section */}
+      {/* Company Information Section */}
       <section
         id="end"
         className="testsect container d-flex flex-column justify-content-center zoom_img"
