@@ -67,7 +67,7 @@ export default function Shop1({ search }) {
         return sortItems([...prevData, ...data], sortOption)
       });
 
-      const filtered = [...products, ...data].filter(product => {
+      const filtered = data.filter(product => {
         // console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
         return product.price <= price[0] && product.price >= price[1]
       });
