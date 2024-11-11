@@ -240,7 +240,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -281,7 +281,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/oriental-fragrance/ignite-oud"
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/ignite-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -321,7 +321,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/oriental-fragrance/kaaf"
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/kaaf"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -361,7 +361,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/oriental-fragrance/laathani"
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/laathani"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -401,7 +401,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/occidental-fragrance/marj"
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/marj"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -441,7 +441,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/occidental-fragrance/musk-roses"
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/musk-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -481,7 +481,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/occidental-fragrance/oud-roses"
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/oud-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -521,7 +521,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -561,7 +561,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href={"/en/shop/eau-de-parfum/occidental-fragrance/rose-noir"}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -601,7 +601,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/occidental-fragrance/summer-oud"
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/summer-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
