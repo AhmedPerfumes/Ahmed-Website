@@ -5,7 +5,11 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
+import { useLocale } from "next-intl";
+
 export default function Hero() {
+
+  const locale = useLocale();
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -50,7 +54,7 @@ export default function Hero() {
                 {elm.subtitle}
               </h2>
               <Link
-                href="/shop"
+                href={`/${locale}/shop`}
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7 text-white"
               >
                 Discover More

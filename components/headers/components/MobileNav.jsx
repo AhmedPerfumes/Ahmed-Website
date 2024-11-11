@@ -13,17 +13,22 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMenu } from '../../../context/MenuContext';
+
+import { useLocale, useTranslations } from "next-intl";
 export default function MobileNav() {
+
+  const locale = useLocale();
+  const t = useTranslations();
   const pathname = usePathname();
   // const searchParams = useSearchParams();
   // const category = searchParams.get('category');
   // const subcategory = searchParams.get('subcategory');
   
   const isMenuActive = (menu) => {
-    return menu.split("/")[3] == pathname.split("/")[3];
+    return menu.split("/")[3] == pathname.split("/")[4];
   };
   const isActiveParentMenu = (menu) => {
-    return menu.split("/")[2] == pathname.split("/")[2];
+    return menu.split("/")[2] == pathname.split("/")[3];
   };
 
   useEffect(() => {
@@ -170,12 +175,12 @@ export default function MobileNav() {
     return (
       <li key={i} className="navigation__item">
         <a
-          href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+          href={item.name != 'Gift Sets' ? `/${locale}/product-category/${item.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
           className={`navigation__link js-nav-right d-flex align-items-center
             ${isActiveParentMenu(`/product-category/${item.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           }`}
         >
-          { item.name }
+          { t(item.name) }
           {/* <svg
             className="ms-auto"
             width="7"
@@ -200,18 +205,18 @@ export default function MobileNav() {
             >
               <use href="#icon_prev_sm" />
             </svg>
-            { item.name }
+            { t(item.name) }
           </a>
           <ul className="list-unstyled">
             {item.productSubCategories.map((elm, i) => (
               <li key={i} className="sub-menu__item">
                 <a
-                  href={item.name != 'Gift Sets' ? `/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'}
+                  href={item.name != 'Gift Sets' ? `/${locale}/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
                   className={`menu-link menu-link_us-s ${
                     isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                   }`}
                 >
-                  {elm.name}
+                  {t(elm.name)}
                 </a>
               </li>
             ))}

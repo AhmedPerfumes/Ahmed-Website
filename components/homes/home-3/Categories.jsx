@@ -5,10 +5,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 
 export default function Categories({ params, subCategories }) {
 
-  const categoryName = usePathname().split("/")[2];
+  const locale = useLocale();
+  const categoryName = usePathname().split("/")[3];
 
   const handleMouseOver = (e) => {
     const tooltip = document.getElementById("video-tooltip");
@@ -103,7 +105,7 @@ export default function Categories({ params, subCategories }) {
             <SwiperSlide key={i} className="swiper-slide text-center">
               <a
                 key={i}
-                href={`/product-category/${removeSpecialCharactersAndAmp(categoryName)}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
+                href={`/${locale}/product-category/${removeSpecialCharactersAndAmp(categoryName)}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                 className="shop-categories__item mb-3"
               >
                 <video
@@ -123,7 +125,7 @@ export default function Categories({ params, subCategories }) {
               </a>
               <div className="text-center">
                 <a
-                  href={`/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
+                  href={`/${locale}/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
                   className="menu-link fw-medium"
                   key={i}
                 >

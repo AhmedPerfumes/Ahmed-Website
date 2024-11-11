@@ -9,7 +9,14 @@ import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
 import Link from "next/link";
+
+import { useLocale } from "next-intl";
+import { useRouter, usePathname } from "../../i18n/routing";
 export default function MobileHeader() {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [scrollDirection, setScrollDirection] = useState("down");
 
   useEffect(() => {
@@ -42,6 +49,11 @@ export default function MobileHeader() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleLangChange = (e) => {
+    // console.log(pathname, e.target.value);
+    router.push(pathname, { locale: e.target.value });
+  };
 
   return (
     <div
@@ -167,12 +179,14 @@ export default function MobileHeader() {
             </span>
           </div>
 
-          {/* <div className="container d-flex align-items-center">
+          <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
             <select
               className="form-select form-select-sm bg-transparent border-0"
               aria-label="Default select example"
               name="store-language"
+              value={locale}
+              onChange={handleLangChange}
             >
               {languageOptions.map((option, index) => (
                 <option
@@ -184,7 +198,7 @@ export default function MobileHeader() {
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
 
           <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Country</label>

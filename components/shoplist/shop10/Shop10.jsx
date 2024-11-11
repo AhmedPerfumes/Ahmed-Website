@@ -27,8 +27,8 @@ import { usePathname } from "next/navigation";
 
 export default function Shop10({ subCategories, products }) {
   const pathname = usePathname();
-  const category = pathname.split("/")[2];
-  const subcategory = pathname.split("/")[3];
+  const category = pathname.split("/")[3];
+  const subcategory = pathname.split("/")[4];
 
   // console.log('0000111', JSON.stringify(subCategories), products);
 

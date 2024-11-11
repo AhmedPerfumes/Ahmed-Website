@@ -13,7 +13,20 @@ import {
 
 import { useMenu } from '../../context/MenuContext';
 
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter, usePathname } from "../../i18n/routing";
+
 export default function Footer14() {
+
+  const locale = useLocale();
+  const t = useTranslations();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleLangChange = (e) => {
+    // console.log(pathname, e.target.value);
+    router.push(pathname, { locale: e.target.value });
+  };
 
   const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
 
@@ -164,7 +177,7 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {footerLinks1.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <a href={elm.href} className="menu-link menu-link_us-s">
+                  <a href={`/${locale}${elm.href}`} className="menu-link menu-link_us-s">
                     {elm.text}
                   </a>
                 </li>
@@ -178,8 +191,8 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {categoriesSubCategories.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <a href={elm.name != 'Gift Sets' ? `/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : '/product-category/gift-sets'} className="menu-link menu-link_us-s">
-                    {elm.name}
+                  <a href={elm.name != 'Gift Sets' ? `/${locale}/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`} className="menu-link menu-link_us-s">
+                    {t(elm.name)}
                   </a>
                 </li>
               ))}
@@ -237,8 +250,8 @@ export default function Footer14() {
             reserved
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
-            <a className="text-white" href={"/order-tracking"}>Track Order</a>
-            {/* <div className="d-flex align-items-center">
+            <a className="text-white" href={`/${locale}/order-tracking`}>Track Order</a>
+            <div className="d-flex align-items-center">
                <label
                 htmlFor="footerSettingsLanguage"
                 className="me-2 text-white"
@@ -250,6 +263,8 @@ export default function Footer14() {
                 className="form-select form-select-sm bg-transparent border-0"
                 aria-label="Default select example"
                 name="store-language"
+                value={locale}
+                onChange={handleLangChange}
               >
                 {languageOptions2.map((option, index) => (
                   <option
@@ -261,7 +276,7 @@ export default function Footer14() {
                   </option>
                 ))}
               </select>
-            </div> */}
+            </div>
 
             <div className="d-flex align-items-center">
               {/* <label

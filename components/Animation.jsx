@@ -15,7 +15,10 @@ import "./Animation.css";
 import MobileSlider from "./singleProduct/sliders/MobileSlider";
 import { duration } from "@mui/material";
 
+import { useLocale } from "next-intl";
+
 const Animation = () => {
+  const locale = useLocale();
   useEffect(() => {
     const isMobileDevice = () => {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -558,7 +561,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop/eau-de-parfum/occidental-fragrance/rose-noir"
+                          href={`/${locale}/shop`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -696,7 +699,7 @@ const Animation = () => {
           </div>
 
           <Link
-            href="/shop"
+            href={`/${locale}/shop`}
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
             Discover More

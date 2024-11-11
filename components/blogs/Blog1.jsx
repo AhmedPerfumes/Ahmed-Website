@@ -5,9 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { useLocale } from "next-intl";
+
 export default function Blog1() {
   // const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [filteredBlogs, setFilteredBlogs] = useState(blogs12);
+  const locale = useLocale();
   // useEffect(() => {
   //   if (activeCategory == "ALL") {
   //     setFilteredBlogs(blogs12);
@@ -129,12 +132,12 @@ export default function Blog1() {
                   <span className="blog-grid__item-meta__date">{new Date(elm.created_at).toLocaleDateString()}</span>
                 </div>
                 <div className="blog-grid__item-title">
-                  <Link href={`/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
+                  <Link href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
                 </div>
                 <div className="blog-grid__item-content">
                   <p>{elm.description}</p>
                   <Link
-                    href={`/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
+                    href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                     className="readmore-link"
                   >
                     Continue Reading

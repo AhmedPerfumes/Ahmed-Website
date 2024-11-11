@@ -4,8 +4,11 @@ import { closeModalUserlogin } from "@/utlis/aside";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 // import { useRouter } from 'next/navigation';
+import { useLocale } from "next-intl";
 
 export default function CustomerLogin() {
+
+  const locale = useLocale();
   useEffect(() => {
     const pageOverlay = document.getElementById("pageOverlay");
 
@@ -66,7 +69,7 @@ export default function CustomerLogin() {
       } else {
         setSuccess(data.message);
         setError(null);
-        setTimeout(() => window.location.href='/verify-otp', 1000);
+        setTimeout(() => window.location.href=`/${locale}/verify-otp`, 1000);
       }
       // console.log(data);
     } catch (error) {

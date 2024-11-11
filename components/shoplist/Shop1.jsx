@@ -18,9 +18,11 @@ import {
 } from "@/data/products/productCategories";
 import he from 'he';
 import Slider from "rc-slider";
-import Price from "./filter/Price";
+
+import {useLocale} from 'next-intl';
 
 export default function Shop1({ search }) {
+  const locale = useLocale();
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
 
@@ -60,7 +62,7 @@ export default function Shop1({ search }) {
       if (data.length === 0) {
         setHasMore(false);
       }
-      console.log('Data', data);
+      // console.log('Data', data);
       // setProducts((prevData) => [...prevData, ...data]); // Append new data
       setProducts((prevData) => {
         // console.log('Products', ...prevData);
@@ -68,10 +70,10 @@ export default function Shop1({ search }) {
       });
 
       const filtered = data.filter(product => {
-        console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
+        // console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
         return product.price <= price[0] && product.price >= price[1]
       });
-      console.log('filteredData', filtered);
+      // console.log('filteredData', filtered);
 
       setFilteredProducts((prevDataa) => {
         // console.log('FilteredProducts', ...prevData);
@@ -127,7 +129,7 @@ useEffect(() => {
 
    // Sorting function
    const sortItems = (items, option) => {
-    console.log(items, option);
+    // console.log(items, option);
     switch (option) {
       case 'popularity':
         return [...items].sort((a, b) => b.sales - a.sales);
@@ -285,12 +287,12 @@ useEffect(() => {
                 />
                 <div className="price-range__info d-flex align-items-center mt-2">
                   <div className="me-auto">
-                    <span className="text-secondary">Max Price: </span>
-                    <span className="price-range__max">{price[1]}د.إ</span>
+                    <span className="text-secondary">Min Price: </span>
+                    <span className="price-range__max">{price[0]}د.إ</span>
                   </div>
                   <div>
-                    <span className="text-secondary">Min Price: </span>
-                    <span className="price-range__min">{price[0]}د.إ</span>
+                    <span className="text-secondary">Max Price: </span>
+                    <span className="price-range__min">{price[1]}د.إ</span>
                   </div>
                 </div>
             </div>
@@ -319,7 +321,7 @@ useEffect(() => {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -400,7 +402,7 @@ useEffect(() => {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (

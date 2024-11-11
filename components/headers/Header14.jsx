@@ -9,16 +9,20 @@ import { slideData1000 } from "@/data/heroslides";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
 import { IoLocationOutline  } from "react-icons/io5";
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useMenu } from '../../context/MenuContext';
 import { useUser } from '../../context/UserContext';
-
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter, usePathname } from "../../i18n/routing";
 
 export default function Header14() {
-
+  const locale = useLocale();
+  // console.log(locale);
+  const t = useTranslations();
+  
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
   const containerRef = useRef(null);
@@ -45,7 +49,9 @@ export default function Header14() {
 //     }
 //  }, [isLoggedIn]);
 
- const router = useRouter();
+//  const router = useRouter();
+const router = useRouter();
+const pathname = usePathname();
 
 const [searchKeyWord, setSearchKeyWord] = useState('');
 
@@ -60,7 +66,12 @@ const handleLogout = (e) => {
   window.location.href = '/';
 };
 
- const pathname = usePathname();
+const handleLangChange = (e) => {
+  // console.log(pathname, e.target.value);
+  router.push(pathname, { locale: e.target.value });
+};
+
+//  const pathname = usePathname();
 
  const { isLoggedIn } = useUser();
 
@@ -94,7 +105,7 @@ const handleLogout = (e) => {
 
   const onSearch = (event) => {
     event.preventDefault();
-    window.location.href = `/shop?q=${removeSpecialCharactersAndAmp(searchKeyWord).split(' ').join('-')}`;
+    window.location.href = `/${locale}/shop?q=${removeSpecialCharactersAndAmp(searchKeyWord).split(' ').join('-')}`;
   };
 
   function removeSpecialCharactersAndAmp(str) {
@@ -149,14 +160,14 @@ const handleLogout = (e) => {
               className="search-field container"
             >
               <p className="text-uppercase text-secondary fw-medium mb-4">
-                What are you looking for?
+                {t('title')}
               </p>
               <div className="position-relative">
                 <input
                   className="search-field__input search-popup__input w-100 fw-medium"
                   type="text"
                   name="search-keyword"
-                  placeholder="Search products"
+                  placeholder={t("Search Products")}
                   value={searchKeyWord}
                   onChange={handleChange}
                 />
@@ -180,26 +191,26 @@ const handleLogout = (e) => {
 
               <div className="search-popup__results">
                 <div className="sub-menu search-suggestion">
-                  <h6 className="sub-menu__title fs-base">Quicklinks</h6>
+                  <h6 className="sub-menu__title fs-base">{t("Quicklinks")}</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <a href="/shop/eau-de-parfum/oriental-fragrance/marj" className="menu-link menu-link_us-s">
-                        Marj
+                      <a href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/marj`} className="menu-link menu-link_us-s">
+                        {t("Marj")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="/shop/eau-de-parfum/occidental-fragrance/rose-noir" className="menu-link menu-link_us-s">
-                        Rose Noir
+                      <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`} className="menu-link menu-link_us-s">
+                        {t("Rose Noir")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender" className="menu-link menu-link_us-s">
-                        Oud Lavender
+                      <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`} className="menu-link menu-link_us-s">
+                        {t("Oud Lavender")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href="/shop/eau-de-parfum/occidental-fragrance/oud-classic" className="menu-link menu-link_us-s">
-                        Oud Classic
+                      <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-classic`} className="menu-link menu-link_us-s">
+                        {t("Oud Classic")}
                       </a>
                     </li>
                     {/* <li className="sub-menu__item">
@@ -234,16 +245,18 @@ const handleLogout = (e) => {
                       </option>
                     ))}
                   </select>
-                  {/* <select
+                  <select
                     className="form-select form-select-sm bg-transparent color-black"
                     name="store-language"
+                    value={locale}
+                    onChange={handleLangChange}
                   >
                     {languageOptions2.map((option, index) => (
                       <option key={index} value={option.value}>
                         {option.text}
                       </option>
                     ))}
-                  </select> */}
+                  </select>
                 </div>
               </div>
               <div className="logo">
@@ -261,7 +274,7 @@ const handleLogout = (e) => {
                     className="header-search__input w-100"
                     type="text"
                     name="search-keyword"
-                    placeholder="Search products..."
+                    placeholder={t("Search Products")}
                     onClick={() => setIsPopupOpen((pre) => !pre)}
                     value={searchKeyWord}
                     onChange={handleChange}
