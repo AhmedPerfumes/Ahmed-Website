@@ -237,7 +237,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -278,7 +278,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop/eau-de-parfum/oriental-fragrance/ignite-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -318,7 +318,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop/eau-de-parfum/oriental-fragrance/kaaf"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -358,7 +358,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop-1"
+                          href="/shop/eau-de-parfum/oriental-fragrance/laathani"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -398,7 +398,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop/eau-de-parfum/occidental-fragrance/marj"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -438,7 +438,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop/eau-de-parfum/occidental-fragrance/musk-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -478,7 +478,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop/eau-de-parfum/occidental-fragrance/oud-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -518,7 +518,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -558,7 +558,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop/eau-de-parfum/occidental-fragrance/rose-noir"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -598,7 +598,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href="/shop"
+                          href="/shop/eau-de-parfum/occidental-fragrance/summer-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -696,7 +696,7 @@ const Animation = () => {
           </div>
 
           <Link
-            href="/shop-1"
+            href="/shop"
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
             Discover More
@@ -944,21 +944,22 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-      <section className="testsect">
-        <div className="panel2 position-relative">
+
+      <section className="testsect section4">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/production.avif"
-            alt="Section 2"
+            alt="Ethereal Essence"
           />
-          <div className="text_reveal position-absolute">
-            <h2 className="text-center text-white h2">Section 5</h2>
+          <div className="text_reveal position-absolute zoom_img">
+          
+            <h2 className="text-center text-white h2">
+            Your Journey Begins with a Scent
+            </h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+            At Ahmed Al Maghribi Perfumes, each fragrance tells your story. Our luxurious scents evoke memories and emotions, becoming a lasting part of who you are.
             </p>
           </div>
           <a
@@ -999,12 +1000,8 @@ const Animation = () => {
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
             <h3 className="mb-3">The Company</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
-              sapien dignissim a elementum. Sociis metus, hendrerit mauris id
-              in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
-              sodales orci etiam phasellus lacus id leo. Amet turpis nunc, nulla
-              massa est viverra interdum. Praesent auctor nulla morbi non
-              posuere mattis. Arcu eu id maecenas cras.
+            Step into olfactory elegance with Ahmed Al Maghribi Perfumes, where each composition is a symphony of rare absolutes and precious accords. Our meticulously curated essences evoke sophistication, crafting sillage that lingers in timeless harmony. Experience the alchemy of fragrance at its finest.
+
             </p>
           </div>
           <div className="order-0 order-md-1">

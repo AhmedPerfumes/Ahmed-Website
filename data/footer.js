@@ -50,7 +50,7 @@ export const currencyOptions = [
 
 export const socialLinks = [
   {
-    href: "https://facebook.com",
+    href: "https://www.facebook.com/ahmedalmaghribiperfumesllc/",
     className: "svg-icon svg-icon_facebook",
     width: 9,
     height: 15,
@@ -58,7 +58,7 @@ export const socialLinks = [
     icon: "#icon_facebook",
   },
   {
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/ahmedalmaghribiperfumes/",
     className: "svg-icon svg-icon_instagram",
     width: 14,
     height: 13,
@@ -66,7 +66,7 @@ export const socialLinks = [
     icon: "#icon_instagram",
   },
   {
-    href: "https://youtube.com",
+    href: "https://www.youtube.com/channel/UCzUsyi2q3zCR4YTeAA1okkg",
     className: "svg-icon svg-icon_youtube",
     width: 16,
     height: 11,
