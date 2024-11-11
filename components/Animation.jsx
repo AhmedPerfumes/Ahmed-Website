@@ -15,10 +15,11 @@ import "./Animation.css";
 import MobileSlider from "./singleProduct/sliders/MobileSlider";
 import { duration } from "@mui/material";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const Animation = () => {
   const locale = useLocale();
+  const t = useTranslations();
   useEffect(() => {
     const isMobileDevice = () => {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -188,20 +189,17 @@ const Animation = () => {
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/multiple-products-banner.avif"
-            alt="Signature Selections"
+            alt={t("Signature Selections")}
           />
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-              Signature Selections
+            {t("Signature Selections")}
             </div>
             <h2 className="text-center text-white h2">
-              Fragrances Adored by All
+              {t("Fragrances Adored by All")}
             </h2>
             <p className="text-center text-white p">
-              Explore our bestsellers, a collection of high-quality fragrances
-              designed to cater to diverse tastes. From timeless classics to
-              modern blends, each scent is crafted with precision, offering
-              something special for every fragrance lover.
+              {t("Discover our bestsellers crafted to suit diverse tastes From classics to modern blends each fragrance offers something unique for every scent lover")}
             </p>
           </div>
 
@@ -645,7 +643,7 @@ const Animation = () => {
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect section3">
-        <div className="panel2 position-relative">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -655,14 +653,11 @@ const Animation = () => {
 
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-              Where Luxury Meets Your Senses
+              {t("Where Luxury Meets Your Senses")}
             </div>
-            <h2 className="text-center text-white h2">Exclusive Collection</h2>
+            <h2 className="text-center text-white h2">{t("Exclusive Collection")}</h2>
             <p className="text-center text-white p">
-              Explore our unique selection of exquisite scents. Every fragrance
-              is expertly created using the best ingredients to convey elegance
-              and originality. Discover a variety of unique scents that
-              complement your sense of style and leave a lasting impression.
+              {t("Explore our exclusive collection of refined scents made with the finest ingredients Elegant and original each fragrance complements your style")}
             </p>
           </div>
           <a
@@ -674,6 +669,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
+      
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
           {/* For Large Screens */}
@@ -717,15 +713,11 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-              Elegant Treasures for Every Occasion
+              {t("Elegant Treasures for Every Occasion")}
             </div>
-            <h2 className="text-center text-white h2">The Art of Gifting</h2>
+            <h2 className="text-center text-white h2">{t("The Art of Gifting")}</h2>
             <p className="text-center text-white p">
-              Delight in our exquisite fragrance gift sets, each thoughtfully
-              curated to celebrate special moments. Elegantly presented, these
-              sets feature a selection of our finest scents, making them the
-              perfect gift for loved ones. Elevate any occasion with the luxury
-              of captivating aromas that linger in memory.
+              {t("Celebrate special moments with our curated fragrance gift sets Beautifully presented and featuring our finest scents they make the perfect gift for any occasion")}
             </p>
           </div>
           <a
@@ -759,17 +751,13 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute zoom_img">
             <div className="text-center text-white sub-title">
-              Ancient Aromas
+              {t("Ancient Aromas")}
             </div>
             <h2 className="text-center text-white h2">
-              The Essence of Arabic Dakhoon
+              {t("The Essence of Arabic Dakhoon")}
             </h2>
             <p className="text-center text-white p">
-              Discover the rich heritage of Arabic Dakhoon, crafted from the
-              finest natural ingredients. Each blend creates a warm and inviting
-              atmosphere, perfect for your home or special occasions. Light our
-              Dakhoon to enjoy long-lasting fragrances that reflect Middle
-              Eastern tradition.
+              {t("Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich long lasting aromas that bring warmth and tradition to your home")}
             </p>
           </div>
           <a
@@ -959,10 +947,10 @@ const Animation = () => {
           <div className="text_reveal position-absolute zoom_img">
           
             <h2 className="text-center text-white h2">
-            Your Journey Begins with a Scent
+            {t("Your Journey Begins with a Scent")}
             </h2>
             <p className="text-center text-white p">
-            At Ahmed Al Maghribi Perfumes, each fragrance tells your story. Our luxurious scents evoke memories and emotions, becoming a lasting part of who you are.
+            {t("At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that")}
             </p>
           </div>
           <a
@@ -987,24 +975,18 @@ const Animation = () => {
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
-            <h3 className="mb-3">Quality Since 20+ Years</h3>
+            <h3 className="mb-3">{t("Quality Crafted Through Expertise 20 plus Years of Mastery")}</h3>
             <p>
-              Quality is of prime importance at Al Maghribi Perfumes. We
-              consider to take the same approach to fragrances that connoisseurs
-              take. Careful consideration is given when bringing together
-              different elements that emit exquisite aromas. At each stage of
-              our production process, we have austere quality control checks
-              that ensure our lofty benchmarks are being met.
+              {t("For over 20 years Ahmed Al Maghribi Perfumes has been dedicated to creating luxurious timeless scents Using only the finest natural ingredients we ensure every fragrance is crafted with precision and excellence offering lasting quality")}
             </p>
           </div>
         </div>
 
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
-            <h3 className="mb-3">The Company</h3>
+            <h3 className="mb-3">{t("The Company")}</h3>
             <p>
-            Step into olfactory elegance with Ahmed Al Maghribi Perfumes, where each composition is a symphony of rare absolutes and precious accords. Our meticulously curated essences evoke sophistication, crafting sillage that lingers in timeless harmony. Experience the alchemy of fragrance at its finest.
-
+            {t("Step into olfactory elegance with Ahmed Al Maghribi Perfumes where each composition is a symphony of rare absolutes and precious accords Our meticulously curated essences evoke sophistication crafting sillage that lingers in timeless harmony Experience the alchemy of fragrance at its finest")}
             </p>
           </div>
           <div className="order-0 order-md-1">

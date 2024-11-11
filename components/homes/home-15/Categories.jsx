@@ -4,7 +4,10 @@ import { categories8, categories88 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
+
 export default function Categories({ section }) {
+  const t = useTranslations();
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -63,10 +66,10 @@ export default function Categories({ section }) {
                   </video>
                   <div className="text-center">
                     <Link href={elm.link} className="menu-link h6 fw-medium">
-                      {elm.altText}
+                      {t(elm.altText)}
                       <br />
                       <span className="fs-14 text-secondary fst-italic">
-                        {elm.subText}
+                        {t(elm.subText)}
                       </span>
                     </Link>
                   </div>
