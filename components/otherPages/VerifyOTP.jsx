@@ -20,7 +20,6 @@ export default function VerifyOTP() {
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    setIsLoading(true);
     if(mobile == '') {
      setError('Mobile Number is Required');
      setSuccess(null);
