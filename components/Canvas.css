@@ -68,23 +68,26 @@
   
   .skip-button {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+    bottom: 60px;
+    left: 50%;
+    width: 120px; /* Make width a bit wider for a capsule look */
+    height: 60px; /* Reduce height to get a capsule shape */
+    border-radius: 30px; /* Apply uniform border-radius for capsule shape */
+    background-color: rgba(0, 0, 0, 0.178); /* Transparent background */
+    color: rgb(255, 255, 255);
     font-size: 14px;
-    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
-  }
+    border: 2px solid white;
+}
+
   
   .skip-button:hover {
     background-color: rgba(0, 0, 0, 0.9);
   }
-  
+  .canvas.hidden{
+    display: none;
+  }

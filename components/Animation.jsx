@@ -17,33 +17,13 @@ import { duration } from "@mui/material";
 
 import { useLocale } from "next-intl";
 
+gsap.registerPlugin(ScrollTrigger);
 const Animation = () => {
   const locale = useLocale();
   useEffect(() => {
-    const isMobileDevice = () => {
-      return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    };
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Snapping logic
-    let snap = (value) => value; // a snapping function that we'll set later in a "refresh" event listener
-
-    // ScrollTrigger 1: sections scroll and snap vertically
-    // const sections = gsap.utils.toArray(".testsect");
-
-    // ScrollTrigger.create({
-    //   start: 1,
-    //   end: "max",
-    //   snap: {
-    //     snapTo: (value, self) => snap(value, self.direction),
-    //     duration: { min: 0.01, max: 0.3 },
-    //     delay: 0,
-    //   },
-    // });
-    // ScrollTrigger 2: horizontal scroll in section ".container"
-    const panels = gsap.utils.toArray(".cont .panel2");
-
+  // Check if the necessary elements exist before proceeding
+  const panels = gsap.utils.toArray(".cont .panel2");
+  if (panels.length > 0) {
     const panelTween = gsap.to(panels, {
       xPercent: -100 * (panels.length - 1),
       ease: "none",
@@ -51,14 +31,14 @@ const Animation = () => {
         trigger: ".cont",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        // markers: true,
         pin: true,
         scrub: 1,
       },
     });
-    // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
-    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+  }
 
+  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+  if (mobilepanel.length > 0) {
     const mobilepanelTween = gsap.to(mobilepanel, {
       xPercent: -100 * (mobilepanel.length - 1),
       ease: "none",
@@ -66,116 +46,103 @@ const Animation = () => {
         trigger: ".mobilecontainer",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        // markers: true,
         pin: true,
         scrub: 3,
-        // No snap property here
+      },
+    });
+  }
+
+  const swiper = new Swiper(".mySwiper", {
+    navigation: {
+      nextEl: ".swiper-next-button",
+      prevEl: ".swiper-prev-button",
+    },
+    effect: "fade",
+    loop: true,
+  });
+
+  swiper.on("slideChange", function (sld) {
+    document.body.setAttribute("data-sld", sld.realIndex);
+  });
+
+  swiper.on("slideChange", function () {
+    const activeIndex = swiper.realIndex;
+    updateNavCircle(activeIndex);
+  });
+
+  function updateNavCircle(activeIndex) {
+    const circles = document.querySelectorAll(".nav-circle");
+    circles.forEach((circle) => {
+      circle.classList.remove("active");
+    });
+
+    const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
+    if (activeCircle) {
+      activeCircle.classList.add("active");
+    }
+  }
+
+  function handleNavCircleClick(index) {
+    swiper.slideTo(index);
+  }
+
+  const navCircles = document.querySelectorAll(".nav-circle");
+  navCircles.forEach((circle, index) => {
+    circle.addEventListener("click", () => handleNavCircleClick(index));
+  });
+
+  gsap.utils.toArray(".testsect").forEach((section) => {
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 400px',
+        end: 'bottom 95%',
+        scrub: 4,
       },
     });
 
-    const swiper = new Swiper(".mySwiper", {
-      navigation: {
-        nextEl: ".swiper-next-button",
-        prevEl: ".swiper-prev-button",
-      },
-      effect: "fade",
-      loop: true,
+    timeline.to(section.querySelector(".sub-title"), {
+      opacity: 1,
+      duration: 1,
     });
 
-    swiper.on("slideChange", function (sld) {
-      document.body.setAttribute("data-sld", sld.realIndex);
-    });
-    swiper.on("slideChange", function () {
-      const activeIndex = swiper.realIndex;
-      updateNavCircle(activeIndex);
-    });
+    timeline.fromTo(
+      section.querySelector(".h2"),
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2.75 }
+    );
 
-    function updateNavCircle(activeIndex) {
-      // Remove 'active' class from all circles
-      const circles = document.querySelectorAll(".nav-circle");
-      circles.forEach((circle) => {
-        circle.classList.remove("active");
-      });
+    timeline.fromTo(
+      section.querySelector(".p"),
+      { y: 60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2.85 }
+    );
+  });
 
-      // Add 'active' class to the current circle
-      const activeCircle =
-        document.querySelectorAll(".nav-circle")[activeIndex];
-      if (activeCircle) {
-        activeCircle.classList.add("active");
-      }
-    }
-
-    function handleNavCircleClick(index) {
-      swiper.slideTo(index);
-    }
-
-    // Attach click event listeners to the navigation circles
-    const navCircles = document.querySelectorAll(".nav-circle");
-    navCircles.forEach((circle, index) => {
-      circle.addEventListener("click", () => handleNavCircleClick(index));
-    });
-
-    gsap.utils.toArray(".testsect").forEach((section) => {
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          
-          trigger: section, // use individual section as trigger
-          start: 'top 400px',
-          end: 'bottom 95%',
-          
-          scrub: 4,
-          
-        }
-      });
-
-      timeline.to(section.querySelector(".sub-title"), {
-        opacity: 1,
-        duration: 1,
-      });
-
-      timeline.fromTo(
-        section.querySelector(".h2"),
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 2.75 }
-      );
-
-      timeline.fromTo(
-        section.querySelector(".p"),
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 2.85 }
-      );
-
-      // timeline.to(section.querySelector('.panel2'), {
-      //   yPercent: -5,
-      //   duration: 1
-      // });
-    });
-
-    let imgs = gsap.utils.toArray(".zoom_img");
-    imgs.forEach((img, i) => {
+  let imgs = gsap.utils.toArray(".zoom_img");
+  imgs.forEach((img, i) => {
+    if (img) {
       gsap.fromTo(
         img,
-        { scale: 0.75 }, // Initial scale
+        { scale: 0.75 },
         {
-          scale: 1, // Final scale
+          scale: 1,
           scrollTrigger: {
             trigger: img,
             start: "top 70%",
             end: "top 7.5%",
-
-            // markers: true,
             scrub: 1,
-            // snap: !isMobileDevice() ? true : false,
           },
         }
       );
-    });
+    }
+  });
 
-    // Cleanup on unmount
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+  return () => {
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  };
+}, []);
+
 
   return (
     <div id="main2">
@@ -853,6 +820,13 @@ const Animation = () => {
               highest-quality ingredients, imparting our perfumes with their
               rich olfactory facets.
             </p>
+            <Link
+            href={`/en/export`}
+            className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+          >
+            Discover More
+          </Link>
+          
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <img
@@ -927,6 +901,7 @@ const Animation = () => {
               highest-quality ingredients, imparting our perfumes with their
               rich olfactory facets.
             </p>
+            
             <div className="row">
               <div className="col-6">
                 <img
