@@ -22,128 +22,134 @@ const Animation = () => {
   const locale = useLocale();
   const t = useTranslations();
   useEffect(() => {
-  // Check if the necessary elements exist before proceeding
-  const panels = gsap.utils.toArray(".cont .panel2");
-  if (panels.length > 0) {
-    const panelTween = gsap.to(panels, {
-      xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cont",
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        pin: true,
-        scrub: 1,
-      },
-    });
-  }
-
-  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
-  if (mobilepanel.length > 0) {
-    const mobilepanelTween = gsap.to(mobilepanel, {
-      xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".mobilecontainer",
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        pin: true,
-        scrub: 3,
-      },
-    });
-  }
-
-  const swiper = new Swiper(".mySwiper", {
-    navigation: {
-      nextEl: ".swiper-next-button",
-      prevEl: ".swiper-prev-button",
-    },
-    effect: "fade",
-    loop: true,
-  });
-
-  swiper.on("slideChange", function (sld) {
-    document.body.setAttribute("data-sld", sld.realIndex);
-  });
-
-  swiper.on("slideChange", function () {
-    const activeIndex = swiper.realIndex;
-    updateNavCircle(activeIndex);
-  });
-
-  function updateNavCircle(activeIndex) {
-    const circles = document.querySelectorAll(".nav-circle");
-    circles.forEach((circle) => {
-      circle.classList.remove("active");
-    });
-
-    const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
-    if (activeCircle) {
-      activeCircle.classList.add("active");
+    // Check if the necessary elements exist before proceeding
+    const panels = gsap.utils.toArray(".cont .panel2");
+    if (panels.length > 0) {
+      const panelTween = gsap.to(panels, {
+        xPercent:
+          locale == "en"
+            ? -100 * (panels.length - 1)
+            : 100 * (panels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".cont",
+          start: "top top",
+          end: "+=" + window.innerWidth * 3,
+          pin: true,
+          scrub: 1,
+        },
+      });
     }
-  }
 
-  function handleNavCircleClick(index) {
-    swiper.slideTo(index);
-  }
+    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+    if (mobilepanel.length > 0) {
+      const mobilepanelTween = gsap.to(mobilepanel, {
+        xPercent:
+          locale == "en"
+            ? -100 * (mobilepanel.length - 1)
+            : 100 * (panels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".mobilecontainer",
+          start: "top top",
+          end: "+=" + window.innerWidth * 3,
+          pin: true,
+          scrub: 3,
+        },
+      });
+    }
 
-  const navCircles = document.querySelectorAll(".nav-circle");
-  navCircles.forEach((circle, index) => {
-    circle.addEventListener("click", () => handleNavCircleClick(index));
-  });
-
-  gsap.utils.toArray(".testsect").forEach((section) => {
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 400px',
-        end: 'bottom 95%',
-        scrub: 4,
+    const swiper = new Swiper(".mySwiper", {
+      navigation: {
+        nextEl: ".swiper-next-button",
+        prevEl: ".swiper-prev-button",
       },
+      effect: "fade",
+      loop: true,
     });
 
-    timeline.to(section.querySelector(".sub-title"), {
-      opacity: 1,
-      duration: 1,
+    swiper.on("slideChange", function (sld) {
+      document.body.setAttribute("data-sld", sld.realIndex);
     });
 
-    timeline.fromTo(
-      section.querySelector(".h2"),
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 2.75 }
-    );
+    swiper.on("slideChange", function () {
+      const activeIndex = swiper.realIndex;
+      updateNavCircle(activeIndex);
+    });
 
-    timeline.fromTo(
-      section.querySelector(".p"),
-      { y: 60, opacity: 0 },
-      { y: 0, opacity: 1, duration: 2.85 }
-    );
-  });
+    function updateNavCircle(activeIndex) {
+      const circles = document.querySelectorAll(".nav-circle");
+      circles.forEach((circle) => {
+        circle.classList.remove("active");
+      });
 
-  let imgs = gsap.utils.toArray(".zoom_img");
-  imgs.forEach((img, i) => {
-    if (img) {
-      gsap.fromTo(
-        img,
-        { scale: 0.75 },
-        {
-          scale: 1,
-          scrollTrigger: {
-            trigger: img,
-            start: "top 70%",
-            end: "top 7.5%",
-            scrub: 1,
-          },
-        }
+      const activeCircle =
+        document.querySelectorAll(".nav-circle")[activeIndex];
+      if (activeCircle) {
+        activeCircle.classList.add("active");
+      }
+    }
+
+    function handleNavCircleClick(index) {
+      swiper.slideTo(index);
+    }
+
+    const navCircles = document.querySelectorAll(".nav-circle");
+    navCircles.forEach((circle, index) => {
+      circle.addEventListener("click", () => handleNavCircleClick(index));
+    });
+
+    gsap.utils.toArray(".testsect").forEach((section) => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 400px",
+          end: "bottom 95%",
+          scrub: 4,
+        },
+      });
+
+      timeline.to(section.querySelector(".sub-title"), {
+        opacity: 1,
+        duration: 1,
+      });
+
+      timeline.fromTo(
+        section.querySelector(".h2"),
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 2.75 }
       );
-    }
-  });
 
-  return () => {
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  };
-}, []);
+      timeline.fromTo(
+        section.querySelector(".p"),
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 2.85 }
+      );
+    });
 
+    let imgs = gsap.utils.toArray(".zoom_img");
+    imgs.forEach((img, i) => {
+      if (img) {
+        gsap.fromTo(
+          img,
+          { scale: 0.75 },
+          {
+            scale: 1,
+            scrollTrigger: {
+              trigger: img,
+              start: "top 70%",
+              end: "top 7.5%",
+              scrub: 1,
+            },
+          }
+        );
+      }
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
     <div id="main2">
@@ -160,13 +166,15 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-            {t("Signature Selections")}
+              {t("Signature Selections")}
             </div>
             <h2 className="text-center text-white h2">
               {t("Fragrances Adored by All")}
             </h2>
             <p className="text-center text-white p">
-              {t("Discover our bestsellers crafted to suit diverse tastes From classics to modern blends each fragrance offers something unique for every scent lover")}
+              {t(
+                "Discover our bestsellers crafted to suit diverse tastes From classics to modern blends each fragrance offers something unique for every scent lover"
+              )}
             </p>
           </div>
 
@@ -526,7 +534,9 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={"/en/shop/eau-de-parfum/occidental-fragrance/rose-noir"}
+                          href={
+                            "/en/shop/eau-de-parfum/occidental-fragrance/rose-noir"
+                          }
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -622,9 +632,13 @@ const Animation = () => {
             <div className="text-center text-white sub-title">
               {t("Where Luxury Meets Your Senses")}
             </div>
-            <h2 className="text-center text-white h2">{t("Exclusive Collection")}</h2>
+            <h2 className="text-center text-white h2">
+              {t("Exclusive Collection")}
+            </h2>
             <p className="text-center text-white p">
-              {t("Explore our exclusive collection of refined scents made with the finest ingredients Elegant and original each fragrance complements your style")}
+              {t(
+                "Explore our exclusive collection of refined scents made with the finest ingredients Elegant and original each fragrance complements your style"
+              )}
             </p>
           </div>
           <a
@@ -636,7 +650,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      
+
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
           {/* For Large Screens */}
@@ -682,9 +696,13 @@ const Animation = () => {
             <div className="text-center text-white sub-title">
               {t("Elegant Treasures for Every Occasion")}
             </div>
-            <h2 className="text-center text-white h2">{t("The Art of Gifting")}</h2>
+            <h2 className="text-center text-white h2">
+              {t("The Art of Gifting")}
+            </h2>
             <p className="text-center text-white p">
-              {t("Celebrate special moments with our curated fragrance gift sets Beautifully presented and featuring our finest scents they make the perfect gift for any occasion")}
+              {t(
+                "Celebrate special moments with our curated fragrance gift sets Beautifully presented and featuring our finest scents they make the perfect gift for any occasion"
+              )}
             </p>
           </div>
           <a
@@ -724,7 +742,9 @@ const Animation = () => {
               {t("The Essence of Arabic Dakhoon")}
             </h2>
             <p className="text-center text-white p">
-              {t("Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich long lasting aromas that bring warmth and tradition to your home")}
+              {t(
+                "Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich long lasting aromas that bring warmth and tradition to your home"
+              )}
             </p>
           </div>
           <a
@@ -809,12 +829,11 @@ const Animation = () => {
               rich olfactory facets.
             </p>
             <Link
-            href={`/en/export`}
-            className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
-          >
-            Discover More
-          </Link>
-          
+              href={`/en/export`}
+              className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+            >
+              Discover More
+            </Link>
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <img
@@ -889,7 +908,7 @@ const Animation = () => {
               highest-quality ingredients, imparting our perfumes with their
               rich olfactory facets.
             </p>
-            
+
             <div className="row">
               <div className="col-6">
                 <img
@@ -920,12 +939,13 @@ const Animation = () => {
             alt="Ethereal Essence"
           />
           <div className="text_reveal position-absolute zoom_img">
-          
             <h2 className="text-center text-white h2">
-            {t("Your Journey Begins with a Scent")}
+              {t("Your Journey Begins with a Scent")}
             </h2>
             <p className="text-center text-white p">
-            {t("At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that")}
+              {t(
+                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that"
+              )}
             </p>
           </div>
           <a
@@ -950,9 +970,13 @@ const Animation = () => {
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
-            <h3 className="mb-3">{t("Quality Crafted Through Expertise 20 plus Years of Mastery")}</h3>
+            <h3 className="mb-3">
+              {t("Quality Crafted Through Expertise 20 plus Years of Mastery")}
+            </h3>
             <p>
-              {t("For over 20 years Ahmed Al Maghribi Perfumes has been dedicated to creating luxurious timeless scents Using only the finest natural ingredients we ensure every fragrance is crafted with precision and excellence offering lasting quality")}
+              {t(
+                "For over 20 years Ahmed Al Maghribi Perfumes has been dedicated to creating luxurious timeless scents Using only the finest natural ingredients we ensure every fragrance is crafted with precision and excellence offering lasting quality"
+              )}
             </p>
           </div>
         </div>
@@ -961,7 +985,9 @@ const Animation = () => {
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
             <h3 className="mb-3">{t("The Company")}</h3>
             <p>
-            {t("Step into olfactory elegance with Ahmed Al Maghribi Perfumes where each composition is a symphony of rare absolutes and precious accords Our meticulously curated essences evoke sophistication crafting sillage that lingers in timeless harmony Experience the alchemy of fragrance at its finest")}
+              {t(
+                "Step into olfactory elegance with Ahmed Al Maghribi Perfumes where each composition is a symphony of rare absolutes and precious accords Our meticulously curated essences evoke sophistication crafting sillage that lingers in timeless harmony Experience the alchemy of fragrance at its finest"
+              )}
             </p>
           </div>
           <div className="order-0 order-md-1">
