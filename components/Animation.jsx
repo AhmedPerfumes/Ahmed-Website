@@ -22,70 +22,26 @@ const Animation = () => {
   const locale = useLocale();
   const t = useTranslations();
   useEffect(() => {
-  // Check if the necessary elements exist before proceeding
-  const panels = gsap.utils.toArray(".cont .panel2");
-  if (panels.length > 0) {
-    const panelTween = gsap.to(panels, {
-      xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cont",
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        pin: true,
-        scrub: 1,
-      },
-    });
-  }
-
-  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
-  if (mobilepanel.length > 0) {
-    const mobilepanelTween = gsap.to(mobilepanel, {
-      xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".mobilecontainer",
-        start: "top top",
-        end: "+=" + window.innerWidth * 3,
-        pin: true,
-        scrub: 3,
-      },
-    });
-  }
-
-  const swiper = new Swiper(".mySwiper", {
-    navigation: {
-      nextEl: ".swiper-next-button",
-      prevEl: ".swiper-prev-button",
-    },
-    effect: "fade",
-    loop: true,
-  });
-
-  swiper.on("slideChange", function (sld) {
-    document.body.setAttribute("data-sld", sld.realIndex);
-  });
-
-  swiper.on("slideChange", function () {
-    const activeIndex = swiper.realIndex;
-    updateNavCircle(activeIndex);
-  });
-
-  function updateNavCircle(activeIndex) {
-    const circles = document.querySelectorAll(".nav-circle");
-    circles.forEach((circle) => {
-      circle.classList.remove("active");
-    });
-
-    const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
-    if (activeCircle) {
-      activeCircle.classList.add("active");
+    // Check if the necessary elements exist before proceeding
+    const panels = gsap.utils.toArray(".cont .panel2");
+    if (panels.length > 0) {
+      const panelTween = gsap.to(panels, {
+        xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".cont",
+          start: "top top",
+          end: "+=" + window.innerWidth * 3,
+          pin: true,
+          scrub: 1,
+        },
+      });
     }
-
+  
     const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
     if (mobilepanel.length > 0) {
       const mobilepanelTween = gsap.to(mobilepanel, {
-        xPercent: -100 * (mobilepanel.length - 1),
+        xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
         ease: "none",
         scrollTrigger: {
           trigger: ".mobilecontainer",
@@ -96,7 +52,7 @@ const Animation = () => {
         },
       });
     }
-
+  
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -105,66 +61,65 @@ const Animation = () => {
       effect: "fade",
       loop: true,
     });
-
+  
     swiper.on("slideChange", function (sld) {
       document.body.setAttribute("data-sld", sld.realIndex);
     });
-
+  
     swiper.on("slideChange", function () {
       const activeIndex = swiper.realIndex;
       updateNavCircle(activeIndex);
     });
-
+  
     function updateNavCircle(activeIndex) {
       const circles = document.querySelectorAll(".nav-circle");
       circles.forEach((circle) => {
         circle.classList.remove("active");
       });
-
-      const activeCircle =
-        document.querySelectorAll(".nav-circle")[activeIndex];
+  
+      const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
       if (activeCircle) {
         activeCircle.classList.add("active");
       }
     }
-
+  
     function handleNavCircleClick(index) {
       swiper.slideTo(index);
     }
-
+  
     const navCircles = document.querySelectorAll(".nav-circle");
     navCircles.forEach((circle, index) => {
       circle.addEventListener("click", () => handleNavCircleClick(index));
     });
-
+  
     gsap.utils.toArray(".testsect").forEach((section) => {
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top 400px",
-          end: "bottom 95%",
+          start: 'top 400px',
+          end: 'bottom 95%',
           scrub: 4,
         },
       });
-
+  
       timeline.to(section.querySelector(".sub-title"), {
         opacity: 1,
         duration: 1,
       });
-
+  
       timeline.fromTo(
         section.querySelector(".h2"),
         { y: 50, opacity: 0 },
         { y: 0, opacity: 1, duration: 2.75 }
       );
-
+  
       timeline.fromTo(
         section.querySelector(".p"),
         { y: 60, opacity: 0 },
         { y: 0, opacity: 1, duration: 2.85 }
       );
     });
-
+  
     let imgs = gsap.utils.toArray(".zoom_img");
     imgs.forEach((img, i) => {
       if (img) {
@@ -181,15 +136,12 @@ const Animation = () => {
             },
           }
         );
-      }     
+      }
     });
   
-    
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }
-
   }, []);
 
   return (
