@@ -84,10 +84,10 @@ export default function Categories({ section }) {
       ) : (
         <>
           <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
-            Most Preferred Categories
+            {t("Iconic Indulgence")}
           </h2>
           <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center">
-            The World's Premium Brands In One Destination.
+            {t("See luxury in motion through the eyes of those who know it best")}
           </p>
           <div className="position-relative">
             <Swiper
@@ -113,10 +113,10 @@ export default function Categories({ section }) {
                   </video>
                   <div className="text-center">
                     <Link href={elm.link} className="menu-link h6 fw-medium">
-                      {elm.altText}
+                      {t(elm.altText)}
                       <br />
                       <span className="fs-14 text-secondary fst-italic">
-                        {elm.subText}
+                        {t(elm.subText)}
                       </span>
                     </Link>
                   </div>
