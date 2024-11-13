@@ -5,11 +5,12 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Hero() {
 
   const locale = useLocale();
+  const t=useTranslations();
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -45,19 +46,19 @@ export default function Hero() {
             </div>
             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
               <h6 className="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3 text-white">
-                {elm.season.toUpperCase()}
+                {t(elm.season)}
               </h6>
               <h2 className="h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5 text-white">
-                {elm.title}
+                {t(elm.title)}
               </h2>
               <h2 className="h1 fw-bold mb-2 animate animate_fade animate_btt animate_delay-5 text-white">
-                {elm.subtitle}
+                {t(elm.subtitle)}
               </h2>
               <Link
                 href={`/${locale}/shop`}
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7 text-white"
               >
-                Discover More
+                {t("Discover More")}
               </Link>
             </div>
           </div>

@@ -183,7 +183,7 @@ const Animation = () => {
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
-            Scroll To Discover More
+            {t("Scroll To Discover More")}
           </a>
         </div>
       </section>
@@ -197,26 +197,34 @@ const Animation = () => {
                 <div className="mainnn swiper-slide " id="beach">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Bin Shaikh</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Bin Shaikh")}</h1>
+                      <h2 className="mainnn-subtitle">AED 215</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        In 20 years, there could be more plastic in our oceans
-                        than fish.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("French Lavender, Saffron, Rose, Citrus,Oakmoss")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("Jasmine, Orchid, Sugar, Violet, Incense Bakhoor")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t(
+                            "Patchouli, Agarwood, Ambroxan, Musk White,Amber Resins"
+                          )}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Plastic pollution injures more than 100.000 marine
-                        animals every year.It takes around 450 years for one
-                        plastic bottle to decompose.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -238,26 +246,31 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="savanna">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Ignite Oud</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Ignite Oud")}</h1>
+                      <h2 className="mainnn-subtitle">AED 250</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        The Earth’s area affected by desertification is approx
-                        11 times India’s size.
-                      </div>
-                      <div className="mainnn-content__subtitle ">
-                        The Savannas act as a carbon sink, absorbing CO2 from
-                        the atmosphere and helping to maintain the balance of
-                        global temperatures.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("GERANIUM, LEATHER")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("CEDARWOOD, PATCHOULI")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("MOSS, MUSK, AMBER, SANDALWOOD")}
+                        </p>
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/oriental-fragrance/ignite-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -279,25 +292,34 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="glacier">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Kaaf</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Kaaf")}</h1>
+                      <h2 className="mainnn-subtitle">AED 90</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        Glaciers contain 75% of the World's freshwater.
+                        <p>
+                          {t("Top Notes:")}
+                          {t(
+                            "RED FRUITS, WATERMELON, LAVENDER, SICILIAN ORANGE"
+                          )}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("SANDAL WOOD, AMBBROXAN, WHITE MUSK")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("LOTUS, JASMINE, LILLY OF THE VALLEY, SEA ACCORD")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        The effects of melting ice glaciers are biodiversity
-                        loss, the rising of the sea level and the deficiency of
-                        freshwater, among others.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/oriental-fragrance/kaaf"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -319,25 +341,32 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Laathani</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Laathani")}</h1>
+                      <h2 className="mainnn-subtitle">AED 175</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("FRESH NOTES, CANDIED FRUITS, PINK PEPPER")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("OUD ACCORDS, ROSEMARY, BAKHOOR ACCORDS")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("WHITE AMBER, VETIVER, MUSK, LEATHER")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/oriental-fragrance/laathani"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -359,25 +388,38 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Marj</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Marj")}</h1>
+                      <h2 className="mainnn-subtitle">AED 165</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t(
+                            "BERGAMOT, PINK PEPPER, ELEMI, NUTMEG, TANGERINE, OUD, HONEY"
+                          )}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t(
+                            "PATCHOULI, AROMATIC ACCORDS, VETIVER, CASHMERE WOOD, CINNAMON, ROSE, SAFFRON,JASMINE, ORANGE BLOSSOM"
+                          )}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t(
+                            "MUSK, AMBER, RASPBERRY, SAFFRON, OAKMOSS,POWDER, AMBRETTE SEEDS,LEATHER, SANDALWOOD, VIOLET, AGARWOOD, AMBROXAN"
+                          )}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/marj"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -399,25 +441,32 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Musk & Roses</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Musk & Roses")}</h1>
+                      <h2 className="mainnn-subtitle">AED 110</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("Floral Raspberry")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("Roses")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("Musky")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/musk-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -439,25 +488,32 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Oud & Roses</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Oud & Roses")}</h1>
+                      <h2 className="mainnn-subtitle">AED 135</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("Turkish rose,lavender, lemon,peony")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("sandal wood,white flowers, frankincense")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("agarwood, guaiac wood, oak moss, Musk, amber")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/oud-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -479,25 +535,32 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Oud Lavender</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Oud Lavender")}</h1>
+                      <h2 className="mainnn-subtitle">AED 135</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("Hyacinth, Lavender, Fruits")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("Iris, Jasmine, Pink Pepper")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("Vetiver, Amber, Oud, Musk")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -519,19 +582,26 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Rose Noir</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Rose Noir")}</h1>
+                      <h2 className="mainnn-subtitle">AED 110</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("Rose, Jasmine, Peony")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("White Flower, Sandal Wood, Frankincense")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("Agarwood, Musk, Amber, Oak Moss")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href={
@@ -539,7 +609,7 @@ const Animation = () => {
                           }
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -561,25 +631,32 @@ const Animation = () => {
                 <div className="mainnn swiper-slide" id="coral">
                   <div className="left-sideee">
                     <div className="mainnn-wrapper">
-                      <h3 className="mainnn-header">BEST SELLERS</h3>
-                      <h1 className="mainnn-title">Summer Oud</h1>
-                      <h2 className="mainnn-subtitle">AED 39.90</h2>
+                      <h3 className="mainnn-header">{t("Best Sellers")}</h3>
+                      <h1 className="mainnn-title">{t("Summer Oud")}</h1>
+                      <h2 className="mainnn-subtitle">AED 150</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
-                        We will have lost 60% of our coral reefs by 2030.
+                        <p>
+                          {t("Top Notes:")}
+                          {t("CYPRIOL, SAFFRON, INCENSE, MANDARIN")}
+                        </p>
+                        <p>
+                          {t("Heart Notes:")}
+                          {t("ROSE, AMBER, PATCHOULI, CASHMERE WOOD, CARAMEL")}
+                        </p>
+                        <p>
+                          {t("Base Notes:")}
+                          {t("OUD ACCORD, MUSK, OAK MOSS, VETIVER, LEATHER")}
+                        </p>
                       </div>
-                      <div className="mainnn-content__subtitle ">
-                        Coral reefs are essential to humans, as they protect the
-                        shorelines and are a source of nutrients and habitat for
-                        thousands of marine species.
-                      </div>
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/summer-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
-                          Shop Now
+                          {t("Shop Now")}
                         </Link>
                       </div>
                     </div>
@@ -646,7 +723,7 @@ const Animation = () => {
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
-            Scroll To Discover More
+            {t("Scroll To Discover More")}
           </a>
         </div>
       </section>
@@ -656,7 +733,7 @@ const Animation = () => {
           {/* For Large Screens */}
           <div className="d-none d-lg-block pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2">
-              Crafted for the Discerning Few
+              {t("Crafted for the Discerning")}
             </h2>
             <video muted autoPlay loop className="w-75 pt-5" preload="none">
               <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
@@ -665,7 +742,7 @@ const Animation = () => {
           {/* For small screens */}
           <div className="d-block d-lg-none pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2 s-font">
-              Crafted for the Discerning Few
+              {t("Crafted for the Discerning")}
             </h2>
             <video muted autoPlay loop className="w-75 pt-2" preload="none">
               <source
@@ -679,7 +756,7 @@ const Animation = () => {
             href={`/${locale}/shop`}
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
-            Discover More
+            {t("Discover More")}
           </Link>
         </div>
       </section>
@@ -710,7 +787,7 @@ const Animation = () => {
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
-            Scroll To Discover More
+            {t("Scroll To Discover More")}
           </a>
         </div>
       </section>
@@ -752,7 +829,7 @@ const Animation = () => {
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
-            Scroll To Discover More
+            {t("Scroll To Discover More")}
           </a>
         </div>
       </section>
@@ -778,15 +855,10 @@ const Animation = () => {
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Carefully <span className="s-font">selected ingredients</span>
+              {t("Essence of Arabia")}
+              {/* Carefully <span className="s-font">selected ingredients</span> */}
             </h3>
-            <p className="text-center px-3">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets.
-            </p>
+            <p className="text-center px-3">{t("Step into")}</p>
             <div className="mt-4">
               <Link href="#">
                 <img
@@ -812,27 +884,28 @@ const Animation = () => {
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Carefully{" "}
+              Reaching{" "}
               <span
                 className="s-font
               
               "
               >
-                selected ingredients
+                Every Corner of the World
               </span>
             </h3>
             <p className="text-center px-3">
-              From sadendemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets.
+              Ahmed Al Maghribi Perfumes proudly spans over 91 countries,
+              sharing our luxurious fragrances with the world. With an
+              unwavering commitment to craftsmanship and excellence, our
+              signature scents are now available for global distribution,
+              spreading the essence of timeless luxury and rich tradition to
+              every corner of the globe.
             </p>
             <Link
               href={`/en/export`}
               className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
             >
-              Discover More
+              {t("Discover More")}
             </Link>
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
@@ -852,16 +925,6 @@ const Animation = () => {
 
       {/* This is the Mobile Slider  */}
       <section className="MobileSlider mobilecontainer d-lg-none zoom_img">
-        {/* <div className="mobilepanel d-flex align-items-center">
-          <div className="inner">
-            <video loop muted autoPlay className="w-100" preload="none">
-              <source
-                src="/assets/videos/ignite-rose-slideshow.mp4"
-                type="video/mp4"
-              />
-            </video>
-          </div>
-        </div> */}
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
@@ -953,7 +1016,7 @@ const Animation = () => {
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
-            Scroll To Discover More
+            {t("Scroll To Discover More")}
           </a>
         </div>
       </section>
@@ -984,11 +1047,7 @@ const Animation = () => {
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
             <h3 className="mb-3">{t("The Company")}</h3>
-            <p>
-              {t(
-                "Step into olfactory elegance with Ahmed Al Maghribi Perfumes where each composition is a symphony of rare absolutes and precious accords Our meticulously curated essences evoke sophistication crafting sillage that lingers in timeless harmony Experience the alchemy of fragrance at its finest"
-              )}
-            </p>
+            <p>{t("Steps")}</p>
           </div>
           <div className="order-0 order-md-1">
             <img
