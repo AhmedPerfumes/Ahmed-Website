@@ -14,10 +14,10 @@ export default function OrderCompleted() {
     setShowDate(true);
     localStorage.setItem('cartList', []);
     setCartProducts([]);
-    if(localStorage.getItem('orderData').length > 0) {
-      setOrderDetails(JSON.parse(atob(localStorage.getItem('orderData'))));
-      // localStorage.setItem('orderData', '');
-    }
+    // if(localStorage.getItem('orderData').length > 0) {
+    //   setOrderDetails(JSON.parse(atob(localStorage.getItem('orderData'))));
+    //   // localStorage.setItem('orderData', '');
+    // }
     // console.log('...', localStorage.getItem('orderData').length);
   }, []);
 

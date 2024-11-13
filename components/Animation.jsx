@@ -26,7 +26,7 @@ const Animation = () => {
   const panels = gsap.utils.toArray(".cont .panel2");
   if (panels.length > 0) {
     const panelTween = gsap.to(panels, {
-      xPercent: -100 * (panels.length - 1),
+      xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
       ease: "none",
       scrollTrigger: {
         trigger: ".cont",
@@ -41,7 +41,7 @@ const Animation = () => {
   const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
   if (mobilepanel.length > 0) {
     const mobilepanelTween = gsap.to(mobilepanel, {
-      xPercent: -100 * (mobilepanel.length - 1),
+      xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
       ease: "none",
       scrollTrigger: {
         trigger: ".mobilecontainer",
