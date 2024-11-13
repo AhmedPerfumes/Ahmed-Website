@@ -181,13 +181,15 @@ const Animation = () => {
             },
           }
         );
-      }
+      }     
     });
-
+  
+    
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }
+
   }, []);
 
   return (
