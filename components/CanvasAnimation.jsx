@@ -3,9 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
-import Footer14 from "@/components/footers/Footer14";
-import Animation from "@/components/Animation";
-import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 import "./Canvas.css";
 
@@ -14,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const [showSkipButton, setShowSkipButton] = useState(false);
-  const [isVisible, setIsVisible] = useState(true); // New state for visibility
   const frameCount = 343;
   let images = [];
   let ball = { frame: 0 };
@@ -66,10 +62,6 @@ const CanvasAnimation = () => {
           });
         }
       },
-      onComplete: () => {
-        // Hide the component after the animation completes
-        setIsVisible(false); // This will hide the component
-      }
     });
 
     return () => {
@@ -86,25 +78,12 @@ const CanvasAnimation = () => {
   };
 
   return (
-    isVisible ? <div>
+    <div>
       <canvas ref={canvasRef} className="canvas"></canvas>
       {showSkipButton && (
         <button onClick={skipAnimation} className="skip-button">Skip</button>
       )}
-    </div> : <>
-            <main id="">
-            {/* Animation component will render after CanvasAnimation */}
-            <Animation />
-          </main>
-          <section className="d-none d-lg-block" style={{ height: "100%" }}>
-            <Footer14 />
-          </section>
-          <section className="d-sm-block d-md-none bg-dark pt-5">
-            <div className="MobileFooter">
-              <MobileFooter2 />
-            </div>
-          </section>
-        </>
+    </div>
   );
 };
 
