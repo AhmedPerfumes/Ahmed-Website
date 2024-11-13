@@ -18,9 +18,11 @@ import {
 } from "@/data/products/productCategories";
 import he from 'he';
 import Slider from "rc-slider";
-import Price from "./filter/Price";
+
+import {useLocale} from 'next-intl';
 
 export default function Shop1({ search }) {
+  const locale = useLocale();
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
 
@@ -67,7 +69,7 @@ export default function Shop1({ search }) {
         return sortItems([...prevData, ...data], sortOption)
       });
 
-      const filtered = [...products, ...data].filter(product => {
+      const filtered = data.filter(product => {
         // console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
         return product.price <= price[0] && product.price >= price[1]
       });
@@ -319,7 +321,7 @@ useEffect(() => {
                   >
                     {elm?.images && JSON.parse(elm.images).map((image, ind) => (
                       <SwiperSlide key={ind} className="swiper-slide">
-                        <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
@@ -400,7 +402,7 @@ useEffect(() => {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <a href={`/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (

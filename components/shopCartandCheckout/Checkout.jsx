@@ -17,9 +17,12 @@ import Image from "next/image";
 import he from 'he';
 import { products1 } from "@/data/products/fashion";
 import { useRouter } from 'next/navigation';
+import { useLocale } from "next-intl";
 
 export default function Checkout() {
   const router = useRouter();
+  const locale = useLocale();
+
   const { cartProducts, totalPrice, freeShippingFlag, setOrderDetails } = useContextElement();
   const { isLoggedIn } = useUser();
   // const [selectedRegion, setSelectedRegion] = useState("");
@@ -188,7 +191,7 @@ export default function Checkout() {
           },
           shippingAdd: false,
         });
-        setTimeout(() => router.push('/shop-order-complete'), 1000);
+        setTimeout(() => router.push(`/${locale}/shop-order-complete`), 1000);
       } else if(data.message && data.message.split(' ')[0] == 'Redirecting') {
         setSuccess(data.message);
         setError(null);

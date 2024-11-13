@@ -1,8 +1,9 @@
 import Image from "next/image";
 import React from "react";
-
+import { useTranslations } from "next-intl";
 
 export default function About() {
+  const t = useTranslations();
   return (
     <section className="about-us">
       {/* Hero Image */}
@@ -19,7 +20,7 @@ export default function About() {
 
       {/* Main Content */}
       <div className="container mt-5 pt-5">
-        <div className="mw-930">
+        {/* <div className="mw-930">
           <h2 className="page-title text-center pt-4 fw-lighter">
             OUR ARABIC PERFUMES: INSPIRED BY TRADITIONS, MADE BY HANDS
           </h2>
@@ -44,7 +45,7 @@ export default function About() {
             and friends into a refreshing and fragrant home, with one of our
             signature Bakhoor fragrances.
           </p>
-        </div>
+        </div> */}
 
         <div className="row align-items-center pt-5">
           {/* Left Side - Image */}
@@ -60,32 +61,15 @@ export default function About() {
 
           {/* Right Side - Text */}
           <div className="col-lg-6 pt-5 mt-5 text-center text-lg-start">
-            <h4 className="fs-2 pt-5 mt-5">Ahmed Al Maghribi Perfumes</h4>
+            <h4 className="fs-2 pt-5 mt-5">{t("Celebrating 20 Years of Fragrant Excellence")}</h4>
             <p className="fs-5">
-              First started as a hobby of its founder - Mr. Kafeel Ahmed. His
-              passion for perfume making was so intense that it has evolved into
-              being one of the most loved perfume brands in the region. During
-              this 20 years plus journey, a lot of new fragrances have come into
-              existence. However, the ones that they initially started with, are
-              even today of key essence.
+              {t("Founded by Mr Kafeel Ahmed in 2000 Ahmed Al Maghribi Perfumes is a beacon of tradition and quality in the realm of Arabic fragrances Our journey is deeply rooted in respect for our cultural heritage dedicated to crafting scents that capture the essence of our region with the finest globally sourced ingredients")}
             </p>
             <p className="mt-3 fs-5">
-              The love for fragrance creation has been extended by creating
-              occasion specific perfumes, it's just like wearing different
-              attires depending on the place and occasion one intends to attend.
-              Our perfumes are produced by maintaining a close work relationship
-              with the local community. Some people know exactly what they want
-              and that helps us create personalized fragrances for them. Also,
-              we set ourselves apart from the approach of creating perfumes that
-              follow fashion. Our approach is strongly based on culture and
-              tradition. We understand that perfumes have strongly impacted the
-              Arabic culture. For example, Oud and musk are fragrances loved by
-              the prophet according to the Arabic tradition.
+              {t("With over 180 branches across the GCC and a growing international presence we have evolved the art of perfumery While honoring traditional Arabic techniques our innovative blends cater to diverse tastes ensuring each fragrance delivers a rich lasting experience")}
             </p>
             <p className="mt-3 fs-5">
-              Our business is closely knit as one family working together. We
-              believe this is important for our company as it helps us align and
-              nurture the core values of our business.
+              {t("Our mission remains unwavering to create high quality perfumes that resonate with individuality At Ahmed Al Maghribi Perfumes we invite you to explore our luxurious collection and find the perfect scent that truly reflects who you are")}
             </p>
           </div>
         </div>
@@ -93,16 +77,11 @@ export default function About() {
         <div className="row mt-5 pt-5">
           {/* Left Side - Text */}
           <div className="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
-            <h4 className="mb-4 fs-2">Since 20+ Years</h4>
+            <h4 className="mb-4 fs-2">{t("The Visionary Behind the Fragrance")}</h4>
             <p className="fs-5">
-              Quality is of prime importance at Al Maghribi Perfumes. We
-              consider taking the same approach to fragrances that connoisseurs
-              take. Careful consideration is given when bringing together
-              different elements that emit exquisite aromas. At each stage of
-              our production process, we have austere quality control checks
-              that ensure our lofty benchmarks are being met.
+              {t("Mr Kafeel Ahmed born and raised in the vibrant city of Mumbai has always possessed a deep seated passion for creation and innovation Despite initially being distant from the realms of luxury and fragrance his fascination with crafting unique experiences drew him into the captivating world of perfumery In 2000 he founded Ahmed Al Maghribi Perfumes starting with a humble home based factory and a single retail outlet Through relentless determination and the steadfast support of his dedicated team he navigated challenges to establish a brand that has become synonymous with luxury fragrances earning recognition across the GCC and beyond")}
             </p>
-            <p className="mt-3 fs-5">
+            {/* <p className="mt-3 fs-5">
               In order to conserve the traditional feel in our fragrances, all
               of our perfumes are handmade. Machines are hardly part of our
               creation process. We do not believe in modernizing the way in
@@ -110,7 +89,7 @@ export default function About() {
               great value and importance. This is how our perfumes distinguish
               themselves from the mass-produced ones available in the market
               today.
-            </p>
+            </p> */}
           </div>
 
           {/* Right Side - Video */}

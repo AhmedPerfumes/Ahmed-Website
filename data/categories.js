@@ -467,7 +467,7 @@ export const categories8 = [
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Antee Gift Set",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    subText: "Whispers of Elegance",
     videoSrc: "/assets/videos/giftsets/antee.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/antee.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/aayah"
@@ -476,7 +476,7 @@ export const categories8 = [
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
     altText: "The Dukhoon Collection",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    subText: "Tradition Reimagined",
     videoSrc: "/assets/videos/giftsets/dakhoon-collection.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/dukhoon-collection.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
@@ -484,8 +484,8 @@ export const categories8 = [
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Ihda Khas Gift Set",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    altText: "Ihdaa Khaas Gift Set",
+    subText: "Essence of Luxury",
     videoSrc: "/assets/videos/giftsets/ihdakhas.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/ihda-khas.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
@@ -494,7 +494,7 @@ export const categories8 = [
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
     altText: "Oud & Roses Gift Set",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    subText: "Expression of Memories",
     videoSrc: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
@@ -503,7 +503,7 @@ export const categories8 = [
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Shauque Al Shuyookh Gift Set",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    subText: "A Legacy of Grace",
     videoSrc: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
     link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"

@@ -15,167 +15,135 @@ import "./Animation.css";
 import MobileSlider from "./singleProduct/sliders/MobileSlider";
 import { duration } from "@mui/material";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
+gsap.registerPlugin(ScrollTrigger);
 const Animation = () => {
   const locale = useLocale();
+  const t = useTranslations();
   useEffect(() => {
-    const isMobileDevice = () => {
-      return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    };
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Snapping logic
-    let snap = (value) => value; // a snapping function that we'll set later in a "refresh" event listener
-
-    // ScrollTrigger 1: sections scroll and snap vertically
-    // const sections = gsap.utils.toArray(".testsect");
-
-    // ScrollTrigger.create({
-    //   start: 1,
-    //   end: "max",
-    //   snap: {
-    //     snapTo: (value, self) => snap(value, self.direction),
-    //     duration: { min: 0.01, max: 0.3 },
-    //     delay: 0,
-    //   },
-    // });
-    // ScrollTrigger 2: horizontal scroll in section ".container"
-    const panels = gsap.utils.toArray(".cont .panel2");
-
+  // Check if the necessary elements exist before proceeding
+  const panels = gsap.utils.toArray(".cont .panel2");
+  if (panels.length > 0) {
     const panelTween = gsap.to(panels, {
-      xPercent: -100 * (panels.length - 1),
+      xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
       ease: "none",
       scrollTrigger: {
         trigger: ".cont",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        // markers: true,
         pin: true,
         scrub: 1,
       },
     });
-    // ScrollTrigger 3: horizontal scroll in section ".mobilecontainer" without snapping
-    const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+  }
 
+  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+  if (mobilepanel.length > 0) {
     const mobilepanelTween = gsap.to(mobilepanel, {
-      xPercent: -100 * (mobilepanel.length - 1),
+      xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
       ease: "none",
       scrollTrigger: {
         trigger: ".mobilecontainer",
         start: "top top",
         end: "+=" + window.innerWidth * 3,
-        // markers: true,
         pin: true,
         scrub: 3,
-        // No snap property here
+      },
+    });
+  }
+
+  const swiper = new Swiper(".mySwiper", {
+    navigation: {
+      nextEl: ".swiper-next-button",
+      prevEl: ".swiper-prev-button",
+    },
+    effect: "fade",
+    loop: true,
+  });
+
+  swiper.on("slideChange", function (sld) {
+    document.body.setAttribute("data-sld", sld.realIndex);
+  });
+
+  swiper.on("slideChange", function () {
+    const activeIndex = swiper.realIndex;
+    updateNavCircle(activeIndex);
+  });
+
+  function updateNavCircle(activeIndex) {
+    const circles = document.querySelectorAll(".nav-circle");
+    circles.forEach((circle) => {
+      circle.classList.remove("active");
+    });
+
+    const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
+    if (activeCircle) {
+      activeCircle.classList.add("active");
+    }
+  }
+
+  function handleNavCircleClick(index) {
+    swiper.slideTo(index);
+  }
+
+  const navCircles = document.querySelectorAll(".nav-circle");
+  navCircles.forEach((circle, index) => {
+    circle.addEventListener("click", () => handleNavCircleClick(index));
+  });
+
+  gsap.utils.toArray(".testsect").forEach((section) => {
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 400px',
+        end: 'bottom 95%',
+        scrub: 4,
       },
     });
 
-    const swiper = new Swiper(".mySwiper", {
-      navigation: {
-        nextEl: ".swiper-next-button",
-        prevEl: ".swiper-prev-button",
-      },
-      effect: "fade",
-      loop: true,
+    timeline.to(section.querySelector(".sub-title"), {
+      opacity: 1,
+      duration: 1,
     });
 
-    swiper.on("slideChange", function (sld) {
-      document.body.setAttribute("data-sld", sld.realIndex);
-    });
-    swiper.on("slideChange", function () {
-      const activeIndex = swiper.realIndex;
-      updateNavCircle(activeIndex);
-    });
+    timeline.fromTo(
+      section.querySelector(".h2"),
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2.75 }
+    );
 
-    function updateNavCircle(activeIndex) {
-      // Remove 'active' class from all circles
-      const circles = document.querySelectorAll(".nav-circle");
-      circles.forEach((circle) => {
-        circle.classList.remove("active");
-      });
+    timeline.fromTo(
+      section.querySelector(".p"),
+      { y: 60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2.85 }
+    );
+  });
 
-      // Add 'active' class to the current circle
-      const activeCircle =
-        document.querySelectorAll(".nav-circle")[activeIndex];
-      if (activeCircle) {
-        activeCircle.classList.add("active");
-      }
-    }
-
-    function handleNavCircleClick(index) {
-      swiper.slideTo(index);
-    }
-
-    // Attach click event listeners to the navigation circles
-    const navCircles = document.querySelectorAll(".nav-circle");
-    navCircles.forEach((circle, index) => {
-      circle.addEventListener("click", () => handleNavCircleClick(index));
-    });
-
-    gsap.utils.toArray(".testsect").forEach((section) => {
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          
-          trigger: section, // use individual section as trigger
-          start: 'top 400px',
-          end: 'bottom 95%',
-          
-          scrub: 4,
-          
-        }
-      });
-
-      timeline.to(section.querySelector(".sub-title"), {
-        opacity: 1,
-        duration: 1,
-      });
-
-      timeline.fromTo(
-        section.querySelector(".h2"),
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 2.75 }
-      );
-
-      timeline.fromTo(
-        section.querySelector(".p"),
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 2.85 }
-      );
-
-      // timeline.to(section.querySelector('.panel2'), {
-      //   yPercent: -5,
-      //   duration: 1
-      // });
-    });
-
-    let imgs = gsap.utils.toArray(".zoom_img");
-    imgs.forEach((img, i) => {
+  let imgs = gsap.utils.toArray(".zoom_img");
+  imgs.forEach((img, i) => {
+    if (img) {
       gsap.fromTo(
         img,
-        { scale: 0.75 }, // Initial scale
+        { scale: 0.75 },
         {
-          scale: 1, // Final scale
+          scale: 1,
           scrollTrigger: {
             trigger: img,
             start: "top 70%",
             end: "top 7.5%",
-
-            // markers: true,
             scrub: 1,
-            // snap: !isMobileDevice() ? true : false,
           },
         }
       );
-    });
+    }
+  });
 
-    // Cleanup on unmount
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+  return () => {
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  };
+}, []);
+
 
   return (
     <div id="main2">
@@ -188,20 +156,17 @@ const Animation = () => {
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/multiple-products-banner.avif"
-            alt="Signature Selections"
+            alt={t("Signature Selections")}
           />
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-              Signature Selections
+            {t("Signature Selections")}
             </div>
             <h2 className="text-center text-white h2">
-              Fragrances Adored by All
+              {t("Fragrances Adored by All")}
             </h2>
             <p className="text-center text-white p">
-              Explore our bestsellers, a collection of high-quality fragrances
-              designed to cater to diverse tastes. From timeless classics to
-              modern blends, each scent is crafted with precision, offering
-              something special for every fragrance lover.
+              {t("Discover our bestsellers crafted to suit diverse tastes From classics to modern blends each fragrance offers something unique for every scent lover")}
             </p>
           </div>
 
@@ -240,7 +205,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -281,7 +246,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/ignite-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -321,7 +286,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/kaaf"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -361,7 +326,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/oriental-fragrance/laathani"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -401,7 +366,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/marj"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -441,7 +406,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/musk-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -481,7 +446,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/oud-roses"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -521,7 +486,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -561,7 +526,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href={"/en/shop/eau-de-parfum/occidental-fragrance/rose-noir"}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -601,7 +566,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
-                          href={`/${locale}/shop`}
+                          href="/en/shop/eau-de-parfum/occidental-fragrance/summer-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           Shop Now
@@ -645,7 +610,7 @@ const Animation = () => {
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
       <section className="testsect section3">
-        <div className="panel2 position-relative">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
@@ -655,14 +620,11 @@ const Animation = () => {
 
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-              Where Luxury Meets Your Senses
+              {t("Where Luxury Meets Your Senses")}
             </div>
-            <h2 className="text-center text-white h2">Exclusive Collection</h2>
+            <h2 className="text-center text-white h2">{t("Exclusive Collection")}</h2>
             <p className="text-center text-white p">
-              Explore our unique selection of exquisite scents. Every fragrance
-              is expertly created using the best ingredients to convey elegance
-              and originality. Discover a variety of unique scents that
-              complement your sense of style and leave a lasting impression.
+              {t("Explore our exclusive collection of refined scents made with the finest ingredients Elegant and original each fragrance complements your style")}
             </p>
           </div>
           <a
@@ -674,6 +636,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
+      
       <section id="start" className="testsect zoom_img section4">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
           {/* For Large Screens */}
@@ -717,15 +680,11 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute">
             <div className="text-center text-white sub-title">
-              Elegant Treasures for Every Occasion
+              {t("Elegant Treasures for Every Occasion")}
             </div>
-            <h2 className="text-center text-white h2">The Art of Gifting</h2>
+            <h2 className="text-center text-white h2">{t("The Art of Gifting")}</h2>
             <p className="text-center text-white p">
-              Delight in our exquisite fragrance gift sets, each thoughtfully
-              curated to celebrate special moments. Elegantly presented, these
-              sets feature a selection of our finest scents, making them the
-              perfect gift for loved ones. Elevate any occasion with the luxury
-              of captivating aromas that linger in memory.
+              {t("Celebrate special moments with our curated fragrance gift sets Beautifully presented and featuring our finest scents they make the perfect gift for any occasion")}
             </p>
           </div>
           <a
@@ -759,17 +718,13 @@ const Animation = () => {
           />
           <div className="text_reveal position-absolute zoom_img">
             <div className="text-center text-white sub-title">
-              Ancient Aromas
+              {t("Ancient Aromas")}
             </div>
             <h2 className="text-center text-white h2">
-              The Essence of Arabic Dakhoon
+              {t("The Essence of Arabic Dakhoon")}
             </h2>
             <p className="text-center text-white p">
-              Discover the rich heritage of Arabic Dakhoon, crafted from the
-              finest natural ingredients. Each blend creates a warm and inviting
-              atmosphere, perfect for your home or special occasions. Light our
-              Dakhoon to enjoy long-lasting fragrances that reflect Middle
-              Eastern tradition.
+              {t("Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich long lasting aromas that bring warmth and tradition to your home")}
             </p>
           </div>
           <a
@@ -853,6 +808,13 @@ const Animation = () => {
               highest-quality ingredients, imparting our perfumes with their
               rich olfactory facets.
             </p>
+            <Link
+            href={`/en/export`}
+            className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+          >
+            Discover More
+          </Link>
+          
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <img
@@ -927,6 +889,7 @@ const Animation = () => {
               highest-quality ingredients, imparting our perfumes with their
               rich olfactory facets.
             </p>
+            
             <div className="row">
               <div className="col-6">
                 <img
@@ -947,21 +910,22 @@ const Animation = () => {
         </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
-      <section className="testsect">
-        <div className="panel2 position-relative">
+
+      <section className="testsect section4">
+        <div className="panel2 position-relative d-flex justify-content-center">
           <img
             className="zoom_img"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/production.avif"
-            alt="Section 2"
+            alt="Ethereal Essence"
           />
-          <div className="text_reveal position-absolute">
-            <h2 className="text-center text-white h2">Section 5</h2>
+          <div className="text_reveal position-absolute zoom_img">
+          
+            <h2 className="text-center text-white h2">
+            {t("Your Journey Begins with a Scent")}
+            </h2>
             <p className="text-center text-white p">
-              This panel gets pinned in a similar way, and has a more involved
-              animation that's wrapped in a timeline, fading the background
-              color and animating the transforms of the paragraph in addition to
-              the line, all synced with the scroll position perfectly.
+            {t("At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that")}
             </p>
           </div>
           <a
@@ -986,28 +950,18 @@ const Animation = () => {
             </video>
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
-            <h3 className="mb-3">Quality Since 20+ Years</h3>
+            <h3 className="mb-3">{t("Quality Crafted Through Expertise 20 plus Years of Mastery")}</h3>
             <p>
-              Quality is of prime importance at Al Maghribi Perfumes. We
-              consider to take the same approach to fragrances that connoisseurs
-              take. Careful consideration is given when bringing together
-              different elements that emit exquisite aromas. At each stage of
-              our production process, we have austere quality control checks
-              that ensure our lofty benchmarks are being met.
+              {t("For over 20 years Ahmed Al Maghribi Perfumes has been dedicated to creating luxurious timeless scents Using only the finest natural ingredients we ensure every fragrance is crafted with precision and excellence offering lasting quality")}
             </p>
           </div>
         </div>
 
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
-            <h3 className="mb-3">The Company</h3>
+            <h3 className="mb-3">{t("The Company")}</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
-              sapien dignissim a elementum. Sociis metus, hendrerit mauris id
-              in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis
-              sodales orci etiam phasellus lacus id leo. Amet turpis nunc, nulla
-              massa est viverra interdum. Praesent auctor nulla morbi non
-              posuere mattis. Arcu eu id maecenas cras.
+            {t("Step into olfactory elegance with Ahmed Al Maghribi Perfumes where each composition is a symphony of rare absolutes and precious accords Our meticulously curated essences evoke sophistication crafting sillage that lingers in timeless harmony Experience the alchemy of fragrance at its finest")}
             </p>
           </div>
           <div className="order-0 order-md-1">

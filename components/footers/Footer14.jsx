@@ -56,10 +56,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                  Fast And Free Delivery
+                {t("Swift Complimentary Shipping")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                  Free Shipping on all orders above AED 400
+                {t("Free delivery on orders over AED 400")}
                 </p>
               </div>
             </div>
@@ -79,11 +79,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                  Safe & Secure Payment
+                {t("Secure Payment Solutions")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                  Our online payment system is operated by a service provider
-                  specializing in secure online payments.
+                {t("Your payments are safe with our secure online system")}
                 </p>
               </div>
             </div>
@@ -103,10 +102,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                  Cash on Delivery
+                {t("Convenient Cash on Delivery")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                  Pay by cash when receiving your order
+                {t("Pay conveniently upon receiving your order")}
                 </p>
               </div>
             </div>

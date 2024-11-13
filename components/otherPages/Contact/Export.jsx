@@ -3,9 +3,11 @@ import TopDeals from "@/components/homes/home-11/TopDeals";
 import Categories from "@/components/homes/home-5/Categories";
 import TopCollections from "@/components/homes/home-5/TopCollections";
 import Image from "next/image";
-import React from 'react'
+import React from 'react';
+import { useTranslations } from "next-intl";
 
-export default function Export() {  
+export default function Export() {
+  const t = useTranslations();
   return (
   <>
     <div className="container-fluid p-0 pt-2">
@@ -40,9 +42,10 @@ export default function Export() {
           </video>
         </div>
         <div className="col-md-6 text-center pt-5">
-          <h4 className="text-uppercase fs-2">We distribute our product globally</h4>
-          <p className="mt-3 fs-6">Ahmed Al Maghribi Perfume’s International Exports Division is well established to Fulfill International Demands. In just over a decade since its inception, the brands offered through the International Exports Division which is available in more than 45 countries, primarily due to their world-class quality that appeals to Distributors, and more importantly to the end consumers.</p>
-          <p className="mt-3 fs-6">The International Exports Division has worked tirelessly and evolved both strategically and in its product offerings to address the global audience. Presently its products are available and highly successful in major federal retail chain stores and individual perfumery stores across the globe.</p>
+          <h4 className="text-uppercase fs-2">{t("Global Reach of Ahmed Al Maghribi Perfumes")}</h4>
+          <p className="mt-3 fs-6">{t("At Ahmed Al Maghribi Perfumes our passion for excellence knows no borders Our International Exports Division with over a decade of expertise proudly serves more than 91 countries Our carefully crafted fragrances renowned for their unmatched quality captivate both distributors and consumers worldwide")}
+          </p>
+          <p className="mt-3 fs-6">{t("We have partnered with leading retail chains and independent perfumery stores ensuring our signature scents reach every corner of the globe From strategic growth to evolving product offerings we are dedicated to bringing the essence of luxury to a global audience")}</p>
         </div>
       </div>
     </div>

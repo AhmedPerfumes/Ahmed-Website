@@ -9,8 +9,7 @@ gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 
 const MobileAnimation = () => {
   const canvasRef = useRef(null);
-  const ballTextRef = useRef(null);
-  const frameCount = 365;
+  const frameCount = 355;
   let images = [];
   let ball = { frame: 0 };
 
@@ -46,16 +45,18 @@ const MobileAnimation = () => {
         scrub: 1,
         pin: canvas,
         end: '250%',
-        onLeave: () => {
-          // Snap to the next section when the last frame is reached
-          // gsap.to(window, {
-          //   scrollTo: { y: "#animation-section", autoKill: false }, // Smooth scroll to the section
-          //   duration: 0.5,
-          //   ease: "power2.inOut",
-          // });
-        },
       },
-      onUpdate: render,
+      onUpdate:()=>{ 
+        render();
+        if (Math.round(ball.frame) === frameCount - 2) {
+          // Scroll to #main2 section
+          gsap.to(window, {
+            scrollTo: { y: "#main2", autoKill: false },
+            duration: 0.5,
+            ease: "power2.inOut",
+          });
+        }
+      },
     });
 
  

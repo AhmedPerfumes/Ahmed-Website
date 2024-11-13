@@ -1,0 +1,81 @@
+SELECT
+'UAE' AS company,
+'2' AS hostingId,
+`ec_orders`.`id` AS ecOrderId,
+CONCAT('UAE','_','2','_',`ec_orders`.`id`) AS sysOrderId,
+`ec_orders`.`code` AS orderNo,
+DATE_FORMAT(`ec_orders`.`created_at`, '%m/%d/%Y %h:%i:%s %p') AS orderDate,
+DATE_FORMAT(CONVERT_TZ(`ec_orders`.`created_at`, 'SYSTEM', '-04:00'), '%m/%d/%Y %h:%i:%s %p') AS orderDate_GMT,
+'ECommerce' AS slOrderType,
+'' AS whsCode,
+`ec_orders`.`status` AS ecOrderStatus,
+'' AS statusRemarks,
+`payments`.`payment_channel` AS payMethod,
+'0' AS postedToSAP,
+'' AS cardCode,
+`ec_customers`.`id` AS customerId,
+`ec_customer_addresses`.`name` AS billName,
+'AE' AS billCountry,
+`ec_customer_addresses`.`state` AS billState,
+`ec_customer_addresses`.`city` AS billCity,
+`ec_customer_addresses`.`address` AS billAddress,
+`ec_customer_addresses`.`email` AS billEmail,
+`ec_customer_addresses`.`phone` AS billMobile,
+`ec_order_addresses`.`name` AS shipName,
+'AE' AS shipCountry,
+`ec_order_addresses`.`state` AS shipState,
+`ec_order_addresses`.`city` AS shipCity,
+`ec_order_addresses`.`address` AS shipAddress,
+`ec_order_addresses`.`email` AS shipEmail,
+`ec_order_addresses`.`phone` AS shipMobile,
+`payments`.`currency` AS currecncy,
+'19.05' AS courier,
+'0' AS courierVATPer,
+'0.9524' AS courierVAT,
+`ec_orders`.`amount` AS grossAmount,
+`ec_orders`.`discount_amount` AS discount,
+'0' AS discountPer,
+'0' AS discountVAT,
+`ec_orders`.`sub_total` AS orderAmount,
+`ec_orders`.`tax_amount` AS orderVAT,
+`ec_orders`.`description` AS remarks,
+'wc-processing' AS deliveryMode,
+'0' AS pickupLocationId,
+'' AS pickupLocation,
+'' AS salesOrderId
+FROM `ec_orders`
+LEFT JOIN `payments` ON `ec_orders`.`payment_id` = `payments`.`id`
+LEFT JOIN `ec_customers` ON `ec_customers`.`id` = `ec_orders`.`user_id`
+LEFT JOIN `ec_customer_addresses` ON `ec_customers`.`id` = `ec_customer_addresses`.`customer_id`
+LEFT JOIN `ec_order_addresses` ON `ec_orders`.`id` = `ec_order_addresses`.`order_id`;
+
+
+
+
+SELECT
+CONCAT('UAE','_','2','_',`ec_order_product`.`order_id`) AS SysOrderID,
+`ec_order_product`.`id` AS LineId,
+'' AS ItemCode,
+`ec_order_product`.`product_name` AS ItemName,
+'Pieces' AS UoM,
+`ec_products`.`sku` AS SKU,
+`ec_order_product`.`product_id` AS ProductID,
+'0' AS VariantID,
+'' AS AttributeID,
+`ec_order_product`.`qty` AS Qty,
+`ec_order_product`.`price` AS Price,
+`ec_order_product`.`qty` * `ec_order_product`.`price` AS total_price,
+'0' AS DiscountPer,
+'0' AS Discount,
+`ec_order_product`.`qty` * `ec_order_product`.`price` AS NetAmount,
+'F2' AS VatGroup,
+'5' AS VATPer,
+`ec_order_product`.`tax_amount` AS VAT,
+`ec_order_product`.`price` + `ec_order_product`.`tax_amount` AS GrossAmount,
+'' AS WebTotal,
+'' AS WEBVAT,
+'' AS LineRemarks,
+'0' AS isTaxable,
+'' AS lineItemType
+FROM `ec_order_product`
+LEFT JOIN `ec_products` ON `ec_order_product`.`product_id` = `ec_products`.`id`;
