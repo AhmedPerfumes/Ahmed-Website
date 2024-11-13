@@ -38,11 +38,11 @@ export default function NewsLetter() {
             aria-label="Close"
           ></button>
           <div className="row p-0 m-0">
-            <div className="col-md-6 p-0 d-none d-md-block">
+            <div className="col-md-8 p-0 d-none d-md-block">
               <div className="newsletter-popup__bg h-100 w-100">
                 <Image
-                  width={450}
-                  height={550}
+                  width={550}
+                  height={650}
                   style={{ height: "fit-content" }}
                   loading="lazy"
                   src="/assets/images/home/demo8/zumar.jpg"
@@ -51,7 +51,7 @@ export default function NewsLetter() {
                 />
               </div>
             </div>
-            <div className="col-md-6 p-0 d-flex align-items-center">
+            <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
                 <h3 className="section-title fw-normal mb-3 pb-2">
                   Exclusive Launch
@@ -61,7 +61,14 @@ export default function NewsLetter() {
                   exclusive, limited-edition fragrance. <br />
                   <b className="sub-title">Don't miss out.</b>
                 </p>
-                <form
+
+                <a
+                  class="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+                  href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+                >
+                  Explore
+                </a>
+                {/* <form
                   onSubmit={(e) => e.preventDefault()}
                   className="footer-newsletter__form position-relative bg-body"
                 >
@@ -76,7 +83,7 @@ export default function NewsLetter() {
                     type="submit"
                     defaultValue="OPT IN"
                   />
-                </form>
+                </form> */}
               </div>
             </div>
           </div>

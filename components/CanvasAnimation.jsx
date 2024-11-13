@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import ScrollToPlugin from 'gsap/ScrollToPlugin';
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 import Footer14 from "@/components/footers/Footer14";
 import Animation from "@/components/Animation";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
@@ -22,11 +22,12 @@ const CanvasAnimation = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/final/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) =>
+      `/assets/final/${(index + 1).toString()}.jpg`;
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
@@ -47,12 +48,12 @@ const CanvasAnimation = () => {
 
     gsap.to(ball, {
       frame: frameCount - 1,
-      snap: 'frame',
-      ease: 'none',
+      snap: "frame",
+      ease: "none",
       scrollTrigger: {
         scrub: 1,
         pin: canvas,
-        end: '250%',
+        end: "250%",
         onEnter: () => setShowSkipButton(true),
         onLeave: () => setShowSkipButton(false),
       },
@@ -69,7 +70,7 @@ const CanvasAnimation = () => {
       onComplete: () => {
         // Hide the component after the animation completes
         setIsVisible(false); // This will hide the component
-      }
+      },
     });
 
     return () => {
@@ -85,26 +86,30 @@ const CanvasAnimation = () => {
     });
   };
 
-  return (
-    isVisible ? <div>
+  return isVisible ? (
+    <div>
       <canvas ref={canvasRef} className="canvas"></canvas>
       {showSkipButton && (
-        <button onClick={skipAnimation} className="skip-button">Skip</button>
+        <button onClick={skipAnimation} className="skip-button">
+          SKIP INTRO
+        </button>
       )}
-    </div> : <>
-            <main id="">
-            {/* Animation component will render after CanvasAnimation */}
-            <Animation />
-          </main>
-          <section className="d-none d-lg-block" style={{ height: "100%" }}>
-            <Footer14 />
-          </section>
-          <section className="d-sm-block d-md-none bg-dark pt-5">
-            <div className="MobileFooter">
-              <MobileFooter2 />
-            </div>
-          </section>
-        </>
+    </div>
+  ) : (
+    <>
+      <main id="">
+        {/* Animation component will render after CanvasAnimation */}
+        <Animation />
+      </main>
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
+        <Footer14 />
+      </section>
+      <section className="d-sm-block d-md-none bg-dark pt-5">
+        <div className="MobileFooter">
+          <MobileFooter2 />
+        </div>
+      </section>
+    </>
   );
 };
 
