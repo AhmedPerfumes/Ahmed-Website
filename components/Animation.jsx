@@ -22,20 +22,64 @@ const Animation = () => {
   const locale = useLocale();
   const t = useTranslations();
   useEffect(() => {
-    // Check if the necessary elements exist before proceeding
-    const panels = gsap.utils.toArray(".cont .panel2");
-    if (panels.length > 0) {
-      const panelTween = gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".cont",
-          start: "top top",
-          end: "+=" + window.innerWidth * 3,
-          pin: true,
-          scrub: 1,
-        },
-      });
+  // Check if the necessary elements exist before proceeding
+  const panels = gsap.utils.toArray(".cont .panel2");
+  if (panels.length > 0) {
+    const panelTween = gsap.to(panels, {
+      xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".cont",
+        start: "top top",
+        end: "+=" + window.innerWidth * 3,
+        pin: true,
+        scrub: 1,
+      },
+    });
+  }
+
+  const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+  if (mobilepanel.length > 0) {
+    const mobilepanelTween = gsap.to(mobilepanel, {
+      xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".mobilecontainer",
+        start: "top top",
+        end: "+=" + window.innerWidth * 3,
+        pin: true,
+        scrub: 3,
+      },
+    });
+  }
+
+  const swiper = new Swiper(".mySwiper", {
+    navigation: {
+      nextEl: ".swiper-next-button",
+      prevEl: ".swiper-prev-button",
+    },
+    effect: "fade",
+    loop: true,
+  });
+
+  swiper.on("slideChange", function (sld) {
+    document.body.setAttribute("data-sld", sld.realIndex);
+  });
+
+  swiper.on("slideChange", function () {
+    const activeIndex = swiper.realIndex;
+    updateNavCircle(activeIndex);
+  });
+
+  function updateNavCircle(activeIndex) {
+    const circles = document.querySelectorAll(".nav-circle");
+    circles.forEach((circle) => {
+      circle.classList.remove("active");
+    });
+
+    const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
+    if (activeCircle) {
+      activeCircle.classList.add("active");
     }
 
     const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
@@ -143,6 +187,7 @@ const Animation = () => {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
+  }
   }, []);
 
   return (
