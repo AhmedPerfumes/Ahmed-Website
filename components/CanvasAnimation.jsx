@@ -4,19 +4,20 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
-import "./Canvas.css"
+import "./Canvas.css";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const [showSkipButton, setShowSkipButton] = useState(false);
-  const frameCount = 349;
+  const frameCount = 343;
   let images = [];
   let ball = { frame: 0 };
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const context = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -30,10 +31,12 @@ const CanvasAnimation = () => {
     }
 
     const render = () => {
-      context.canvas.width = images[0].width;
-      context.canvas.height = images[0].height;
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(images[ball.frame], 0, 0);
+      if (images[0]) {
+        context.canvas.width = images[0].width;
+        context.canvas.height = images[0].height;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(images[ball.frame], 0, 0);
+      }
     };
 
     images[0].onload = render;
@@ -49,7 +52,16 @@ const CanvasAnimation = () => {
         onEnter: () => setShowSkipButton(true),
         onLeave: () => setShowSkipButton(false),
       },
-      onUpdate: render,
+      onUpdate: () => {
+        render();
+        if (Math.round(ball.frame) === frameCount - 2) {
+          gsap.to(window, {
+            scrollTo: { y: "#main2", autoKill: false },
+            duration: 0.5,
+            ease: "power2.inOut",
+          });
+        }
+      },
     });
 
     return () => {
