@@ -38,7 +38,7 @@ export default function NewsLetter() {
             aria-label="Close"
           ></button>
           <div className="row p-0 m-0">
-            <div className="col-md-8 p-0 d-none d-md-block">
+            <div className="col-md-8 p-0">
               <div className="newsletter-popup__bg h-100 w-100">
                 <Image
                   width={550}
