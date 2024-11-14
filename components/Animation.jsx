@@ -877,7 +877,7 @@ const Animation = () => {
             </div>
           </div>
           <div className="inner2 mt-5">
-            <Categories section="section4" />
+            <Categories />
           </div>
         </div>
 
