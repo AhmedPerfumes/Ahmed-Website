@@ -877,7 +877,7 @@ const Animation = () => {
             </div>
           </div>
           <div className="inner2 mt-5">
-            <Categories section="section4" />
+            <Categories />
           </div>
         </div>
 
@@ -917,7 +917,7 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
-            <Categories />
+            <Categories section="section4"/>
           </div>
         </div>
         &nbsp;&nbsp;&nbsp;

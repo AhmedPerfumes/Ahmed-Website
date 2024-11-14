@@ -5,7 +5,7 @@ import MobileFooter2 from "@/components/footers/MobileFooter2";
 import React from "react";
 import CanvasAnimation from "@/components/CanvasAnimation";
 import MobileAnimation from "@/components/MobileAnimation";
-
+import NewsLetter from "@/components/modals/NewsLetter";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -22,7 +22,8 @@ export default function HomePage8() {
         backgroundImage: `url(https://www.ateliercologne.com/us_en/images/backgrounds/background-ivory.jpg)`,
       }}
     >
-        <Header14 />
+      <NewsLetter />
+      <Header14 />
       <div className="d-none d-lg-block">
         {/* CanvasAnimation will render first for large screens */}
         <CanvasAnimation />
