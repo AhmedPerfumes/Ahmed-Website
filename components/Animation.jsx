@@ -26,7 +26,10 @@ const Animation = () => {
     const panels = gsap.utils.toArray(".cont .panel2");
     if (panels.length > 0) {
       const panelTween = gsap.to(panels, {
-        xPercent: locale == 'en' ? -100 * (panels.length - 1) : 100 * (panels.length - 1),
+        xPercent:
+          locale == "en"
+            ? -100 * (panels.length - 1)
+            : 100 * (panels.length - 1),
         ease: "none",
         scrollTrigger: {
           trigger: ".cont",
@@ -37,11 +40,14 @@ const Animation = () => {
         },
       });
     }
-  
+
     const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
     if (mobilepanel.length > 0) {
       const mobilepanelTween = gsap.to(mobilepanel, {
-        xPercent: locale == 'en' ? -100 * (mobilepanel.length - 1) : 100 * (panels.length - 1),
+        xPercent:
+          locale == "en"
+            ? -100 * (mobilepanel.length - 1)
+            : 100 * (panels.length - 1),
         ease: "none",
         scrollTrigger: {
           trigger: ".mobilecontainer",
@@ -52,7 +58,7 @@ const Animation = () => {
         },
       });
     }
-  
+
     const swiper = new Swiper(".mySwiper", {
       navigation: {
         nextEl: ".swiper-next-button",
@@ -61,65 +67,66 @@ const Animation = () => {
       effect: "fade",
       loop: true,
     });
-  
+
     swiper.on("slideChange", function (sld) {
       document.body.setAttribute("data-sld", sld.realIndex);
     });
-  
+
     swiper.on("slideChange", function () {
       const activeIndex = swiper.realIndex;
       updateNavCircle(activeIndex);
     });
-  
+
     function updateNavCircle(activeIndex) {
       const circles = document.querySelectorAll(".nav-circle");
       circles.forEach((circle) => {
         circle.classList.remove("active");
       });
-  
-      const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
+
+      const activeCircle =
+        document.querySelectorAll(".nav-circle")[activeIndex];
       if (activeCircle) {
         activeCircle.classList.add("active");
       }
     }
-  
+
     function handleNavCircleClick(index) {
       swiper.slideTo(index);
     }
-  
+
     const navCircles = document.querySelectorAll(".nav-circle");
     navCircles.forEach((circle, index) => {
       circle.addEventListener("click", () => handleNavCircleClick(index));
     });
-  
+
     gsap.utils.toArray(".testsect").forEach((section) => {
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top 400px',
-          end: 'bottom 95%',
+          start: "top 400px",
+          end: "bottom 95%",
           scrub: 4,
         },
       });
-  
+
       timeline.to(section.querySelector(".sub-title"), {
         opacity: 1,
         duration: 1,
       });
-  
+
       timeline.fromTo(
         section.querySelector(".h2"),
         { y: 50, opacity: 0 },
         { y: 0, opacity: 1, duration: 2.75 }
       );
-  
+
       timeline.fromTo(
         section.querySelector(".p"),
         { y: 60, opacity: 0 },
         { y: 0, opacity: 1, duration: 2.85 }
       );
     });
-  
+
     let imgs = gsap.utils.toArray(".zoom_img");
     imgs.forEach((img, i) => {
       if (img) {
@@ -138,7 +145,7 @@ const Animation = () => {
         );
       }
     });
-  
+
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -177,7 +184,6 @@ const Animation = () => {
             style={{ bottom: "0" }}
           >
             {t("Scroll To Discover More")}
-            
           </a>
         </div>
       </section>
@@ -206,7 +212,7 @@ const Animation = () => {
                           {t("Jasmine, Orchid, Sugar, Violet, Incense Bakhoor")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t(
                             "Patchouli, Agarwood, Ambroxan, Musk White,Amber Resins"
                           )}
@@ -251,14 +257,13 @@ const Animation = () => {
                           {t("GERANIUM, LEATHER")}
                         </p>
                         <p>
-                        {t("Heart Notes:")}
+                          {t("Heart Notes:")}
                           {t("CEDARWOOD, PATCHOULI")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("MOSS, MUSK, AMBER, SANDALWOOD")}
                         </p>
-                        
                       </div>
                       <div className="moreee-menu pt-5">
                         <Link
@@ -295,18 +300,20 @@ const Animation = () => {
                       <div className="mainnn-content__title ">
                         <p>
                           {t("Top Notes:")}
-                          {t("RED FRUITS, WATERMELON, LAVENDER, SICILIAN ORANGE")}
+                          {t(
+                            "RED FRUITS, WATERMELON, LAVENDER, SICILIAN ORANGE"
+                          )}
                         </p>
                         <p>
                           {t("Heart Notes:")}
                           {t("SANDAL WOOD, AMBBROXAN, WHITE MUSK")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("LOTUS, JASMINE, LILLY OF THE VALLEY, SEA ACCORD")}
                         </p>
                       </div>
-                     
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/oriental-fragrance/kaaf"
@@ -349,11 +356,11 @@ const Animation = () => {
                           {t("OUD ACCORDS, ROSEMARY, BAKHOOR ACCORDS")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("WHITE AMBER, VETIVER, MUSK, LEATHER")}
                         </p>
                       </div>
-                    
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/oriental-fragrance/laathani"
@@ -389,18 +396,24 @@ const Animation = () => {
                       <div className="mainnn-content__title ">
                         <p>
                           {t("Top Notes:")}
-                          {t("BERGAMOT, PINK PEPPER, ELEMI, NUTMEG, TANGERINE, OUD, HONEY")}
+                          {t(
+                            "BERGAMOT, PINK PEPPER, ELEMI, NUTMEG, TANGERINE, OUD, HONEY"
+                          )}
                         </p>
                         <p>
                           {t("Heart Notes:")}
-                          {t("PATCHOULI, AROMATIC ACCORDS, VETIVER, CASHMERE WOOD, CINNAMON, ROSE, SAFFRON,JASMINE, ORANGE BLOSSOM")}
+                          {t(
+                            "PATCHOULI, AROMATIC ACCORDS, VETIVER, CASHMERE WOOD, CINNAMON, ROSE, SAFFRON,JASMINE, ORANGE BLOSSOM"
+                          )}
                         </p>
                         <p>
-                        {t("Base Notes:")}
-                          {t("MUSK, AMBER, RASPBERRY, SAFFRON, OAKMOSS,POWDER, AMBRETTE SEEDS,LEATHER, SANDALWOOD, VIOLET, AGARWOOD, AMBROXAN")}
+                          {t("Base Notes:")}
+                          {t(
+                            "MUSK, AMBER, RASPBERRY, SAFFRON, OAKMOSS,POWDER, AMBRETTE SEEDS,LEATHER, SANDALWOOD, VIOLET, AGARWOOD, AMBROXAN"
+                          )}
                         </p>
                       </div>
-                     
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/marj"
@@ -443,12 +456,11 @@ const Animation = () => {
                           {t("Roses")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("Musky")}
                         </p>
-                        
                       </div>
-                     
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/musk-roses"
@@ -491,11 +503,11 @@ const Animation = () => {
                           {t("sandal wood,white flowers, frankincense")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("agarwood, guaiac wood, oak moss, Musk, amber")}
                         </p>
                       </div>
-                      
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/oud-roses"
@@ -538,11 +550,11 @@ const Animation = () => {
                           {t("Iris, Jasmine, Pink Pepper")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("Vetiver, Amber, Oud, Musk")}
                         </p>
                       </div>
-                      
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
@@ -585,11 +597,11 @@ const Animation = () => {
                           {t("White Flower, Sandal Wood, Frankincense")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("Agarwood, Musk, Amber, Oak Moss")}
                         </p>
                       </div>
-                      
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href={
@@ -634,18 +646,17 @@ const Animation = () => {
                           {t("ROSE, AMBER, PATCHOULI, CASHMERE WOOD, CARAMEL")}
                         </p>
                         <p>
-                        {t("Base Notes:")}
+                          {t("Base Notes:")}
                           {t("OUD ACCORD, MUSK, OAK MOSS, VETIVER, LEATHER")}
                         </p>
                       </div>
-                      
+
                       <div className="moreee-menu pt-5">
                         <Link
                           href="/en/shop/eau-de-parfum/occidental-fragrance/summer-oud"
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                          
                         </Link>
                       </div>
                     </div>
@@ -723,7 +734,6 @@ const Animation = () => {
           <div className="d-none d-lg-block pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2">
               {t("Crafted for the Discerning")}
-              
             </h2>
             <video muted autoPlay loop className="w-75 pt-5" preload="none">
               <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
@@ -732,7 +742,7 @@ const Animation = () => {
           {/* For small screens */}
           <div className="d-block d-lg-none pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2 s-font">
-            {t("Crafted for the Discerning")}
+              {t("Crafted for the Discerning")}
             </h2>
             <video muted autoPlay loop className="w-75 pt-2" preload="none">
               <source
@@ -790,7 +800,6 @@ const Animation = () => {
           <Lookbook />
 
           <Categories section="section3" />
-          
         </div>
       </section>
       {/* Arabian Dakhoon Section */}
@@ -849,9 +858,7 @@ const Animation = () => {
               {t("Essence of Arabia")}
               {/* Carefully <span className="s-font">selected ingredients</span> */}
             </h3>
-            <p className="text-center px-3">
-              {t("Step into")}
-            </p>
+            <p className="text-center px-3">{t("Step into")}</p>
             <div className="mt-4">
               <Link href="#">
                 <img
@@ -888,7 +895,6 @@ const Animation = () => {
               className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
             >
               {t("Discover More")}
-              
             </Link>
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
@@ -1030,9 +1036,7 @@ const Animation = () => {
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
           <div className="col-lg-7 p-5 text-center order-1 order-md-0">
             <h3 className="mb-3">{t("The Company")}</h3>
-            <p>
-              {t("Steps")}
-            </p>
+            <p>{t("Steps")}</p>
           </div>
           <div className="order-0 order-md-1">
             <img
