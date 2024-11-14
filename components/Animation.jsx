@@ -895,6 +895,7 @@ const Animation = () => {
       <section className="cont testsect ">
         <div className="panel2 mb-4">
           <div className="inner2 mt-5 d-flex align-items-center">
+            {/* Iconic indulgence */}
             <Categories section="section4" />
           </div>
         </div>
@@ -972,7 +973,7 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
-            <Categories section="section4"/>
+            <Categories section="section4" />
           </div>
         </div>
         &nbsp;&nbsp;&nbsp;

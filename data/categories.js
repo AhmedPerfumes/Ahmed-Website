@@ -538,47 +538,74 @@ export const categories88 = [
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Grace",
+    altText: "Gauahar Khan",
     subText: "Exude effortless allure",
-    videoSrc: "/assets/videos/dakhoon/asateen.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
+    videoSrc: "/assets/videos/vlogs/gauhar-khan.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/gauhar-khan.jpg",
     link: "#"
   },
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
-    altText: "Allure",
+    altText: "Khalid Al Ameri",
     subText: "Capture elegance in motion",
-    videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
+    videoSrc: "/assets/videos/vlogs/Khalid.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/Khalid.jpg",
+    link: "#"
   },
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Splendor",
+    altText: "Aromatix - Neeb Alwaz",
     subText: "Uncover your signature glow",
-    videoSrc: "/assets/videos/dakhoon/khususi.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
+    videoSrc: "/assets/videos/vlogs/Neeb.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/Neeb.jpg",
+    link: "#"
   },
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
-    altText: "Prestige",
+    altText: "Rico Fragrance",
     subText: "Radiate pure, refined luxury",
-    videoSrc: "/assets/videos/dakhoon/maliki.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
+    videoSrc: "/assets/videos/vlogs/Rico.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/Rico.jpg",
+    link: "#"
   },
   {
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Aura",
+    altText: "Sana Khan",
     subText: "Embrace unforgettable elegance",
-    videoSrc: "/assets/videos/dakhoon/oud.mov",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
-    link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+    videoSrc: "/assets/videos/vlogs/Sana-Khan.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/Sana-Khan.jpg",
+    link: "#"
+  },
+  {
+    id: 5,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "Yasser Salah Salem",
+    subText: "Embrace unforgettable elegance",
+    videoSrc: "/assets/videos/vlogs/yassersalahsalem.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/yassersalahsalem.jpg",
+    link: "#"
+  },
+  {
+    id: 5,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "The Cologne Boy",
+    subText: "Embrace unforgettable elegance",
+    videoSrc: "/assets/videos/vlogs/The-Cologne-Boy.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/The-Cologne-Boy.jpg",
+    link: "#"
+  },
+  {
+    id: 5,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "Hina Khan",
+    subText: "Embrace unforgettable elegance",
+    videoSrc: "/assets/videos/vlogs/Henna-Khan.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/Henna-Khan.jpg",
+    link: "#"
   },
 ];
 
@@ -586,8 +613,8 @@ export const categoriesInfluencers = [
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Grace",
-    subText: "Exude effortless allure",
+    altText: "Oud Ma'attar Asaateen",
+    subText: "Oud, leather, and rose luxury",
     videoSrc: "/assets/videos/dakhoon/asateen.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
     link: "#"
@@ -595,8 +622,8 @@ export const categoriesInfluencers = [
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
-    altText: "Allure",
-    subText: "Capture elegance in motion",
+    altText: "Bakhoor Hind",
+    subText: "Exotic warmth of saffron",
     videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
@@ -604,8 +631,8 @@ export const categoriesInfluencers = [
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Splendor",
-    subText: "Uncover your signature glow",
+    altText: "Oud Ma'attar Khususi",
+    subText: "Citrus and oud, pure elegance",
     videoSrc: "/assets/videos/dakhoon/khususi.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
@@ -613,8 +640,8 @@ export const categoriesInfluencers = [
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
-    altText: "Prestige",
-    subText: "Radiate pure, refined luxury",
+    altText: "Oud Ma'Attar Maliki",
+    subText: "Royal saffron and oud bliss",
     videoSrc: "/assets/videos/dakhoon/maliki.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
@@ -622,8 +649,8 @@ export const categoriesInfluencers = [
   {
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Aura",
-    subText: "Embrace unforgettable elegance",
+    altText: "Bakhoor Ahmed",
+    subText: "Citrus, roses, and musk bliss",
     videoSrc: "/assets/videos/dakhoon/oud.mov",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
     link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
