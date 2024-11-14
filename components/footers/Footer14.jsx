@@ -133,7 +133,7 @@ export default function Footer14() {
             </div>
             {/* <!-- /.logo --> */}
             <p className="footer-address">
-              Ahmed Al Maghrebi Perfume Manuf L.L.C, <br />
+              Ahmed Al Maghrebi Perfume Manuf L.L.C <br />
               Jurf Industrial Zone 3 <br />
               AJMAN, P. O. Box – 3850 <br />
               UAE
@@ -151,7 +151,7 @@ export default function Footer14() {
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="footer__social-link d-block">
+                  <a href={link.href} className="footer__social-link d-block"target="_blank">
                     <svg
                       className={link.className}
                       width={link.width}

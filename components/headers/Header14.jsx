@@ -141,7 +141,7 @@ const handleLangChange = (e) => {
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
                 <a href="#" className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
-                  {elm.description.split(" ").slice(0, 13).join(" ")}
+                  {t(elm.description.split(" ").slice(0, 13).join(" "))}
                 </a>
               </div>
             </SwiperSlide>

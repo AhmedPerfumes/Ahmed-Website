@@ -56,7 +56,7 @@ export default function Lookbook() {
                     <p className="fw-medium mb-0">
                       <a href={`/product1_simple/${id}`}>{title}</a>
                     </p>
-                    <p className="mb-0">${price}</p>
+                    <p className="mb-0">د.إ{price}</p>
                   </div>
                 )}
                 openOnClick
