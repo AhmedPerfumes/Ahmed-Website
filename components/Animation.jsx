@@ -199,22 +199,28 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Bin Shaikh")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 215</h2>
+                      <h2 className="mainnn-subtitle"> 215.00 د.إ</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("French Lavender, Saffron, Rose, Citrus,Oakmoss")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("French Lavender Saffron Rose Citrus Oakmoss")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("Jasmine, Orchid, Sugar, Violet, Incense Bakhoor")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("Jasmine Orchid Sugar Violet Incense Bakhoor")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
                           {t(
-                            "Patchouli, Agarwood, Ambroxan, Musk White,Amber Resins"
+                            "Patchouli Agarwood Ambroxan Musk White Amber Resins"
                           )}
                         </p>
                       </div>
@@ -248,21 +254,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Ignite Oud")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 250</h2>
+                      <h2 className="mainnn-subtitle">د.إ 250.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("GERANIUM, LEATHER")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("GERANIUM LEATHER")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("CEDARWOOD, PATCHOULI")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("CEDARWOOD PATCHOULI")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("MOSS, MUSK, AMBER, SANDALWOOD")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("MOSS MUSK AMBER SANDALWOOD")}
                         </p>
                       </div>
                       <div className="moreee-menu pt-5">
@@ -294,23 +306,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Kaaf")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 90</h2>
+                      <h2 className="mainnn-subtitle">د.إ 90.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t(
-                            "RED FRUITS, WATERMELON, LAVENDER, SICILIAN ORANGE"
-                          )}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("RED FRUITS WATERMELON LAVENDER SICILIAN ORANGE")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("SANDAL WOOD, AMBBROXAN, WHITE MUSK")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("SANDALWOOD AMBBROXAN WHITE MUSK")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("LOTUS, JASMINE, LILLY OF THE VALLEY, SEA ACCORD")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("LOTUS JASMINE LILLY OF THE VALLEY SEA ACCORD")}
                         </p>
                       </div>
 
@@ -343,21 +359,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Laathani")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 175</h2>
+                      <h2 className="mainnn-subtitle">د.إ 175.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("FRESH NOTES, CANDIED FRUITS, PINK PEPPER")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("FRESH NOTES CANDIED FRUITS PINK PEPPER")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("OUD ACCORDS, ROSEMARY, BAKHOOR ACCORDS")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("OUD ACCORDS ROSEMARY BAKHOOR ACCORDS")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("WHITE AMBER, VETIVER, MUSK, LEATHER")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("WHITE AMBER VETIVER MUSK LEATHER")}
                         </p>
                       </div>
 
@@ -390,26 +412,32 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Marj")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 165</h2>
+                      <h2 className="mainnn-subtitle">د.إ 165.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
                           {t(
-                            "BERGAMOT, PINK PEPPER, ELEMI, NUTMEG, TANGERINE, OUD, HONEY"
+                            "BERGAMOT PINK PEPPER ELEMI NUTMEG TANGERINE OUD HONEY"
                           )}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
                           {t(
-                            "PATCHOULI, AROMATIC ACCORDS, VETIVER, CASHMERE WOOD, CINNAMON, ROSE, SAFFRON,JASMINE, ORANGE BLOSSOM"
+                            "PATCHOULI AROMATIC ACCORDS VETIVER CASHMERE WOOD CINNAMON ROSE SAFFRON JASMINE ORANGE BLOSSOM"
                           )}
                         </p>
                         <p>
-                          {t("Base Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
                           {t(
-                            "MUSK, AMBER, RASPBERRY, SAFFRON, OAKMOSS,POWDER, AMBRETTE SEEDS,LEATHER, SANDALWOOD, VIOLET, AGARWOOD, AMBROXAN"
+                            "MUSK AMBER RASPBERRY SAFFRON OAKMOSS POWDER AMBRETTE SEEDS LEATHER SANDALWOOD VIOLET AGARWOOD AMBROXAN"
                           )}
                         </p>
                       </div>
@@ -443,20 +471,26 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Musk & Roses")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 110</h2>
+                      <h2 className="mainnn-subtitle">د.إ 110.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
                           {t("Floral Raspberry")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
                           {t("Roses")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
                           {t("Musky")}
                         </p>
                       </div>
@@ -490,21 +524,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Oud & Roses")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 135</h2>
-                    </div>                                                   
+                      <h2 className="mainnn-subtitle">د.إ 135.00</h2>
+                    </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("Turkish rose,lavender, lemon,peony")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("Turkish rose lavender lemon,peony")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("sandal wood,white flowers, frankincense")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("sandal wood white flowers frankincense")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("agarwood, guaiac wood, oak moss, Musk, amber")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("agarwood guaiac wood oakmoss Musk amber")}
                         </p>
                       </div>
 
@@ -537,21 +577,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Oud Lavender")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 135</h2>
+                      <h2 className="mainnn-subtitle">د.إ 135.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("Hyacinth, Lavender, Fruits")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("Hyacinth Lavender Fruits")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("Iris, Jasmine, Pink Pepper")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("Iris Jasmine Pink Pepper")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("Vetiver, Amber, Oud, Musk")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("Vetiver Amber Oud Musk")}
                         </p>
                       </div>
 
@@ -584,21 +630,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Rose Noir")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 110</h2>
+                      <h2 className="mainnn-subtitle">د.إ 110.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("Rose, Jasmine, Peony")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("Rose Jasmine Peony")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("White Flower, Sandal Wood, Frankincense")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("White Flower SandalWood Frankincense")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("Agarwood, Musk, Amber, Oak Moss")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("Agarwood Musk Amber Oak Moss")}
                         </p>
                       </div>
 
@@ -633,21 +685,27 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Summer Oud")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 150</h2>
+                      <h2 className="mainnn-subtitle">د.إ 150.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
                         <p>
-                          {t("Top Notes:")}
-                          {t("CYPRIOL, SAFFRON, INCENSE, MANDARIN")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Top Notes: ")}
+                          </span>
+                          {t("CYPRIOL SAFFRON INCENSE MANDARIN")}
                         </p>
                         <p>
-                          {t("Heart Notes:")}
-                          {t("ROSE, AMBER, PATCHOULI, CASHMERE WOOD, CARAMEL")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Heart Notes: ")}
+                          </span>
+                          {t("ROSE AMBER PATCHOULI CASHMERE WOOD CARAMEL")}
                         </p>
                         <p>
-                          {t("Base Notes:")}
-                          {t("OUD ACCORD, MUSK, OAK MOSS, VETIVER, LEATHER")}
+                          <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
+                            {t("Base Notes: ")}
+                          </span>
+                          {t("OUD ACCORDS MUSK OAKMOSS VETIVER LEATHER")}
                         </p>
                       </div>
 
@@ -886,10 +944,7 @@ const Animation = () => {
             <h3 className="text-center">
               {t("Reaching Every Corner of the World")}
             </h3>
-            <p className="text-center px-3">
-              {t(
-              "Exports Text")}
-            </p>
+            <p className="text-center px-3">{t("Exports Text")}</p>
             <Link
               href={`/en/export`}
               className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
@@ -925,9 +980,6 @@ const Animation = () => {
           <div className="inner d-flex align-items-center">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
-
-
-
                 src="/assets/videos/ignite-rose-mobile.mp4"
                 type="video/mp4"
               />
@@ -942,9 +994,7 @@ const Animation = () => {
         <div className="mobilepanel">
           <div className="inner text-center pt-5 mt-4">
             <h1>{t("Essence of Arabia")}</h1>
-            <p className="fs-5">
-            {t("Step into")}
-            </p>
+            <p className="fs-5">{t("Step into")}</p>
 
             <img src="assets/images/home/demo8/Bakhoor-Ahmed.jpg" alt="" />
           </div>
@@ -953,7 +1003,7 @@ const Animation = () => {
           <div className="inner text-center pt-5 mt-4">
             <h1>Reaching Every Corner of the World</h1>
             <p className="fs-5">
-            Ahmed Al Maghribi Perfumes proudly spans over 91 countries,
+              Ahmed Al Maghribi Perfumes proudly spans over 91 countries,
               sharing our luxurious fragrances with the world. With an
               unwavering commitment to craftsmanship and excellence, our
               signature scents are now available for global distribution,

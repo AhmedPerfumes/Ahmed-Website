@@ -1645,7 +1645,7 @@ export const products17 = [
       top: "50%",
     },
     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/oud-roses-2.png",
-    price: 123,
+    price: 350,
     title: "Oud & Roses Gift Set",
   },
   {
@@ -1655,7 +1655,7 @@ export const products17 = [
       top: "55%",
     },
     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/03/oud-roses-2.png",
-    price: 129,
+    price: 350,
     title: "Oud & Roses Gift Set",
   },
   {
@@ -1665,7 +1665,7 @@ export const products17 = [
       top: "42%",
     },
     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/01/antee.png",
-    price: 129,
+    price: 225,
     title: "Antee Gift Set",
   },
   {
@@ -1675,7 +1675,7 @@ export const products17 = [
       top: "38%",
     },
     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2024/01/antee.png",
-    price: 129,
+    price: 225,
     title: "Antee Gift Set",
   },
   {
@@ -1685,7 +1685,7 @@ export const products17 = [
       top: "60%",
     },
     imgSrc: "https://www.ahmedalmaghribi.com/wp-content/uploads/2022/03/Front-box-with-product.png",
-    price: 129,
+    price: 150,
     title: "The Dukhoon Collection",
   },
   // {
