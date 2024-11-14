@@ -1,5 +1,5 @@
 SELECT
-'UAE DB Name' AS company,
+'auvzymnyxf' AS company,
 `ec_orders`.`id` AS ecOrderId,
 `ec_orders`.`code` AS orderNo,
 DATE_FORMAT(`ec_orders`.`created_at`, '%m/%d/%Y %h:%i:%s %p') AS orderDate,
@@ -22,20 +22,21 @@ DATE_FORMAT(CONVERT_TZ(`ec_orders`.`created_at`, 'SYSTEM', '-04:00'), '%m/%d/%Y 
 `ec_order_addresses`.`email` AS shipEmail,
 `ec_order_addresses`.`phone` AS shipMobile,
 `payments`.`currency` AS currecncy,
-'19.05 Dynamic Shipping' AS courier,
-'0.9524 Dynamic' AS courierVAT,
-'0 Dynamic to b added' AS serviceAmt,
-'0.9524 Dynamic to b added' AS serviceVAT,
+`payments`.`charge_id` AS paymeId,
+`ec_orders`.`shipping_amount` AS courier,
+(`ec_orders`.`shipping_amount` / 100) * 5 AS courierVAT,
+'3' AS serviceAmt,
+(3 / 100) * 5 AS serviceVAT,
 `ec_orders`.`amount` AS grossAmount,
 `ec_orders`.`discount_amount` AS discount,
-'0 Dynamic' AS discountPer,
-'0 Dynamic' AS discountVAT,
+'0' AS discountPer,
 `ec_orders`.`sub_total` AS orderAmount,
 `ec_orders`.`tax_amount` AS orderVAT,
 `ec_orders`.`description` AS remarks,
 'wc-processing' AS deliveryMode,
-'bigint to b added' AS salesOrderId,
-'yes or no' AS is_cancelled
+`ec_orders`.`salesOrderId`,
+`ec_orders`.`isCancelled`,
+`ec_orders`.`awb`
 FROM `ec_orders`
 LEFT JOIN `payments` ON `ec_orders`.`payment_id` = `payments`.`id`
 LEFT JOIN `ec_customers` ON `ec_customers`.`id` = `ec_orders`.`user_id`
@@ -49,7 +50,7 @@ SELECT
 `ec_order_product`.`id` AS LineId,
 'varchar' AS SAPItemCode,
 `ec_order_product`.`product_name` AS ItemName,
-'Pieces Dynamic' AS UoM,
+'Pieces' AS UoM,
 `ec_products`.`sku` AS SKU,
 `ec_order_product`.`product_id` AS ProductID,
 `ec_order_product`.`qty` AS Qty,
@@ -57,10 +58,10 @@ SELECT
 `ec_order_product`.`qty` * `ec_order_product`.`price` AS total_price,
 '0 Dynamic' AS DiscountPer,
 '0 Dynamic' AS Discount,
-`ec_order_product`.`qty` * `ec_order_product`.`price` amt after discount AS NetAmount,
+'ec_order_product.qty * ec_order_product.price amt after discount' AS NetAmount,
 `ec_order_product`.`tax_amount` AS VAT,
 `ec_order_product`.`price` + `ec_order_product`.`tax_amount` AS GrossAmount,
-if VAT > 0 then 1 else 0 AS isTaxable,
-'fee or line_item' AS lineItemType
+IF(`ec_order_product`.`tax_amount` > 0, 1, 0) AS isTaxable,
+'fee or line_item query to b provided by Farhan' AS lineItemType
 FROM `ec_order_product`
 LEFT JOIN `ec_products` ON `ec_order_product`.`product_id` = `ec_products`.`id`;
