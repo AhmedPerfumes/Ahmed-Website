@@ -43,7 +43,7 @@ export default function Lookbook() {
                 className="example"
                 render={({ content, activeAnchor }) => (
                   <div className="popover-product">
-                    <Link href={`/product1_simple/${id}`}>
+                    <a href={`/product1_simple/${id}`}>
                       <img
                         width={330}
                         height={400}
@@ -52,11 +52,11 @@ export default function Lookbook() {
                         src={imgSrc}
                         alt="image"
                       />
-                    </Link>
+                    </a>
                     <p className="fw-medium mb-0">
-                      <Link href={`/product1_simple/${id}`}>{title}</Link>
+                      <a href={`/product1_simple/${id}`}>{title}</a>
                     </p>
-                    <p className="mb-0">${price}</p>
+                    <p className="mb-0">د.إ{price}</p>
                   </div>
                 )}
                 openOnClick
@@ -78,7 +78,7 @@ export default function Lookbook() {
                 className="example"
                 render={({ content, activeAnchor }) => (
                   <div className="popover-product">
-                    <Link href={`/product1_simple/${id}`}>
+                    <a href={`/product1_simple/${id}`}>
                       <img
                         width={330}
                         height={400}
@@ -87,9 +87,9 @@ export default function Lookbook() {
                         src={imgSrc}
                         alt="image"
                       />
-                    </Link>
+                    </a>
                     <p className="fw-medium mb-0">
-                      <Link href={`/product1_simple/${id}`}>{title}</Link>
+                      <a href={`/product1_simple/${id}`}>{title}</a>
                     </p>
                     <p className="mb-0">${price}</p>
                   </div>
