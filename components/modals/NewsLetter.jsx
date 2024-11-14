@@ -63,7 +63,7 @@ export default function NewsLetter() {
                 </p>
 
                 <a
-                  class="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+                  className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                   href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
                 >
                   Explore
