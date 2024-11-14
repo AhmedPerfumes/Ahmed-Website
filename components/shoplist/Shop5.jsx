@@ -53,7 +53,7 @@ const Shop5 = () => {
         </SwiperSlide>
         <SwiperSlide className="panel">
           <img
-            src="/assets/images/home/demo8/gift-sets/bidun-esam-giftset-bnr.jpg"
+            src="/assets/images/home/demo8/gift-sets/Ihdakhaas-banner.jpg"
             alt="Bidun Esam Gift Set"
           />
         </SwiperSlide>
