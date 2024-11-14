@@ -199,7 +199,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Bin Shaikh")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 215</h2>
+                      <h2 className="mainnn-subtitle">د.إ 215.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -220,12 +220,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -248,7 +248,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Ignite Oud")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 250</h2>
+                      <h2 className="mainnn-subtitle">د.إ 250.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -266,12 +266,12 @@ const Animation = () => {
                         </p>
                       </div>
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/oriental-fragrance/ignite-oud"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/ignite-oud`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -294,7 +294,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Kaaf")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 90</h2>
+                      <h2 className="mainnn-subtitle">د.إ 90.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -315,12 +315,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/oriental-fragrance/kaaf"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/kaaf`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -343,7 +343,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Laathani")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 175</h2>
+                      <h2 className="mainnn-subtitle">د.إ 175.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -362,12 +362,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/oriental-fragrance/laathani"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/laathani`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -390,7 +390,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Marj")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 165</h2>
+                      <h2 className="mainnn-subtitle">د.إ 165.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -415,12 +415,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/occidental-fragrance/marj"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/marj`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -443,7 +443,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Musk & Roses")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 110</h2>
+                      <h2 className="mainnn-subtitle">د.إ 110.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -462,12 +462,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/occidental-fragrance/musk-roses"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/musk-roses`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -490,7 +490,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Oud & Roses")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 135</h2>
+                      <h2 className="mainnn-subtitle">د.إ 135.00</h2>
                     </div>                                                   
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -509,12 +509,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/occidental-fragrance/oud-roses"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-roses`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -537,7 +537,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Oud Lavender")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 135</h2>
+                      <h2 className="mainnn-subtitle">د.إ 135.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -556,12 +556,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -584,7 +584,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Rose Noir")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 110</h2>
+                      <h2 className="mainnn-subtitle">د.إ 110.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -603,14 +603,14 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
+                        <a
                           href={
-                            "/en/shop/eau-de-parfum/occidental-fragrance/rose-noir"
+                            `/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`
                           }
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -633,7 +633,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Summer Oud")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 150</h2>
+                      <h2 className="mainnn-subtitle">د.إ 150.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -652,12 +652,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <Link
-                          href="/en/shop/eau-de-parfum/occidental-fragrance/summer-oud"
+                        <a
+                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/summer-oud`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -752,12 +752,12 @@ const Animation = () => {
             </video>
           </div>
 
-          <Link
+          <a
             href={`/${locale}/shop`}
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
             {t("Discover More")}
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -860,20 +860,20 @@ const Animation = () => {
             </h3>
             <p className="text-center px-3">{t("Step into")}</p>
             <div className="mt-4">
-              <Link href="#">
+              <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
                 <img
                   className="w-50 px-1"
                   src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
                   alt="Image 1"
                 />
-              </Link>
-              <Link href="#">
+              </a>
+              <a href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
                 <img
                   className="w-50 px-1"
                   src="/assets/images/home/demo8/Oud-Asateen.jpg"
                   alt="Image 1"
                 />
-              </Link>
+              </a>
             </div>
           </div>
           <div className="inner2 mt-5">
@@ -890,24 +890,28 @@ const Animation = () => {
               {t(
               "Exports Text")}
             </p>
-            <Link
-              href={`/en/export`}
+            <a
+              href={`/${locale}/export`}
               className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
             >
               {t("Discover More")}
-            </Link>
+            </a>
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
-            <img
-              className="px-2 w-100 w-md-auto"
-              src="/assets/images/home/demo8/export/aqua-oud.jpg"
-              alt="Image 1"
-            />
-            <img
-              className="px-2 w-100 w-md-auto"
-              src="/assets/images/home/demo8/export/endless.jpg"
-              alt="Image 2"
-            />
+            <a href={`/${locale}/export`}>
+              <img
+                className="px-2 w-100 w-md-auto"
+                src="/assets/images/home/demo8/export/aqua-oud.jpg"
+                alt="Image 1"
+              />
+            </a>
+            <a href={`/${locale}/export`}>
+              <img
+                className="px-2 w-100 w-md-auto"
+                src="/assets/images/home/demo8/export/endless.jpg"
+                alt="Image 2"
+              />
+            </a>
           </div>
         </div>
       </section>
@@ -946,7 +950,7 @@ const Animation = () => {
             {t("Step into")}
             </p>
 
-            <img src="assets/images/home/demo8/Bakhoor-Ahmed.jpg" alt="" />
+            <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}><img src="assets/images/home/demo8/Bakhoor-Ahmed.jpg" alt="" /></a>
           </div>
         </div>
         <div className="mobilepanel d-flex justify-content-center">
@@ -963,18 +967,22 @@ const Animation = () => {
 
             <div className="row">
               <div className="col-6">
-                <img
-                  src="assets/images/home/demo8/export/aqua-oud.jpg"
-                  alt=""
-                  className="img-fluid"
-                />
+                <a href={`/${locale}/export`}>
+                  <img
+                    src="assets/images/home/demo8/export/aqua-oud.jpg"
+                    alt=""
+                    className="img-fluid"
+                  />
+                </a>
               </div>
               <div className="col-6">
-                <img
-                  src="assets/images/home/demo8/export/endless.jpg"
-                  alt=""
-                  className="img-fluid"
-                />
+                <a href={`/${locale}/export`}>
+                  <img
+                    src="assets/images/home/demo8/export/endless.jpg"
+                    alt=""
+                    className="img-fluid"
+                  />
+                  </a>
               </div>
             </div>
           </div>
