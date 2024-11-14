@@ -193,7 +193,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Bin Shaikh")}</h1>
-                      <h2 className="mainnn-subtitle">AED 215</h2>
+                      <h2 className="mainnn-subtitle">د.إ 215</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -242,7 +242,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Ignite Oud")}</h1>
-                      <h2 className="mainnn-subtitle">AED 250</h2>
+                      <h2 className="mainnn-subtitle">د.إ 250</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -289,7 +289,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Kaaf")}</h1>
-                      <h2 className="mainnn-subtitle">AED 90</h2>
+                      <h2 className="mainnn-subtitle">د.إ 90</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -336,7 +336,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Laathani")}</h1>
-                      <h2 className="mainnn-subtitle">AED 175</h2>
+                      <h2 className="mainnn-subtitle">د.إ 175</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -383,7 +383,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Marj")}</h1>
-                      <h2 className="mainnn-subtitle">AED 165</h2>
+                      <h2 className="mainnn-subtitle">د.إ 165</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -430,7 +430,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Musk & Roses")}</h1>
-                      <h2 className="mainnn-subtitle">AED 110</h2>
+                      <h2 className="mainnn-subtitle">د.إ 110</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -478,7 +478,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Oud & Roses")}</h1>
-                      <h2 className="mainnn-subtitle">AED 135</h2>
+                      <h2 className="mainnn-subtitle">د.إ 135</h2>
                     </div>                                                   
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -525,7 +525,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Oud Lavender")}</h1>
-                      <h2 className="mainnn-subtitle">AED 135</h2>
+                      <h2 className="mainnn-subtitle">د.إ 135</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -572,7 +572,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Rose Noir")}</h1>
-                      <h2 className="mainnn-subtitle">AED 110</h2>
+                      <h2 className="mainnn-subtitle">د.إ 110</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -621,7 +621,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Summer Oud")}</h1>
-                      <h2 className="mainnn-subtitle">AED 150</h2>
+                      <h2 className="mainnn-subtitle">د.إ 150</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -877,22 +877,11 @@ const Animation = () => {
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">
             <h3 className="text-center">
-              Reaching{" "}
-              <span
-                className="s-font
-              
-              "
-              >
-                Every Corner of the World
-              </span>
+              {t("Reaching Every Corner of the World")}
             </h3>
             <p className="text-center px-3">
-              Ahmed Al Maghribi Perfumes proudly spans over 91 countries,
-              sharing our luxurious fragrances with the world. With an
-              unwavering commitment to craftsmanship and excellence, our
-              signature scents are now available for global distribution,
-              spreading the essence of timeless luxury and rich tradition to
-              every corner of the globe.
+              {t(
+              "Exports Text")}
             </p>
             <Link
               href={`/en/export`}
@@ -930,6 +919,9 @@ const Animation = () => {
           <div className="inner d-flex align-items-center">
             <video loop muted autoPlay className="w-100" preload="none">
               <source
+
+
+
                 src="/assets/videos/ignite-rose-mobile.mp4"
                 type="video/mp4"
               />
@@ -943,13 +935,9 @@ const Animation = () => {
         </div>
         <div className="mobilepanel">
           <div className="inner text-center pt-5 mt-4">
-            <h1>Carefullyyyyy Selected ingredients</h1>
+            <h1>{t("Essence of Arabia")}</h1>
             <p className="fs-5">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets
+            {t("Step into")}
             </p>
 
             <img src="assets/images/home/demo8/Bakhoor-Ahmed.jpg" alt="" />
@@ -957,13 +945,14 @@ const Animation = () => {
         </div>
         <div className="mobilepanel d-flex justify-content-center">
           <div className="inner text-center pt-5 mt-4">
-            <h1>Carefully Selected Ingredients</h1>
+            <h1>Reaching Every Corner of the World</h1>
             <p className="fs-5">
-              From endemic species to renowned terroirs, we are particularly
-              meticulous when it comes to sourcing our raw materials. While
-              respecting the rhythms of nature, we commit to selecting only the
-              highest-quality ingredients, imparting our perfumes with their
-              rich olfactory facets.
+            Ahmed Al Maghribi Perfumes proudly spans over 91 countries,
+              sharing our luxurious fragrances with the world. With an
+              unwavering commitment to craftsmanship and excellence, our
+              signature scents are now available for global distribution,
+              spreading the essence of timeless luxury and rich tradition to
+              every corner of the globe.
             </p>
 
             <div className="row">
