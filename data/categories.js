@@ -538,8 +538,8 @@ export const categories88 = [
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Asateen",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    altText: "Grace",
+    subText: "Exude effortless allure",
     videoSrc: "/assets/videos/dakhoon/asateen.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
     link: "#"
@@ -547,8 +547,8 @@ export const categories88 = [
   {
     id: 2,
     imgSrc: "/assets/images/home/demo15/category-2.jpg",
-    altText: "Bakhoor Hind",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    altText: "Allure",
+    subText: "Capture elegance in motion",
     videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
@@ -556,8 +556,8 @@ export const categories88 = [
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Oud Ma'attar Khususi",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    altText: "Splendor",
+    subText: "Uncover your signature glow",
     videoSrc: "/assets/videos/dakhoon/khususi.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
@@ -565,8 +565,8 @@ export const categories88 = [
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
-    altText: "Oud Ma'attar Maliki",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    altText: "Prestige",
+    subText: "Radiate pure, refined luxury",
     videoSrc: "/assets/videos/dakhoon/maliki.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
     link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
@@ -574,36 +574,59 @@ export const categories88 = [
   {
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Oud",
-    subText: "by Ahmed Al Maghribi Perfumer",
+    altText: "Aura",
+    subText: "Embrace unforgettable elegance",
     videoSrc: "/assets/videos/dakhoon/oud.mov",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
     link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
   },
-  // {
-  //   id: 6,
-  //   imgSrc: "/assets/images/home/demo15/category-2.jpg",
-  //   altText: "Gift Set 6",
-  //   subText: "by Ahmed Al Maghribi Perfumer",
-  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/oolang-infini.mp4",
-  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/oolang-infini@1x.jpg",
-  // },
-  // {
-  //   id: 7,
-  //   imgSrc: "/assets/images/home/demo15/category-3.jpg",
-  //   altText: "Gift Set 7",
-  //   subText: "by Ahmed Al Maghribi Perfumer",
-  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/pomelo-paradis.mp4",
-  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/pomelo-paradis@1x.jpg",
-  // },
-  // {
-  //   id: 8,
-  //   imgSrc: "/assets/images/home/demo15/category-4.jpg",
-  //   altText: "Gift Set 8",
-  //   subText: "by Ahmed Al Maghribi Perfumer",
-  //   videoSrc: "https://www.ateliercologne.com/videos/chapters/third/story/preview/clementine-california.mp4",
-  //   imgSrc2: "https://www.ateliercologne.com/images/chapters/third/fragrance/clementine-california@1x.jpg",
-  // },
+];
+export const categories80 = [
+  {
+    id: 1,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "Grace",
+    subText: "Exude effortless allure",
+    videoSrc: "/assets/videos/dakhoon/asateen.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
+    link: "#"
+  },
+  {
+    id: 2,
+    imgSrc: "/assets/images/home/demo15/category-2.jpg",
+    altText: "Allure",
+    subText: "Capture elegance in motion",
+    videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
+  },
+  {
+    id: 3,
+    imgSrc: "/assets/images/home/demo15/category-3.jpg",
+    altText: "Splendor",
+    subText: "Uncover your signature glow",
+    videoSrc: "/assets/videos/dakhoon/khususi.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
+  },
+  {
+    id: 4,
+    imgSrc: "/assets/images/home/demo15/category-4.jpg",
+    altText: "Prestige",
+    subText: "Radiate pure, refined luxury",
+    videoSrc: "/assets/videos/dakhoon/maliki.mp4",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
+    link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
+  },
+  {
+    id: 5,
+    imgSrc: "/assets/images/home/demo15/category-1.jpg",
+    altText: "Aura",
+    subText: "Embrace unforgettable elegance",
+    videoSrc: "/assets/videos/dakhoon/oud.mov",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
+    link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+  },
 ];
 
 export const categories9 = [

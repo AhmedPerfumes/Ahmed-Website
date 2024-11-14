@@ -173,12 +173,12 @@ export default function Footer14() {
           {/* <!-- /.footer-column --> */}
 
           <div className="footer-column footer-menu mb-4 mb-lg-0">
-            <h6 className="sub-menu__title text-uppercase">Company</h6>
+            <h6 className="sub-menu__title text-uppercase">{t("Company")}</h6>
             <ul className="sub-menu__list list-unstyled">
               {footerLinks1.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
                   <a href={`/${locale}${elm.href}`} className="menu-link menu-link_us-s">
-                    {elm.text}
+                    {t(elm.text)}
                   </a>
                 </li>
               ))}
@@ -187,7 +187,7 @@ export default function Footer14() {
           {/* <!-- /.footer-column --> */}
 
           <div className="footer-column footer-menu mb-4 mb-lg-0">
-            <h6 className="sub-menu__title text-uppercase">Categories</h6>
+            <h6 className="sub-menu__title text-uppercase">{t("Categories")}</h6>
             <ul className="sub-menu__list list-unstyled">
               {categoriesSubCategories.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
@@ -215,10 +215,10 @@ export default function Footer14() {
           {/* <!-- /.footer-column --> */}
 
           <div className="footer-column footer-newsletter col-12 mb-4 mb-lg-0">
-            <h6 className="sub-menu__title text-uppercase">Subscribe</h6>
+            <h6 className="sub-menu__title text-uppercase">{t("Subscribe")}</h6>
             <p>
-              Be the first to get the latest news about trends, promotions, and
-              much more!
+              {t("Be the First")}
+             
             </p>
             <form
               onSubmit={(e) => e.preventDefault()}

@@ -93,7 +93,7 @@ export default function Hero() {
                 href={`${locale}/shop`}
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
               >
-                Discover More
+                {t("Discover More")}  
               </a>
             </div>
           </div>

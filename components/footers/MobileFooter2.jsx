@@ -44,8 +44,7 @@ export default function MobileFooter2() {
           Subscribe
         </h6>
         <p className="text-white text-center">
-          Be the first to get the latest news about trends, promotions, and much
-          more!
+        {t("Be the First")}
         </p>
         <form className="footer-newsletter__form position-relative bg-body w-75 d-flex ">
           <input
@@ -138,7 +137,7 @@ export default function MobileFooter2() {
                   href={`/${locale}${elm.href}`}
                   className="menu-link menu-link_us-s text-white"
                 >
-                  {elm.text}
+                  {t(elm.text)}
                 </a>
               </li>
             ))}
@@ -177,38 +176,6 @@ export default function MobileFooter2() {
           </ul>
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-          sx={{
-            backgroundColor: "black",
-            color: "white",
-          }}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          Help
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            backgroundColor: "black",
-            color: "white",
-          }}
-        >
-          <ul className="sub-menu__list list-unstyled">
-            {footerLinks3.map((elm, i) => (
-              <li key={i} className="sub-menu__item">
-                <a
-                  href={elm.href}
-                  className="menu-link menu-link_us-s text-white"
-                >
-                  {elm.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </AccordionDetails>
-      </Accordion> */}
       <div className="footer-bottom container text-white text-center">
         <div className="d-block d-md-flex align-items-center flex-nowrap">
           <span className="footer-copyright me-auto d-flex flex-nowrap">

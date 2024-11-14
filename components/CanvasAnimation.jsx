@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import ScrollToPlugin from 'gsap/ScrollToPlugin';
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 
 import "./Canvas.css";
 
@@ -18,11 +18,12 @@ const CanvasAnimation = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/final/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) =>
+      `/assets/final/${(index + 1).toString()}.jpg`;
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
@@ -43,12 +44,12 @@ const CanvasAnimation = () => {
 
     gsap.to(ball, {
       frame: frameCount - 1,
-      snap: 'frame',
-      ease: 'none',
+      snap: "frame",
+      ease: "none",
       scrollTrigger: {
         scrub: 1,
         pin: canvas,
-        end: '250%',
+        end: "250%",
         onEnter: () => setShowSkipButton(true),
         onLeave: () => setShowSkipButton(false),
       },
@@ -81,7 +82,9 @@ const CanvasAnimation = () => {
     <div>
       <canvas ref={canvasRef} className="canvas"></canvas>
       {showSkipButton && (
-        <button onClick={skipAnimation} className="skip-button">Skip</button>
+        <button onClick={skipAnimation} className="skip-button">
+          SKIP INTRO
+        </button>
       )}
     </div>
   );
