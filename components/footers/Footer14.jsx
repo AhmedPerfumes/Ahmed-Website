@@ -133,7 +133,7 @@ export default function Footer14() {
             </div>
             {/* <!-- /.logo --> */}
             <p className="footer-address">
-              Ahmed Al Maghrebi Perfume Manuf L.L.C, <br />
+              Ahmed Al Maghrebi Perfume Manuf L.L.C <br />
               Jurf Industrial Zone 3 <br />
               AJMAN, P. O. Box – 3850 <br />
               UAE

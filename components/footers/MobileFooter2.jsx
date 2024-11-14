@@ -41,7 +41,8 @@ export default function MobileFooter2() {
     <div className="mb-5">
       <div className="footer-column footer-newsletter col-12 mb-4 mb-lg-0 d-flex flex-column align-items-center">
         <h6 className="sub-menu__title text-uppercase text-white text-center">
-          Subscribe
+          {t("Subscribe")}
+          
         </h6>
         <p className="text-white text-center">
         {t("Be the First")}
@@ -122,7 +123,7 @@ export default function MobileFooter2() {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          Company
+          {t("Company")}
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -154,7 +155,7 @@ export default function MobileFooter2() {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          Shop
+          {t("Categories")}
         </AccordionSummary>
         <AccordionDetails
           sx={{
