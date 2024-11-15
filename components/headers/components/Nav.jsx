@@ -146,6 +146,14 @@ export default function Nav({ categoriesSubCategories }) {
     );
   });
 
+  categoriesSubCategoriesBody.push(
+    <li key="export" className="navigation__item">
+      <a href={`/${locale}/export`} className="navigation__link">
+        Export
+      </a>
+    </li>
+  );
+
   return (
     <>
       { categoriesSubCategoriesBody && categoriesSubCategoriesBody }
