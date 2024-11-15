@@ -56,19 +56,12 @@ const Shop5 = () => {
           </a>
         </SwiperSlide>
         <SwiperSlide className="panel">
-<<<<<<< HEAD
-          <img
-            src="/assets/images/home/demo8/gift-sets/Ihdakhaas-banner.jpg"
-            alt="Bidun Esam Gift Set"
-          />
-=======
           <a href="#">
             <img
               src="/assets/images/home/demo8/gift-sets/shauque-al-shuyookh-bnr.jpg"
               alt="Shauque Al Shuyookh Gift Set"
             />
           </a>
->>>>>>> yazil
         </SwiperSlide>
         <SwiperSlide className="panel">
           <a href="#">
