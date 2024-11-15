@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { useLocale } from "next-intl";
 
 export default function NewsLetter() {
   const modalElement = useRef();
+  const locale = useLocale();
   useEffect(() => {
     const bootstrap = require("bootstrap"); // dynamically import bootstrap
     var myModal = new bootstrap.Modal(
@@ -64,7 +66,7 @@ export default function NewsLetter() {
 
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href="/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+                  href={`/${locale}/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
                 >
                   Explore
                 </a>
