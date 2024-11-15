@@ -8,7 +8,8 @@ import React from "react";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 // import Loader from "@/components/loader/Loader";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
-import Link from "next/link";
+// import Link from "next/link";
+import QuickView from "@/components/modals/QuickView";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -45,7 +46,7 @@ const ShopPage8 = async ({ params }) => {
     console.log(data);
     return (
       <>
-      {/* <Loader/> */}
+        <QuickView />
         <Header14 />
         <Banner5 image={ data.image }/>
         <main className="page-wrapper pt-0">

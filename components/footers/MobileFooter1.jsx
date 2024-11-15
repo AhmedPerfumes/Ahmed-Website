@@ -2,8 +2,10 @@
 import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
 
 export default function MobileFooter1() {
+  const locale = useLocale();
   const [showFooter, setShowFooter] = useState(false);
   const { wishList } = useContextElement();
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function MobileFooter1() {
 
         <div className="col-4">
           <Link
-            href="/shop"
+            href={`/${locale}/shop`}
             className="footer-mobile__link d-flex flex-column align-items-center"
           >
             <svg
@@ -57,9 +59,9 @@ export default function MobileFooter1() {
         </div>
         {/* <!-- /.col-3 --> */}
 
-        <div className="col-4">
+        {/* <div className="col-4">
           <Link
-            href="/account_wishlist"
+            href={`/${locale}/account_wishlist`}
             className="footer-mobile__link d-flex flex-column align-items-center"
           >
             <div className="position-relative">
@@ -79,7 +81,7 @@ export default function MobileFooter1() {
             </div>
             <span>Wishlist</span>
           </Link>
-        </div>
+        </div> */}
         {/* <!-- /.col-3 --> */}
       </div>
       {/* <!-- /.row --> */}

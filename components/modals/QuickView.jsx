@@ -6,9 +6,9 @@ import Size from "../singleProduct/Size";
 import Colors from "../singleProduct/Colors";
 import Image from "next/image";
 import ShareComponent from "../common/ShareComponent";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import he from 'he';
-import Link from "next/link";
+// import Link from "next/link";
 
 export default function QuickView() {
   const { quickViewItem } = useContextElement();
@@ -75,8 +75,26 @@ export default function QuickView() {
       document.getElementById("cartDrawer").classList.add("aside_visible");
     }
   };
+  
+  const modalElement = useRef();
+
+  useEffect(() => {
+    const bootstrap = require("bootstrap"); // dynamically import bootstrap
+    let myModal = new bootstrap.Modal(
+      document.getElementById("quickView"),
+      {
+        keyboard: false,
+      }
+    );
+
+    // myModal.show();
+    modalElement.current.addEventListener("hidden.bs.modal", () => {
+      myModal.hide();
+    });
+  }, []);
+
   return (
-    <div className="modal fade" id="quickView" tabIndex="-1">
+    <div className="modal fade" id="quickView" tabIndex="-1" ref={modalElement}>
       <div className="modal-dialog quick-view modal-dialog-centered">
         <div className="modal-content">
           <button
