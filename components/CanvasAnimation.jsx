@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
+  const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
   const frameCount = 343;
   let images = [];
@@ -55,13 +56,18 @@ const CanvasAnimation = () => {
       },
       onUpdate: () => {
         render();
-        if (Math.round(ball.frame) === frameCount - 2) {
-          gsap.to(window, {
-            scrollTo: { y: "#main2", autoKill: false },
-            duration: 0.5,
-            ease: "power2.inOut",
-          });
+        const currentScrollY = window.scrollY;
+        if(currentScrollY > previousScrollY.current) {
+          console.log(Math.round(ball.frame) +'==='+ frameCount);
+          if (Math.round(ball.frame) + 50 > frameCount - 2) {
+            gsap.to(window, {
+              scrollTo: { y: "#main2", autoKill: false },
+              duration: 0.5,
+              ease: "power2.inOut",
+            });
+          }
         }
+        previousScrollY.current = currentScrollY;
       },
     });
 

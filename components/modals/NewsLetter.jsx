@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 
 export default function NewsLetter() {
   const modalElement = useRef();
+  const [hasScrolled, setHasScrolled] = useState(false);
   const locale = useLocale();
   useEffect(() => {
     const bootstrap = require("bootstrap"); // dynamically import bootstrap
@@ -16,11 +17,34 @@ export default function NewsLetter() {
       }
     );
 
-    myModal.show();
-    modalElement.current.addEventListener("hidden.bs.modal", () => {
-      myModal.hide();
-    });
-  }, []);
+    // Function to show the modal
+    const showModal = () => {
+      if (!hasScrolled) {
+        myModal.show();
+        setHasScrolled(true); // Update state to prevent multiple triggers
+      }
+    };
+
+    // Add scroll event listener
+    const handleScroll = () => {
+      // If scroll exceeds 300px, show the modal
+      if (window.scrollY > 4500 && !hasScrolled) {
+        showModal();
+      }
+    };
+
+    // Listen to the scroll event
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup: Remove scroll event listener when component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasScrolled]);
+
+  // modalElement.current.addEventListener("hidden.bs.modal", () => {
+  //   myModal.hide();
+  // });
 
   return (
     <div
