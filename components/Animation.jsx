@@ -532,7 +532,7 @@ const Animation = () => {
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
                             {t("Top Notes: ")}
                           </span>
-                          {t("Turkish rose lavender lemon,peony")}
+                          {t("Turkish rose lavender lemon peony")}
                         </p>
                         <p>
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
@@ -544,7 +544,7 @@ const Animation = () => {
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
                             {t("Base Notes: ")}
                           </span>
-                          {t("agarwood guaiac wood oakmoss Musk amber")}
+                          {t("agarwood guaiac wood oak moss Musk amber")}
                         </p>
                       </div>
 
@@ -644,7 +644,7 @@ const Animation = () => {
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
                             {t("Heart Notes: ")}
                           </span>
-                          {t("White Flower SandalWood Frankincense")}
+                          {t("White Flower Sandal Wood Frankincense")}
                         </p>
                         <p>
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>

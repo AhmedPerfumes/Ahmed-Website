@@ -40,31 +40,45 @@ const Shop5 = () => {
         onInit={handleSlideChange} // Call handleSlideChange on Swiper initialization
       >
         <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
-            alt="Oud and Roses Gift Set"
-          />
+          <a href="#">
+            <img
+              src="/assets/images/home/demo8/gift-sets/ihdakhaas-banner.jpg"
+              alt="Bidun Esam Gift Set"
+            />{" "}
+          </a>
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/shauque-al-shuyookh-bnr.jpg"
-            alt="Shauque Al Shuyookh Gift Set"
-          />
+          <a href="#">
+            <img
+              src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
+              alt="Oud and Roses Gift Set"
+            />
+          </a>
         </SwiperSlide>
         <SwiperSlide className="panel">
+<<<<<<< HEAD
           <img
             src="/assets/images/home/demo8/gift-sets/Ihdakhaas-banner.jpg"
             alt="Bidun Esam Gift Set"
           />
+=======
+          <a href="#">
+            <img
+              src="/assets/images/home/demo8/gift-sets/shauque-al-shuyookh-bnr.jpg"
+              alt="Shauque Al Shuyookh Gift Set"
+            />
+          </a>
+>>>>>>> yazil
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
-            alt="The Dukhoon Collection"
-          />
+          <a href="#">
+            <img
+              src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
+              alt="The Dukhoon Collection"
+            />
+          </a>
         </SwiperSlide>
       </Swiper>
-
     </div>
   );
 };
