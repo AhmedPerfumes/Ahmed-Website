@@ -154,7 +154,7 @@ export default function Nav({ categoriesSubCategories }) {
       <a href={`/${locale}/export`} className={`navigation__link
           ${isActiveExportMenu(`/export`) ? "menu-active" : ""}
           `}>
-        Worldwide Distribution
+        {t("Worldwide Distribution")}
       </a>
     </li>
   );
