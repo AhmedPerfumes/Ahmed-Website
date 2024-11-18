@@ -11,7 +11,7 @@ export default function Lookbook() {
           height={35}
           alt="logo"
         />
-        <h3 class="wp-heading-inline fs-2 text-center">Orders Dashboard</h3>
+        <h3 className="wp-heading-inline fs-2 text-center">Orders Dashboard</h3>
         <div id="example_wrapper">
           <div className="row">
             <div className="col-sm-12 col-md-6">

@@ -32,7 +32,7 @@ const Shop5 = () => {
         pagination={{
           clickable: true, // Make pagination circles clickable
           renderBullet: (index, className) => {
-            return `<span class="${className} circle-pagination"></span>`; // Custom rendering of pagination circles
+            return `<span className="${className} circle-pagination"></span>`; // Custom rendering of pagination circles
           },
         }}
         style={{ height: "100vh" }} // Make sure Swiper takes full height
