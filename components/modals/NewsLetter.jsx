@@ -47,23 +47,23 @@ export default function NewsLetter() {
   }, [hasScrolled]);
 
   // Function to remove the backdrop
-  const removeBackdrop = () => {
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) {
-      backdrop.classList.remove('show'); // Hide the backdrop
-      backdrop.remove(); // Remove it from the DOM
-    }
-  };
+  // const removeBackdrop = () => {
+  //   const backdrop = document.querySelector('.modal-backdrop');
+  //   if (backdrop) {
+  //     backdrop.classList.remove('show'); // Hide the backdrop
+  //     backdrop.remove(); // Remove it from the DOM
+  //   }
+  // };
 
   // Function to close the modal
-  const closeModal = () => {
-    const modalElement = document.getElementById('newsletterPopup');
-    modalElement.classList.remove('show'); // Hide the modal
-    document.body.classList.remove('modal-open'); // Restore body scrolling
-    document.body.style.overflow = ''; // Reset overflow style to enable scrolling again
-    document.body.style.paddingRight = `0px`;
-    removeBackdrop(); // Remove the backdrop
-  };
+  // const closeModal = () => {
+  //   const modalElement = document.getElementById('newsletterPopup');
+  //   modalElement.classList.remove('show'); // Hide the modal
+  //   document.body.classList.remove('modal-open'); // Restore body scrolling
+  //   document.body.style.overflow = ''; // Reset overflow style to enable scrolling again
+  //   document.body.style.paddingRight = `0px`;
+  //   removeBackdrop(); // Remove the backdrop
+  // };
 
   return (
     <div
@@ -79,7 +79,7 @@ export default function NewsLetter() {
           <button
             type="button"
             className="btn-close"
-            onClick={closeModal}
+            data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
           <div className="row p-0 m-0">
