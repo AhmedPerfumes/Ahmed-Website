@@ -25,7 +25,7 @@ export default function Hero() {
         el: ".spbh5",
         clickable: true,
         renderBullet: function (index, className) {
-          return ` <span class="swiper-pagination-bullet ${className}">0${
+          return ` <span className="swiper-pagination-bullet ${className}">0${
             index + 1
           }</span>`;
         },

@@ -23,7 +23,7 @@ export default function Hero() {
         el: ".spb3",
         bulletActiveClass: "swiper-pagination-bullet-active",
         renderBullet: function (index, className) {
-          return `<span class="swiper-pagination-bullet ${className}" tabIndex="0">
+          return `<span className="swiper-pagination-bullet ${className}" tabIndex="0">
             0${index + 1}
           </span>`;
         },

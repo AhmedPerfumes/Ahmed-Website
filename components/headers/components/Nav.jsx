@@ -20,12 +20,15 @@ export default function Nav({ categoriesSubCategories }) {
   const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
-  // console.log(searchParams.get('category'));
   const isMenuActive = (menu) => {
     return menu.split("/")[3] == pathname.split("/")[4];
   };
   const isActiveParentMenu = (menu) => {
     return menu.split("/")[2] == pathname.split("/")[3];
+  };
+  const isActiveExportMenu = (menu) => {
+    console.log(menu, pathname);
+    return menu.split("/")[1] == pathname.split("/")[2];
   };
 
   useEffect(() => {
@@ -148,8 +151,10 @@ export default function Nav({ categoriesSubCategories }) {
 
   categoriesSubCategoriesBody.push(
     <li key="export" className="navigation__item">
-      <a href={`/${locale}/export`} className="navigation__link">
-        Export
+      <a href={`/${locale}/export`} className={`navigation__link
+          ${isActiveExportMenu(`/export`) ? "menu-active" : ""}
+          `}>
+        Worldwide Distribution
       </a>
     </li>
   );

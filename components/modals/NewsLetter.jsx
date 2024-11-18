@@ -28,7 +28,7 @@ export default function NewsLetter() {
     // Add scroll event listener
     const handleScroll = () => {
       // If scroll exceeds 300px, show the modal
-      if (window.scrollY > 4500 && !hasScrolled) {
+      if (window.scrollY > 5900 && !hasScrolled) {
         showModal();
       }
     };
@@ -36,15 +36,34 @@ export default function NewsLetter() {
     // Listen to the scroll event
     window.addEventListener('scroll', handleScroll);
 
+    modalElement.current.addEventListener("hidden.bs.modal", () => {
+      myModal.hide();
+    });
+
     // Cleanup: Remove scroll event listener when component unmounts
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [hasScrolled]);
 
-  // modalElement.current.addEventListener("hidden.bs.modal", () => {
-  //   myModal.hide();
-  // });
+  // Function to remove the backdrop
+  const removeBackdrop = () => {
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.classList.remove('show'); // Hide the backdrop
+      backdrop.remove(); // Remove it from the DOM
+    }
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    const modalElement = document.getElementById('newsletterPopup');
+    modalElement.classList.remove('show'); // Hide the modal
+    document.body.classList.remove('modal-open'); // Restore body scrolling
+    document.body.style.overflow = ''; // Reset overflow style to enable scrolling again
+    document.body.style.paddingRight = `0px`;
+    removeBackdrop(); // Remove the backdrop
+  };
 
   return (
     <div
@@ -60,7 +79,7 @@ export default function NewsLetter() {
           <button
             type="button"
             className="btn-close"
-            data-bs-dismiss="modal"
+            onClick={closeModal}
             aria-label="Close"
           ></button>
           <div className="row p-0 m-0">
@@ -90,7 +109,7 @@ export default function NewsLetter() {
 
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/en/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
+                  href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
                 >
                   Explore
                 </a>

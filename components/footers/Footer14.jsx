@@ -252,12 +252,12 @@ export default function Footer14() {
           <div className="footer-settings d-block d-md-flex align-items-center">
             <a className="text-white" href={`/${locale}/order-tracking`}>Track Order</a>
             <div className="d-flex align-items-center">
-               <label
+               {/* <label
                 htmlFor="footerSettingsLanguage"
                 className="me-2 text-white"
               >
                 Language
-              </label> 
+              </label>  */}
               <select
                 id="footerSettingsLanguage"
                 className="form-select form-select-sm bg-transparent border-0"
