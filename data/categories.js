@@ -228,7 +228,7 @@ export const categoriesInfluencers = [
   {
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Bakhoor Ahmed",
+    altText: "Oud Philippine",
     subText: "Citrus, roses, and musk bliss",
     videoSrc: "/assets/videos/dakhoon/oud.mov",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",

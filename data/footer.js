@@ -4,7 +4,7 @@ export const footerLinks1 = [
   { href: "#", text: "Terms & Conditions" },
   { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
-  { href: "/export", text:"Exports"},
+  { href: "/export", text:"Worldwide Distributions"},
   { href: "#", text:"Shipping & Delivery"},
   { href: "#", text:"Refund Policy"}
 ];
