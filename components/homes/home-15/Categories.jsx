@@ -141,10 +141,10 @@ export default function Categories({ section }) {
     categoryRend = (
       <>
         <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
-          Gem Collection
+          {t("Gem Collection")}
         </h2>
         <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center">
-          {t("Modern elegance meets Middle Eastern tradition.")}
+          {t("Modern elegance meets Middle Eastern tradition")}
         </p>
         <div className="position-relative">
           <Swiper
