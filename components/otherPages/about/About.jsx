@@ -11,7 +11,7 @@ export default function About() {
         <Image
           loading="lazy"
           className="w-100 h-auto d-block"
-          src="/assets/images/about/about.jpg"
+          src="/assets/images/about/corporate-banner.jpg"
           alt="image"
           width={1500}
           height={550}
@@ -47,39 +47,53 @@ export default function About() {
           </p>
         </div> */}
 
-        <div className="row align-items-center pt-5">
+        <div className="row align-items-center pt-5 pb-5">
           {/* Left Side - Image */}
           <div className="col-lg-6 mb-4 mb-lg-0">
-            <Image
-              src="/assets/images/about/about3.png"
-              alt="Description of image"
-              width={600} // Adjust the width as needed
-              height={600} // Adjust the height as needed
-              className="img-fluid"
-            />
+            <div className="embed-responsive embed-responsive-16by9">
+              <video
+                className="embed-responsive-item"
+                src="/assets/images/about/production.mp4" // Replace with your video URL
+                autoPlay
+                loop
+                muted
+                width="100%"
+                height="auto"
+              ></video>
+            </div>
           </div>
 
           {/* Right Side - Text */}
-          <div className="col-lg-6 pt-5 mt-5 text-center text-lg-start">
-            <h4 className="fs-2 pt-5 mt-5">{t("Celebrating 20 Years of Fragrant Excellence")}</h4>
+          <div className="col-lg-6 text-center text-lg-start">
+            <h4 className="fs-2">
+              {t("Celebrating 20 Years of Fragrant Excellence")}
+            </h4>
             <p className="fs-5">
-              {t("Founded by Mr Kafeel Ahmed in 2000 Ahmed Al Maghribi Perfumes is a beacon of tradition and quality in the realm of Arabic fragrances Our journey is deeply rooted in respect for our cultural heritage dedicated to crafting scents that capture the essence of our region with the finest globally sourced ingredients")}
+              {t(
+                "Founded by Mr Kafeel Ahmed in 2000 Ahmed Al Maghribi Perfumes is a beacon of tradition and quality in the realm of Arabic fragrances Our journey is deeply rooted in respect for our cultural heritage dedicated to crafting scents that capture the essence of our region with the finest globally sourced ingredients"
+              )}
             </p>
             <p className="mt-3 fs-5">
-              {t("With over 180 branches across the GCC and a growing international presence we have evolved the art of perfumery While honoring traditional Arabic techniques our innovative blends cater to diverse tastes ensuring each fragrance delivers a rich lasting experience")}
+              {t(
+                "With over 180 branches across the GCC and a growing international presence we have evolved the art of perfumery While honoring traditional Arabic techniques our innovative blends cater to diverse tastes ensuring each fragrance delivers a rich lasting experience"
+              )}
             </p>
             <p className="mt-3 fs-5">
-              {t("Our mission remains unwavering to create high quality perfumes that resonate with individuality At Ahmed Al Maghribi Perfumes we invite you to explore our luxurious collection and find the perfect scent that truly reflects who you are")}
+              {t(
+                "Our mission remains unwavering to create high quality perfumes that resonate with individuality At Ahmed Al Maghribi Perfumes we invite you to explore our luxurious collection and find the perfect scent that truly reflects who you are"
+              )}
             </p>
           </div>
         </div>
 
-        <div className="row mt-5 pt-5">
+        <div className="row align-items-center pt-5">
           {/* Left Side - Text */}
-          <div className="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
-            <h4 className="mb-4 fs-2">{t("The Visionary Behind the Fragrance")}</h4>
+          <div className="col-lg-6 mb-lg-0 text-center text-lg-start">
+            <h4 className="fs-2">{t("The Visionary Behind the Fragrance")}</h4>
             <p className="fs-5">
-              {t("Mr Kafeel Ahmed born and raised in the vibrant city of Mumbai has always possessed a deep seated passion for creation and innovation Despite initially being distant from the realms of luxury and fragrance his fascination with crafting unique experiences drew him into the captivating world of perfumery In 2000 he founded Ahmed Al Maghribi Perfumes starting with a humble home based factory and a single retail outlet Through relentless determination and the steadfast support of his dedicated team he navigated challenges to establish a brand that has become synonymous with luxury fragrances earning recognition across the GCC and beyond")}
+              {t(
+                "Mr Kafeel Ahmed born and raised in the vibrant city of Mumbai has always possessed a deep seated passion for creation and innovation Despite initially being distant from the realms of luxury and fragrance his fascination with crafting unique experiences drew him into the captivating world of perfumery In 2000 he founded Ahmed Al Maghribi Perfumes starting with a humble home based factory and a single retail outlet Through relentless determination and the steadfast support of his dedicated team he navigated challenges to establish a brand that has become synonymous with luxury fragrances earning recognition across the GCC and beyond"
+              )}
             </p>
             {/* <p className="mt-3 fs-5">
               In order to conserve the traditional feel in our fragrances, all

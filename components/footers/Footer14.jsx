@@ -11,13 +11,12 @@ import {
   socialLinks,
 } from "@/data/footer";
 
-import { useMenu } from '../../context/MenuContext';
+import { useMenu } from "../../context/MenuContext";
 
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 
 export default function Footer14() {
-
   const locale = useLocale();
   const t = useTranslations();
   const router = useRouter();
@@ -28,13 +27,17 @@ export default function Footer14() {
     router.push(pathname, { locale: e.target.value });
   };
 
-  const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
+  const {
+    categoriesSubCategories,
+    isLoading: isMenuLoading,
+    error,
+  } = useMenu();
 
   if (isMenuLoading) {
     return <div></div>;
   }
   if (error) {
-    return <div>{ error }</div>;
+    return <div>{error}</div>;
   }
 
   return (
@@ -56,10 +59,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                {t("Swift Complimentary Shipping")}
+                  {t("Swift Complimentary Shipping")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                {t("Free delivery on orders over AED 400")}
+                  {t("Free delivery on orders over AED 400")}
                 </p>
               </div>
             </div>
@@ -79,10 +82,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                {t("Secure Payment Solutions")}
+                  {t("Secure Payment Solutions")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                {t("Your payments are safe with our secure online system")}
+                  {t("Your payments are safe with our secure online system")}
                 </p>
               </div>
             </div>
@@ -102,10 +105,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                {t("Convenient Cash on Delivery")}
+                  {t("Convenient Cash on Delivery")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                {t("Pay conveniently upon receiving your order")}
+                  {t("Pay conveniently upon receiving your order")}
                 </p>
               </div>
             </div>
@@ -151,7 +154,11 @@ export default function Footer14() {
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="footer__social-link d-block"target="_blank">
+                  <a
+                    href={link.href}
+                    className="footer__social-link d-block"
+                    target="_blank"
+                  >
                     <svg
                       className={link.className}
                       width={link.width}
@@ -177,7 +184,10 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {footerLinks1.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <a href={`/${locale}${elm.href}`} className="menu-link menu-link_us-s">
+                  <a
+                    href={`/${locale}${elm.href}`}
+                    className="menu-link menu-link_us-s"
+                  >
                     {t(elm.text)}
                   </a>
                 </li>
@@ -187,11 +197,23 @@ export default function Footer14() {
           {/* <!-- /.footer-column --> */}
 
           <div className="footer-column footer-menu mb-4 mb-lg-0">
-            <h6 className="sub-menu__title text-uppercase">{t("Categories")}</h6>
+            <h6 className="sub-menu__title text-uppercase">
+              {t("Categories")}
+            </h6>
             <ul className="sub-menu__list list-unstyled">
               {categoriesSubCategories.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <a href={elm.name != 'Gift Sets' ? `/${locale}/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`} className="menu-link menu-link_us-s">
+                  <a
+                    href={
+                      elm.name != "Gift Sets"
+                        ? `/${locale}/product-category/${elm.name
+                            .split(" ")
+                            .join("-")
+                            .toLowerCase()}`
+                        : `/${locale}/product-category/gift-sets`
+                    }
+                    className="menu-link menu-link_us-s"
+                  >
                     {t(elm.name)}
                   </a>
                 </li>
@@ -216,10 +238,7 @@ export default function Footer14() {
 
           <div className="footer-column footer-newsletter col-12 mb-4 mb-lg-0">
             <h6 className="sub-menu__title text-uppercase">{t("Subscribe")}</h6>
-            <p>
-              {t("Be the First")}
-             
-            </p>
+            <p>{t("Be the First")}</p>
             <form
               onSubmit={(e) => e.preventDefault()}
               className="footer-newsletter__form position-relative bg-body"
@@ -250,9 +269,11 @@ export default function Footer14() {
             reserved
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
-            <a className="text-white" href={`/${locale}/order-tracking`}>Track Order</a>
+            <a className="text-white" href={`/${locale}/order-tracking`}>
+              Track Order{" "}
+            </a>
             <div className="d-flex align-items-center">
-               {/* <label
+              {/* <label
                 htmlFor="footerSettingsLanguage"
                 className="me-2 text-white"
               >
