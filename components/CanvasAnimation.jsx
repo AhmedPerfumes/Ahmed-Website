@@ -58,7 +58,7 @@ const CanvasAnimation = () => {
         render();
         const currentScrollY = window.scrollY;
         if(currentScrollY > previousScrollY.current) {
-          console.log(Math.round(ball.frame) +'==='+ frameCount);
+          // console.log(Math.round(ball.frame) +'==='+ frameCount);
           if (Math.round(ball.frame) + 50 > frameCount - 2) {
             gsap.to(window, {
               scrollTo: { y: "#main2", autoKill: false },
