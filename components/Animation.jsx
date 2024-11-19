@@ -889,7 +889,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      {/* Full screen vertical Scroll Slider */}
+      {/* Full screen horizontal Scroll Slider */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
           <div className="inner2 mt-5 d-flex align-items-center">
