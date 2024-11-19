@@ -51,7 +51,9 @@ const ShopPage8 = async ({ params }) => {
   
   try {
     const data = await getCategorySubCategory(category);
-    console.log(data);
+    console.log(data.productSubCategories[0]);
+    
+    
     return data && (
       <>
         <QuickView />

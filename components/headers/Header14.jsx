@@ -39,17 +39,6 @@ export default function Header14() {
     };
   }, [isHeaderOpen]);
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-//   useEffect(() => {
-//     const token = localStorage.getItem('token');
-//     console.log(token);
-//     if (token) {
-//       setIsLoggedIn(true);
-//     }
-//  }, [isLoggedIn]);
-
-//  const router = useRouter();
 const router = useRouter();
 const pathname = usePathname();
 
@@ -279,26 +268,7 @@ const handleLangChange = (e) => {
                     value={searchKeyWord}
                     onChange={handleChange}
                   />
-                  {/* <button
-                    className="btn header-search__btn"
-                    type="button"
-                    onClick={() => setIsPopupOpen((pre) => !pre)}
-                  >
-                    <svg
-                      className="d-block"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {isPopupOpen ? (
-                        <use href="#icon_close" />
-                      ) : (
-                        <use href="#icon_search" />
-                      )}
-                    </svg>
-                  </button> */}
+                  
                 </div>
 
                 <div className="header-tools__item hover-container">
@@ -308,16 +278,7 @@ const handleLangChange = (e) => {
                 </div>
 
                 <Link className="header-tools__item" href="#">
-                  {/* <svg
-                    className="d-block"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <use href="#icon_heart" />
-                  </svg> */}
+                
                   <IoLocationOutline size={20}/>
                 </Link>
 
@@ -354,38 +315,7 @@ const handleLangChange = (e) => {
           </div>
         </div>
       </header>
-      {/* { pathname == "/" ?
-      <nav className="navigation text-center d-none d-lg-block menu-button btn">
-        <a
-          className="navigation__item"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault(); // Prevents the default anchor behavior
-            setIsHeaderOpen((prev) => !prev); // Toggles the header
-          }}
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z"
-              fill="currentColor"
-            />
-            <path
-              d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z"
-              fill="currentColor"
-            />
-            <path
-              d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z"
-              fill="currentColor"
-            />
-          </svg>
-        </a>
-      </nav> : null } */}
+     
     </>
   );
 }
