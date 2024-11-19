@@ -9,10 +9,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from "he";
 
-import { useLocale } from "next-intl";
+import { useLocale ,useTranslations} from "next-intl";
 
 export default function Style2({ category, subcategory, products }) {
   const locale = useLocale();
+  const t=useTranslations();
   const indexToSwap = 1;
   let objectFound = false;
 
@@ -250,7 +251,7 @@ export default function Style2({ category, subcategory, products }) {
                       .join("-")
                       .toLowerCase()}`}
                   >
-                    {elm?.product_name && he.decode(elm?.product_name)}
+                    {elm?.product_name && t(he.decode(elm?.product_name))}
                   </a>
                 </h6>
                 <div className="product-card__price d-flex">
