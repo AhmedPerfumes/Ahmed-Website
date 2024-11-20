@@ -13,6 +13,7 @@ import { useContextElement } from "@/context/Context";
 import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 
+
 export default function SingleProduct11({ category, subcategory, product }) {
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
@@ -78,7 +79,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
               <span className="current-price"> {product.price}د.إ</span>
             </div>
             <div className="product-single__short-desc">
-              <div dangerouslySetInnerHTML={{ __html: product.description }}></div>
+             
+              <div dangerouslySetInnerHTML={{ __html :  product.description }}></div>
             </div>
             <h6 style={{ color: "red" }}>{error && error}</h6>
             <form onSubmit={(e) => e.preventDefault()}>
