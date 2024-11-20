@@ -90,7 +90,7 @@ const CanvasAnimation = () => {
         render();
         const currentScrollY = window.scrollY;
         if (currentScrollY > previousScrollY.current) {
-          if (Math.round(ball.frame) + 50 > frameCount - 2) {
+          if (Math.round(ball.frame) + 50 > frameCount - 5) {
             gsap.to(window, {
               scrollTo: { y: "#main2", autoKill: false },
               duration: 0.5,
@@ -107,6 +107,15 @@ const CanvasAnimation = () => {
     };
   }, []); // Run effect once after component mounts
 
+  useEffect(() => {
+    if (loadingProgress === 100) {
+      setTimeout(() => {
+        // Add the 'hidden' class to fade out the loading screen
+        document.querySelector(".loading-screen").classList.add("hidden");
+      }, 500); // Delay to allow the progress bar to complete the last animation
+    }
+  }, [loadingProgress]); // Runs whenever loadingProgress changes
+
   // Skip button click handler
   const skipAnimation = () => {
     gsap.to(window, {
@@ -122,7 +131,10 @@ const CanvasAnimation = () => {
       {!isLoaded && (
         <div className="loading-screen">
           <div className="loading-bar">
-            <div className="loading-progress" style={{ width: `${loadingProgress}%` }}></div>
+            <div
+              className="loading-progress"
+              style={{ width: `${loadingProgress}%` }}
+            ></div>
           </div>
           <p>Loading... {loadingProgress}%</p>
         </div>
