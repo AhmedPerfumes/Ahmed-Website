@@ -108,7 +108,7 @@ const CanvasAnimation = () => {
   }, []); // Run effect once after component mounts
 
   useEffect(() => {
-    if (loadingProgress <= 90) {
+    if (loadingProgress <= 50) {
       setTimeout(() => {
         const loadingScreen = document.querySelector(".loading-screen");
         
