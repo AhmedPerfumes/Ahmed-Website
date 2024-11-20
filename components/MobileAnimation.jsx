@@ -90,7 +90,7 @@ const CanvasAnimation = () => {
         render();
         const currentScrollY = window.scrollY;
         if (currentScrollY > previousScrollY.current) {
-          if (Math.round(ball.frame) + 50 > frameCount - 5) {
+          if (Math.round(ball.frame) + 50 > frameCount - 2) {
             gsap.to(window, {
               scrollTo: { y: "#main2", autoKill: false },
               duration: 0.5,
@@ -111,7 +111,7 @@ const CanvasAnimation = () => {
    useEffect(() => {
     const loaderTimeout = setTimeout(() => {
       setIsLoaded(true); // Hide loader after 2 seconds
-    }, 10000); // 2 seconds delay
+    }, 20000);
 
     return () => clearTimeout(loaderTimeout); // Cleanup the timeout if the component is unmounted
   }, []); // Only run this effect once, after initial render
@@ -134,7 +134,7 @@ const CanvasAnimation = () => {
             {/* Your GIF loader here */}
             {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
           </div>
-          <p>Loading... {loadingProgress}%</p>
+          <p>Loading...</p>
         </div>
       )}
 

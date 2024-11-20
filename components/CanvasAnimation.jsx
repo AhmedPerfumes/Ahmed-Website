@@ -134,7 +134,7 @@ const CanvasAnimation = () => {
             {/* Your GIF loader here */}
             {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
           </div>
-          <p>Loading... {loadingProgress}%</p>
+          <p>Loading...</p>
         </div>
       )}
 
