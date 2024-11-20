@@ -11,11 +11,14 @@ import Clolor2 from "./Clolor2";
 import ShareComponent from "../common/ShareComponent";
 import { useContextElement } from "@/context/Context";
 import he from 'he';
+import { useLocale, useTranslations } from "next-intl";
 
 export default function SingleProduct11({ category, subcategory, product }) {
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState(null);
+  const locale = useLocale();
+  const t=useTranslations();
 
   const isIncludeCard = () => {
     const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
@@ -70,7 +73,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               </div>
               {/* <!-- /.breadcrumb --> */}
             </div>
-            <h1 className="product-single__name">{product?.product_name && he.decode(product?.product_name)}</h1>
+            <h1 className="product-single__name">{product?.product_name && t(he.decode(product?.product_name))}</h1>
             <div className="product-single__price">
               <span className="current-price"> {product.price}د.إ</span>
             </div>
@@ -124,7 +127,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                   className="btn btn-primary btn-addtocart js-open-aside"
                   onClick={() => addToCart()}
                 >
-                  {isIncludeCard() ? "Already Added" : "Add to Cart"}
+                  {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
                 </button>
               </div>
               }
@@ -134,11 +137,11 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <div className="product-single__meta-info">
               <div className="meta-item">
-                <label>Estimated delivery:</label>
-                <span> 3 - 5 days</span>
+                <label>{t("Estimated delivery:")}</label>
+                <span> {t("3 to 5 days")}</span>
               </div>
               <div className="meta-item">
-                <label>Categories: </label>
+                <label>{t("Categories")}: </label>
                 <span>{ category.split('-').join(' ').toUpperCase() }, { subcategory.split('-').join(' ').toUpperCase() }</span>
               </div>
             </div>

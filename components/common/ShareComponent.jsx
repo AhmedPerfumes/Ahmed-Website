@@ -3,10 +3,13 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function ShareComponent({ title = "title" }) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations();
+  const locale = useLocale();
 
   const [fullUrl, setFullUrl] = useState("");
 
@@ -45,7 +48,7 @@ export default function ShareComponent({ title = "title" }) {
       >
         <use href="#icon_sharing" />
       </svg>
-      <span>Share</span>
+      <span>{t("Share")}</span>
     </Link>
   );
 }
