@@ -112,7 +112,7 @@ const CanvasAnimation = () => {
       setTimeout(() => {
         // Add the 'hidden' class to fade out the loading screen
         document.querySelector(".loading-screen").classList.add("hidden");
-      }, 500); // Delay to allow the progress bar to complete the last animation
+      }, 300); // Delay to allow the progress bar to complete the last animation
     }
   }, [loadingProgress]); // Runs whenever loadingProgress changes
 

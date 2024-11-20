@@ -108,13 +108,20 @@ const CanvasAnimation = () => {
   }, []); // Run effect once after component mounts
 
   useEffect(() => {
-    if (loadingProgress === 80) {
+    if (loadingProgress === 100) {
       setTimeout(() => {
-        // Add the 'hidden' class to fade out the loading screen
-        document.querySelector(".loading-screen").classList.add("hidden");
-      }, 500); // Delay to allow the progress bar to complete the last animation
+        const loadingScreen = document.querySelector(".loading-screen");
+        
+        // Trigger fade-out and hide the loading screen after a brief delay
+        loadingScreen.classList.add("hidden");
+  
+        // Ensure the screen is completely hidden after the fade-out
+        setTimeout(() => {
+          loadingScreen.style.display = "none"; // Remove from layout
+        }, 300); // Match the duration of the fade-out
+      }, 300); // Delay to allow the progress bar to complete the last animation
     }
-  }, [loadingProgress]); // Runs whenever loadingProgress changes
+  }, [loadingProgress]);
 
   // Skip button click handler
   const skipAnimation = () => {
