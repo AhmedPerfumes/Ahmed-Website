@@ -130,11 +130,9 @@ const CanvasAnimation = () => {
       {/* Loading screen */}
       {!isLoaded && (
         <div className="loading-screen">
-          <div className="loading-bar">
-            <div
-              className="loading-progress"
-              style={{ width: `${loadingProgress}%` }}
-            ></div>
+        <div className="loading-gif-container">
+            {/* Your GIF loader here */}
+            {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
           </div>
           <p>Loading... {loadingProgress}%</p>
         </div>
