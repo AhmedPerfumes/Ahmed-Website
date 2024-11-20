@@ -137,6 +137,22 @@
   pointer-events: none; /* Prevent interaction when hidden */
 }
 
+@media (max-width: 767px) {
+  .loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;  /* Prevents interaction and removes the element visually */
+    pointer-events: none; /* Prevent interaction when hidden */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;  /* Prevents interaction and removes the element visually */
+    pointer-events: none; /* Prevent interaction when hidden */
+  }
+}
+
 .loading-bar {
   width: 80%;
   height: 20px;
