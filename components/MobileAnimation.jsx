@@ -14,7 +14,7 @@ const CanvasAnimation = () => {
   const [showSkipButton, setShowSkipButton] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false); // Track loading state
   const [loadingProgress, setLoadingProgress] = useState(0); // Track loading progress
-  const frameCount = 343;
+  const frameCount = 355;
   let images = [];
   let ball = { frame: 0 };
 
@@ -28,7 +28,7 @@ const CanvasAnimation = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/final/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) => `/assets/mobilescreen/${(index + 1).toString()}.jpg`;
 
     // Preload all images and update the loading progress
     const imagePromises = [];
@@ -107,14 +107,14 @@ const CanvasAnimation = () => {
     };
   }, []); // Run effect once after component mounts
 
-  useEffect(() => {
-    if (loadingProgress <= 90) {
-      setTimeout(() => {
-        // Hide the loading screen once the images are loaded
-        setIsLoaded(true); // Set state to hide the loader
-      }, 300); // Delay before hiding the loader
-    }
-  }, [loadingProgress]);
+   // Ensure the loader stays for 2 seconds, even if images load faster
+   useEffect(() => {
+    const loaderTimeout = setTimeout(() => {
+      setIsLoaded(true); // Hide loader after 2 seconds
+    }, 10000); // 2 seconds delay
+
+    return () => clearTimeout(loaderTimeout); // Cleanup the timeout if the component is unmounted
+  }, []); // Only run this effect once, after initial render
 
   // Skip button click handler
   const skipAnimation = () => {
