@@ -1,17 +1,19 @@
 import React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function BreadCumb({ category, subcategory, product }) {
+  const t = useTranslations();
   return (
     <>
       <Link href="/" className="menu-link menu-link_us-s text-uppercase fw-medium">
-        Home
+      {t("Home")}
       </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
         /
       </span>
       <Link href="#" className="menu-link menu-link_us-s text-uppercase fw-medium">
-        Shop
+        {t("Shop")}
       </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
         /

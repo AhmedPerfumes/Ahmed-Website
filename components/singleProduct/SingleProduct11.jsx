@@ -127,7 +127,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                   className="btn btn-primary btn-addtocart js-open-aside"
                   onClick={() => addToCart()}
                 >
-                  {isIncludeCard() ? "Already Added" : t("Add to Cart")}
+                  {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
                 </button>
               </div>
               }
@@ -138,10 +138,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
             <div className="product-single__meta-info">
               <div className="meta-item">
                 <label>{t("Estimated delivery:")}</label>
-                <span> 3 - 5 days</span>
+                <span> {t("3 to 5 days")}</span>
               </div>
               <div className="meta-item">
-                <label>Categories: </label>
+                <label>{t("Categories")}: </label>
                 <span>{ category.split('-').join(' ').toUpperCase() }, { subcategory.split('-').join(' ').toUpperCase() }</span>
               </div>
             </div>
