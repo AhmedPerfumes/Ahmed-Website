@@ -113,3 +113,40 @@
   .skip-button2:hover {
     background-color: rgba(0, 0, 0, 0.9);
   }
+
+  /* Loading Screen */
+  .loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+  }
+
+  .loading-bar {
+    width: 80%;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .loading-progress {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 10px;
+    transition: width 0.2s ease-in-out;
+  }
+
+  /* Canvas */
+  .canvas {
+    display: block;
+    margin: 0 auto;
+    transition: opacity 0.5s ease;
+  }

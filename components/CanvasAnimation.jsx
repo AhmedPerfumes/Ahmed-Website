@@ -12,26 +12,56 @@ const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false); // Track loading state
+  const [loadingProgress, setLoadingProgress] = useState(0); // Track loading progress
   const frameCount = 343;
   let images = [];
   let ball = { frame: 0 };
 
   useEffect(() => {
+    // Disable scroll until images are loaded
+    // document.body.style.overflow = "hidden";
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) =>
-      `/assets/final/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) => `/assets/final/${(index + 1).toString()}.jpg`;
 
+    // Preload all images and update the loading progress
+    const imagePromises = [];
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = currentFrame(i);
       images.push(img);
+
+      // Create a promise for each image load
+      imagePromises.push(
+        new Promise((resolve, reject) => {
+          img.onload = () => {
+            setLoadingProgress((prev) => Math.round(((i + 1) / frameCount) * 100)); // Update progress
+            resolve();
+          };
+          img.onerror = reject;
+        })
+      );
     }
 
+    // Once all images are loaded, enable scrolling and start the animation
+    Promise.all(imagePromises)
+      .then(() => {
+        setIsLoaded(true);
+        // document.body.style.overflow = ""; // Re-enable scroll
+      })
+      .catch((error) => {
+        console.error("Error loading images:", error);
+        setIsLoaded(true);
+        // document.body.style.overflow = ""; // Re-enable scroll even if images fail to load
+      });
+
+    // Function to render the current frame on the canvas
     const render = () => {
       if (images[0]) {
         context.canvas.width = images[0].width;
@@ -41,8 +71,10 @@ const CanvasAnimation = () => {
       }
     };
 
+    // Start rendering once the first image is loaded
     images[0].onload = render;
 
+    // GSAP animation on scroll
     gsap.to(ball, {
       frame: frameCount - 1,
       snap: "frame",
@@ -57,8 +89,7 @@ const CanvasAnimation = () => {
       onUpdate: () => {
         render();
         const currentScrollY = window.scrollY;
-        if(currentScrollY > previousScrollY.current) {
-          // console.log(Math.round(ball.frame) +'==='+ frameCount);
+        if (currentScrollY > previousScrollY.current) {
           if (Math.round(ball.frame) + 50 > frameCount - 2) {
             gsap.to(window, {
               scrollTo: { y: "#main2", autoKill: false },
@@ -74,8 +105,9 @@ const CanvasAnimation = () => {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []);
+  }, []); // Run effect once after component mounts
 
+  // Skip button click handler
   const skipAnimation = () => {
     gsap.to(window, {
       scrollTo: { y: "#main2", autoKill: false },
@@ -86,7 +118,20 @@ const CanvasAnimation = () => {
 
   return (
     <div>
+      {/* Loading screen */}
+      {!isLoaded && (
+        <div className="loading-screen">
+          <div className="loading-bar">
+            <div className="loading-progress" style={{ width: `${loadingProgress}%` }}></div>
+          </div>
+          <p>Loading... {loadingProgress}%</p>
+        </div>
+      )}
+
+      {/* Canvas Animation */}
       <canvas ref={canvasRef} className="canvas"></canvas>
+
+      {/* Skip Button */}
       {showSkipButton && (
         <button onClick={skipAnimation} className="skip-button">
           SKIP INTRO
