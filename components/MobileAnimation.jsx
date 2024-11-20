@@ -108,18 +108,11 @@ const CanvasAnimation = () => {
   }, []); // Run effect once after component mounts
 
   useEffect(() => {
-    if (loadingProgress <= 50) {
+    if (loadingProgress <= 90) {
       setTimeout(() => {
-        const loadingScreen = document.querySelector(".loading-screen");
-        
-        // Trigger fade-out and hide the loading screen after a brief delay
-        loadingScreen.classList.add("hidden");
-  
-        // Ensure the screen is completely hidden after the fade-out
-        setTimeout(() => {
-          loadingScreen.style.display = "none"; // Remove from layout
-        }, 300); // Match the duration of the fade-out
-      }, 300); // Delay to allow the progress bar to complete the last animation
+        // Hide the loading screen once the images are loaded
+        setIsLoaded(true); // Set state to hide the loader
+      }, 300); // Delay before hiding the loader
     }
   }, [loadingProgress]);
 
@@ -134,14 +127,12 @@ const CanvasAnimation = () => {
 
   return (
     <div>
-      {/* Loading screen */}
+      {/* Show loading GIF until loading is complete */}
       {!isLoaded && (
         <div className="loading-screen">
-          <div className="loading-bar">
-            <div
-              className="loading-progress"
-              style={{ width: `${loadingProgress}%` }}
-            ></div>
+          <div className="loading-gif-container">
+            {/* Your GIF loader here */}
+            {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
           </div>
           <p>Loading... {loadingProgress}%</p>
         </div>
