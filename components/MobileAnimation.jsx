@@ -108,7 +108,7 @@ const CanvasAnimation = () => {
   }, []); // Run effect once after component mounts
 
   useEffect(() => {
-    if (loadingProgress === 100) {
+    if (loadingProgress === 80) {
       setTimeout(() => {
         // Add the 'hidden' class to fade out the loading screen
         document.querySelector(".loading-screen").classList.add("hidden");
