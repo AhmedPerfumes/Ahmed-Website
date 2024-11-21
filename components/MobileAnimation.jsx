@@ -1,27 +1,30 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import ScrollToPlugin from 'gsap/ScrollToPlugin';
-import "./Canvas.css"
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 
-gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
+import "./Canvas.css";
 
-const MobileAnimation = () => {
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
-  const frameCount = 355;
+  const frameCount = 343;
   let images = [];
   let ball = { frame: 0 };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/mobilescreen/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) =>
+      `/assets/webp/${(index + 1).toString()}.webp`;
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
@@ -30,31 +33,32 @@ const MobileAnimation = () => {
     }
 
     const render = () => {
-      context.canvas.width = images[0].width;
-      context.canvas.height = images[0].height;
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(images[ball.frame], 0, 0);
-     
+      if (images[0]) {
+        context.canvas.width = images[0].width;
+        context.canvas.height = images[0].height;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(images[ball.frame], 0, 0);
+      }
     };
 
     images[0].onload = render;
 
     gsap.to(ball, {
       frame: frameCount - 1,
-      snap: 'frame',
-      ease: 'none',
+      snap: "frame",
+      ease: "none",
       scrollTrigger: {
         scrub: 1,
         pin: canvas,
-        end: '250%',
+        end: "250%",
         onEnter: () => setShowSkipButton(true),
         onLeave: () => setShowSkipButton(false),
       },
-      onUpdate:()=>{ 
+      onUpdate: () => {
         render();
         const currentScrollY = window.scrollY;
         if(currentScrollY > previousScrollY.current) {
-          console.log(Math.round(ball.frame) +'==='+ frameCount);
+          // console.log(Math.round(ball.frame) +'==='+ frameCount);
           if (Math.round(ball.frame) + 50 > frameCount - 2) {
             gsap.to(window, {
               scrollTo: { y: "#main2", autoKill: false },
@@ -66,7 +70,6 @@ const MobileAnimation = () => {
         previousScrollY.current = currentScrollY;
       },
     });
-    
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -83,14 +86,14 @@ const MobileAnimation = () => {
 
   return (
     <div>
-    <canvas ref={canvasRef} className="canvas"></canvas>
-    {showSkipButton && (
-      <button onClick={skipAnimation} className="skip-button2">
-        SKIP INTRO
-      </button>
-    )}
-  </div>
+      <canvas ref={canvasRef} className="canvas"></canvas>
+      {showSkipButton && (
+        <button onClick={skipAnimation} className="skip-button">
+          SKIP INTRO
+        </button>
+      )}
+    </div>
   );
 };
 
-export default MobileAnimation;
+export default CanvasAnimation;

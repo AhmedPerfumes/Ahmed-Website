@@ -7,6 +7,7 @@ import CanvasAnimation from "@/components/CanvasAnimation";
 import MobileAnimation from "@/components/MobileAnimation";
 import NewsLetter from "@/components/modals/NewsLetter";
 
+
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
   description: "Buy Best Perfumes Online Ahmed Perfume",
@@ -31,6 +32,7 @@ export default function HomePage8() {
       <div className="d-sm-block d-md-none">
         {/* MobileAnimation will render for small screens */}
         <MobileAnimation />
+        
       </div>
       <main id="">
         {/* Animation component will render after CanvasAnimation */}

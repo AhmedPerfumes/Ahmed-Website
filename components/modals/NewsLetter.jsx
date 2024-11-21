@@ -5,65 +5,49 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 
 export default function NewsLetter() {
-  const modalElement = useRef();
+  const modalElement = useRef(null);
   const [hasScrolled, setHasScrolled] = useState(false);
   const locale = useLocale();
+  let modalInstance = null;
+
   useEffect(() => {
-    const bootstrap = require("bootstrap"); // dynamically import bootstrap
-    var myModal = new bootstrap.Modal(
-      document.getElementById("newsletterPopup"),
-      {
-        keyboard: false,
-      }
-    );
+    const bootstrap = require("bootstrap");
+
+    // Initialize Bootstrap Modal
+    modalInstance = new bootstrap.Modal(modalElement.current, {
+      keyboard: false,
+    });
 
     // Function to show the modal
     const showModal = () => {
       if (!hasScrolled) {
-        myModal.show();
-        setHasScrolled(true); // Update state to prevent multiple triggers
+        modalInstance.show();
+        setHasScrolled(true);
       }
     };
 
-    // Add scroll event listener
+    // Handle scroll event
     const handleScroll = () => {
-      // If scroll exceeds 300px, show the modal
       if (window.scrollY > 5900 && !hasScrolled) {
         showModal();
       }
     };
 
-    // Listen to the scroll event
-    window.addEventListener('scroll', handleScroll);
-
-    modalElement.current.addEventListener("hidden.bs.modal", () => {
-      myModal.hide();
+    // Add event listener for close button
+    const closeButton = modalElement.current.querySelector(".btn-close");
+    closeButton.addEventListener("click", () => {
+      modalInstance.hide(); // Programmatically hide the modal
     });
 
-    // Cleanup: Remove scroll event listener when component unmounts
+    // Listen for scroll events
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listeners on unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      closeButton.removeEventListener("click", () => modalInstance.hide());
     };
   }, [hasScrolled]);
-
-  // Function to remove the backdrop
-  // const removeBackdrop = () => {
-  //   const backdrop = document.querySelector('.modal-backdrop');
-  //   if (backdrop) {
-  //     backdrop.classList.remove('show'); // Hide the backdrop
-  //     backdrop.remove(); // Remove it from the DOM
-  //   }
-  // };
-
-  // Function to close the modal
-  // const closeModal = () => {
-  //   const modalElement = document.getElementById('newsletterPopup');
-  //   modalElement.classList.remove('show'); // Hide the modal
-  //   document.body.classList.remove('modal-open'); // Restore body scrolling
-  //   document.body.style.overflow = ''; // Reset overflow style to enable scrolling again
-  //   document.body.style.paddingRight = `0px`;
-  //   removeBackdrop(); // Remove the backdrop
-  // };
 
   return (
     <div
@@ -71,15 +55,15 @@ export default function NewsLetter() {
       id="newsletterPopup"
       ref={modalElement}
       tabIndex="-1"
-      data-bs-backdrop={"true"}
+      data-bs-backdrop="true"
       aria-hidden="true"
     >
       <div className="modal-dialog newsletter-popup modal-dialog-centered">
         <div className="modal-content">
+          {/* Explicit close button handling */}
           <button
             type="button"
             className="btn-close"
-            data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
           <div className="row p-0 m-0">
@@ -106,29 +90,12 @@ export default function NewsLetter() {
                   exclusive, limited-edition fragrance. <br />
                   <b className="sub-title">Don't miss out.</b>
                 </p>
-
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                   href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
                 >
                   Explore
                 </a>
-                {/* <form
-                  onSubmit={(e) => e.preventDefault()}
-                  className="footer-newsletter__form position-relative bg-body"
-                >
-                  <input
-                    className="form-control border-2"
-                    type="email"
-                    name="email"
-                    placeholder="Your email address"
-                  />
-                  <input
-                    className="btn-link fw-medium bg-transparent position-absolute top-0 end-0 h-100"
-                    type="submit"
-                    defaultValue="OPT IN"
-                  />
-                </form> */}
               </div>
             </div>
           </div>
