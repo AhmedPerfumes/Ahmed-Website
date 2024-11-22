@@ -19,7 +19,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState(null);
   const locale = useLocale();
-  const t=useTranslations();
+  const t = useTranslations();
 
   const isIncludeCard = () => {
     const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
@@ -60,6 +60,32 @@ export default function SingleProduct11({ category, subcategory, product }) {
     }
   };
 
+  function cleanProductName(productName) {
+    // Step 1: Remove any non-alphanumeric characters except for spaces
+    const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, '') + ' Description';
+  
+    // Step 2: Words to remove
+    const wordsToRemove = ['&', ' &', '& ', ' & ', 'amp', ' amp', 'amp ', ' amp ', ';', ' ;', '; ', ' ; '];
+  
+    // Step 3: Remove the words from the dynamic key (case insensitive)
+    let cleanString = dynamicKey;
+    wordsToRemove.forEach(word => {
+      const regex = new RegExp(word, 'gi'); // 'gi' for global and case-insensitive replacement
+      cleanString = cleanString.replace(regex, '');
+    });
+  
+    // Step 4: Replace multiple spaces with a single space
+    cleanString = cleanString.replace(/\s+/g, ' ').trim(); // Trim to remove leading/trailing spaces
+  
+    return cleanString;
+  }
+
+  function capitalizeEachWord(str) {
+    return str.split(' ') // Split the sentence into words
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+              .join(' '); // Join the words back into a sentence
+  }
+
   return (
     <>
       {Object.keys(product).length > 0 ? <><section className="product-single container product-single__type-9">
@@ -79,8 +105,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               <span className="current-price"> {product.price}د.إ</span>
             </div>
             <div className="product-single__short-desc">
-             
-              <div dangerouslySetInnerHTML={{ __html :  product.description }}></div>
+              <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(product.product_name)) }}></div>
             </div>
             <h6 style={{ color: "red" }}>{error && error}</h6>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -144,7 +169,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               </div>
               <div className="meta-item">
                 <label>{t("Categories")}: </label>
-                <span>{ category.split('-').join(' ').toUpperCase() }, { subcategory.split('-').join(' ').toUpperCase() }</span>
+                <span>{ t(capitalizeEachWord(category.split('-').join(' '))) }, { t(capitalizeEachWord(subcategory.split('-').join(' '))) }</span>
               </div>
             </div>
           </div>
@@ -157,7 +182,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             Description
           </h2>
           <div className="product-single__details-list__content text-white">
-            <Description content={ product.content }/>
+            <Description product_name={ product.product_name } content={ product.content }/>
           </div>
           <h2 className="product-single__details-list__title text-white">
             Fragrance Notes
