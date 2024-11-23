@@ -147,6 +147,7 @@ export default function Checkout() {
       totalPrice,
       finalPrice,
       customer_id: userJson ? userJson.id : null,
+      locale
     }
  
     try {

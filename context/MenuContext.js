@@ -5,6 +5,8 @@ const MenuContext = createContext();
 
 export function MenuProvider({ children }) {
   const [categoriesSubCategories, setCategoriesSubCategories] = useState([]);
+  const [vatTax, setVatTax] = useState(0.00);
+  const [shippingServiceCharges, setshippingServiceCharges] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,11 +28,27 @@ export function MenuProvider({ children }) {
      
           // Handle response if necessary
           const data = await response.json();
-          if(data.length > 0) {
+          if(data && data.productCategories.length > 0) {
             setError(null);
-            setCategoriesSubCategories(data);
+            setCategoriesSubCategories(data.productCategories);
           } else {
             setCategoriesSubCategories(null);
+            setError(data);
+          }
+
+          if(data && data.tax) {
+            setError(null);
+            setVatTax(data.tax);
+          } else {
+            setVatTax(null);
+            setError(data);
+          }
+
+          if(data && data.shipping_service_charges) {
+            setError(null);
+            setshippingServiceCharges(data.shipping_service_charges);
+          } else {
+            setshippingServiceCharges(null);
             setError(data);
           }
           // console.log(data);
@@ -49,7 +67,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges }}>
       {children}
     </MenuContext.Provider>
   );
