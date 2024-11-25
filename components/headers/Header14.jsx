@@ -11,10 +11,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
 // import { usePathname } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
-import { IoLocationOutline  } from "react-icons/io5";
+import { IoLocationOutline } from "react-icons/io5";
 // import { useRouter } from 'next/navigation';
-import { useMenu } from '../../context/MenuContext';
-import { useUser } from '../../context/UserContext';
+import { useMenu } from "../../context/MenuContext";
+import { useUser } from "../../context/UserContext";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 
@@ -22,7 +22,7 @@ export default function Header14() {
   const locale = useLocale();
   // console.log(locale);
   const t = useTranslations();
-  
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
   const containerRef = useRef(null);
@@ -39,38 +39,42 @@ export default function Header14() {
     };
   }, [isHeaderOpen]);
 
-const router = useRouter();
-const pathname = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
 
-const [searchKeyWord, setSearchKeyWord] = useState('');
+  const [searchKeyWord, setSearchKeyWord] = useState("");
 
-const handleChange = (event) => {
-  setSearchKeyWord(event.target.value);
-};
+  const handleChange = (event) => {
+    setSearchKeyWord(event.target.value);
+  };
 
-const handleLogout = (e) => {
-  e.preventDefault();
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  window.location.href = '/';
-};
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
 
-const handleLangChange = (e) => {
-  // console.log(pathname, e.target.value);
-  router.push(pathname, { locale: e.target.value });
-};
+  const handleLangChange = (e) => {
+    // console.log(pathname, e.target.value);
+    router.push(pathname, { locale: e.target.value });
+  };
 
-//  const pathname = usePathname();
+  //  const pathname = usePathname();
 
- const { isLoggedIn } = useUser();
+  const { isLoggedIn } = useUser();
 
- const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
+  const {
+    categoriesSubCategories,
+    isLoading: isMenuLoading,
+    error,
+  } = useMenu();
 
   if (isMenuLoading) {
     return <div></div>;
   }
   if (error) {
-    return <div>{ error }</div>;
+    return <div>{error}</div>;
   }
 
   const swiperOptions = {
@@ -94,18 +98,22 @@ const handleLangChange = (e) => {
 
   const onSearch = (event) => {
     event.preventDefault();
-    window.location.href = `/${locale}/shop?q=${removeSpecialCharactersAndAmp(searchKeyWord).split(' ').join('-')}`;
+    window.location.href = `/${locale}/shop?q=${removeSpecialCharactersAndAmp(
+      searchKeyWord
+    )
+      .split(" ")
+      .join("-")}`;
   };
 
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
-    let cleanedStr = str.replace(/&amp;/g, '');
+    let cleanedStr = str.replace(/&amp;/g, "");
 
     // Remove all special characters
-    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, "");
 
     // Replace multiple spaces with a single space and trim
-    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
+    cleanedStr = cleanedStr.replace(/\s+/g, " ").trim();
 
     return cleanedStr;
   }
@@ -129,7 +137,10 @@ const handleLangChange = (e) => {
               className="swiper-slide text-center"
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                <a href="#" className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
+                <a
+                  href="#"
+                  className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white"
+                >
                   {t(elm.description.split(" ").slice(0, 13).join(" "))}
                 </a>
               </div>
@@ -144,12 +155,9 @@ const handleLangChange = (e) => {
           }`}
         >
           <div className="search-popup js-hidden-content">
-            <form
-              onSubmit={onSearch}
-              className="search-field container"
-            >
+            <form onSubmit={onSearch} className="search-field container">
               <p className="text-uppercase text-secondary fw-medium mb-4">
-                {t('title')}
+                {t("title")}
               </p>
               <div className="position-relative">
                 <input
@@ -183,22 +191,34 @@ const handleLangChange = (e) => {
                   <h6 className="sub-menu__title fs-base">{t("Quicklinks")}</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <a href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/marj`} className="menu-link menu-link_us-s">
+                      <a
+                        href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/marj`}
+                        className="menu-link menu-link_us-s"
+                      >
                         {t("Marj")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`} className="menu-link menu-link_us-s">
+                      <a
+                        href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`}
+                        className="menu-link menu-link_us-s"
+                      >
                         {t("Rose Noir")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`} className="menu-link menu-link_us-s">
+                      <a
+                        href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`}
+                        className="menu-link menu-link_us-s"
+                      >
                         {t("Oud Lavender")}
                       </a>
                     </li>
                     <li className="sub-menu__item">
-                      <a href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-classic`} className="menu-link menu-link_us-s">
+                      <a
+                        href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-classic`}
+                        className="menu-link menu-link_us-s"
+                      >
                         {t("Oud Classic")}
                       </a>
                     </li>
@@ -223,17 +243,19 @@ const handleLangChange = (e) => {
                   <select
                     className="form-select form-select-sm bg-transparent color-black"
                     name="store-currency"
+                    onChange={(e) => window.open(e.target.value, "_blank")}
                   >
                     {currencyOptions.map((option, index) => (
                       <option
                         key={index}
                         className="footer-select__option"
-                        value={option.value}
+                        value={option.link}
                       >
                         {option.text}
                       </option>
                     ))}
                   </select>
+
                   <select
                     className="form-select form-select-sm bg-transparent color-black"
                     name="store-language"
@@ -268,18 +290,22 @@ const handleLangChange = (e) => {
                     value={searchKeyWord}
                     onChange={handleChange}
                   />
-                  
                 </div>
 
                 <div className="header-tools__item hover-container">
-                  { !isLoggedIn ? <Link className="js-open-aside" href="#">
-                    <User />
-                  </Link> : <Link href="#" onClick={handleLogout}><FiLogOut size={20}/></Link> }
+                  {!isLoggedIn ? (
+                    <Link className="js-open-aside" href="#">
+                      <User />
+                    </Link>
+                  ) : (
+                    <Link href="#" onClick={handleLogout}>
+                      <FiLogOut size={20} />
+                    </Link>
+                  )}
                 </div>
 
                 <Link className="header-tools__item" href="#">
-                
-                  <IoLocationOutline size={20}/>
+                  <IoLocationOutline size={20} />
                 </Link>
 
                 <a
@@ -308,14 +334,13 @@ const handleLangChange = (e) => {
             <div className="container">
               <nav className="navigation w-100 d-flex align-items-center justify-content-center py-2">
                 <ul className="navigation__list list-unstyled d-flex my-1">
-                  <Nav categoriesSubCategories={ categoriesSubCategories }/>
+                  <Nav categoriesSubCategories={categoriesSubCategories} />
                 </ul>
               </nav>
             </div>
           </div>
         </div>
       </header>
-     
     </>
   );
 }
