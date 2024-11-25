@@ -190,7 +190,7 @@ const Animation = () => {
 
       {/* Top 10 Products */}
       <section className="testsect zoom_img section2 d-flex">
-        <div className="panel2 pt-4 d-flex justify-content-center align-items-center">
+        <div className="panel2 d-flex justify-content-center">
           <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
