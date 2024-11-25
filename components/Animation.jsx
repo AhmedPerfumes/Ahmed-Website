@@ -189,8 +189,8 @@ const Animation = () => {
       </section>
 
       {/* Top 10 Products */}
-      <section className="testsect zoom_img section2 d-flex">
-        <div className="panel2 d-flex justify-content-center">
+      <section className="testsect section2 d-flex">
+        <div className="panel2 d-flex justify-content-center align-items-lg-center">
           <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
@@ -856,6 +856,7 @@ const Animation = () => {
           <Lookbook />
 
           <Categories section="section3" />
+          
         </div>
       </section>
       {/* Arabian Dakhoon Section */}
