@@ -13,15 +13,15 @@ export const metadata = {
 };
 
 async function getOrderDetails(order_id) {
-  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/orderDetails`, { 
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     order_number: order_id
-  //   })
-  // });
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}api/orderDetails`, { 
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      order_number: order_id
+    })
+  });
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/orderDetails`, { 
     method: 'POST',
     headers: {

@@ -11,6 +11,7 @@ const countries = [
 ];
 import { useContextElement } from "@/context/Context";
 import { useUser } from "@/context/UserContext";
+import { useMenu } from '@/context/MenuContext';
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,8 +19,10 @@ import he from 'he';
 import { products1 } from "@/data/products/fashion";
 import { useRouter } from 'next/navigation';
 import { useLocale } from "next-intl";
+import Pagination1 from "../common/Pagination1";
 
 export default function Checkout() {
+  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
   const router = useRouter();
   const locale = useLocale();
 
@@ -130,8 +133,11 @@ export default function Checkout() {
     setError(null);
     setSuccess(null);
 
-    const shippingPrice = freeShippingFlag ? 0 : 20;
-    const finalPrice = !freeShippingFlag ? 20 + totalPrice + 3 : 0 + totalPrice + 3
+    const shippingPrice = freeShippingFlag ? 0.00 : parseFloat(shippingServiceCharges[0].price);
+    const shippingPriceVat = shippingPrice / 100 * vatTax.percentage;
+    const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1].price);
+    const servicePrice = shippingServiceCharges[1].price;
+    const servicePriceVat = servicePrice / 100 * vatTax.percentage;
 
     let userJson = null;
     if(isLoggedIn) {
@@ -144,6 +150,10 @@ export default function Checkout() {
       products : cartProducts,
       payment_method: selectedOption,
       shippingPrice,
+      shippingPriceVat,
+      servicePrice,
+      servicePriceVat,
+      vatTax: vatTax.percentage,
       totalPrice,
       finalPrice,
       customer_id: userJson ? userJson.id : null,
@@ -357,6 +367,13 @@ export default function Checkout() {
     } finally {
       setIsSendOTPLoading(false);
     }
+  }
+
+  if (isMenuLoading) {
+    return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ error }</div>;
   }
 
   return (
@@ -661,15 +678,15 @@ export default function Checkout() {
                     </tr>
                     <tr>
                       <th>SHIPPING</th>
-                      <td>{freeShippingFlag ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
+                      <td>{freeShippingFlag ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }د.إ`}</td>
                     </tr>
                     <tr>
                     <th>SERVICE FEE</th>
-                    <td>3د.إ</td>
+                    <td>{ shippingServiceCharges[1].price }د.إ</td>
                     </tr>
                     <tr>
                       <th>TOTAL</th>
-                      <td>{!freeShippingFlag ? (20 + totalPrice + 3).toFixed(2) : (0 + totalPrice + 3).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((20 + totalPrice) / 100) * 5).toFixed(2) : (((0 + totalPrice) / 100) * 5).toFixed(2) }د.إ VAT)</td>
+                      <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((parseFloat(shippingServiceCharges[0].price) + totalPrice) / 100) * vatTax.percentage).toFixed(2) : (((0 + totalPrice) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</td>
                     </tr>
                   </tbody>
                 </table>

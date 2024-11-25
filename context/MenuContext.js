@@ -14,7 +14,7 @@ export function MenuProvider({ children }) {
     async function getCategoriesSubCategories() {
     
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategories`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategoriesTemp`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
