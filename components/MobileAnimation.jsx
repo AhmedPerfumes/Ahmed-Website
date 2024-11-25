@@ -10,146 +10,99 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
-  const previousScrollY = useRef(0); // Store previous scroll position for comparison
-  const [showSkipButton, setShowSkipButton] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false); // Track loading state
-  const [loadingProgress, setLoadingProgress] = useState(0); // Track loading progress
-  const frameCount = 355;
-  let images = [];
-  let ball = { frame: 0 };
+  const [isLoaded, setIsLoaded] = useState(false); // Track loading status
+  const frameCount = 355; // Total number of frames
+  const images = []; // Array to store preloaded images
+  const animationState = { frame: 0 }; // Object for GSAP animation
 
   useEffect(() => {
-    // Disable scroll until images are loaded
-    // document.body.style.overflow = "hidden";
-
     const canvas = canvasRef.current;
-    if (!canvas) return;
     const context = canvas.getContext("2d");
+
+    if (!canvas) return;
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) =>
-      `/assets/webp/${(index + 1).toString()}.webp`;
+    // Function to get the image path
+    const getFrame = (index) => `/assets/webp/${index + 1}.webp`;
 
-    // Preload all images and update the loading progress
-    const imagePromises = [];
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      images.push(img);
+    // Preload all frames
+    const preloadImages = () => {
+      const promises = [];
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = getFrame(i);
+        images.push(img);
+        promises.push(
+          new Promise((resolve) => {
+            img.onload = resolve; // Resolve once the image is loaded
+            img.onerror = resolve; // Handle errors gracefully
+          })
+        );
+      }
+      return Promise.all(promises);
+    };
 
-      // Create a promise for each image load
-      imagePromises.push(
-        new Promise((resolve, reject) => {
-          img.onload = () => {
-            setLoadingProgress((prev) =>
-              Math.round(((i + 1) / frameCount) * 100)
-            ); // Update progress
-            resolve();
-          };
-          img.onerror = reject;
-        })
-      );
-    }
-
-    // Once all images are loaded, enable scrolling and start the animation
-    Promise.all(imagePromises)
-      .then(() => {
-        setIsLoaded(true);
-        // document.body.style.overflow = ""; // Re-enable scroll
-      })
-      .catch((error) => {
-        console.error("Error loading images:", error);
-        setIsLoaded(true);
-        // document.body.style.overflow = ""; // Re-enable scroll even if images fail to load
-      });
-
-    // Function to render the current frame on the canvas
-    const render = () => {
-      if (images[0]) {
-        context.canvas.width = images[0].width;
-        context.canvas.height = images[0].height;
+    const renderFrame = (frame) => {
+      const image = images[frame];
+      if (image) {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(images[ball.frame], 0, 0);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
       }
     };
 
-    // Start rendering once the first image is loaded
-    images[0].onload = render;
+    // Start preloading and animate after loading
+    preloadImages().then(() => {
+      setIsLoaded(true); // Hide loader once all images are loaded
+      renderFrame(0);
 
-    // GSAP animation on scroll
-    gsap.to(ball, {
-      frame: frameCount - 1,
-      snap: "frame",
-      ease: "none",
-      scrollTrigger: {
-        scrub: 1,
-        pin: canvas,
-        end: "250%",
-        onEnter: () => setShowSkipButton(true),
-        onLeave: () => setShowSkipButton(false),
-      },
-      onUpdate: () => {
-        render();
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > previousScrollY.current) {
-          if (Math.round(ball.frame) + 50 > frameCount - 2) {
-            gsap.to(window, {
-              scrollTo: { y: "#main2", autoKill: false },
-              duration: 0.5,
-              ease: "power2.inOut",
-            });
-          }
-        }
-        previousScrollY.current = currentScrollY;
-      },
+      gsap.to(animationState, {
+        frame: frameCount - 1,
+        snap: "frame", // Snap to nearest frame
+        ease: "none",
+        scrollTrigger: {
+          scrub: 1, // Smooth animation during scroll
+          pin: canvas, // Pin the canvas
+          end: "200%", // Adjust the scroll duration as needed
+        },
+        onUpdate: () => {
+          renderFrame(animationState.frame);
+        },
+        onComplete: () => {
+          // Auto-scroll to the next section after the last frame
+          gsap.to(window, {
+            scrollTo: { y: "#main2", autoKill: false },
+            duration: 1,
+            ease: "power2.inOut",
+          });
+        },
+      });
     });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []); // Run effect once after component mounts
-
-  // Ensure the loader stays for 2 seconds, even if images load faster
-  useEffect(() => {
-    const loaderTimeout = setTimeout(() => {
-      setIsLoaded(true); // Hide loader after 2 seconds
-    }, 20000);
-
-    return () => clearTimeout(loaderTimeout); // Cleanup the timeout if the component is unmounted
-  }, []); // Only run this effect once, after initial render
-
-  // Skip button click handler
-  const skipAnimation = () => {
-    gsap.to(window, {
-      scrollTo: { y: "#main2", autoKill: false },
-      duration: 0.5,
-      ease: "power2.inOut",
-    });
-  };
+  }, []);
 
   return (
     <div>
-      {/* Show loading GIF until loading is complete */}
+      {/* Loader */}
       {!isLoaded && (
         <div className="loading-screen">
-          <div className="loading-gif-container">
-            {/* Your GIF loader here */}
-            {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
-          </div>
+          <div className="spinner"></div>
           <p>Loading...</p>
         </div>
       )}
 
-      {/* Canvas Animation */}
+      {/* Canvas */}
       <canvas ref={canvasRef} className="canvas"></canvas>
 
-      {/* Skip Button */}
-      {showSkipButton && (
-        <button onClick={skipAnimation} className="skip-button">
-          SKIP INTRO
-        </button>
-      )}
+      {/* Section after the animation */}
+      <div id="main2" className="next-section">
+        <h1>Welcome to the Next Section</h1>
+        <p>Scroll down to explore more content.</p>
+      </div>
     </div>
   );
 };
