@@ -28,7 +28,8 @@ const CanvasAnimation = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/final/${(index + 1).toString()}.jpg`;
+    const currentFrame = (index) =>
+      `/assets/final/${(index + 1).toString()}.jpg`;
 
     // Preload all images and update the loading progress
     const imagePromises = [];
@@ -41,7 +42,9 @@ const CanvasAnimation = () => {
       imagePromises.push(
         new Promise((resolve, reject) => {
           img.onload = () => {
-            setLoadingProgress((prev) => Math.round(((i + 1) / frameCount) * 100)); // Update progress
+            setLoadingProgress((prev) =>
+              Math.round(((i + 1) / frameCount) * 100)
+            ); // Update progress
             resolve();
           };
           img.onerror = reject;
@@ -107,15 +110,6 @@ const CanvasAnimation = () => {
     };
   }, []); // Run effect once after component mounts
 
-  useEffect(() => {
-    if (loadingProgress === 100) {
-      setTimeout(() => {
-        // Add the 'hidden' class to fade out the loading screen
-        document.querySelector(".loading-screen").classList.add("hidden");
-      }, 300); // Delay to allow the progress bar to complete the last animation
-    }
-  }, [loadingProgress]); // Runs whenever loadingProgress changes
-
   // Skip button click handler
   const skipAnimation = () => {
     gsap.to(window, {
@@ -127,17 +121,6 @@ const CanvasAnimation = () => {
 
   return (
     <div>
-      {/* Loading screen */}
-      {!isLoaded && (
-        <div className="loading-screen">
-        <div className="loading-gif-container">
-            {/* Your GIF loader here */}
-            {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
-          </div>
-          <p>Loading...</p>
-        </div>
-      )}
-
       {/* Canvas Animation */}
       <canvas ref={canvasRef} className="canvas"></canvas>
 
