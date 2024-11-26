@@ -31,11 +31,11 @@ const Loader = () => {
   }, []);
 
     // Remove the loader and re-enable scroll once loading is done
-    useEffect(() => {
-      if (!loading) {
-        document.body.style.overflow = 'auto'; // Enable scrolling once loading is done
-      }
-    }, [loading]);
+    // useEffect(() => {
+    //   if (!loading) {
+    //     document.body.style.overflow = 'auto'; // Enable scrolling once loading is done
+    //   }
+    // }, [loading]);
 
   if (!loading) return null;
 
