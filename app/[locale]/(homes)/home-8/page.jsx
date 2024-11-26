@@ -26,11 +26,11 @@ export default function HomePage8() {
       <Header14 />
       <div className="d-none d-lg-block">
         {/* CanvasAnimation will render first for large screens */}
-        {/* <CanvasAnimation /> */}
+        <CanvasAnimation />
       </div>
       <div className="d-sm-block d-md-none">
         {/* MobileAnimation will render for small screens */}
-        {/* <MobileAnimation /> */}
+        <MobileAnimation />
       </div>
       <main id="">
         {/* Animation component will render after CanvasAnimation */}

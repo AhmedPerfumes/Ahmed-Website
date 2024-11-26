@@ -12,15 +12,11 @@ const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false); // Track loading state
-  const [loadingProgress, setLoadingProgress] = useState(0); // Track loading progress
   const frameCount = 343;
   let images = [];
   let ball = { frame: 0 };
 
   useEffect(() => {
-    // Disable scroll until images are loaded
-    // document.body.style.overflow = "hidden";
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -36,30 +32,7 @@ const CanvasAnimation = () => {
       const img = new Image();
       img.src = currentFrame(i);
       images.push(img);
-
-      // Create a promise for each image load
-      imagePromises.push(
-        new Promise((resolve, reject) => {
-          img.onload = () => {
-            setLoadingProgress((prev) => Math.round(((i + 1) / frameCount) * 100)); // Update progress
-            resolve();
-          };
-          img.onerror = reject;
-        })
-      );
     }
-
-    // Once all images are loaded, enable scrolling and start the animation
-    Promise.all(imagePromises)
-      .then(() => {
-        setIsLoaded(true);
-        // document.body.style.overflow = ""; // Re-enable scroll
-      })
-      .catch((error) => {
-        console.error("Error loading images:", error);
-        setIsLoaded(true);
-        // document.body.style.overflow = ""; // Re-enable scroll even if images fail to load
-      });
 
     // Function to render the current frame on the canvas
     const render = () => {
@@ -107,15 +80,6 @@ const CanvasAnimation = () => {
     };
   }, []); // Run effect once after component mounts
 
-  useEffect(() => {
-    if (loadingProgress === 100) {
-      setTimeout(() => {
-        // Add the 'hidden' class to fade out the loading screen
-        document.querySelector(".loading-screen").classList.add("hidden");
-      }, 300); // Delay to allow the progress bar to complete the last animation
-    }
-  }, [loadingProgress]); // Runs whenever loadingProgress changes
-
   // Skip button click handler
   const skipAnimation = () => {
     gsap.to(window, {
@@ -127,17 +91,6 @@ const CanvasAnimation = () => {
 
   return (
     <div>
-      {/* Loading screen */}
-      {!isLoaded && (
-        <div className="loading-screen">
-        <div className="loading-gif-container">
-            {/* Your GIF loader here */}
-            {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
-          </div>
-          <p>Loading...</p>
-        </div>
-      )}
-
       {/* Canvas Animation */}
       <canvas ref={canvasRef} className="canvas"></canvas>
 
