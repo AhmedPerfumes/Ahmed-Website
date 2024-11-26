@@ -13,7 +13,7 @@ export default function Home() {
   const t = useTranslations();
   return (
     <>
-    <Loader/>
+    {/* <Loader/> */}
       {/* <h1>{t('title')}</h1> */}
       <HomePage8 />
       

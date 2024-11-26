@@ -6,7 +6,6 @@ const Loader = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.body.classList.add('loader-no-scroll');
     // Check if the page is already loaded
     if (document.readyState === "complete") {
       setLoading(false);
@@ -26,16 +25,8 @@ const Loader = () => {
     return () => {
       clearTimeout(timer);
       window.removeEventListener("load", handlePageLoad);
-      document.body.classList.remove('loader-no-scroll');
     };
   }, []);
-
-    // Remove the loader and re-enable scroll once loading is done
-    // useEffect(() => {
-    //   if (!loading) {
-    //     document.body.style.overflow = 'auto'; // Enable scrolling once loading is done
-    //   }
-    // }, [loading]);
 
   if (!loading) return null;
 

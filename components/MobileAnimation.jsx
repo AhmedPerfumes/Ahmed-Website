@@ -26,7 +26,7 @@ const CanvasAnimation = () => {
 
       if (loadedImagesCount === frameCount) {
         setIsLoaded(true); // All images are loaded, set state to true
-        document.body.classList.remove("canvas-no-scroll");
+        document.body.style.overflow = "auto";
       }
     };
 
@@ -40,7 +40,7 @@ const CanvasAnimation = () => {
   };
 
   useEffect(() => {
-    document.body.classList.add("canvas-no-scroll");
+    document.body.style.overflow = "hidden";
     preloadImages(); // Call the preload function when the component mounts
 
     // Once images are loaded, we can start the animation logic

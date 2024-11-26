@@ -113,11 +113,3 @@
   .skip-button2:hover {
     background-color: rgba(0, 0, 0, 0.9);
   }
-
-  .canvas-no-scroll {
-    overflow: hidden;
-  }
-
-  .loader-no-scroll {
-    overflow: hidden;
-  }
