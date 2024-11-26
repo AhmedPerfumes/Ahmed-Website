@@ -97,11 +97,11 @@ const CanvasAnimation = () => {
       {!isLoaded && (
         // <div className="loading-screen">
         //   <div className="loading-gif-container">
-        //     <img src="/assets/loading.gif" alt="Loading..." />
+            <img src="/assets/loading.gif" alt="Loading..." />
         //   </div>
         //   <p>Loading...</p>
         // </div>
-        <img src="/assets/mobilescreen/1.jpg" />
+        // <img src="/assets/mobilescreen/1.jpg" />
       )}
 
       {/* Canvas Animation */}
