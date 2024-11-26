@@ -107,7 +107,9 @@ const CanvasAnimation = () => {
       )}
 
       {/* Canvas Animation */}
-      <canvas ref={canvasRef} className="canvas"></canvas>
+      <div style={{ overflow: isLoaded ? "auto" : "hidden" }}>
+        <canvas ref={canvasRef} className="canvas"></canvas>
+      </div>
 
       {/* Skip Button */}
       {showSkipButton && (
