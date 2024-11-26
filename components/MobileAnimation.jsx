@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 const ScrollVideoPlayer = () => {
   const videoRef = useRef(null); // To reference the video element
   const [videoDuration, setVideoDuration] = useState(0); // To store the video duration
+  const [isLoading, setIsLoading] = useState(true); // To track loading state
   const playbackConst = 50; // Adjust the playback speed
   const containerRef = useRef(null); // Reference for the container to adjust the height
 
@@ -16,6 +17,11 @@ const ScrollVideoPlayer = () => {
       video.addEventListener('loadedmetadata', () => {
         setVideoDuration(video.duration);
         container.style.height = `${Math.floor(video.duration) * playbackConst}px`;
+      });
+
+      // Event listener for when the video can start playing
+      video.addEventListener('canplay', () => {
+        setIsLoading(false); // Video is ready to play
       });
     }
 
@@ -35,12 +41,20 @@ const ScrollVideoPlayer = () => {
     return () => {
       if (video) {
         video.removeEventListener('loadedmetadata', () => {});
+        video.removeEventListener('canplay', () => {});
       }
     };
   }, [playbackConst]);
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} style={{ position: 'relative' }}>
+      {/* Loading Indicator */}
+      {isLoading && (
+        <div className="loading-indicator">
+          <img src="/assets/loading.gif" alt="Loading..." /> {/* Replace with your loading gif */}
+        </div>
+      )}
+
       {/* Video element */}
       <video
         ref={videoRef}
