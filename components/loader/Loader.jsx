@@ -6,6 +6,7 @@ const Loader = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
     // Check if the page is already loaded
     if (document.readyState === "complete") {
       setLoading(false);
@@ -25,8 +26,16 @@ const Loader = () => {
     return () => {
       clearTimeout(timer);
       window.removeEventListener("load", handlePageLoad);
+      document.body.style.overflow = 'auto';
     };
   }, []);
+
+    // Remove the loader and re-enable scroll once loading is done
+    useEffect(() => {
+      if (!loading) {
+        document.body.style.overflow = 'auto'; // Enable scrolling once loading is done
+      }
+    }, [loading]);
 
   if (!loading) return null;
 

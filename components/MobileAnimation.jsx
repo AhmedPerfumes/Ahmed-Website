@@ -13,36 +13,37 @@ const CanvasAnimation = () => {
   const [isLoaded, setIsLoaded] = useState(false); // State to track if images are loaded
   const [showSkipButton, setShowSkipButton] = useState(false); // Show skip button after scroll enters
   const frameCount = 355; // Number of frames in your animation
-  const [images, setImages] = useState([]); // Track loaded images
+  let images = [];
   let ball = { frame: 0 };
 
-  // Function to preload images concurrently using Promise.all
+  // Preload all images function
   const preloadImages = () => {
-    const imagePromises = [];
+    let loadedImagesCount = 0;
 
-    // Create an array of promises that resolve when each image is loaded
+    // Function to handle when an image is loaded
+    const onImageLoad = () => {
+      loadedImagesCount += 1;
+
+      if (loadedImagesCount === frameCount) {
+        setIsLoaded(true); // All images are loaded, set state to true
+        document.body.style.overflow = "auto";
+      }
+    };
+
+    // Preload images
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = `/assets/mobilescreen/${(i + 1).toString()}.jpg`;
-      imagePromises.push(
-        new Promise((resolve) => {
-          img.onload = resolve; // Resolve the promise when the image is loaded
-        })
-      );
+      img.onload = onImageLoad; // Attach onLoad event
+      images.push(img); // Add image to array
     }
-
-    // Wait for all images to load concurrently
-    Promise.all(imagePromises).then(() => {
-      setImages(Array.from({ length: frameCount }, (_, i) => `/assets/mobilescreen/${(i + 1).toString()}.jpg`));
-      setIsLoaded(true); // Once all images are loaded, set state to true
-      document.body.style.overflow = 'auto'; // Enable scrolling once images are loaded
-    });
   };
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'; // Disable scrolling while images are loading
+    document.body.style.overflow = "hidden";
     preloadImages(); // Call the preload function when the component mounts
 
+    // Once images are loaded, we can start the animation logic
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -52,15 +53,11 @@ const CanvasAnimation = () => {
 
     // Function to render the current frame on the canvas
     const render = () => {
-      if (images[ball.frame]) {
-        const img = new Image();
-        img.src = images[ball.frame];
-        img.onload = () => {
-          context.canvas.width = img.width;
-          context.canvas.height = img.height;
-          context.clearRect(0, 0, canvas.width, canvas.height);
-          context.drawImage(img, 0, 0);
-        };
+      if (images[0]) {
+        context.canvas.width = images[0].width;
+        context.canvas.height = images[0].height;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(images[ball.frame], 0, 0);
       }
     };
 
@@ -85,7 +82,7 @@ const CanvasAnimation = () => {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [isLoaded, images]); // Re-run when `isLoaded` or `images` state changes
+  }, [isLoaded]); // Run when `isLoaded` state changes
 
   // Skip button click handler
   const skipAnimation = () => {
@@ -100,16 +97,17 @@ const CanvasAnimation = () => {
     <div>
       {/* Show loading GIF until images are loaded */}
       {!isLoaded && (
-        <div className="loading-screen">
-          <div className="loading-gif-container">
+        // <div className="loading-screen">
+        //   <div className="loading-gif-container">
             <img src="/assets/loading.gif" alt="Loading..." />
-          </div>
-          <p>Loading...</p>
-        </div>
+        //   </div>
+        //   <p>Loading...</p>
+        // </div>
+        // <img src="/assets/mobilescreen/1.jpg" />
       )}
 
       {/* Canvas Animation */}
-      <div style={{ overflow: isLoaded ? 'auto' : 'hidden' }}>
+      <div style={{ overflow: isLoaded ? "auto" : "hidden" }}>
         <canvas ref={canvasRef} className="canvas"></canvas>
       </div>
 
