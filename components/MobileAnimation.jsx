@@ -1,38 +1,53 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import ScrollToPlugin from "gsap/ScrollToPlugin";
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
-import "./Canvas.css";
+import './Canvas.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const CanvasAnimation = () => {
   const canvasRef = useRef(null);
-  const previousScrollY = useRef(0); // Store previous scroll position for comparison
-  const [showSkipButton, setShowSkipButton] = useState(false);
-  const frameCount = 355;
+  const [isLoaded, setIsLoaded] = useState(false); // State to track if images are loaded
+  const [showSkipButton, setShowSkipButton] = useState(false); // Show skip button after scroll enters
+  const frameCount = 355; // Number of frames in your animation
   let images = [];
   let ball = { frame: 0 };
 
-  useEffect(() => {
+  // Preload all images function
+  const preloadImages = () => {
+    let loadedImagesCount = 0;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Function to handle when an image is loaded
+    const onImageLoad = () => {
+      loadedImagesCount += 1;
 
-    const currentFrame = (index) => `/assets/mobilescreen/${(index + 10).toString()}.jpg`;
+      if (loadedImagesCount === frameCount) {
+        setIsLoaded(true); // All images are loaded, set state to true
+      }
+    };
 
-    // Preload all images and update the loading progress
-    const imagePromises = [];
+    // Preload images
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = currentFrame(i);
-      images.push(img);
+      img.src = `/assets/mobilescreen/${(i + 1).toString()}.jpg`;
+      img.onload = onImageLoad; // Attach onLoad event
+      images.push(img); // Add image to array
     }
+  };
+
+  useEffect(() => {
+    preloadImages(); // Call the preload function when the component mounts
+
+    // Once images are loaded, we can start the animation logic
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const context = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     // Function to render the current frame on the canvas
     const render = () => {
@@ -44,54 +59,50 @@ const CanvasAnimation = () => {
       }
     };
 
-    // Start rendering once the first image is loaded
-    images[0].onload = render;
-
     // GSAP animation on scroll
     gsap.to(ball, {
       frame: frameCount - 1,
-      snap: "frame",
-      ease: "none",
+      snap: 'frame',
+      ease: 'none',
       scrollTrigger: {
         scrub: 1,
         pin: canvas,
-        end: "250%",
+        end: '250%',
         onEnter: () => setShowSkipButton(true),
         onLeave: () => setShowSkipButton(false),
       },
       onUpdate: () => {
         render();
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > previousScrollY.current) {
-          if (Math.round(ball.frame) + 50 > frameCount - 5) {
-            gsap.to(window, {
-              scrollTo: { y: "#main2", autoKill: false },
-              duration: 0.5,
-              ease: "power2.inOut",
-            });
-          }
-        }
-        previousScrollY.current = currentScrollY;
       },
     });
 
+    // Clean up on unmount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []); // Run effect once after component mounts
+  }, [isLoaded]); // Run when `isLoaded` state changes
 
   // Skip button click handler
   const skipAnimation = () => {
     gsap.to(window, {
-      scrollTo: { y: "#main2", autoKill: false },
+      scrollTo: { y: '#main2', autoKill: false },
       duration: 0.5,
-      ease: "power2.inOut",
+      ease: 'power2.inOut',
     });
   };
 
   return (
     <div>
-      <img src="/assets/mobilescreen/1.jpg" />
+      {/* Show loading GIF until images are loaded */}
+      {!isLoaded && (
+        // <div className="loading-screen">
+        //   <div className="loading-gif-container">
+        //     <img src="/assets/loading.gif" alt="Loading..." />
+        //   </div>
+        //   <p>Loading...</p>
+        // </div>
+        <img src="/assets/mobilescreen/1.jpg" />
+      )}
 
       {/* Canvas Animation */}
       <canvas ref={canvasRef} className="canvas"></canvas>
