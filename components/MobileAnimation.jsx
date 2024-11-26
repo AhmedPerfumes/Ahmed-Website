@@ -26,7 +26,7 @@ const CanvasAnimation = () => {
 
       if (loadedImagesCount === frameCount) {
         setIsLoaded(true); // All images are loaded, set state to true
-        document.body.style.overflow = "auto";
+        document.body.classList.remove("no-scroll");
       }
     };
 
@@ -40,7 +40,7 @@ const CanvasAnimation = () => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("no-scroll");
     preloadImages(); // Call the preload function when the component mounts
 
     // Once images are loaded, we can start the animation logic
@@ -79,9 +79,9 @@ const CanvasAnimation = () => {
     });
 
     // Clean up on unmount
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    // return () => {
+    //   ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    // };
   }, [isLoaded]); // Run when `isLoaded` state changes
 
   // Skip button click handler
