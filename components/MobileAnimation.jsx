@@ -24,7 +24,7 @@ const CanvasAnimation = () => {
     const onImageLoad = () => {
       loadedImagesCount += 1;
 
-      if (loadedImagesCount === frameCount) {
+      if (loadedImagesCount <= 200) {
         setIsLoaded(true); // All images are loaded, set state to true
         document.body.style.overflow = "auto";
       }
@@ -79,9 +79,9 @@ const CanvasAnimation = () => {
     });
 
     // Clean up on unmount
-    // return () => {
-    //   ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    // };
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, [isLoaded]); // Run when `isLoaded` state changes
 
   // Skip button click handler
