@@ -79,6 +79,36 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <link rel="preload" href="/assets/webp/18.webp" as="image" />
         <link rel="preload" href="/assets/webp/19.webp" as="image" />
         <link rel="preload" href="/assets/webp/20.webp" as="image" />
+        <link rel="preload" href="/assets/webp/21.webp" as="image" />
+        <link rel="preload" href="/assets/webp/22.webp" as="image" />
+        <link rel="preload" href="/assets/webp/23.webp" as="image" />
+        <link rel="preload" href="/assets/webp/24.webp" as="image" />
+        <link rel="preload" href="/assets/webp/25.webp" as="image" />
+        <link rel="preload" href="/assets/webp/26.webp" as="image" />
+        <link rel="preload" href="/assets/webp/27.webp" as="image" />
+        <link rel="preload" href="/assets/webp/28.webp" as="image" />
+        <link rel="preload" href="/assets/webp/29.webp" as="image" />
+        <link rel="preload" href="/assets/webp/30.webp" as="image" />
+        <link rel="preload" href="/assets/webp/31.webp" as="image" />
+        <link rel="preload" href="/assets/webp/32.webp" as="image" />
+        <link rel="preload" href="/assets/webp/33.webp" as="image" />
+        <link rel="preload" href="/assets/webp/34.webp" as="image" />
+        <link rel="preload" href="/assets/webp/35.webp" as="image" />
+        <link rel="preload" href="/assets/webp/36.webp" as="image" />
+        <link rel="preload" href="/assets/webp/37.webp" as="image" />
+        <link rel="preload" href="/assets/webp/38.webp" as="image" />
+        <link rel="preload" href="/assets/webp/39.webp" as="image" />
+        <link rel="preload" href="/assets/webp/40.webp" as="image" />
+        <link rel="preload" href="/assets/webp/41.webp" as="image" />
+        <link rel="preload" href="/assets/webp/42.webp" as="image" />
+        <link rel="preload" href="/assets/webp/43.webp" as="image" />
+        <link rel="preload" href="/assets/webp/44.webp" as="image" />
+        <link rel="preload" href="/assets/webp/45.webp" as="image" />
+        <link rel="preload" href="/assets/webp/46.webp" as="image" />
+        <link rel="preload" href="/assets/webp/47.webp" as="image" />
+        <link rel="preload" href="/assets/webp/48.webp" as="image" />
+        <link rel="preload" href="/assets/webp/49.webp" as="image" />
+        <link rel="preload" href="/assets/webp/50.webp" as="image" />
       </head>
       <body className={myFont.className}>
       <NextIntlClientProvider messages={messages}>
