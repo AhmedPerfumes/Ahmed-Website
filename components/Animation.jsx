@@ -6,6 +6,7 @@ import Link from "next/link";
 import Hero from "@/components/homes/home-8/Hero";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "./footers/MobileFooter2";
+import VideoPanel from "./VideoPanel";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
@@ -1002,19 +1003,7 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <video
-              loop
-              playsinline
-              muted
-              autoPlay
-              className="w-100"
-              preload="none"
-            >
-              <source
-                src="/assets/videos/ignite-rose-mobile.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <VideoPanel src="/assets/videos/ignite-rose-mobile.mp4" />
           </div>
         </div>
         <div className="mobilepanel ">
