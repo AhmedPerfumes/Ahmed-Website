@@ -791,7 +791,14 @@ const Animation = () => {
             <h2 className="fw-lighter sec-two-h2 pt-2">
               {t("Crafted for the Discerning")}
             </h2>
-            <video muted autoPlay loop className="w-75 pt-5" preload="none">
+            <video
+              muted
+              playsinline
+              autoPlay
+              loop
+              className="w-75 pt-5"
+              preload="none"
+            >
               <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
             </video>
           </div>
@@ -800,7 +807,14 @@ const Animation = () => {
             <h2 className="fw-lighter sec-two-h2 pt-2 s-font">
               {t("Crafted for the Discerning")}
             </h2>
-            <video muted autoPlay loop className="w-75 pt-2" preload="none">
+            <video
+              muted
+              playsinline
+              autoPlay
+              loop
+              className="w-75 pt-2"
+              preload="none"
+            >
               <source
                 type="video/mp4"
                 src="/assets/videos/multi-product-mobile.mp4"
@@ -889,7 +903,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      {/* Full screen horizontal Scroll Slider */}
+      {/* Full screen vertical Scroll Slider */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
           <div className="inner2 mt-5 d-flex align-items-center">
@@ -900,7 +914,14 @@ const Animation = () => {
 
         <div className="panel2 mt-5">
           <div className="inner2">
-            <video loop muted autoPlay className="w-100" preload="none">
+            <video
+              loop
+              playsinline
+              muted
+              autoPlay
+              className="w-100"
+              preload="none"
+            >
               <source
                 src="/assets/videos/ignite-rose-video.mp4"
                 type="video/mp4"
@@ -981,7 +1002,14 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <video loop muted autoPlay className="w-100" preload="none">
+            <video
+              loop
+              playsinline
+              muted
+              autoPlay
+              className="w-100"
+              preload="none"
+            >
               <source
                 src="/assets/videos/ignite-rose-mobile.mp4"
                 type="video/mp4"
@@ -1038,6 +1066,11 @@ const Animation = () => {
             </div>
           </div>
         </div>
+        <div className="mobilepanel d-flex justify-content-center">
+          <div className="inner text-center pt-5 mt-4">
+            <div className="row"></div>
+          </div>
+        </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
 
@@ -1076,7 +1109,14 @@ const Animation = () => {
       >
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
-            <video loop muted autoPlay className="w-100" preload="none">
+            <video
+              loop
+              muted
+              playsinline
+              autoPlay
+              className="w-100"
+              preload="none"
+            >
               <source src="/assets/videos/production.mp4" type="video/mp4" />
             </video>
           </div>
