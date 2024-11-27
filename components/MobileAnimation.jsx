@@ -12,7 +12,7 @@ const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
-  const frameCount = 355;
+  const frameCount = 150;
   let images = [];
   let ball = { frame: 0 };
 
