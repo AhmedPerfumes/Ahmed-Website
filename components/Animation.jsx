@@ -1056,7 +1056,7 @@ const Animation = () => {
             </h2>
             <p className="text-center text-white p">
               {t(
-                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that"
+                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are"
               )}
             </p>
           </div>
