@@ -63,9 +63,8 @@
   }
   .canvas {
     display: block; /* Ensure canvas is displayed correctly */
-    max-width: 100%; /* Ensure it fits within the screen width */
-    height: auto; /* Automatically adjust the height based on the width */
-    margin: 0 auto; /* Center the canvas */
+    width: 100%; /* Ensure it fits within the screen width */
+    height: 100vh; /* Automatically adjust the height based on the width */
   }
   
   .skip-button {
