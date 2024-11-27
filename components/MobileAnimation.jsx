@@ -35,7 +35,7 @@ const CanvasAnimation = () => {
     const loadChunk = (startIndex) => {
       for (let i = startIndex; i < Math.min(startIndex + chunkSize, frameCount); i++) {
         const img = new Image();
-        img.src = `/assets/mobilescreen/${(i + 1).toString()}.jpg`;
+        img.src = `/assets/webp/${(i + 1).toString()}.webp`;
         img.onload = onImageLoad; // Attach onLoad event
         images.push(img); // Add image to array
       }
