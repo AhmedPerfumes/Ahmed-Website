@@ -24,7 +24,7 @@ const CanvasAnimation = () => {
     const onImageLoad = () => {
       loadedImagesCount += 1;
 
-      if (loadedImagesCount <= 20) {
+      if (loadedImagesCount <= 10) {
         setIsLoaded(true); // All images are loaded, set state to true
         document.body.style.overflow = "auto";
       }
