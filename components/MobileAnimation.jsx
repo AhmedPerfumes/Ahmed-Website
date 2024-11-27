@@ -17,10 +17,10 @@ const CanvasAnimation = () => {
   let ball = { frame: 0 };
 
   useEffect(() => {
-    // Simulate a 1-minute loading time (60000 milliseconds)
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false); // Set loading to false after 1 minute
+    const canvasTimer = setTimeout(() => {
+      setLoading(false);
     }, 60000);
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -79,7 +79,7 @@ const CanvasAnimation = () => {
     });
 
     return () => {
-      clearTimeout(loadingTimer);
+      clearTimeout(canvasTimer);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []); // Run effect once after component mounts
@@ -95,26 +95,15 @@ const CanvasAnimation = () => {
 
   return (
     <div>
-      {/* Show loading spinner or animation for 1 minute */}
-      {isLoading ? (
-        <div className="loader">
-          <p>Loading... Please wait for a moment...</p>
-          {/* Optionally, you can add a spinner here */}
-          <div className="spinner"></div>
-        </div>
-      ) : (
-        <>
-          {/* Canvas Animation */}
-          <canvas ref={canvasRef} className="canvas"></canvas>
+      {/* Canvas Animation */}
+      <canvas ref={canvasRef} className="canvas"></canvas>
 
-          {/* Skip Button */}
-          {showSkipButton && (
-            <button onClick={skipAnimation} className="skip-button">
-              SKIP INTRO
-            </button>
-          )}
-        </>
-        )}
+      {/* Skip Button */}
+      {showSkipButton && (
+        <button onClick={skipAnimation} className="skip-button">
+          SKIP INTRO
+        </button>
+      )}
     </div>
   );
 };
