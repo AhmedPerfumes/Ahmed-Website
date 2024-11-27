@@ -4,8 +4,14 @@ import Animation from "@/components/Animation";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import React from "react";
 import CanvasAnimation from "@/components/CanvasAnimation";
-import MobileAnimation from "@/components/MobileAnimation";
+// import MobileAnimation from "@/components/MobileAnimation";
 import NewsLetter from "@/components/modals/NewsLetter";
+import dynamic from 'next/dynamic';
+
+const MobileAnimation = dynamic(() => import('@/components/MobileAnimation'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false, // Disable server-side rendering for this component
+});
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
