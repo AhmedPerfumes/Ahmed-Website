@@ -792,35 +792,18 @@ const Animation = () => {
             <h2 className="fw-lighter sec-two-h2 pt-2">
               {t("Crafted for the Discerning")}
             </h2>
-            <video
-              muted
-              playsinline
-              autoPlay
-              loop
-              className="w-75 pt-5"
-              preload="none"
-            >
-              <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
-            </video>
+            <VideoPanel src="/assets/videos/multi-product.mp4" />
           </div>
           {/* For small screens */}
           <div className="d-block d-lg-none pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2 s-font">
               {t("Crafted for the Discerning")}
             </h2>
-            <video
-              muted
-              playsinline
-              autoPlay
-              loop
-              className="w-75 pt-2"
-              preload="none"
-            >
-              <source
-                type="video/mp4"
-                src="/assets/videos/multi-product-mobile.mp4"
-              />
-            </video>
+
+            <VideoPanel
+              type="video/mp4"
+              src="/assets/videos/multi-product-mobile.mp4"
+            />
           </div>
 
           <a
@@ -915,19 +898,7 @@ const Animation = () => {
 
         <div className="panel2 mt-5">
           <div className="inner2">
-            <video
-              loop
-              playsinline
-              muted
-              autoPlay
-              className="w-100"
-              preload="none"
-            >
-              <source
-                src="/assets/videos/ignite-rose-video.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <VideoPanel src="/assets/videos/ignite-rose-video.mp4" />
           </div>
         </div>
 
@@ -1098,16 +1069,7 @@ const Animation = () => {
       >
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
-            <video
-              loop
-              muted
-              playsinline
-              autoPlay
-              className="w-100"
-              preload="none"
-            >
-              <source src="/assets/videos/production.mp4" type="video/mp4" />
-            </video>
+            <VideoPanel src="/assets/videos/production.mp4" />
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
             <h3 className="mb-3">
