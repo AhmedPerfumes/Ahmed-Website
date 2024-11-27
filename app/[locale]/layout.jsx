@@ -58,7 +58,28 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
 
   return (
     <html lang={locale} dir={locale == 'ar' ? 'rtl' : 'ltr'}>
-      <head></head>
+      <head>
+        <link rel="preload" href="/assets/1.webp" as="image" />
+        <link rel="preload" href="/assets/2.webp" as="image" />
+        <link rel="preload" href="/assets/3.webp" as="image" />
+        <link rel="preload" href="/assets/4.webp" as="image" />
+        <link rel="preload" href="/assets/5.webp" as="image" />
+        <link rel="preload" href="/assets/6.webp" as="image" />
+        <link rel="preload" href="/assets/7.webp" as="image" />
+        <link rel="preload" href="/assets/8.webp" as="image" />
+        <link rel="preload" href="/assets/9.webp" as="image" />
+        <link rel="preload" href="/assets/10.webp" as="image" />
+        <link rel="preload" href="/assets/11.webp" as="image" />
+        <link rel="preload" href="/assets/12.webp" as="image" />
+        <link rel="preload" href="/assets/13.webp" as="image" />
+        <link rel="preload" href="/assets/14.webp" as="image" />
+        <link rel="preload" href="/assets/15.webp" as="image" />
+        <link rel="preload" href="/assets/16.webp" as="image" />
+        <link rel="preload" href="/assets/17.webp" as="image" />
+        <link rel="preload" href="/assets/18.webp" as="image" />
+        <link rel="preload" href="/assets/19.webp" as="image" />
+        <link rel="preload" href="/assets/20.webp" as="image" />
+      </head>
       <body className={myFont.className}>
       <NextIntlClientProvider messages={messages}>
         <Svgs />
