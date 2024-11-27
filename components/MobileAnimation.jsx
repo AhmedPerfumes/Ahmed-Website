@@ -17,9 +17,6 @@ const CanvasAnimation = () => {
   let ball = { frame: 0 };
 
   useEffect(() => {
-    const canvasTimer = setTimeout(() => {
-      setLoading(false);
-    }, 60000);
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -79,7 +76,6 @@ const CanvasAnimation = () => {
     });
 
     return () => {
-      clearTimeout(canvasTimer);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []); // Run effect once after component mounts
