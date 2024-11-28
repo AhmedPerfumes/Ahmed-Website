@@ -24,13 +24,16 @@ const CanvasAnimation = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const currentFrame = (index) => `/assets/webp/${(index + 1).toString()}.webp`;
+    const currentFrame = (index) => `/assets/mobilescreencompressed/${(index + 1).toString()}-min.jpg`;
 
     // Preload all images and update the loading progress
     const imagePromises = [];
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = currentFrame(i);
+      if(i + 1 != 22 && i + 1 != 148 && i + 1 != 223 && i + 1 != 224 && i + 1 != 225 && i + 1 != 226 && i + 1 != 227 && i + 1 != 228 && i + 1 != 229 && i + 1 != 230 && i + 1 != 231 && i + 1 != 232 &&
+        i + 1 != 233 && i + 1 != 234 && i + 1 != 235 && i + 1 != 236 && i + 1 != 237 && i + 1 != 238 && i + 1 != 239 && i + 1 != 240 && i + 1 != 241 && i + 1 != 242 && i + 1 != 243 && i + 1 != 244) {
+        img.src = currentFrame(i);
+      }
       images.push(img);
     }
 
