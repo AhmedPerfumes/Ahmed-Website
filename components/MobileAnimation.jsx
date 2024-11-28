@@ -12,12 +12,12 @@ const CanvasAnimation = () => {
   const canvasRef = useRef(null);
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
+  const [loading, setLoading] = useState(true);  // Track loading state
   const frameCount = 318;
   let images = [];
   let ball = { frame: 0 };
 
   useEffect(() => {
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -35,6 +35,13 @@ const CanvasAnimation = () => {
         img.src = currentFrame(i);
       }
       images.push(img);
+
+      img.onload = () => {
+        // Check if all images are loaded
+        if (images.every((img) => img.complete)) {
+          setLoading(false);  // Set loading to false when all images are loaded
+        }
+      };
     }
 
     // Function to render the current frame on the canvas
@@ -92,10 +99,38 @@ const CanvasAnimation = () => {
     });
   };
 
+  // Function to draw the placeholder
+  const drawPlaceholder = (context) => {
+    context.fillStyle = "#f0f0f0";  // Light gray background for placeholder
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);  // Draw background
+    context.fillStyle = "#888";  // Placeholder text color
+    context.font = "20px Arial";  // Font style
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText("Loading...", context.canvas.width / 2, context.canvas.height / 2);  // Placeholder text
+  };
+
   return (
     <div>
       {/* Canvas Animation */}
-      <canvas ref={canvasRef} className="canvas"></canvas>
+      <canvas ref={canvasRef} className="canvas">
+        {/* Show a loading placeholder when images are not loaded */}
+        {loading && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "#888",
+              fontSize: "20px",
+              textAlign: "center",
+            }}
+          >
+            Loading...
+          </div>
+        )}
+      </canvas>
 
       {/* Skip Button */}
       {showSkipButton && (
