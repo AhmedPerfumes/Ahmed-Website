@@ -30,14 +30,14 @@ export default function HomePage8() {
     >
       <NewsLetter />
       <Header14 />
-      <div className="d-none d-lg-block">
+      {/* <div className="d-none d-lg-block"> */}
         {/* CanvasAnimation will render first for large screens */}
-        <CanvasAnimation />
-      </div>
-      <div className="d-sm-block d-md-none">
+        {/* <CanvasAnimation /> */}
+      {/* </div> */}
+      {/* <div className="d-sm-block d-md-none"> */}
         {/* MobileAnimation will render for small screens */}
         <MobileAnimation />
-      </div>
+      {/* </div> */}
       <main id="">
         {/* Animation component will render after CanvasAnimation */}
         <Animation />
