@@ -190,8 +190,8 @@ const Animation = () => {
       </section>
 
       {/* Top 10 Products */}
-      <section className="testsect zoom_img section2 d-flex">
-        <div className="panel2 pt-4 d-flex justify-content-center align-items-center">
+      <section className="testsect section2 d-flex">
+        <div className="panel2 d-flex justify-content-center align-items-lg-center">
           <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
@@ -851,6 +851,7 @@ const Animation = () => {
           <Lookbook />
 
           <Categories section="section3" />
+          
         </div>
       </section>
       {/* Arabian Dakhoon Section */}
@@ -1045,7 +1046,7 @@ const Animation = () => {
             </h2>
             <p className="text-center text-white p">
               {t(
-                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that"
+                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are"
               )}
             </p>
           </div>
