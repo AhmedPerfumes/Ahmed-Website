@@ -58,7 +58,6 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
 
   return (
     <html lang={locale} dir={locale == 'ar' ? 'rtl' : 'ltr'}>
-      
       <body className={myFont.className}>
       <NextIntlClientProvider messages={messages}>
         <Svgs />

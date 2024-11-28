@@ -6,7 +6,7 @@ import React from "react";
 import CanvasAnimation from "@/components/CanvasAnimation";
 import MobileAnimation from "@/components/MobileAnimation";
 import NewsLetter from "@/components/modals/NewsLetter";
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
 // const MobileAnimation = dynamic(() => import('@/components/MobileAnimation'), {
 //   loading: () => <p>Loading...</p>,
@@ -30,14 +30,14 @@ export default function HomePage8() {
     >
       <NewsLetter />
       <Header14 />
-      {/* <div className="d-none d-lg-block"> */}
+      <div className="d-none d-lg-block">
         {/* CanvasAnimation will render first for large screens */}
         <CanvasAnimation />
-      {/* </div> */}
-      {/* <div className="d-sm-block d-md-none"> */}
+      </div>
+      <div className="d-sm-block d-md-none">
         {/* MobileAnimation will render for small screens */}
-        {/* <MobileAnimation /> */}
-      {/* </div> */}
+        <MobileAnimation />
+      </div>
       <main id="">
         {/* Animation component will render after CanvasAnimation */}
         <Animation />
