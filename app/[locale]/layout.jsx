@@ -80,7 +80,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <link rel="preload" href="/assets/mobilescreencompressed/19-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/20-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/21-min.jpg" as="image" />
-        {/* <link rel="preload" href="/assets/mobilescreencompressed/22-min.jpg" as="image" /> */}
+        
         <link rel="preload" href="/assets/mobilescreencompressed/23-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/24-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/25-min.jpg" as="image" />
@@ -285,28 +285,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <link rel="preload" href="/assets/mobilescreencompressed/220-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/221-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/222-min.jpg" as="image" />
-        {/* <link rel="preload" href="/assets/mobilescreencompressed/223-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/224-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/225-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/226-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/227-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/228-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/229-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/230-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/231-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/232-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/233-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/234-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/235-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/236-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/237-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/238-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/239-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/240-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/241-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/242-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/243-min.jpg" as="image" />
-        <link rel="preload" href="/assets/mobilescreencompressed/244-min.jpg" as="image" /> */}
+  
         <link rel="preload" href="/assets/mobilescreencompressed/245-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/246-min.jpg" as="image" />
         <link rel="preload" href="/assets/mobilescreencompressed/247-min.jpg" as="image" />
