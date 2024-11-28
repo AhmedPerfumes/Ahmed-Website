@@ -7,7 +7,7 @@ const CanvasAnimation = () => {
   return (
     <section>
     <div    scroll-frames="demo"
-            data-url-mask="/assets/final/|1 to 343|.jpg"
+            data-url-mask="/assets/webp/|1 to 355|.webp"
             data-background-size="cover"
             data-detector="the_detector">
     </div>
