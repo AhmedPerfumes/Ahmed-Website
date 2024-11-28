@@ -114,3 +114,14 @@
   .skip-button2:hover {
     background-color: rgba(0, 0, 0, 0.9);
   }
+
+  [scroll-frames] {
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100vh;
+  }
+  section {
+      height: 200vh;
+  }
+  hr { opacity: 0 }
