@@ -157,10 +157,10 @@ const Animation = () => {
       <section className="vh-100 hero-banner">
         <Hero />
       </section>
-      <section className="testsect section1">
+      <section className="testsect bg-custom">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img section1"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/multiple-products-banner.avif"
             alt={t("Signature Selections")}
@@ -753,10 +753,10 @@ const Animation = () => {
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect section3">
+      <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img section3"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/collection-bnr.avif"
             alt="Exclusive Collection"
@@ -785,7 +785,7 @@ const Animation = () => {
         </div>
       </section>
 
-      <section id="start" className="testsect zoom_img section4">
+      <section id="start" className="testsect zoom_img">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
           {/* For Large Screens */}
           <div className="d-none d-lg-block pt-2">
@@ -800,10 +800,7 @@ const Animation = () => {
               {t("Crafted for the Discerning")}
             </h2>
 
-            <VideoPanel
-              type="video/mp4"
-              src="/assets/videos/multi-product-mobile.mp4"
-            />
+            <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
           </div>
 
           <a
@@ -818,7 +815,7 @@ const Animation = () => {
       <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img gifting"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/giftset-bnr.avif"
             alt="Art of Gifting"
@@ -857,10 +854,10 @@ const Animation = () => {
         </div>
       </section>
       {/* Arabian Dakhoon Section */}
-      <section className="testsect section4">
+      <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img section4"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/dakhoon-bnr.avif"
             alt="Ethereal Essence"
