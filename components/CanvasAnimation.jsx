@@ -22,7 +22,7 @@ const CanvasAnimation = () => {
         <hr id="the_detector_web"/>
       </section> : 
       <section className="sectionWebMob">
-        <div scroll-frames="mobile" data-url-mask="/assets/mobilescreencompressed/|1 to 354|.jpg" data-background-size="contain" data-detector="the_detector_mob"></div>
+        <div scroll-frames="mobile" data-url-mask="/assets/mobilescreencomp/|1 to 140|.jpg" data-background-size="cover" data-detector="the_detector_mob"></div>
         <hr id="the_detector_mob"/>
       </section>
   );
