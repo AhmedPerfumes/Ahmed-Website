@@ -76,7 +76,7 @@ export default function MobileHeader() {
         </Link>
 
         <div className="logo">
-          <Link href="/">
+          <a href="/">
             <Image
               src="https://www.ahmedalmaghribi.com/wp-content/uploads/2022/01/Ahmed-logo.svg"
               width={200}
@@ -84,7 +84,7 @@ export default function MobileHeader() {
               alt="Ahmed"
               className="logo__image d-block"
             />
-          </Link>
+          </a>
         </div>
         {/* <!-- /.logo --> */}
 

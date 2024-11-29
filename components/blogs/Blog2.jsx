@@ -69,16 +69,16 @@ export default function Blog2() {
                   <span className="blog-grid__item-meta__date">{elm.date}</span>
                 </div>
                 <div className="blog-grid__item-title">
-                  <Link href={`/blog_single/${elm.id}`}>{elm.title}</Link>
+                  <a href={`/blog_single/${elm.id}`}>{elm.title}</a>
                 </div>
                 <div className="blog-grid__item-content">
                   <p>{elm.content}</p>
-                  <Link
+                  <a
                     href={`/blog_single/${elm.id}`}
                     className="readmore-link"
                   >
                     Continue Reading
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

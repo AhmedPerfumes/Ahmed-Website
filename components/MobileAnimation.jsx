@@ -8,7 +8,7 @@ import "./Canvas.css";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-const CanvasAnimation = () => {
+const MobileAnimation = () => {
   const canvasRef = useRef(null);
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(false);
@@ -96,4 +96,4 @@ const CanvasAnimation = () => {
   );
 };
 
-export default CanvasAnimation;
+export default MobileAnimation;
