@@ -115,7 +115,7 @@
     background-color: rgba(0, 0, 0, 0.9);
   }
 
-  /* [scroll-frames] {
+  [scroll-frames] {
     position: sticky;
     top: 0;
     left: 0;
@@ -125,4 +125,4 @@
   .sectionWebMob {
       height: 200vh;
   }
-  hr { opacity: 0 } */
+  hr { opacity: 0 }
