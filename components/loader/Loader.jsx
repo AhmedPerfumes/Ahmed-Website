@@ -20,7 +20,7 @@ const Loader = () => {
     // Set a timeout to remove the loader after 1.5 seconds if still loading
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust the timeout as needed
+    }, 1500); // Adjust the timeout as needed
 
     return () => {
       clearTimeout(timer);

@@ -121,7 +121,8 @@
     left: 0;
     height: 100vh;
   }
-  section {
+
+  .sectionWebMob {
       height: 200vh;
   }
   hr { opacity: 0 }
