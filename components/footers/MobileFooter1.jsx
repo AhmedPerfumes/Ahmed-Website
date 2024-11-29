@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -52,7 +52,7 @@ export default function MobileFooter1() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <use href="#icon_hanger" />
+              <use href="#icon_gift" />
             </svg>
             <span>Shop</span>
           </Link>
@@ -65,7 +65,16 @@ export default function MobileFooter1() {
             className="footer-mobile__link d-flex flex-column align-items-center"
           >
             <div className="position-relative">
-              <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_cart"></use></svg>
+              <svg
+                className="d-block"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <use href="#icon_cart"></use>
+              </svg>
               <span className="wishlist-amount d-block position-absolute js-wishlist-count">
                 {cartProducts.length}
               </span>

@@ -8,9 +8,8 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function Hero() {
-
   const locale = useLocale();
-  const t=useTranslations();
+  const t = useTranslations();
   const swiperOptions = {
     autoplay: {
       delay: 5000,
@@ -40,8 +39,7 @@ export default function Hero() {
                 width="1903"
                 height="945"
                 alt="image"
-                className="slideshow-bg__img object-fit-cover object-position-right"
-                style={{ objectPosition: elm.objectPosition }}
+                className="slideshow-bg__img"
               />
             </div>
             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">

@@ -42,7 +42,9 @@ const CanvasAnimation = () => {
       imagePromises.push(
         new Promise((resolve, reject) => {
           img.onload = () => {
-            setLoadingProgress((prev) => Math.round(((i + 1) / frameCount) * 100)); // Update progress
+            setLoadingProgress((prev) =>
+              Math.round(((i + 1) / frameCount) * 100)
+            ); // Update progress
             resolve();
           };
           img.onerror = reject;
@@ -108,8 +110,8 @@ const CanvasAnimation = () => {
     };
   }, []); // Run effect once after component mounts
 
-   // Ensure the loader stays for 2 seconds, even if images load faster
-   useEffect(() => {
+  // Ensure the loader stays for 2 seconds, even if images load faster
+  useEffect(() => {
     const loaderTimeout = setTimeout(() => {
       setIsLoaded(true); // Hide loader after 2 seconds
     }, 20000);
