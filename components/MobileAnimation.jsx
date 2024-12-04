@@ -5,6 +5,8 @@ import "./Canvas.css";
 const MobileAnimation = () => {
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
   const [showSkipButton, setShowSkipButton] = useState(true);
+  const [showModal, setShowModal] = useState(true); // Modal state
+
   const handleScroll = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -19,8 +21,8 @@ const MobileAnimation = () => {
 
     // Auto-scroll to the next section when imageIndex reaches 9
     const currentScrollY = window.scrollY;
-    if(currentScrollY > previousScrollY.current) {
-      if (imageIndex == 9) {
+    if (currentScrollY > previousScrollY.current) {
+      if (imageIndex === 9) {
         // Scroll to the next section with a smooth scroll
         const nextSection = document.getElementById("main2");
         if (nextSection) {
@@ -30,6 +32,7 @@ const MobileAnimation = () => {
     }
     previousScrollY.current = currentScrollY;
   };
+
   const skipAnimation = () => {
     const nextSection = document.getElementById("main2");
     if (nextSection) {
@@ -37,28 +40,55 @@ const MobileAnimation = () => {
       setShowSkipButton(false);
     }
   };
+
   useEffect(() => {
-      // Use setTimeout to ensure page rendering is complete before scrolling
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 0);  // Delay the scroll action to ensure it's executed after render
+    // Automatically hide the modal after 1 minute (60000 ms)
+    const modalTimer = setTimeout(() => {
+      setShowModal(false); // Close the modal after 1 minute
+    }, 3000);
 
-      // Attach the scroll event listener
-      window.addEventListener("scroll", handleScroll);
+    // Use setTimeout to ensure page rendering is complete before scrolling
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);  // Delay the scroll action to ensure it's executed after render
 
-      // Cleanup the event listener when the component is unmounted
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
+    if (showModal) {
+      const modalContent = document.querySelector(".modal-content");
+      if (modalContent) {
+        modalContent.style.pointerEvents = "auto"; // Add pointer-events: auto
+      }
+    }
+
+    // Attach the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener and the timeout when the component is unmounted
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(modalTimer); // Clear the timeout if the component is unmounted
+    };
   }, []);
+
   return (
     <section className="sectionWebMob">
-      <div scroll-frames="demo"
-          data-url-mask="/assets/mobilescreencomp/|1 to 136|.jpg"
-          data-background-size="cover"
-          data-detector="the_detector">
-      </div>
-      <hr id="the_detector"/>
+      {/* Modal */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <img src="/assets/loading.gif" alt="Modal Image" />
+          </div>
+        </div>
+      )}
+
+      <div
+        scroll-frames="demo"
+        data-url-mask="/assets/mobilescreencomp/|1 to 136|.jpg"
+        data-background-size="cover"
+        data-detector="the_detector"
+      ></div>
+
+      <hr id="the_detector" />
+
       {showSkipButton && (
         <button onClick={skipAnimation} className="skip-button">
           SKIP INTRO
