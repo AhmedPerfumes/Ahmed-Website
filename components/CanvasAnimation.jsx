@@ -17,6 +17,10 @@ const CanvasAnimation = () => {
   let ball = { frame: 0 };
 
   useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);  // Delay the scroll action to ensure it's executed after render
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");

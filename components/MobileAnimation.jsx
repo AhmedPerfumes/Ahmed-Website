@@ -15,7 +15,7 @@ const MobileAnimation = () => {
     const imageIndex = Math.floor(scrollPercentage * totalImages);  // Calculate the image index
 
     // Update the image source
-    console.log(imageIndex);
+    // console.log(imageIndex);
 
     // Auto-scroll to the next section when imageIndex reaches 9
     const currentScrollY = window.scrollY;
