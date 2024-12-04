@@ -26,6 +26,7 @@ const MobileAnimation = () => {
         // Scroll to the next section with a smooth scroll
         const nextSection = document.getElementById("main2");
         if (nextSection) {
+          setShowSkipButton(false);
           nextSection.scrollIntoView({ behavior: "smooth" });
         }
       }
@@ -42,15 +43,22 @@ const MobileAnimation = () => {
   };
 
   useEffect(() => {
-    // Automatically hide the modal after 1 minute (60000 ms)
+    // Automatically hide the modal after 3 seconds (3000 ms)
     const modalTimer = setTimeout(() => {
-      setShowModal(false); // Close the modal after 1 minute
+      setShowModal(false); // Close the modal after 3 seconds
     }, 3000);
 
     // Use setTimeout to ensure page rendering is complete before scrolling
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 0);  // Delay the scroll action to ensure it's executed after render
+
+    // Disable scrolling while the modal is active
+    if (showModal) {
+      document.body.style.overflow = "hidden"; // Disable scroll
+    } else {
+      document.body.style.overflow = "auto"; // Re-enable scroll when modal is closed
+    }
 
     if (showModal) {
       const modalContent = document.querySelector(".modal-content");
@@ -67,7 +75,7 @@ const MobileAnimation = () => {
       window.removeEventListener("scroll", handleScroll);
       clearTimeout(modalTimer); // Clear the timeout if the component is unmounted
     };
-  }, []);
+  }, [showModal]); // Effect runs when showModal changes
 
   return (
     <section className="sectionWebMob">
