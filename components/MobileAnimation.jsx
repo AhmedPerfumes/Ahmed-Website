@@ -73,8 +73,8 @@ const MobileAnimation = () => {
     <section className="sectionWebMob">
       {/* Modal */}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="modal loader-modal">
+          <div className="modal-content loader-modal-content">
             <img src="/assets/loading.gif" alt="Modal Image" />
           </div>
         </div>

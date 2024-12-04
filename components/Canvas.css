@@ -138,7 +138,7 @@
 } */
 
 /* Fullscreen Modal Styles */
-.modal {
+.loader-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -152,7 +152,7 @@
   pointer-events: none; /* Disable interactions with the background */
 }
 
-.modal-content {
+.loader-modal-content {
   background-color: white;
   padding: 40px;
   border-radius: 8px;
