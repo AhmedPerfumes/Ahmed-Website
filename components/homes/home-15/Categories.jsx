@@ -6,8 +6,8 @@ import {
   categoriesInfluencers,
 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function Categories({ section }) {
@@ -20,8 +20,14 @@ export default function Categories({ section }) {
     slidesPerGroup: 5,
     effect: "none",
     loop: true,
-    pagination: false,
-    navigation: false,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
     grabCursor: true,
     breakpoints: {
       320: {
@@ -38,57 +44,52 @@ export default function Categories({ section }) {
         slidesPerView: 5,
         slidesPerGroup: 1,
         spaceBetween: 30,
-        pagination: false,
       },
     },
   };
 
   let categoryRend;
 
-  if (section == "section3") {
-    categoryRend = (
-      <>
-        <div className="position-relative">
-          <Swiper
-            className="swiper-container js-swiper-slider"
-            {...swiperOptions}
-          >
-            {categories8.map((elm, i) => (
-              <SwiperSlide key={i} className="swiper-slide">
-                <video
-                  loading="lazy"
-                  className="w-100 mb-3"
-                  width="330"
-                  height="400"
-                  style={{ height: "fit-content" }}
-                  muted
-                  loop
-                  onMouseOver={(event) => event.target.play()}
-                  onMouseOut={(event) => event.target.pause()}
-                  preload="none"
-                  poster={elm.imgSrc2}
-                >
-                  <source type="video/mp4" src={elm.videoSrc} />
-                </video>
-                <div className="text-center">
-                  <Link href={elm.link} className="menu-link h6 fw-medium">
-                    {t(elm.altText)}
-                    <br />
-                    <span className="fs-14 text-secondary fst-italic">
-                      {t(elm.subText)}
-                    </span>
-                  </Link>
-                </div>
-              </SwiperSlide>
-            ))}
-
-            {/* <!-- /.swiper-wrapper --> */}
-          </Swiper>
-          {/* <!-- /.swiper-container js-swiper-slider --> */}
+  const renderSlides = (categories) =>
+    categories.map((elm, i) => (
+      <SwiperSlide key={i} className="swiper-slide">
+        <video
+          loading="lazy"
+          className="w-100 mb-3"
+          width="330"
+          height="400"
+          style={{ height: "fit-content" }}
+          muted
+          loop
+          onMouseOver={(event) => event.target.play()}
+          onMouseOut={(event) => event.target.pause()}
+          preload="none"
+          poster={elm.imgSrc2}
+        >
+          <source type="video/mp4" src={elm.videoSrc} />
+        </video>
+        <div className="text-center">
+          <Link href={elm.link} className="menu-link h6 fw-medium">
+            {t(elm.altText)}
+            <br />
+            <span className="fs-14 text-secondary fst-italic">
+              {t(elm.subText)}
+            </span>
+          </Link>
         </div>
-      </>
+      </SwiperSlide>
+    ));
+
+  if (section === "section3") {
+    categoryRend = (
+      <Swiper className="swiper-container" {...swiperOptions}>
+        {renderSlides(categories8)}
+        <div className="swiper-pagination"></div>
+        <div className="swiper-button-next"></div>
+        <div className="swiper-button-prev"></div>
+      </Swiper>
     );
-  } else if (section == "section4") {
+  } else if (section === "section4") {
     categoryRend = (
       <>
         <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
@@ -97,44 +98,12 @@ export default function Categories({ section }) {
         <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center">
           {t("See luxury in motion through the eyes of those who know it best")}
         </p>
-        <div className="position-relative">
-          <Swiper
-            className="swiper-container js-swiper-slider"
-            {...swiperOptions}
-          >
-            {categories88.map((elm, i) => (
-              <SwiperSlide key={i} className="swiper-slide">
-                <video
-                  loading="lazy"
-                  className="w-100 mb-3"
-                  width="330"
-                  height="400"
-                  style={{ height: "fit-content" }}
-                  muted
-                  loop
-                  onMouseOver={(event) => event.target.play()}
-                  onMouseOut={(event) => event.target.pause()}
-                  preload="none"
-                  poster={elm.imgSrc2}
-                >
-                  <source type="video/mp4" src={elm.videoSrc} />
-                </video>
-                <div className="text-center">
-                  <Link href={elm.link} className="menu-link h6 fw-medium">
-                    {t(elm.altText)}
-                    <br />
-                    <span className="fs-14 text-secondary fst-italic">
-                      {t(elm.subText)}
-                    </span>
-                  </Link>
-                </div>
-              </SwiperSlide>
-            ))}
-
-            {/* <!-- /.swiper-wrapper --> */}
-          </Swiper>
-          {/* <!-- /.swiper-container js-swiper-slider --> */}
-        </div>
+        <Swiper className="swiper-container" {...swiperOptions}>
+          {renderSlides(categories88)}
+          <div className="swiper-pagination"></div>
+          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev"></div>
+        </Swiper>
       </>
     );
   } else {
@@ -146,52 +115,21 @@ export default function Categories({ section }) {
         <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center">
           {t("Modern elegance meets Middle Eastern tradition")}
         </p>
-        <div className="position-relative">
-          <Swiper
-            className="swiper-container js-swiper-slider"
-            {...swiperOptions}
-          >
-            {categoriesInfluencers.map((elm, i) => (
-              <SwiperSlide key={i} className="swiper-slide">
-                <video
-                  loading="lazy"
-                  className="w-100 mb-3"
-                  width="330"
-                  height="400"
-                  style={{ height: "fit-content" }}
-                  muted
-                  loop
-                  onMouseOver={(event) => event.target.play()}
-                  onMouseOut={(event) => event.target.pause()}
-                  preload="none"
-                  poster={elm.imgSrc2}
-                >
-                  <source type="video/mp4" src={elm.videoSrc} />
-                </video>
-                <div className="text-center">
-                  <Link href={elm.link} className="menu-link h6 fw-medium">
-                    {t(elm.altText)}
-                    <br />
-                    <span className="fs-14 text-secondary fst-italic">
-                      {t(elm.subText)}
-                    </span>
-                  </Link>
-                </div>
-              </SwiperSlide>
-            ))}
-
-            {/* <!-- /.swiper-wrapper --> */}
-          </Swiper>
-          {/* <!-- /.swiper-container js-swiper-slider --> */}
-        </div>
+        <Swiper className="swiper-container" {...swiperOptions}>
+          {renderSlides(categoriesInfluencers)}
+          <div className="swiper-pagination"></div>
+          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev"></div>
+        </Swiper>
       </>
     );
   }
 
   return (
-    <section className="category-carousel container">
+    <section className="category-carousel container position-relative">
+      <div className="slider-shadow-left"></div>
       {categoryRend}
-      {/* <!-- /.position-relative --> */}
+      <div className="slider-shadow-right"></div>
     </section>
   );
 }

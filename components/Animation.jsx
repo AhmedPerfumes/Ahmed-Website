@@ -6,6 +6,7 @@ import Link from "next/link";
 import Hero from "@/components/homes/home-8/Hero";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "./footers/MobileFooter2";
+import VideoPanel from "./VideoPanel";
 
 import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
@@ -156,10 +157,10 @@ const Animation = () => {
       <section className="vh-100 hero-banner">
         <Hero />
       </section>
-      <section className="testsect section1">
+      <section className="testsect bg-custom">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img section1"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/multiple-products-banner.avif"
             alt={t("Signature Selections")}
@@ -189,8 +190,8 @@ const Animation = () => {
       </section>
 
       {/* Top 10 Products */}
-      <section className="testsect zoom_img section2 d-flex">
-        <div className="panel2 pt-4 d-flex justify-content-center align-items-center">
+      <section className="testsect section2 d-flex">
+        <div className="panel2 d-flex justify-content-center align-items-lg-center">
           <div className="contai ">
             <div className="mySwiper">
               <div className="main-wrapper swiper-wrapper">
@@ -752,10 +753,10 @@ const Animation = () => {
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
 
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div> */}
-      <section className="testsect section3">
+      <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img section3"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/collection-bnr.avif"
             alt="Exclusive Collection"
@@ -784,28 +785,22 @@ const Animation = () => {
         </div>
       </section>
 
-      <section id="start" className="testsect zoom_img section4">
+      <section id="start" className="testsect zoom_img">
         <div className="panel2 d-flex flex-column justify-content-center align-items-center text-center pt-5">
           {/* For Large Screens */}
           <div className="d-none d-lg-block pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2">
               {t("Crafted for the Discerning")}
             </h2>
-            <video muted autoPlay loop className="w-75 pt-5" preload="none">
-              <source type="video/mp4" src="/assets/videos/multi-product.mp4" />
-            </video>
+            <VideoPanel src="/assets/videos/multi-product.mp4" />
           </div>
           {/* For small screens */}
           <div className="d-block d-lg-none pt-2">
             <h2 className="fw-lighter sec-two-h2 pt-2 s-font">
               {t("Crafted for the Discerning")}
             </h2>
-            <video muted autoPlay loop className="w-75 pt-2" preload="none">
-              <source
-                type="video/mp4"
-                src="/assets/videos/multi-product-mobile.mp4"
-              />
-            </video>
+
+            <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
           </div>
 
           <a
@@ -820,7 +815,7 @@ const Animation = () => {
       <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img gifting"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/giftset-bnr.avif"
             alt="Art of Gifting"
@@ -856,13 +851,14 @@ const Animation = () => {
           <Lookbook />
 
           <Categories section="section3" />
+          
         </div>
       </section>
       {/* Arabian Dakhoon Section */}
-      <section className="testsect section4">
+      <section className="testsect">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
-            className="zoom_img"
+            className="zoom_img section4"
             style={{ width: "100%" }}
             src="/assets/images/home/demo8/avif/dakhoon-bnr.avif"
             alt="Ethereal Essence"
@@ -889,7 +885,7 @@ const Animation = () => {
           </a>
         </div>
       </section>
-      {/* Full screen horizontal Scroll Slider */}
+      {/* Full screen vertical Scroll Slider */}
       <section className="cont testsect ">
         <div className="panel2 mb-4">
           <div className="inner2 mt-5 d-flex align-items-center">
@@ -900,12 +896,7 @@ const Animation = () => {
 
         <div className="panel2 mt-5">
           <div className="inner2">
-            <video loop muted autoPlay className="w-100" preload="none">
-              <source
-                src="/assets/videos/ignite-rose-video.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <VideoPanel src="/assets/videos/ignite-rose-video.mp4" />
           </div>
         </div>
 
@@ -981,12 +972,7 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <video loop muted autoPlay className="w-100" preload="none">
-              <source
-                src="/assets/videos/ignite-rose-mobile.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <VideoPanel src="/assets/videos/ignite-rose-mobile.mp4" />
           </div>
         </div>
         <div className="mobilepanel ">
@@ -1038,6 +1024,11 @@ const Animation = () => {
             </div>
           </div>
         </div>
+        <div className="mobilepanel d-flex justify-content-center">
+          <div className="inner text-center pt-5 mt-4">
+            <div className="row"></div>
+          </div>
+        </div>
       </section>
       <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4"></div>
 
@@ -1055,7 +1046,7 @@ const Animation = () => {
             </h2>
             <p className="text-center text-white p">
               {t(
-                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are Discover the aroma that"
+                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are"
               )}
             </p>
           </div>
@@ -1076,9 +1067,7 @@ const Animation = () => {
       >
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
           <div className="order-1 order-md-0">
-            <video loop muted autoPlay className="w-100" preload="none">
-              <source src="/assets/videos/production.mp4" type="video/mp4" />
-            </video>
+            <VideoPanel src="/assets/videos/production.mp4" />
           </div>
           <div className="col-lg-7 p-5 text-center order-3 order-md-1">
             <h3 className="mb-3">

@@ -126,3 +126,12 @@
       height: 200vh;
   }
   hr { opacity: 0 }
+/* Canvas styles */
+/* .canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+} */
