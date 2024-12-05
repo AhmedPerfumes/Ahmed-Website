@@ -156,7 +156,7 @@ export default function QuickView() {
             <div className="product-single__detail">
               <h1 className="product-single__name">{he.decode(quickViewItem.product_name)}</h1>
               <div className="product-single__price">
-                <span className="current-price">{quickViewItem.price}د.إ</span>
+                {quickViewItem?.sale_price ? <span className="money price price-old"> {quickViewItem.price}د.إ</span> : <span className="current-price"> {quickViewItem.price}د.إ</span>} {quickViewItem?.sale_price && <span class="money price price-sale"> {quickViewItem.price - (quickViewItem.price / 100 * quickViewItem.sale_price)}د.إ</span>}
               </div>
               <div className="product-single__short-desc">
                 <div dangerouslySetInnerHTML={{ __html: quickViewItem.description }}>

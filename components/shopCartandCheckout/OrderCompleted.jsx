@@ -30,6 +30,16 @@ export default function OrderCompleted() {
     return <div>{ error }</div>;
   }
 
+  const subTotalPrice = (elm) => {
+    if(elm?.discount) {
+      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+    } else if(elm?.sale_price) {
+      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</td>;
+    } else {
+      return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+    }
+  };
+
   return (
     <>
     {Object.keys(orderDetails).length ? <><div className="order-complete">
@@ -85,7 +95,7 @@ export default function OrderCompleted() {
                   <td>
                     {he.decode(elm.name)} x {elm.qty}
                   </td>
-                  <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
+                  { subTotalPrice(elm) }
                 </tr>
               ))}
             </tbody>

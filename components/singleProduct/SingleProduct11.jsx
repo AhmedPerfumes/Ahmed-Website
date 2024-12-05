@@ -102,7 +102,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <h1 className="product-single__name">{product?.product_name && t(he.decode(product?.product_name))}</h1>
             <div className="product-single__price">
-              <span className="current-price"> {product.price}د.إ</span>
+              {product?.sale_price ? <span className="money price price-old"> {product.price}د.إ</span> : <span className="current-price"> {product.price}د.إ</span>} {product?.sale_price && <span class="money price price-sale"> {product.price - (product.price / 100 * product.sale_price)}د.إ</span>}
             </div>
             <div className="product-single__short-desc">
               <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(product.product_name)) }}></div>

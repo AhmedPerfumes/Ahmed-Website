@@ -17,6 +17,13 @@ export default function Context({ children }) {
 
   useEffect(() => {
     const subtotal = cartProducts.reduce((accumulator, product) => {
+      if(product?.discount) {
+        const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
+        return accumulator + product.quantity * discount_price;
+      } else if(product?.sale_price) {
+        const sale_price = (product.price - (product.price / 100 * product.sale_price)).toFixed(2);
+        return accumulator + product.quantity * sale_price;
+      }
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);

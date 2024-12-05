@@ -83,7 +83,9 @@ const MobileAnimation = () => {
       {showModal && (
         <div className="modal loader-modal">
           <div className="modal-content loader-modal-content">
-            <img src="/assets/loading.gif" alt="Modal Image" />
+            <div className="preload">
+              <img src="/assets/preloader.gif" alt="Modal Image" className="preloader-gif"/>
+            </div>
           </div>
         </div>
       )}

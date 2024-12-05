@@ -416,7 +416,7 @@ useEffect(() => {
                         </span>
                       </>
                     ) : ( */}
-                      <span className="money price">{elm.price}د.إ</span>
+                      {elm?.sale_price ? <span className="money price price-old"> {elm.price}د.إ</span> : <span className="money price"> {elm.price}د.إ</span>} {elm?.sale_price && <span class="money price price-sale"> {elm.price - (elm.price / 100 * elm.sale_price)}د.إ</span>}
                     {/* )} */}
                   </div>
                   {/* {elm.colors && (

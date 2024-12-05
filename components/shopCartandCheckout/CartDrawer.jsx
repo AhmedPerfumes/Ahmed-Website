@@ -47,6 +47,16 @@ export default function CartDrawer() {
     100
   );
 
+  const subTotalPrice = (elm) => {
+    if(elm?.discount) {
+      return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</span>;
+    } else if(elm?.sale_price) {
+      return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</span>;
+    } else {
+      return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}د.إ</span>;
+    }
+  };
+
   return (
     <>
       <div
@@ -122,9 +132,8 @@ export default function CartDrawer() {
                         </div>
                       </div>
 
-                      <span className="cart-drawer-item__price money price">
-                        {(elm.price * elm.quantity).toFixed(2)}د.إ
-                      </span>
+                        {subTotalPrice(elm)}
+                      
                     </div>
                   </div>
 

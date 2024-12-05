@@ -4,7 +4,7 @@ import { products54 } from "@/data/products/fashion";
 import React from "react";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from "he";
@@ -63,6 +63,17 @@ export default function Style2({ category, subcategory, products }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { addProductToQuickView } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
+
+  const price = (elm) => {
+    if(elm?.discount) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+    } else if(elm?.sale_price) {
+      return <span className="money price price-old">{elm?.price}د.إ</span>;
+    } else {
+      return <span className="money price">{elm?.price}د.إ</span>;
+    }
+  };
+
   return (
     <div
       className="products-grid row row-cols-2 row-cols-md-3 row-cols-lg-3"
@@ -83,46 +94,60 @@ export default function Style2({ category, subcategory, products }) {
                     nextEl: `#style-2${elm?.product_id.toString()} .pc__img-next`,
                   }}
                 >
-                  {elm?.images &&
-                    JSON.parse(elm.images).map((image, ind) => (
-                      <SwiperSlide key={ind} className="swiper-slide">
-                        <a
-                          href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
-                            category
-                          )}/${subcat}${removeSpecialCharactersAndAmp(
-                            elm.product_name
-                          )
-                            .split(" ")
-                            .join("-")
-                            .toLowerCase()}`}
+                  <SwiperSlide key={i} className="swiper-slide">
+                    <a
+                      href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
+                        category
+                      )}/${subcat}${removeSpecialCharactersAndAmp(
+                        elm.product_name
+                      )
+                        .split(" ")
+                        .join("-")
+                        .toLowerCase()}`}
+                    >
+                      {elm?.images &&
+                        // JSON.parse(elm.images).map((image, ind) => (
+                            <>
+                              {JSON.parse(elm.images)[0] && <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                                width="330"
+                                height="400"
+                                alt="img"
+                                className="pc__img"
+                              />
+                              }
+
+                              {JSON.parse(elm.images)[1] && <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                                width="330"
+                                height="400"
+                                alt="img"
+                                className="pc__img pc__img-second"
+                              />
+                              }
+                            </>
+                        // ))
+                        }
+                      </a>
+                      {elm?.label_name && (
+                        <div
+                          style={{ backgroundColor: elm.label_color }}
+                          className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
                         >
-                          <Image
-                            loading="lazy"
-                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
-                            width="330"
-                            height="400"
-                            alt="img"
-                            className="pc__img"
-                          />
-                        </a>
-                        {elm?.label_name && (
-                          <div
-                            style={{ backgroundColor: elm.label_color }}
-                            className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
-                          >
-                            {elm?.label_name}
-                          </div>
-                        )}
-                        {elm.product_qty <= 0 && (
-                          <div
-                            style={{ backgroundColor: "#dc3545" }}
-                            className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
-                          >
-                            Out Of Stock
-                          </div>
-                        )}
+                          {elm?.label_name}
+                        </div>
+                      )}
+                      {elm.product_qty <= 0 && (
+                        <div
+                          style={{ backgroundColor: "#dc3545" }}
+                          className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
+                        >
+                          Out Of Stock
+                        </div>
+                      )}
                       </SwiperSlide>
-                    ))}
 
                   {i != 1 ? (
                     <>
@@ -255,7 +280,7 @@ export default function Style2({ category, subcategory, products }) {
                   </a>
                 </h6>
                 <div className="product-card__price d-flex">
-                  <span className="money price">{elm?.price}د.إ</span>
+                  { price(elm) }
                 </div>
               </div>
             ) : null}

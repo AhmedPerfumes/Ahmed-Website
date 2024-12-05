@@ -376,6 +376,16 @@ export default function Checkout() {
     return <div>{ error }</div>;
   }
 
+  const subTotalPrice = (elm) => {
+    if(elm?.discount) {
+      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+    } else if(elm?.sale_price) {
+      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</td>;
+    } else {
+      return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+    }
+  };
+
   return (
     <>
       <form onSubmit={onOrder}>
@@ -665,7 +675,7 @@ export default function Checkout() {
                         <td>
                           {he.decode(elm.product_name)} x {elm.quantity}
                         </td>
-                        <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>
+                        {subTotalPrice(elm)}
                       </tr>
                     ))}
                   </tbody>
