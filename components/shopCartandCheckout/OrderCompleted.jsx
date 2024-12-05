@@ -1,12 +1,14 @@
 "use client";
 
 import { useContextElement } from "@/context/Context";
+import { useMenu } from '@/context/MenuContext';
 import { useEffect, useState } from "react";
 import he from 'he';
 import Link from "next/link";
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
+  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
   // console.log('...', freeShippingFlag);
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
@@ -20,6 +22,13 @@ export default function OrderCompleted() {
     // }
     // console.log('...', localStorage.getItem('orderData').length);
   }, []);
+
+  if (isMenuLoading) {
+    return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ error }</div>;
+  }
 
   return (
     <>
@@ -53,7 +62,7 @@ export default function OrderCompleted() {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((20 + orderDetails.sub_total) / 100) * 5).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * 5).toFixed(2) }د.إ VAT)</span>
+          <span>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(shippingServiceCharges[0].price) + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -89,15 +98,15 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{(orderDetails.sub_total).toFixed(2) >= 400 ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
+                <td>{(orderDetails.sub_total).toFixed(2) >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }د.إ`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
-                <td>3د.إ</td>
+                <td>{ shippingServiceCharges[1].price }د.إ</td>
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((20 + orderDetails.sub_total) / 100) * 5).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * 5).toFixed(2) }د.إ VAT)</td>
+                <td>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((shippingServiceCharges[0].price + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</td>
               </tr>
             </tbody>
           </table>

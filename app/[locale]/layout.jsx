@@ -58,7 +58,6 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
 
   return (
     <html lang={locale} dir={locale == 'ar' ? 'rtl' : 'ltr'}>
-      <head></head>
       <body className={myFont.className}>
       <NextIntlClientProvider messages={messages}>
         <Svgs />
@@ -88,6 +87,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <div className="page-overlay" id="pageOverlay"></div>
         <ScrollTop />
       </NextIntlClientProvider>
+      <script src="/assets/scroll-frames.js"></script>
       </body>
     </html>
   );

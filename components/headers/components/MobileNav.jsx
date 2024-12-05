@@ -30,6 +30,10 @@ export default function MobileNav() {
   const isActiveParentMenu = (menu) => {
     return menu.split("/")[2] == pathname.split("/")[3];
   };
+  const isActiveExportMenu = (menu) => {
+    // console.log(menu, pathname);
+    return menu.split("/")[1] == pathname.split("/")[2];
+  };
 
   useEffect(() => {
     const selectors = {
@@ -171,7 +175,7 @@ export default function MobileNav() {
     return <div>{ error }</div>;
   }
 
-  let categoriesSubCategoriesBody = categoriesSubCategories.map((item, i) => {
+  let categoriesSubCategoriesBody = categoriesSubCategories?.map((item, i) => {
     return (
       <li key={i} className="navigation__item">
         <a
@@ -225,6 +229,16 @@ export default function MobileNav() {
       </li>
     )
   });
+
+  categoriesSubCategoriesBody.push(
+    <li key="export" className="navigation__item">
+      <a href={`/${locale}/export`} className={`navigation__link
+          ${isActiveExportMenu(`/export`) ? "menu-active" : ""}
+          `}>
+        {t("Worldwide Distribution")}
+      </a>
+    </li>
+  );
   
   return (
     <>

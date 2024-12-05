@@ -16,7 +16,6 @@ export default function Home() {
     <Loader/>
       {/* <h1>{t('title')}</h1> */}
       <HomePage8 />
-      
     </>
   );
 }

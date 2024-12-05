@@ -132,16 +132,16 @@ export default function Blog1() {
                   <span className="blog-grid__item-meta__date">{new Date(elm.created_at).toLocaleDateString()}</span>
                 </div>
                 <div className="blog-grid__item-title">
-                  <Link href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
+                  <a href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</a>
                 </div>
                 <div className="blog-grid__item-content">
                   <p>{elm.description}</p>
-                  <Link
+                  <a
                     href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                     className="readmore-link"
                   >
                     Continue Reading
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

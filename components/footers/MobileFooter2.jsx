@@ -164,7 +164,7 @@ export default function MobileFooter2() {
           }}
         >
           <ul className="sub-menu__list list-unstyled">
-            {categoriesSubCategories.map((elm, i) => (
+            {categoriesSubCategories?.map((elm, i) => (
               <li key={i} className="sub-menu__item">
                 <a
                   href={elm.name != 'Gift Sets' ? `/${locale}/product-category/${elm.name.split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}

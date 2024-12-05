@@ -5,9 +5,11 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { useLocale } from "next-intl";
+import { useMenu } from '../../context/MenuContext';
+import Pagination1 from "../common/Pagination1";
 
 export default function Cart() {
-
+  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
@@ -42,6 +44,14 @@ export default function Cart() {
       [id]: checked,
     }));
   };
+
+  if (isMenuLoading) {
+    return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ error }</div>;
+  }
+
   return (
     <div className="shopping-cart" style={{ minHeight: "calc(100vh - 300px)" }}>
       <div className="cart-table__wrapper">
@@ -208,7 +218,7 @@ export default function Cart() {
                         </div> :
                         <div className="form-check">
                           <label className="form-check-label" htmlFor="flat_rate">
-                            Shipping Cost: 20د.إ
+                            Shipping Cost: { shippingServiceCharges[0].price }د.إ
                           </label>
                         </div>
                       }
@@ -237,12 +247,12 @@ export default function Cart() {
                   </tr>
                   <tr>
                     <th>SERVICE FEE</th>
-                    <td>3د.إ</td>
+                    <td>{ shippingServiceCharges[1].price }د.إ</td>
                   </tr>
                   <tr>
                     <th>Total</th>
                     <td>
-                      {!freeShippingFlag ? (20 + totalPrice + 3).toFixed(2) : (0 + totalPrice + 3).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((20 + totalPrice) / 100) * 5).toFixed(2) : (((0 + totalPrice) / 100) * 5).toFixed(2) }د.إ VAT)
+                      {!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((parseFloat(shippingServiceCharges[0].price) + totalPrice) / 100) * vatTax.percentage).toFixed(2) : (((0 + totalPrice) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)
                     </td>
                   </tr>
                 </tbody>

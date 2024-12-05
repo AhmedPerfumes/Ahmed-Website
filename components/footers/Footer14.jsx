@@ -201,7 +201,7 @@ export default function Footer14() {
               {t("Categories")}
             </h6>
             <ul className="sub-menu__list list-unstyled">
-              {categoriesSubCategories.map((elm, i) => (
+              {categoriesSubCategories?.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
                   <a
                     href={

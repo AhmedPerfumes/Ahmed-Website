@@ -1,157 +1,109 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import ScrollToPlugin from "gsap/ScrollToPlugin";
-
+import { useEffect, useRef, useState } from "react";
 import "./Canvas.css";
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-const CanvasAnimation = () => {
-  const canvasRef = useRef(null);
+const MobileAnimation = () => {
   const previousScrollY = useRef(0); // Store previous scroll position for comparison
-  const [showSkipButton, setShowSkipButton] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false); // Track loading state
-  const [loadingProgress, setLoadingProgress] = useState(0); // Track loading progress
-  const frameCount = 355;
-  let images = [];
-  let ball = { frame: 0 };
+  const [showSkipButton, setShowSkipButton] = useState(true);
+  const [showModal, setShowModal] = useState(true); // Modal state
 
-  useEffect(() => {
-    // Disable scroll until images are loaded
-    // document.body.style.overflow = "hidden";
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercentage = scrollTop / totalHeight;  // Get the scroll percentage (0 to 1)
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Determine the image based on scroll percentage
+    const totalImages = 136; // Total number of images (adjust based on your data)
+    const imageIndex = Math.floor(scrollPercentage * totalImages);  // Calculate the image index
 
-    const currentFrame = (index) =>
-      `/assets/webp/${(index + 1).toString()}.webp`;
+    // Update the image source
+    // console.log(imageIndex);
 
-    // Preload all images and update the loading progress
-    const imagePromises = [];
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      images.push(img);
-
-      // Create a promise for each image load
-      imagePromises.push(
-        new Promise((resolve, reject) => {
-          img.onload = () => {
-            setLoadingProgress((prev) =>
-              Math.round(((i + 1) / frameCount) * 100)
-            ); // Update progress
-            resolve();
-          };
-          img.onerror = reject;
-        })
-      );
-    }
-
-    // Once all images are loaded, enable scrolling and start the animation
-    Promise.all(imagePromises)
-      .then(() => {
-        setIsLoaded(true);
-        // document.body.style.overflow = ""; // Re-enable scroll
-      })
-      .catch((error) => {
-        console.error("Error loading images:", error);
-        setIsLoaded(true);
-        // document.body.style.overflow = ""; // Re-enable scroll even if images fail to load
-      });
-
-    // Function to render the current frame on the canvas
-    const render = () => {
-      if (images[0]) {
-        context.canvas.width = images[0].width;
-        context.canvas.height = images[0].height;
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(images[ball.frame], 0, 0);
-      }
-    };
-
-    // Start rendering once the first image is loaded
-    images[0].onload = render;
-
-    // GSAP animation on scroll
-    gsap.to(ball, {
-      frame: frameCount - 1,
-      snap: "frame",
-      ease: "none",
-      scrollTrigger: {
-        scrub: 1,
-        pin: canvas,
-        end: "250%",
-        onEnter: () => setShowSkipButton(true),
-        onLeave: () => setShowSkipButton(false),
-      },
-      onUpdate: () => {
-        render();
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > previousScrollY.current) {
-          if (Math.round(ball.frame) + 50 > frameCount - 2) {
-            gsap.to(window, {
-              scrollTo: { y: "#main2", autoKill: false },
-              duration: 0.5,
-              ease: "power2.inOut",
-            });
-          }
+    // Auto-scroll to the next section when imageIndex reaches 9
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > previousScrollY.current) {
+      if (imageIndex === 9) {
+        // Scroll to the next section with a smooth scroll
+        const nextSection = document.getElementById("main2");
+        if (nextSection) {
+          setShowSkipButton(false);
+          nextSection.scrollIntoView({ behavior: "smooth" });
         }
-        previousScrollY.current = currentScrollY;
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []); // Run effect once after component mounts
-
-  // Ensure the loader stays for 2 seconds, even if images load faster
-  useEffect(() => {
-    const loaderTimeout = setTimeout(() => {
-      setIsLoaded(true); // Hide loader after 2 seconds
-    }, 20000);
-
-    return () => clearTimeout(loaderTimeout); // Cleanup the timeout if the component is unmounted
-  }, []); // Only run this effect once, after initial render
-
-  // Skip button click handler
-  const skipAnimation = () => {
-    gsap.to(window, {
-      scrollTo: { y: "#main2", autoKill: false },
-      duration: 0.5,
-      ease: "power2.inOut",
-    });
+      }
+    }
+    previousScrollY.current = currentScrollY;
   };
 
+  const skipAnimation = () => {
+    const nextSection = document.getElementById("main2");
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: "smooth" });
+      setShowSkipButton(false);
+    }
+  };
+
+  useEffect(() => {
+    // Automatically hide the modal after 3 seconds (3000 ms)
+    const modalTimer = setTimeout(() => {
+      setShowModal(false); // Close the modal after 3 seconds
+    }, 3000);
+
+    // Use setTimeout to ensure page rendering is complete before scrolling
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);  // Delay the scroll action to ensure it's executed after render
+
+    // Disable scrolling while the modal is active
+    if (showModal) {
+      document.body.style.overflow = "hidden"; // Disable scroll
+    } else {
+      document.body.style.overflow = "auto"; // Re-enable scroll when modal is closed
+    }
+
+    if (showModal) {
+      const modalContent = document.querySelector(".modal-content");
+      if (modalContent) {
+        modalContent.style.pointerEvents = "auto"; // Add pointer-events: auto
+      }
+    }
+
+    // Attach the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener and the timeout when the component is unmounted
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(modalTimer); // Clear the timeout if the component is unmounted
+    };
+  }, [showModal]); // Effect runs when showModal changes
+
   return (
-    <div>
-      {/* Show loading GIF until loading is complete */}
-      {!isLoaded && (
-        <div className="loading-screen">
-          <div className="loading-gif-container">
-            {/* Your GIF loader here */}
-            {/* <img src="/assets/loading.gif" alt="Loading..." /> */}
+    <section className="sectionWebMob">
+      {/* Modal */}
+      {showModal && (
+        <div className="modal loader-modal">
+          <div className="modal-content loader-modal-content">
+            <img src="/assets/loading.gif" alt="Modal Image" />
           </div>
-          <p>Loading...</p>
         </div>
       )}
 
-      {/* Canvas Animation */}
-      <canvas ref={canvasRef} className="canvas"></canvas>
+      <div
+        scroll-frames="demo"
+        data-url-mask="/assets/mobilescreencomp/|1 to 136|.jpg"
+        data-background-size="cover"
+        data-detector="the_detector"
+      ></div>
 
-      {/* Skip Button */}
+      <hr id="the_detector" />
+
       {showSkipButton && (
         <button onClick={skipAnimation} className="skip-button">
           SKIP INTRO
         </button>
       )}
-    </div>
+    </section>
   );
 };
 
-export default CanvasAnimation;
+export default MobileAnimation;

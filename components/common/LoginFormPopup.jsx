@@ -51,9 +51,9 @@ export default function LoginFormPopup() {
                   Remember me
                 </label>
               </div>
-              <Link href="/reset_password" className="btn-text ms-auto">
+              <a href="/reset_password" className="btn-text ms-auto">
                 Lost password?
-              </Link>
+              </a>
             </div>
 
             <button

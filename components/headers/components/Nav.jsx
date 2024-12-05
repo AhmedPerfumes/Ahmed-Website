@@ -16,7 +16,6 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function Nav({ categoriesSubCategories }) {
-
   const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
@@ -27,7 +26,7 @@ export default function Nav({ categoriesSubCategories }) {
     return menu.split("/")[2] == pathname.split("/")[3];
   };
   const isActiveExportMenu = (menu) => {
-    console.log(menu, pathname);
+    // console.log(menu, pathname);
     return menu.split("/")[1] == pathname.split("/")[2];
   };
 
