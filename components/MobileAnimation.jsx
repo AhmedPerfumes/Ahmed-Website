@@ -3,32 +3,35 @@ import { useEffect, useRef, useState } from "react";
 import "./Canvas.css";
 
 const MobileAnimation = () => {
-  const previousScrollY = useRef(0); // Store previous scroll position for comparison
+  const previousScrollY = useRef(0); // Store previous scroll position
   const [showSkipButton, setShowSkipButton] = useState(true);
   const [showModal, setShowModal] = useState(true); // Modal state
+  const [currentTextSlide, setCurrentTextSlide] = useState(null); // Track text slide
+
+  const totalImages = 136; // Total frames
 
   const handleScroll = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercentage = scrollTop / totalHeight;  // Get the scroll percentage (0 to 1)
+    const totalHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercentage = scrollTop / totalHeight; // Get scroll percentage (0 to 1)
+    const imageIndex = Math.floor(scrollPercentage * totalImages); // Calculate image index
 
-    // Determine the image based on scroll percentage
-    const totalImages = 136; // Total number of images (adjust based on your data)
-    const imageIndex = Math.floor(scrollPercentage * totalImages);  // Calculate the image index
+    // Show specific text slides based on the frame range
+    if (imageIndex >= 1 && imageIndex <= 8) {
+      setCurrentTextSlide(1);
+    } else {
+      setCurrentTextSlide(null); // Hide text when not in specified ranges
+    }
 
-    // Update the image source
-    // console.log(imageIndex);
-
-    // Auto-scroll to the next section when imageIndex reaches 9
+    // Auto-scroll to next section
     const currentScrollY = window.scrollY;
-    if (currentScrollY > previousScrollY.current) {
-      if (imageIndex === 9) {
-        // Scroll to the next section with a smooth scroll
-        const nextSection = document.getElementById("main2");
-        if (nextSection) {
-          setShowSkipButton(false);
-          nextSection.scrollIntoView({ behavior: "smooth" });
-        }
+    if (currentScrollY > previousScrollY.current && imageIndex === 8) {
+      const nextSection = document.getElementById("main2");
+      if (nextSection) {
+        setShowSkipButton(false);
+        setCurrentTextSlide(null);
+        nextSection.scrollIntoView({ behavior: "smooth" });
       }
     }
     previousScrollY.current = currentScrollY;
@@ -43,39 +46,29 @@ const MobileAnimation = () => {
   };
 
   useEffect(() => {
-    // Automatically hide the modal after 3 seconds (3000 ms)
+    // Modal behavior
     const modalTimer = setTimeout(() => {
-      setShowModal(false); // Close the modal after 3 seconds
+      setShowModal(false);
     }, 3000);
 
-    // Use setTimeout to ensure page rendering is complete before scrolling
     setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 0);  // Delay the scroll action to ensure it's executed after render
+    }, 0);
 
-    // Disable scrolling while the modal is active
     if (showModal) {
-      document.body.style.overflow = "hidden"; // Disable scroll
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"; // Re-enable scroll when modal is closed
-    }
-
-    if (showModal) {
-      const modalContent = document.querySelector(".modal-content");
-      if (modalContent) {
-        modalContent.style.pointerEvents = "auto"; // Add pointer-events: auto
-      }
+      document.body.style.overflow = "auto";
     }
 
     // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup the event listener and the timeout when the component is unmounted
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(modalTimer); // Clear the timeout if the component is unmounted
+      clearTimeout(modalTimer);
     };
-  }, [showModal]); // Effect runs when showModal changes
+  }, [showModal]);
 
   return (
     <section className="sectionWebMob">
@@ -84,7 +77,11 @@ const MobileAnimation = () => {
         <div className="modal loader-modal">
           <div className="modal-content loader-modal-content">
             <div className="preload">
-              <img src="/assets/preloader.gif" alt="Modal Image" className="preloader-gif"/>
+              <img
+                src="/assets/preloader.gif"
+                alt="Modal Image"
+                className="preloader-gif"
+              />
             </div>
           </div>
         </div>
@@ -99,11 +96,28 @@ const MobileAnimation = () => {
 
       <hr id="the_detector" />
 
-      {showSkipButton && (
-        <button onClick={skipAnimation} className="skip-button">
-          SKIP INTRO
-        </button>
-      )}
+      {/* Text Slide Animations */}
+      <div className="text-slide-container">
+        {currentTextSlide === 1 && (
+          <>
+            <p className="text-uppercase text-white fw-medium text-nowrap">
+              Explore The New Experience
+            </p>
+            <h2 className="fw-lighter text-white text-wrap">
+              Step Into The World of Fragrance Wonders
+            </h2>
+          </>
+        )}
+
+        {showSkipButton && (
+          <button
+            onClick={skipAnimation}
+            className="d-block position-absolute start-50 translate-middle-x text-white btn-link btn-link_lg default-underline text-uppercase fw-medium"
+          >
+            SKIP INTRO
+          </button>
+        )}
+      </div>
     </section>
   );
 };
