@@ -123,7 +123,7 @@
   }
 
   .sectionWebMob {
-      height: 200vh;
+      height: 150vh;
   }
   hr { opacity: 0 }
 
@@ -154,7 +154,7 @@
 }
 
 .loader-modal-content {
-  background-color: white;
+  background-color: rgb(255, 243, 226);
   padding: 40px;
   border-radius: 8px;
   width: 100%; /* Take up 90% of the screen width */
@@ -167,5 +167,47 @@
   justify-content: center;
   align-items: center;
   pointer-events: none; /* Disable interactions with the background */
+}
+
+.text-slide-container {
+  position: fixed;
+  bottom: 10%; /* Position near the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none; /* Disable interactions */
+  z-index: 10;
+  width: 100%; /* Make sure it doesn't overflow on smaller screens */
+  color: #663915;
+}
+
+.text-slide-container h2 {
+  font-size: 24px;
+}
+
+.text-slide {
+  font-family: Lato, sans-serif, Serif;
+  font-size: 22px;
+  color: #906408;
+  background: rgba(255, 255, 255, 0.37); /* Slightly darker background for contrast */
+  padding: 15px 30px; /* Add padding for a clean look */
+  border-radius: 8px; /* Smooth corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add subtle shadow */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
+  max-width: 600px; /* Limit width for readability */
+  margin: 0 auto; /* Center the text within the container */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
