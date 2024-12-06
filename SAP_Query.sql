@@ -56,7 +56,7 @@ SELECT
 `ec_order_product`.`qty` AS Qty,
 `ec_order_product`.`price` AS Price,
 `ec_order_product`.`qty` * `ec_order_product`.`price` AS total_price,
-'0 Dynamic' AS DiscountPer,
+`ec_order_product`.`discount_percent` AS DiscountPer,
 '0 Dynamic' AS Discount,
 'ec_order_product.qty * ec_order_product.price amt after discount' AS NetAmount,
 `ec_order_product`.`tax_amount` AS VAT,

@@ -127,7 +127,7 @@ export default function OrderTrack() {
           <div className="order-info__item">
             <label>Total</label>
 
-            <span>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 || orderDetails.shipping_amount > 0.00 ? ((20 + orderDetails.sub_total) / 100) * 5 : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</span>
+            <span>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 || orderDetails.shipping_amount > 0.00 ? ((parseFloat(orderDetails.shipping_amount) + parseFloat(orderDetails.sub_total)) / 100) * orderDetails.vat_amount : ((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount }د.إ VAT)</span>
           </div>
           <div className="order-info__item">
             <label>Paymetn Method</label>
@@ -151,7 +151,7 @@ export default function OrderTrack() {
                     <td>
                       {he.decode(elm.product_name)} x {elm.qty}
                     </td>
-                    <td>{elm.price * elm.qty}د.إ</td>
+                    <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
                   </tr>
                 ))}
               </tbody>
@@ -164,15 +164,15 @@ export default function OrderTrack() {
                 </tr>
                 <tr>
                   <th>SHIPPING</th>
-                  <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : 'Shipping Cost: 20د.إ'}</td>
+                  <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${orderDetails.shipping_amount}د.إ`}</td>
                 </tr>
                 <tr>
                   <th>SERVICE FEE</th>
-                  <td>3د.إ</td>
+                  <td>{ orderDetails.service_amount }د.إ</td>
                 </tr>
                 <tr>
                   <th>TOTAL</th>
-                  <td>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 || orderDetails.shipping_amount > 0.00 ? ((20 + orderDetails.sub_total) / 100) * 5 : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</td>
+                  <td>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 || orderDetails.shipping_amount > 0.00 ? ((parseFloat(orderDetails.shipping_amount) + parseFloat(orderDetails.sub_total)) / 100) * orderDetails.vat_amount : ((0 + orderDetails.sub_total) / 100) * 5 }د.إ VAT)</td>
                 </tr>
               </tbody>
             </table>
