@@ -34,14 +34,14 @@ export default function ChectoutSteps() {
   const [activePathIndex, setactivePathIndex] = useState(0);
   const pathname = usePathname();
   useEffect(() => {
-    const activeTab = steps.filter((elm) => elm.href == pathname)[0];
+    const activeTab = steps.filter((elm) => elm.href == '/'+pathname.split('/')[2])[0];
     const activeTabIndex = steps.indexOf(activeTab);
     setactivePathIndex(activeTabIndex);
   }, [pathname]);
   return (
     <div className="checkout-steps">
       {steps.map((elm, i) => (
-        <Link
+        <a
           key={i}
           href={elm.id == 3 ? '#' : `/${locale}${elm.href}`}
           className={`checkout-steps__item  ${
@@ -53,7 +53,7 @@ export default function ChectoutSteps() {
             <span>{elm.title}</span>
             <em>{elm.description}</em>
           </span>
-        </Link>
+        </a>
       ))}
     </div>
   );

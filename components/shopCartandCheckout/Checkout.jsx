@@ -388,6 +388,7 @@ export default function Checkout() {
 
   return (
     <>
+    {cartProducts.length ? (
       <form onSubmit={onOrder}>
         <div className="checkout-form">
           <div className="billing-info__wrapper">
@@ -965,7 +966,16 @@ export default function Checkout() {
             </div>
           </div>
       ) : null}
-        </form>
+      </form>
+      ) : (
+        <>
+          <div className="fs-20">Shop cart is empty</div>
+
+          <button className="btn mt-3 mb-3 btn-light">
+            <a href={`/${locale}/shop`}>Explore Products</a>
+          </button>
+        </>
+      )}
     </>
   );
 }

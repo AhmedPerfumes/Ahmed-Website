@@ -68,7 +68,7 @@ export default function Style2({ category, subcategory, products }) {
     if(elm?.discount) {
       return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
     } else if(elm?.sale_price) {
-      return <span className="money price price-old">{elm?.price}د.إ</span>;
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
     } else {
       return <span className="money price">{elm?.price}د.إ</span>;
     }

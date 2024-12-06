@@ -32,11 +32,11 @@ export default function OrderCompleted() {
 
   const subTotalPrice = (elm) => {
     if(elm?.discount) {
-      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}د.إ</td>;
     } else if(elm?.sale_price) {
-      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</td>;
+      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
     } else {
-      return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+      return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
     }
   };
 

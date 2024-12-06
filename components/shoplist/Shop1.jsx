@@ -162,6 +162,16 @@ useEffect(() => {
     setFilteredProducts(filtered);
   };
 
+  const discPrice = (elm) => {
+    if(elm?.discount) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+    } else if(elm?.sale_price) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+    } else {
+      return <span className="money price">{elm?.price}د.إ</span>;
+    }
+  };
+
   return (
     <>
       <section className="full-width_padding">
@@ -319,17 +329,34 @@ useEffect(() => {
                       nextEl: ".next" + i,
                     }}
                   >
-                    {elm?.images && JSON.parse(elm.images).map((image, ind) => (
-                      <SwiperSlide key={ind} className="swiper-slide">
+                    {/* {elm?.images && JSON.parse(elm.images).map((image, ind) => ( */}
+                      <SwiperSlide key={i} className="swiper-slide">
                         <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
-                          <Image
-                            loading="lazy"
-                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
-                            width="330"
-                            height="400"
-                            alt="Cropped Faux leather Jacket"
-                            className="pc__img"
-                          />
+                          {elm?.images &&
+                          // JSON.parse(elm.images).map((image, ind) => (
+                              <>
+                                {JSON.parse(elm.images)[0] && <Image
+                                  loading="lazy"
+                                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                                  width="330"
+                                  height="400"
+                                  alt="img"
+                                  className="pc__img"
+                                />
+                                }
+
+                                {JSON.parse(elm.images)[1] && <Image
+                                  loading="lazy"
+                                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                                  width="330"
+                                  height="400"
+                                  alt="img"
+                                  className="pc__img pc__img-second"
+                                />
+                                }
+                              </>
+                          // ))
+                          }
                         </a>
                         {elm?.label_name && (
                           <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
@@ -342,7 +369,7 @@ useEffect(() => {
                           </div>
                         )}
                       </SwiperSlide>
-                    ))}
+                    {/* ))} */}
 
                     <span
                       className={`cursor-pointer pc__img-prev ${"prev" + i} `}
@@ -416,7 +443,7 @@ useEffect(() => {
                         </span>
                       </>
                     ) : ( */}
-                      {elm?.sale_price ? <span className="money price price-old"> {elm.price}د.إ</span> : <span className="money price"> {elm.price}د.إ</span>} {elm?.sale_price && <span class="money price price-sale"> {elm.price - (elm.price / 100 * elm.sale_price)}د.إ</span>}
+                      { discPrice(elm) }
                     {/* )} */}
                   </div>
                   {/* {elm.colors && (

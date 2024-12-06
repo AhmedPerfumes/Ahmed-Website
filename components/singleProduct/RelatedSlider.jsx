@@ -62,6 +62,17 @@ export default function RelatedSlider({ relatedProds }) {
 
     return cleanedStr;
   }
+
+  const price = (elm) => {
+    if(elm?.discount) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+    } else if(elm?.sale_price) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+    } else {
+      return <span className="money price">{elm?.price}د.إ</span>;
+    }
+  };
+
   return (
     <section className="products-carousel container">
       <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">
@@ -77,26 +88,33 @@ export default function RelatedSlider({ relatedProds }) {
           {relatedProds && relatedProds.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide product-card">
               <div className="pc__img-wrapper">
-                <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
-                  {elm?.images && JSON.parse(elm.images).map((image, ind) => (
-                      <Image
-                        loading="lazy"
-                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
-                        width="330"
-                        height="400"
-                        alt="Cropped Faux leather Jacket"
-                        className="pc__img"
-                      />
-                    ))}
-                    {/* <Image
-                      loading="lazy"
-                      src="/assets/images/products/product_1-1.jpg"
-                      width="330"
-                      height="400"
-                      alt="Cropped Faux leather Jacket"
-                      className="pc__img pc__img-second"
-                    /> */}
-                </Link>
+                <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                  {elm?.images &&
+                    // JSON.parse(elm.images).map((image, ind) => (
+                        <>
+                          {JSON.parse(elm.images)[0] && <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                            width="330"
+                            height="400"
+                            alt="img"
+                            className="pc__img"
+                          />
+                          }
+
+                          {JSON.parse(elm.images)[1] && <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                            width="330"
+                            height="400"
+                            alt="img"
+                            className="pc__img pc__img-second"
+                          />
+                          }
+                        </>
+                    // ))
+                    }
+                </a>
                   {elm?.label_name && (
                   <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                     { elm?.label_name }
@@ -130,7 +148,7 @@ export default function RelatedSlider({ relatedProds }) {
                   <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
-                  <span className="money price">{elm.price}د.إ</span>
+                  { price(elm) }
                 </div>
 
                 {/* <button
