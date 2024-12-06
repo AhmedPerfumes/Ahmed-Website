@@ -281,15 +281,17 @@ export default function Header14() {
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
                 <div className="header-search search-field d-none d-xxl-flex mx-4">
-                  <input
-                    className="header-search__input w-100"
-                    type="text"
-                    name="search-keyword"
-                    placeholder={t("Search Products")}
-                    onClick={() => setIsPopupOpen((pre) => !pre)}
-                    value={searchKeyWord}
-                    onChange={handleChange}
-                  />
+                  <form onSubmit={onSearch}>
+                    <input
+                      className="header-search__input w-100"
+                      type="text"
+                      name="search-keyword"
+                      placeholder={t("Search Products")}
+                      onClick={() => setIsPopupOpen((pre) => !pre)}
+                      value={searchKeyWord}
+                      onChange={handleChange}
+                    />
+                  </form>
                 </div>
 
                 <div className="header-tools__item hover-container">
