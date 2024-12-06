@@ -55,11 +55,11 @@ const MobileAnimation = () => {
       window.scrollTo(0, 0);
     }, 0);
 
-    if (showModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    // if (showModal) {
+    //   document.body.style.overflow = "hidden";
+    // } else {
+    //   document.body.style.overflow = "auto";
+    // }
 
     // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
