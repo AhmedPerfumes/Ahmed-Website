@@ -64,11 +64,11 @@ export default function Cart() {
 
   const price = (elm) => {
     if(elm?.discount) {
-      return <span className="shopping-cart__product-price">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span>;
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__product-price">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span>;
     } else {
-      return <span className="shopping-cart__product-price">{(elm.price * elm.quantity).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__product-price">{(elm.price).toFixed(2)}د.إ</span>;
     }
   };
 
