@@ -46,7 +46,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(orderDetails.shipping_amount) + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) }د.إ VAT)</span>
+          <span>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(orderDetails.shipping_amount) + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) }د.إ VAT)</span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -78,11 +78,11 @@ export default function OrderPaymentCompleted({ orderDetails }) {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>{(orderDetails.sub_total).toFixed(2)}د.إ</td>
+                <td>{orderDetails.sub_total}د.إ</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{(orderDetails.sub_total).toFixed(2) >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ orderDetails.shipping_amount }د.إ`}</td>
+                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ orderDetails.shipping_amount }د.إ`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
@@ -90,7 +90,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(orderDetails.shipping_amount) + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) }د.إ VAT)</td>
+                <td>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(orderDetails.shipping_amount) + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) }د.إ VAT)</td>
               </tr>
             </tbody>
           </table>
