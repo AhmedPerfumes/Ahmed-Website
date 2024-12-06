@@ -19,8 +19,8 @@ const CanvasAnimation = () => {
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 0);  // Delay the scroll action to ensure it's executed after render
-    
+    }, 0); // Delay the scroll action to ensure it's executed after render
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -61,7 +61,7 @@ const CanvasAnimation = () => {
       onUpdate: () => {
         render();
         const currentScrollY = window.scrollY;
-        if(currentScrollY > previousScrollY.current) {
+        if (currentScrollY > previousScrollY.current) {
           // console.log(Math.round(ball.frame) +'==='+ frameCount);
           if (Math.round(ball.frame) + 50 > frameCount - 2) {
             gsap.to(window, {

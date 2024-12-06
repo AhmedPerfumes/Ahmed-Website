@@ -112,7 +112,7 @@ const MobileAnimation = () => {
         {showSkipButton && (
           <button
             onClick={skipAnimation}
-            className="d-block position-absolute start-50 translate-middle-x text-white btn-link btn-link_lg default-underline text-uppercase fw-medium"
+            className="d-block start-50 translate-middle-x text-white btn-link btn-link_lg default-underline text-uppercase fw-medium"
           >
             SKIP INTRO
           </button>
