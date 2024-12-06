@@ -68,7 +68,7 @@ export default function Cart() {
     } else if(elm?.sale_price) {
       return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span>;
     } else {
-      return <span className="shopping-cart__product-price">{(elm.price).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__product-price">{elm.price}د.إ</span>;
     }
   };
 
