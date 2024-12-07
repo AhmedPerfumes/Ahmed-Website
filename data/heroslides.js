@@ -265,14 +265,16 @@ export const slidesData3 = [
     objectPosition: "50% center",
     title: "Feel Luxurious",
     subtitle: "with",
+    href: "/shop/eau-de-parfum/occidental-fragrance/ignite-rose",
   },
   {
     id: 2,
-    imageSrc: "/assets/images/home/demo8/avif/thaqaf-banner.avif",
+    imageSrc: "/assets/images/zumar-bnr.jpg",
     season: "Bespoke",
     objectPosition: "70% center",
-    title: "Scent-sational",
-    subtitle: "Discoveries",
+    title: "Redefines luxury &",
+    subtitle: "evokes the spirit of royalty",
+    href: "/shop/eau-de-parfum/occidental-fragrance/zumar",
   },
   // {
   //   id: 3,
@@ -479,14 +481,14 @@ export const slideData1000 = [
     bgImage: "/assets/images/home/demo15/slider1_bg.jpg",
     title: "Natural Glow",
     description:
-      "15% OFF ON OUR EXCLUSIVE COLLECTION SETS",
+      "Free Shipping on orders AED 400 and above",
   },
   {
     id: 2,
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "Natural Glow",
     description:
-      "HOME DELIVERY NOW AVAILABLE",
+      "A huge selection of best fragrance.",
   },
   {
     id: 3,

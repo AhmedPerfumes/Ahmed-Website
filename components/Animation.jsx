@@ -851,7 +851,6 @@ const Animation = () => {
           <Lookbook />
 
           <Categories section="section3" />
-          
         </div>
       </section>
       {/* Arabian Dakhoon Section */}

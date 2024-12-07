@@ -93,6 +93,16 @@ export default function QuickView() {
     });
   }, []);
 
+  const price = (elm) => {
+    if(elm?.discount) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+    } else if(elm?.sale_price) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+    } else {
+      return <span className="money price">{elm?.price}د.إ</span>;
+    }
+  };
+
   return (
     <div className="modal fade" id="quickView" tabIndex="-1" ref={modalElement}>
       <div className="modal-dialog quick-view modal-dialog-centered">
@@ -156,7 +166,7 @@ export default function QuickView() {
             <div className="product-single__detail">
               <h1 className="product-single__name">{he.decode(quickViewItem.product_name)}</h1>
               <div className="product-single__price">
-                <span className="current-price">{quickViewItem.price}د.إ</span>
+                { price(quickViewItem) }
               </div>
               <div className="product-single__short-desc">
                 <div dangerouslySetInnerHTML={{ __html: quickViewItem.description }}>

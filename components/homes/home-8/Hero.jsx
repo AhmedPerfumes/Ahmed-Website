@@ -33,14 +33,16 @@ export default function Hero() {
         <SwiperSlide key={i} className="swiper-slide">
           <div className="overflow-hidden position-relative h-100">
             <div className="slideshow-bg">
-              <Image
-                loading="lazy"
-                src={elm.imageSrc}
-                width="1903"
-                height="945"
-                alt="image"
-                className="slideshow-bg__img"
-              />
+              <a href={`${locale}/${elm.href}`}>
+                <Image
+                  loading="lazy"
+                  src={elm.imageSrc}
+                  width="1903"
+                  height="945"
+                  alt="image"
+                  className="slideshow-bg__img"
+                />
+              </a>
             </div>
             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
               <h6 className="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3 text-white">
@@ -53,7 +55,7 @@ export default function Hero() {
                 {t(elm.subtitle)}
               </h2>
               <Link
-                href={`/${locale}/shop`}
+                href={`${locale}/${elm.href}`}
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7 text-white"
               >
                 {t("Discover More")}

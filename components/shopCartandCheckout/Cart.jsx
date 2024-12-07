@@ -52,6 +52,26 @@ export default function Cart() {
     return <div>{ error }</div>;
   }
 
+  const subTotalPrice = (elm) => {
+    if(elm?.discount) {
+      return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</span>;
+    } else if(elm?.sale_price) {
+      return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</span>;
+    } else {
+      return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}د.إ</span>;
+    }
+  };
+
+  const price = (elm) => {
+    if(elm?.discount) {
+      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span>;
+    } else if(elm?.sale_price) {
+      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span>;
+    } else {
+      return <span className="shopping-cart__product-price">{elm.price}د.إ</span>;
+    }
+  };
+
   return (
     <div className="shopping-cart" style={{ minHeight: "calc(100vh - 300px)" }}>
       <div className="cart-table__wrapper">
@@ -93,9 +113,9 @@ export default function Cart() {
                       </div>
                     </td>
                     <td>
-                      <span className="shopping-cart__product-price">
-                        {elm.price}د.إ
-                      </span>
+                      
+                        { price(elm) }
+                      
                     </td>
                     <td>
                       <div className="qty-control position-relative">
@@ -125,9 +145,9 @@ export default function Cart() {
                       </div>
                     </td>
                     <td>
-                      <span className="shopping-cart__subtotal">
-                        {(elm.price * elm.quantity).toFixed(2)}د.إ
-                      </span>
+                      
+                        { subTotalPrice(elm) }
+                      
                     </td>
                     <td>
                       <a

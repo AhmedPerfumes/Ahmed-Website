@@ -376,8 +376,19 @@ export default function Checkout() {
     return <div>{ error }</div>;
   }
 
+  const subTotalPrice = (elm) => {
+    if(elm?.discount) {
+      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+    } else if(elm?.sale_price) {
+      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</td>;
+    } else {
+      return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+    }
+  };
+
   return (
     <>
+    {cartProducts.length ? (
       <form onSubmit={onOrder}>
         <div className="checkout-form">
           <div className="billing-info__wrapper">
@@ -665,7 +676,7 @@ export default function Checkout() {
                         <td>
                           {he.decode(elm.product_name)} x {elm.quantity}
                         </td>
-                        <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>
+                        {subTotalPrice(elm)}
                       </tr>
                     ))}
                   </tbody>
@@ -955,7 +966,16 @@ export default function Checkout() {
             </div>
           </div>
       ) : null}
-        </form>
+      </form>
+      ) : (
+        <>
+          <div className="fs-20">Shop cart is empty</div>
+
+          <button className="btn mt-3 mb-3 btn-light">
+            <a href={`/${locale}/shop`}>Explore Products</a>
+          </button>
+        </>
+      )}
     </>
   );
 }

@@ -30,6 +30,16 @@ export default function OrderCompleted() {
     return <div>{ error }</div>;
   }
 
+  const subTotalPrice = (elm) => {
+    if(elm?.discount) {
+      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}د.إ</td>;
+    } else if(elm?.sale_price) {
+      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
+    } else {
+      return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+    }
+  };
+
   return (
     <>
     {Object.keys(orderDetails).length ? <><div className="order-complete">
@@ -62,7 +72,7 @@ export default function OrderCompleted() {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(shippingServiceCharges[0].price) + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</span>
+          <span>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(shippingServiceCharges[0].price) + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -85,7 +95,7 @@ export default function OrderCompleted() {
                   <td>
                     {he.decode(elm.name)} x {elm.qty}
                   </td>
-                  <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
+                  { subTotalPrice(elm) }
                 </tr>
               ))}
             </tbody>
@@ -94,7 +104,7 @@ export default function OrderCompleted() {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>{(orderDetails.sub_total).toFixed(2)}د.إ</td>
+                <td>{parseFloat(orderDetails.sub_total).toFixed(2)}د.إ</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
@@ -106,7 +116,7 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((shippingServiceCharges[0].price + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</td>
+                <td>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(shippingServiceCharges[0].price) + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</td>
               </tr>
             </tbody>
           </table>

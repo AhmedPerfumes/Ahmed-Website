@@ -25,7 +25,7 @@ export default function HomePage8() {
   return (
     <div
       style={{
-        backgroundImage: `url(https://www.ateliercologne.com/us_en/images/backgrounds/background-ivory.jpg)`,
+        backgroundImage: `url(/assets/background-ivory.webp)`,
       }}
     >
       <NewsLetter />

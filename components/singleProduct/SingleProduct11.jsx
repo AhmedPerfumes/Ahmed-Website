@@ -86,6 +86,16 @@ export default function SingleProduct11({ category, subcategory, product }) {
               .join(' '); // Join the words back into a sentence
   }
 
+  const price = (elm) => {
+    if(elm?.discount) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+    } else if(elm?.sale_price) {
+      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+    } else {
+      return <span className="money price">{elm?.price}د.إ</span>;
+    }
+  };
+
   return (
     <>
       {Object.keys(product).length > 0 ? <><section className="product-single container product-single__type-9">
@@ -102,7 +112,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <h1 className="product-single__name">{product?.product_name && t(he.decode(product?.product_name))}</h1>
             <div className="product-single__price">
-              <span className="current-price"> {product.price}د.إ</span>
+              { price(product) }
             </div>
             <div className="product-single__short-desc">
               <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(product.product_name)) }}></div>
