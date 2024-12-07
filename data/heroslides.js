@@ -488,7 +488,7 @@ export const slideData1000 = [
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "Natural Glow",
     description:
-      "A huge selection of best fragrance.",
+      "A huge selection of best fragrance",
   },
   {
     id: 3,
