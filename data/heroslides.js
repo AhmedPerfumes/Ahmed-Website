@@ -270,7 +270,7 @@ export const slidesData3 = [
   {
     id: 2,
     imageSrc: "/assets/images/zumar-bnr.jpg",
-    season: "Bespoke",
+    season: "Lasting",
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
@@ -488,7 +488,7 @@ export const slideData1000 = [
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "Natural Glow",
     description:
-      "A huge selection of best fragrance.",
+      "A huge selection of best fragrance",
   },
   {
     id: 3,
