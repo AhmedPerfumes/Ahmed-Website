@@ -73,28 +73,34 @@ export default function TopCollections() {
     }
   }, [currentCategory]);
 
-  useEffect(async() => {
-    async function getExportProducts() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/exportProducts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          category_id: 19,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    }
+  useEffect(() => {
+    const getExportProducts = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/exportProducts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            category_id: 19,
+          }),
+        });
 
-    const data = await getExportProducts();
-    console.log(data);
-    setProducts(data);
-    setLoading(false);
-  },[]);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getExportProducts();
+  }, []);
 
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
@@ -156,18 +162,28 @@ export default function TopCollections() {
                 {products.map((elm, i) => (
                   <SwiperSlide key={i} className="swiper-slide product-card">
                     <div className="pc__img-wrapper">
-                      {elm?.images && JSON.parse(elm.images).map((image, ind) => (
-                        <a key={ind} href={`/${locale}/shop/collections/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>
-                          <Image
+                      {/* {elm?.images && JSON.parse(elm.images).map((image, ind) => ( */}
+                        <a href={`/${locale}/shop/collections/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>
+                        {JSON.parse(elm.images)[0] && <Image
                             loading="lazy"
-                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
                             width="260"
                             height="315"
                             alt="Cropped Faux leather Jacket"
                             className="pc__img"
                           />
+                        }
+                        {JSON.parse(elm.images)[1] && <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                            width="260"
+                            height="315"
+                            alt="Cropped Faux leather Jacket"
+                            className="pc__img pc__img-second"
+                          />
+                        }
                         </a>
-                      ))}
+                      {/* ))} */}
                       <button
                         className="pc__atc btn btn-lg anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
                         onClick={() => addProductToCart(elm)}
