@@ -91,7 +91,9 @@ export default function Shop10({ subCategories, products }) {
   };
 
   return (
-    <section className="shop-main container">
+    <section className="gift-shop shop-main container">
+      <div id="next-section">
+      </div>
       <div className="d-flex justify-content-between mb-4 pb-md-2 border-bottom border-dark">
         <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
           <BreadCumb category={ category } subcategory={ subcategory }/>
