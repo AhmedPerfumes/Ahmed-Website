@@ -895,7 +895,7 @@ const Animation = () => {
 
         <div className="panel2 mt-5">
           <div className="inner2">
-            <VideoPanel src="/assets/videos/ignite-rose-video.mp4" />
+            <VideoPanel src="/assets/videos/zumar-video.mp4" />
           </div>
         </div>
 
