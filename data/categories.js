@@ -127,15 +127,15 @@ export const categories88 = [
     imgSrc2: "/assets/videos/vlogs/thumbnails/gauhar-khan.jpg",
     link: "#"
   },
-  {
-    id: 2,
-    imgSrc: "/assets/images/home/demo15/category-2.jpg",
-    altText: "Khalid Al Ameri",
-    subText: "Capture elegance in motion",
-    videoSrc: "/assets/videos/vlogs/Khalid.mp4",
-    imgSrc2: "/assets/videos/vlogs/thumbnails/Khalid.jpg",
-    link: "#"
-  },
+  // {
+  //   id: 2,
+  //   imgSrc: "/assets/images/home/demo15/category-2.jpg",
+  //   altText: "Khalid Al Ameri",
+  //   subText: "Capture elegance in motion",
+  //   videoSrc: "/assets/videos/vlogs/Khalid.mp4",
+  //   imgSrc2: "/assets/videos/vlogs/thumbnails/Khalid.jpg",
+  //   link: "#"
+  // },
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
