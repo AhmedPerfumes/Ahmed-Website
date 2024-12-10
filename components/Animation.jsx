@@ -214,7 +214,7 @@ const Animation = () => {
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
                             {t("Heart Notes: ")}
                           </span>
-                          {t("Jasmine Orchid Sugar Violet Incense Bakhoor")}
+                          {t("Jasmine Orchid Sugar Violet Icennse Bakhoor")}
                         </p>
                         <p>
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
