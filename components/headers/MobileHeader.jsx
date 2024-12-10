@@ -206,7 +206,6 @@ export default function MobileHeader() {
               className="form-select form-select-sm bg-transparent border-0"
               aria-label="Default select example"
               name="store-language"
-              defaultValue={"fghgjhgj"}
               onChange={(e) => window.open(e.target.value, "_blank")}
             >
               {currencyOptions.map((option, index) => (
