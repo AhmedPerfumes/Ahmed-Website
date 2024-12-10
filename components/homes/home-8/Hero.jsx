@@ -54,12 +54,12 @@ export default function Hero() {
               <h2 className="h1 fw-bold mb-2 animate animate_fade animate_btt animate_delay-5 text-white">
                 {t(elm.subtitle)}
               </h2>
-              <Link
+              <a
                 href={`${locale}/${elm.href}`}
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7 text-white"
               >
                 {t("Discover More")}
-              </Link>
+              </a>
             </div>
           </div>
         </SwiperSlide>

@@ -8,16 +8,24 @@ import "./Shop5.css"; // Import your CSS file for styling
 const Shop5 = () => {
   const swiperRef = useRef(null); // Create a ref to the Swiper instance
 
+  // Function to handle slide change
   const handleSlideChange = () => {
     if (swiperRef.current) {
       const { activeIndex, slides } = swiperRef.current.swiper;
 
-      // Enable mousewheel interaction by default
-      swiperRef.current.swiper.mousewheel.enable();
-
       // Disable mousewheel interaction on the last slide
       if (activeIndex === slides.length - 1) {
         swiperRef.current.swiper.mousewheel.disable();
+
+        // Delay the scroll to the next section by 2 seconds
+        setTimeout(() => {
+          const nextSection = document.getElementById('next-section'); // Replace with the actual ID of the next section
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' }); // Scroll smoothly to the next section
+          }
+        }, 1000); // 2000ms = 2 seconds delay
+      } else {
+        swiperRef.current.swiper.mousewheel.enable(); // Enable mousewheel interaction for other slides
       }
     }
   };
@@ -32,7 +40,7 @@ const Shop5 = () => {
         pagination={{
           clickable: true, // Make pagination circles clickable
           renderBullet: (index, className) => {
-            return `<span className="${className} circle-pagination"></span>`; // Custom rendering of pagination circles
+            return `<span class="${className} circle-pagination"></span>`; // Custom rendering of pagination circles
           },
         }}
         style={{ height: "100vh" }} // Make sure Swiper takes full height
@@ -40,38 +48,33 @@ const Shop5 = () => {
         onInit={handleSlideChange} // Call handleSlideChange on Swiper initialization
       >
         <SwiperSlide className="panel">
-          <a href="#">
-            <img
-              src="/assets/images/home/demo8/gift-sets/ihdakhaas-banner.jpg"
-              alt="Bidun Esam Gift Set"
-            />{" "}
-          </a>
+          <img
+            src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
+            alt="Oud and Roses Gift Set"
+          />
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <a href="#">
-            <img
-              src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
-              alt="Oud and Roses Gift Set"
-            />
-          </a>
+          <img
+            src="/assets/images/home/demo8/gift-sets/shauque-al-shuyookh-bnr.jpg"
+            alt="Shauque Al Shuyookh Gift Set"
+          />
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <a href="#">
-            <img
-              src="/assets/images/home/demo8/gift-sets/shauque-al-shuyookh-bnr.jpg"
-              alt="Shauque Al Shuyookh Gift Set"
-            />
-          </a>
+          <img
+            src="/assets/images/home/demo8/gift-sets/Ihdakhaas-banner.jpg"
+            alt="Bidun Esam Gift Set"
+          />
         </SwiperSlide>
         <SwiperSlide className="panel">
-          <a href="#">
-            <img
-              src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
-              alt="The Dukhoon Collection"
-            />
-          </a>
+          <img
+            src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
+            alt="The Dukhoon Collection"
+          />
         </SwiperSlide>
       </Swiper>
+
+      {/* This is the next section to scroll to */}
+  
     </div>
   );
 };

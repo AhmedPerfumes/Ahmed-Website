@@ -83,20 +83,20 @@ export default function NewsLetter() {
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
                 <h3 className="section-title fw-normal mb-3 pb-2">
-                  {/* Exclusive Launch */}
-                  Coming Soon
+                  Exclusive Launch
+                  {/* Coming Soon */}
                 </h3>
                 <p>
                   Be the first to embrace the elegance of <b>Zumar</b>, our
                   exclusive, limited-edition fragrance. <br />
                   <b className="sub-title">Don't miss out.</b>
                 </p>
-                {/* <a
+                <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
+                  href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/zumar`}
                 >
                   Explore
-                </a> */}
+                </a>
               </div>
             </div>
           </div>

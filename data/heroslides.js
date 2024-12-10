@@ -270,7 +270,7 @@ export const slidesData3 = [
   {
     id: 2,
     imageSrc: "/assets/images/zumar-bnr.jpg",
-    season: "Bespoke",
+    season: "Lasting",
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
