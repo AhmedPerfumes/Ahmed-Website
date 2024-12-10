@@ -20,7 +20,7 @@ export const metadata = {
 const ExportPage = () => {
   return (
     <>
-      <Loader/>
+      {/* <Loader/> */}
       <Header14 />
       <Export />
       <section className="d-none d-lg-block" style={{ height: "100%" }}>

@@ -207,12 +207,13 @@ export default function MobileHeader() {
               aria-label="Default select example"
               name="store-language"
               defaultValue={"fghgjhgj"}
+              onChange={(e) => window.open(e.target.value, "_blank")}
             >
               {currencyOptions.map((option, index) => (
                 <option
                   key={index}
                   className="footer-select__option"
-                  value={option.value}
+                  value={option.link}
                 >
                   {option.text}
                 </option>
