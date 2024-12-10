@@ -311,12 +311,13 @@ export default function Footer14() {
                 className="form-select form-select-sm bg-transparent border-0"
                 aria-label="Default select example"
                 name="store-language"
+                onChange={(e) => window.open(e.target.value, "_blank")}
               >
                 {currencyOptions.map((option, index) => (
                   <option
                     key={index}
                     className="footer-select__option"
-                    value={option.value}
+                    value={option.link}
                   >
                     {option.text}
                   </option>
