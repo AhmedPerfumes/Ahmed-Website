@@ -42,7 +42,7 @@ export default function Shop10({ subCategories, products }) {
   const [subCatProducts, setSubCatProducts] = useState(products);
 
   useEffect(() => {
-    if(subcategory || category == 'hair-mist' || category == 'gift-sets') {
+    if(subcategory || category == 'hair-mist' || category == 'gift-sets' || category == 'extrait-de-parfum') {
       setSubCatProducts(sortSubCategory(subCatProducts, sortOption));
     } else {
       setCatProducts(sortCategory(catProducts, sortOption));
