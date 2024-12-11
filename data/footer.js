@@ -1,7 +1,7 @@
 export const footerLinks1 = [
   { href: "/about", text: "Company Information" },
   { href: "#", text: "Privacy Policy" },
-  { href: "#", text: "Terms & Conditions" },
+  { href: "/terms", text: "Terms & Conditions" },
   { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
   { href: "/export", text:"Worldwide Distributions"},

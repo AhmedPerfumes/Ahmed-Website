@@ -75,14 +75,14 @@ export default function MobileFooter2() {
         </div>
         {/* <!-- /.logo --> */}
         <p className="footer-address text-white text-center">
-          Ahmed Al Maghrebi Perfume Manuf L.L.C, <br />
+          Ahmed Al Maghribi Perfume Manuf L.L.C, <br />
           Jurf Industrial Zone 3 <br />
           AJMAN, P. O. Box – 3850 <br />
           UAE
         </p>
 
         <p className="m-0 text-white text-center">
-          <strong className="fw-medium">estore@ahmedalmaghribi.com</strong>
+          <strong className="fw-medium">info@ahmedalmaghribi.com</strong>
         </p>
         <p className="text-center">
           <strong className="fw-medium text-white text-center">
