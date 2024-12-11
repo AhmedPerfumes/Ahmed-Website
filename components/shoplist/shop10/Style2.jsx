@@ -55,8 +55,10 @@ export default function Style2({ category, subcategory, products }) {
     console.log(removeSpecialCharactersAndAmp(category));
     if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
       subcat = "gift-sets/";
-    } else {
+    } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
       subcat = "hair-mist/";
+    } else {
+      subcat = "extrait-de-parfum/";
     }
   }
 
