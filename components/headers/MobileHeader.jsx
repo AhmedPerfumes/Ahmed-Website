@@ -162,7 +162,7 @@ export default function MobileHeader() {
         </div>
         {/* <!-- /.container --> */}
 
-        <div className="border-top mt-auto pb-2">
+        <div className="border-top mt-2 pb-2">
           <div className="customer-links container mt-4 mb-2 pb-1">
             <svg
               className="d-inline-block align-middle"
@@ -178,7 +178,7 @@ export default function MobileHeader() {
               My Account
             </span>
           </div>
-
+      <div className="d-flex">
           <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
             <select
@@ -218,6 +218,7 @@ export default function MobileHeader() {
                 </option>
               ))}
             </select>
+          </div>
           </div>
 
           <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">

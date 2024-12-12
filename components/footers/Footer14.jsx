@@ -136,14 +136,14 @@ export default function Footer14() {
             </div>
             {/* <!-- /.logo --> */}
             <p className="footer-address">
-              {t("Ahmed Al Maghrebi Perfume Manuf")} <br />
+              {t("Ahmed Al Maghribi Perfume Manuf")} <br />
               {t("Jurf Industrial Zone 3")} <br />
               AJMAN, P. O. Box – 3850 <br />
               UAE
             </p>
 
             <p className="m-0">
-              <strong className="fw-medium">estore@ahmedalmaghribi.com</strong>
+              <strong className="fw-medium">info@ahmedalmaghribi.com</strong>
             </p>
             <p>
               <strong className="fw-medium">
