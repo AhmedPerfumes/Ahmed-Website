@@ -162,7 +162,7 @@ export default function MobileHeader() {
         </div>
         {/* <!-- /.container --> */}
 
-        <div className="border-top mt-4 pb-2">
+        <div className="border-top mt-2 pb-2">
           <div className="customer-links container mt-4 mb-2 pb-1">
             <svg
               className="d-inline-block align-middle"
