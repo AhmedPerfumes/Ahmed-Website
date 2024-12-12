@@ -178,7 +178,7 @@ export default function MobileHeader() {
               My Account
             </span>
           </div>
-
+      <div className="d-flex">
           <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
             <select
@@ -218,6 +218,7 @@ export default function MobileHeader() {
                 </option>
               ))}
             </select>
+          </div>
           </div>
 
           <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">
