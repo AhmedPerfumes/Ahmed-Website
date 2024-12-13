@@ -1,7 +1,7 @@
 import Footer14 from '@/components/footers/Footer14'
 import MobileFooter2 from '@/components/footers/MobileFooter2'
 import Header14 from '@/components/headers/Header14'
-import Privacy from '@/components/otherPages/Privacy'
+import Shipping from '@/components/otherPages/Shipping'
 import React from 'react'
 export const metadata = {
     title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -10,13 +10,14 @@ export const metadata = {
       icon: 'https://www.ahmedalmaghribi.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png',
     },
   };
-export default function PrivacyPolicy() {
+
+function ShippingDelivery() {
   return (
-      <div style={{
-          backgroundImage: `url(/assets/background-ivory.webp)`,
-        }}>
-          <Header14/>
-        <Privacy/>
+    <div style={{
+        backgroundImage: `url(/assets/background-ivory.webp)`,
+      }}> 
+        <Header14/>
+        <Shipping/>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
       </section>
@@ -25,7 +26,8 @@ export default function PrivacyPolicy() {
           <MobileFooter2/>
         </div>
       </section>
-        
     </div>
   )
 }
+
+export default ShippingDelivery

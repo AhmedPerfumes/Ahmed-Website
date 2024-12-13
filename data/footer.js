@@ -5,7 +5,7 @@ export const footerLinks1 = [
   { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
   { href: "/export", text:"Worldwide Distributions"},
-  { href: "#", text:"Shipping & Delivery"},
+  { href: "/shipping-and-delivery", text:"Shipping & Delivery"},
   { href: "/refund-policy", text:"Refund Policy"}
 ];
 export const footerLinks2 = [
