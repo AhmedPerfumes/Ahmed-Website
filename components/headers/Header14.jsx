@@ -280,7 +280,7 @@ export default function Header14() {
                 </a>
               </div>
               <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
-                <div className="header-search search-field d-none d-xxl-flex mx-4">
+                <div className="header-search search-field d-none d-lg-flex  mx-4">
                   <form onSubmit={onSearch}>
                     <input
                       className="header-search__input w-100"
