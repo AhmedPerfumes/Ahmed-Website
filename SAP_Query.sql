@@ -58,9 +58,9 @@ SELECT
 `ec_order_product`.`qty` * `ec_order_product`.`price` AS total_price,
 `ec_order_product`.`discount_percent` AS DiscountPer,
 '0 Dynamic' AS Discount,
-'ec_order_product.qty * ec_order_product.price amt after discount' AS NetAmount,
+'ec_order_product.qty * ec_order_product.price' AS NetAmount,
 `ec_order_product`.`tax_amount` AS VAT,
-`ec_order_product`.`price` + `ec_order_product`.`tax_amount` AS GrossAmount,
+`ec_order_product`.`price` + `ec_order_product`.`tax_amount` * 5 AS GrossAmount,
 IF(`ec_order_product`.`tax_amount` > 0, 1, 0) AS isTaxable,
 'fee or line_item query to b provided by Farhan' AS lineItemType
 FROM `ec_order_product`

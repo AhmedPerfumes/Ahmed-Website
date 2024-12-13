@@ -25,10 +25,10 @@ export default function MobileNav() {
   // const subcategory = searchParams.get('subcategory');
   
   const isMenuActive = (menu) => {
-    return menu.split("/")[3] == pathname.split("/")[4];
+    return menu.split("/")[3] == pathname.split("/")[3];
   };
   const isActiveParentMenu = (menu) => {
-    return menu.split("/")[2] == pathname.split("/")[3];
+    return menu.split("/")[2] == pathname.split("/")[2];
   };
   const isActiveExportMenu = (menu) => {
     // console.log(menu, pathname);

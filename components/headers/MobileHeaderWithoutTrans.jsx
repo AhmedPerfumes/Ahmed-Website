@@ -19,6 +19,12 @@ export default function MobileHeader() {
 
   const [scrollDirection, setScrollDirection] = useState("down");
 
+  const [searchKeyWord, setSearchKeyWord] = useState("");
+  
+    const handleChange = (event) => {
+      setSearchKeyWord(event.target.value);
+    };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -54,6 +60,28 @@ export default function MobileHeader() {
   //   // console.log(pathname, e.target.value);
   //   router.push(pathname, { locale: e.target.value });
   // };
+
+  const onSearch = (event) => {
+    event.preventDefault();
+    window.location.href = `/en/shop?q=${removeSpecialCharactersAndAmp(
+      searchKeyWord
+    )
+      .split(" ")
+      .join("-")}`;
+  };
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, "");
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, "");
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, " ").trim();
+
+    return cleanedStr;
+  }
 
   return (
     <div
@@ -112,7 +140,7 @@ export default function MobileHeader() {
       <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
         <div className="container">
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={onSearch}
             className="search-field position-relative mt-4 mb-3"
           >
             <div className="position-relative">
@@ -121,6 +149,8 @@ export default function MobileHeader() {
                 type="text"
                 name="search-keyword"
                 placeholder="Search products"
+                value={searchKeyWord}
+                onChange={handleChange}
               />
               <button
                 className="btn-icon search-popup__submit pb-0 me-2"

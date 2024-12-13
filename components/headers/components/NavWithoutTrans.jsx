@@ -19,11 +19,11 @@ export default function Nav({ categoriesSubCategories }) {
   // const locale = useLocale();
   // const t = useTranslations();
   const pathname = usePathname();
-  const isMenuActive = (menu) => {
-    return menu.split("/")[3] == pathname.split("/")[4];
+  const isMenuActive = (menu) => {    
+    return menu.split("/")[3] == pathname.split("/")[3];
   };
   const isActiveParentMenu = (menu) => {
-    return menu.split("/")[2] == pathname.split("/")[3];
+    return menu.split("/")[2] == pathname.split("/")[2];
   };
   const isActiveExportMenu = (menu) => {
     // console.log(menu, pathname);
