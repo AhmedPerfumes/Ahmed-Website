@@ -1,16 +1,16 @@
 import Footer14 from '@/components/footers/Footer14'
 import MobileFooter2 from '@/components/footers/MobileFooter2'
 import Header14 from '@/components/headers/Header14'
-import Privacy from '@/components/otherPages/Privacy'
+import RefundPolicy from '@/components/otherPages/RefundPolicy'
 import React from 'react'
 
-export default function PrivacyPolicy() {
+function Refund() {
   return (
-      <div style={{
-          backgroundImage: `url(/assets/background-ivory.webp)`,
-        }}>
-          <Header14/>
-        <Privacy/>
+    <div style={{
+        backgroundImage: `url(/assets/background-ivory.webp)`,
+      }}>
+        <Header14/>
+        <RefundPolicy/>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
       </section>
@@ -19,7 +19,8 @@ export default function PrivacyPolicy() {
           <MobileFooter2/>
         </div>
       </section>
-        
     </div>
   )
 }
+
+export default Refund
