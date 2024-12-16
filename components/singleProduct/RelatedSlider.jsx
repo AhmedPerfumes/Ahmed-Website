@@ -63,6 +63,28 @@ export default function RelatedSlider({ relatedProds }) {
     return cleanedStr;
   }
 
+  const isSubcategory = (category, subcategory) => {
+    let subcat = "";
+    if (subcategory != null) {
+      return subcat =
+        removeSpecialCharactersAndAmp(subcategory.subcategory_name)
+          .split(" ")
+          .join("-")
+          .toLowerCase();
+    } else {
+      if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
+        console.log("gift-sets");
+        return subcat = "gift-sets";
+      } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
+        console.log("hair-mist");
+        return subcat = "hair-mist";
+      } else {
+        console.log("extrait-de-parfum");
+        return subcat = "extrait-de-parfum";
+      }
+    }
+  }
+
   const price = (elm) => {
     const currentUTC = new Date(); // Current UTC time
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
@@ -95,7 +117,7 @@ export default function RelatedSlider({ relatedProds }) {
           {relatedProds && relatedProds.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide product-card">
               <div className="pc__img-wrapper">
-                <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                   {elm?.images &&
                     // JSON.parse(elm.images).map((image, ind) => (
                         <>
@@ -152,7 +174,7 @@ export default function RelatedSlider({ relatedProds }) {
               <div className="pc__info position-relative">
                 <p className="pc__category">{elm.category_name}</p>
                 <h6 className="pc__title">
-                  <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                  <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                 </h6>
                 <div className="product-card__price d-flex">
                   { price(elm) }

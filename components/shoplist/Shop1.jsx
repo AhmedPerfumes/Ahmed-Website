@@ -127,6 +127,28 @@ useEffect(() => {
     return cleanedStr;
   }
 
+  const isSubcategory = (category, subcategory) => {
+    let subcat = "";
+    if (subcategory != null) {
+      return subcat =
+        removeSpecialCharactersAndAmp(subcategory.subcategory_name)
+          .split(" ")
+          .join("-")
+          .toLowerCase();
+    } else {
+      if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
+        console.log("gift-sets");
+        return subcat = "gift-sets";
+      } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
+        console.log("hair-mist");
+        return subcat = "hair-mist";
+      } else {
+        console.log("extrait-de-parfum");
+        return subcat = "extrait-de-parfum";
+      }
+    }
+  }
+
    // Sorting function
    const sortItems = (items, option) => {
     // console.log(items, option);
@@ -338,7 +360,7 @@ useEffect(() => {
                   >
                     {/* {elm?.images && JSON.parse(elm.images).map((image, ind) => ( */}
                       <SwiperSlide key={i} className="swiper-slide">
-                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           {elm?.images &&
                           // JSON.parse(elm.images).map((image, ind) => (
                               <>
@@ -436,7 +458,7 @@ useEffect(() => {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (
