@@ -127,6 +127,28 @@ useEffect(() => {
     return cleanedStr;
   }
 
+  const isSubcategory = (category, subcategory) => {
+    let subcat = "";
+    if (subcategory != null) {
+      return subcat =
+        removeSpecialCharactersAndAmp(subcategory.subcategory_name)
+          .split(" ")
+          .join("-")
+          .toLowerCase();
+    } else {
+      if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
+        console.log("gift-sets");
+        return subcat = "gift-sets";
+      } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
+        console.log("hair-mist");
+        return subcat = "hair-mist";
+      } else {
+        console.log("extrait-de-parfum");
+        return subcat = "extrait-de-parfum";
+      }
+    }
+  }
+
    // Sorting function
    const sortItems = (items, option) => {
     // console.log(items, option);
@@ -163,8 +185,15 @@ useEffect(() => {
   };
 
   const discPrice = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      } else {
+        return <span className="money price">{elm?.price}د.إ</span>;
+      }
     } else if(elm?.sale_price) {
       return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
     } else {
@@ -331,7 +360,7 @@ useEffect(() => {
                   >
                     {/* {elm?.images && JSON.parse(elm.images).map((image, ind) => ( */}
                       <SwiperSlide key={i} className="swiper-slide">
-                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                           {elm?.images &&
                           // JSON.parse(elm.images).map((image, ind) => (
                               <>
@@ -405,7 +434,7 @@ useEffect(() => {
                       Already Added
                     </button> : elm.product_qty > 0 && <button
                       className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                      onClick={() => addProductToCart(elm)}
+                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory.subcategory_name})}
                       title="Add to Cart"
                     >
                       Add To Cart
@@ -429,7 +458,7 @@ useEffect(() => {
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
                   <h6 className="pc__title">
-                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                    <a href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (

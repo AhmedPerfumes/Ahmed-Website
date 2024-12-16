@@ -16,10 +16,15 @@ export default function Context({ children }) {
   const [orderDetails, setOrderDetails] = useState({});
 
   useEffect(() => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     const subtotal = cartProducts.reduce((accumulator, product) => {
       if(product?.discount) {
-        const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
-        return accumulator + product.quantity * discount_price;
+        if(new Date(current_date_time) >= new Date(product.discount.start_date) && new Date(current_date_time) <= new Date(product.discount.end_date)) {
+          const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
+          return accumulator + product.quantity * discount_price;
+        }
       } else if(product?.sale_price) {
         const sale_price = (product.price - (product.price / 100 * product.sale_price)).toFixed(2);
         return accumulator + product.quantity * sale_price;

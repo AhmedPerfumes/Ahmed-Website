@@ -48,8 +48,15 @@ export default function CartDrawer() {
   );
 
   const subTotalPrice = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</span>;
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</span>;
+      } else {
+        return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}د.إ</span>;
+      }
     } else if(elm?.sale_price) {
       return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</span>;
     } else {

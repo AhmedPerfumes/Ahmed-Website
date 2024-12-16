@@ -31,6 +31,12 @@ export default function Style2({ category, subcategory, products }) {
     }
   }
 
+  function capitalizeEachWord(str) {
+    return str.split(' ') // Split the sentence into words
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+              .join(' '); // Join the words back into a sentence
+  }
+
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
     let cleanedStr = str?.replace(/&amp;/g, "");
@@ -50,15 +56,15 @@ export default function Style2({ category, subcategory, products }) {
       removeSpecialCharactersAndAmp(subcategory)
         .split(" ")
         .join("-")
-        .toLowerCase() + "/";
+        .toLowerCase();
   } else {
     console.log(removeSpecialCharactersAndAmp(category));
     if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
-      subcat = "gift-sets/";
+      subcat = "gift-sets";
     } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
-      subcat = "hair-mist/";
+      subcat = "hair-mist";
     } else {
-      subcat = "extrait-de-parfum/";
+      subcat = "extrait-de-parfum";
     }
   }
 
@@ -67,8 +73,15 @@ export default function Style2({ category, subcategory, products }) {
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
 
   const price = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      } else {
+        return <span className="money price">{elm?.price}د.إ</span>;
+      }
     } else if(elm?.sale_price) {
       return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
     } else {
@@ -100,7 +113,7 @@ export default function Style2({ category, subcategory, products }) {
                     <a
                       href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                         category
-                      )}/${subcat}${removeSpecialCharactersAndAmp(
+                      )}/${subcat}/${removeSpecialCharactersAndAmp(
                         elm.product_name
                       )
                         .split(" ")
@@ -181,7 +194,7 @@ export default function Style2({ category, subcategory, products }) {
                   <a
                     href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                       category
-                    )}/${subcat}${removeSpecialCharactersAndAmp(
+                    )}/${subcat}/${removeSpecialCharactersAndAmp(
                       elm.permalink?.key
                     )?.toLowerCase()}`}
                   >
@@ -204,7 +217,7 @@ export default function Style2({ category, subcategory, products }) {
                       className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-45 d-inline-flex align-items-center"
                       href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                         category
-                      )}/${subcat}${removeSpecialCharactersAndAmp(
+                      )}/${subcat}/${removeSpecialCharactersAndAmp(
                         elm.permalink?.key
                       )?.toLowerCase()}`}
                     >
@@ -227,7 +240,7 @@ export default function Style2({ category, subcategory, products }) {
                     : elm?.product_qty > 0 && (
                         <button
                           className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                          onClick={() => addProductToCart(elm)}
+                          onClick={() => addProductToCart({...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' '))})}
                           title="Add to Cart"
                         >
                           Add To Cart
@@ -238,7 +251,7 @@ export default function Style2({ category, subcategory, products }) {
                     data-bs-toggle="modal"
                     data-bs-target="#quickView"
                     title="Quick view"
-                    onClick={() => addProductToQuickView(elm)}
+                    onClick={() => addProductToQuickView({...elm, category_name: category, subcategory_name: subcat})}
                   >
                     Quick View
                   </button>
@@ -271,7 +284,7 @@ export default function Style2({ category, subcategory, products }) {
                   <a
                     href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                       category
-                    )}/${subcat}${removeSpecialCharactersAndAmp(
+                    )}/${subcat}/${removeSpecialCharactersAndAmp(
                       elm?.product_name
                     )
                       ?.split(" ")

@@ -50,7 +50,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
   };
   const addToCart = () => {
     if (!isIncludeCard()) {
-      const item = product;
+      const item = {...product, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcategory.split('-').join(' '))};
       item.quantity = quantity;
       setCartProducts((pre) => [...pre, item]);
       document
@@ -87,8 +87,15 @@ export default function SingleProduct11({ category, subcategory, product }) {
   }
 
   const price = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      } else {
+        return <span className="money price">{elm?.price}د.إ</span>;
+      }
     } else if(elm?.sale_price) {
       return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
     } else {
@@ -173,6 +180,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
               <ShareComponent title={product.product_name} />
             </div>
             <div className="product-single__meta-info">
+            <div className="meta-item">
+                <label>SKU:</label>
+                <span> {product.sku && product.sku}</span>
+              </div>
               <div className="meta-item">
                 <label>{t("Estimated delivery:")}</label>
                 <span> {t("3 to 5 days")}</span>
