@@ -50,7 +50,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
   };
   const addToCart = () => {
     if (!isIncludeCard()) {
-      const item = product;
+      const item = {...product, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcategory.split('-').join(' '))};
       item.quantity = quantity;
       setCartProducts((pre) => [...pre, item]);
       document

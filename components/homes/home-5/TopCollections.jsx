@@ -186,7 +186,7 @@ export default function TopCollections() {
                       {/* ))} */}
                       <button
                         className="pc__atc btn btn-lg anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                        onClick={() => addProductToCart(elm)}
+                        onClick={() => addProductToCart({...elm, category_name: 'Collections', subcategory_name: 'Online Exclusive'})}
                         title={
                           isAddedToCartProducts(elm.product_id)
                             ? "Already Added"

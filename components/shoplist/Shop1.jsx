@@ -434,7 +434,7 @@ useEffect(() => {
                       Already Added
                     </button> : elm.product_qty > 0 && <button
                       className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                      onClick={() => addProductToCart(elm)}
+                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory.subcategory_name})}
                       title="Add to Cart"
                     >
                       Add To Cart

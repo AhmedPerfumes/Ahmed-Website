@@ -66,7 +66,7 @@ export default function QuickView() {
   };
   const addToCart = () => {
     if (!isIncludeCard()) {
-      const item = quickViewItem;
+      const item = {...quickViewItem, category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')), subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))};
       item.quantity = quantity;
       setCartProducts((pre) => [...pre, item]);
       document
@@ -110,6 +110,12 @@ export default function QuickView() {
       return <span className="money price">{elm?.price}د.إ</span>;
     }
   };
+
+  function capitalizeEachWord(str) {
+    return str.split(' ') // Split the sentence into words
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+              .join(' '); // Join the words back into a sentence
+  }
 
   return (
     <div className="modal fade" id="quickView" tabIndex="-1" ref={modalElement}>
