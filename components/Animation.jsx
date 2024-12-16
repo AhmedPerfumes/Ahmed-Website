@@ -738,7 +738,7 @@ const Animation = () => {
               </div>
             </div>
             <div className="nav-circle-container">
-              <SwipeLeft/>
+              <SwipeLeft style={{color: "#bb8c1c"}}/>
               
               <div className="nav-circle" data-target="#beach"></div>
               <div className="nav-circle" data-target="#savanna"></div>
@@ -750,7 +750,7 @@ const Animation = () => {
               <div className="nav-circle" data-target="#coral"></div>
               <div className="nav-circle" data-target="#coral"></div>
               <div className="nav-circle" data-target="#coral"></div>
-              <SwipeRight/>
+              <SwipeRight style={{color: "#bb8c1c"}}/>
             </div>
           </div>
         </div>
