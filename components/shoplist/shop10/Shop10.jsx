@@ -83,7 +83,7 @@ export default function Shop10({ subCategories, products }) {
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
-    if(subcategory || category == 'hair-mist' || category == 'gift-sets') {
+    if(subcategory || category == 'hair-mist' || category == 'gift-sets' || category == 'extrait-de-parfum') {
       setSubCatProducts(sortSubCategory(subCatProducts, event.target.value));
     } else {
       setCatProducts(sortCategory(catProducts, event.target.value));
