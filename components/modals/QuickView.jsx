@@ -105,7 +105,7 @@ export default function QuickView() {
         return <span className="money price">{elm?.price}د.إ</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+      return <><span className="money price price-sale">د.إ {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}</span><span className="money price price-old">د.إ{elm?.price}</span> </>;
     } else {
       return <span className="money price">{elm?.price}د.إ</span>;
     }

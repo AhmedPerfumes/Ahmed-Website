@@ -17,6 +17,7 @@ import MobileSlider from "./singleProduct/sliders/MobileSlider";
 import { duration } from "@mui/material";
 
 import { useLocale, useTranslations } from "next-intl";
+import { MoveDownOutlined, SwipeLeft, SwipeRight } from "@mui/icons-material";
 
 gsap.registerPlugin(ScrollTrigger);
 const Animation = () => {
@@ -715,7 +716,9 @@ const Animation = () => {
                         >
                           {t("Shop Now")}
                         </a>
+                        
                       </div>
+                      
                     </div>
                   </div>
                   <div className="centerrr">
@@ -735,6 +738,8 @@ const Animation = () => {
               </div>
             </div>
             <div className="nav-circle-container">
+              <SwipeLeft style={{color: "#bb8c1c"}}/>
+              
               <div className="nav-circle" data-target="#beach"></div>
               <div className="nav-circle" data-target="#savanna"></div>
               <div className="nav-circle" data-target="#glacier"></div>
@@ -745,6 +750,7 @@ const Animation = () => {
               <div className="nav-circle" data-target="#coral"></div>
               <div className="nav-circle" data-target="#coral"></div>
               <div className="nav-circle" data-target="#coral"></div>
+              <SwipeRight style={{color: "#bb8c1c"}}/>
             </div>
           </div>
         </div>
