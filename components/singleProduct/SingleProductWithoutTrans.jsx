@@ -181,6 +181,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <div className="product-single__meta-info">
               <div className="meta-item">
+                <label>SKU:</label>
+                <span> {product.sku && product.sku}</span>
+              </div>
+              <div className="meta-item">
                 <label>Estimated delivery:</label>
                 <span> 3 to 5 days</span>
               </div>

@@ -180,7 +180,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
               <ShareComponent title={product.product_name} />
             </div>
             <div className="product-single__meta-info">
-            <div className="meta-item">
+              <div className="meta-item">
                 <label>SKU:</label>
                 <span> {product.sku && product.sku}</span>
               </div>
