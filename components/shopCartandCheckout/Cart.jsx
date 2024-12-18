@@ -284,7 +284,19 @@ export default function Cart() {
                   <tr>
                     <th>Total</th>
                     <td>
-                      {!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((parseFloat(shippingServiceCharges[0].price) + totalPrice) / 100) * vatTax.percentage).toFixed(2) : (((0 + totalPrice) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)
+                      {!freeShippingFlag ?
+                        (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (
+                          (
+                            (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                            (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
+                            (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                          ).toFixed(2)) : (
+                          (
+                            0 +
+                            (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
+                            (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                          ).toFixed(2)) }د.إ VAT)
                     </td>
                   </tr>
                 </tbody>
