@@ -296,8 +296,4 @@
 	object-position: center; /* Default for desktop */
   }
   
-  @media (max-width: 768px) {
-	.slideshow-bg__img {
-	  object-position: -25rem; /* Adjust for mobile */
-	}
-  }
+ 

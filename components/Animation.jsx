@@ -4,6 +4,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Link from "next/link";
 import Hero from "@/components/homes/home-8/Hero";
+import Hero2 from "@/components/homes/home-8/Hero2";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "./footers/MobileFooter2";
 import VideoPanel from "./VideoPanel";
@@ -203,9 +204,14 @@ const Animation = () => {
 
   return (
     <div id="main2">
-      <section className="vh-100 hero-banner">
-        <Hero />
+      <section className="vh-100 hero-banner d-none d-lg-block">
+        <Hero />     
+            
       </section>
+      <div className="d-sm-block d-md-none">
+      <Hero2/> 
+
+      </div>
       <section className="testsect bg-custom">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
