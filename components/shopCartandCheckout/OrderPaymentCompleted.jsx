@@ -14,6 +14,27 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     setCartProducts([]);
   }, []);
 
+  const subTotalPrice = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    if(elm?.discount_percent) {
+      console.log('...', elm.discount_percent);
+      // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
+      // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        // console.log('if...');
+        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}د.إ</td>;
+      // } else {
+      //   console.log('else...');
+      //   return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+      // }
+    } else if(elm?.sale_price) {
+      return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
+    } else {
+      return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}د.إ</td>;
+    }
+  };
+
   return (
     <>
     {orderDetails.order_id ? <><div className="order-complete">
@@ -80,7 +101,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
                   <td>
                     {he.decode(elm.product_name)} x {elm.qty}
                   </td>
-                  <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
+                  { subTotalPrice(elm) }
                 </tr>
               ))}
             </tbody>
