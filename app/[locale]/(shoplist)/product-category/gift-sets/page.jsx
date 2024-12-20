@@ -45,7 +45,6 @@ async function getCategorySubCategory(categoryName) {
       console.log(data);
       return data && (
       <>
-      {/* <Loader/> */}
         <QuickView />
         <Header14 />
         <main>
