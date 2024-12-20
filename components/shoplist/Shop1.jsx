@@ -392,10 +392,16 @@ useEffect(() => {
                             { elm?.label_name }
                           </div>
                         )}
-                        {elm.product_qty <= 0 && (
+                        {elm.product_qty <= 0 ? (
                           <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                             Out Of Stock
                           </div>
+                        ) : (
+                          elm.discount && (
+                            <div style={{ backgroundColor: '#198754' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                              Sale {elm.discount.value}%
+                            </div>
+                          )
                         )}
                       </SwiperSlide>
                     {/* ))} */}
@@ -434,7 +440,7 @@ useEffect(() => {
                       Already Added
                     </button> : elm.product_qty > 0 && <button
                       className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory.subcategory_name})}
+                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
                       title="Add to Cart"
                     >
                       Add To Cart
