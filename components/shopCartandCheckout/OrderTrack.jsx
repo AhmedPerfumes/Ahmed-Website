@@ -148,17 +148,7 @@ export default function OrderTrack() {
           <div className="order-info__item">
             <label>Total</label>
 
-            <span>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 || orderDetails.shipping_amount > 0.00 ? (
-                  (
-                    (parseFloat(orderDetails.shipping_amount) - parseFloat(orderDetails.shipping_amount) / (1 + parseFloat(orderDetails.vat_amount / 100))) +
-                    (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(orderDetails.vat_amount / 100))) +
-                    (parseFloat(orderDetails.service_amount) - parseFloat(orderDetails.service_amount) / (1 + parseFloat(orderDetails.vat_amount / 100)))
-                  ).toFixed(2)) : (
-                  (
-                    0 +
-                    (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(orderDetails.vat_amount / 100))) +
-                    (parseFloat(orderDetails.service_amount) - parseFloat(orderDetails.service_amount) / (1 + parseFloat(orderDetails.vat_amount / 100)))
-                  ).toFixed(2)) }د.إ VAT)</span>
+            <span>{orderDetails.total}د.إ (includes { orderDetails.tax_amount }د.إ VAT)</span>
           </div>
           <div className="order-info__item">
             <label>Paymetn Method</label>
@@ -203,17 +193,7 @@ export default function OrderTrack() {
                 </tr>
                 <tr>
                   <th>TOTAL</th>
-                  <td>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 || orderDetails.shipping_amount > 0.00 ? (
-                      (
-                        (parseFloat(orderDetails.shipping_amount) - parseFloat(orderDetails.shipping_amount) / (1 + parseFloat(orderDetails.vat_amount / 100))) +
-                        (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(orderDetails.vat_amount / 100))) +
-                        (parseFloat(orderDetails.service_amount) - parseFloat(orderDetails.service_amount) / (1 + parseFloat(orderDetails.vat_amount / 100)))
-                      ).toFixed(2)) : (
-                      (
-                        0 +
-                        (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(orderDetails.vat_amount / 100))) +
-                        (parseFloat(orderDetails.service_amount) - parseFloat(orderDetails.service_amount) / (1 + parseFloat(orderDetails.vat_amount / 100)))
-                      ).toFixed(2)) }د.إ VAT)
+                  <td>{orderDetails.total}د.إ (includes { orderDetails.tax_amount }د.إ VAT)
                   </td>
                 </tr>
               </tbody>

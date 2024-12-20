@@ -5,6 +5,7 @@ import { useMenu } from '@/context/MenuContext';
 import { useEffect, useState } from "react";
 import he from 'he';
 import Link from "next/link";
+import Pagination1 from "../common/Pagination1";
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
