@@ -251,7 +251,7 @@ export default function Style2({ category, subcategory, products }) {
                     data-bs-toggle="modal"
                     data-bs-target="#quickView"
                     title="Quick view"
-                    onClick={() => addProductToQuickView({...elm, category_name: category, subcategory_name: subcat})}
+                    onClick={() => addProductToQuickView({...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' '))})}
                   >
                     Quick View
                   </button>
