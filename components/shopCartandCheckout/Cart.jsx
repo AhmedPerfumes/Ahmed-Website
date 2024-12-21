@@ -12,6 +12,9 @@ export default function Cart() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
+  // const [couponCode, setCouponCode] = useState("");
+  // const [couponError, setCouponError] = useState(null);
+  // const [couponSuccess, setCouponSuccess] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
   const setQuantity = async (id, quantity, productQty) => {
     if (quantity >= 1 && quantity <= productQty) {
@@ -44,6 +47,44 @@ export default function Cart() {
       [id]: checked,
     }));
   };
+
+  // const handleCouponChange = (e) => {
+  //   setCouponCode(e.target.value);
+  // };
+
+  // const applyCoupon = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     // Call your backend API or validation logic for the coupon code
+  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ couponCode }),
+  //     });
+
+  //     const data = await res.json();
+
+  //     if(data.message && data.message.split(' ')[0] == 'Details') {
+  //       setCouponError(null);
+  //       setCouponSuccess('Coupon Applied Successfully');
+  //     } else {
+  //       setCouponSuccess(null);
+  //       console.log(data);
+  //       if(data['couponCode']) {
+  //         setCouponError(data['couponCode']);
+  //       } else if(data['mobile_number']) {
+  //         setCouponError(data['mobile_number']);
+  //       } else {
+  //         setCouponError(data.message);
+  //       }
+  //     }
+  //   } catch (err) {
+  //     setCouponSuccess(null);
+  //     setCouponError("An error occurred. Please try again.");
+  //   }
+  // };
 
   if (isMenuLoading) {
     return <div><Pagination1 /></div>;
@@ -182,25 +223,29 @@ export default function Cart() {
                 ))}
               </tbody>
             </table>
-            <div className="cart-table-footer">
+            {/* <div className="cart-table-footer">
               <form
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={applyCoupon}
                 className="position-relative bg-body"
               >
+                {couponError ? <div style={{ color: 'red' }}>{couponError}</div> : <div style={{ color: 'green' }}>{couponSuccess}</div>}
                 <input
                   className="form-control"
                   type="text"
                   name="coupon_code"
                   placeholder="Coupon Code"
+                  required
+                  value={couponCode}
+                  onChange={handleCouponChange}
                 />
                 <input
                   className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4"
                   type="submit"
-                  defaultValue="APPLY COUPON"
+                  value="APPLY COUPON"
                 />
               </form>
-              {/* <button className="btn btn-light">UPDATE CART</button> */}
-            </div>
+              -<button className="btn btn-light">UPDATE CART</button>-
+            </div> */}
           </>
         ) : (
           <>

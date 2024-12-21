@@ -72,6 +72,11 @@ export default function Checkout() {
   const [isOTPButton, setIsOTPButton] = useState(true);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
 
+  const [couponCode, setCouponCode] = useState("");
+  const [couponError, setCouponError] = useState(null);
+  const [couponSuccess, setCouponSuccess] = useState(null);
+  const [couponData, setCouponData] = useState(null);
+
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -368,6 +373,54 @@ export default function Checkout() {
       setIsSendOTPLoading(false);
     }
   }
+
+  const handleCouponChange = (e) => {
+    setCouponCode(e.target.value);
+  };
+
+  const applyCoupon = async (e) => {
+    e.preventDefault();
+    if(couponCode == '') {
+      setCouponError('Coupon Code is Required');
+      setCouponSuccess(null);
+      return;
+    } else if(!isOTPVerified) {
+      setCouponError('Verify Mobile Number First');
+      setCouponSuccess(null);
+      return;
+    }
+    try {
+      // Call your backend API or validation logic for the coupon code
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ couponCode, mobile_number: formData.billingAddress.mobile }),
+      });
+
+      const data = await res.json();
+
+      if(data.message && data.message.split(' ')[0] == 'Details') {
+        setCouponError(null);
+        setCouponData(data.coupon);
+        setCouponSuccess('Coupon Applied Successfully');
+      } else {
+        setCouponSuccess(null);
+        console.log(data);
+        if(data['couponCode']) {
+          setCouponError(data['couponCode']);
+        } else if(data['mobile_number']) {
+          setCouponError(data['mobile_number']);
+        } else {
+          setCouponError(data.message);
+        }
+      }
+    } catch (err) {
+      setCouponSuccess(null);
+      setCouponError("An error occurred. Please try again.");
+    }
+  };
 
   if (isMenuLoading) {
     return <div><Pagination1 /></div>;
@@ -719,6 +772,31 @@ export default function Checkout() {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div >
+                {/* <form
+                  onSubmit={applyCoupon}
+                  className="position-relative bg-body"
+                > */}
+                  {couponError ? <div style={{ color: 'red' }}>{couponError}</div> : <div style={{ color: 'green' }}>{couponSuccess}</div>}
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="coupon_code"
+                    placeholder="Coupon Code"
+                    required
+                    value={couponCode}
+                    onChange={handleCouponChange}
+                  />
+                  <input
+                    className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4 my-5"
+                    type="button"
+                    value="APPLY COUPON"
+                    onClick={applyCoupon}
+                  />
+                {/* </form> */}
+                <br/>
+                {/* <button className="btn btn-light">UPDATE CART</button> */}
               </div>
               <div className="checkout__payment-methods">
                 <div className="form-check">
