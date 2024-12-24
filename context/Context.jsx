@@ -14,6 +14,7 @@ export default function Context({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [freeShippingFlag, setFreeShippingFlag] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
+  const [couponDataContext, setCouponDataContext] = useState(null);
 
   useEffect(() => {
     const currentUTC = new Date(); // Current UTC time
@@ -25,6 +26,11 @@ export default function Context({ children }) {
           const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
           return accumulator + product.quantity * discount_price;
         }
+      } else if(product?.coupon && couponDataContext != null) {
+        if(new Date(current_date_time) >= new Date(product.coupon.start_date) && new Date(current_date_time) <= new Date(product.coupon.end_date)) {
+          const coupon_price = (product.price - (product.price / 100 * product.coupon.value)).toFixed(2);
+          return accumulator + product.quantity * coupon_price;
+        }
       } else if(product?.sale_price) {
         const sale_price = (product.price - (product.price / 100 * product.sale_price)).toFixed(2);
         return accumulator + product.quantity * sale_price;
@@ -33,7 +39,7 @@ export default function Context({ children }) {
     }, 0);
     setTotalPrice(subtotal);
     setFreeShippingFlag((subtotal).toFixed(2) >= 400 ? true : false);
-  }, [cartProducts]);
+  }, [cartProducts, couponDataContext]);
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
@@ -107,6 +113,7 @@ export default function Context({ children }) {
     freeShippingFlag,
     setOrderDetails,
     orderDetails,
+    setCouponDataContext
   };
   return (
     <dataContext.Provider value={contextElement}>

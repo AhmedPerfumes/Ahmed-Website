@@ -26,7 +26,7 @@ export default function Checkout() {
   const router = useRouter();
   const locale = useLocale();
 
-  const { cartProducts, totalPrice, freeShippingFlag, setOrderDetails } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, setOrderDetails, setCouponDataContext } = useContextElement();
   const { isLoggedIn } = useUser();
   // const [selectedRegion, setSelectedRegion] = useState("");
   const [idDDActive, setIdDDActive] = useState(false);
@@ -378,17 +378,40 @@ export default function Checkout() {
     setCouponCode(e.target.value);
   };
 
+  const removeCoupon = (e) => {
+    setCouponCode('');
+    setCouponSuccess(null);
+    setCouponData(null);
+    setCouponDataContext(null);
+  };
+
   const applyCoupon = async (e) => {
     e.preventDefault();
     if(couponCode == '') {
       setCouponError('Coupon Code is Required');
       setCouponSuccess(null);
-      return;
-    } else if(!isOTPVerified) {
-      setCouponError('Verify Mobile Number First');
-      setCouponSuccess(null);
+      setCouponDataContext(null);
       return;
     }
+
+    let product_coupon = false;
+    cartProducts.map((item) => {
+      if(item.coupon?.code == couponCode) {
+        product_coupon = true;
+      }
+    });
+
+    if(!product_coupon) {
+      setCouponError('Invalid Coupon Code for this products');
+      setCouponSuccess(null);
+      setCouponDataContext(null);
+      return;
+    }
+    // else if(!isOTPVerified) {
+    //   setCouponError('Verify Mobile Number First');
+    //   setCouponSuccess(null);
+    //   return;
+    // }
     try {
       // Call your backend API or validation logic for the coupon code
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`, {
@@ -396,7 +419,7 @@ export default function Checkout() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ couponCode, mobile_number: formData.billingAddress.mobile }),
+        body: JSON.stringify({ couponCode, mobile_number: '0503320383' }),
       });
 
       const data = await res.json();
@@ -404,9 +427,12 @@ export default function Checkout() {
       if(data.message && data.message.split(' ')[0] == 'Details') {
         setCouponError(null);
         setCouponData(data.coupon);
-        setCouponSuccess('Coupon Applied Successfully');
+        setCouponDataContext(data.coupon);
+        setCouponSuccess(`Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`);
       } else {
         setCouponSuccess(null);
+        setCouponData(null);
+        setCouponDataContext(null);
         console.log(data);
         if(data['couponCode']) {
           setCouponError(data['couponCode']);
@@ -418,6 +444,8 @@ export default function Checkout() {
       }
     } catch (err) {
       setCouponSuccess(null);
+      setCouponData(null);
+      setCouponDataContext(null);
       setCouponError("An error occurred. Please try again.");
     }
   };
@@ -436,6 +464,12 @@ export default function Checkout() {
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+      } else {
+        return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+      }
+    } else if(elm?.coupon && couponData != null && couponCode != null) {
+      if(new Date(current_date_time) >= new Date(elm.coupon.start_date) && new Date(current_date_time) <= new Date(elm.coupon.end_date)) {
+        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}د.إ</td>;
       } else {
         return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
       }
@@ -788,12 +822,19 @@ export default function Checkout() {
                     value={couponCode}
                     onChange={handleCouponChange}
                   />
-                  <input
-                    className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4 my-5"
-                    type="button"
-                    value="APPLY COUPON"
-                    onClick={applyCoupon}
-                  />
+                  {
+                    !couponData ? <input
+                      className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4 my-5"
+                      type="button"
+                      value="APPLY COUPON"
+                      onClick={applyCoupon}
+                    /> : <input
+                      className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4 my-5"
+                      type="button"
+                      value="REMOVE COUPON"
+                      onClick={removeCoupon}
+                    />
+                  }
                 {/* </form> */}
                 <br/>
                 {/* <button className="btn btn-light">UPDATE CART</button> */}
