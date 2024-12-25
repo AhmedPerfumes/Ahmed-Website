@@ -7,6 +7,7 @@ export function MenuProvider({ children }) {
   const [categoriesSubCategories, setCategoriesSubCategories] = useState([]);
   const [vatTax, setVatTax] = useState(0.00);
   const [shippingServiceCharges, setshippingServiceCharges] = useState([]);
+  const [currency, setCurrency] = useState('د.إ');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -51,6 +52,14 @@ export function MenuProvider({ children }) {
             setshippingServiceCharges(null);
             setError(data);
           }
+
+          if(data && data.currency) {
+            setError(null);
+            setCurrency(data.currency);
+          } else {
+            setCurrency(null);
+            setError(data);
+          }
           // console.log(data);
         } catch (error) {
           // Capture the error message to display to the user
@@ -67,7 +76,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency }}>
       {children}
     </MenuContext.Provider>
   );

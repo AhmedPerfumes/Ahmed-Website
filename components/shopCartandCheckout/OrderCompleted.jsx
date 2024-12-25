@@ -9,7 +9,7 @@ import Pagination1 from "../common/Pagination1";
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
-  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
+  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   // console.log('...', freeShippingFlag);
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
@@ -28,7 +28,7 @@ export default function OrderCompleted() {
     return <div><Pagination1 /></div>;
   }
   if (isMenuError) {
-    return <div>{ error }</div>;
+    return <div>{ isMenuError }</div>;
   }
 
   const subTotalPrice = (elm) => {
@@ -40,15 +40,22 @@ export default function OrderCompleted() {
       console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         console.log('if...');
-        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       } else {
         console.log('else...');
-        return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+      }
+    } else if(elm?.coupon) {
+      // console.log('else if', elm);
+      if(new Date(current_date_time) >= new Date(elm.coupon.start_date) && new Date(current_date_time) <= new Date(elm.coupon.end_date)) {
+        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+      } else {
+        return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
       }
     } else if(elm?.sale_price) {
-      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     } else {
-      return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
 
@@ -84,7 +91,7 @@ export default function OrderCompleted() {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (
+          <span>{parseFloat(orderDetails.total).toFixed(2)}{ currency.symbol } (includes { orderDetails.shipping_amount > 0 ? (
                 (
                   (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                   (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -94,7 +101,7 @@ export default function OrderCompleted() {
                   0 +
                   (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
                   (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                ).toFixed(2)) }د.إ VAT)
+                ).toFixed(2)) }{ currency.symbol } VAT)
           </span>
         </div>
         <div className="order-info__item">
@@ -127,19 +134,19 @@ export default function OrderCompleted() {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>{parseFloat(orderDetails.sub_total).toFixed(2)}د.إ</td>
+                <td>{parseFloat(orderDetails.sub_total).toFixed(2)}{ currency.symbol }</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{(orderDetails.sub_total).toFixed(2) >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }د.إ`}</td>
+                <td>{(orderDetails.sub_total).toFixed(2) >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
-                <td>{ shippingServiceCharges[1].price }د.إ</td>
+                <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (
+                <td>{parseFloat(orderDetails.total).toFixed(2)}{ currency.symbol } (includes { orderDetails.shipping_amount > 0 ? (
                     (
                       (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -149,7 +156,7 @@ export default function OrderCompleted() {
                       0 +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                    ).toFixed(2)) }د.إ VAT)
+                    ).toFixed(2)) }{ currency.symbol } VAT)
                 </td>
               </tr>
             </tbody>

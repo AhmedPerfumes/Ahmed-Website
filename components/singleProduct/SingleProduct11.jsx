@@ -12,9 +12,10 @@ import ShareComponent from "../common/ShareComponent";
 import { useContextElement } from "@/context/Context";
 import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
-
+import { useMenu } from '@/context/MenuContext';
 
 export default function SingleProduct11({ category, subcategory, product }) {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState(null);
@@ -92,14 +93,14 @@ export default function SingleProduct11({ category, subcategory, product }) {
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">د.إ{elm?.price}</span> <span className="money price price-sale"> د.إ{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
+        return <><span className="money price price-old">{ currency.symbol }{elm?.price}</span> <span className="money price price-sale"> { currency.symbol }{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
       } else {
-        return <span className="money price">{elm?.price}د.إ</span>;
+        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-sale">د.إ {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}</span><span className="money price price-old">د.إ{elm?.price}</span> </>;
+      return <><span className="money price price-sale">{ currency.symbol }{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}</span><span className="money price price-old">{ currency.symbol }{elm?.price}</span> </>;
     } else {
-      return <span className="money price">{elm?.price}د.إ</span>;
+      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
     }
   };
 

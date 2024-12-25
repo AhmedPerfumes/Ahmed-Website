@@ -9,8 +9,10 @@ import {
 } from "@/data/products/productFilterOptions";
 import { useEffect, useState } from "react";
 import Slider from "rc-slider";
+import { useMenu } from '@/context/MenuContext';
 
 export default function FilterAll() {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const [activeColor, setActiveColor] = useState(colors[0]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [filterFacts, setFilterFacts] = useState(filters);
@@ -304,11 +306,11 @@ export default function FilterAll() {
             <div className="price-range__info d-flex align-items-center mt-2">
               <div className="me-auto">
                 <span className="text-secondary">Max Price: </span>
-                <span className="price-range__max">{price[1]}د.إ</span>
+                <span className="price-range__max">{price[1]}{ currency.symbol }</span>
               </div>
               <div>
                 <span className="text-secondary">Min Price: </span>
-                <span className="price-range__min">{price[0]}د.إ</span>
+                <span className="price-range__min">{price[0]}{ currency.symbol }</span>
               </div>
             </div>
           </div>

@@ -9,8 +9,11 @@ import ShareComponent from "../common/ShareComponent";
 import { useState, useEffect, useRef } from "react";
 import he from 'he';
 // import Link from "next/link";
+import { useMenu } from '@/context/MenuContext';
+import Pagination1 from "../common/Pagination1";
 
 export default function QuickView() {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { quickViewItem } = useContextElement();
   const { isAddedToCartProducts } = useContextElement();
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
@@ -100,14 +103,14 @@ export default function QuickView() {
     if(elm?.discount) {
       // console.log(current_date_time, new Date(elm.discount.start_date), new Date(elm.discount.end_date));
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">د.إ{elm?.price}</span> <span className="money price price-sale"> د.إ{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
+        return <><span className="money price price-old">{ currency.symbol }{elm?.price}</span> <span className="money price price-sale"> { currency.symbol }{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
       } else {
-        return <span className="money price">{elm?.price}د.إ</span>;
+        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-sale">د.إ {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}</span><span className="money price price-old">د.إ{elm?.price}</span> </>;
+      return <><span className="money price price-sale">{ currency.symbol }{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}</span><span className="money price price-old">{ currency.symbol }{elm?.price}</span> </>;
     } else {
-      return <span className="money price">{elm?.price}د.إ</span>;
+      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
     }
   };
 
@@ -116,6 +119,13 @@ export default function QuickView() {
               .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
               .join(' '); // Join the words back into a sentence
   }
+
+  // if (isMenuLoading) {
+  //   return <div><Pagination1 /></div>;
+  // }
+  // if (isMenuError) {
+  //   return <div>{ isMenuError }</div>;
+  // }
 
   return (
     <div className="modal fade" id="quickView" tabIndex="-1" ref={modalElement}>

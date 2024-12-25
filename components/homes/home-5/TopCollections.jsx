@@ -10,8 +10,11 @@ import Image from "next/image";
 import he from 'he';
 import Pagination1 from "../../common/Pagination1";
 import { useLocale } from "next-intl";
+import { useMenu } from '@/context/MenuContext';
+import Pagination1 from "../../common/Pagination1";
 
 export default function TopCollections() {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
@@ -113,6 +116,13 @@ export default function TopCollections() {
     cleanedStr = cleanedStr?.replace(/\s+/g, ' ').trim();
 
     return cleanedStr;
+  }
+
+  if (isMenuLoading) {
+      return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ isMenuError }</div>;
   }
 
   return loading ? <Pagination1 /> : (
@@ -244,15 +254,15 @@ export default function TopCollections() {
                         {elm.priceOld && (
                           <>
                             <span className="money price price-old">
-                              {elm.priceOld}د.إ
+                              {elm.priceOld}{ currency.symbol }
                             </span>
                             <span className="money price price-sale">
-                              {elm.price}د.إ
+                              {elm.price}{ currency.symbol }
                             </span>
                           </>
                         )}
                         {!elm.priceOld && (
-                          <span className="money price">{elm.price}د.إ</span>
+                          <span className="money price">{elm.price}{ currency.symbol }</span>
                         )}
                       </div>
                     </div>

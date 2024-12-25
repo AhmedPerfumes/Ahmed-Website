@@ -4,8 +4,11 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import Image from "next/image";
+import { useMenu } from '@/context/MenuContext';
+import Pagination1 from "../../common/Pagination1";
 
 export default function Lookbook() {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const [isMobile, setIsMobile] = useState(null);
 
   useEffect(() => {
@@ -15,6 +18,13 @@ export default function Lookbook() {
 
     setIsMobile(isMobileDevice());
   }, []);
+
+  if (isMenuLoading) {
+    return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ isMenuError }</div>;
+  }
 
   return (
     <div className="lookbook-products container position-relative">
@@ -56,7 +66,7 @@ export default function Lookbook() {
                     <p className="fw-medium mb-0">
                       <a href={`/product1_simple/${id}`}>{title}</a>
                     </p>
-                    <p className="mb-0">د.إ{price}</p>
+                    <p className="mb-0">{ currency.symbol }{price}</p>
                   </div>
                 )}
                 openOnClick

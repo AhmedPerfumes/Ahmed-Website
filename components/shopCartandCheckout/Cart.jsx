@@ -9,7 +9,7 @@ import { useMenu } from '../../context/MenuContext';
 import Pagination1 from "../common/Pagination1";
 
 export default function Cart() {
-  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
+  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
   // const [couponCode, setCouponCode] = useState("");
@@ -90,7 +90,7 @@ export default function Cart() {
     return <div><Pagination1 /></div>;
   }
   if (isMenuError) {
-    return <div>{ error }</div>;
+    return <div>{ isMenuError }</div>;
   }
 
   const currentUTC = new Date(); // Current UTC time
@@ -100,28 +100,28 @@ export default function Cart() {
   const subTotalPrice = (elm) => {
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</span>;
+        return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       } else {
-        return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}د.إ</span>;
+        return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     } else {
-      return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     }
   };
 
   const price = (elm) => {
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span>;
+        return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span>;
       } else {
-        return <span className="money price">{elm?.price}د.إ</span>;
+        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span>;
+      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}{ currency.symbol }</span>;
     } else {
-      return <span className="shopping-cart__product-price">{elm.price}د.إ</span>;
+      return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
     }
   };
 
@@ -266,7 +266,7 @@ export default function Cart() {
                 <tbody>
                   <tr>
                     <th>Subtotal</th>
-                    <td>{totalPrice.toFixed(2)}د.إ</td>
+                    <td>{totalPrice.toFixed(2)}{ currency.symbol }</td>
                   </tr>
                   <tr>
                     <th>Shipping</th>
@@ -295,7 +295,7 @@ export default function Cart() {
                         </div> :
                         <div className="form-check">
                           <label className="form-check-label" htmlFor="flat_rate">
-                            Shipping Cost: { shippingServiceCharges[0].price }د.إ
+                            Shipping Cost: { shippingServiceCharges[0].price }{ currency.symbol }
                           </label>
                         </div>
                       }
@@ -324,14 +324,14 @@ export default function Cart() {
                   </tr>
                   <tr>
                     <th>SERVICE FEE</th>
-                    <td>{ shippingServiceCharges[1].price }د.إ</td>
+                    <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
                   </tr>
                   <tr>
                     <th>Total</th>
                     <td>
                       {!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
-                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}{ currency.symbol } (includes { !freeShippingFlag ? (
                           (
                             (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -341,7 +341,7 @@ export default function Cart() {
                             0 +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(2)) }د.إ VAT)
+                          ).toFixed(2)) }{ currency.symbol } VAT)
                     </td>
                   </tr>
                 </tbody>

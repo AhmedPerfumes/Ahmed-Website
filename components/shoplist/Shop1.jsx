@@ -20,8 +20,10 @@ import he from 'he';
 import Slider from "rc-slider";
 
 import {useLocale} from 'next-intl';
+import { useMenu } from '@/context/MenuContext';
 
 export default function Shop1({ search }) {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const [selectedColView, setSelectedColView] = useState(3);
@@ -190,14 +192,14 @@ useEffect(() => {
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+        return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span></>;
       } else {
-        return <span className="money price">{elm?.price}د.إ</span>;
+        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}{ currency.symbol }</span></>;
     } else {
-      return <span className="money price">{elm?.price}د.إ</span>;
+      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
     }
   };
 
@@ -327,11 +329,11 @@ useEffect(() => {
                 <div className="price-range__info d-flex align-items-center mt-2">
                   <div className="me-auto">
                     <span className="text-secondary">Min Price: </span>
-                    <span className="price-range__max">{price[0]}د.إ</span>
+                    <span className="price-range__max">{price[0]}{ currency.symbol }</span>
                   </div>
                   <div>
                     <span className="text-secondary">Max Price: </span>
-                    <span className="price-range__min">{price[1]}د.إ</span>
+                    <span className="price-range__min">{price[1]}{ currency.symbol }</span>
                   </div>
                 </div>
             </div>

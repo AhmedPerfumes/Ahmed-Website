@@ -3,8 +3,11 @@
 import { useContextElement } from "@/context/Context";
 import he from 'he';
 import { useState, useEffect } from 'react';
+import { useMenu } from '@/context/MenuContext';
+import Pagination1 from "../common/Pagination1";
 
 export default function OrderPaymentCompleted({ orderDetails }) {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { setCartProducts } = useContextElement();
   const [showDate, setShowDate] = useState(false);
 
@@ -23,17 +26,27 @@ export default function OrderPaymentCompleted({ orderDetails }) {
       // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         // console.log('if...');
-        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // } else {
       //   console.log('else...');
-      //   return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+      //   return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // }
+    } else if(elm?.coupon) {
+        console.log('else if');
+        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     } else if(elm?.sale_price) {
-      return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     } else {
-      return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}د.إ</td>;
+        return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
+
+  if (isMenuLoading) {
+    return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ isMenuError }</div>;
+  }
 
   return (
     <>
@@ -67,7 +80,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{orderDetails.total}د.إ (includes { orderDetails.tax_amount }د.إ VAT)
+          <span>{orderDetails.total}{ currency.symbol } (includes { orderDetails.tax_amount }{ currency.symbol } VAT)
           </span>
         </div>
         <div className="order-info__item">
@@ -100,19 +113,19 @@ export default function OrderPaymentCompleted({ orderDetails }) {
             <tbody>
               <tr>
                 <th>SUBTOTAL</th>
-                <td>{orderDetails.sub_total}د.إ</td>
+                <td>{orderDetails.sub_total}{ currency.symbol }</td>
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * 1.05).toFixed(2) }د.إ`}</td>
+                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * 1.05).toFixed(2) }${ currency.symbol }`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
-                <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }د.إ</td>
+                <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }{ currency.symbol }</td>
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{orderDetails.total}د.إ (includes { orderDetails.tax_amount }د.إ VAT)
+                <td>{orderDetails.total}{ currency.symbol } (includes { orderDetails.tax_amount }{ currency.symbol } VAT)
                 </td>
               </tr>
             </tbody>

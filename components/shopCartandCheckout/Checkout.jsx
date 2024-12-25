@@ -22,7 +22,7 @@ import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 
 export default function Checkout() {
-  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError } = useMenu();
+  const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const router = useRouter();
   const locale = useLocale();
 
@@ -162,7 +162,8 @@ export default function Checkout() {
       totalPrice,
       finalPrice,
       customer_id: userJson ? userJson.id : null,
-      locale
+      locale,
+      couponCode
     }
  
     try {
@@ -407,11 +408,11 @@ export default function Checkout() {
       setCouponDataContext(null);
       return;
     }
-    // else if(!isOTPVerified) {
-    //   setCouponError('Verify Mobile Number First');
-    //   setCouponSuccess(null);
-    //   return;
-    // }
+    else if(!isOTPVerified) {
+      setCouponError('Verify Mobile Number First');
+      setCouponSuccess(null);
+      return;
+    }
     try {
       // Call your backend API or validation logic for the coupon code
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`, {
@@ -419,7 +420,7 @@ export default function Checkout() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ couponCode, mobile_number: '0503320383' }),
+        body: JSON.stringify({ couponCode, mobile_number: formData.billingAddress.mobile }),
       });
 
       const data = await res.json();
@@ -454,7 +455,7 @@ export default function Checkout() {
     return <div><Pagination1 /></div>;
   }
   if (isMenuError) {
-    return <div>{ error }</div>;
+    return <div>{ isMenuError }</div>;
   }
 
   const subTotalPrice = (elm) => {
@@ -462,21 +463,25 @@ export default function Checkout() {
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
+      console.log('if');
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
       } else {
-        return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+        return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
       }
     } else if(elm?.coupon && couponData != null && couponCode != null) {
+      console.log('else if');
       if(new Date(current_date_time) >= new Date(elm.coupon.start_date) && new Date(current_date_time) <= new Date(elm.coupon.end_date)) {
-        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+        return <td><span className="money price price-old">{elm?.price}{ currency.symbol }</span><span className="money price price-sale">{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></td>;
       } else {
-        return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+        return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
       }
     } else if(elm?.sale_price) {
-      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</td>;
+      console.log('else if 2');
+      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     } else {
-      return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+      console.log('else');
+      return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     }
   };
 
@@ -779,20 +784,20 @@ export default function Checkout() {
                   <tbody>
                     <tr>
                       <th>SUBTOTAL</th>
-                      <td>{totalPrice.toFixed(2)}د.إ</td>
+                      <td>{totalPrice.toFixed(2)}{ currency.symbol }</td>
                     </tr>
                     <tr>
                       <th>SHIPPING</th>
-                      <td>{freeShippingFlag ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }د.إ`}</td>
+                      <td>{freeShippingFlag ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol}`}</td>
                     </tr>
                     <tr>
                     <th>SERVICE FEE</th>
-                    <td>{ shippingServiceCharges[1].price }د.إ</td>
+                    <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
                     </tr>
                     <tr>
                       <th>TOTAL</th>
                       <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
-                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (
+                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}{ currency.symbol } (includes { !freeShippingFlag ? (
                           (
                             (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -802,7 +807,7 @@ export default function Checkout() {
                             0 +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(2)) }د.إ VAT)</td>
+                          ).toFixed(2)) }{ currency.symbol } VAT)</td>
                     </tr>
                   </tbody>
                 </table>
