@@ -1,6 +1,6 @@
 import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
-import Animation from "@/components/Animation";
+import Homepage from "@/components/Homepage";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import React from "react";
 import CanvasAnimation from "@/components/CanvasAnimation";
@@ -28,19 +28,12 @@ export default function HomePage8() {
         backgroundImage: `url(/assets/background-ivory.webp)`,
       }}
     >
-      <NewsLetter />
-      <Header14 />
-      <div className="d-none d-lg-block">
-        {/* CanvasAnimation will render first for large screens */}
-        <CanvasAnimation />
-      </div>
-      <div className="d-sm-block d-md-none">
-        {/* MobileAnimation will render for small screens */}
-        <MobileAnimation />
-      </div>
+      {/* <NewsLetter /> */}
+      {/* <Header14 /> */}
+
       <main id="">
         {/* Animation component will render after CanvasAnimation */}
-        <Animation />
+        <Homepage />
       </main>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
