@@ -276,14 +276,36 @@ export const slidesData3 = [
     subtitle: "evokes the spirit of royalty",
     href: "/shop/eau-de-parfum/occidental-fragrance/zumar",
   },
-  // {
-  //   id: 3,
-  //   imageSrc: "/assets/images/home/demo8/thaqaf-bnr.jpg",
-  //   season: "Summer 2023",
-  //   objectPosition: "50% center",
-  //   title: "New Arrival Kid’s",
-  //   subtitle: "Collection",
-  // },
+  {
+    id: 3,
+    imageSrc: "/assets/images/home/demo8/uae-final.jpg",
+    season: "",
+    objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "/shop/",
+  },
+];
+export const slidesData33 = [
+  {
+    id: 1,
+    imageSrc: "/assets/images/home/demo8/mobile.jpg",
+    season: "",
+    objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "/shop/",
+  },
+  {
+    id: 2,
+    imageSrc: "/assets/images/zumar-bnr.jpg",
+    season: "Lasting",
+    objectPosition: "70% center",
+    title: "Redefines luxury &",
+    subtitle: "evokes the spirit of royalty",
+    href: "/shop/eau-de-parfum/occidental-fragrance/zumar",
+  },
+
 ];
 export const slidesData4 = [
   {

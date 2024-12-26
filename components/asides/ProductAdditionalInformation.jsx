@@ -2,7 +2,7 @@
 
 import { closeModalProductAdditionalInformation } from "@/utlis/aside";
 import { useEffect } from "react";
-import AdditionalInfo from "../singleProduct/AdditionalInfo";
+import AdditionalInfoWithoutTrans from "../singleProduct/AdditionalInfoWithoutTrans";
 
 export default function ProductAdditionalInformation() {
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function ProductAdditionalInformation() {
       </div>
       {/* /.aside-header */}
       <div className="aside-content">
-        <AdditionalInfo />
+        <AdditionalInfoWithoutTrans />
       </div>
       {/* /.aside-content */}
     </div>

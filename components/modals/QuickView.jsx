@@ -66,7 +66,7 @@ export default function QuickView() {
   };
   const addToCart = () => {
     if (!isIncludeCard()) {
-      const item = quickViewItem;
+      const item = {...quickViewItem, category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')), subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))};
       item.quantity = quantity;
       setCartProducts((pre) => [...pre, item]);
       document
@@ -94,14 +94,28 @@ export default function QuickView() {
   }, []);
 
   const price = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}د.إ</span></>;
+      // console.log(current_date_time, new Date(elm.discount.start_date), new Date(elm.discount.end_date));
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <><span className="money price price-old">د.إ{elm?.price}</span> <span className="money price price-sale"> د.إ{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
+      } else {
+        return <span className="money price">{elm?.price}د.إ</span>;
+      }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{elm?.price}د.إ</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}د.إ</span></>;
+      return <><span className="money price price-sale">د.إ {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}</span><span className="money price price-old">د.إ{elm?.price}</span> </>;
     } else {
       return <span className="money price">{elm?.price}د.إ</span>;
     }
   };
+
+  function capitalizeEachWord(str) {
+    return str.split(' ') // Split the sentence into words
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+              .join(' '); // Join the words back into a sentence
+  }
 
   return (
     <div className="modal fade" id="quickView" tabIndex="-1" ref={modalElement}>

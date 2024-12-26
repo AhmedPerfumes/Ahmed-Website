@@ -95,11 +95,10 @@
   .skip-button2 {
     position: fixed;
     bottom: 60px;
-    left: 32%;
-    width: 100px; /* Make width a bit wider for a capsule look */
-    height: 60px; /* Reduce height to get a capsule shape */
-    border-radius: 30px; /* Apply uniform border-radius for capsule shape */
-    background-color: rgba(0, 0, 0, 0.178); /* Transparent background */
+    left: 35%;
+    width: auto; /* Adjust width to fit the text */
+    height: auto; /* Adjust height based on text content */
+    background-color: rgba(0, 0, 0, 0.397); /* Transparent background */
     color: rgb(255, 255, 255);
     font-size: 14px;
     cursor: pointer;
@@ -107,7 +106,10 @@
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
-    border: 2px solid white;
+    padding: 10px 20px; /* Add some padding for spacing */
+    text-align: center; /* Center align the text */
+    border: none; /* Remove all borders */
+    border-bottom: 2px solid white; /* Add bottom border */
 }
 
   
@@ -171,7 +173,7 @@
 
 .text-slide-container {
   position: fixed;
-  bottom: 10%; /* Position near the bottom */
+  bottom: 14%; /* Position near the bottom */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%);
   text-align: center;

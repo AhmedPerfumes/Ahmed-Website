@@ -355,7 +355,7 @@ h2, h3 {
     font-size: 18px;
   }
   .swiper-slide {
-    display: flex;
+    // display: flex;
     flex-direction: column;
     align-items: center;
   }
@@ -461,6 +461,9 @@ footer {
   line-height: 36px;
   text-decoration: none;
 
+}
+.swiper-center .swiper-wrapper{
+  justify-content: center;
 }
 // Mobile Slider css
 
@@ -570,6 +573,7 @@ footer {
   font-size: 14px;
   color: #af4c4c; /* Same green color as the progress bar */
 }
+
 .nav-circle-container {
   display: flex;
   justify-content: center;

@@ -5,6 +5,7 @@ import { useMenu } from '@/context/MenuContext';
 import { useEffect, useState } from "react";
 import he from 'he';
 import Link from "next/link";
+import Pagination1 from "../common/Pagination1";
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails } = useContextElement();
@@ -31,8 +32,19 @@ export default function OrderCompleted() {
   }
 
   const subTotalPrice = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}د.إ</td>;
+      console.log('...', elm.discount);
+      console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        console.log('if...');
+        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}د.إ</td>;
+      } else {
+        console.log('else...');
+        return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+      }
     } else if(elm?.sale_price) {
       return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
     } else {
@@ -67,12 +79,23 @@ export default function OrderCompleted() {
         </div>
         <div className="order-info__item">
           <label>Date</label>
-          {showDate && <span>{new Date().toLocaleDateString()}</span>}
+          {showDate && <span>{new Date().toLocaleDateString()}</span>} 
         </div>
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(shippingServiceCharges[0].price) + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</span>
+          <span>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (
+                (
+                  (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                  (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
+                  (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                ).toFixed(2)) : (
+                (
+                  0 +
+                  (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
+                  (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                ).toFixed(2)) }د.إ VAT)
+          </span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -116,7 +139,18 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(shippingServiceCharges[0].price) + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</td>
+                <td>{parseFloat(orderDetails.total).toFixed(2)}د.إ (includes { orderDetails.shipping_amount > 0 ? (
+                    (
+                      (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                      (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
+                      (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                    ).toFixed(2)) : (
+                    (
+                      0 +
+                      (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
+                      (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                    ).toFixed(2)) }د.إ VAT)
+                </td>
               </tr>
             </tbody>
           </table>

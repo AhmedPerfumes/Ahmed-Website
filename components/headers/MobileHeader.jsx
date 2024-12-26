@@ -19,6 +19,12 @@ export default function MobileHeader() {
 
   const [scrollDirection, setScrollDirection] = useState("down");
 
+  const [searchKeyWord, setSearchKeyWord] = useState("");
+
+  const handleChange = (event) => {
+    setSearchKeyWord(event.target.value);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -54,6 +60,28 @@ export default function MobileHeader() {
     // console.log(pathname, e.target.value);
     router.push(pathname, { locale: e.target.value });
   };
+
+  const onSearch = (event) => {
+    event.preventDefault();
+    window.location.href = `/${locale}/shop?q=${removeSpecialCharactersAndAmp(
+      searchKeyWord
+    )
+      .split(" ")
+      .join("-")}`;
+  };
+
+  function removeSpecialCharactersAndAmp(str) {
+    // Remove the specific word "&amp;"
+    let cleanedStr = str.replace(/&amp;/g, "");
+
+    // Remove all special characters
+    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, "");
+
+    // Replace multiple spaces with a single space and trim
+    cleanedStr = cleanedStr.replace(/\s+/g, " ").trim();
+
+    return cleanedStr;
+  }
 
   return (
     <div
@@ -112,7 +140,7 @@ export default function MobileHeader() {
       <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
         <div className="container">
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={onSearch}
             className="search-field position-relative mt-4 mb-3"
           >
             <div className="position-relative">
@@ -121,6 +149,8 @@ export default function MobileHeader() {
                 type="text"
                 name="search-keyword"
                 placeholder="Search products"
+                value={searchKeyWord}
+                onChange={handleChange}
               />
               <button
                 className="btn-icon search-popup__submit pb-0 me-2"
@@ -162,7 +192,7 @@ export default function MobileHeader() {
         </div>
         {/* <!-- /.container --> */}
 
-        <div className="border-top mt-auto pb-2">
+        <div className="border-top mt-2 pb-2">
           <div className="customer-links container mt-4 mb-2 pb-1">
             <svg
               className="d-inline-block align-middle"
@@ -178,7 +208,7 @@ export default function MobileHeader() {
               My Account
             </span>
           </div>
-
+      <div className="d-flex">
           <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
             <select
@@ -206,18 +236,19 @@ export default function MobileHeader() {
               className="form-select form-select-sm bg-transparent border-0"
               aria-label="Default select example"
               name="store-language"
-              defaultValue={"fghgjhgj"}
+              onChange={(e) => window.open(e.target.value,"_self")}
             >
               {currencyOptions.map((option, index) => (
                 <option
                   key={index}
                   className="footer-select__option"
-                  value={option.value}
+                  value={option.link}
                 >
                   {option.text}
                 </option>
               ))}
             </select>
+          </div>
           </div>
 
           <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">

@@ -4,6 +4,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Link from "next/link";
 import Hero from "@/components/homes/home-8/Hero";
+import Hero2 from "@/components/homes/home-8/Hero2";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "./footers/MobileFooter2";
 import VideoPanel from "./VideoPanel";
@@ -17,6 +18,8 @@ import MobileSlider from "./singleProduct/sliders/MobileSlider";
 import { duration } from "@mui/material";
 
 import { useLocale, useTranslations } from "next-intl";
+import { ArrowLeftOutlined, ArrowLeftRounded, ArrowLeftTwoTone, KeyboardArrowLeftRounded, KeyboardArrowRightRounded, MoveDownOutlined, RampLeft, SwipeLeft, SwipeLeftAltOutlined, SwipeLeftAltRounded, SwipeLeftRounded, SwipeRight } from "@mui/icons-material";
+import { FiArrowLeft, FiArrowLeftCircle, FiArrowRight, FiChevronsLeft } from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger);
 const Animation = () => {
@@ -83,22 +86,69 @@ const Animation = () => {
       circles.forEach((circle) => {
         circle.classList.remove("active");
       });
-
-      const activeCircle =
-        document.querySelectorAll(".nav-circle")[activeIndex];
+    
+      const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
       if (activeCircle) {
         activeCircle.classList.add("active");
       }
     }
-
+    
+    function updateNavCircle(activeIndex) {
+      const circles = document.querySelectorAll(".nav-circle");
+      circles.forEach((circle) => {
+        circle.classList.remove("active");
+      });
+    
+      const activeCircle = document.querySelectorAll(".nav-circle")[activeIndex];
+      if (activeCircle) {
+        activeCircle.classList.add("active");
+      }
+    }
+    
     function handleNavCircleClick(index) {
       swiper.slideTo(index);
+      updateNavCircle(index); // Update the circle based on the new slide
     }
-
+    
+    // Add functionality for left and right arrows
+    function handleArrowClick(direction) {
+      const activeIndex = swiper.realIndex; // Get the current active slide index
+      let newIndex = direction === 'left' ? activeIndex - 1 : activeIndex + 1;
+    
+      // Wrap around the slides when reaching the end or beginning
+      if (newIndex < 0) {
+        newIndex = swiper.slides.length - 1;
+      } else if (newIndex >= swiper.slides.length) {
+        newIndex = 0;
+      }
+    
+      swiper.slideTo(newIndex);
+      updateNavCircle(newIndex); // Update the circle based on the new slide
+    }
+    
+    // Attach event listeners to the navigation circles
     const navCircles = document.querySelectorAll(".nav-circle");
     navCircles.forEach((circle, index) => {
+      // Add mouse and touch events to handle clicks/taps on both desktop and mobile
       circle.addEventListener("click", () => handleNavCircleClick(index));
+      circle.addEventListener("touchstart", () => handleNavCircleClick(index)); // For mobile devices
     });
+    
+    // Attach event listeners to the left and right arrows
+    const leftArrow = document.querySelector(".left-arrow");
+    const rightArrow = document.querySelector(".right-arrow");
+    
+    if (leftArrow) {
+      leftArrow.addEventListener("click", () => handleArrowClick('left'));
+      leftArrow.addEventListener("touchstart", () => handleArrowClick('left')); // For mobile devices
+    }
+    
+    if (rightArrow) {
+      rightArrow.addEventListener("click", () => handleArrowClick('right'));
+      rightArrow.addEventListener("touchstart", () => handleArrowClick('right')); // For mobile devices
+    }
+    
+    
 
     gsap.utils.toArray(".testsect").forEach((section) => {
       const timeline = gsap.timeline({
@@ -154,9 +204,14 @@ const Animation = () => {
 
   return (
     <div id="main2">
-      <section className="vh-100 hero-banner">
-        <Hero />
+      <section className="vh-100 hero-banner d-none d-lg-block">
+        <Hero />     
+            
       </section>
+      <div className="d-sm-block d-md-none">
+      <Hero2/> 
+
+      </div>
       <section className="testsect bg-custom">
         <div className="panel2 position-relative d-flex justify-content-center">
           <img
@@ -214,7 +269,7 @@ const Animation = () => {
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
                             {t("Heart Notes: ")}
                           </span>
-                          {t("Jasmine Orchid Sugar Violet Incense Bakhoor")}
+                          {t("Jasmine Orchid Sugar Violet Icennse Bakhoor")}
                         </p>
                         <p>
                           <span style={{ color: "#bb8c1c", fontSize: "18px" }}>
@@ -715,7 +770,9 @@ const Animation = () => {
                         >
                           {t("Shop Now")}
                         </a>
+                        
                       </div>
+                      
                     </div>
                   </div>
                   <div className="centerrr">
@@ -735,6 +792,10 @@ const Animation = () => {
               </div>
             </div>
             <div className="nav-circle-container">
+              {/* <SwipeLeft style={{color: "#bb8c1c"}}/> */}
+              {/* <FiArrowLeft className="left-arrow" style={{ color: "#bb8c1c", cursor: "pointer" }} /> */}
+              <KeyboardArrowLeftRounded className="left-arrow" style={{ color: "#bb8c1c", cursor: "pointer" }}/>
+              
               <div className="nav-circle" data-target="#beach"></div>
               <div className="nav-circle" data-target="#savanna"></div>
               <div className="nav-circle" data-target="#glacier"></div>
@@ -745,6 +806,8 @@ const Animation = () => {
               <div className="nav-circle" data-target="#coral"></div>
               <div className="nav-circle" data-target="#coral"></div>
               <div className="nav-circle" data-target="#coral"></div>
+              {/* <SwipeRight style={{color: "#bb8c1c"}}/> */}
+              <KeyboardArrowRightRounded className="right-arrow" style={{ color: "#bb8c1c", cursor: "pointer" }} />
             </div>
           </div>
         </div>

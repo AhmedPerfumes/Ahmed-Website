@@ -377,8 +377,15 @@ export default function Checkout() {
   }
 
   const subTotalPrice = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}د.إ</td>;
+      } else {
+        return <td>{(elm.price * elm.quantity).toFixed(2)}د.إ</td>;
+      }
     } else if(elm?.sale_price) {
       return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}د.إ</td>;
     } else {
@@ -697,7 +704,18 @@ export default function Checkout() {
                     </tr>
                     <tr>
                       <th>TOTAL</th>
-                      <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (((parseFloat(shippingServiceCharges[0].price) + totalPrice) / 100) * vatTax.percentage).toFixed(2) : (((0 + totalPrice) / 100) * vatTax.percentage).toFixed(2) }د.إ VAT)</td>
+                      <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
+                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}د.إ (includes { !freeShippingFlag ? (
+                          (
+                            (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                            (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
+                            (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                          ).toFixed(2)) : (
+                          (
+                            0 +
+                            (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
+                            (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                          ).toFixed(2)) }د.إ VAT)</td>
                     </tr>
                   </tbody>
                 </table>

@@ -42,7 +42,7 @@ export default function Shop10({ subCategories, products }) {
   const [subCatProducts, setSubCatProducts] = useState(products);
 
   useEffect(() => {
-    if(subcategory || category == 'hair-mist' || category == 'gift-sets') {
+    if(subcategory || category == 'hair-mist' || category == 'gift-sets' || category == 'extrait-de-parfum') {
       setSubCatProducts(sortSubCategory(subCatProducts, sortOption));
     } else {
       setCatProducts(sortCategory(catProducts, sortOption));
@@ -83,7 +83,7 @@ export default function Shop10({ subCategories, products }) {
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
-    if(subcategory || category == 'hair-mist' || category == 'gift-sets') {
+    if(subcategory || category == 'hair-mist' || category == 'gift-sets' || category == 'extrait-de-parfum') {
       setSubCatProducts(sortSubCategory(subCatProducts, event.target.value));
     } else {
       setCatProducts(sortCategory(catProducts, event.target.value));
@@ -91,7 +91,9 @@ export default function Shop10({ subCategories, products }) {
   };
 
   return (
-    <section className="shop-main container">
+    <section className="gift-shop shop-main container">
+      <div id="next-section">
+      </div>
       <div className="d-flex justify-content-between mb-4 pb-md-2 border-bottom border-dark">
         <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
           <BreadCumb category={ category } subcategory={ subcategory }/>

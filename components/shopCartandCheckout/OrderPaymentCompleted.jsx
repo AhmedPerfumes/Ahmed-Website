@@ -14,6 +14,27 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     setCartProducts([]);
   }, []);
 
+  const subTotalPrice = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    if(elm?.discount_percent) {
+      console.log('...', elm.discount_percent);
+      // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
+      // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        // console.log('if...');
+        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}د.إ</td>;
+      // } else {
+      //   console.log('else...');
+      //   return <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>;
+      // }
+    } else if(elm?.sale_price) {
+      return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}د.إ</td>;
+    } else {
+      return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}د.إ</td>;
+    }
+  };
+
   return (
     <>
     {orderDetails.order_id ? <><div className="order-complete">
@@ -41,12 +62,13 @@ export default function OrderPaymentCompleted({ orderDetails }) {
         </div>
         <div className="order-info__item">
           <label>Date</label>
-          {showDate && <span>{new Date().toLocaleDateString()}</span>}
+          {showDate && <span>{new Date().toLocaleDateString()}</span>} 
         </div>
         <div className="order-info__item">
           <label>Total</label>
 
-          <span>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(orderDetails.shipping_amount) + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) }د.إ VAT)</span>
+          <span>{orderDetails.total}د.إ (includes { orderDetails.tax_amount }د.إ VAT)
+          </span>
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
@@ -69,7 +91,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
                   <td>
                     {he.decode(elm.product_name)} x {elm.qty}
                   </td>
-                  <td>{(elm.price * elm.qty).toFixed(2)}د.إ</td>
+                  { subTotalPrice(elm) }
                 </tr>
               ))}
             </tbody>
@@ -82,15 +104,16 @@ export default function OrderPaymentCompleted({ orderDetails }) {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ orderDetails.shipping_amount }د.إ`}</td>
+                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * 1.05).toFixed(2) }د.إ`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>
-                <td>{ orderDetails.service_amount }د.إ</td>
+                <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }د.إ</td>
               </tr>
               <tr>
                 <th>TOTAL</th>
-                <td>{orderDetails.total}د.إ (includes { orderDetails.shipping_amount > 0 ? (((parseFloat(orderDetails.shipping_amount) + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) : (((0 + orderDetails.sub_total) / 100) * orderDetails.vat_amount).toFixed(2) }د.إ VAT)</td>
+                <td>{orderDetails.total}د.إ (includes { orderDetails.tax_amount }د.إ VAT)
+                </td>
               </tr>
             </tbody>
           </table>

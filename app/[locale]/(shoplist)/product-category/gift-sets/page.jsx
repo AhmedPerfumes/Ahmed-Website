@@ -9,6 +9,8 @@ import Shop5 from "@/components/shoplist/Shop5";
 
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 
+import QuickView from "@/components/modals/QuickView";
+
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
   description: "Buy Best Perfumes Online Ahmed Perfume",
@@ -44,6 +46,7 @@ async function getCategorySubCategory(categoryName) {
       return data && (
       <>
       {/* <Loader/> */}
+        <QuickView />
         <Header14 />
         <main>
           <Shop5 />

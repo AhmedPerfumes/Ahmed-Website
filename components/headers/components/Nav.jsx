@@ -86,7 +86,7 @@ export default function Nav({ categoriesSubCategories }) {
         >
           { t(item.name) }
         </a>
-        { item.name != 'Hair Mist' &&
+        { item.name != 'Hair Mist' && item.name != 'Extrait De Parfum' ?
           <div className="mega-menu">
             <div className="container d-flex">
               <div className="col pe-4">
@@ -142,7 +142,7 @@ export default function Nav({ categoriesSubCategories }) {
               </div>
             </div>
             {/* <!-- /.container d-flex --> */}
-          </div>
+          </div> : null
         }
       </li>
     );

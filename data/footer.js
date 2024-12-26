@@ -1,12 +1,12 @@
 export const footerLinks1 = [
   { href: "/about", text: "Company Information" },
-  { href: "#", text: "Privacy Policy" },
-  { href: "#", text: "Terms & Conditions" },
+  { href: "/privacy", text: "Privacy Policy" },
+  { href: "/terms", text: "Terms & Conditions" },
   { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
   { href: "/export", text:"Worldwide Distributions"},
-  { href: "#", text:"Shipping & Delivery"},
-  { href: "#", text:"Refund Policy"}
+  { href: "/shipping-and-delivery", text:"Shipping & Delivery"},
+  { href: "/refund-policy", text:"Refund Policy"}
 ];
 export const footerLinks2 = [
   { href: "/shop-2", text: "Eau de Parfum" },

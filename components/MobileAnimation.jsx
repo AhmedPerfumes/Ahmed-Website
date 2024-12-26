@@ -38,6 +38,8 @@ const MobileAnimation = () => {
   };
 
   const skipAnimation = () => {
+    console.log("Skip button clicked");
+    
     const nextSection = document.getElementById("main2");
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
@@ -95,6 +97,11 @@ const MobileAnimation = () => {
       ></div>
 
       <hr id="the_detector" />
+      {showSkipButton && (
+        <button onClick={skipAnimation} className="skip-button2">
+          SKIP INTRO
+        </button>
+      )}
 
       {/* Text Slide Animations */}
       <div className="text-slide-container">
@@ -107,15 +114,6 @@ const MobileAnimation = () => {
               Step Into The World of Fragrance Wonders
             </h2>
           </>
-        )}
-
-        {showSkipButton && (
-          <button
-            onClick={skipAnimation}
-            className="d-block start-50 translate-middle-x text-white btn-link btn-link_lg default-underline text-uppercase fw-medium"
-          >
-            SKIP INTRO
-          </button>
         )}
       </div>
     </section>
