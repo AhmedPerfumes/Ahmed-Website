@@ -29,6 +29,8 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
+import { FacebookPixelEvents } from "@/components/Metapixel";
+
 
 const myFont = localFont({
   src: "../../public/assets/fonts/kanit/Kanit-Medium.ttf",
@@ -59,10 +61,13 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
   return (
     <html lang={locale} dir={locale == 'ar' ? 'rtl' : 'ltr'}>
       <body className={myFont.className}>
+        
       <NextIntlClientProvider messages={messages}>
         <Svgs />
         <Context>
+          
           <UserProvider>
+      <FacebookPixelEvents/>
             <MenuProvider>
               <MobileHeader />
                 {children}
@@ -87,6 +92,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <div className="page-overlay" id="pageOverlay"></div>
         <ScrollTop />
       </NextIntlClientProvider>
+      
       <script src="/assets/scroll-frames.js"></script>
       </body>
     </html>
