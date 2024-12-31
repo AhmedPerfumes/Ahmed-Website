@@ -362,7 +362,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Kaaf")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 90.00</h2>
+                      <h2 className="mainnn-subtitle">د.إ 100.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -388,7 +388,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/kaaf`}
+                          href={`/${locale}/shop/extrait-de-parfum/extrait-de-parfum/kaaf`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
