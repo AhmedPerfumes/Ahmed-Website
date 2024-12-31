@@ -823,7 +823,6 @@ export default function Checkout() {
                     type="text"
                     name="coupon_code"
                     placeholder="Coupon Code"
-                    required
                     value={couponCode}
                     onChange={handleCouponChange}
                   />

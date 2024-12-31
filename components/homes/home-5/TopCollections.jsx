@@ -11,7 +11,7 @@ import he from 'he';
 import Pagination1 from "../../common/Pagination1";
 import { useLocale } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
-import Pagination1 from "../../common/Pagination1";
+// import Pagination1 from "../../common/Pagination1";
 
 export default function TopCollections() {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
