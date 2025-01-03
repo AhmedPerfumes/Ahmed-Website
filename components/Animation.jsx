@@ -362,7 +362,7 @@ const Animation = () => {
                     <div className="mainnn-wrapper">
                       <h3 className="mainnn-header">{t("Best Sellers")}</h3>
                       <h1 className="mainnn-title">{t("Kaaf")}</h1>
-                      <h2 className="mainnn-subtitle">د.إ 90.00</h2>
+                      <h2 className="mainnn-subtitle">د.إ 100.00</h2>
                     </div>
                     <div className="mainnn-content">
                       <div className="mainnn-content__title ">
@@ -388,7 +388,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/kaaf`}
+                          href={`/${locale}/shop/extrait-de-parfum/extrait-de-parfum/kaaf`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -963,33 +963,37 @@ const Animation = () => {
         </div>
 
         <div className="panel2 mt-5">
-          <div className="d-flex flex-column align-items-center justify-content-center">
-            <h3 className="text-center">
-              {t("Essence of Arabia")}
-              {/* Carefully <span className="s-font">selected ingredients</span> */}
-            </h3>
-            <p className="text-center px-3">{t("Step into")}</p>
-            <div className="mt-4">
-              <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
-                <img
-                  className="w-50 px-1"
-                  src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
-                  alt="Image 1"
-                />
-              </a>
-              <a href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
-                <img
-                  className="w-50 px-1"
-                  src="/assets/images/home/demo8/Oud-Asateen.jpg"
-                  alt="Image 1"
-                />
-              </a>
-            </div>
-          </div>
-          <div className="inner2 mt-5">
-            <Categories />
-          </div>
-        </div>
+  <div className="d-flex flex-column align-items-center justify-content-center">
+    <h3 className="text-center">
+      {t("Essence of Arabia")}
+    </h3>
+    <p className="text-center px-3">{t("Step into")}</p>
+    <div className="row mt-4 justify-content-center">
+      <div className="col-6 col-md-4 px-1">
+        <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
+          <img
+            className="w-100"
+            src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+            alt="Bakhoor Ahmed"
+          />
+        </a>
+      </div>
+      <div className="col-6 col-md-4 px-1">
+        <a href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
+          <img
+            className="w-100"
+            src="/assets/images/home/demo8/Oud-Asateen.jpg"
+            alt="Oud Asateen"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div className="inner2 mt-5">
+    <Categories />
+  </div>
+</div>
+
 
         <div className="panel2 mt-5">
           <div className="d-flex flex-column align-items-center justify-content-center">

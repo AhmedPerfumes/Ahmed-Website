@@ -17,6 +17,7 @@ function ShippingDelivery() {
         backgroundImage: `url(/assets/background-ivory.webp)`,
       }}> 
         <Header14/>
+        
         <Shipping/>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />

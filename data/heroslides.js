@@ -2,52 +2,43 @@ export const slides1 = [
   {
     id: 1,
 
-    characterImg: "/assets/images/slideshow-character1.png",
+    characterImg: "/assets/images/home/demo5/mobile-city.jpg",
     characterAlt: "Woman Fashion 1",
     characterText: "Summer",
     text1: "New Trend",
     text2: "Summer Sale Stylish",
     text3: "Womens",
   },
-  {
-    id: 2,
-
-    characterImg: "/assets/images/slideshow-character2.png",
-    characterAlt: "Woman Fashion 2",
-    characterText: "",
-    text1: "Summer 2020",
-    text3: "Hello New Season",
-    text4: "Limited Time Offer - Up to 60% off & Free Shipping",
-  },
+  
 ];
 export const slides2 = [
   {
     id: 1,
-    imageSrc: "/assets/images/home/demo2/slider1.jpg",
+    imageSrc: "/assets/images/home/demo5/city-walk.jpg",
     imageAlt: "Pattern",
     imageStyle: { objectPosition: "80% center" },
-    season: "Summer 2023",
-    title: "Hello New Season",
-    discount: "Limited time offer - up to 60% off & free shipping",
+    season: "",
+    title: "",
+    discount: "",
   },
-  {
-    id: 2,
-    imageSrc: "/assets/images/home/demo2/slider2.jpg",
-    imageAlt: "Pattern",
-    imageStyle: { objectPosition: "70% center" },
-    season: "Summer 2023",
-    title: "Hello New Season",
-    discount: "Limited time offer - up to 60% off & free shipping",
-  },
-  {
-    id: 3,
-    imageSrc: "/assets/images/home/demo2/slider3.jpg",
-    imageAlt: "Pattern",
-    imageStyle: { objectPosition: "70% center" },
-    season: "Summer 2023",
-    title: "Hello New Season",
-    discount: "Limited time offer - up to 60% off & free shipping",
-  },
+  // {
+  //   id: 2,
+  //   imageSrc: "/assets/images/home/demo2/slider2.jpg",
+  //   imageAlt: "Pattern",
+  //   imageStyle: { objectPosition: "70% center" },
+  //   season: "Summer 2023",
+  //   title: "Hello New Season",
+  //   discount: "Limited time offer - up to 60% off & free shipping",
+  // },
+  // {
+  //   id: 3,
+  //   imageSrc: "/assets/images/home/demo2/slider3.jpg",
+  //   imageAlt: "Pattern",
+  //   imageStyle: { objectPosition: "70% center" },
+  //   season: "Summer 2023",
+  //   title: "Hello New Season",
+  //   discount: "Limited time offer - up to 60% off & free shipping",
+  // },
 ];
 export const slides3 = [
   {
@@ -143,7 +134,7 @@ export const slides6 = [
   {
     id: 1,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
+    imgSrc: "/assets/images/home/demo5/city-walk.jpg",
     title: "",
   },
   {
@@ -274,11 +265,11 @@ export const slidesData3 = [
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
-    href: "/shop/eau-de-parfum/occidental-fragrance/zumar",
+    href: "/shop/extrait-de-parfum/extrait-de-parfum/zumar",
   },
   {
     id: 3,
-    imageSrc: "/assets/images/home/demo8/uae-final.jpg",
+    imageSrc: "/assets/images/home/demo8/raffle-draw.jpg",
     season: "",
     objectPosition: "50% center",
     title: "",
@@ -289,7 +280,7 @@ export const slidesData3 = [
 export const slidesData33 = [
   {
     id: 1,
-    imageSrc: "/assets/images/home/demo8/mobile.jpg",
+    imageSrc: "/assets/images/home/demo8/raffle-draw-mobile.jpg",
     season: "",
     objectPosition: "50% center",
     title: "",
