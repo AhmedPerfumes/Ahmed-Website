@@ -170,7 +170,7 @@ export default function OrderTrack() {
         <div className="checkout__totals-wrapper">
           <div className="checkout__totals">
             <h3>Order Details</h3>
-            <h4>Status: <span>{orderDetails.status.label}</span></h4>
+            {orderDetails.payment_status != 'failed' ? <h4>Status: <span>{orderDetails.status.label}</span></h4> : <h4>Status: <span>{orderDetails.payment_status}</span></h4>}
             <table className="checkout-cart-items">
               <thead>
                 <tr>
