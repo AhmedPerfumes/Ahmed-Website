@@ -265,7 +265,7 @@ export const slidesData3 = [
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
-    href: "/shop/eau-de-parfum/occidental-fragrance/zumar",
+    href: "/shop/extrait-de-parfum/extrait-de-parfum/zumar",
   },
   {
     id: 3,
