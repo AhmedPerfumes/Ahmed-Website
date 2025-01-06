@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function Nav({ categoriesSubCategories }) {
+  // console.log('000000000', categoriesSubCategories);
   const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
@@ -86,7 +87,7 @@ export default function Nav({ categoriesSubCategories }) {
         >
           { t(item.name) }
         </a>
-        { item.name != 'Hair Mist' && item.name != 'Extrait De Parfum' ?
+        { item.productSubCategories.length > 0 ?
           <div className="mega-menu">
             <div className="container d-flex">
               <div className="col pe-4">
