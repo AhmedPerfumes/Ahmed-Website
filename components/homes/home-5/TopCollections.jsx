@@ -173,7 +173,7 @@ export default function TopCollections() {
                   <SwiperSlide key={i} className="swiper-slide product-card">
                     <div className="pc__img-wrapper">
                       {/* {elm?.images && JSON.parse(elm.images).map((image, ind) => ( */}
-                        <a href={`/${locale}/shop/collections/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>
+                        <a href={`/${locale}/shop/online-exclusive/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>
                         {JSON.parse(elm.images)[0] && <Image
                             loading="lazy"
                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
@@ -248,7 +248,7 @@ export default function TopCollections() {
                     <div className="pc__info position-relative">
                       {/* <p className="pc__category">{elm.category}</p> */}
                       <h6 className="pc__title">
-                      <a href={`/${locale}/shop/collections/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                      <a href={`/${locale}/shop//online-exclusive/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
                       </h6>
                       <div className="product-card__price d-flex">
                         {elm.priceOld && (

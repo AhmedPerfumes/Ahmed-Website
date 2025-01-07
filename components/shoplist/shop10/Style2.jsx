@@ -64,8 +64,10 @@ export default function Style2({ category, subcategory, products }) {
       subcat = "gift-sets";
     } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
       subcat = "hair-mist";
-    } else {
+    } else if (removeSpecialCharactersAndAmp(category) == "xtrait-de-parfum") {
       subcat = "extrait-de-parfum";
+    } else {
+      subcat = "online-exclusive";
     }
   }
 
