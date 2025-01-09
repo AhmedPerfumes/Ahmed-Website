@@ -1007,6 +1007,7 @@ const Animation = () => {
             >
               {t("Discover More")}
             </a>
+            
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
             <a href={`/${locale}/export`}>
