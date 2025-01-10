@@ -280,7 +280,7 @@ export const slidesData3 = [
 export const slidesData33 = [
   {
     id: 3,
-    imageSrc: "/assets/images/home/demo8/raffle-draw-mobile.jpg",
+    imageSrc: "/assets/images/home/demo8/raffle-draw-mobile-new.jpg",
     season: "",
     objectPosition: "50% center",
     title: "",
