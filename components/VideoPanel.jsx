@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ src, wid }) => {
   const videoRef = useRef(null);
 
   const [isInView, setIsInView] = useState(false);
@@ -49,7 +49,7 @@ const VideoPlayer = ({ src }) => {
       muted
       playsInline
       loop
-      style={{ width: "100%", height: "auto" }}
+      style={{ width: wid ? "70%" : "100%", height: "auto" }}
     >
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
