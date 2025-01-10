@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import he from 'he';
 import { useLocale } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
+import VideoPanel from "../VideoPanel";
 
 export default function CartDrawer() {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -161,8 +162,15 @@ export default function CartDrawer() {
             Your cart is empty. Start shopping!
           </div>
         )}
-        
         <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
+        {/* <Image
+          loading="lazy"
+          src={"/assets/images/home/demo8/square banner final.jpg"}
+          width={200}
+          height={200}
+          alt="image"
+        /> */}
+        <VideoPanel src="/assets/videos/popup video.mp4" />
         <div className="free-shipping-progress mt-3">
               {totalPrice < freeShippingThreshold ? (
                 <div>

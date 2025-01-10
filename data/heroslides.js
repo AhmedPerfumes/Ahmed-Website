@@ -256,7 +256,7 @@ export const slidesData3 = [
     objectPosition: "50% center",
     title: "Feel Luxurious",
     subtitle: "with",
-    href: "/shop/eau-de-parfum/occidental-fragrance/ignite-rose",
+    href: "shop/perfumes/occidental-fragrance/ignite-rose",
   },
   {
     id: 2,
@@ -265,21 +265,21 @@ export const slidesData3 = [
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
-    href: "/shop/perfumes/occidental-fragrance/zumar",
+    href: "shop/perfumes/occidental-fragrance/zumar",
   },
   {
     id: 3,
-    imageSrc: "/assets/images/home/demo8/raffle-draw.jpg",
+    imageSrc: "/assets/images/home/demo8/shop-and-win.jpg",
     season: "",
     objectPosition: "50% center",
     title: "",
     subtitle: "",
-    href: "/shop/",
+    href: "shop/",
   },
 ];
 export const slidesData33 = [
   {
-    id: 1,
+    id: 3,
     imageSrc: "/assets/images/home/demo8/raffle-draw-mobile.jpg",
     season: "",
     objectPosition: "50% center",
@@ -294,7 +294,7 @@ export const slidesData33 = [
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
-    href: "/shop/eau-de-parfum/occidental-fragrance/zumar",
+    href: "shop/perfumes/occidental-fragrance/zumar",
   },
 
 ];
@@ -503,12 +503,19 @@ export const slideData1000 = [
     description:
       "A huge selection of best fragrance",
   },
+  // {
+  //   id: 3,
+  //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+  //   title: "Natural Glow",
+  //   description:
+  //     "FOR ANY INQUIRIES, PLEASE CONTACT OUR CUSTOMER CARE TEAM AT +800 472 1828",
+  // },
   {
     id: 3,
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "Natural Glow",
     description:
-      "FOR ANY INQUIRIES, PLEASE CONTACT OUR CUSTOMER CARE TEAM AT +800 472 1828",
+      "Purchase above AED 250 and get a chance to WIN big",
   },
 ];
 

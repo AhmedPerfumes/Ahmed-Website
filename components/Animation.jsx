@@ -1038,7 +1038,7 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <VideoPanel src="/assets/videos/ignite-rose-mobile.mp4" />
+            <VideoPanel src="/assets/videos/zumar-video.mp4" />
           </div>
         </div>
         <div className="mobilepanel ">
