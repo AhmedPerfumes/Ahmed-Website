@@ -283,7 +283,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
+                          href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -335,7 +335,7 @@ const Animation = () => {
                       </div>
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/ignite-oud`}
+                          href={`/${locale}/shop/perfumes/oriental-fragrance/ignite-oud`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -388,7 +388,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/extrait-de-parfum/extrait-de-parfum/kaaf`}
+                          href={`/${locale}/shop/perfumes/oriental-fragrance/kaaf`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -441,7 +441,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/laathani`}
+                          href={`/${locale}/shop/perfumes/oriental-fragrance/laathani`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -500,7 +500,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/marj`}
+                          href={`/${locale}/shop/perfumes/occidental-fragrance/marj`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -553,7 +553,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/musk-roses`}
+                          href={`/${locale}/shop/perfumes/occidental-fragrance/musk-roses`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -606,7 +606,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-roses`}
+                          href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -659,7 +659,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`}
+                          href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -712,7 +712,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`}
+                          href={`/${locale}/shop/perfumes/occidental-fragrance/rose-noir`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -765,7 +765,7 @@ const Animation = () => {
 
                       <div className="moreee-menu pt-5">
                         <a
-                          href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/summer-oud`}
+                          href={`/${locale}/shop/perfumes/occidental-fragrance/summer-oud`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
@@ -1039,7 +1039,7 @@ const Animation = () => {
         &nbsp;&nbsp;&nbsp;
         <div className="mobilepanel">
           <div className="inner d-flex align-items-center">
-            <VideoPanel src="/assets/videos/ignite-rose-mobile.mp4" />
+            <VideoPanel src="/assets/videos/zumar-video.mp4" />
           </div>
         </div>
         <div className="mobilepanel ">

@@ -1,28 +1,55 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ src, wid }) => {
   const videoRef = useRef(null);
 
-  useEffect(() => {
-    // Ensure the code runs only on the client-side (browser)
-    if (typeof window !== "undefined" && videoRef.current) {
-      const video = videoRef.current;
+  const [isInView, setIsInView] = useState(false);
 
-      // Try to autoplay the video on page load
-      video.play().catch((error) => {
-        console.log("Autoplay blocked or failed:", error);
+  useEffect(() => {
+    const video = videoRef.current;
+
+    // Check if the video element is in the viewport
+    const handleIntersection = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Play the video when it comes into the viewport
+          setIsInView(true);
+          video.play().catch((error) => {
+            console.log("Autoplay blocked or failed:", error);
+          });
+        } else {
+          // Optionally pause the video when it's out of view
+          setIsInView(false);
+          video.pause();
+        }
       });
+    };
+
+    // Create the Intersection Observer
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.5, // Trigger when 50% of the video is visible
+    });
+
+    if (video) {
+      observer.observe(video);
     }
+
+    // Clean up observer on component unmount
+    return () => {
+      if (video) {
+        observer.unobserve(video);
+      }
+    };
   }, []);
 
   return (
     <video
       ref={videoRef}
-      autoPlay
+      // autoPlay
       muted
       playsInline
       loop
-      style={{ width: "100%", height: "auto" }}
+      style={{ width: wid ? "70%" : "100%", height: "auto" }}
     >
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.

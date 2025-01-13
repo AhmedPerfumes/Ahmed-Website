@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
+import VideoPanel from "../VideoPanel";
 
 export default function NewsLetter() {
   const modalElement = useRef(null);
@@ -28,7 +29,7 @@ export default function NewsLetter() {
 
     // Handle scroll event
     const handleScroll = () => {
-      if (window.scrollY > 5900 && !hasScrolled) {
+      if (window.scrollY > 3500 && !hasScrolled) {
         showModal();
       }
     };
@@ -69,7 +70,7 @@ export default function NewsLetter() {
           <div className="row p-0 m-0">
             <div className="col-md-8 p-0">
               <div className="newsletter-popup__bg h-100 w-100">
-                <Image
+                {/* <Image
                   width={550}
                   height={650}
                   style={{ height: "fit-content" }}
@@ -77,25 +78,28 @@ export default function NewsLetter() {
                   src="/assets/images/home/demo8/zumar.jpg"
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"
-                />
+                /> */}
+                <VideoPanel src="/assets/videos/popup video.mp4" />
               </div>
             </div>
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
-                <h3 className="section-title fw-normal mb-3 pb-2">
-                  Exclusive Launch
+                <h3 className="section-title fw-normal mb-3 pb-2" style={{ color: '#cfa91a' }}>
+                  SHOP & WIN
                   {/* Coming Soon */}
                 </h3>
                 <p>
-                  Be the first to embrace the elegance of <b>Zumar</b>, our
-                  exclusive, limited-edition fragrance. <br />
-                  <b className="sub-title">Don't miss out.</b>
+                  Purchase above AED 250 and get a chance to WIN. <br />
+                  Valid till 30th Jan 2025. <br />
+                  Terms & Conditions apply.
+                  {/* <b className="sub-title">Don't miss out.</b> */}
+
                 </p>
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/shop/perfumes/occidental-fragrance/zumar`}
+                  href={`/${locale}/shop`}
                 >
-                  Explore
+                  Shop Now
                 </a>
               </div>
             </div>
