@@ -29,7 +29,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
-import { FacebookPixelEvents } from "@/components/Metapixel";
+// import { FacebookPixelEvents } from "@/components/Metapixel";
 import Head from "next/head";
 
 
@@ -95,7 +95,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <Context>
           
           <UserProvider>
-            <FacebookPixelEvents/>
+            {/* <FacebookPixelEvents/> */}
             <MenuProvider>
               <MobileHeader />
                 {children}
