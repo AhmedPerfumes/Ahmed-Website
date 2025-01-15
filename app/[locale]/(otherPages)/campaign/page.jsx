@@ -6,7 +6,7 @@ import Header14 from "@/components/headers/Header14";
 
 
 import React from "react";
-import Loader from "@/components/loader/Loader";
+// import Loader from "@/components/loader/Loader";
 import CityWalk from "@/components/campagin/Citywalk";
 
 export const metadata = {
@@ -20,7 +20,7 @@ export const metadata = {
 const Citywalk = () => {
   return (
     <>
-      <Loader/>
+      {/* <Loader/> */}
       <Header14 />
    <CityWalk/>
     

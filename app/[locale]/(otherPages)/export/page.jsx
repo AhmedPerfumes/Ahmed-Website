@@ -7,7 +7,7 @@ import Contact from "@/components/otherPages/Contact/Contact";
 import LocationMap from "@/components/otherPages/Contact/LocationMap";
 
 import React from "react";
-import Loader from "@/components/loader/Loader";
+// import Loader from "@/components/loader/Loader";
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -20,7 +20,7 @@ export const metadata = {
 const ExportPage = () => {
   return (
     <>
-      <Loader/>
+      {/* <Loader/> */}
       <Header14 />
       <Export />
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
