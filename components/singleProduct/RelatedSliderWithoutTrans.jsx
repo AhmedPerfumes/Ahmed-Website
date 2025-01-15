@@ -95,7 +95,7 @@ export default function RelatedSlider({ relatedProds }) {
           {relatedProds && relatedProds.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide product-card">
               <div className="pc__img-wrapper">
-                <a href={`/en/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                <Link href={`/en/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                   {elm?.images &&
                     // JSON.parse(elm.images).map((image, ind) => (
                         <>
@@ -121,7 +121,7 @@ export default function RelatedSlider({ relatedProds }) {
                         </>
                     // ))
                     }
-                </a>
+                </Link>
                   {elm?.label_name && (
                   <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                     { elm?.label_name }
@@ -158,7 +158,7 @@ export default function RelatedSlider({ relatedProds }) {
               <div className="pc__info position-relative">
                 <p className="pc__category">{elm.category_name}</p>
                 <h6 className="pc__title">
-                  <a href={`/en/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</a>
+                  <Link href={`/en/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${elm.subcategory && removeSpecialCharactersAndAmp(elm.subcategory.subcategory_name).split(" ").join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   { price(elm) }

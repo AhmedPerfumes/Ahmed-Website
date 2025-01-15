@@ -113,7 +113,7 @@ export default function Style2({ category, subcategory, products }) {
                   }}
                 >
                   <SwiperSlide key={i} className="swiper-slide">
-                    <a
+                    <Link
                       href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                         category
                       )}/${subcat}/${removeSpecialCharactersAndAmp(
@@ -148,7 +148,7 @@ export default function Style2({ category, subcategory, products }) {
                             </>
                         // ))
                         }
-                      </a>
+                      </Link>
                       {elm?.label_name && (
                         <div
                           style={{ backgroundColor: elm.label_color }}
@@ -197,7 +197,7 @@ export default function Style2({ category, subcategory, products }) {
                 </Swiper>
               ) : (
                 <>
-                  <a
+                  <Link
                     href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                       category
                     )}/${subcat}/${removeSpecialCharactersAndAmp(
@@ -213,13 +213,13 @@ export default function Style2({ category, subcategory, products }) {
                       className=""
                       alt="image"
                     />
-                  </a>
+                  </Link>
                   <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
                     <h2 className="fs-30 fw-normal text-uppercase mb-0 text-white cat-title">
                       {elm?.product_name && he.decode(elm?.product_name)}
                     </h2>
                     <p className="mb-4 text-white">Exclusive Launch</p>
-                    <a
+                    <Link
                       className="btn btn-outline-primary rounded-pill border-0 fs-base text-uppercase fw-medium btn-45 d-inline-flex align-items-center"
                       href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                         category
@@ -228,7 +228,7 @@ export default function Style2({ category, subcategory, products }) {
                       )?.toLowerCase()}`}
                     >
                       <span>Explore</span>
-                    </a>
+                    </Link>
                   </div>
                 </>
               )}
@@ -287,7 +287,7 @@ export default function Style2({ category, subcategory, products }) {
               <div className="pc__info position-relative">
                 {/* <p className="pc__category text-beige">{elm.category}</p> */}
                 <h6 className="pc__title">
-                  <a
+                  <Link
                     href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                       category
                     )}/${subcat}/${removeSpecialCharactersAndAmp(
@@ -298,7 +298,7 @@ export default function Style2({ category, subcategory, products }) {
                       .toLowerCase()}`}
                   >
                     {elm?.product_name && t(he.decode(elm?.product_name))}
-                  </a>
+                  </Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   { price(elm) }

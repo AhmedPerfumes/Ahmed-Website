@@ -33,7 +33,7 @@ export default function Hero() {
         <SwiperSlide key={i} className="swiper-slide">
           <div className="overflow-hidden position-relative h-100">
             <div className="slideshow-bg">
-              <a href={`${locale}/${elm.href}`}>
+              <Link href={`${locale}/${elm.href}`}>
                 <Image
                   loading="lazy"
                   src={elm.imageSrc}
@@ -42,7 +42,7 @@ export default function Hero() {
                   alt="image"
                   className="slideshow-bg__img"
                 />
-              </a>
+              </Link>
             </div>
             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
               {elm.id != 3 && <h6 className="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3 text-white">

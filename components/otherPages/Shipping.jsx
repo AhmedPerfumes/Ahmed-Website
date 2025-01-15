@@ -14,7 +14,7 @@ function Shipping() {
         Due to strict International trading agreements and regulations, we are unable to ship the fragrance to other countries except for this country. As of now, we can ship the goods only locally! 
         </p>
         <p className='mt-5 fs-5 mb-5 pb-5'>
-        For more details visit: <a href="https://www.ahmed-perfume.com/en/export">WorldWide Distributions</a> 
+        For more details visit: <Link href="https://www.ahmed-perfume.com/en/export">WorldWide Distributions</Link> 
         </p>
 
     </div>

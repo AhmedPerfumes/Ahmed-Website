@@ -96,7 +96,7 @@ export default function Blog1() {
           {/* <h2 className="page-title">The Blog</h2> */}
           {/* <div className="blog__filter">
             {categories.map((elm, i) => (
-              <a
+              <Link
                 onClick={() => setActiveCategory(elm)}
                 key={i}
                 className={`menu-link menu-link_us-s ${
@@ -104,7 +104,7 @@ export default function Blog1() {
                 }`}
               >
                 {elm}
-              </a>
+              </Link>
             ))}
           </div> */}
         </div>
@@ -132,16 +132,16 @@ export default function Blog1() {
                   <span className="blog-grid__item-meta__date">{new Date(elm.created_at).toLocaleDateString()}</span>
                 </div>
                 <div className="blog-grid__item-title">
-                  <a href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</a>
+                  <Link href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
                 </div>
                 <div className="blog-grid__item-content">
                   <p>{elm.description}</p>
-                  <a
+                  <Link
                     href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                     className="readmore-link"
                   >
                     Continue Reading
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -282,12 +282,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -334,12 +334,12 @@ const Animation = () => {
                         </p>
                       </div>
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/oriental-fragrance/ignite-oud`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -387,12 +387,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/oriental-fragrance/kaaf`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -440,12 +440,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/oriental-fragrance/laathani`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -499,12 +499,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/occidental-fragrance/marj`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -552,12 +552,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/occidental-fragrance/musk-roses`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -605,12 +605,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -658,12 +658,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -711,12 +711,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/occidental-fragrance/rose-noir`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -764,12 +764,12 @@ const Animation = () => {
                       </div>
 
                       <div className="moreee-menu pt-5">
-                        <a
+                        <Link
                           href={`/${locale}/shop/perfumes/occidental-fragrance/summer-oud`}
                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                         >
                           {t("Shop Now")}
-                        </a>
+                        </Link>
                         
                       </div>
                       
@@ -838,13 +838,13 @@ const Animation = () => {
               )}
             </p>
           </div>
-          <a
+          <Link
             href="#footer"
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
             {t("Scroll To Discover More")}
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -866,12 +866,12 @@ const Animation = () => {
             <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
           </div>
 
-          <a
+          <Link
             href={`/${locale}/shop`}
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
           >
             {t("Discover More")}
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -896,13 +896,13 @@ const Animation = () => {
               )}
             </p>
           </div>
-          <a
+          <Link
             href="#footer"
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
             {t("Scroll To Discover More")}
-          </a>
+          </Link>
         </div>
       </section>
       {/* <div className="mb-4 pb-4 mb-xl-4 mt-xl-3 pt-xl-3 pb-xl-4 zoom_img"></div> */}
@@ -938,13 +938,13 @@ const Animation = () => {
               )}
             </p>
           </div>
-          <a
+          <Link
             href="#footer"
             className="d-block position-absolute start-50 translate-middle-x text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
             style={{ bottom: "0" }}
           >
             {t("Scroll To Discover More")}
-          </a>
+          </Link>
         </div>
       </section>
       {/* Full screen vertical Scroll Slider */}
@@ -970,22 +970,22 @@ const Animation = () => {
     <p className="text-center px-3">{t("Step into")}</p>
     <div className="row mt-4 justify-content-center">
       <div className="col-6 col-md-4 px-1">
-        <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
+        <Link href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
           <img
             className="w-100"
             src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
             alt="Bakhoor Ahmed"
           />
-        </a>
+        </Link>
       </div>
       <div className="col-6 col-md-4 px-1">
-        <a href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
+        <Link href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
           <img
             className="w-100"
             src="/assets/images/home/demo8/Oud-Asateen.jpg"
             alt="Oud Asateen"
           />
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -1001,28 +1001,28 @@ const Animation = () => {
               {t("Reaching Every Corner of the World")}
             </h3>
             <p className="text-center px-3">{t("Exports Text")}</p>
-            <a
+            <Link
               href={`/${locale}/export`}
               className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
             >
               {t("Discover More")}
-            </a>
+            </Link>
           </div>
           <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
-            <a href={`/${locale}/export`}>
+            <Link href={`/${locale}/export`}>
               <img
                 className="px-2 w-100 w-md-auto"
                 src="/assets/images/home/demo8/export/aqua-oud.jpg"
                 alt="Image 1"
               />
-            </a>
-            <a href={`/${locale}/export`}>
+            </Link>
+            <Link href={`/${locale}/export`}>
               <img
                 className="px-2 w-100 w-md-auto"
                 src="/assets/images/home/demo8/export/endless.jpg"
                 alt="Image 2"
               />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -1051,9 +1051,9 @@ const Animation = () => {
             <h1>{t("Essence of Arabia")}</h1>
             <p className="fs-5">{t("Step into")}</p>
 
-            <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
+            <Link href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
               <img src="assets/images/home/demo8/Bakhoor-Ahmed.jpg" alt="" />
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mobilepanel d-flex justify-content-center">
@@ -1070,22 +1070,22 @@ const Animation = () => {
 
             <div className="row">
               <div className="col-6">
-                <a href={`/${locale}/export`}>
+                <Link href={`/${locale}/export`}>
                   <img
                     src="assets/images/home/demo8/export/aqua-oud.jpg"
                     alt=""
                     className="img-fluid"
                   />
-                </a>
+                </Link>
               </div>
               <div className="col-6">
-                <a href={`/${locale}/export`}>
+                <Link href={`/${locale}/export`}>
                   <img
                     src="assets/images/home/demo8/export/endless.jpg"
                     alt=""
                     className="img-fluid"
                   />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

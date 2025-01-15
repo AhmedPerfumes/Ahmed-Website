@@ -406,6 +406,7 @@ export default function Checkout() {
       setCouponError('Invalid Coupon Code for this products');
       setCouponSuccess(null);
       setCouponDataContext(null);
+      setCouponCode('');
       return;
     }
     else if(!isOTPVerified) {
@@ -1113,7 +1114,7 @@ export default function Checkout() {
           <div className="fs-20">Shop cart is empty</div>
 
           <button className="btn mt-3 mb-3 btn-light">
-            <a href={`/${locale}/shop`}>Explore Products</a>
+            <Link href={`/${locale}/shop`}>Explore Products</Link>
           </button>
         </>
       )}

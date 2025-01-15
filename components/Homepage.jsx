@@ -117,12 +117,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                             lover.
                         </p>
                     </div>
-                    <a
+                    <Link
                         href=""
                         className="anchor text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
                     >
                         Scroll To Discover More
-                    </a>
+                    </Link>
                 </div>
             </section>
 
@@ -191,12 +191,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/bin-shaikh`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -269,12 +269,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 </p>
                                             </div>
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/ignite-oud`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -352,12 +352,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/kaaf`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -432,12 +432,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/oriental-fragrance/laathani`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -512,12 +512,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/marj`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -586,12 +586,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/musk-roses`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -666,12 +666,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-roses`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -746,12 +746,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/oud-lavender`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -824,12 +824,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/rose-noir`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -904,12 +904,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             </div>
 
                                             <div className="moreee-menu pt-5">
-                                                <a
+                                                <Link
                                                     href={`/${locale}/shop/eau-de-parfum/occidental-fragrance/summer-oud`}
                                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
                                                 >
                                                     {t("Shop Now")}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -1000,12 +1000,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                             lover.
                         </p>
                     </div>
-                    <a
-                        href=""
+                    <Link
+                        href="#"
                         className="anchor text_dash text-white text-uppercase fw-medium mb-5 text-nowrap"
                     >
                         Scroll To Discover More
-                    </a>
+                    </Link>
                 </div>
             </section>
 

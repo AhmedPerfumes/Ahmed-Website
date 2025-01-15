@@ -154,7 +154,7 @@ export default function Footer14() {
             <ul className="social-links list-unstyled d-flex flex-wrap mb-0">
               {socialLinks.map((link, index) => (
                 <li key={index}>
-                  <a
+                  <Link
                     href={link.href}
                     className="footer__social-link d-block"
                     target="_blank"
@@ -172,7 +172,7 @@ export default function Footer14() {
                         link.icon
                       )}
                     </svg>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -184,12 +184,12 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {footerLinks1.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <a
+                  <Link
                     href={`/${locale}${elm.href}`}
                     className="menu-link menu-link_us-s"
                   >
                     {t(elm.text)}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -203,7 +203,7 @@ export default function Footer14() {
             <ul className="sub-menu__list list-unstyled">
               {categoriesSubCategories?.map((elm, i) => (
                 <li key={i} className="sub-menu__item">
-                  <a
+                  <Link
                     href={
                       elm.name != "Gift Sets"
                         ? `/${locale}/product-category/${elm.name
@@ -215,7 +215,7 @@ export default function Footer14() {
                     className="menu-link menu-link_us-s"
                   >
                     {t(elm.name)}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -269,9 +269,9 @@ export default function Footer14() {
             reserved
           </span>
           <div className="footer-settings d-block d-md-flex align-items-center">
-            <a className="text-white" href={`/${locale}/order-tracking`}>
+            <Link className="text-white" href={`/${locale}/order-tracking`}>
               Track Order{" "}
-            </a>
+            </Link>
             <div className="d-flex align-items-center">
               {/* <label
                 htmlFor="footerSettingsLanguage"

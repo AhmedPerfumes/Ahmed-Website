@@ -252,7 +252,7 @@ export default function Cart() {
             <div className="fs-20">Shop cart is empty</div>
 
             <button className="btn mt-3 btn-light">
-              <a href={`/${locale}/shop`}>Explore Products</a>
+              <Link href={`/${locale}/shop`}>Explore Products</Link>
             </button>
           </>
         )}
@@ -349,9 +349,9 @@ export default function Cart() {
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
-                <a href={`/${locale}/shop-checkout`} className="btn btn-primary btn-checkout">
+                <Link href={`/${locale}/shop-checkout`} className="btn btn-primary btn-checkout">
                   PROCEED TO CHECKOUT
-                </a>
+                </Link>
               </div>
             </div>
           </div>

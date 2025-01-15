@@ -136,12 +136,12 @@ export default function Header14() {
               className="swiper-slide text-center"
             >
               <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                <a
+                <Link
                   href="#"
                   className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white"
                 >
                   {elm.description.split(" ").slice(0, 13).join(" ")}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}
@@ -190,36 +190,36 @@ export default function Header14() {
                   <h6 className="sub-menu__title fs-base">Quicklinks</h6>
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
-                      <a
+                      <Link
                         href={`/en/shop/eau-de-parfum/oriental-fragrance/marj`}
                         className="menu-link menu-link_us-s"
                       >
                         Marj
-                      </a>
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a
+                      <Link
                         href={`/en/shop/eau-de-parfum/occidental-fragrance/rose-noir`}
                         className="menu-link menu-link_us-s"
                       >
                         Rose Noir
-                      </a>
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a
+                      <Link
                         href={`/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender`}
                         className="menu-link menu-link_us-s"
                       >
                         Oud Lavender
-                      </a>
+                      </Link>
                     </li>
                     <li className="sub-menu__item">
-                      <a
+                      <Link
                         href={`/en/shop/eau-de-parfum/occidental-fragrance/oud-classic`}
                         className="menu-link menu-link_us-s"
                       >
                         Oud Classic
-                      </a>
+                      </Link>
                     </li>
                     {/* <li className="sub-menu__item">
                       <a href="/en/shop/eau-de-parfum/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">

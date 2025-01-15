@@ -193,20 +193,20 @@ export default function CartDrawer() {
           </div>
           {cartProducts.length ? (
             <>
-              <a href={`/en/shop-cart`} className="btn btn-light mt-3 d-block">
+              <Link href={`/en/shop-cart`} className="btn btn-light mt-3 d-block">
                 View Cart
-              </a>
-              <a
+              </Link>
+              <Link
                 href={`/en/shop-checkout`}
                 className="btn btn-primary mt-3 d-block"
               >
                 Checkout
-              </a>
+              </Link>
             </>
           ) : (
-            <a href={`/en/shop`} className="btn btn-light mt-3 d-block">
+            <Link href={`/en/shop`} className="btn btn-light mt-3 d-block">
               Explore shop
-            </a>
+            </Link>
           )}
         </div>
       </div>

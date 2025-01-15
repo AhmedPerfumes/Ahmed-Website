@@ -40,7 +40,7 @@ export default function MobileFooter1() {
         {/* <!-- /.col-3 --> */}
 
         <div className="col-4">
-          <a
+          <Link
             href={`/${locale}/shop`}
             className="footer-mobile__link d-flex flex-column align-items-center"
           >
@@ -55,12 +55,12 @@ export default function MobileFooter1() {
               <use href="#icon_gift" />
             </svg>
             <span>Shop</span>
-          </a>
+          </Link>
         </div>
         {/* <!-- /.col-3 --> */}
 
         <div className="col-4">
-          <a
+          <Link
             href={`/${locale}/shop-cart`}
             className="footer-mobile__link d-flex flex-column align-items-center"
           >
@@ -80,7 +80,7 @@ export default function MobileFooter1() {
               </span>
             </div>
             <span>Cart</span>
-          </a>
+          </Link>
         </div>
         {/* <!-- /.col-3 --> */}
       </div>

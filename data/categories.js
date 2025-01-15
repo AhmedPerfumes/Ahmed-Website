@@ -53,7 +53,7 @@ export const categories8 = [
     subText: "Whispers of Elegance",
     videoSrc: "/assets/videos/giftsets/antee.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/antee.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/aayah"
+    link: "/shop/gift-sets/gift-sets/antee-gift-set-05"
   },
   {
     id: 2,
@@ -62,7 +62,7 @@ export const categories8 = [
     subText: "Tradition Reimagined",
     videoSrc: "/assets/videos/giftsets/dakhoon-collection.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/dukhoon-collection.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
+    link: "/shop/gift-sets/gift-sets/the-dukhoon-collection"
   },
   {
     id: 3,
@@ -71,7 +71,7 @@ export const categories8 = [
     subText: "Essence of Luxury",
     videoSrc: "/assets/videos/giftsets/ihdakhas.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/ihda-khas.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
+    link: "/shop/gift-sets/gift-sets/ihdaa-khaas"
   },
   {
     id: 4,
@@ -80,7 +80,7 @@ export const categories8 = [
     subText: "Expression of Memories",
     videoSrc: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
+    link: "/shop/gift-sets/gift-sets/oud-roses-gift-set"
   },
   {
     id: 5,
@@ -89,7 +89,7 @@ export const categories8 = [
     subText: "A Legacy of Grace",
     videoSrc: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
-    link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+    link: "/shop/gift-sets/gift-sets/shauque-al-shuyookh"
   },
   // {
   //   id: 6,
@@ -200,7 +200,7 @@ export const categoriesInfluencers = [
     subText: "Oud, leather, and rose luxury",
     videoSrc: "/assets/videos/dakhoon/asateen.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
-    link: "#"
+    link: "/product-category/dakhoon"
   },
   {
     id: 2,
@@ -209,7 +209,7 @@ export const categoriesInfluencers = [
     subText: "Exotic warmth of saffron",
     videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/awfa"
+    link: "/product-category/dakhoon"
   },
   {
     id: 3,
@@ -218,7 +218,7 @@ export const categoriesInfluencers = [
     subText: "Citrus and oud, pure elegance",
     videoSrc: "/assets/videos/dakhoon/khususi.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/bidun-esam"
+    link: "/product-category/dakhoon"
   },
   {
     id: 4,
@@ -227,7 +227,7 @@ export const categoriesInfluencers = [
     subText: "Royal saffron and oud bliss",
     videoSrc: "/assets/videos/dakhoon/maliki.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
-    link: "/shop/eau-de-parfum/oriental-fragrance/bin-ameer"
+    link: "/product-category/dakhoon"
   },
   {
     id: 5,
@@ -236,7 +236,7 @@ export const categoriesInfluencers = [
     subText: "Citrus, roses, and musk bliss",
     videoSrc: "/assets/videos/dakhoon/oud.mov",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
-    link: "http://localhost:3000/shop/eau-de-parfum/oriental-fragrance/bin-shaikh"
+    link: "/product-category/dakhoon"
   },
 ];
 export const categories80 = [

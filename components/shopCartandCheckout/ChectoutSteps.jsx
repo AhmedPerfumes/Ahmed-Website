@@ -41,7 +41,7 @@ export default function ChectoutSteps() {
   return (
     <div className="checkout-steps">
       {steps.map((elm, i) => (
-        <a
+        <Link
           key={i}
           href={elm.id == 3 ? '#' : `/${locale}${elm.href}`}
           className={`checkout-steps__item  ${
@@ -53,7 +53,7 @@ export default function ChectoutSteps() {
             <span>{elm.title}</span>
             <em>{elm.description}</em>
           </span>
-        </a>
+        </Link>
       ))}
     </div>
   );

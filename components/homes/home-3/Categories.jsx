@@ -103,7 +103,7 @@ export default function Categories({ params, subCategories }) {
         <Swiper {...swiperOptions} className="swiper-center swiper-container js-swiper-slider sub-cat-video">
           {subCategories?.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide text-center">
-              <a
+              <Link
                 key={i}
                 href={`/${locale}/product-category/${removeSpecialCharactersAndAmp(categoryName)}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                 className="shop-categories__item mb-3"
@@ -122,15 +122,15 @@ export default function Categories({ params, subCategories }) {
                 >
                   <source src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.video}`} type="video/mp4" width={200} />
                 </video>
-              </a>
+              </Link>
               <div className="text-center">
-                <a
+                <Link
                   href={`/${locale}/product-category/${categoryName}/${elm.name.split(' ').join('-').toLowerCase()}`}
                   className="menu-link fw-medium"
                   key={i}
                 >
                   {elm.name}
-                </a>
+                </Link>
               </div>
             </SwiperSlide>
           ))}

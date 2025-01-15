@@ -11,12 +11,12 @@ export default function Notfound() {
           Sorry, we couldn't find the page you where looking for. We suggest
           that you return to home page.
         </p>
-        <Link
+        <a
           href={"/"}
           className="btn btn-primary d-flex align-items-center justify-content-center mx-auto"
         >
           GO BACK
-        </Link>
+        </a>
       </div>
     </section>
   );

@@ -79,14 +79,14 @@ export default function Nav({ categoriesSubCategories }) {
   let categoriesSubCategoriesBody = categoriesSubCategories?.map((item, i) => {
     return (
       <li className="navigation__item" key={i}>
-        <a
+        <Link
           href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
           className={`navigation__link
           ${isActiveParentMenu(`/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           `}
         >
           { t(item.name) }
-        </a>
+        </Link>
         { item.productSubCategories.length > 0 ?
           <div className="mega-menu">
             <div className="container d-flex">
@@ -97,14 +97,14 @@ export default function Nav({ categoriesSubCategories }) {
                 <ul className="sub-menu__list list-unstyled">
                   {item.productSubCategories.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
-                      <a
+                      <Link
                         href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
                         className={`menu-link menu-link_us-s ${
                           isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                         }`}
                       >
                         {t(elm.name)}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -112,7 +112,7 @@ export default function Nav({ categoriesSubCategories }) {
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <a href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}>
+                  <Link href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
@@ -122,13 +122,13 @@ export default function Nav({ categoriesSubCategories }) {
                       style={{ height: "fit-content" }}
                       alt="New Horizons"
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
 
               <div className="mega-menu__media col pe-4">
                 <div className="position-relative">
-                  <a href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}>
+                  <Link href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}>
                     <Image
                       loading="lazy"
                       className="mega-menu__img"
@@ -138,7 +138,7 @@ export default function Nav({ categoriesSubCategories }) {
                       style={{ height: "fit-content" }}
                       alt="New Horizons"
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -151,11 +151,11 @@ export default function Nav({ categoriesSubCategories }) {
 
   categoriesSubCategoriesBody.push(
     <li key="export" className="navigation__item">
-      <a href={`/${locale}/export`} className={`navigation__link
+      <Link href={`/${locale}/export`} className={`navigation__link
           ${isActiveExportMenu(`/export`) ? "menu-active" : ""}
           `}>
         {t("Worldwide Distribution")}
-      </a>
+      </Link>
     </li>
   );
 

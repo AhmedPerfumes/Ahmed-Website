@@ -20,21 +20,21 @@ export default function BreadCumb({ category, subcategory, product }) {
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
         /
       </span>
-      <a href="#" className="menu-link menu-link_us-s text-uppercase fw-medium">
+      <Link href="#" className="menu-link menu-link_us-s text-uppercase fw-medium">
         Shop
-      </a>
+      </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
         /
       </span>
-      <a href={category != 'gift-sets' ? `/en/product-category/${category}` : '/en/product-category/gift-sets'} className="menu-link menu-link_us-s fw-medium">
+      <Link href={category != 'gift-sets' ? `/en/product-category/${category}` : '/en/product-category/gift-sets'} className="menu-link menu-link_us-s fw-medium">
         { capitalizeEachWord(category.split('-').join(' ')) }
-      </a>
+      </Link>
       <span className="breadcrumb-separator menu-link fw-medium ps-1 pe-1">
         /
       </span>
-      <a href={category != 'gift-sets' ? `/en/product-category/${category}/${subcategory}` : '/en/product-category/gift-sets'} className="menu-link menu-link_us-s fw-medium">
+      <Link href={category != 'gift-sets' ? `/en/product-category/${category}/${subcategory}` : '/en/product-category/gift-sets'} className="menu-link menu-link_us-s fw-medium">
         { capitalizeEachWord(subcategory.split('-').join(' ')) }
-      </a>
+      </Link>
     </>
   );
 }

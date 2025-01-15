@@ -19,7 +19,7 @@ import MobileHeader from "@/components/headers/MobileHeader";
 import SizeGuide from "@/components/modals/SizeGuide";
 import Delivery from "@/components/modals/Delivery";
 import CustomerLogin from "@/components/asides/CustomerLogin";
-import ShopFilter from "@/components/asides/ShopFilter";
+// import ShopFilter from "@/components/asides/ShopFilter";
 import ProductDescription from "@/components/asides/ProductDescription";
 import ProductAdditionalInformation from "@/components/asides/ProductAdditionalInformation";
 import ProductReviews from "@/components/asides/ProductReviews";
@@ -67,7 +67,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <Context>
           
           <UserProvider>
-      <FacebookPixelEvents/>
+            <FacebookPixelEvents/>
             <MenuProvider>
               <MobileHeader />
                 {children}
@@ -93,7 +93,7 @@ export default async  function LocaleLayout({ children, params: {locale} }) {
         <ScrollTop />
       </NextIntlClientProvider>
       
-      <script src="/assets/scroll-frames.js"></script>
+      {/* <script src="/assets/scroll-frames.js"></script> */}
       </body>
     </html>
   );

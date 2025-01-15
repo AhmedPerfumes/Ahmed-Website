@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import VideoPanel from "../VideoPanel";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 export default function NewsLetter() {
   const modalElement = useRef(null);
