@@ -1,368 +1,209 @@
 #main {
     overflow: hidden;
-  }
+}
   
-  .scroll-section {
-    height: 100vh;
-    width: 100vw;
-  }
-  
-  .horizontal-scroll {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .panel {
-    width: 100vw;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+.scroll-section {
+	height: 100vh;
+	width: 100vw;
+}
+
+.horizontal-scroll {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.panel {
+	width: 100vw;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.inner {
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.section-1 {
+	background-image: url('https://www.ahmed-perfume.com/assets/images/home/demo8/avif/multiple-products-banner.avif');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: bottom;
     align-items: center;
-  }
-/* 
-  .best-seller {
     display: flex;
     flex-direction: column;
-    align-items: center;
-  } */
-  
-  .inner {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .section-slider {
-    background-image: url('https://www.ahmed-perfume.com/_next/image?url=%2Fassets%2Fimages%2Fzumar-bnr.jpg&w=3840&q=75');
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  
+    justify-content: space-between;
+    padding: 32px 0 40px;
+    position: relative;
+
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
   .section-1 {
     background-image: url('https://www.ahmed-perfume.com/assets/images/home/demo8/avif/multiple-products-banner.avif');
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: right;
   }
-  .section-2 {
-    background-image: url('https://www.ahmed-perfume.com/assets/images/home/demo8/avif/collection-bnr.avif');
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  
-  .green {
-    background-color: green;
-  }
-  
-  .red {
-    background-color: #ff4545;
-  }
-  
-  .anchor {
-    top: 45%;
-  }
-/* :root {
-	--body-color: #2c2d2a;
-	--savanna-bg: #e9bf8b;
-	--beach-bg: #e7dfcf;
-	--glacier-bg: #b6d6c8;
-	--coral-bg: #e86357;
-	--arrow-fill: #333231;
-	--body-font: "Montserrat", sans-serif;
-	--italic-font: "EB Garamond", serif;
-} */
+}
 
-/* * {
-	box-sizing: border-box;
-	outline: none;
-} */
+@media (max-width: 576px) {
+	.custom-text {
+		font-style: italic;
+		bottom: -20rem;
+	}
+}
 
-.contai {
-	max-width: 1100px;
-	border-radius: 4px;
-	max-height: 700px;
-	height: 90vh;
-	width: 100%;
+.section-2 {
+	background-image: url('https://www.ahmed-perfume.com/assets/images/home/demo8/avif/collection-bnr.avif');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.section-3 {
 	display: flex;
 	flex-direction: column;
-	scroll-behavior: smooth;
-	/* background-color: #e6decf; */
-	padding: 0 30px;
-	position: relative;
-	cursor: grab;
-}
-
-.left-sideee {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	max-width: 320px;
-}
-
-.mySwiper {
-	display: flex;
-	flex-grow: 1;
-	position: relative;
-}
-
-.mainnn {
-	padding: 42px 0 30px;
-	display: flex;
-	flex-grow: 1;
-	position: relative;
-}
-
-.mainnn-header {
-	text-transform: uppercase;
-	font-size: 14px;
-	letter-spacing: 4px;
-	font-weight: 600;
-	transition-delay: 0.2s;
-}
-
-.mainnn-title {
-	font-family: var(--italic-font);
-	font-size: 100px;
-	font-weight: 400;
-	margin-top: 10px;
-	line-height: 1em;
-	transition-delay: 0.3s;
-}
-
-.mainnn-subtitle {
-	font-family: var(--italic-font);
-	font-weight: 400;
-	font-size: 32px;
-	margin-top: 14px;
-	margin-bottom: 60px;
-	transition-delay: 0.4s;
-}
-
-.mainnn-content-title {
-	font-size: 26px;
-	font-family: var(--italic-font);
-	font-style: italic;
-	margin-bottom: 14px;
-	transition-delay: 0.2s;
-}
-
-.mainnn-content-subtitle {
-	font-size: 14px;
-	line-height: 1.5;
-	margin-bottom: 24px;
-	letter-spacing: -0.01em;
-	transition-delay: 0.3s;
-}
-
-.moreee-menu {
-	font-size: 13px;
-	font-weight: 500;
-	display: flex;
-	align-items: center;
-	transition-delay: 0.4s;
-}
-
-.moreee-menu svg {
-	width: 28px;
-	height: 18px;
-	margin-left: 10px;
-}
-
-.centerrr {
-	display: flex;
-	margin-left: 120px;
-	position: relative;
-	flex-shrink: 0;
-}
-
-.bottle-bg {
-	width: 320px;
-	height: 450px;
-	object-fit: cover;
-	border-radius: 160px;
-	max-width: 100%;
-}
-
-.bottle-img {
-	position: absolute;
-	top: 25%;
-	left: 0;
-	transform: scale(1.6);
-	max-width: 100%;
-}
-
-.buttonnn-wrapper {
-	position: absolute;
-	right: 30px;
-	bottom: 20px;
-	z-index: 1;
-	display: flex;
-	align-items: center;
-}
-
-.buttonnn-wrapper svg {
-	width: 28px;
-}
-
-.swiper-button {
-	border: 1px solid var(--body-color);
-	border-radius: 50%;
-	width: 44px;
-	height: 44px;
-	display: flex;
-	align-items: center;
+	text-align: center;
 	justify-content: center;
-	background: linear-gradient(to right, var(--body-color) 40%, transparent 0%);
-	background-size: 200% 100%;
-	background-position: right bottom;
-	transition: all 0.3s ease-out;
-	cursor: pointer;
+	align-items: center;
 }
 
-.swiper-button + .swiper-button {
-	margin-left: 16px;
+.scroll-section .section-3 a {
+	top: 10%;
+	color: #C58B14;
 }
 
-.swiper-button:hover {
-	background-color: var(--body-color);
-	background-position: left bottom;
+.section-4 {
+	background-image: url('/assets/images/home/demo8/avif/giftset-bnr.avif');
+	background-size: cover;
+	background-repeat: no-repeat;
 }
-
-.swiper-button:hover svg {
-	stroke: #fff;
-}
-
-.swiper-prev-button {
-	background: linear-gradient(to left, var(--body-color) 40%, transparent 0%);
-	background-size: 200% 100%;
-	background-position: left bottom;
-	transition: all 0.3s ease-out;
-}
-
-.swiper-prev-button svg {
-	transform: rotate(-180deg);
-}
-
-.swiper-prev-button:hover {
-	background-position: right bottom;
-}
-
-.mainnn > .swiper-slide {
-	opacity: 0 !important;
-	transition: 0.4s;
-}
-
-.swiper-slide-active {
-	opacity: 1 !important;
-}
-
-.swiper-slide .mainnn-wrapper > *,
-.swiper-slide .mainnn-content > * {
-	transform: translateY(-30px);
-	opacity: 0;
-	transition-duration: 0.8s;
-}
-
-.swiper-slide-active .mainnn-wrapper > *,
-.swiper-slide-active .mainnn-content > * {
-	transform: none;
-	opacity: 1;
-}
-
-.swiper-slide .bottle-bg {
-	transition-duration: 0.6s;
-	opacity: 0;
-	object-position: 60%;
-}
-
-.swiper-slide-active .bottle-bg {
-	opacity: 1;
-	transform: none;
-	object-position: 50%;
-}
-
-.swiper-slide .bottle-img {
-	transition-duration: 0.8s;
-	transform: scale(1.2);
-	opacity: 0;
-}
-
-.swiper-slide-active .bottle-img {
-	opacity: 1;
-	transform: scale(1.6);
-}
-
-.text_reveal {
-	margin: 25%;
-}
-
-.section1 {
-	width: 100%;
-	object-fit: cover; /* Ensures the image covers the container */
-	object-position: center; /* Default for desktop */
-  }
   
-  @media (max-width: 768px) {
-	.section1 {
-	  object-position: -55rem; /* Adjust for mobile */
+.section-6 {
+	background-image: url('/assets/images/home/demo8/avif/dakhoon-bnr.avif');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.best-sellers {
+	/* width: 100vw;
+	height: 100%; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.section-content {
+	padding: 0 16px;
+}
+
+.section-paragraph {
+	margin-top: 20px;
+}
+
+@media (min-width: 1024px)  {
+	.section-paragraph {
+		padding: 0 10%;
 	}
+}
+
+
+.slideshow-bg__img {
+	width: 100%;
+	object-fit: cover; 
+	object-position: center; 
+}
+  
+.slideshow-text {
+	font-style: italic;
+}
+
+@media (max-width: 576px) {
+	.slide-custom-text {
+		font-style: italic;
+		bottom: -20rem;
+	}
+}
+    
+.top-35 {
+	top: 35%;
+	}
+
+@media (max-width: 576px) {
+	.top-25 {
+		top: 25%;
+	}
+}
+
+.bottom-30 {
+	bottom: 30%;
+}
+
+@media (max-width: 576px) {
+	.bottom-30 {
+		bottom: 30%;
+	}
+}
+
+.t-subtitle {
+	border-top: 2px solid;
+    border-bottom: 2px solid;
+    padding: .3125rem 0;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 16px;
   }
 
-.section2 {
-	width: 100%;
-	object-fit: cover; /* Ensures the image covers the container */
-	object-position: center; /* Default for desktop */
-  }
-  
-  @media (max-width: 768px) {
-	.section2 {
-	  object-position: -6rem; /* Adjust for mobile */
+.bottom-scroll {
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+    bottom: 0;
+    left: auto;
+    position: absolute;
+    margin-bottom: 3%;
+
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	.bottom-scroll {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		bottom: 0;
+		left: auto;
+		position: absolute;
+		margin-bottom: 15%;
 	}
-  }
-.section3 {
-	width: 100%;
-	object-fit: cover; /* Ensures the image covers the container */
-	object-position: center; /* Default for desktop */
-  }
+}
+
+.scroll-icon {
+	animation: animationTopToBottom 4s infinite;
+}
   
-  @media (max-width: 768px) {
-	.section3 {
-	  object-position: -6rem; /* Adjust for mobile */
-	}
-  }
-.gifting {
-	width: 100%;
-	object-fit: cover; /* Ensures the image covers the container */
-	object-position: center; /* Default for desktop */
-  }
+@keyframes animationTopToBottom {
+0% {
+	transform: translateY(0);
+}
+50% {
+	transform: translateY(-8px);
+}
+60% {
+	transform: translateY(-8px);
+}
+100% {
+	transform: translateY(0);
+}
+}
+
   
-  @media (max-width: 768px) {
-	.gifting {
-	  object-position: -5rem; /* Adjust for mobile */
-	}
-  }
+
   
-  .section4 {
-	width: 100%;
-	object-fit: cover; /* Ensures the image covers the container */
-	object-position: center; /* Default for desktop */
-  }
+
   
-  @media (max-width: 768px) {
-	.section4 {
-	  object-position: -6rem; /* Adjust for mobile */
-	}
-  }
-  .slideshow-bg__img {
-	width: 100%;
-	object-fit: cover; /* Ensures the image covers the container */
-	object-position: center; /* Default for desktop */
-  }
-  
-  @media (max-width: 768px) {
-	.slideshow-bg__img {
-	  object-position: -25rem; /* Adjust for mobile */
-	}
-  }

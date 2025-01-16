@@ -45,7 +45,7 @@ export default function Hero() {
               </Link>
             </div>
             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-              {elm.id != 3 && <h6 className="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3 text-white">
+              {elm.id != 3 && <h6 className="t-subtitle text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3 text-white">
                 {t(elm.season)}
               </h6>}
               <h2 className="h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5 text-white">
