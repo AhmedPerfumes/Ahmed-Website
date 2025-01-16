@@ -199,6 +199,7 @@
   "Dehn Al Oud Hindi Seufi" : "دهن العود هندي سيوفي ",
   "Dehn Al Oudh Mubakhar" : "دهن العود مبخر",
   "Dehn Al Oud Combodi Omani" : "دهن العود كمبودي عماني ",
+  "DEHN AL OUD AJDAAD":"دهن العود أجداد",
 
   "-------------Concentrated Oil Category":"This is category for Concentrated Oil-----------",
   "Wesaf" : "وصاف",
@@ -981,7 +982,7 @@
 "Supreme Hair Mist Notes": "",
 "Shaikha Hind Hair Mist Notes": "<p><span style=\"color:hsl(0,0%,100%);\"><strong>العليا : الكشمش الأسود، كاسيا، العنب، التوت الأحمر</strong></span>  <br><span style=\"color:hsl(0,0%,100%);\"><strong>لوسطى : الفاوانيا، البنفسج، زنبق الوادي، الياسمين</strong></span>  <br><span style=\"color:hsl(0,0%,100%);\"><strong>القاعدة : خشب العود.</strong></span></p>",
 "Bidun Esam Hair Mist Notes": "<p>العليا : الأزهار الحارة (الزعفران والورد) <br>لوسطى : الأزهار (الزهور البيضاء) <br>القاعدة : أخشاب ، المسك (العود الكمبودي، المسك، العنبر)</p>",
-"Oud Roses Hair Mist Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/top-notes-oud-roses.jpg\" alt=\"Top Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Top Notes</h3><p>Floral (Turkish rose, lavender, lemon, peony)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/heart-images-oud-roses.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">Heart Notes</h3><p>Sweet (sandalwood, white flowers, frankincense)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/bottom-notes-oud-roses.jpg\" alt=\"Bottom Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Bottom Notes</h3><p>Musky( agarwood, guaiac wood, oak moss, Musk, amber)</p></div></div>",
+"Oud Roses Hair Mist Notes": "<p>العليا  – الأزهار (الورد التركي، الخزامى، الليمون، الفاوانيا)</p><p>الوسطى – حلو (خشب الصندل، الزهور البيضاء، اللبان)</p><p>القاعدة – المسك (خشب العود، خشب الغاياك، طحلب البلوط، المسك، العنبر)</p><p>بالإضافة حبة السوداء ، جنين القمح ، زيت الجوجوبا ، زيت أملا.</p>",
 "Rose Noir Hair Mist Notes": "<p>Top Notes: Citrus Rosy (Mandarin, Rose)</p><p>Heart Notes: Vanilla (Vanilla, Salt)</p><p>Base Notes: Woody (Ambergris, Sandalwood, Cashmere Wood)</p>",
 
 "----------Collections Single Product Page Collections":"----------Collections Single Product Page Collections",
