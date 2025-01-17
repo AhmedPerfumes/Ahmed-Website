@@ -208,7 +208,7 @@ const Animation = () => {
       {/* <PopupForm/> */}
       <section className="vh-100 hero-banner d-none d-lg-block">
         <Hero />
-        <Hero />
+        {/* <Hero /> */}
       </section>
       <div className="d-sm-block d-md-none">
       <Hero2/> 
