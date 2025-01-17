@@ -68,31 +68,14 @@ export const slides3 = [
 export const slides4 = [
   {
     id: 1,
-    bgImg: "/assets/images/home/demo4/slider1.png",
-    markImg: "/assets/images/home/demo4/slider_mark.png",
-    title: "The Classics",
-    description: "An exclusive selection of this season's trends.",
-    characterImgWidth: 493,
-    characterImgHeight: 693,
-  },
-  {
-    id: 2,
-    bgImg: "/assets/images/home/demo4/slider2.png",
-    markImg: "/assets/images/home/demo4/slider_mark.png",
-    title: "The Classics",
-    description: "An exclusive selection of this season's trends.",
-    characterImgWidth: 490,
-    characterImgHeight: 690,
-  },
-  {
-    id: 3,
-    bgImg: "/assets/images/home/demo4/slider3.png",
-    markImg: "/assets/images/home/demo4/slider_mark.png",
+    bgImg: "/assets/images/home/demo8/top/bottles/bin-shaikh.png",
+    markImg: "/assets/images/home/demo8/top/bin-shaikh.jpg",
     title: "The Classics",
     description: "An exclusive selection of this season's trends.",
     characterImgWidth: 675,
     characterImgHeight: 733,
   },
+  
 ];
 export const slides5 = [
   {
@@ -267,15 +250,7 @@ export const slidesData3 = [
     subtitle: "evokes the spirit of royalty",
     href: "shop/perfumes/occidental-fragrance/zumar",
   },
-  {
-    id: 3,
-    imageSrc: "/assets/images/home/demo8/shop-and-win.jpg",
-    season: "",
-    objectPosition: "50% center",
-    title: "",
-    subtitle: "",
-    href: "shop/",
-  },
+  
 ];
 export const slidesData33 = [
   {

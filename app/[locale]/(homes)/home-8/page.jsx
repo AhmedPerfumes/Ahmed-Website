@@ -1,6 +1,7 @@
 import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
-import Animation from "@/components/Animation";
+// import Animation from "@/components/Animation";
+import HomePage from "@/components/HomePage";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import React from "react";
 // import CanvasAnimation from "@/components/CanvasAnimation";
@@ -12,7 +13,6 @@ import NewsLetter from "@/components/modals/NewsLetter";
 //   loading: () => <p>Loading...</p>,
 //   ssr: false, // Disable server-side rendering for this component
 // });
-
 export const metadata = {
     title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
     description: "Buy Best Perfumes Online Ahmed Perfume",
@@ -40,7 +40,8 @@ export default function HomePage8() {
             </div>
             <main id="">
                 {/* Animation component will render after CanvasAnimation */}
-                <Animation />
+                <HomePage />
+                {/* <Animation /> */}
             </main>
             <section className="d-none d-lg-block" style={{ height: "100%" }}>
                 <Footer14 />
