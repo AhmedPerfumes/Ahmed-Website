@@ -20,6 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from 'next/navigation';
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
+import Map from "../Map";
 
 export default function Checkout() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -76,6 +77,9 @@ export default function Checkout() {
   const [couponError, setCouponError] = useState(null);
   const [couponSuccess, setCouponSuccess] = useState(null);
   const [couponData, setCouponData] = useState(null);
+
+  const [location, setLocation] = useState(null);
+
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
@@ -485,7 +489,7 @@ export default function Checkout() {
       return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     }
   };
-
+  console.log('Parent Location:', location);
   return (
     <>
     {cartProducts.length ? (
@@ -548,6 +552,11 @@ export default function Checkout() {
                   </div>
                 </div>
               </div>
+
+              <div className="col-md-12">
+                <Map setLocation={setLocation}/>
+              </div>
+
               <div className="col-md-12">
                 <div className="form-floating mt-3 mb-3">
                   <input
