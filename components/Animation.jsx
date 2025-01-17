@@ -20,6 +20,7 @@ import { duration } from "@mui/material";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeftOutlined, ArrowLeftRounded, ArrowLeftTwoTone, KeyboardArrowLeftRounded, KeyboardArrowRightRounded, MoveDownOutlined, RampLeft, SwipeLeft, SwipeLeftAltOutlined, SwipeLeftAltRounded, SwipeLeftRounded, SwipeRight } from "@mui/icons-material";
 import { FiArrowLeft, FiArrowLeftCircle, FiArrowRight, FiChevronsLeft } from "react-icons/fi";
+import PopupForm from "./common/PopupForm";
 
 gsap.registerPlugin(ScrollTrigger);
 const Animation = () => {
@@ -204,6 +205,7 @@ const Animation = () => {
 
   return (
     <div id="main2">
+      {/* <PopupForm/> */}
       <section className="vh-100 hero-banner d-none d-lg-block">
         <Hero />     
             
