@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from 'next/navigation';
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-import Map from "../Map";
+// import Map from "../Map";
 
 export default function Checkout() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -167,7 +167,8 @@ export default function Checkout() {
       finalPrice,
       customer_id: userJson ? userJson.id : null,
       locale,
-      couponCode
+      couponCode,
+      ...location
     }
  
     try {
@@ -553,9 +554,9 @@ export default function Checkout() {
                 </div>
               </div>
 
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <Map setLocation={setLocation}/>
-              </div>
+              </div> */}
 
               <div className="col-md-12">
                 <div className="form-floating mt-3 mb-3">

@@ -1,8 +1,8 @@
 // pages/checkout.js
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, Marker, Autocomplete } from '@react-google-maps/api';
 
-const Map = ({ setLocation }) => {
+const Map =  React.memo(({setLocation}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 //   const [searchLocation, setSearchLocation] = useState(null);
@@ -68,11 +68,12 @@ const [currentLocation, setCurrentLocation] = useState(null);
     return <div>{error}</div>;
   }
 
+  const googleMapLibraries = ['places'];
   return (
     <div style={{ width: '100%', height: '300px' }}>
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-        libraries={['places']}
+        libraries={googleMapLibraries}
       >
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
@@ -121,6 +122,6 @@ const [currentLocation, setCurrentLocation] = useState(null);
       </LoadScript>
     </div>
   );
-};
+});
 
 export default Map;
