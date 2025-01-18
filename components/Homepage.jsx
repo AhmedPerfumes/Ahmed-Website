@@ -155,7 +155,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="scroll-section ">
+            {/* <section className="scroll-section ">
                 <div className="panel w-100 h-100">
                     <div className="">
                         <h2 className="h1 text-center pt-3">
@@ -171,224 +171,234 @@ const ScrollSnapHorizontalBootstrap = () => {
                         <ProductHero />
                     </div>
                 </div>
-            </section>
+            </section> */}
 
-            <section className="scroll-section d-flex flex-direction-column section-2">
-                <div className="panel sub-section w-100 vh-100">
-                    <div className="section-content">
-                        <div className="text-center text-white d-flex justify-content-center">
-                            <span className="t-subtitle">
-                                {t("WHERE LUXURY MEETS YOUR SENSES")}
-                            </span>
-                        </div>
-                        <h2 className="h1 text-center text-white pt-3">
-                            {t("Exclusive Collection")}
-                        </h2>
-                        <p className="text-center text-white section-paragraph">
-                            {t(
-                                "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
-                            )}
-                        </p>
-                        <div className="d-flex justify-content-center pt-5">
-                            <Link
-                                href="/shop"
-                                className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
-                            >
-                                Discover Now
-                            </Link>
-                        </div>
+            <section id="second-chapter-slider" className="container flex__column__center" data-v-ea8e1c8e="">
+                <div className="container-description flex__column__center__bottom flex__g-xxs" data-v-ea8e1c8e="">
+                    <div className="t__h3 t__color-blue" data-v-ea8e1c8e="">
+                        Inside the atelier
+                    </div>
+                    <div className="t__m t__color-blue" data-v-ea8e1c8e="">
+                        The atelier is the expression of Atelier Cologne creativity. Inspired
+                        by the traditional spirit of cologne, a unique collective of perfume-artists
+                        craft new fragrance explorations. They seek to capture the movement of
+                        nature and its vibrant beauty through scented expressions of inner emotions.
+                        Atelier Cologne surrounds itself with painters, sculptors, designers who
+                        express their intimate connection with fragrances through art.
                     </div>
                 </div>
-                <div className="bottom-scroll">
-                    <Image
-                        width={40}
-                        height={40}
-                        className="bottom-0 scroll-icon"
-                        src="/assets/images/ahmed-icon.png"
-                        alt="logo Ahmed"
-                        loading="lazy"
-                    />
-                    <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
-                    </span>
-                </div>
-            </section>
+                    
+                <div className="swiper swiper-initialized swiper-horizontal slider-artist swiper-backface-hidden mySwiper" style={{ '--swiper-pagination-color': '#006990' }} data-v-8967c2b9="">
+                    <div className="swiper-wrapper" >
+                        <div className="swiper-slide slide" data-swiper-slide-index="0" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
+                            {/* First slider */}
+                            <div className="container-desktop d-none d-lg-block" data-v-8967c2b9="">
+                                <div class="container-desktop" data-v-8967c2b9="">
+                                    <div class="col-left" data-v-8967c2b9="">
+                                        <img class="img-classic loading-background" srcset="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <div class="container-artist flex__column__left" data-v-8967c2b9="">
+                                            <div class="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">Orange Sanguine</div>
+                                            <div class="t__sub-title t__color-blue" data-v-8967c2b9="">as painted by Geoffroy Pithon</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-right" data-v-8967c2b9="">
+                                        <img class="img-classic loading-background" srcset="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <button class="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
+                                            <span data-v-7aa9e1a2="">Discover</span>
+                                        </button>
+                                    </div>
+                                    </div>
+                                </div>
 
-            <section className="scroll-section d-flex flex-direction-column section-3">
-                <div className="panel w-100 h-100">
-                    <div className="section-content">
-                        <div
-                            className="d-flex flex-column justify-content-around
-        gap-5"
-                        >
-                            <div className="section-head">
-                                <h2 className=" text-center">
-                                    {t("Crafted for The ")}
-                                    <br />
-                                    <span className="text-italic">
-                                        {t("discerning")}
-                                    </span>
-                                </h2>
-                                <p className="text-center section-paragraph">
-                                    {t(
-                                        "Explore our exclusive collection of refined scents, made with the finest ingredients. "
-                                    )}
-                                    <br />{" "}
-                                    {t(
-                                        "Elegant and original, each fragrance complements your style"
-                                    )}
-                                </p>
+                                <div className="container-mobile d-sm-block d-md-none" data-v-8967c2b9="">
+                                    <div data-v-8967c2b9="" class="container-mobile">
+                                        <div data-v-8967c2b9="" class="container-images">
+                                            <img data-v-399c522e="" data-v-8967c2b9="" class="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg" alt="" loading="lazy"/>
+                                            <img data-v-399c522e="" data-v-8967c2b9="" class="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg" alt="" loading="lazy"/>
+                                        </div>
+                                        <div data-v-8967c2b9="" class="container-artist flex__column__left">
+                                            <div data-v-8967c2b9="" class="t__h4 t__color-primary t__capitalize">Oolang Infini</div>
+                                            <div data-v-8967c2b9="" class="t__sub-title t__color-blue">as painted by Gabrielle Rul</div>
+                                        </div>
+                                        <button data-v-7aa9e1a2="" data-v-8967c2b9="" class="btn-classic"><span data-v-7aa9e1a2="">Discover</span></button>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="videoarea d-block d-lg-block">
-                                <VideoPanel src="/assets/videos/multi-product.mp4" />
-                            </div>
-                            <div className="videoarea d-block d-lg-none">
-                                <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
-                            </div>
-                            <div className="d-flex justify-content-center pt-5">
-                                <Link
-                                    href="/shop"
-                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium "
-                                >
-                                    Discover Now
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                            {/* First slider */}
 
-            <section className="scroll-section d-flex flex-direction-column section-4">
-                <div className="panel sub-section w-100 vh-100">
-                    <div className="section-content">
-                        <div className="text-center text-white d-flex justify-content-center">
-                            <span className="t-subtitle">
-                                {t("Elegant Treasures for Every Occasion")}
-                            </span>
-                        </div>
-                        <h2 className="h1 text-center text-white pt-3">
-                            {t("The Art of Gifting")}
-                        </h2>
-                        <p className="text-center text-white section-paragraph">
-                            {t(
-                                "Celebrate special moments with our curated fragrance gift sets Beautifully presented and featuring our finest scents they make the perfect gift for any occasion"
-                            )}
-                        </p>
-                        <div className="d-flex justify-content-center pt-5">
-                            <Link
-                                href="/shop"
-                                className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
-                            >
-                                Discover Now
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="bottom-scroll">
-                    <Image
-                        width={40}
-                        height={40}
-                        className="bottom-0 scroll-icon"
-                        src="/assets/images/ahmed-icon.png"
-                        alt="logo Ahmed"
-                        loading="lazy"
-                    />
-                    <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
-                    </span>
-                </div>
-            </section>
-            <section className="d-flex flex-direction-column section-5">
-                <div className="panel ">
-                    <div className="d-flex flex-column justify-content-around gap-5">
-                        <div className="section-head">
-                            <h2 className=" text-center pt-5">
-                                {t("Crafted for The ")}
-                                <br />
-                                <span className="text-italic">
-                                    {t("discerning")}
-                                </span>
-                            </h2>
-                            <p className="text-center section-paragraph">
-                                {t(
-                                    "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
-                                )}
-                            </p>
-                        </div>
-                        <Categories />
-                        {/* <Lookbook /> */}
-                        <div className="section-head d-flex flex-column align-items-center justify-content-center">
-                            {/* <h4 className="text-center">
-                                {t("The perfect gift for every occasion")}
-                            </h4> */}
-                            <span className="t-subtitle">
-                                {t("The perfect gift for every occasion")}
-                            </span>
-                            <div className="mt-4 mb-5">
-                                <a href={`/${locale}/shop/dakhoon/gift-sets`}>
-                                    <Image
-                                        loading="lazy"
-                                        src="/assets/images/Ihda-khas-giftset.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Bakhoor-Ahmed"
-                                        className="w-50 px-1"
-                                    />
-                                </a>
-                                <a href={`/${locale}/shop/dakhoon/gift-sets`}>
-                                    <Image
-                                        className="w-50 px-1"
-                                        src="/assets/images/Antee-05-Giftset.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Oud-Asateen"
-                                    />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                            {/* Second slider */}
+                            <div className="swiper-slide slide" data-swiper-slide-index="1" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
+                                <div className="container-desktop" data-v-8967c2b9="">
+                                    <div className="col-left" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
+                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
+                                            Oolang Infini
+                                            </div>
+                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
+                                            as painted by Gabrielle Rul
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-right" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
+                                            
+                                            <span data-v-7aa9e1a2="">
+                                            Discover
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
 
-            <section className="scroll-section d-flex flex-direction-column section-6">
-                <div className="panel w-100 vh-100">
-                    <div className="section-content">
-                        <div className="text-center text-white d-flex justify-content-center">
-                            <span className="t-subtitle">
-                                {t("WHERE LUXURY MEETS YOUR SENSES")}
-                            </span>
+                                
+                            </div>
+                            {/* Second slider */}
+
+                            {/* Third slider */}
+                            <div className="swiper-slide slide" data-swiper-slide-index="2" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
+                                <div className="container-desktop" data-v-8967c2b9="">
+                                    <div className="col-left" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
+                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
+                                            Rose Cuirée
+                                            </div>
+                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
+                                            as painted by Ziling Wang
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-right" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
+                                            
+                                            <span data-v-7aa9e1a2="">
+                                            Discover
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Third slider */}
+
+                            {/* Fourth slider */}
+                            <div className="swiper-slide swiper-slide-prev slide" data-swiper-slide-index="3" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
+                                <div className="container-desktop" data-v-8967c2b9="">
+                                    <div className="col-left" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
+                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
+                                            Gaïac Eternel
+                                            </div>
+                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
+                                            as painted by Zoé Rumeau
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-right" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
+                                            
+                                            <span data-v-7aa9e1a2="">
+                                            Discover
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Fourth slider */}
+
+                            {/* Fifth slider */}
+                            <div className="swiper-slide swiper-slide-active slide" data-swiper-slide-index="4" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
+                                <div className="container-desktop" data-v-8967c2b9="">
+                                    <div className="col-left" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
+                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
+                                            Trèfle Pur
+                                            </div>
+                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
+                                            Sculptured by Victoire de Lencquesaing
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-right" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
+                                            
+                                            <span data-v-7aa9e1a2="">
+                                            Discover
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>                        
+                            </div>
+                            {/* Fifth slider */}
+
+                            {/* Sixth slider */}
+                            <div className="swiper-slide swiper-slide-next slide" data-swiper-slide-index="5" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
+                                <div className="container-desktop" data-v-8967c2b9="">
+                                    <div className="col-left" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
+                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
+                                            Camélia Intrépide
+                                            </div>
+                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
+                                            Imagined by François Azambourg
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-right" data-v-8967c2b9="">
+                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
+                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
+                                            
+                                            <span data-v-7aa9e1a2="">
+                                            Discover
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Sixth slider */}
                         </div>
-                        <h2 className="h1 text-center text-white pt-3">
-                            {t("Exclusive Collection")}
-                        </h2>
-                        <p className="text-center text-white section-paragraph">
-                            {t(
-                                "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
-                            )}
-                        </p>
-                        <div className="d-flex justify-content-center pt-5">
-                            <Link
-                                href="/shop"
-                                className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
-                            >
-                                Discover Now
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="bottom-scroll">
-                    <Image
-                        width={40}
-                        height={40}
-                        className="bottom-0 scroll-icon"
-                        src="/assets/images/ahmed-icon.png"
-                        alt="logo Ahmed"
-                        loading="lazy"
-                    />
-                    <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
-                    </span>
-                </div>
+
+                    {/* <div className="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal">
+                        <span className="swiper-pagination-bullet">
+                        </span>
+                        <span className="swiper-pagination-bullet">
+                        </span>
+                        <span className="swiper-pagination-bullet">
+                        </span>
+                        <span className="swiper-pagination-bullet">
+                        </span>
+                        <span className="swiper-pagination-bullet swiper-pagination-bullet-active">
+                        </span>
+                        <span className="swiper-pagination-bullet">
+                        </span>
+                    </div> */}
+                </div> 
             </section>
 
             {/* Horizontal Scrolling Section */}
