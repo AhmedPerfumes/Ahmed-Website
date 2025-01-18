@@ -29,7 +29,7 @@ export default function HomePage8() {
             }}
         >
             <NewsLetter />
-            <Header14 />
+            {/* <Header14 /> */}
             <div className="d-none d-lg-block">
                 {/* CanvasAnimation will render first for large screens */}
                 {/* <CanvasAnimation /> */}

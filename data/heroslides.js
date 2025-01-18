@@ -117,26 +117,30 @@ export const slides6 = [
   {
     id: 1,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/city-walk.jpg",
-    title: "",
+    imgBg: "/assets/images/home/demo8/top/bin-shaikh.jpg",
+    imgSrc: "/assets/images/home/demo8/top/bottles/bin-shaikh.png",
+    title: "Bin Shaikh",
   },
   {
     id: 2,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
-    title: "",
+    imgBg: "/assets/images/home/demo8/top/ignite-oud.jpg",
+    imgSrc: "/assets/images/home/demo8/top/bottles/ignite-oud.png",
+    title: "Ignite oud",
   },
   {
     id: 3,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
-    title: "",
+    imgBg: "/assets/images/home/demo8/top/bin-shaikh.jpg",
+    imgSrc: "/assets/images/home/demo8/top/bottles/bin-shaikh.png",
+    title: "Bin Shaikh",
   },
   {
     id: 4,
     bgColor: "#f5e6e0",
-    imgSrc: "/assets/images/home/demo5/banner-1.jpg",
-    title: "",
+    imgBg: "/assets/images/home/demo8/top/ignite-oud.jpg",
+    imgSrc: "/assets/images/home/demo8/top/bottles/ignite-oud.png",
+    title: "Ignite oud",
   },
 ];
 export const slidesData = [

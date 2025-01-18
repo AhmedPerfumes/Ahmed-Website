@@ -7,6 +7,15 @@
 	width: 100vw;
 }
 
+.logo__image {
+    filter: brightness(0) invert(1); /* Makes the logo white */
+    transition: filter 0.3s ease;   /* Smooth transition effect */
+}
+
+.logo:hover .logo__image {
+    filter: none; /* Restores the original color on hover */
+}
+
 .horizontal-scroll {
 	position: relative;
 	display: flex;
@@ -63,14 +72,31 @@
 	background-image: url('https://www.ahmed-perfume.com/assets/images/home/demo8/avif/collection-bnr.avif');
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position: bottom;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 40px;
+    position: relative;
 }
 
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	.section-2 {
+	  background-image: url('https://www.ahmed-perfume.com/assets/images/home/demo8/avif/collection-bnr.avif');
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  background-position: right;
+	}
+  }
+
 .section-3 {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
 	align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 40px;
+    position: relative;
 }
 
 .scroll-section .section-3 a {
@@ -82,18 +108,107 @@
 	background-image: url('/assets/images/home/demo8/avif/giftset-bnr.avif');
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position: bottom;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 40px;
+    position: relative;
 }
+
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	.section-4 {
+	  background-image: url('/assets/images/home/demo8/avif/giftset-bnr.avif');
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  background-position: right;
+	}
+  }
   
 .section-6 {
 	background-image: url('/assets/images/home/demo8/avif/dakhoon-bnr.avif');
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position: bottom;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 40px;
+    position: relative;
 }
 
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	.section-6 {
+	  background-image: url('/assets/images/home/demo8/avif/dakhoon-bnr.avif');
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  background-position: right;
+	}
+  }
+
+.sub-section {
+	display: flex;
+	flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.best-sellers {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
 .best-sellers {
 	/* width: 100vw;
 	height: 100%; */
 	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+}
+.best-sellers-text {
+    position: relative; /* Required for positioning the ::before element */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+	padding: 5rem;
+}
+
+@media (min-width: 992px) {
+    .best-sellers-text {
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+.best-sellers-text::before {
+    content: ""; /* Required for the pseudo-element to appear */
+    position: absolute; /* Allows the pseudo-element to be positioned relative to .best-sellers-text */
+    pointer-events: none; /* Ensures it doesn't interfere with user interactions */
+    border: 0.1875rem solid #bb8c1c; /* Gold-colored border */
+    top: 0.625rem; /* Spacing from the top */
+    left: 0.625rem; /* Spacing from the left */
+    right: 0.625rem; /* Spacing from the right */
+    bottom: 0.625rem; /* Spacing from the bottom */
+    z-index: 2; /* Places the pseudo-element below other content if necessary */
+    -webkit-box-shadow: inset 0 0 0 0.1875rem #ccc; /* Inner shadow */
+    box-shadow: inset 0 0 0 0.1875rem #ccc; /* Inner shadow for modern browsers */
+}
+
+
+.best-sellers-img {
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
@@ -112,6 +227,13 @@
 	}
 }
 
+.section-head .section-paragraph {
+	padding: 0 30%;
+}
+
+.section-head h2 {
+	font-size: 2.9rem;
+}
 
 .slideshow-bg__img {
 	width: 100%;
@@ -123,11 +245,21 @@
 	font-style: italic;
 }
 
+@media screen and (min-width: 320px) and (max-width: 768px) {
+	.slideshow-text {
+		margin-top: -10rem;
+	}
+}
+
 @media (max-width: 576px) {
 	.slide-custom-text {
 		font-style: italic;
 		bottom: -20rem;
 	}
+}
+
+.text-italic {
+	font-style: italic;
 }
     
 .top-35 {
@@ -202,8 +334,8 @@
 }
 }
 
-  
-
-  
-
-  
+.videoarea {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

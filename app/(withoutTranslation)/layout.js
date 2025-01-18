@@ -31,7 +31,7 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 
 const myFont = localFont({
-  src: "../../public/assets/fonts/kanit/Kanit-Medium.ttf",
+  src: "../../public/assets/fonts/wulkan/WulkanDisplayRegular.ttf",
 });
 
 // export const metadata = {
