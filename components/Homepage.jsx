@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
 import Hero from "@/components/homes/home-8/Hero";
-import ProductHero from "@/components/homes/home-4/Hero";
+import ProductHero from "@/components/homes/home-5/Hero";
 import {
     KeyboardArrowLeftRounded,
     KeyboardArrowRightRounded,
@@ -150,11 +150,11 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="scroll-section">
-                <div className="panel">
-                    <Hero />
+            {/* <section className="scroll-section d-flex flex-direction-column">
+                <div className="panel section-slider w-100 vh-100">
+                    <ProductHero />
                 </div>
-            </section>
+            </section> */}
 
             {/* Horizontal Scrolling Section */}
             <section className="horizontal-scroll d-flex flex-row w-100 vh-100">

@@ -1,7 +1,7 @@
 import Footer14 from "@/components/footers/Footer14";
 import Header14 from "@/components/headers/Header14";
 import Animation from "@/components/Animation";
-import HomePage from "@/components/HomePage";
+// import HomePage from "@/components/HomePage";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import React from "react";
 // import CanvasAnimation from "@/components/CanvasAnimation";

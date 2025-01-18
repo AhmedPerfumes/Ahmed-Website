@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 
 export default function LoginFormPopup() {
+  const locale = useLocale();
   return (
     <div
       className="aside aside_right overflow-hidden customer-forms"
@@ -66,7 +68,7 @@ export default function LoginFormPopup() {
             <div className="customer-option mt-4 text-center">
               <span className="text-secondary">No account yet?</span>
               <Link
-                href="/login_register#register-tab"
+                href={`${locale}/login_register#register-tab`}
                 className="btn-text js-show-register"
               >
                 Create Account
