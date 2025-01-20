@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 export default function Categories({ section }) {
   const t = useTranslations();
@@ -17,14 +18,15 @@ export default function Categories({ section }) {
     autoplay: {
       delay: 5000,
     },
+    modules: [Autoplay, Navigation],
     slidesPerView: 5,
-    slidesPerGroup: 5,
+    slidesPerGroup: 2,
     effect: "none",
     loop: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
+    // pagination: {
+    //   el: ".swiper-pagination",
+    //   clickable: true,
+    // },
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
@@ -32,7 +34,7 @@ export default function Categories({ section }) {
     grabCursor: true,
     breakpoints: {
       320: {
-        slidesPerView: 3,
+        slidesPerView: 2,
         slidesPerGroup: 2,
         spaceBetween: 14,
       },

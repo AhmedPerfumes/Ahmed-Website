@@ -164,7 +164,7 @@ export const categories88 = [
     link: "#"
   },
   {
-    id: 5,
+    id: 6,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Yasser Salah Salem",
     subText: "Embrace unforgettable elegance",
@@ -173,7 +173,7 @@ export const categories88 = [
     link: "#"
   },
   {
-    id: 5,
+    id: 7,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "The Cologne Boy",
     subText: "Embrace unforgettable elegance",
@@ -182,7 +182,7 @@ export const categories88 = [
     link: "#"
   },
   {
-    id: 5,
+    id: 8,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Hina Khan",
     subText: "Embrace unforgettable elegance",
