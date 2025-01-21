@@ -97,7 +97,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 scrub: true, // Smooth scrolling
 
                 pin: true, // Pin during horizontal scroll
-                anticipatePin: 1, // Smooth pinning transition
+                // anticipatePin: 1, // Smooth pinning transition
             },
         });
 
@@ -449,8 +449,8 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
 
                     {/* Navigation buttons */}
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev"></div>
                     {/* Pagination Bullets */}
                 
                 </div> 
@@ -500,12 +500,9 @@ const ScrollSnapHorizontalBootstrap = () => {
             <section className="scroll-section d-flex flex-direction-column section-3">
                 <div className="panel w-100 h-100">
                     <div className="section-content">
-                        <div
-                            className="d-flex flex-column justify-content-around
-        gap-5"
-                        >
+                        <div className="d-flex flex-column justify-content-around gap-5">
                             <div className="section-head">
-                                <h2 className=" text-center">
+                                <h2 className="text-center">
                                     {t("Crafted for The ")}
                                     <br />
                                     <span className="text-italic">
@@ -716,77 +713,81 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                 </div>
                 <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                    <div className="inner">
-                        <div className="d-flex flex-column align-items-center justify-content-center">
-                            <h3 className="text-center">
-                                {t("Essence of Arabia")}
-                            </h3>
-                            <p className="text-center px-3">{t("Step into")}</p>
-
-                            <div className="mt-5">
-                                <a
-                                    href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
-                                >
-                                    <Image
-                                        loading="lazy"
-                                        src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Bakhoor-Ahmed"
-                                        className="w-50 px-1"
-                                    />
-                                </a>
-                                <a
-                                    href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
-                                >
-                                    <Image
-                                        className="w-50 px-1"
-                                        src="/assets/images/home/demo8/Oud-Asateen.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Oud-Asateen"
-                                    />
-                                </a>
+                    <div className="">
+                        <h3 className="text-center" style={{ "whiteSpace": "nowrap" }}>
+                            {t("Essence of Arabia")}
+                        </h3>
+                        <p className="text-center">{t("Step into")}</p>
+                        <div className="row mt-4 justify-content-center">
+                            <div className="col-md-6">
+                                <Link href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
+                                <img
+                                    className=""
+                                    src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                                    alt="Bakhoor Ahmed"
+                                />
+                                </Link>
+                            </div>
+                            <div className="col-md-6">
+                                <Link href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
+                                <img
+                                    className=""
+                                    src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                                    alt="Oud Asateen"
+                                />
+                                </Link>
                             </div>
                         </div>
                     </div>
-                    <div className="inner2 mt-5">
+                    <div className="panel2 mt-5">
+                        <div className="inner2 mt-5">
+                            <Categories />
+                        </div>
+                    </div>
+                    {/* <div className="inner2 mt-5">
                         <Categories />
-                    </div>
+                    </div> */}
+                    {/* <div className="d-flex flex-column align-items-center">
+                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
+                        {t("Reaching Every Corner of the World")}
+                        </h3>
+                        <p className="text-center">{t("Exports Text")}</p>
+                        <Link
+                        href={`/${locale}/export`}
+                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                        >
+                        {t("Discover More")}
+                        </Link>
+                    </div> */}
                 </div>
-                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                    <div className="inner text-center pt-5 mt-4">
-                        <h1>Reaching Every Corner of the World</h1>
-                        <p className="fs-5">
-                            Ahmed Al Maghribi Perfumes proudly spans over 91
-                            countries, sharing our luxurious fragrances with the
-                            world. With an unwavering commitment to
-                            craftsmanship and excellence, our signature scents
-                            are now available for global distribution, spreading
-                            the essence of timeless luxury and rich tradition to
-                            every corner of the globe.
-                        </p>
-
-                        <div className="row">
-                            <div className="col-6">
-                                <a href={`/${locale}/export`}>
-                                    <img
-                                        src="assets/images/home/demo8/export/aqua-oud.jpg"
-                                        alt=""
-                                        className="img-fluid"
-                                    />
-                                </a>
-                            </div>
-                            <div className="col-6">
-                                <a href={`/${locale}/export`}>
-                                    <img
-                                        src="assets/images/home/demo8/export/endless.jpg"
-                                        alt=""
-                                        className="img-fluid"
-                                    />
-                                </a>
-                            </div>
-                        </div>
+                <div className="panel mt-5">
+                    <div className="d-flex flex-column align-items-center">
+                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
+                        {t("Reaching Every Corner of the World")}
+                        </h3>
+                        <p className="text-center">{t("Exports Text")}</p>
+                        <Link
+                        href={`/${locale}/export`}
+                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                        >
+                        {t("Discover More")}
+                        </Link>
+                    </div>
+                    <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
+                        <Link href={`/${locale}/export`}>
+                        <img
+                            className="px-2 w-100 w-md-auto"
+                            src="/assets/images/home/demo8/export/aqua-oud.jpg"
+                            alt="Image 1"
+                        />
+                        </Link>
+                        <Link href={`/${locale}/export`}>
+                        <img
+                            className="px-2 w-100 w-md-auto"
+                            src="/assets/images/home/demo8/export/endless.jpg"
+                            alt="Image 2"
+                        />
+                        </Link>
                     </div>
                 </div>
             </section>

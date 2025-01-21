@@ -19,8 +19,8 @@ export default function Categories({ section }) {
       delay: 5000,
     },
     modules: [Autoplay, Navigation],
-    slidesPerView: 4,
-    slidesPerGroup: 2,
+    slidesPerView: 5,
+    slidesPerGroup: 3,
     effect: "none",
     loop: true,
     // pagination: {
@@ -95,10 +95,10 @@ export default function Categories({ section }) {
   } else if (section === "section4") {
     categoryRend = (
       <>
-        <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
+        <h2 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-2">
           {t("Iconic Indulgence")}
         </h2>
-        <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center">
+        <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
           {t("See luxury in motion through the eyes of those who know it best")}
         </p>
         <Swiper className="swiper-container" {...swiperOptions}>
