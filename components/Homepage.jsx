@@ -608,7 +608,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 <span className="t-subtitle">
                     {t("The perfect gift for every occasion")}
                 </span>
-                <div className="mt-4 mb-5">
+                <div className="mt-4 mb-5 d-none d-md-block">
                     <a href={`/${locale}/shop/dakhoon/gift-sets`}>
                         <Image
                             loading="lazy"
@@ -616,16 +616,40 @@ const ScrollSnapHorizontalBootstrap = () => {
                             width="600"
                             height="600"
                             alt="Bakhoor-Ahmed"
-                            className="w-50 px-1"
+                            className="w-50 px-1 object-fit-contain"
                         />
                     </a>
                     <a href={`/${locale}/shop/dakhoon/gift-sets`}>
                         <Image
-                            className="w-50 px-1"
+                            className="w-50 px-1 object-fit-contain"
                             src="/assets/images/Antee-05-Giftset.jpg"
                             width="600"
                             height="600"
                             alt="Oud-Asateen"
+                        />
+                    </a>
+                </div>
+
+                <div className="mt-4 mb-5 d-block d-sm-none d-flex flex-column">
+                    <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                        <Image
+                            loading="lazy"
+                            src="/assets/images/Ihda-khas-giftset.jpg"
+                            width="600"
+                            height="600"
+                            alt="Bakhoor-Ahmed"
+                            className="w-100 px-1"
+                            style={{ paddingTop: "1rem", objectFit: "contain" }}
+                        />
+                    </a>
+                    <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                        <Image
+                            className="w-100 px-1"
+                            src="/assets/images/Antee-05-Giftset.jpg"
+                            width="600"
+                            height="600"
+                            alt="Oud-Asateen"
+                            style={{ paddingTop: "1rem", objectFit: "contain" }}
                         />
                     </a>
                 </div>
