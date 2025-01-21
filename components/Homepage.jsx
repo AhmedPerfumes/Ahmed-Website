@@ -212,7 +212,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="/assets/images/best-sellers/notes/zumar@1x.jpg 1x, /assets/images/best-sellers/notes/zumar@2x.jpg 2x,"
+                                            srcSet="/assets/images/best-sellers/notes/zumar@1x.jpg 1x, /assets/images/best-sellers/notes/zumar@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
                                             src="/assets/images/best-sellers/notes/zumar@2x.jpg"
                                             alt=""
@@ -244,9 +244,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="/assets/images/best-sellers/zumar.jpg"
+                                            srcSet="/assets/images/best-sellers/zumar@1x.jpg 1x, /assets/images/best-sellers/zumar@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="/assets/images/best-sellers/zumar.jpg"
+                                            src="/assets/images/best-sellers/zumar@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -287,7 +287,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/zumar@1x.jpg 1x, /assets/images/best-sellers/zumar@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
                                         src="/assets/images/best-sellers/zumar.jpg"
                                         alt=""
