@@ -616,16 +616,18 @@ const ScrollSnapHorizontalBootstrap = () => {
                             width="600"
                             height="600"
                             alt="Bakhoor-Ahmed"
-                            className="w-50 px-1 object-fit-contain"
+                            className="w-50 px-1"
+                            style={{ objectFit: "contain" }}
                         />
                     </a>
                     <a href={`/${locale}/shop/dakhoon/gift-sets`}>
                         <Image
-                            className="w-50 px-1 object-fit-contain"
+                            className="w-50 px-1"
                             src="/assets/images/Antee-05-Giftset.jpg"
                             width="600"
                             height="600"
                             alt="Oud-Asateen"
+                            style={{ objectFit: "contain" }}
                         />
                     </a>
                 </div>

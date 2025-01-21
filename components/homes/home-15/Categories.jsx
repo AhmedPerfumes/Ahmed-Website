@@ -19,7 +19,7 @@ export default function Categories({ section }) {
       delay: 5000,
     },
     modules: [Autoplay, Navigation],
-    slidesPerView: 5,
+    slidesPerView: 4,
     slidesPerGroup: 2,
     effect: "none",
     loop: true,
