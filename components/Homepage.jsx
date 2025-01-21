@@ -17,7 +17,7 @@ import Categories from "@/components/homes/home-15/Categories";
 import Lookbook from "@/components/homes/home-9/Lookbook";
 import Image from "next/image";
 import Link from "next/link";
-import 'swiper/css/pagination';
+import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -67,12 +67,16 @@ const ScrollSnapHorizontalBootstrap = () => {
         });
 
         function updateNavCircle(activeIndex) {
-            const circles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
+            const circles = document.querySelectorAll(
+                ".swiper-pagination-horizontal .swiper-pagination-bullet"
+            );
             circles.forEach((circle) => {
                 circle.classList.remove("swiper-pagination-bullet-active");
             });
 
-            const activeCircle = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet")[activeIndex];
+            const activeCircle = document.querySelectorAll(
+                ".swiper-pagination-horizontal .swiper-pagination-bullet"
+            )[activeIndex];
             if (activeCircle) {
                 activeCircle.classList.add("swiper-pagination-bullet-active");
             }
@@ -82,7 +86,9 @@ const ScrollSnapHorizontalBootstrap = () => {
             swiper.slideTo(index);
         }
 
-        const navCircles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
+        const navCircles = document.querySelectorAll(
+            ".swiper-pagination-horizontal .swiper-pagination-bullet"
+        );
         navCircles.forEach((circle, index) => {
             circle.addEventListener("click", () => handleNavCircleClick(index));
         });
@@ -157,71 +163,159 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            {/* <section className="scroll-section ">
-                <div className="panel w-100 h-100">
-                    <div className="">
-                        <h2 className="h1 text-center pt-3">
-                            {t("Best Sellers")}
-                        </h2>
-                        <p className="text-center section-paragraph">
-                            {t(
-                                "Discover our bestsellers crafted to suit diverse tastes From classics to modern blends each fragrance offers something unique for every scent lover"
-                            )}
-                        </p>
-                    </div>
-                    <div>
-                        <ProductHero />
-                    </div>
-                </div>
-            </section> */}
-
-            <section id="second-chapter-slider" className="container flex__column__center" data-v-ea8e1c8e="">
-                <div className="container-description flex__column__center__bottom flex__g-xxs" data-v-ea8e1c8e="">
-                        <h2 className="h1 text-center pt-3">
-                            {t("Best Sellers")}
-                        </h2>
+            <section
+                id="second-chapter-slider"
+                className="container flex__column__center"
+                data-v-ea8e1c8e=""
+            >
+                <div
+                    className="container-description flex__column__center__bottom flex__g-xxs"
+                    data-v-ea8e1c8e=""
+                >
+                    <h2 className="h1 text-center pt-3">{t("Best Sellers")}</h2>
                     <div className="t__m t__color-blue" data-v-ea8e1c8e="">
-                        The atelier is the expression of Atelier Cologne creativity. Inspired
-                        by the traditional spirit of cologne, a unique collective of perfume-artists
-                        craft new fragrance explorations. They seek to capture the movement of
-                        nature and its vibrant beauty through scented expressions of inner emotions.
-                        Atelier Cologne surrounds itself with painters, sculptors, designers who
-                        express their intimate connection with fragrances through art.
+                        The atelier is the expression of Atelier Cologne
+                        creativity. Inspired by the traditional spirit of
+                        cologne, a unique collective of perfume-artists craft
+                        new fragrance explorations. They seek to capture the
+                        movement of nature and its vibrant beauty through
+                        scented expressions of inner emotions. Atelier Cologne
+                        surrounds itself with painters, sculptors, designers who
+                        express their intimate connection with fragrances
+                        through art.
                     </div>
                 </div>
-                    
-                <div className="swiper swiper-initialized swiper-horizontal slider-artist swiper-backface-hidden mySwiper" data-v-8967c2b9="">
+
+                <div
+                    className="swiper swiper-initialized swiper-horizontal slider-artist swiper-backface-hidden mySwiper"
+                    data-v-8967c2b9=""
+                >
                     <div className="swiper-wrapper">
                         {/* First slider */}
-                        <div className="swiper-slide slide" data-swiper-slide-index="0" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
-                            <div className="container-desktop d-none d-md-block" data-v-8967c2b9="">
-                                <div className="container-desktop" data-v-8967c2b9="">
-                                    <div className="col-left" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
-                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">Orange Sanguine</div>
-                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">as painted by Geoffroy Pithon</div>
+                        <div
+                            className="swiper-slide slide"
+                            data-swiper-slide-index="0"
+                            data-v-8967c2b9=""
+                            style={{ width: "752px", marginRight: "10px" }}
+                        >
+                            <div
+                                className="container-desktop d-none d-md-block"
+                                data-v-8967c2b9=""
+                            >
+                                <div
+                                    className="container-desktop"
+                                    data-v-8967c2b9=""
+                                >
+                                    <div
+                                        className="col-left"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="/assets/images/best-sellers/notes/zumar@1x.jpg 1x, /assets/images/best-sellers/notes/zumar@2x.jpg 2x,"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="/assets/images/best-sellers/notes/zumar@2x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <div
+                                            className="container-artist flex__column__left"
+                                            data-v-8967c2b9=""
+                                        >
+                                            <div
+                                                className="t__h4 t__color-primary t__capitalize"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Orange Sanguine
+                                            </div>
+                                            <div
+                                                className="t__sub-title t__color-blue"
+                                                data-v-8967c2b9=""
+                                            >
+                                                as painted by Geoffroy Pithon
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-right" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
-                                            <span data-v-7aa9e1a2="">Discover</span>
+                                    <div
+                                        className="col-right"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="/assets/images/best-sellers/zumar.jpg"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="/assets/images/best-sellers/zumar.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div data-v-8967c2b9="" className="container-mobile d-block d-sm-none">
-                                <div data-v-8967c2b9="" className="container-images">
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-artist-1-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    </div>
-                                <div data-v-8967c2b9="" className="container-artist flex__column__left">
-                                    <div data-v-8967c2b9="" className="t__h4 t__color-primary t__capitalize">Orange Sanguine</div>
-                                    <div data-v-8967c2b9="" className="t__sub-title t__color-blue">as painted by Geoffroy Pithon</div>
+                            <div
+                                data-v-8967c2b9=""
+                                className="container-mobile d-block d-sm-none"
+                            >
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-images"
+                                >
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-artist"
+                                        srcSet="/assets/images/best-sellers/notes/zumar@1x.jpg 1x, /assets/images/best-sellers/notes/zumar@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="/assets/images/best-sellers/notes/zumar@2x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-fragrance"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-1/carousel-product-1-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="/assets/images/best-sellers/zumar.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <button data-v-7aa9e1a2="" data-v-8967c2b9="" className="btn-classic">
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-artist flex__column__left"
+                                >
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__h4 t__color-primary t__capitalize"
+                                    >
+                                        Orange Sanguine
+                                    </div>
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__sub-title t__color-blue"
+                                    >
+                                        as painted by Geoffroy Pithon
+                                    </div>
+                                </div>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
                                     <span data-v-7aa9e1a2="">Discover</span>
                                 </button>
                             </div>
@@ -229,35 +323,130 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {/* First slider */}
 
                         {/* Second slider */}
-                        <div className="swiper-slide slide" data-swiper-slide-index="1" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
-                            <div className="container-desktop d-none d-md-block" data-v-8967c2b9="">
-                                <div className="container-desktop" data-v-8967c2b9="">
-                                    <div className="col-left" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
-                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">Oolang Infini</div>
-                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">as painted by Gabrielle Rul</div>
+                        <div
+                            className="swiper-slide slide"
+                            data-swiper-slide-index="1"
+                            data-v-8967c2b9=""
+                            style={{ width: "752px", marginRight: "10px" }}
+                        >
+                            <div
+                                className="container-desktop d-none d-md-block"
+                                data-v-8967c2b9=""
+                            >
+                                <div
+                                    className="container-desktop"
+                                    data-v-8967c2b9=""
+                                >
+                                    <div
+                                        className="col-left"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <div
+                                            className="container-artist flex__column__left"
+                                            data-v-8967c2b9=""
+                                        >
+                                            <div
+                                                className="t__h4 t__color-primary t__capitalize"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Oolang Infini
+                                            </div>
+                                            <div
+                                                className="t__sub-title t__color-blue"
+                                                data-v-8967c2b9=""
+                                            >
+                                                as painted by Gabrielle Rul
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-right" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
-                                            <span data-v-7aa9e1a2="">Discover</span>
+                                    <div
+                                        className="col-right"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div data-v-8967c2b9="" className="container-mobile d-block d-sm-none">
-                                <div data-v-8967c2b9="" className="container-images">
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    </div>
-                                <div data-v-8967c2b9="" className="container-artist flex__column__left">
-                                    <div data-v-8967c2b9="" className="t__h4 t__color-primary t__capitalize">Oolang Infini</div>
-                                    <div data-v-8967c2b9="" className="t__sub-title t__color-blue">as painted by Gabrielle Rul</div>
+                            <div
+                                data-v-8967c2b9=""
+                                className="container-mobile d-block d-sm-none"
+                            >
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-images"
+                                >
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-artist"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-fragrance"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <button data-v-7aa9e1a2="" data-v-8967c2b9="" className="btn-classic">
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-artist flex__column__left"
+                                >
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__h4 t__color-primary t__capitalize"
+                                    >
+                                        Oolang Infini
+                                    </div>
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__sub-title t__color-blue"
+                                    >
+                                        as painted by Gabrielle Rul
+                                    </div>
+                                </div>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
                                     <span data-v-7aa9e1a2="">Discover</span>
                                 </button>
                             </div>
@@ -265,41 +454,130 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {/* Second slider */}
 
                         {/* Third slider */}
-                        <div className="swiper-slide slide" data-swiper-slide-index="2" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
-                            <div className="container-desktop d-none d-md-block" data-v-8967c2b9="">
-                                <div className="container-desktop" data-v-8967c2b9="">
-                                    <div className="col-left" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
-                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
-                                            Rose Cuirée
+                        <div
+                            className="swiper-slide slide"
+                            data-swiper-slide-index="2"
+                            data-v-8967c2b9=""
+                            style={{ width: "752px", marginRight: "10px" }}
+                        >
+                            <div
+                                className="container-desktop d-none d-md-block"
+                                data-v-8967c2b9=""
+                            >
+                                <div
+                                    className="container-desktop"
+                                    data-v-8967c2b9=""
+                                >
+                                    <div
+                                        className="col-left"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <div
+                                            className="container-artist flex__column__left"
+                                            data-v-8967c2b9=""
+                                        >
+                                            <div
+                                                className="t__h4 t__color-primary t__capitalize"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Rose Cuirée
                                             </div>
-                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
-                                            as painted by Ziling Wang
+                                            <div
+                                                className="t__sub-title t__color-blue"
+                                                data-v-8967c2b9=""
+                                            >
+                                                as painted by Ziling Wang
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-right" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg" alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
-                                            <span data-v-7aa9e1a2="">Discover</span>
+                                    <div
+                                        className="col-right"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div data-v-8967c2b9="" className="container-mobile d-block d-sm-none">
-                                <div data-v-8967c2b9="" className="container-images">
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg" alt="" loading="lazy"/>
+                            <div
+                                data-v-8967c2b9=""
+                                className="container-mobile d-block d-sm-none"
+                            >
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-images"
+                                >
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-artist"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-fragrance"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <div data-v-8967c2b9="" className="container-artist flex__column__left">
-                                    <div data-v-8967c2b9="" className="t__h4 t__color-primary t__capitalize">Rose Cuirée</div>
-                                    <div data-v-8967c2b9="" className="t__sub-title t__color-blue">as painted by Ziling Wang</div>
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-artist flex__column__left"
+                                >
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__h4 t__color-primary t__capitalize"
+                                    >
+                                        Rose Cuirée
+                                    </div>
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__sub-title t__color-blue"
+                                    >
+                                        as painted by Ziling Wang
+                                    </div>
                                 </div>
-                                <button data-v-7aa9e1a2="" data-v-8967c2b9="" className="btn-classic">
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
                                     <span data-v-7aa9e1a2="">Discover</span>
                                 </button>
                             </div>
@@ -307,46 +585,130 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {/* Third slider */}
 
                         {/* Fourth slider */}
-                        <div className="swiper-slide slide" data-swiper-slide-index="3" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
-                            <div className="container-desktop d-none d-md-block" data-v-8967c2b9="">
-                                <div className="container-desktop" data-v-8967c2b9="">
-                                    <div className="col-left" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
-                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
-                                            Gaïac Eternel
+                        <div
+                            className="swiper-slide slide"
+                            data-swiper-slide-index="3"
+                            data-v-8967c2b9=""
+                            style={{ width: "752px", marginRight: "10px" }}
+                        >
+                            <div
+                                className="container-desktop d-none d-md-block"
+                                data-v-8967c2b9=""
+                            >
+                                <div
+                                    className="container-desktop"
+                                    data-v-8967c2b9=""
+                                >
+                                    <div
+                                        className="col-left"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <div
+                                            className="container-artist flex__column__left"
+                                            data-v-8967c2b9=""
+                                        >
+                                            <div
+                                                className="t__h4 t__color-primary t__capitalize"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Gaïac Eternel
                                             </div>
-                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
-                                            as painted by Zoé Rumeau
+                                            <div
+                                                className="t__sub-title t__color-blue"
+                                                data-v-8967c2b9=""
+                                            >
+                                                as painted by Zoé Rumeau
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-right" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
-                                            
+                                    <div
+                                        className="col-right"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
                                             <span data-v-7aa9e1a2="">
-                                            Discover
+                                                Discover
                                             </span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div data-v-8967c2b9="" className="container-mobile d-block d-sm-none">
-                                <div data-v-8967c2b9="" className="container-images">
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg" alt="" loading="lazy"/>
+                            <div
+                                data-v-8967c2b9=""
+                                className="container-mobile d-block d-sm-none"
+                            >
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-images"
+                                >
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-artist"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-fragrance"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <div data-v-8967c2b9="" className="container-artist flex__column__left">
-                                    <div data-v-8967c2b9="" className="t__h4 t__color-primary t__capitalize">Gaïac Eternel</div>
-                                    <div data-v-8967c2b9="" className="t__sub-title t__color-blue">as painted by Zoé Rumeau</div>
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-artist flex__column__left"
+                                >
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__h4 t__color-primary t__capitalize"
+                                    >
+                                        Gaïac Eternel
+                                    </div>
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__sub-title t__color-blue"
+                                    >
+                                        as painted by Zoé Rumeau
+                                    </div>
                                 </div>
-                                <button data-v-7aa9e1a2="" data-v-8967c2b9="" className="btn-classic">
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
                                     <span data-v-7aa9e1a2="">Discover</span>
                                 </button>
                             </div>
@@ -354,46 +716,131 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {/* Fourth slider */}
 
                         {/* Fifth slider */}
-                        <div className="swiper-slide slide" data-swiper-slide-index="4" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
-                            <div className="container-desktop d-none d-md-block" data-v-8967c2b9="">
-                                <div className="container-desktop" data-v-8967c2b9="">
-                                    <div className="col-left" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
-                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
-                                            Trèfle Pur
+                        <div
+                            className="swiper-slide slide"
+                            data-swiper-slide-index="4"
+                            data-v-8967c2b9=""
+                            style={{ width: "752px", marginRight: "10px" }}
+                        >
+                            <div
+                                className="container-desktop d-none d-md-block"
+                                data-v-8967c2b9=""
+                            >
+                                <div
+                                    className="container-desktop"
+                                    data-v-8967c2b9=""
+                                >
+                                    <div
+                                        className="col-left"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <div
+                                            className="container-artist flex__column__left"
+                                            data-v-8967c2b9=""
+                                        >
+                                            <div
+                                                className="t__h4 t__color-primary t__capitalize"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Trèfle Pur
                                             </div>
-                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
-                                            Sculptured by Victoire de Lencquesaing
+                                            <div
+                                                className="t__sub-title t__color-blue"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Sculptured by Victoire de
+                                                Lencquesaing
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-right" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
-                                            
+                                    <div
+                                        className="col-right"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
                                             <span data-v-7aa9e1a2="">
-                                            Discover
+                                                Discover
                                             </span>
                                         </button>
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
 
-                            <div data-v-8967c2b9="" className="container-mobile d-block d-sm-none">
-                                <div data-v-8967c2b9="" className="container-images">
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg" alt="" loading="lazy"/>
+                            <div
+                                data-v-8967c2b9=""
+                                className="container-mobile d-block d-sm-none"
+                            >
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-images"
+                                >
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-artist"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-fragrance"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <div data-v-8967c2b9="" className="container-artist flex__column__left">
-                                    <div data-v-8967c2b9="" className="t__h4 t__color-primary t__capitalize">Trèfle Pur</div>
-                                    <div data-v-8967c2b9="" className="t__sub-title t__color-blue">Sculptured by Victoire de Lencquesaing</div>
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-artist flex__column__left"
+                                >
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__h4 t__color-primary t__capitalize"
+                                    >
+                                        Trèfle Pur
+                                    </div>
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__sub-title t__color-blue"
+                                    >
+                                        Sculptured by Victoire de Lencquesaing
+                                    </div>
                                 </div>
-                                <button data-v-7aa9e1a2="" data-v-8967c2b9="" className="btn-classic">
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
                                     <span data-v-7aa9e1a2="">Discover</span>
                                 </button>
                             </div>
@@ -401,46 +848,130 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {/* Fifth slider */}
 
                         {/* Sixth slider */}
-                        <div className="swiper-slide slide" data-swiper-slide-index="5" data-v-8967c2b9="" style={{ width: '752px', marginRight: '10px' }}>
-                            <div className="container-desktop d-none d-md-block" data-v-8967c2b9="">
-                                <div className="container-desktop" data-v-8967c2b9="">
-                                    <div className="col-left" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <div className="container-artist flex__column__left" data-v-8967c2b9="">
-                                            <div className="t__h4 t__color-primary t__capitalize" data-v-8967c2b9="">
-                                            Camélia Intrépide
+                        <div
+                            className="swiper-slide slide"
+                            data-swiper-slide-index="5"
+                            data-v-8967c2b9=""
+                            style={{ width: "752px", marginRight: "10px" }}
+                        >
+                            <div
+                                className="container-desktop d-none d-md-block"
+                                data-v-8967c2b9=""
+                            >
+                                <div
+                                    className="container-desktop"
+                                    data-v-8967c2b9=""
+                                >
+                                    <div
+                                        className="col-left"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <div
+                                            className="container-artist flex__column__left"
+                                            data-v-8967c2b9=""
+                                        >
+                                            <div
+                                                className="t__h4 t__color-primary t__capitalize"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Camélia Intrépide
                                             </div>
-                                            <div className="t__sub-title t__color-blue" data-v-8967c2b9="">
-                                            Imagined by François Azambourg
+                                            <div
+                                                className="t__sub-title t__color-blue"
+                                                data-v-8967c2b9=""
+                                            >
+                                                Imagined by François Azambourg
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-right" data-v-8967c2b9="">
-                                        <img className="img-classic loading-background" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
-                                        sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
-                                        alt="" loading="lazy" data-v-8967c2b9="" data-v-399c522e=""/>
-                                        <button className="btn-classic" data-v-8967c2b9="" data-v-7aa9e1a2="">
-                                            
+                                    <div
+                                        className="col-right"
+                                        data-v-8967c2b9=""
+                                    >
+                                        <img
+                                            className="img-classic loading-background"
+                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                            sizes="(min-width: 768px) 1040w"
+                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                            alt=""
+                                            loading="lazy"
+                                            data-v-8967c2b9=""
+                                            data-v-399c522e=""
+                                        />
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
                                             <span data-v-7aa9e1a2="">
-                                            Discover
+                                                Discover
                                             </span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div data-v-8967c2b9="" className="container-mobile d-block d-sm-none">
-                                <div data-v-8967c2b9="" className="container-images">
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-artist" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg" alt="" loading="lazy"/>
-                                    <img data-v-399c522e="" data-v-8967c2b9="" className="img-classic img-fragrance" srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x" sizes="(min-width: 768px) 1040w" src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg" alt="" loading="lazy"/>
+                            <div
+                                data-v-8967c2b9=""
+                                className="container-mobile d-block d-sm-none"
+                            >
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-images"
+                                >
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-artist"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        data-v-399c522e=""
+                                        data-v-8967c2b9=""
+                                        className="img-classic img-fragrance"
+                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                        sizes="(min-width: 768px) 1040w"
+                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <div data-v-8967c2b9="" className="container-artist flex__column__left">
-                                    <div data-v-8967c2b9="" className="t__h4 t__color-primary t__capitalize">Camélia Intrépide</div>
-                                    <div data-v-8967c2b9="" className="t__sub-title t__color-blue">Imagined by François Azambourg</div>
+                                <div
+                                    data-v-8967c2b9=""
+                                    className="container-artist flex__column__left"
+                                >
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__h4 t__color-primary t__capitalize"
+                                    >
+                                        Camélia Intrépide
+                                    </div>
+                                    <div
+                                        data-v-8967c2b9=""
+                                        className="t__sub-title t__color-blue"
+                                    >
+                                        Imagined by François Azambourg
+                                    </div>
                                 </div>
-                                <button data-v-7aa9e1a2="" data-v-8967c2b9="" className="btn-classic">
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
                                     <span data-v-7aa9e1a2="">Discover</span>
                                 </button>
                             </div>
@@ -452,8 +983,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                     {/* Pagination Bullets */}
-                
-                </div> 
+                </div>
             </section>
 
             <section className="scroll-section d-flex flex-direction-column section-2">
@@ -581,7 +1111,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </span>
                 </div>
             </section>
-            
+
             <section className="d-flex">
                 <div className="w-100 d-flex flex-column">
                     <div className="d-flex flex-column justify-content-around gap-5">
