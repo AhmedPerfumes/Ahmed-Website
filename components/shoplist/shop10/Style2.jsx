@@ -159,7 +159,7 @@ export default function Style2({ category, subcategory, products }) {
                       )}
                       {elm.product_qty <= 0 ? (
                         <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                          Out Of Stock
+                          {t("Out Of Stock")}
                         </div>
                       ) : (
                         elm.discount && (
@@ -249,7 +249,7 @@ export default function Style2({ category, subcategory, products }) {
                           onClick={() => addProductToCart({...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' '))})}
                           title="Add to Cart"
                         >
-                          Add To Cart
+                          {t("Add To Cart")}
                         </button>
                       )}
                   <button
@@ -259,7 +259,7 @@ export default function Style2({ category, subcategory, products }) {
                     title="Quick view"
                     onClick={() => addProductToQuickView({...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' '))})}
                   >
-                    Quick View
+                    {t("Quick View")}
                   </button>
                 </div>
               ) : null}

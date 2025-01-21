@@ -138,8 +138,8 @@ export default function Footer14() {
             <p className="footer-address">
               {t("Ahmed Al Maghribi Perfume Manuf")} <br />
               {t("Jurf Industrial Zone 3")} <br />
-              AJMAN, P. O. Box – 3850 <br />
-              UAE
+              {t("Ajman")} <br />
+              {t("UAE")}
             </p>
 
             <p className="m-0">
