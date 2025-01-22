@@ -1120,15 +1120,15 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <div className="d-flex flex-column justify-content-around gap-5">
                         <div className="section-head">
                             <h2 className=" text-center pt-5">
-                                {t("Crafted for The ")}
+                                {t("Gifts for Every ")}
                                 <br />
                                 <span className="text-italic">
-                                    {t("discerning")}
+                                    {t("Occasion")}
                                 </span>
                             </h2>
                             <p className="text-center section-paragraph">
                                 {t(
-                                    "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
+                                    "Delight your loved ones with our luxurious gift sets, thoughtfully curated to include our most exquisite fragrances."
                                 )}
                             </p>
                         </div>
