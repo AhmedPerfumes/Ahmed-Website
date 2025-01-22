@@ -1255,9 +1255,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            {/* Horizontal Scrolling Section */}
-                            
-            {!isMobile ? <><section className="horizontal-scroll d-flex flex-row w-100 vh-100">
+  {/* Horizontal Scrolling Section */}
+                           
+  {!isMobile ? <><section className="horizontal-scroll d-flex flex-row w-100 vh-100">
                 <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
                     <div className="inner">
                         <div className="panel2 mb-4">
@@ -1352,7 +1352,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                 </div>
             </section></> :
-            
+           
             <><section className="horizontal-scroll d-flex flex-row w-100 vh-100">
                 <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
                     <div className="inner">
@@ -1448,7 +1448,49 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                 </div>
             </section></>}
+            
+                
 
+            <section className="scroll-section d-flex flex-direction-column section-7 mt-3">
+                <div className="panel w-100 vh-100">
+                    <div className="section-content">
+                        <div className="text-center text-white d-flex justify-content-center">
+                            <span className="t-subtitle">
+                                {t("WHERE LUXURY MEETS YOUR SENSES")}
+                            </span>
+                        </div>
+                        <h2 className="h1 text-center text-white pt-3">
+                        {t("Your Journey Begins with a Scent")}
+                        </h2>
+                        <p className="text-center text-white section-paragraph">
+                            {t(
+                                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are"
+                            )}
+                        </p>
+                        <div className="d-flex justify-content-center pt-5">
+                            <Link
+                                href="/shop"
+                                className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
+                            >
+                                Discover Now
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="bottom-scroll">
+                    <Image
+                        width={40}
+                        height={40}
+                        className="bottom-0 scroll-icon"
+                        src="/assets/images/ahmed-icon.png"
+                        alt="logo Ahmed"
+                        loading="lazy"
+                    />
+                    <span className="text-white text-uppercase mt-2">
+                        Scroll to discover
+                    </span>
+                </div>
+            </section>
             {/* Company Information Section */}
             <section
         id="end"
