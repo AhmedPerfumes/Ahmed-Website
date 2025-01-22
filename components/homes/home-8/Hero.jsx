@@ -70,7 +70,7 @@ export default function Hero() {
             ))}
             {/* <!-- /.slideshow-wrapper js-swiper-slider --> */}
 
-            <div className="slideshow-pagination position-right-center type2 color-white position-right-2"></div>
+            {/* <div className="slideshow-pagination position-right-center type2 color-white position-right-2"></div> */}
             {/* <!-- /.products-pagination --> */}
             <a
                 href="#footer"

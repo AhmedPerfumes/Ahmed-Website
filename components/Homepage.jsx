@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
@@ -25,6 +25,9 @@ gsap.registerPlugin(ScrollTrigger);
 const ScrollSnapHorizontalBootstrap = () => {
     const locale = useLocale();
     const t = useTranslations();
+
+    const [isMobile, setIsMobile] = useState(null);
+
     useEffect(() => {
         const sections = gsap.utils.toArray(".scroll-section");
         const panels = gsap.utils.toArray(".horizontal-scroll .panel");
@@ -36,13 +39,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                 start: "top top",
                 end: "bottom top",
                 scrub: true,
-                snap: {
-                    snapTo: 1, // Snap to the nearest section immediately
-                    duration: 0.4, // Very short duration for snapping
-                    ease: "power1.inOut", // No easing for instant snapping
-                    delay: 0, // Remove additional delay
-                    inertia: false, // Disable inertia for quicker snapping
-                },
+                // snap: {
+                //     snapTo: 1, // Snap to the nearest section immediately
+                //     duration: 0.4, // Very short duration for snapping
+                //     ease: "power1.inOut", // No easing for instant snapping
+                //     delay: 0, // Remove additional delay
+                //     inertia: false, // Disable inertia for quicker snapping
+                // },
                 onEnter: () => console.log(`Entering section ${i + 1}`),
                 onLeaveBack: () => console.log(`Leaving section ${i + 1}`),
             });
@@ -61,34 +64,36 @@ const ScrollSnapHorizontalBootstrap = () => {
             loop: true,
         });
 
-        swiper.on("slideChange", function () {
-            const activeIndex = swiper.realIndex;
-            updateNavCircle(activeIndex);
-        });
+        // swiper.on("slideChange", function () {
+        //     const activeIndex = swiper.realIndex;
+        //     updateNavCircle(activeIndex);
+        // });
 
-        function updateNavCircle(activeIndex) {
-            const circles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
-            circles.forEach((circle) => {
-                circle.classList.remove("swiper-pagination-bullet-active");
-            });
+        // function updateNavCircle(activeIndex) {
+        //     const circles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
+        //     circles.forEach((circle) => {
+        //         circle.classList.remove("swiper-pagination-bullet-active");
+        //     });
 
-            const activeCircle = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet")[activeIndex];
-            if (activeCircle) {
-                activeCircle.classList.add("swiper-pagination-bullet-active");
-            }
-        }
+        //     const activeCircle = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet")[activeIndex];
+        //     if (activeCircle) {
+        //         activeCircle.classList.add("swiper-pagination-bullet-active");
+        //     }
+        // }
 
-        function handleNavCircleClick(index) {
-            swiper.slideTo(index);
-        }
+        // function handleNavCircleClick(index) {
+        //     swiper.slideTo(index);
+        // }
 
-        const navCircles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
-        navCircles.forEach((circle, index) => {
-            circle.addEventListener("click", () => handleNavCircleClick(index));
-        });
+        // const navCircles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
+        // navCircles.forEach((circle, index) => {
+        //     circle.addEventListener("click", () => handleNavCircleClick(index));
+        // });
         // Horizontal scrolling within `.horizontal-scroll`
         gsap.to(panels, {
-            xPercent: -100 * (panels.length - 1), // Move horizontally based on panels
+            xPercent: locale == "en"
+            ? -100 * (panels.length - 1)
+            : 100 * (panels.length - 1), // Move horizontally based on panels
             ease: "power1.inOut",
             scrollTrigger: {
                 trigger: ".horizontal-scroll",
@@ -100,6 +105,30 @@ const ScrollSnapHorizontalBootstrap = () => {
                 // anticipatePin: 1, // Smooth pinning transition
             },
         });
+
+        // const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+        //     if (mobilepanel.length > 0) {
+        //     const mobilepanelTween = gsap.to(mobilepanel, {
+        //         xPercent:
+        //         locale == "en"
+        //             ? -100 * (mobilepanel.length - 1)
+        //             : 100 * (panels.length - 1),
+        //         ease: "none",
+        //         scrollTrigger: {
+        //         trigger: ".mobilecontainer",
+        //         start: "top top",
+        //         end: "+=" + window.innerWidth * 3,
+        //         pin: true,
+        //         scrub: 3,
+        //         },
+        //     });
+        //     }
+
+        const isMobileDevice = () => {
+            return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+          };
+      
+          setIsMobile(isMobileDevice());
 
         return () => {
             // Cleanup all ScrollTriggers
@@ -497,8 +526,8 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="scroll-section d-flex flex-direction-column section-3">
-                <div className="panel w-100 h-100">
+            <section className="d-flex section-3">
+                <div className="">
                     <div className="section-content">
                         <div className="d-flex flex-column justify-content-around gap-5">
                             <div className="section-head">
@@ -519,11 +548,15 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     )}
                                 </p>
                             </div>
-                            <div className="videoarea d-block d-lg-block">
-                                <VideoPanel src="/assets/videos/multi-product.mp4" />
+                            <div className="d-none d-md-block">
+                                <div className="videoarea d-flex align-items-center">
+                                    <VideoPanel src="/assets/videos/multi-product.mp4" />
+                                </div>
                             </div>
-                            <div className="videoarea d-block d-lg-none">
-                                <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
+                            <div className="d-block d-sm-none">
+                                <div className="videoarea d-flex align-items-center">
+                                    <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
+                                </div>
                             </div>
                             <div className="d-flex justify-content-center pt-5">
                                 <Link
@@ -696,7 +729,8 @@ const ScrollSnapHorizontalBootstrap = () => {
             </section>
 
             {/* Horizontal Scrolling Section */}
-            <section className="horizontal-scroll d-flex flex-row w-100 vh-100">
+                            
+            {!isMobile ? <><section className="horizontal-scroll d-flex flex-row w-100 vh-100">
                 <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
                     <div className="inner">
                         <div className="panel2 mb-4">
@@ -762,10 +796,10 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
                 <div className="panel mt-5">
                     <div className="d-flex flex-column align-items-center">
-                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
+                        <h3 className="text-center w-50" style={{ "fontSize": "2rem"}}>
                         {t("Reaching Every Corner of the World")}
                         </h3>
-                        <p className="text-center">{t("Exports Text")}</p>
+                        <p className="text-center w-50">{t("Exports Text")}</p>
                         <Link
                         href={`/${locale}/export`}
                         className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
@@ -790,7 +824,103 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </Link>
                     </div>
                 </div>
-            </section>
+            </section></> :
+            
+            <><section className="horizontal-scroll d-flex flex-row w-100 vh-100">
+                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                    <div className="inner">
+                        <div className="panel2 mb-4">
+                            <div className="inner2 mt-5 d-flex align-items-center">
+                                {/* Iconic indulgence */}
+                                <Categories section="section4" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                    <div className="inner">
+                        <VideoPanel src="/assets/videos/zumar-video.mp4" />
+                    </div>
+                </div>
+                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                    <div className="" style={locale === "en" ? { paddingLeft: "10%" } : { paddingRight: "10%" }}>
+                        <h3 className="text-center" style={{ "whiteSpace": "nowrap" }}>
+                            {t("Essence of Arabia")}
+                        </h3>
+                        <p className="text-center">{t("Step into")}</p>
+                        <div className="row mt-4 justify-content-center">
+                            <div className="col-md-6">
+                                <Link href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
+                                <img
+                                    className=""
+                                    src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                                    alt="Bakhoor Ahmed"
+                                />
+                                </Link>
+                            </div>
+                            <div className="col-md-6">
+                                <Link href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
+                                <img
+                                    className=""
+                                    src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                                    alt="Oud Asateen"
+                                />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="panel2 mt-5">
+                        <div className="inner2 mt-5">
+                            <Categories />
+                        </div>
+                    </div>
+                    {/* <div className="inner2 mt-5">
+                        <Categories />
+                    </div> */}
+                    {/* <div className="d-flex flex-column align-items-center">
+                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
+                        {t("Reaching Every Corner of the World")}
+                        </h3>
+                        <p className="text-center">{t("Exports Text")}</p>
+                        <Link
+                        href={`/${locale}/export`}
+                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                        >
+                        {t("Discover More")}
+                        </Link>
+                    </div> */}
+                </div>
+                <div className="panel mt-5">
+                    <div className="d-flex flex-column align-items-center" style={locale === "en" ? { paddingLeft: "20%" } : { paddingRight: "20%" }}>
+                        <h3 className="text-center w-50" style={{ "fontSize": "2rem"}}>
+                        {t("Reaching Every Corner of the World")}
+                        </h3>
+                        <p className="text-center w-50">{t("Exports Text")}</p>
+                        <Link
+                        href={`/${locale}/export`}
+                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                        >
+                        {t("Discover More")}
+                        </Link>
+                    </div>
+                    <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
+                        {/* <Link href={`/${locale}/export`}>
+                        <img
+                            className="px-2 w-100 w-md-auto"
+                            src="/assets/images/home/demo8/export/aqua-oud.jpg"
+                            alt="Image 1"
+                        />
+                        </Link>
+                        <Link href={`/${locale}/export`}>
+                        <img
+                            className="px-2 w-100 w-md-auto"
+                            src="/assets/images/home/demo8/export/endless.jpg"
+                            alt="Image 2"
+                        />
+                        </Link> */}
+                    </div>
+                </div>
+            </section></>}
 
             {/* Vertical Section 3 */}
             <section className="scroll-section">
