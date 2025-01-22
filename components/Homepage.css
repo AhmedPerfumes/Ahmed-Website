@@ -150,6 +150,28 @@
 	}
   }
 
+  .section-7 {
+    background-image: url('/assets/images/home/demo8/avif/production.avif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 40px;
+    position: relative;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+    .section-7 {
+      background-image: url('/assets/images/home/demo8/avif/production.avif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+  }
+
 .sub-section {
 	display: flex;
 	flex-direction: column;
