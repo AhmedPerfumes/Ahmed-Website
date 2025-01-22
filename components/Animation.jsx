@@ -963,36 +963,36 @@ const Animation = () => {
         </div>
 
         <div className="panel2 mt-5">
-  <div className="d-flex flex-column align-items-center justify-content-center">
-    <h3 className="text-center">
-      {t("Essence of Arabia")}
-    </h3>
-    <p className="text-center px-3">{t("Step into")}</p>
-    <div className="row mt-4 justify-content-center">
-      <div className="col-6 col-md-4 px-1">
-        <Link href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
-          <img
-            className="w-100"
-            src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
-            alt="Bakhoor Ahmed"
-          />
-        </Link>
-      </div>
-      <div className="col-6 col-md-4 px-1">
-        <Link href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
-          <img
-            className="w-100"
-            src="/assets/images/home/demo8/Oud-Asateen.jpg"
-            alt="Oud Asateen"
-          />
-        </Link>
-      </div>
-    </div>
-  </div>
-  <div className="inner2 mt-5">
-    <Categories />
-  </div>
-</div>
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h3 className="text-center">
+              {t("Essence of Arabia")}
+            </h3>
+            <p className="text-center px-3">{t("Step into")}</p>
+            <div className="row mt-4 justify-content-center">
+              <div className="col-6 col-md-4 px-1">
+                <Link href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}>
+                  <img
+                    className="w-100"
+                    src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                    alt="Bakhoor Ahmed"
+                  />
+                </Link>
+              </div>
+              <div className="col-6 col-md-4 px-1">
+                <Link href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}>
+                  <img
+                    className="w-100"
+                    src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                    alt="Oud Asateen"
+                  />
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="inner2 mt-5">
+            <Categories />
+          </div>
+        </div>
 
 
         <div className="panel2 mt-5">
