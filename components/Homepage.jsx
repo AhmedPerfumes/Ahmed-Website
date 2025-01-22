@@ -248,6 +248,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
+                                            onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/zumar")}
                                         >
                                             <span data-v-7aa9e1a2="">
                                                 Discover
@@ -292,7 +293,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
                                         Zumar
                                     </div>
@@ -304,6 +305,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     </div>
                                 </div>
                                 <button
+                                onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/zumar")}
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -376,6 +378,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-399c522e=""
                                         />
                                         <button
+                                        onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/bin-shaikh")}
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -423,7 +426,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
                                         Bin Shaikh
                                     </div>
@@ -435,6 +438,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     </div>
                                 </div>
                                 <button
+                                onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/bin-shaikh")}
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -507,6 +511,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-399c522e=""
                                         />
                                         <button
+                                        onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/ignite-oud")}
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -554,7 +559,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
                                         Ignite Oud
                                     </div>
@@ -566,6 +571,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     </div>
                                 </div>
                                 <button
+                                  onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/ignite-oud")}
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -638,6 +644,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-399c522e=""
                                         />
                                         <button
+                                        onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/marj")}
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -685,7 +692,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
                                       Marj
                                     </div>
@@ -697,6 +704,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     </div>
                                 </div>
                                 <button
+                                onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/marj")}
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -769,6 +777,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-399c522e=""
                                         />
                                         <button
+                                        onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/oud-roses")}
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -816,7 +825,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
                                         Oud & Roses
                                     </div>
@@ -828,6 +837,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     </div>
                                 </div>
                                 <button
+                                 onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/oud-roses")}
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -900,6 +910,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-399c522e=""
                                         />
                                         <button
+                                        onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/kaaf")}
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -947,7 +958,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
                                         Kaaf
                                     </div>
@@ -959,6 +970,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     </div>
                                 </div>
                                 <button
+                                onClick={() => window.open("https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/kaaf")}
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
