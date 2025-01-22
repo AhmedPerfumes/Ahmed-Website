@@ -174,15 +174,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 >
                     <h2 className="h1 text-center pt-3">{t("Best Sellers")}</h2>
                     <div className="t__m t__color-blue" data-v-ea8e1c8e="">
-                        The atelier is the expression of Atelier Cologne
-                        creativity. Inspired by the traditional spirit of
-                        cologne, a unique collective of perfume-artists craft
-                        new fragrance explorations. They seek to capture the
-                        movement of nature and its vibrant beauty through
-                        scented expressions of inner emotions. Atelier Cologne
-                        surrounds itself with painters, sculptors, designers who
-                        express their intimate connection with fragrances
-                        through art.
+                    Discover our best-selling perfumes, loved for their captivating aromas and lasting impressions. From floral elegance to bold, woody notes, each fragrance is crafted to perfection, making them timeless favorites.
                     </div>
                 </div>
 
@@ -225,16 +217,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Orange Sanguine
+                                                Zumar
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Geoffroy Pithon
+                                                {/* as painted by Geoffroy Pithon */}
                                             </div>
                                         </div>
                                     </div>
@@ -302,13 +294,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize"
                                     >
-                                        Orange Sanguine
+                                        Zumar
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Geoffroy Pithon
+                                        {/* as painted by Geoffroy Pithon */}
                                     </div>
                                 </div>
                                 <button
@@ -343,9 +335,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/binshaikh@1x.jpg 1x, /assets/images/best-sellers/notes/binshaikh@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/binshaikh@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -356,16 +348,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Oolang Infini
+                                                Bin Shaikh
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Gabrielle Rul
+                                                {/* as painted by Gabrielle Rul */}
                                             </div>
                                         </div>
                                     </div>
@@ -375,9 +367,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/bin-shaikh@1x.jpg 1x, /assets/images/best-sellers/bin-shaikh@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/bin-shaikh@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -400,7 +392,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 data-v-8967c2b9=""
                                 className="container-mobile d-block d-sm-none"
                             >
-                                <div
+                                 <div
                                     data-v-8967c2b9=""
                                     className="container-images"
                                 >
@@ -408,9 +400,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/binshaikh@1x.jpg 1x, /assets/images/best-sellers/notes/binshaikh@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/binshaikh@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -418,9 +410,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/bin-shaikh@1x.jpg 1x, /assets/images/best-sellers/bin-shaikh@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/bin-shaikh@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -433,13 +425,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize"
                                     >
-                                        Oolang Infini
+                                        Bin Shaikh
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Gabrielle Rul
+                                        {/* as painted by Gabrielle Rul */}
                                     </div>
                                 </div>
                                 <button
@@ -474,9 +466,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/notes/ignite-oud@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/ignite-oud@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -487,16 +479,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Rose Cuirée
+                                                Ignite Oud
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Ziling Wang
+                                                {/* as painted by Ziling Wang */}
                                             </div>
                                         </div>
                                     </div>
@@ -506,9 +498,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/ignite-oud@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/ignite-oud@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -531,7 +523,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 data-v-8967c2b9=""
                                 className="container-mobile d-block d-sm-none"
                             >
-                                <div
+                                 <div
                                     data-v-8967c2b9=""
                                     className="container-images"
                                 >
@@ -539,9 +531,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/notes/ignite-oud@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/ignite-oud@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -549,9 +541,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/ignite-oud@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/ignite-oud@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -564,13 +556,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize"
                                     >
-                                        Rose Cuirée
+                                        Ignite Oud
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Ziling Wang
+                                        {/* as painted by Ziling Wang */}
                                     </div>
                                 </div>
                                 <button
@@ -605,9 +597,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/marj@1x.jpg 1x, /assets/images/best-sellers/notes/marj@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/marj@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -618,16 +610,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Gaïac Eternel
+                                                Marj
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Zoé Rumeau
+                                                {/* s painted by Zoé Rumeau */}
                                             </div>
                                         </div>
                                     </div>
@@ -637,9 +629,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/marj@1x.jpg 1x, /assets/images/best-sellers/marj@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/marj@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -662,7 +654,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 data-v-8967c2b9=""
                                 className="container-mobile d-block d-sm-none"
                             >
-                                <div
+                                 <div
                                     data-v-8967c2b9=""
                                     className="container-images"
                                 >
@@ -670,9 +662,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/marj@1x.jpg 1x, /assets/images/best-sellers/notes/marj@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/marj@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -680,9 +672,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/marj@1x.jpg 1x, /assets/images/best-sellers/marj@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/marj@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -695,13 +687,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize"
                                     >
-                                        Gaïac Eternel
+                                      Marj
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Zoé Rumeau
+                                        {/* as painted by Zoé Rumeau */}
                                     </div>
                                 </div>
                                 <button
@@ -726,7 +718,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 className="container-desktop d-none d-md-block"
                                 data-v-8967c2b9=""
                             >
-                                <div
+                                 <div
                                     className="container-desktop"
                                     data-v-8967c2b9=""
                                 >
@@ -736,9 +728,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/oud-and-rose@1x.jpg 1x, /assets/images/best-sellers/notes/oud-and-rose@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/oud-and-rose@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -749,17 +741,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Trèfle Pur
+                                                Oud & Roses
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                Sculptured by Victoire de
-                                                Lencquesaing
+                                                {/* as painted by Zoé Rumeau */}
                                             </div>
                                         </div>
                                     </div>
@@ -769,9 +760,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/oud-and-roses@1x.jpg 1x, /assets/images/best-sellers/oud-and-roses@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/oud-and-roses@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -794,7 +785,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 data-v-8967c2b9=""
                                 className="container-mobile d-block d-sm-none"
                             >
-                                <div
+                                 <div
                                     data-v-8967c2b9=""
                                     className="container-images"
                                 >
@@ -802,9 +793,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/oud-and-rose@1x.jpg 1x, /assets/images/best-sellers/notes/oud-and-rose@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/oud-and-rose@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -812,9 +803,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/oud-and-roses@1x.jpg 1x, /assets/images/best-sellers/oud-and-roses@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/oud-and-roses@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -827,13 +818,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize"
                                     >
-                                        Trèfle Pur
+                                        Oud & Roses
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        Sculptured by Victoire de Lencquesaing
+                                        {/* Sculptured by Victoire de Lencquesaing */}
                                     </div>
                                 </div>
                                 <button
@@ -858,7 +849,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 className="container-desktop d-none d-md-block"
                                 data-v-8967c2b9=""
                             >
-                                <div
+                                 <div
                                     className="container-desktop"
                                     data-v-8967c2b9=""
                                 >
@@ -868,9 +859,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/kaaf@1x.jpg 1x, /assets/images/best-sellers/notes/kaaf@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/kaaf@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -881,16 +872,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Camélia Intrépide
+                                                Kaaf
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                Imagined by François Azambourg
+                                                {/* as painted by Zoé Rumeau */}
                                             </div>
                                         </div>
                                     </div>
@@ -900,9 +891,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/kaaf@1x.jpg 1x, /assets/images/best-sellers/kaaf@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/kaaf@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -925,7 +916,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 data-v-8967c2b9=""
                                 className="container-mobile d-block d-sm-none"
                             >
-                                <div
+                                 <div
                                     data-v-8967c2b9=""
                                     className="container-images"
                                 >
@@ -933,9 +924,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/kaaf@1x.jpg 1x, /assets/images/best-sellers/notes/kaaf@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/kaaf@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -943,9 +934,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/kaaf@1x.jpg 1x, /assets/images/best-sellers/kaaf@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/kaaf@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -958,13 +949,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize"
                                     >
-                                        Camélia Intrépide
+                                        Kaaf
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        Imagined by François Azambourg
+                                        {/* Imagined by François Azambourg */}
                                     </div>
                                 </div>
                                 <button
@@ -980,8 +971,8 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
 
                     {/* Navigation buttons */}
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev"></div>
                     {/* Pagination Bullets */}
                 </div>
             </section>
@@ -1320,16 +1311,93 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                 </div>
             </section>
+            <section className="scroll-section d-flex flex-direction-column section-7 mt-3">
+                <div className="panel w-100 vh-100">
+                    <div className="section-content">
+                        <div className="text-center text-white d-flex justify-content-center">
+                            <span className="t-subtitle">
+                                {t("WHERE LUXURY MEETS YOUR SENSES")}
+                            </span>
+                        </div>
+                        <h2 className="h1 text-center text-white pt-3">
+                        {t("Your Journey Begins with a Scent")}
+                        </h2>
+                        <p className="text-center text-white section-paragraph">
+                            {t(
+                                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are"
+                            )}
+                        </p>
+                        <div className="d-flex justify-content-center pt-5">
+                            <Link
+                                href="/shop"
+                                className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
+                            >
+                                Discover Now
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="bottom-scroll">
+                    <Image
+                        width={40}
+                        height={40}
+                        className="bottom-0 scroll-icon"
+                        src="/assets/images/ahmed-icon.png"
+                        alt="logo Ahmed"
+                        loading="lazy"
+                    />
+                    <span className="text-white text-uppercase mt-2">
+                        Scroll to discover
+                    </span>
+                </div>
+            </section>
 
-            {/* Vertical Section 3 */}
+            {/* Company Information Section */}
+            <section
+        id="end"
+        className="testsect container d-flex flex-column justify-content-center zoom_img"
+      >
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
+          <div className="order-1 order-md-0">
+            <VideoPanel src="/assets/videos/production.mp4" />
+          </div>
+          <div className="col-lg-7 p-5 text-center order-3 order-md-1">
+            <h3 className="mb-3">
+              {t("Quality Crafted Through Expertise 20 plus Years of Mastery")}
+            </h3>
+            <p>
+              {t(
+                "For over 20 years Ahmed Al Maghribi Perfumes has been dedicated to creating luxurious timeless scents Using only the finest natural ingredients we ensure every fragrance is crafted with precision and excellence offering lasting quality"
+              )}
+            </p>
+          </div>
+        </div>
+
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
+          <div className="col-lg-7 p-5 text-center order-1 order-md-0">
+            <h3 className="mb-3">{t("The Company")}</h3>
+            <p>{t("Steps")}</p>
+          </div>
+          <div className="order-0 order-md-1">
+            <img
+              className="h-auto w-100"
+              src="/assets/images/home/demo8/Shop.jpg"
+              alt="image"
+            />
+          </div>
+        </div>
+      </section>
+
+            {/* Vertical Section 3
             <section className="scroll-section">
                 <div className="panel orange w-100 vh-100"></div>
             </section>
 
             {/* Vertical Section 4 */}
-            <section className="scroll-section">
+            {/* <section className="scroll-section">
                 <div className="panel blue w-100 vh-100"></div>
-            </section>
+            </section> */}
+            
         </div>
     );
 };

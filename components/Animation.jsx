@@ -205,7 +205,7 @@ const Animation = () => {
   return (
     <div id="main2">
       <section className="vh-100 hero-banner d-none d-lg-block">
-        <Hero />
+   1     <Hero />
         <Hero />
       </section>
       <div className="d-sm-block d-md-none">
