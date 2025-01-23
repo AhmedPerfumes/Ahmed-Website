@@ -127,7 +127,7 @@ const ScrollSnapHorizontalBootstrap = () => {
         const isMobileDevice = () => {
             return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
           };
-      
+     
           setIsMobile(isMobileDevice());
 
         return () => {
@@ -509,7 +509,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Ignite Oud
+                                                {t("Ignite Oud")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -584,7 +584,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Ignite Oud
+                                        {t("Ignite Oud")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -642,7 +642,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Marj
+                                               {t("Marj")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -717,7 +717,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                      Marj
+                                      {t("Marj")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -1492,6 +1492,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
             {/* Company Information Section */}
+
             <section
         id="end"
         className="testsect container d-flex flex-column justify-content-center zoom_img"
