@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
@@ -25,6 +25,9 @@ gsap.registerPlugin(ScrollTrigger);
 const ScrollSnapHorizontalBootstrap = () => {
     const locale = useLocale();
     const t = useTranslations();
+
+    const [isMobile, setIsMobile] = useState(null);
+
     useEffect(() => {
         const sections = gsap.utils.toArray(".scroll-section");
         const panels = gsap.utils.toArray(".horizontal-scroll .panel");
@@ -36,13 +39,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                 start: "top top",
                 end: "bottom top",
                 scrub: true,
-                snap: {
-                    snapTo: 1, // Snap to the nearest section immediately
-                    duration: 0.4, // Very short duration for snapping
-                    ease: "power1.inOut", // No easing for instant snapping
-                    delay: 0, // Remove additional delay
-                    inertia: false, // Disable inertia for quicker snapping
-                },
+                // snap: {
+                //     snapTo: 1, // Snap to the nearest section immediately
+                //     duration: 0.4, // Very short duration for snapping
+                //     ease: "power1.inOut", // No easing for instant snapping
+                //     delay: 0, // Remove additional delay
+                //     inertia: false, // Disable inertia for quicker snapping
+                // },
                 onEnter: () => console.log(`Entering section ${i + 1}`),
                 onLeaveBack: () => console.log(`Leaving section ${i + 1}`),
             });
@@ -61,40 +64,37 @@ const ScrollSnapHorizontalBootstrap = () => {
             loop: true,
         });
 
-        swiper.on("slideChange", function () {
-            const activeIndex = swiper.realIndex;
-            updateNavCircle(activeIndex);
-        });
+        // swiper.on("slideChange", function () {
+        //     const activeIndex = swiper.realIndex;
+        //     updateNavCircle(activeIndex);
+        // });
 
-        function updateNavCircle(activeIndex) {
-            const circles = document.querySelectorAll(
-                ".swiper-pagination-horizontal .swiper-pagination-bullet"
-            );
-            circles.forEach((circle) => {
-                circle.classList.remove("swiper-pagination-bullet-active");
-            });
+        // function updateNavCircle(activeIndex) {
+        //     const circles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
+        //     circles.forEach((circle) => {
+        //         circle.classList.remove("swiper-pagination-bullet-active");
+        //     });
 
-            const activeCircle = document.querySelectorAll(
-                ".swiper-pagination-horizontal .swiper-pagination-bullet"
-            )[activeIndex];
-            if (activeCircle) {
-                activeCircle.classList.add("swiper-pagination-bullet-active");
-            }
-        }
+        //     const activeCircle = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet")[activeIndex];
+        //     if (activeCircle) {
+        //         activeCircle.classList.add("swiper-pagination-bullet-active");
+        //     }
+        // }
 
-        function handleNavCircleClick(index) {
-            swiper.slideTo(index);
-        }
+        // function handleNavCircleClick(index) {
+        //     swiper.slideTo(index);
+        // }
 
-        const navCircles = document.querySelectorAll(
-            ".swiper-pagination-horizontal .swiper-pagination-bullet"
-        );
-        navCircles.forEach((circle, index) => {
-            circle.addEventListener("click", () => handleNavCircleClick(index));
-        });
+        // const navCircles = document.querySelectorAll(".swiper-pagination-horizontal .swiper-pagination-bullet");
+        // navCircles.forEach((circle, index) => {
+        //     circle.addEventListener("click", () => handleNavCircleClick(index));
+        // });
         // Horizontal scrolling within `.horizontal-scroll`
         gsap.to(panels, {
-            xPercent: -100 * (panels.length - 1), // Move horizontally based on panels
+            xPercent:
+                locale == "en"
+                    ? -100 * (panels.length - 1)
+                    : 100 * (panels.length - 1), // Move horizontally based on panels
             ease: "power1.inOut",
             scrollTrigger: {
                 trigger: ".horizontal-scroll",
@@ -103,9 +103,33 @@ const ScrollSnapHorizontalBootstrap = () => {
                 scrub: true, // Smooth scrolling
 
                 pin: true, // Pin during horizontal scroll
-                anticipatePin: 1, // Smooth pinning transition
+                // anticipatePin: 1, // Smooth pinning transition
             },
         });
+
+        // const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
+        //     if (mobilepanel.length > 0) {
+        //     const mobilepanelTween = gsap.to(mobilepanel, {
+        //         xPercent:
+        //         locale == "en"
+        //             ? -100 * (mobilepanel.length - 1)
+        //             : 100 * (panels.length - 1),
+        //         ease: "none",
+        //         scrollTrigger: {
+        //         trigger: ".mobilecontainer",
+        //         start: "top top",
+        //         end: "+=" + window.innerWidth * 3,
+        //         pin: true,
+        //         scrub: 3,
+        //         },
+        //     });
+        //     }
+
+        const isMobileDevice = () => {
+            return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        };
+
+        setIsMobile(isMobileDevice());
 
         return () => {
             // Cleanup all ScrollTriggers
@@ -140,7 +164,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </p>
                         <div className="d-flex justify-content-center pt-5">
                             <Link
-                                href="/shop"
+                                href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
                                 Discover Now
@@ -174,15 +198,10 @@ const ScrollSnapHorizontalBootstrap = () => {
                 >
                     <h2 className="h1 text-center pt-3">{t("Best Sellers")}</h2>
                     <div className="t__m t__color-blue" data-v-ea8e1c8e="">
-                        The atelier is the expression of Atelier Cologne
-                        creativity. Inspired by the traditional spirit of
-                        cologne, a unique collective of perfume-artists craft
-                        new fragrance explorations. They seek to capture the
-                        movement of nature and its vibrant beauty through
-                        scented expressions of inner emotions. Atelier Cologne
-                        surrounds itself with painters, sculptors, designers who
-                        express their intimate connection with fragrances
-                        through art.
+                        Discover our best-selling perfumes, loved for their
+                        captivating aromas and lasting impressions. From floral
+                        elegance to bold, woody notes, each fragrance is crafted
+                        to perfection, making them timeless favorites.
                     </div>
                 </div>
 
@@ -225,16 +244,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Orange Sanguine
+                                                Zumar
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Geoffroy Pithon
+                                                {/* as painted by Geoffroy Pithon */}
                                             </div>
                                         </div>
                                     </div>
@@ -256,6 +275,11 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
+                                            onClick={() =>
+                                                window.open(
+                                                    "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/zumar"
+                                                )
+                                            }
                                         >
                                             <span data-v-7aa9e1a2="">
                                                 Discover
@@ -300,18 +324,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Orange Sanguine
+                                        Zumar
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Geoffroy Pithon
+                                        {/* as painted by Geoffroy Pithon */}
                                     </div>
                                 </div>
                                 <button
+                                    onClick={() =>
+                                        window.open(
+                                            "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/zumar"
+                                        )
+                                    }
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -343,9 +372,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/binshaikh@1x.jpg 1x, /assets/images/best-sellers/notes/binshaikh@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/binshaikh@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -356,16 +385,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Oolang Infini
+                                                Bin Shaikh
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Gabrielle Rul
+                                                {/* as painted by Gabrielle Rul */}
                                             </div>
                                         </div>
                                     </div>
@@ -375,15 +404,20 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/bin-shaikh@1x.jpg 1x, /assets/images/best-sellers/bin-shaikh@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/bin-shaikh@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
                                             data-v-399c522e=""
                                         />
                                         <button
+                                            onClick={() =>
+                                                window.open(
+                                                    "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/bin-shaikh"
+                                                )
+                                            }
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -408,9 +442,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/binshaikh@1x.jpg 1x, /assets/images/best-sellers/notes/binshaikh@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-artist-2-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/binshaikh@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -418,9 +452,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/bin-shaikh@1x.jpg 1x, /assets/images/best-sellers/bin-shaikh@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-2/carousel-product-2-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/bin-shaikh@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -431,18 +465,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Oolang Infini
+                                        Bin Shaikh
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Gabrielle Rul
+                                        {/* as painted by Gabrielle Rul */}
                                     </div>
                                 </div>
                                 <button
+                                    onClick={() =>
+                                        window.open(
+                                            "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/bin-shaikh"
+                                        )
+                                    }
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -474,9 +513,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/notes/ignite-oud@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/ignite-oud@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -487,16 +526,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Rose Cuirée
+                                                Ignite Oud
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Ziling Wang
+                                                {/* as painted by Ziling Wang */}
                                             </div>
                                         </div>
                                     </div>
@@ -506,15 +545,20 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/ignite-oud@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/ignite-oud@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
                                             data-v-399c522e=""
                                         />
                                         <button
+                                            onClick={() =>
+                                                window.open(
+                                                    "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/ignite-oud"
+                                                )
+                                            }
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -539,9 +583,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/notes/ignite-oud@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-artist-3-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/ignite-oud@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -549,9 +593,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/ignite-oud@1x.jpg 1x, /assets/images/best-sellers/ignite-oud@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-3/carousel-product-3-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/ignite-oud@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -562,18 +606,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Rose Cuirée
+                                        Ignite Oud
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Ziling Wang
+                                        {/* as painted by Ziling Wang */}
                                     </div>
                                 </div>
                                 <button
+                                    onClick={() =>
+                                        window.open(
+                                            "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/ignite-oud"
+                                        )
+                                    }
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -605,9 +654,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/marj@1x.jpg 1x, /assets/images/best-sellers/notes/marj@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/marj@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -618,16 +667,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Gaïac Eternel
+                                                Marj
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                as painted by Zoé Rumeau
+                                                {/* s painted by Zoé Rumeau */}
                                             </div>
                                         </div>
                                     </div>
@@ -637,15 +686,20 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/marj@1x.jpg 1x, /assets/images/best-sellers/marj@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/marj@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
                                             data-v-399c522e=""
                                         />
                                         <button
+                                            onClick={() =>
+                                                window.open(
+                                                    "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/marj"
+                                                )
+                                            }
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -670,9 +724,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/marj@1x.jpg 1x, /assets/images/best-sellers/notes/marj@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-artist-4-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/marj@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -680,9 +734,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/marj@1x.jpg 1x, /assets/images/best-sellers/marj@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-4/carousel-product-4-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/marj@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -693,18 +747,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Gaïac Eternel
+                                        Marj
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        as painted by Zoé Rumeau
+                                        {/* as painted by Zoé Rumeau */}
                                     </div>
                                 </div>
                                 <button
+                                    onClick={() =>
+                                        window.open(
+                                            "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/marj"
+                                        )
+                                    }
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -736,9 +795,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/oud-and-rose@1x.jpg 1x, /assets/images/best-sellers/notes/oud-and-rose@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/oud-and-rose@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -749,17 +808,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Trèfle Pur
+                                                Oud & Roses
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                Sculptured by Victoire de
-                                                Lencquesaing
+                                                {/* as painted by Zoé Rumeau */}
                                             </div>
                                         </div>
                                     </div>
@@ -769,15 +827,20 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/oud-and-roses@1x.jpg 1x, /assets/images/best-sellers/oud-and-roses@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/oud-and-roses@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
                                             data-v-399c522e=""
                                         />
                                         <button
+                                            onClick={() =>
+                                                window.open(
+                                                    "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/oud-roses"
+                                                )
+                                            }
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -802,9 +865,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/oud-and-rose@1x.jpg 1x, /assets/images/best-sellers/notes/oud-and-rose@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-artist-5-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/oud-and-rose@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -812,9 +875,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/oud-and-roses@1x.jpg 1x, /assets/images/best-sellers/oud-and-roses@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-5/carousel-product-5-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/oud-and-roses@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -825,18 +888,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Trèfle Pur
+                                        Oud & Roses
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        Sculptured by Victoire de Lencquesaing
+                                        {/* Sculptured by Victoire de Lencquesaing */}
                                     </div>
                                 </div>
                                 <button
+                                    onClick={() =>
+                                        window.open(
+                                            "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/oud-roses"
+                                        )
+                                    }
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -868,9 +936,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/notes/kaaf@1x.jpg 1x, /assets/images/best-sellers/notes/kaaf@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/notes/kaaf@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
@@ -881,16 +949,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                                             data-v-8967c2b9=""
                                         >
                                             <div
-                                                className="t__h4 t__color-primary t__capitalize"
+                                                className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Camélia Intrépide
+                                                Kaaf
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
                                                 data-v-8967c2b9=""
                                             >
-                                                Imagined by François Azambourg
+                                                {/* as painted by Zoé Rumeau */}
                                             </div>
                                         </div>
                                     </div>
@@ -900,15 +968,20 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     >
                                         <img
                                             className="img-classic loading-background"
-                                            srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                            srcSet="/assets/images/best-sellers/kaaf@1x.jpg 1x, /assets/images/best-sellers/kaaf@2x.jpg 2x"
                                             sizes="(min-width: 768px) 1040w"
-                                            src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                            src="/assets/images/best-sellers/kaaf@2x.jpg"
                                             alt=""
                                             loading="lazy"
                                             data-v-8967c2b9=""
                                             data-v-399c522e=""
                                         />
                                         <button
+                                            onClick={() =>
+                                                window.open(
+                                                    "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/kaaf"
+                                                )
+                                            }
                                             className="btn-classic"
                                             data-v-8967c2b9=""
                                             data-v-7aa9e1a2=""
@@ -933,9 +1006,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-artist"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/notes/kaaf@1x.jpg 1x, /assets/images/best-sellers/notes/kaaf@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-artist-6-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/notes/kaaf@2x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -943,9 +1016,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-399c522e=""
                                         data-v-8967c2b9=""
                                         className="img-classic img-fragrance"
-                                        srcSet="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg 1x, https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@2x.jpg 2x"
+                                        srcSet="/assets/images/best-sellers/kaaf@1x.jpg 1x, /assets/images/best-sellers/kaaf@2x.jpg 2x"
                                         sizes="(min-width: 768px) 1040w"
-                                        src="https://www.ateliercologne.com/images/chapters/second/carousel/artist-6/carousel-product-6-desktop@1x.jpg"
+                                        src="/assets/images/best-sellers/kaaf@1x.jpg"
                                         alt=""
                                         loading="lazy"
                                     />
@@ -956,18 +1029,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 >
                                     <div
                                         data-v-8967c2b9=""
-                                        className="t__h4 t__color-primary t__capitalize"
+                                        className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Camélia Intrépide
+                                        Kaaf
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
                                         className="t__sub-title t__color-blue"
                                     >
-                                        Imagined by François Azambourg
+                                        {/* Imagined by François Azambourg */}
                                     </div>
                                 </div>
                                 <button
+                                    onClick={() =>
+                                        window.open(
+                                            "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/kaaf"
+                                        )
+                                    }
                                     data-v-7aa9e1a2=""
                                     data-v-8967c2b9=""
                                     className="btn-classic"
@@ -980,8 +1058,8 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
 
                     {/* Navigation buttons */}
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev"></div>
                     {/* Pagination Bullets */}
                 </div>
             </section>
@@ -1004,7 +1082,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </p>
                         <div className="d-flex justify-content-center pt-5">
                             <Link
-                                href="/shop"
+                                href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
                                 Discover Now
@@ -1027,15 +1105,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="scroll-section d-flex flex-direction-column section-3">
-                <div className="panel w-100 h-100">
+            <section className="d-flex section-3">
+                <div className="">
                     <div className="section-content">
-                        <div
-                            className="d-flex flex-column justify-content-around
-        gap-5"
-                        >
+                        <div className="d-flex flex-column justify-content-around gap-5">
                             <div className="section-head">
-                                <h2 className=" text-center">
+                                <h2 className="text-center">
                                     {t("Crafted for The ")}
                                     <br />
                                     <span className="text-italic">
@@ -1052,15 +1127,19 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     )}
                                 </p>
                             </div>
-                            <div className="videoarea d-block d-lg-block">
-                                <VideoPanel src="/assets/videos/multi-product.mp4" />
+                            <div className="d-none d-md-block">
+                                <div className="videoarea d-flex align-items-center">
+                                    <VideoPanel src="/assets/videos/multi-product.mp4" />
+                                </div>
                             </div>
-                            <div className="videoarea d-block d-lg-none">
-                                <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
+                            <div className="d-block d-sm-none">
+                                <div className="videoarea d-flex align-items-center">
+                                    <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
+                                </div>
                             </div>
                             <div className="d-flex justify-content-center pt-5">
                                 <Link
-                                    href="/shop"
+                                    href={`/${locale}/shop`}
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium "
                                 >
                                     Discover Now
@@ -1089,7 +1168,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </p>
                         <div className="d-flex justify-content-center pt-5">
                             <Link
-                                href="/shop"
+                                href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
                                 Discover Now
@@ -1117,15 +1196,15 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <div className="d-flex flex-column justify-content-around gap-5">
                         <div className="section-head">
                             <h2 className=" text-center pt-5">
-                                {t("Crafted for The ")}
+                                {t("Gifts for Every ")}
                                 <br />
                                 <span className="text-italic">
-                                    {t("discerning")}
+                                    {t("Occasion")}
                                 </span>
                             </h2>
                             <p className="text-center section-paragraph">
                                 {t(
-                                    "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
+                                    "Delight your loved ones with our luxurious gift sets, thoughtfully curated to include our most exquisite fragrances.."
                                 )}
                             </p>
                         </div>
@@ -1139,7 +1218,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     {t("The perfect gift for every occasion")}
                 </span>
                 <div className="mt-4 mb-5 d-none d-md-block">
-                    <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                    <a href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}>
                         <Image
                             loading="lazy"
                             src="/assets/images/Ihda-khas-giftset.jpg"
@@ -1150,7 +1229,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                             style={{ objectFit: "contain" }}
                         />
                     </a>
-                    <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                    <a
+                        href={`/${locale}/shop/gift-sets/gift-sets/antee-gift-set-05`}
+                    >
                         <Image
                             className="w-50 px-1"
                             src="/assets/images/Antee-05-Giftset.jpg"
@@ -1205,7 +1286,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </p>
                         <div className="d-flex justify-content-center pt-5">
                             <Link
-                                href="/shop"
+                                href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
                                 Discover Now
@@ -1229,106 +1310,331 @@ const ScrollSnapHorizontalBootstrap = () => {
             </section>
 
             {/* Horizontal Scrolling Section */}
-            <section className="horizontal-scroll d-flex flex-row w-100 vh-100">
-                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                    <div className="inner">
-                        <div className="panel2 mb-4">
-                            <div className="inner2 mt-5 d-flex align-items-center">
-                                {/* Iconic indulgence */}
-                                <Categories section="section4" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                    <div className="inner">
-                        <VideoPanel src="/assets/videos/zumar-video.mp4" />
-                    </div>
-                </div>
-                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                    <div className="inner">
-                        <div className="d-flex flex-column align-items-center justify-content-center">
-                            <h3 className="text-center">
-                                {t("Essence of Arabia")}
-                            </h3>
-                            <p className="text-center px-3">{t("Step into")}</p>
 
-                            <div className="mt-5">
-                                <a
-                                    href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
-                                >
-                                    <Image
-                                        loading="lazy"
-                                        src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Bakhoor-Ahmed"
-                                        className="w-50 px-1"
-                                    />
-                                </a>
-                                <a
-                                    href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
-                                >
-                                    <Image
-                                        className="w-50 px-1"
-                                        src="/assets/images/home/demo8/Oud-Asateen.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Oud-Asateen"
-                                    />
-                                </a>
+            {!isMobile ? (
+                <>
+                    <section className="horizontal-scroll d-flex flex-row w-100 vh-100">
+                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                            <div className="inner">
+                                <div className="panel2 mb-4">
+                                    <div className="inner2 mt-5 d-flex align-items-center">
+                                        {/* Iconic indulgence */}
+                                        <Categories section="section4" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="inner2 mt-5">
+                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                            <div className="inner">
+                                <VideoPanel src="/assets/videos/zumar-video.mp4" />
+                            </div>
+                        </div>
+                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                            <div className="">
+                                <h3
+                                    className="text-center"
+                                    style={{ whiteSpace: "nowrap" }}
+                                >
+                                    {t("Essence of Arabia")}
+                                </h3>
+                                <p className="text-center">{t("Step into")}</p>
+                                <div className="row mt-4 justify-content-center">
+                                    <div className="col-md-6">
+                                        <Link
+                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
+                                        >
+                                            <img
+                                                className=""
+                                                src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                                                alt="Bakhoor Ahmed"
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <Link
+                                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
+                                        >
+                                            <img
+                                                className=""
+                                                src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                                                alt="Oud Asateen"
+                                            />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel2 mt-5">
+                                <div className="inner2 mt-5">
+                                    <Categories />
+                                </div>
+                            </div>
+                            {/* <div className="inner2 mt-5">
                         <Categories />
-                    </div>
-                </div>
-                <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                    <div className="inner text-center pt-5 mt-4">
-                        <h1>Reaching Every Corner of the World</h1>
-                        <p className="fs-5">
-                            Ahmed Al Maghribi Perfumes proudly spans over 91
-                            countries, sharing our luxurious fragrances with the
-                            world. With an unwavering commitment to
-                            craftsmanship and excellence, our signature scents
-                            are now available for global distribution, spreading
-                            the essence of timeless luxury and rich tradition to
-                            every corner of the globe.
-                        </p>
-
-                        <div className="row">
-                            <div className="col-6">
-                                <a href={`/${locale}/export`}>
-                                    <img
-                                        src="assets/images/home/demo8/export/aqua-oud.jpg"
-                                        alt=""
-                                        className="img-fluid"
-                                    />
-                                </a>
+                    </div> */}
+                            {/* <div className="d-flex flex-column align-items-center">
+                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
+                        {t("Reaching Every Corner of the World")}
+                        </h3>
+                        <p className="text-center">{t("Exports Text")}</p>
+                        <Link
+                        href={`/${locale}/export`}
+                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                        >
+                        {t("Discover More")}
+                        </Link>
+                    </div> */}
+                        </div>
+                        <div className="panel mt-5">
+                            <div className="d-flex flex-column align-items-center">
+                                <h3
+                                    className="text-center w-50"
+                                    style={{ fontSize: "2rem" }}
+                                >
+                                    {t("Reaching Every Corner of the World")}
+                                </h3>
+                                <p className="text-center w-50">
+                                    {t("Exports Text")}
+                                </p>
+                                <Link
+                                    href={`/${locale}/export`}
+                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                                >
+                                    {t("Discover More")}
+                                </Link>
                             </div>
-                            <div className="col-6">
-                                <a href={`/${locale}/export`}>
+                            <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
+                                <Link href={`/${locale}/export`}>
                                     <img
-                                        src="assets/images/home/demo8/export/endless.jpg"
-                                        alt=""
-                                        className="img-fluid"
+                                        className="px-2 w-100 w-md-auto"
+                                        src="/assets/images/home/demo8/export/aqua-oud.jpg"
+                                        alt="Image 1"
                                     />
-                                </a>
+                                </Link>
+                                <Link href={`/${locale}/export`}>
+                                    <img
+                                        className="px-2 w-100 w-md-auto"
+                                        src="/assets/images/home/demo8/export/endless.jpg"
+                                        alt="Image 2"
+                                    />
+                                </Link>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
+                </>
+            ) : (
+                <>
+                    <section className="horizontal-scroll d-flex flex-row w-100 vh-100">
+                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                            <div className="inner">
+                                <div className="panel2 mb-4">
+                                    <div className="inner2 mt-5 d-flex align-items-center">
+                                        {/* Iconic indulgence */}
+                                        <Categories section="section4" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                            <div className="inner">
+                                <VideoPanel src="/assets/videos/zumar-video.mp4" />
+                            </div>
+                        </div>
+                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
+                            <div
+                                className=""
+                                style={
+                                    locale === "en"
+                                        ? { paddingLeft: "10%" }
+                                        : { paddingRight: "10%" }
+                                }
+                            >
+                                <h3
+                                    className="text-center"
+                                    style={{ whiteSpace: "nowrap" }}
+                                >
+                                    {t("Essence of Arabia")}
+                                </h3>
+                                <p className="text-center">{t("Step into")}</p>
+                                <div className="row mt-4 justify-content-center">
+                                    <div className="col-md-6">
+                                        <Link
+                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
+                                        >
+                                            <img
+                                                className=""
+                                                src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                                                alt="Bakhoor Ahmed"
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <Link
+                                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
+                                        >
+                                            <img
+                                                className=""
+                                                src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                                                alt="Oud Asateen"
+                                            />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel2 mt-5">
+                                <div className="inner2 mt-5">
+                                    <Categories />
+                                </div>
+                            </div>
+                            {/* <div className="inner2 mt-5">
+                        <Categories />
+                    </div> */}
+                            {/* <div className="d-flex flex-column align-items-center">
+                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
+                        {t("Reaching Every Corner of the World")}
+                        </h3>
+                        <p className="text-center">{t("Exports Text")}</p>
+                        <Link
+                        href={`/${locale}/export`}
+                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                        >
+                        {t("Discover More")}
+                        </Link>
+                    </div> */}
+                        </div>
+                        <div className="panel mt-5">
+                            <div
+                                className="d-flex flex-column align-items-center"
+                                style={
+                                    locale === "en"
+                                        ? { paddingLeft: "20%" }
+                                        : { paddingRight: "20%" }
+                                }
+                            >
+                                <h3
+                                    className="text-center w-50"
+                                    style={{ fontSize: "2rem" }}
+                                >
+                                    {t("Reaching Every Corner of the World")}
+                                </h3>
+                                <p className="text-center w-50">
+                                    {t("Exports Text")}
+                                </p>
+                                <Link
+                                    href={`/${locale}/export`}
+                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                                >
+                                    {t("Discover More")}
+                                </Link>
+                            </div>
+                            <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
+                                {/* <Link href={`/${locale}/export`}>
+                        <img
+                            className="px-2 w-100 w-md-auto"
+                            src="/assets/images/home/demo8/export/aqua-oud.jpg"
+                            alt="Image 1"
+                        />
+                        </Link>
+                        <Link href={`/${locale}/export`}>
+                        <img
+                            className="px-2 w-100 w-md-auto"
+                            src="/assets/images/home/demo8/export/endless.jpg"
+                            alt="Image 2"
+                        />
+                        </Link> */}
+                            </div>
+                        </div>
+                    </section>
+                </>
+            )}
 
             {/* Vertical Section 3 */}
-            <section className="scroll-section">
+            {/* <section className="scroll-section">
                 <div className="panel orange w-100 vh-100"></div>
+            </section> */}
+
+            <section className="scroll-section d-flex flex-direction-column section-7 mt-3">
+                <div className="panel w-100 vh-100">
+                    <div className="section-content">
+                        <div className="text-center text-white d-flex justify-content-center">
+                            <span className="t-subtitle">
+                                {t("WHERE LUXURY MEETS YOUR SENSES")}
+                            </span>
+                        </div>
+                        <h2 className="h1 text-center text-white pt-3">
+                            {t("Your Journey Begins with a Scent")}
+                        </h2>
+                        <p className="text-center text-white section-paragraph">
+                            {t(
+                                "At Ahmed Al Maghribi Perfumes each fragrance tells your story Our luxurious scents evoke memories and emotions becoming a lasting part of who you are"
+                            )}
+                        </p>
+                        <div className="d-flex justify-content-center pt-5">
+                            <Link
+                                href={`/${locale}/shop`}
+                                className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
+                            >
+                                Discover Now
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="bottom-scroll">
+                    <Image
+                        width={40}
+                        height={40}
+                        className="bottom-0 scroll-icon"
+                        src="/assets/images/ahmed-icon.png"
+                        alt="logo Ahmed"
+                        loading="lazy"
+                    />
+                    <span className="text-white text-uppercase mt-2">
+                        Scroll to discover
+                    </span>
+                </div>
             </section>
 
             {/* Vertical Section 4 */}
-            <section className="scroll-section">
+            {/* <section className="scroll-section">
                 <div className="panel blue w-100 vh-100"></div>
+            </section> */}
+            <section
+                id="end"
+                className="testsect container d-flex flex-column justify-content-center zoom_img"
+            >
+                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
+                    <div className="order-1 order-md-0">
+                        <VideoPanel
+                            src="/assets/videos/production.mp4"
+                            section="last"
+                        />
+                    </div>
+                    <div className="col-lg-7 p-5 text-center order-3 order-md-1">
+                        <h3 className="mb-3">
+                            {t(
+                                "Quality Crafted Through Expertise 20 plus Years of Mastery"
+                            )}
+                        </h3>
+                        <p>
+                            {t(
+                                "For over 20 years Ahmed Al Maghribi Perfumes has been dedicated to creating luxurious timeless scents Using only the finest natural ingredients we ensure every fragrance is crafted with precision and excellence offering lasting quality"
+                            )}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mt-5">
+                    <div className="col-lg-7 p-5 text-center order-1 order-md-0">
+                        <h3 className="mb-3">{t("The Company")}</h3>
+                        <p>{t("Steps")}</p>
+                    </div>
+                    <div className="order-0 order-md-1">
+                        <img
+                            className="h-auto w-100"
+                            src="/assets/images/home/demo8/Shop.jpg"
+                            alt="image"
+                        />
+                    </div>
+                </div>
             </section>
         </div>
     );

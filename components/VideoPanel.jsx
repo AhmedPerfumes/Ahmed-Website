@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ src, wid }) => {
+const VideoPlayer = ({ src, section }) => {
     const videoRef = useRef(null);
 
     const [isInView, setIsInView] = useState(false);
@@ -49,7 +49,7 @@ const VideoPlayer = ({ src, wid }) => {
             muted
             playsInline
             loop
-            className="w-75"
+            className={section == 'last' ? 'w-100' : 'w-75'}
         >
             <source src={src} type="video/mp4" />
             Your browser does not support the video tag.

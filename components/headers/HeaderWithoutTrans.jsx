@@ -191,7 +191,7 @@ export default function Header14() {
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
                       <Link
-                        href={`/en/shop/eau-de-parfum/oriental-fragrance/marj`}
+                        href={`/en/shop/perfumes/oriental-fragrance/marj`}
                         className="menu-link menu-link_us-s"
                       >
                         Marj
@@ -199,7 +199,7 @@ export default function Header14() {
                     </li>
                     <li className="sub-menu__item">
                       <Link
-                        href={`/en/shop/eau-de-parfum/occidental-fragrance/rose-noir`}
+                        href={`/en/shop/perfumes/occidental-fragrance/rose-noir`}
                         className="menu-link menu-link_us-s"
                       >
                         Rose Noir
@@ -207,7 +207,7 @@ export default function Header14() {
                     </li>
                     <li className="sub-menu__item">
                       <Link
-                        href={`/en/shop/eau-de-parfum/occidental-fragrance/oud-lavender`}
+                        href={`/en/shop/perfumes/occidental-fragrance/oud-lavender`}
                         className="menu-link menu-link_us-s"
                       >
                         Oud Lavender
@@ -215,14 +215,14 @@ export default function Header14() {
                     </li>
                     <li className="sub-menu__item">
                       <Link
-                        href={`/en/shop/eau-de-parfum/occidental-fragrance/oud-classic`}
+                        href={`/en/shop/perfumes/occidental-fragrance/oud-classic`}
                         className="menu-link menu-link_us-s"
                       >
                         Oud Classic
                       </Link>
                     </li>
                     {/* <li className="sub-menu__item">
-                      <a href="/en/shop/eau-de-parfum/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
+                      <a href="/en/shop/perfumes/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
                         Oud &amp; Roses
                       </a>
                     </li> */}
