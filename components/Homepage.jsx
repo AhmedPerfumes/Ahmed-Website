@@ -30,7 +30,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
     useEffect(() => {
         const sections = gsap.utils.toArray(".scroll-section");
-        const panels = gsap.utils.toArray(".horizontal-scroll .panel");
+        // const panels = gsap.utils.toArray(".horizontal-scroll .panel");
 
         // Vertical snapping logic for all sections
         sections.forEach((section, i) => {
@@ -90,22 +90,23 @@ const ScrollSnapHorizontalBootstrap = () => {
         //     circle.addEventListener("click", () => handleNavCircleClick(index));
         // });
         // Horizontal scrolling within `.horizontal-scroll`
-        gsap.to(panels, {
-            xPercent:
-                locale == "en"
-                    ? -100 * (panels.length - 1)
-                    : 100 * (panels.length - 1), // Move horizontally based on panels
-            ease: "power1.inOut",
-            scrollTrigger: {
-                trigger: ".horizontal-scroll",
-                start: "top top",
-                end: `+=${panels.length * window.innerWidth}`, // Adjust end dynamically
-                scrub: true, // Smooth scrolling
-
-                pin: true, // Pin during horizontal scroll
-                // anticipatePin: 1, // Smooth pinning transition
-            },
-        });
+        const panels = gsap.utils.toArray(".cont .panel2");
+        if (panels.length > 0) {
+            const panelTween = gsap.to(panels, {
+                xPercent:
+                    locale == "en"
+                        ? -100 * (panels.length - 1)
+                        : 100 * (panels.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".cont",
+                    start: "top top",
+                    end: `+=${panels.length * window.innerWidth}`,
+                    pin: true,
+                    scrub: 1,
+                },
+            });
+        }
 
         // const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
         //     if (mobilepanel.length > 0) {
@@ -148,6 +149,8 @@ const ScrollSnapHorizontalBootstrap = () => {
 
             <section className="scroll-section d-flex flex-direction-column section-1">
                 <div className="panel section-slider w-100 vh-100">
+                    {/* Background Overlay */}
+                    {/* <div className="background-overlay"></div> */}
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
                             <span className="t-subtitle">
@@ -291,7 +294,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                             <div
                                 data-v-8967c2b9=""
-                                className="container-mobile d-block d-sm-none"
+                                className="container-mobile d-sm-block d-md-none"
                             >
                                 <div
                                     data-v-8967c2b9=""
@@ -432,7 +435,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                             <div
                                 data-v-8967c2b9=""
-                                className="container-mobile d-block d-sm-none"
+                                className="container-mobile d-sm-block d-md-none"
                             >
                                 <div
                                     data-v-8967c2b9=""
@@ -573,7 +576,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                             <div
                                 data-v-8967c2b9=""
-                                className="container-mobile d-block d-sm-none"
+                                className="container-mobile d-sm-block d-md-none"
                             >
                                 <div
                                     data-v-8967c2b9=""
@@ -714,7 +717,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                             <div
                                 data-v-8967c2b9=""
-                                className="container-mobile d-block d-sm-none"
+                                className="container-mobile d-sm-block d-md-none"
                             >
                                 <div
                                     data-v-8967c2b9=""
@@ -855,7 +858,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                             <div
                                 data-v-8967c2b9=""
-                                className="container-mobile d-block d-sm-none"
+                                className="container-mobile d-sm-block d-md-none"
                             >
                                 <div
                                     data-v-8967c2b9=""
@@ -996,7 +999,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                             <div
                                 data-v-8967c2b9=""
-                                className="container-mobile d-block d-sm-none"
+                                className="container-mobile d-sm-block d-md-none"
                             >
                                 <div
                                     data-v-8967c2b9=""
@@ -1127,17 +1130,17 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     )}
                                 </p>
                             </div>
-                            <div className="d-none d-md-block">
+                            <div className="d-none d-md-block pb-3">
                                 <div className="videoarea d-flex align-items-center">
                                     <VideoPanel src="/assets/videos/multi-product.mp4" />
                                 </div>
                             </div>
-                            <div className="d-block d-sm-none">
+                            <div className="d-block d-sm-none pb-3">
                                 <div className="videoarea d-flex align-items-center">
                                     <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
                                 </div>
                             </div>
-                            <div className="d-flex justify-content-center pt-5">
+                            <div className="d-flex justify-content-center ">
                                 <Link
                                     href={`/${locale}/shop`}
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium "
@@ -1213,7 +1216,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="d-flex flex-column align-items-center">
+            <section className="d-flex flex-column align-items-center pt-5">
                 <span className="t-subtitle">
                     {t("The perfect gift for every occasion")}
                 </span>
@@ -1251,13 +1254,13 @@ const ScrollSnapHorizontalBootstrap = () => {
                             width="600"
                             height="600"
                             alt="Bakhoor-Ahmed"
-                            className="w-100 px-1"
+                            className="w-100 h-100 px-1"
                             style={{ paddingTop: "1rem", objectFit: "contain" }}
                         />
                     </a>
                     <a href={`/${locale}/shop/dakhoon/gift-sets`}>
                         <Image
-                            className="w-100 px-1"
+                            className="w-100 h-100 px-1"
                             src="/assets/images/Antee-05-Giftset.jpg"
                             width="600"
                             height="600"
@@ -1270,6 +1273,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
             <section className="scroll-section d-flex flex-direction-column section-6">
                 <div className="panel w-100 vh-100">
+                    {/* <div className="background-overlay"></div> */}
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
                             <span className="t-subtitle">
@@ -1311,248 +1315,76 @@ const ScrollSnapHorizontalBootstrap = () => {
 
             {/* Horizontal Scrolling Section */}
 
-            {!isMobile ? (
-                <>
-                    <section className="horizontal-scroll d-flex flex-row w-100 vh-100">
-                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                            <div className="inner">
-                                <div className="panel2 mb-4">
-                                    <div className="inner2 mt-5 d-flex align-items-center">
-                                        {/* Iconic indulgence */}
-                                        <Categories section="section4" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                            <div className="inner">
-                                <VideoPanel src="/assets/videos/zumar-video.mp4" />
-                            </div>
-                        </div>
-                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                            <div className="">
-                                <h3
-                                    className="text-center"
-                                    style={{ whiteSpace: "nowrap" }}
-                                >
-                                    {t("Essence of Arabia")}
-                                </h3>
-                                <p className="text-center">{t("Step into")}</p>
-                                <div className="row mt-4 justify-content-center">
-                                    <div className="col-md-6">
-                                        <Link
-                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
-                                        >
-                                            <img
-                                                className=""
-                                                src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
-                                                alt="Bakhoor Ahmed"
-                                            />
-                                        </Link>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <Link
-                                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
-                                        >
-                                            <img
-                                                className=""
-                                                src="/assets/images/home/demo8/Oud-Asateen.jpg"
-                                                alt="Oud Asateen"
-                                            />
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel2 mt-5">
-                                <div className="inner2 mt-5">
-                                    <Categories />
-                                </div>
-                            </div>
-                            {/* <div className="inner2 mt-5">
+            <section className="cont testsect">
+                <div className="panel2 mb-4">
+                    <div className="inner2 mt-5 d-flex align-items-center">
+                        {/* Iconic indulgence */}
+                        <Categories section="section4" />
+                    </div>
+                </div>
+
+                <div className="panel2 mt-5">
+                    <div className="inner2">
+                        <VideoPanel src="/assets/videos/zumar-video.mp4" />
+                    </div>
+                </div>
+
+                <div className="panel2 mt-5">
+                    <div className="inner2 d-flex flex-column align-items-center">
                         <Categories />
-                    </div> */}
-                            {/* <div className="d-flex flex-column align-items-center">
-                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
-                        {t("Reaching Every Corner of the World")}
+                    </div>
+                </div>
+
+                <div className="panel2 mt-5 ">
+                    <div className="d-flex flex-column align-items-center justify-content-center">
+                        <h3 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-2">
+                            {/* {t("Reaching Every Corner of the World")} */}
+                            {t("Essence of Arabia")}
                         </h3>
-                        <p className="text-center">{t("Exports Text")}</p>
+                        <p className="text-center section-paragraph">
+                            {/* {t("Exports Text")} */}
+                            {t("Step into")}
+                        </p>
                         <Link
-                        href={`/${locale}/export`}
-                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                            href={`/${locale}/shop/dakhoon`}
+                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
                         >
-                        {t("Discover More")}
+                            {t("Discover")}
                         </Link>
-                    </div> */}
-                        </div>
-                        <div className="panel mt-5">
-                            <div className="d-flex flex-column align-items-center">
-                                <h3
-                                    className="text-center w-50"
-                                    style={{ fontSize: "2rem" }}
-                                >
-                                    {t("Reaching Every Corner of the World")}
-                                </h3>
-                                <p className="text-center w-50">
-                                    {t("Exports Text")}
-                                </p>
-                                <Link
-                                    href={`/${locale}/export`}
-                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
-                                >
-                                    {t("Discover More")}
-                                </Link>
-                            </div>
-                            <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
-                                <Link href={`/${locale}/export`}>
-                                    <img
-                                        className="px-2 w-100 w-md-auto"
-                                        src="/assets/images/home/demo8/export/aqua-oud.jpg"
-                                        alt="Image 1"
-                                    />
-                                </Link>
-                                <Link href={`/${locale}/export`}>
-                                    <img
-                                        className="px-2 w-100 w-md-auto"
-                                        src="/assets/images/home/demo8/export/endless.jpg"
-                                        alt="Image 2"
-                                    />
-                                </Link>
-                            </div>
-                        </div>
-                    </section>
-                </>
-            ) : (
-                <>
-                    <section className="horizontal-scroll d-flex flex-row w-100 vh-100">
-                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                            <div className="inner">
-                                <div className="panel2 mb-4">
-                                    <div className="inner2 mt-5 d-flex align-items-center">
-                                        {/* Iconic indulgence */}
-                                        <Categories section="section4" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                            <div className="inner">
-                                <VideoPanel src="/assets/videos/zumar-video.mp4" />
-                            </div>
-                        </div>
-                        <div className="panel w-100 vh-100 d-flex justify-content-center align-items-center">
-                            <div
-                                className=""
-                                style={
-                                    locale === "en"
-                                        ? { paddingLeft: "10%" }
-                                        : { paddingRight: "10%" }
-                                }
-                            >
-                                <h3
-                                    className="text-center"
-                                    style={{ whiteSpace: "nowrap" }}
-                                >
-                                    {t("Essence of Arabia")}
-                                </h3>
-                                <p className="text-center">{t("Step into")}</p>
-                                <div className="row mt-4 justify-content-center">
-                                    <div className="col-md-6">
-                                        <Link
-                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
-                                        >
-                                            <img
-                                                className=""
-                                                src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
-                                                alt="Bakhoor Ahmed"
-                                            />
-                                        </Link>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <Link
-                                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
-                                        >
-                                            <img
-                                                className=""
-                                                src="/assets/images/home/demo8/Oud-Asateen.jpg"
-                                                alt="Oud Asateen"
-                                            />
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel2 mt-5">
-                                <div className="inner2 mt-5">
-                                    <Categories />
-                                </div>
-                            </div>
-                            {/* <div className="inner2 mt-5">
-                        <Categories />
-                    </div> */}
-                            {/* <div className="d-flex flex-column align-items-center">
-                        <h3 className="text-center" style={{ "fontSize": "2rem"}}>
-                        {t("Reaching Every Corner of the World")}
-                        </h3>
-                        <p className="text-center">{t("Exports Text")}</p>
+                    </div>
+                    <div className="inner2 mt-4 d-flex align-items-center ">
                         <Link
-                        href={`/${locale}/export`}
-                        className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
+                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
                         >
-                        {t("Discover More")}
+                            <img
+                                className="w-100"
+                                src="/assets/images/home/demo8/Bakhoor-Ahmed.jpg"
+                                alt="Bakhoor Ahmed"
+                            />
                         </Link>
-                    </div> */}
-                        </div>
-                        <div className="panel mt-5">
-                            <div
-                                className="d-flex flex-column align-items-center"
-                                style={
-                                    locale === "en"
-                                        ? { paddingLeft: "20%" }
-                                        : { paddingRight: "20%" }
-                                }
-                            >
-                                <h3
-                                    className="text-center w-50"
-                                    style={{ fontSize: "2rem" }}
-                                >
-                                    {t("Reaching Every Corner of the World")}
-                                </h3>
-                                <p className="text-center w-50">
-                                    {t("Exports Text")}
-                                </p>
-                                <Link
-                                    href={`/${locale}/export`}
-                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium pt-5"
-                                >
-                                    {t("Discover More")}
-                                </Link>
-                            </div>
-                            <div className="inner2 mt-4 d-flex flex-column flex-md-row justify-content-start">
-                                {/* <Link href={`/${locale}/export`}>
-                        <img
-                            className="px-2 w-100 w-md-auto"
-                            src="/assets/images/home/demo8/export/aqua-oud.jpg"
-                            alt="Image 1"
-                        />
+                        <Link
+                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-mtr-asaateen`}
+                        >
+                            <img
+                                className="w-100"
+                                src="/assets/images/home/demo8/Oud-Asateen.jpg"
+                                alt="Oud Asateen"
+                            />
                         </Link>
-                        <Link href={`/${locale}/export`}>
-                        <img
-                            className="px-2 w-100 w-md-auto"
-                            src="/assets/images/home/demo8/export/endless.jpg"
-                            alt="Image 2"
-                        />
-                        </Link> */}
-                            </div>
-                        </div>
-                    </section>
-                </>
-            )}
+                    </div>
+                </div>
+            </section>
+
+            <section className="scroll-section d-lg-none d-flex flex-direction-column">
+                <Categories section="section4" />
+            </section>
 
             {/* Vertical Section 3 */}
             {/* <section className="scroll-section">
                 <div className="panel orange w-100 vh-100"></div>
             </section> */}
 
-            <section className="scroll-section d-flex flex-direction-column section-7 mt-3">
+            <section className="d-flex flex-direction-column section-7 mt-3">
                 <div className="panel w-100 vh-100">
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
