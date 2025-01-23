@@ -43,7 +43,7 @@ export default function HomePage8() {
                 <HomePage />
                 {/* <Animation /> */}
             </main>
-            <section className="d-none d-lg-block" style={{ height: "100%" }}>
+            <section className="d-none d-md-block" style={{ height: "100%" }}>
                 <Footer14 />
             </section>
             <section className="d-sm-block d-md-none bg-dark pt-5">

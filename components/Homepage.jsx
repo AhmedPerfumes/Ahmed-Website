@@ -1375,9 +1375,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="scroll-section d-lg-none d-flex flex-direction-column">
+            {/* <section className="scroll-section d-lg-none d-flex flex-direction-column">
                 <Categories section="section4" />
-            </section>
+            </section> */}
 
             {/* Vertical Section 3 */}
             {/* <section className="scroll-section">
@@ -1431,7 +1431,7 @@ const ScrollSnapHorizontalBootstrap = () => {
             </section> */}
             <section
                 id="end"
-                className="testsect container d-flex flex-column justify-content-center zoom_img"
+                className="container d-flex flex-column justify-content-center"
             >
                 <div className="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5 pt-5">
                     <div className="order-1 order-md-0">
@@ -1459,7 +1459,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         <h3 className="mb-3">{t("The Company")}</h3>
                         <p>{t("Steps")}</p>
                     </div>
-                    <div className="order-0 order-md-1">
+                    <div className="order-0 order-md-1 mb-5">
                         <img
                             className="h-auto w-100"
                             src="/assets/images/home/demo8/Shop.jpg"

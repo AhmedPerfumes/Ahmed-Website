@@ -20,7 +20,7 @@ export default function Categories({ section }) {
         },
         modules: [Autoplay, Navigation],
         slidesPerView: 5,
-        slidesPerGroup: 3,
+        slidesPerGroup: 2,
         effect: "none",
         loop: true,
         // pagination: {
