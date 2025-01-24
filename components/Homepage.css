@@ -274,11 +274,11 @@
 	font-style: italic;
 }
 
-@media screen and (min-width: 320px) and (max-width: 768px) {
+/* @media screen and (min-width: 320px) and (max-width: 768px) {
 	.slideshow-text {
 		margin-top: -10rem;
 	}
-}
+} */
 
 @media (max-width: 576px) {
 	.slide-custom-text {

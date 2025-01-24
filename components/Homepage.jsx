@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
 import Hero from "@/components/homes/home-8/Hero";
+import Hero2 from "@/components/homes/home-8/Hero2";
 import ProductHero from "@/components/homes/home-5/Hero";
 import {
     KeyboardArrowLeftRounded,
@@ -141,11 +142,18 @@ const ScrollSnapHorizontalBootstrap = () => {
     return (
         <div id="main" className="">
             {/* Vertical Section 1 */}
-            <section className="scroll-section d-flex flex-direction-column">
+            {/* <section className="scroll-section d-flex flex-direction-column">
                 <div className="panel section-slider w-100 vh-100">
                     <Hero />
                 </div>
+            </section> */}
+
+            <section className="vh-100 hero-banner d-none d-lg-block">
+                <Hero />
             </section>
+            <div className="d-block d-lg-none">
+                <Hero2/>
+            </div>
 
             <section className="scroll-section d-flex flex-direction-column section-1">
                 <div className="panel section-slider w-100 vh-100">
@@ -1132,12 +1140,12 @@ const ScrollSnapHorizontalBootstrap = () => {
                             </div>
                             <div className="d-none d-md-block pb-3">
                                 <div className="videoarea d-flex align-items-center">
-                                    <VideoPanel src="/assets/videos/multi-product.mp4" />
+                                    <VideoPanel src="/assets/videos/multi-product.mp4" section='hundred'/>
                                 </div>
                             </div>
                             <div className="d-block d-sm-none pb-3">
                                 <div className="videoarea d-flex align-items-center">
-                                    <VideoPanel src="/assets/videos/multi-product-mobile.mp4" />
+                                    <VideoPanel src="/assets/videos/multi-product-mobile.mp4" section='hundred'/>
                                 </div>
                             </div>
                             <div className="d-flex justify-content-center ">
@@ -1325,7 +1333,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                 <div className="panel2 mt-5">
                     <div className="inner2">
-                        <VideoPanel src="/assets/videos/zumar-video.mp4" />
+                        <VideoPanel src="/assets/videos/zumar-video.mp4" section='hundred'/>
                     </div>
                 </div>
 
@@ -1437,7 +1445,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <div className="order-1 order-md-0">
                         <VideoPanel
                             src="/assets/videos/production.mp4"
-                            section="last"
+                            section='hundred'
                         />
                     </div>
                     <div className="col-lg-7 p-5 text-center order-3 order-md-1">

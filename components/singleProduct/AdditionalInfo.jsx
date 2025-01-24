@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 
-export default function AdditionalInfo({ product_name, video, notes, title }) {
+export default function AdditionalInfo({ product_name, video, title }) {
   const t = useTranslations();
   function cleanProductName(productName) {
     // Step 1: Remove any non-alphanumeric characters except for spaces
@@ -92,7 +92,7 @@ export default function AdditionalInfo({ product_name, video, notes, title }) {
           </p>
         </div>
       </div> */}
-      {notes && <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(product_name)) }}></div>}
+      <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(product_name)) }}></div>
       <div className="align-items-lg-center mb-5">
         <div className="col-lg-12 d-flex align-items-center justify-content-center mb-5">
           <h2 className="mb-3 text-white">

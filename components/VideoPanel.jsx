@@ -49,7 +49,12 @@ const VideoPlayer = ({ src, section }) => {
             muted
             playsInline
             loop
-            className={section == "last" ? "w-100" : "w-100"}
+            className={
+                section === 'hundred' ? "w-100" :
+                section === 'popup' ? "w-75" :
+                section === 'sm_popup' ? "w-50" :
+                "w-100" // Default class
+            }
         >
             <source src={src} type="video/mp4" />
             Your browser does not support the video tag.

@@ -204,13 +204,13 @@ export default function SingleProduct11({ category, subcategory, product }) {
             Description
           </h2>
           <div className="product-single__details-list__content text-white">
-            <DescriptionWithoutTrans product_name={ product.product_name } content={ product.content }/>
+            <DescriptionWithoutTrans product_name={ product.product_name }/>
           </div>
           <h2 className="product-single__details-list__title text-white">
             Fragrance Notes
           </h2>
           <div className="product-single__details-list__content text-white">
-            <AdditionalInfoWithoutTrans product_name={ product.product_name } video={ product.video && JSON.parse(product.video)[0][0].value } notes={ product.fragrance_notes } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
+            <AdditionalInfoWithoutTrans product_name={ product.product_name } video={ product.video && JSON.parse(product.video)[0][0].value } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
           </div>
         </div>
       </section></> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}

@@ -170,7 +170,12 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-        <div className="d-flex d-flex-column justify-content-center"><VideoPanel src="/assets/videos/popup video.mp4" wid={true}/></div>
+        <div className="d-flex-column justify-content-center d-none d-md-flex">
+          <VideoPanel src="/assets/videos/popup video.mp4" section='popup'/>
+        </div>
+        <div className="d-flex-column justify-content-center d-flex d-md-none">
+          <VideoPanel src="/assets/videos/popup video.mp4" section='sm_popup'/>
+        </div>
         <div className="free-shipping-progress mt-3">
               {totalPrice < freeShippingThreshold ? (
                 <div>
@@ -192,7 +197,7 @@ export default function CartDrawer() {
               ) : (
                 <h4 className="success">☆ Congratulations! You qualify for free shipping!</h4>
               )}
-            </div>
+        </div>
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">SUBTOTAL:</h6>

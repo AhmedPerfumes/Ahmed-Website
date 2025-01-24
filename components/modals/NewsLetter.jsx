@@ -82,7 +82,7 @@ export default function NewsLetter() {
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"
                 /> */}
-                <VideoPanel src="/assets/videos/popup video.mp4" />
+                <VideoPanel src="/assets/videos/popup video.mp4" section='hundred'/>
               </div>
             </div>
             <div className="col-md-4 p-0 d-flex align-items-center text-center">

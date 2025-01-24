@@ -196,7 +196,7 @@ export default function CustomerLogin() {
             <div className="customer-option mt-4 text-center">
               <span className="text-secondary">No account yet?</span>{" "}
               <Link
-                href="/login_register#register-tab"
+                href="/en/login_register#register-tab"
                 className="btn-text js-show-register"
               >
                 Create Account

@@ -237,6 +237,15 @@ export const slidesData2 = [
 ];
 export const slidesData3 = [
   {
+    id: 3,
+    imageSrc: "/assets/images/home/demo8/raffle-draw.jpg",
+    season: "",
+    // objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "/shop/",
+  },
+  {
     id: 1,
     imageSrc: "/assets/images/home/demo8/avif/Ignite-rose-web-Banner.avif",
     season: "Tailored Elegance",
