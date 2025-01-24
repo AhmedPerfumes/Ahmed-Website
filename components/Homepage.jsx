@@ -178,7 +178,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
-                                Discover Now
+                                {t("Discover Now")}
                             </Link>
                         </div>
                     </div>
@@ -209,10 +209,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 >
                     <h2 className="h1 text-center pt-3">{t("Best Sellers")}</h2>
                     <div className="t__m t__color-blue" data-v-ea8e1c8e="">
-                        Discover our best-selling perfumes, loved for their
-                        captivating aromas and lasting impressions. From floral
-                        elegance to bold, woody notes, each fragrance is crafted
-                        to perfection, making them timeless favorites.
+                        {t("Discover Best Selling")}
                     </div>
                 </div>
 
@@ -258,7 +255,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Zumar
+                                                {t("Zumar")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -337,7 +334,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Zumar
+                                        {t("Zumar")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -399,7 +396,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Bin Shaikh
+                                                {t("Bin Shaikh")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -478,7 +475,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Bin Shaikh
+                                        {t("Bin Shaikh")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -540,7 +537,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Ignite Oud
+                                                {t("Ignite Oud")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -619,7 +616,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Ignite Oud
+                                        {t("Ignite Oud")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -681,7 +678,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Marj
+                                                {t("Marj")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -760,7 +757,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Marj
+                                        {t("Marj")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -822,7 +819,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Oud & Roses
+                                                {t("Oud & Roses")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -901,7 +898,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Oud & Roses
+                                       {t("Oud & Roses")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -963,7 +960,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Kaaf
+                                              {t("Kaaf")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -1042,7 +1039,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Kaaf
+                                        {t("Kaaf")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -1088,7 +1085,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </h2>
                         <p className="text-center text-white section-paragraph">
                             {t(
-                                "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
+                                "Explore our exclusive collection of refined scents made with the finest ingredients Elegant and original each fragrance complements your style"
                             )}
                         </p>
                         <div className="d-flex justify-content-center pt-5">
@@ -1096,7 +1093,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
-                                Discover Now
+                                {t("Discover Now")}
                             </Link>
                         </div>
                     </div>
@@ -1122,7 +1119,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         <div className="d-flex flex-column justify-content-around gap-5">
                             <div className="section-head">
                                 <h2 className="text-center">
-                                    {t("Crafted for The ")}
+                                    {t("Crafted for The")}
                                     <br />
                                     <span className="text-italic">
                                         {t("discerning")}
@@ -1130,12 +1127,9 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 </h2>
                                 <p className="text-center section-paragraph">
                                     {t(
-                                        "Explore our exclusive collection of refined scents, made with the finest ingredients. "
+                                        "Explore our exclusive collection of refined scents"
                                     )}
                                     <br />{" "}
-                                    {t(
-                                        "Elegant and original, each fragrance complements your style"
-                                    )}
                                 </p>
                             </div>
                             <div className="d-none d-md-block pb-3">
@@ -1153,7 +1147,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                     href={`/${locale}/shop`}
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium "
                                 >
-                                    Discover Now
+                                    {t("Discover Now")}
                                 </Link>
                             </div>
                         </div>
@@ -1182,7 +1176,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
-                                Discover Now
+                                {t("Discover Now")}
                             </Link>
                         </div>
                     </div>
@@ -1207,7 +1201,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <div className="d-flex flex-column justify-content-around gap-5">
                         <div className="section-head">
                             <h2 className=" text-center pt-5">
-                                {t("Gifts for Every ")}
+                                {t("Gifts for Every")}
                                 <br />
                                 <span className="text-italic">
                                     {t("Occasion")}
@@ -1215,7 +1209,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                             </h2>
                             <p className="text-center section-paragraph">
                                 {t(
-                                    "Delight your loved ones with our luxurious gift sets, thoughtfully curated to include our most exquisite fragrances.."
+                                    "Delight your loved ones with our luxurious gift sets, thoughtfully curated to include our most exquisite fragrances"
                                 )}
                             </p>
                         </div>
@@ -1285,23 +1279,23 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
                             <span className="t-subtitle">
-                                {t("WHERE LUXURY MEETS YOUR SENSES")}
+                            {t("Ancient Aromas")}
                             </span>
                         </div>
                         <h2 className="h1 text-center text-white pt-3">
-                            {t("Exclusive Collection")}
+                        {t("The Essence of Arabic Dakhoon")}
                         </h2>
                         <p className="text-center text-white section-paragraph">
-                            {t(
-                                "Explore our exclusive collection of refined scents, made with the finest ingredients. Elegant and original, each fragrance complements your style"
-                            )}
+                        {t(
+                "Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich long lasting aromas that bring warmth and tradition to your home"
+              )}
                         </p>
                         <div className="d-flex justify-content-center pt-5">
                             <Link
                                 href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
-                                Discover Now
+                                {t("Discover Now")}
                             </Link>
                         </div>
                     </div>
@@ -1413,7 +1407,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 href={`/${locale}/shop`}
                                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium text-white"
                             >
-                                Discover Now
+                                {t("Discover Now")}
                             </Link>
                         </div>
                     </div>
@@ -1428,7 +1422,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         loading="lazy"
                     />
                     <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
+                        {t("Scroll to discover")}
                     </span>
                 </div>
             </section>

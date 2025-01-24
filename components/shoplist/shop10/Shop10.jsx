@@ -24,11 +24,13 @@ import { openModalShopFilter } from "@/utlis/aside";
 import { sortingOptions } from "@/data/products/productCategories";
 
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Shop10({ subCategories, products }) {
   const pathname = usePathname();
   const category = pathname.split("/")[3];
   const subcategory = pathname.split("/")[4];
+  const t = useTranslations();
 
   // console.log('0000111', JSON.stringify(subCategories), products);
 
@@ -175,7 +177,7 @@ export default function Shop10({ subCategories, products }) {
               return (
                 <div key={ind}><div className="mb-4 mb-xl-5"></div>
                 <h2 className="section-title fw-normal mb-3 pb-2 text-center">
-                  { subCategory.name }
+                  { t(subCategory.name) }
                 </h2>
                 <Style2 category={ category } subcategory={ subCategory.name } products={ subCategory.products }/>
                 <div className="border-bottom"></div></div>

@@ -5,17 +5,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Categories({ params, subCategories }) {
 
   const locale = useLocale();
   const categoryName = usePathname().split("/")[3];
+  const t = useTranslations();
 
   const handleMouseOver = (e) => {
     const tooltip = document.getElementById("video-tooltip");
     const tooltipVideo = document.getElementById("tooltip-video");
     const videoSrc = e.target.getAttribute("data-video-src");
+  
 
     if (tooltip && tooltipVideo) {
       tooltipVideo.querySelector("source").src = videoSrc;
@@ -129,7 +131,7 @@ export default function Categories({ params, subCategories }) {
                   className="menu-link fw-medium"
                   key={i}
                 >
-                  {elm.name}
+                  {t(elm.name)}
                 </Link>
               </div>
             </SwiperSlide>
