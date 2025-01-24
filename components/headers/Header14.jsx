@@ -192,6 +192,14 @@ export default function Header14() {
                   <ul className="sub-menu__list list-unstyled">
                     <li className="sub-menu__item">
                       <Link
+                        href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
+                        className="menu-link menu-link_us-s"
+                      >
+                        {t("Zumar")}
+                      </Link>
+                    </li>
+                    <li className="sub-menu__item">
+                      <Link
                         href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
                         className="menu-link menu-link_us-s"
                       >
@@ -200,26 +208,18 @@ export default function Header14() {
                     </li>
                     <li className="sub-menu__item">
                       <Link
-                        href={`/${locale}/shop/perfumes/occidental-fragrance/rose-noir`}
+                        href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                         className="menu-link menu-link_us-s"
                       >
-                        {t("Rose Noir")}
+                        {t("Oud & Roses")}
                       </Link>
                     </li>
                     <li className="sub-menu__item">
                       <Link
-                        href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}
+                        href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                         className="menu-link menu-link_us-s"
                       >
-                        {t("Oud Lavender")}
-                      </Link>
-                    </li>
-                    <li className="sub-menu__item">
-                      <Link
-                        href={`/${locale}/shop/perfumes/occidental-fragrance/oud-classic`}
-                        className="menu-link menu-link_us-s"
-                      >
-                        {t("Oud Classic")}
+                        {t("Bin Shaikh")}
                       </Link>
                     </li>
                     {/* <li className="sub-menu__item">
