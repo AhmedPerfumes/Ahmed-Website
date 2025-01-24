@@ -240,7 +240,7 @@ export default function Style2({ category, subcategory, products }) {
                           className="btn btn-primary flex-grow-1 fs-base ps-3 ps-xxl-4 pe-0 border-0 text-uppercase fw-medium"
                           title="Already Added"
                         >
-                          Already Added
+                          {t("Already Added")}
                         </button>
                       )
                     : elm?.product_qty > 0 && (

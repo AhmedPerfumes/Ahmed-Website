@@ -193,7 +193,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         loading="lazy"
                     />
                     <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
+                        {t("Scroll to discover")}
                     </span>
                 </div>
             </section>
@@ -1108,7 +1108,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         loading="lazy"
                     />
                     <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
+                        {t("Scroll to discover")}
                     </span>
                 </div>
             </section>
@@ -1191,7 +1191,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         loading="lazy"
                     />
                     <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
+                        {t("Scroll to discover")}
                     </span>
                 </div>
             </section>
@@ -1310,7 +1310,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         loading="lazy"
                     />
                     <span className="text-white text-uppercase mt-2">
-                        Scroll to discover
+                    `   {t("Scroll to discover")}
                     </span>
                 </div>
             </section>
