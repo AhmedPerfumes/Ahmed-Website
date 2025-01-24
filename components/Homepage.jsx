@@ -247,7 +247,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Zumar
+                                                {t("Zumar")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -326,7 +326,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Zumar
+                                        {t("Zumar")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -388,7 +388,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Bin Shaikh
+                                                {t("Bin Shaikh")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -467,7 +467,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Bin Shaikh
+                                        {t("Bin Shaikh")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -529,7 +529,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Ignite Oud
+                                                {t("Ignite Oud")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -608,7 +608,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Ignite Oud
+                                        {t("Ignite Oud")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -670,7 +670,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Marj
+                                                {t("Marj")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -749,7 +749,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Marj
+                                        {t("Marj")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -811,7 +811,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Oud & Roses
+                                                {t("Oud & Roses")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -890,7 +890,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Oud & Roses
+                                       {t("Oud & Roses")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
@@ -952,7 +952,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                                 className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                                 data-v-8967c2b9=""
                                             >
-                                                Kaaf
+                                              {t("Kaaf")}
                                             </div>
                                             <div
                                                 className="t__sub-title t__color-blue"
@@ -1031,7 +1031,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                         data-v-8967c2b9=""
                                         className="t__h4 t__color-primary t__capitalize fs-2 font-weight-bold"
                                     >
-                                        Kaaf
+                                        {t("Kaaf")}
                                     </div>
                                     <div
                                         data-v-8967c2b9=""
