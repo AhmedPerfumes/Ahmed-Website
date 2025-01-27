@@ -1204,7 +1204,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 {t("Gifts for Every")}
                                 <br />
                                 <span className="text-italic">
-                                    {t("Occasion")}
+                                    {/* {t("Occasion")} */}
                                 </span>
                             </h2>
                             <p className="text-center section-paragraph">
