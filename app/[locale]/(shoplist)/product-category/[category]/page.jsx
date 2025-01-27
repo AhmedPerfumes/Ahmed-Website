@@ -77,10 +77,12 @@ const ShopPage8 = async ({ params }) => {
     );
   } catch (error) {
     console.error(error);
-    return <><Header14 />
-            <main className="page-wrapper">
+    return <>
+            <Header14 />
+            <main className="page-wrapper text-center">
               <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Category Found</h2>
-              <RelatedSlider relatedProds={ null }/>
+              {/* <RelatedSlider relatedProds={ null }/> */}
+              <a href='/' className="btn btn-primary w-50 text-uppercase mb-3 mx-auto">Continue Shopping</a>
             </main>
             <section className="d-none d-lg-block" style={{ height: "100%" }}>
               <Footer14 />
@@ -89,7 +91,8 @@ const ShopPage8 = async ({ params }) => {
               <div className="MobileFooter">
                 <MobileFooter2/>
               </div>
-            </section></>;
+            </section>
+          </>;
   }
 }
 
