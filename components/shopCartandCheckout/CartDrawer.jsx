@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import he from 'he';
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 
@@ -15,6 +15,7 @@ export default function CartDrawer() {
   const [error, setError] = useState(null);
   const { cartProducts, setCartProducts, totalPrice } = useContextElement();
   const pathname = usePathname();
+  const t= useTranslations();
   const closeCart = () => {
     document
       .getElementById("cartDrawerOverlay")
@@ -73,7 +74,7 @@ export default function CartDrawer() {
       >
         <div className="aside-header d-flex align-items-center">
           <h3 className="text-uppercase fs-6 mb-0">
-            SHOPPING BAG (
+            {t("SHOPPING BAG")} (
             <span className="cart-amount js-cart-items-count">
               {cartProducts.length}
             </span>{" "}
@@ -159,7 +160,7 @@ export default function CartDrawer() {
           </div>
         ) : (
           <div className="fs-18 mt-5 px-5">
-            Your cart is empty. Start shopping!
+            {t("Your cart is empty Start shopping")}
           </div>
         )}
         <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
@@ -200,24 +201,24 @@ export default function CartDrawer() {
         </div>
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
-            <h6 className="fs-base fw-medium">SUBTOTAL:</h6>
+            <h6 className="fs-base fw-medium">{t("SUBTOTAL")}:</h6>
             <span className="cart-subtotal fw-medium">{totalPrice.toFixed(2)}{ currency.symbol }</span>
           </div>
           {cartProducts.length ? (
             <>
               <Link href={`/${locale}/shop-cart`} className="btn btn-light mt-3 d-block">
-                View Cart
+                {t("View Cart")}
               </Link>
               <Link
                 href={`/${locale}/shop-checkout`}
                 className="btn btn-primary mt-3 d-block"
               >
-                Checkout
+                {t("Checkout")}
               </Link>
             </>
           ) : (
             <Link href={`/${locale}/shop`} className="btn btn-light mt-3 d-block">
-              Explore shop
+              {t("Exploreshop")}
             </Link>
           )}
         </div>
