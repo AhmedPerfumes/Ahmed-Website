@@ -181,7 +181,7 @@ export default function CartDrawer() {
               {totalPrice < freeShippingThreshold ? (
                 <div>
                   <p>
-                    Spend {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
+                    {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
                     shipping! ⛟
                   </p>
                   <div className="progress">
