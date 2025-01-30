@@ -243,7 +243,7 @@ export const slidesData3 = [
     // objectPosition: "50% center",
     title: "",
     subtitle: "",
-    href: "/shop/",
+    href: "shop/",
   },
   {
     id: 1,
