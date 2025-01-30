@@ -152,7 +152,7 @@ export default function Style2({ category, subcategory, products }) {
                       {elm?.label_name && (
                         <div
                           style={{ backgroundColor: elm.label_color }}
-                          className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
+                          className="product-label text-white right-0 top-0 left-auto mt-2 mx-2"
                         >
                           {elm?.label_name}
                         </div>
