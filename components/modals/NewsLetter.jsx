@@ -73,6 +73,7 @@ export default function NewsLetter() {
           <div className="row p-0 m-0">
             <div className="col-md-8 p-0">
               <div className="newsletter-popup__bg h-100 w-100">
+                <Link href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}>
                 <Image
                   width={550}
                   height={650}
@@ -81,14 +82,14 @@ export default function NewsLetter() {
                   src="/assets/images/home/demo8/zumar.jpg"
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"                
-                />
+                  />
+                  </Link>
                 {/* <VideoPanel src="/assets/videos/popup video.mp4" section='hundred'/> */}
               </div>
             </div>
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
                 <h3 className="section-title fw-normal mb-3 pb-2" style={{ color: '#cfa91a' }}>
-                  {/* SHOP & WIN */}
                   Zumar
                 </h3>
                 <p>
@@ -98,7 +99,7 @@ export default function NewsLetter() {
                 </p>
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/shop`}
+                  href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
                 >
                   Shop Now
                 </a>
