@@ -171,12 +171,7 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-        <div className="d-flex-column justify-content-center d-none d-md-flex">
-          <VideoPanel src="/assets/videos/popup video.mp4" section='popup'/>
-        </div>
-        <div className="d-flex-column justify-content-center d-flex d-md-none">
-          <VideoPanel src="/assets/videos/popup video.mp4" section='sm_popup'/>
-        </div>
+       
         <div className="free-shipping-progress mt-3">
               {totalPrice < freeShippingThreshold ? (
                 <div>

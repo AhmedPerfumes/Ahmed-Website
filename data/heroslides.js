@@ -236,15 +236,7 @@ export const slidesData2 = [
   },
 ];
 export const slidesData3 = [
-  {
-    id: 3,
-    imageSrc: "/assets/images/home/demo8/raffle-draw.jpg",
-    season: "",
-    // objectPosition: "50% center",
-    title: "",
-    subtitle: "",
-    href: "/shop/",
-  },
+
   {
     id: 1,
     imageSrc: "/assets/images/home/demo8/avif/Ignite-rose-web-Banner.avif",
@@ -266,15 +258,6 @@ export const slidesData3 = [
   
 ];
 export const slidesData33 = [
-  {
-    id: 3,
-    imageSrc: "/assets/images/home/demo8/raffle-draw-mobile-new.jpg",
-    season: "",
-    objectPosition: "50% center",
-    title: "",
-    subtitle: "",
-    href: "/shop/",
-  },
   {
     id: 2,
     imageSrc: "/assets/images/zumar-bnr.jpg",
@@ -498,13 +481,7 @@ export const slideData1000 = [
   //   description:
   //     "FOR ANY INQUIRIES, PLEASE CONTACT OUR CUSTOMER CARE TEAM AT +800 472 1828",
   // },
-  {
-    id: 3,
-    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
-    title: "Natural Glow",
-    description:
-      "Purchase above AED 250 and get a chance to WIN big",
-  },
+ 
 ];
 
 
