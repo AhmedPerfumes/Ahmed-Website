@@ -6,7 +6,7 @@ export default function TermsRaffle() {
     return (
         <section className="container mw-930 lh-30">
             <h2 className="section-title text-uppercase fw-bold mb-3 mt-3">
-               {t("Shop & Win – Terms and Conditions")}
+               {t("Shop & Win Terms and Conditions")}
             </h2>
             {/* <h6 className="mb-3">    
       </h6> */}
@@ -58,9 +58,9 @@ export default function TermsRaffle() {
             <li>
                {t("The three prize categories for each draw are as follows:")}
                 <ol>
-                    <li>{t("First Prize – 1 – Jetour T2")}</li>
-                    <li>{t("Second Prize – 7 – iPhone 16 Pro Max")}</li>
-                    <li>{t("Third Prize – AED 500 Cash Vouchers for 50 Winners")}</li>
+                    <li>{t("First Prize")}</li>
+                    <li>{t("Second Prize")}</li>
+                    <li>{t("Third Prize")}</li>
                 </ol>
             </li>
             <li>

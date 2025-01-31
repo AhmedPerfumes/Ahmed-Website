@@ -22,7 +22,7 @@ export default function Categories({ description, subCategories }) {
       >
         <div className="shop-categories position-relative">
           <h2 className="h3 pb-3 mb-4 fw-normal text-uppercase text-center">
-            {subcategory == null ? t(category.split("-").join(" ").charAt(0).toUpperCase()+ category.slice(1)) : t(subcategory.split("-").join(" "))}
+            {subcategory == null ? t(category.split("-").join(" ")) : t(subcategory.split("-").join(" "))}
           </h2>
           {description && <div dangerouslySetInnerHTML={{ __html: description }} className="fs-6 fw-medium mb-4 text-center mw-930">
           </div>}
