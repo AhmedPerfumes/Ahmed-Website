@@ -267,7 +267,7 @@ export const slidesData33 = [
     title: "Feel Luxurious",
     subtitle: "with",
     href: "shop/perfumes/occidental-fragrance/la-rosee",
-    color: "#7c3b28"
+    color: "text-black"
   },
   {
     id: 2,
@@ -277,7 +277,7 @@ export const slidesData33 = [
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
     href: "shop/perfumes/occidental-fragrance/zumar",
-    color: "#fff"
+    color: "text-white"
   },
 
 ];
