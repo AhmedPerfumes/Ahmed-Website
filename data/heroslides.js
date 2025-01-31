@@ -236,7 +236,6 @@ export const slidesData2 = [
   },
 ];
 export const slidesData3 = [
-
   {
     id: 1,
     imageSrc: "/assets/images/home/demo8/avif/Ignite-rose-web-Banner.avif",
