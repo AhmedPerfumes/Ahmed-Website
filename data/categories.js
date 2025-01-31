@@ -53,7 +53,8 @@ export const categories8 = [
     subText: "Whispers of Elegance",
     videoSrc: "/assets/videos/giftsets/antee.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/antee.jpg",
-    link: "/shop/gift-sets/gift-sets/antee-gift-set-05"
+    link: "/shop/gift-sets/gift-sets/antee-gift-set-05",
+    btn:"/shop/gift-sets/gift-sets/antee-gift-set-05"
   },
   {
     id: 2,
@@ -62,7 +63,8 @@ export const categories8 = [
     subText: "Tradition Reimagined",
     videoSrc: "/assets/videos/giftsets/dakhoon-collection.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/dukhoon-collection.jpg",
-    link: "/shop/gift-sets/gift-sets/the-dukhoon-collection"
+    link: "/shop/gift-sets/gift-sets/the-dukhoon-collection",
+    btn: "/shop/gift-sets/gift-sets/the-dukhoon-collection"
   },
   {
     id: 3,
@@ -71,7 +73,8 @@ export const categories8 = [
     subText: "Essence of Luxury",
     videoSrc: "/assets/videos/giftsets/ihdakhas.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/ihda-khas.jpg",
-    link: "/shop/gift-sets/gift-sets/ihdaa-khaas"
+    link: "/shop/gift-sets/gift-sets/ihdaa-khaas",
+    btn: "/shop/gift-sets/gift-sets/ihdaa-khaas"
   },
   {
     id: 4,
@@ -80,7 +83,8 @@ export const categories8 = [
     subText: "Expression of Memories",
     videoSrc: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
-    link: "/shop/gift-sets/gift-sets/oud-roses-gift-set"
+    link: "/shop/gift-sets/gift-sets/oud-roses-gift-set",
+    btn: "/shop/gift-sets/gift-sets/oud-roses-gift-set"
   },
   {
     id: 5,
@@ -89,7 +93,8 @@ export const categories8 = [
     subText: "A Legacy of Grace",
     videoSrc: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
-    link: "/shop/gift-sets/gift-sets/shauque-al-shuyookh"
+    link: "/shop/gift-sets/gift-sets/shauque-al-shuyookh",
+    btn: "/shop/gift-sets/gift-sets/shauque-al-shuyookh"
   },
   // {
   //   id: 6,
@@ -121,11 +126,12 @@ export const categories88 = [
   {
     id: 1,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Gauahar Khan",
+    altText: "Rawdha By Ahmed",
     subText: "Exude effortless allure",
     videoSrc: "/assets/videos/vlogs/gauhar-khan.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/gauhar-khan.jpg",
-    link: "#"
+    link: "/shop?q=rawdha",
+    btn:"/shop?q=rawdha"
   },
   // {
   //   id: 2,
@@ -139,56 +145,62 @@ export const categories88 = [
   {
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
-    altText: "Aromatix - Neeb Alwaz",
+    altText: "Laathani",
     subText: "Uncover your signature glow",
-    videoSrc: "/assets/videos/vlogs/Neeb.mp4",
+    videoSrc: "/assets/videos/vlogs/neeb.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Neeb.jpg",
-    link: "#"
+    link: "/shop/perfumes/oriental-fragrance/laathani",
+    btn: "/shop/perfumes/oriental-fragrance/laathani"
   },
   {
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
-    altText: "Rico Fragrance",
+    altText: "Kaaf",
     subText: "Radiate pure, refined luxury",
-    videoSrc: "/assets/videos/vlogs/Rico.mp4",
+    videoSrc: "/assets/videos/vlogs/rico.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Rico.jpg",
-    link: "#"
+    link: "/shop/perfumes/oriental-fragrance/kaaf",
+    btn: "/shop/perfumes/oriental-fragrance/kaaf"
   },
   {
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Sana Khan",
+    altText: "Oud & Roses",
     subText: "Embrace unforgettable elegance",
-    videoSrc: "/assets/videos/vlogs/Sana-Khan.mp4",
+    videoSrc: "/assets/videos/vlogs/sana-Khan.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Sana-Khan.jpg",
-    link: "#"
+    link: "/shop/perfumes/occidental-fragrance/oud-roses",
+    btn: "/shop/perfumes/occidental-fragrance/oud-roses"
   },
   {
     id: 6,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Yasser Salah Salem",
+    altText: "Rose Noir",
     subText: "Embrace unforgettable elegance",
     videoSrc: "/assets/videos/vlogs/yassersalahsalem.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/yassersalahsalem.jpg",
-    link: "#"
+    link: "/shop/perfumes/occidental-fragrance/rose-noir",
+    btn: "/shop/perfumes/occidental-fragrance/rose-noir"
   },
   {
     id: 7,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "The Cologne Boy",
+    altText: "Bin Shaikh",
     subText: "Embrace unforgettable elegance",
-    videoSrc: "/assets/videos/vlogs/The-Cologne-Boy.mp4",
+    videoSrc: "/assets/videos/vlogs/cologne-boy.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/The-Cologne-Boy.jpg",
-    link: "#"
+    link: "/shop/perfumes/oriental-fragrance/bin-shaikh",
+    btn: "/shop/perfumes/oriental-fragrance/bin-shaikh"
   },
   {
     id: 8,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Hina Khan",
+    altText: "Laathani",
     subText: "Embrace unforgettable elegance",
     videoSrc: "/assets/videos/vlogs/Henna-Khan.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Henna-Khan.jpg",
-    link: "#"
+    link: "/shop/perfumes/oriental-fragrance/laathani",
+    btn: "/shop/perfumes/oriental-fragrance/laathani"
   },
 ];
 

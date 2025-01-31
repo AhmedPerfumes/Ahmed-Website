@@ -238,7 +238,7 @@ export const slidesData2 = [
 export const slidesData3 = [
   {
     id: 3,
-    imageSrc: "/assets/images/home/demo8/raffle-draw.jpg",
+    imageSrc: "/assets/images/home/demo8/shop-and-win.jpg",
     season: "",
     // objectPosition: "50% center",
     title: "",
