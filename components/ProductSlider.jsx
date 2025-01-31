@@ -72,18 +72,19 @@ const productSlider = ({ prodSlide }) => {
                                         data-v-8967c2b9=""
                                         data-v-399c522e=""
                                     />
-                                    <button
-                                        className="btn-classic"
-                                        data-v-8967c2b9=""
-                                        data-v-7aa9e1a2=""
-                                        onClick={() =>
-                                            window.open(
-                                                "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/zumar"
-                                            )
-                                        }
+                                    <Link
+                                        href={`${locale}/shop/perfumes/oriental-fragrance/zumar`}
                                     >
-                                        <span data-v-7aa9e1a2="">Discover</span>
-                                    </button>
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -136,18 +137,17 @@ const productSlider = ({ prodSlide }) => {
                                     )}
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/zumar"
-                                    )
-                                }
-                                data-v-7aa9e1a2=""
-                                data-v-8967c2b9=""
-                                className="btn-classic"
+                            <Link
+                                href={`${locale}/shop/perfumes/oriental-fragrance/zumar`}
                             >
-                                <span data-v-7aa9e1a2="">Discover</span>
-                            </button>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
+                                    <span data-v-7aa9e1a2="">Discover</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     {/* First slider */}
@@ -209,18 +209,19 @@ const productSlider = ({ prodSlide }) => {
                                         data-v-8967c2b9=""
                                         data-v-399c522e=""
                                     />
-                                    <button
-                                        onClick={() =>
-                                            window.open(
-                                                "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/bin-shaikh"
-                                            )
-                                        }
-                                        className="btn-classic"
-                                        data-v-8967c2b9=""
-                                        data-v-7aa9e1a2=""
+                                    <Link
+                                        href={`${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                                     >
-                                        <span data-v-7aa9e1a2="">Discover</span>
-                                    </button>
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -271,18 +272,17 @@ const productSlider = ({ prodSlide }) => {
                                     {t("concocted in royalty and lavishness")}
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/bin-shaikh"
-                                    )
-                                }
-                                data-v-7aa9e1a2=""
-                                data-v-8967c2b9=""
-                                className="btn-classic"
+                            <Link
+                                href={`${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                             >
-                                <span data-v-7aa9e1a2="">Discover</span>
-                            </button>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
+                                    <span data-v-7aa9e1a2="">Discover</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     {/* Second slider */}
@@ -344,18 +344,19 @@ const productSlider = ({ prodSlide }) => {
                                         data-v-8967c2b9=""
                                         data-v-399c522e=""
                                     />
-                                    <button
-                                        onClick={() =>
-                                            window.open(
-                                                "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/ignite-oud"
-                                            )
-                                        }
-                                        className="btn-classic"
-                                        data-v-8967c2b9=""
-                                        data-v-7aa9e1a2=""
+                                    <Link
+                                        href={`${locale}/shop/perfumes/occidental-fragrance/ignite-oud`}
                                     >
-                                        <span data-v-7aa9e1a2="">Discover</span>
-                                    </button>
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -408,18 +409,17 @@ const productSlider = ({ prodSlide }) => {
                                     )}
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/ignite-oud"
-                                    )
-                                }
-                                data-v-7aa9e1a2=""
-                                data-v-8967c2b9=""
-                                className="btn-classic"
+                            <Link
+                                href={`${locale}/shop/perfumes/occidental-fragrance/ignite-oud`}
                             >
-                                <span data-v-7aa9e1a2="">Discover</span>
-                            </button>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
+                                    <span data-v-7aa9e1a2="">Discover</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     {/* Third slider */}
@@ -481,18 +481,19 @@ const productSlider = ({ prodSlide }) => {
                                         data-v-8967c2b9=""
                                         data-v-399c522e=""
                                     />
-                                    <button
-                                        onClick={() =>
-                                            window.open(
-                                                "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/marj"
-                                            )
-                                        }
-                                        className="btn-classic"
-                                        data-v-8967c2b9=""
-                                        data-v-7aa9e1a2=""
+                                    <Link
+                                        href={`${locale}/shop/perfumes/oriental-fragrance/marj`}
                                     >
-                                        <span data-v-7aa9e1a2="">Discover</span>
-                                    </button>
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -545,18 +546,17 @@ const productSlider = ({ prodSlide }) => {
                                     )}
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/marj"
-                                    )
-                                }
-                                data-v-7aa9e1a2=""
-                                data-v-8967c2b9=""
-                                className="btn-classic"
+                            <Link
+                                href={`${locale}/shop/perfumes/oriental-fragrance/marj`}
                             >
-                                <span data-v-7aa9e1a2="">Discover</span>
-                            </button>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
+                                    <span data-v-7aa9e1a2="">Discover</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     {/* Fourth slider */}
@@ -618,18 +618,19 @@ const productSlider = ({ prodSlide }) => {
                                         data-v-8967c2b9=""
                                         data-v-399c522e=""
                                     />
-                                    <button
-                                        onClick={() =>
-                                            window.open(
-                                                "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/oud-roses"
-                                            )
-                                        }
-                                        className="btn-classic"
-                                        data-v-8967c2b9=""
-                                        data-v-7aa9e1a2=""
+                                    <Link
+                                        href={`${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                                     >
-                                        <span data-v-7aa9e1a2="">Discover</span>
-                                    </button>
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -680,18 +681,17 @@ const productSlider = ({ prodSlide }) => {
                                     {t("like a lush garden awakened in spring")}
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.ahmed-perfume.com/en/shop/perfumes/occidental-fragrance/oud-roses"
-                                    )
-                                }
-                                data-v-7aa9e1a2=""
-                                data-v-8967c2b9=""
-                                className="btn-classic"
+                            <Link
+                                href={`${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                             >
-                                <span data-v-7aa9e1a2="">Discover</span>
-                            </button>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
+                                    <span data-v-7aa9e1a2="">Discover</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     {/* Fifth slider */}
@@ -753,18 +753,19 @@ const productSlider = ({ prodSlide }) => {
                                         data-v-8967c2b9=""
                                         data-v-399c522e=""
                                     />
-                                    <button
-                                        onClick={() =>
-                                            window.open(
-                                                "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/kaaf"
-                                            )
-                                        }
-                                        className="btn-classic"
-                                        data-v-8967c2b9=""
-                                        data-v-7aa9e1a2=""
+                                    <Link
+                                        href={`${locale}/shop/perfumes/oriental-fragrance/kaaf`}
                                     >
-                                        <span data-v-7aa9e1a2="">Discover</span>
-                                    </button>
+                                        <button
+                                            className="btn-classic"
+                                            data-v-8967c2b9=""
+                                            data-v-7aa9e1a2=""
+                                        >
+                                            <span data-v-7aa9e1a2="">
+                                                Discover
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -817,18 +818,17 @@ const productSlider = ({ prodSlide }) => {
                                     )}
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.ahmed-perfume.com/en/shop/perfumes/oriental-fragrance/kaaf"
-                                    )
-                                }
-                                data-v-7aa9e1a2=""
-                                data-v-8967c2b9=""
-                                className="btn-classic"
+                            <Link
+                                href={`${locale}/shop/perfumes/oriental-fragrance/kaaf`}
                             >
-                                <span data-v-7aa9e1a2="">Discover</span>
-                            </button>
+                                <button
+                                    data-v-7aa9e1a2=""
+                                    data-v-8967c2b9=""
+                                    className="btn-classic"
+                                >
+                                    <span data-v-7aa9e1a2="">Discover</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     {/* Sixth slider */}

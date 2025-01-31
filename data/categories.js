@@ -212,7 +212,8 @@ export const categoriesInfluencers = [
     subText: "Oud, leather, and rose luxury",
     videoSrc: "/assets/videos/dakhoon/asateen.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/asateen.jpg",
-    link: "/product-category/dakhoon"
+    link: "/product-category/dakhoon",
+    btn: "/product-category/dakhoon"
   },
   {
     id: 2,
@@ -221,7 +222,8 @@ export const categoriesInfluencers = [
     subText: "Exotic warmth of saffron",
     videoSrc: "/assets/videos/dakhoon/bakhoor-hind.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/bakhoor-hind.jpg",
-    link: "/product-category/dakhoon"
+    link: "/product-category/dakhoon",
+    btn: "/product-category/dakhoon"
   },
   {
     id: 3,
@@ -230,7 +232,8 @@ export const categoriesInfluencers = [
     subText: "Citrus and oud, pure elegance",
     videoSrc: "/assets/videos/dakhoon/khususi.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
-    link: "/product-category/dakhoon"
+    link: "/product-category/dakhoon",
+    btn: "/product-category/dakhoon"
   },
   {
     id: 4,
@@ -239,7 +242,8 @@ export const categoriesInfluencers = [
     subText: "Royal saffron and oud bliss",
     videoSrc: "/assets/videos/dakhoon/maliki.mp4",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
-    link: "/product-category/dakhoon"
+    link: "/product-category/dakhoon",
+    btn: "/product-category/dakhoon"
   },
   {
     id: 5,
@@ -248,7 +252,8 @@ export const categoriesInfluencers = [
     subText: "Citrus, roses, and musk bliss",
     videoSrc: "/assets/videos/dakhoon/oud.mov",
     imgSrc2: "/assets/videos/dakhoon/thumbnails/oud.jpg",
-    link: "/product-category/dakhoon"
+    link: "/product-category/dakhoon",
+    btn: "/product-category/dakhoon"
   },
 ];
 export const categories80 = [
