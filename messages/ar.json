@@ -11,6 +11,8 @@
   "Eau De Parfum": "عطور",
   "Concentrated Parfum": "العطورالزيتية",
   "Perfumes":"عطور",
+  "concentrated parfum":"العطور الزيتية",
+  "dakhoon": "دخون",
   
   
 
@@ -65,7 +67,9 @@
   "Dakhoon": "دخون",
   "Gift Sets": "أطقم هدايا",
   "Gel": "عناية الجسم",
+  "gel": "عناية الجسم",
   "Hair Mist": "عطور للشعر",
+  "hair mist": "عطور للشعر",
   "Extrait De Parfum": "إيكستريت دو بارفان",
   "Collections": "المجموعات",
   "PRODUCT TYPES": "أنواع المنتجات",
@@ -147,6 +151,7 @@
   "Best Sellers":"الأكثر مبيعا",
   "Premium Collection": "مجموعة متميزة",
   "Online Exclusive": "حصرياً على الإنترنت",
+  "online exclusive": "حصرياً على الإنترنت",
   "Search Products": "البحث عن المنتجات",
   "Quicklinks": "روابط سريعة",
   "Marj": "مرج",
