@@ -238,33 +238,46 @@ export const slidesData2 = [
 export const slidesData3 = [
   {
     id: 1,
-    imageSrc: "/assets/images/home/demo8/avif/Ignite-rose-web-Banner.avif",
-    season: "Tailored Elegance",
+    imageSrc: "/assets/images/home/la-rose.jpg",
+    season: "La Rosee",
     objectPosition: "50% center",
     title: "Feel Luxurious",
     subtitle: "with",
-    href: "shop/perfumes/occidental-fragrance/ignite-rose",
+    href: "shop/perfumes/occidental-fragrance/la-rosee",
+    color: "text-black"
   },
   {
     id: 2,
     imageSrc: "/assets/images/zumar-bnr.jpg",
-    season: "Lasting",
+    season: "Zumar",
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
     href: "shop/perfumes/occidental-fragrance/zumar",
+    color: "text-white"
   },
   
 ];
 export const slidesData33 = [
   {
+    id: 1,
+    imageSrc: "/assets/images/home/la-rose.jpg",
+    season: "La Rosee",
+    objectPosition: "50% center",
+    title: "Feel Luxurious",
+    subtitle: "with",
+    href: "shop/perfumes/occidental-fragrance/la-rosee",
+    color: "text-black"
+  },
+  {
     id: 2,
     imageSrc: "/assets/images/zumar-bnr.jpg",
-    season: "Lasting",
+    season: "Zumar",
     objectPosition: "70% center",
     title: "Redefines luxury &",
     subtitle: "evokes the spirit of royalty",
     href: "shop/perfumes/occidental-fragrance/zumar",
+    color: "text-white"
   },
 
 ];
