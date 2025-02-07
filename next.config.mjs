@@ -11,6 +11,10 @@ const nextConfig = {
             hostname: 'phpstack-667016-4904984.cloudwaysapps.com',
           },
           {
+            protocol: 'https',
+            hostname: 'admin.ahmedalmaghribi.com',
+          },
+          {
             protocol: 'http',
             hostname: 'localhost',
           }
