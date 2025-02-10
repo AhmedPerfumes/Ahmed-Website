@@ -238,6 +238,16 @@ export const slidesData2 = [
 export const slidesData3 = [
   {
     id: 1,
+    imageSrc: "/assets/images/banner/uae-sale.jpg",
+    season: "",
+    objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "shop/perfumes/",
+    color: "text-black"
+  },
+  {
+    id: 2,
     imageSrc: "/assets/images/la-rose.jpg",
     season: "La Rosee",
     objectPosition: "50% center",
@@ -247,7 +257,7 @@ export const slidesData3 = [
     color: "text-black"
   },
   {
-    id: 2,
+    id: 3,
     imageSrc: "/assets/images/zumar-bnr.jpg",
     season: "Zumar",
     objectPosition: "70% center",
@@ -261,6 +271,16 @@ export const slidesData3 = [
 export const slidesData33 = [
   {
     id: 1,
+    imageSrc: "/assets/images/banner/uae-mobile.jpg",
+    season: "",
+    objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "shop/perfumes/",
+    color: "text-black"
+  },
+  {
+    id: 2,
     imageSrc: "/assets/images/la-rose.jpg",
     season: "La Rosee",
     objectPosition: "50% center",
@@ -270,7 +290,7 @@ export const slidesData33 = [
     color: "text-black"
   },
   {
-    id: 2,
+    id: 3,
     imageSrc: "/assets/images/zumar-bnr.jpg",
     season: "Zumar",
     objectPosition: "70% center",
