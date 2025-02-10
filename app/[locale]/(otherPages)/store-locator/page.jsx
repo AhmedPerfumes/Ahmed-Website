@@ -1,4 +1,5 @@
-import Footer1 from "@/components/footers/Footer1";
+import Footer14 from '@/components/footers/Footer14'
+import MobileFooter2 from '@/components/footers/MobileFooter2'
 
 import Header14 from "@/components/headers/Header14";
 
@@ -18,8 +19,14 @@ export default function StoreLocationPage() {
         <StoreLocator />
       </main>
 
-      <div className="mb-5 pb-xl-5"></div>
-      <Footer1 />
+      <section className="d-none d-lg-block" style={{ height: "100%" }}>
+        <Footer14 />
+      </section>
+      <section className="d-sm-block d-md-none bg-dark pt-5  ">
+        <div className="MobileFooter">
+          <MobileFooter2/>
+        </div>
+      </section>
     </>
   );
 }

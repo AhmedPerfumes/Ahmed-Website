@@ -365,9 +365,9 @@ export default function Header14() {
                                     )}
                                 </div>
 
-                                <Link className="header-tools__item" href="#">
+                                <a className="header-tools__item" href={`/${locale}/store-locator`}>
                                     <IoLocationOutline size={20} />
-                                </Link>
+                                </a>
 
                                 <a
                                     onClick={() => openCart()}
