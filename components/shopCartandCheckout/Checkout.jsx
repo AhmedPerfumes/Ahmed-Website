@@ -1126,7 +1126,7 @@ export default function Checkout() {
                                         </div>
                                     )}
                                     <input
-                                        className="form-control"
+                                        className="form-control mb-1"
                                         type="text"
                                         name="coupon_code"
                                         placeholder="Coupon Code"
@@ -1135,21 +1135,21 @@ export default function Checkout() {
                                     />
                                     {!couponData ? (
                                         <input
-                                            className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4 my-5"
+                                            className=""
                                             type="button"
                                             value="APPLY COUPON"
                                             onClick={applyCoupon}
                                         />
                                     ) : (
                                         <input
-                                            className="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4 my-5"
+                                            className=""
                                             type="button"
                                             value="REMOVE COUPON"
                                             onClick={removeCoupon}
                                         />
                                     )}
                                     {/* </form> */}
-                                    <br />
+                                    <br /><br />
                                     {/* <button className="btn btn-light">UPDATE CART</button> */}
                                 </div>
                                 <div className="checkout__payment-methods">
