@@ -25,7 +25,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-// import { FacebookPixelEvents } from "@/components/Metapixel";
+import { FacebookPixelEvents } from "@/components/Metapixel";
 
 // Import English font
 const englishFont = localFont({
@@ -66,7 +66,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                     <Svgs />
                     <Context>
                         <UserProvider>
-                            {/* <FacebookPixelEvents /> */}
+                            <FacebookPixelEvents />
                             <MenuProvider>
                                 <MobileHeader />
                                 {children}

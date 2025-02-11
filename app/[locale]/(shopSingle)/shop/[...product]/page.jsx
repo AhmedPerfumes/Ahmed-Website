@@ -4,8 +4,10 @@ import Header14 from "@/components/headers/Header14";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 import SingleProduct11 from "@/components/singleProduct/SingleProduct11";
 import React from "react";
-import { allProducts } from "@/data/products";
+// import { allProducts } from "@/data/products";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
+import Head from "next/head";
+import { headers } from 'next/headers';
 
 export const metadata = {
   title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
@@ -44,6 +46,29 @@ async function getproduct(categoryName, subCategoryName, product) {
   }
   return response.json();
 }
+
+// JSON-LD Schema for SEO
+const ProductSchema = ({ product }) => {
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.product_name,
+    "image": product.images,
+    "description": product.description,
+    "sku": product.sku,
+    "brand": { "@type": "Brand", "name": "Ahmed Al Maghribi Perfumes" },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "AED",
+      "price": product.price,
+      "url": `https://ae.ahmedalmaghribi.com/en/shop/perfumes/oriental-fragrance/${product.product_name}`,
+      "availability": "https://schema.org/InStock",
+    },
+  };
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />;
+};
+
 const ProductDetailsPage16 = async({ params }) => {
   const [ categoryName, subCategoryName, product ] = params.product;
   console.log(categoryName, subCategoryName, product);
@@ -52,7 +77,19 @@ const ProductDetailsPage16 = async({ params }) => {
     console.log(data);
     return (
       <>
+        <Head>
+          {/* Manually Adding Open Graph Product Tags */}
+          <meta property="og:title" content={data.product_name} />
+          <meta property="og:description" content={data.description} />
+          <meta property="og:image" content={data.images} />
+          <meta property="og:url" content={`https://ae.ahmedalmaghribi.com/en/shop/perfumes/oriental-fragrance/${data.product_name}`} />
+          <meta property="og:type" content="product" /> {/* Manual Fix */}
+          <meta property="product:price:amount" content={data.price} />
+          <meta property="product:price:currency" content="AED" />
+          <meta property="product:brand" content="Ahmed Al Maghribi Perfumes" />
+        </Head>
         <Header14 />
+        <ProductSchema product={data} />
         <main className="page-wrapper">
           <div className="mb-md-1 pb-md-3"></div>
           <SingleProduct11 category={ categoryName } subcategory={ subCategoryName } product={ data } />
