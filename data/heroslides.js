@@ -258,7 +258,7 @@ export const slidesData3 = [
   },
   {
     id: 3,
-    imageSrc: "/assets/images/AHL-banner.jpg",
+    imageSrc: "/assets/images/banner/AHL-Banner.jpg",
     season: "AHL",
     objectPosition: "70% center",
     title: "The Essence",
@@ -291,7 +291,7 @@ export const slidesData33 = [
   },
   {
     id: 3,
-    imageSrc: "/assets/images/AHL-banner.jpg",
+    imageSrc: "/assets/images/banner/AHL-Banner.jpg",
     season: "AHL",
     objectPosition: "70% center",
     title: "The Essence",
