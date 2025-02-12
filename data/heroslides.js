@@ -264,7 +264,7 @@ export const slidesData3 = [
     title: "The Essence",
     subtitle: "of Belonging",
     href: "shop/perfumes/oriental-fragrance/ahl",
-    color: "text-white"
+    color: "text-black"
   },
   
 ];
@@ -297,7 +297,7 @@ export const slidesData33 = [
     title: "The Essence",
     subtitle: "of Belonging",
     href: "shop/perfumes/oriental-fragrance/ahl",
-    color: "text-white"
+    color: "text-black"
   },
 
 ];

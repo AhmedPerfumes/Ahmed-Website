@@ -63,12 +63,12 @@ export default function Hero() {
                                 {t(elm.subtitle)}
                             </h2>
                             {elm.id != 1 && (
-                                <a
+                                <Link
                                     href={`${locale}/${elm.href}`}
                                     className={`btn-link btn-link_lg default-underline text-uppercase fw-bold animate animate_fade animate_btt animate_delay-7 ${elm.color}`}
                                 >
                                     {t("Discover More")}
-                                </a>
+                                </Link>
                             )}
                         </div>
                     </div>
