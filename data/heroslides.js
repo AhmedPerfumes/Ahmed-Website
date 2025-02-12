@@ -258,12 +258,12 @@ export const slidesData3 = [
   },
   {
     id: 3,
-    imageSrc: "/assets/images/zumar-bnr.jpg",
-    season: "Zumar",
+    imageSrc: "/assets/images/AHL-banner.jpg",
+    season: "AHL",
     objectPosition: "70% center",
-    title: "Redefines luxury &",
-    subtitle: "evokes the spirit of royalty",
-    href: "shop/perfumes/occidental-fragrance/zumar",
+    title: "The Essence",
+    subtitle: "of Belonging",
+    href: "shop/perfumes/oriental-fragrance/ahl",
     color: "text-white"
   },
   
@@ -291,12 +291,12 @@ export const slidesData33 = [
   },
   {
     id: 3,
-    imageSrc: "/assets/images/zumar-bnr.jpg",
-    season: "Zumar",
+    imageSrc: "/assets/images/AHL-banner.jpg",
+    season: "AHL",
     objectPosition: "70% center",
-    title: "Redefines luxury &",
-    subtitle: "evokes the spirit of royalty",
-    href: "shop/perfumes/occidental-fragrance/zumar",
+    title: "The Essence",
+    subtitle: "of Belonging",
+    href: "shop/perfumes/oriental-fragrance/ahl",
     color: "text-white"
   },
 
