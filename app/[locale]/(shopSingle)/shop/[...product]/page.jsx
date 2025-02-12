@@ -64,7 +64,7 @@ const ProductSchema = ({ category, subcategory, product }) => {
       "priceCurrency": "AED",
       "price": product.price,
       "url": `https://ae.ahmedalmaghribi.com/en/shop/${category}/${subcategory}/${product.product_name.split(" ").join("-").toLowerCase()}`,
-      "availability": "https://schema.org/InStock",
+      "availability": product.product_qty <= 0 ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
     },
   };
   // console.log(jsonLd);
