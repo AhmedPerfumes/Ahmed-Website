@@ -139,14 +139,15 @@ useEffect(() => {
           .toLowerCase();
     } else {
       if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
-        console.log("gift-sets");
+        // console.log("gift-sets");
         return subcat = "gift-sets";
       } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
-        console.log("hair-mist");
+        // console.log("hair-mist");
         return subcat = "hair-mist";
-      } else {
-        console.log("extrait-de-parfum");
+      } else if (removeSpecialCharactersAndAmp(category) == "extrait-de-parfum") {
         return subcat = "extrait-de-parfum";
+      } else {
+        return subcat = "online-exclusive";
       }
     }
   }

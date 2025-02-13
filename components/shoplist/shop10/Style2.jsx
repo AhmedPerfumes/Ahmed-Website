@@ -59,12 +59,12 @@ export default function Style2({ category, subcategory, products }) {
         .join("-")
         .toLowerCase();
   } else {
-    console.log(removeSpecialCharactersAndAmp(category));
+    // console.log(removeSpecialCharactersAndAmp(category));
     if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
       subcat = "gift-sets";
     } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
       subcat = "hair-mist";
-    } else if (removeSpecialCharactersAndAmp(category) == "xtrait-de-parfum") {
+    } else if (removeSpecialCharactersAndAmp(category) == "extrait-de-parfum") {
       subcat = "extrait-de-parfum";
     } else {
       subcat = "online-exclusive";
