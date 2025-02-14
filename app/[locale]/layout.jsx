@@ -1,3 +1,5 @@
+import Head from "next/head";
+import Script from "next/script";
 import Svgs from "@/components/common/Svgs";
 import "react-tooltip/dist/react-tooltip.css";
 import "../../public/assets/css/plugins/swiper.min.css";
@@ -47,13 +49,12 @@ export default async function LocaleLayout({ children, params: { locale } }) {
         notFound();
     }
 
-    // Select the font based on locale or other conditions
+    // Select the font based on locale
     let selectedFont = englishFont;
-
     if (locale === "ar") {
         selectedFont = arabicFont;
     } else if (locale === "secondary") {
-        selectedFont = sofiaFont; // Apply Sofia Pro Regular as a secondary font
+        selectedFont = sofiaFont;
     }
 
     // Fetch translation messages
@@ -61,7 +62,32 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
     return (
         <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+            <Head>
+                {/* Google Tag Manager - Head */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer','GTM-M4B7GLV');
+                `,
+                    }}
+                />
+            </Head>
+
             <body className={selectedFont.className}>
+                {/* Google Tag Manager - Body */}
+                <noscript>
+                    <iframe
+                        src="https://www.googletagmanager.com/ns.html?id=GTM-M4B7GLV"
+                        height="0"
+                        width="0"
+                        style="display:none;visibility:hidden"
+                    ></iframe>
+                </noscript>
+
                 <NextIntlClientProvider messages={messages}>
                     <Svgs />
                     <Context>
