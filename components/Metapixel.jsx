@@ -74,7 +74,7 @@ export const FacebookPixelEvents = () => {
         fbq("track", "PageView");
 
         // Track InitiateCheckout when user visits the checkout page
-        if (pathname.includes("en/shop//checkout")) {
+        if (pathname.includes("en/shop/checkout")) {
             fbq("track", "InitiateCheckout", {
                 content_ids: cartData.items.map((item) => item.id), // Pass actual product IDs
                 content_type: "product",

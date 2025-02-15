@@ -75,6 +75,22 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                 `,
                     }}
                 />
+
+                {/* Google Analytics (gtag.js) */}
+                <script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-2SE6J2L0J4"
+                ></script>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-2SE6J2L0J4');
+                `,
+                    }}
+                />
             </Head>
 
             <body className={selectedFont.className}>
