@@ -7,7 +7,7 @@ import React from "react";
 // import { allProducts } from "@/data/products";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import Head from "next/head";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 
 export const metadata = {
     title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
