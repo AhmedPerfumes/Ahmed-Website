@@ -8,6 +8,8 @@ export function MenuProvider({ children }) {
   const [vatTax, setVatTax] = useState(0.00);
   const [shippingServiceCharges, setshippingServiceCharges] = useState([]);
   const [currency, setCurrency] = useState('د.إ');
+  const [homeSliders, setHomeSliders] = useState([]);
+  const [homeMobileSliders, setHomeMobileSliders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -60,6 +62,22 @@ export function MenuProvider({ children }) {
             setCurrency(null);
             setError(data);
           }
+
+          if(data && data.home_sliders) {
+            setError(null);
+            setHomeSliders(data.home_sliders);
+          } else {
+            setHomeSliders(null);
+            setError(data);
+          }
+
+          if(data && data.home_mobile_sliders) {
+            setError(null);
+            setHomeMobileSliders(data.home_mobile_sliders);
+          } else {
+            setHomeMobileSliders(null);
+            setError(data);
+          }
           // console.log(data);
         } catch (error) {
           // Capture the error message to display to the user
@@ -76,7 +94,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders }}>
       {children}
     </MenuContext.Provider>
   );
