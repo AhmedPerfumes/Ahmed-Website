@@ -40,7 +40,7 @@ const arabicFont = localFont({
 });
 
 // Import Sofia Pro Regular font as a secondary font
-const sofiaFont = localFont({
+    const sofiaFont = localFont({
     src: "../../public/assets/fonts/sofia/SofiaProRegular.ttf",
 });
 
@@ -59,50 +59,32 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
     // Fetch translation messages
     const messages = await getMessages();
+    const GTM_ID = "GTM-M4B7GLV";
 
     return (
         <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
-            <Head>
-                {/* Google Tag Manager - Head */}
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','GTM-M4B7GLV');
-                `,
-                    }}
-                />
-
-                {/* Google Analytics (gtag.js) */}
-                <script
-                    async
-                    src="https://www.googletagmanager.com/gtag/js?id=G-2SE6J2L0J4"
-                ></script>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-2SE6J2L0J4');
-                `,
-                    }}
-                />
-            </Head>
+            <head>
+            <Script id="gtm-script" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GTM_ID}');
+          `}
+        </Script>
+            </head>
+           
 
             <body className={selectedFont.className}>
-                {/* Google Tag Manager - Body */}
-                <noscript>
-                    <iframe
-                        src="https://www.googletagmanager.com/ns.html?id=GTM-M4B7GLV"
-                        height="0"
-                        width="0"
-                        style="display:none;visibility:hidden"
-                    ></iframe>
-                </noscript>
+            <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
 
                 <NextIntlClientProvider messages={messages}>
                     <Svgs />
