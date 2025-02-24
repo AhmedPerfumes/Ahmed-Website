@@ -28,6 +28,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
+import GTMPageView from "@/components/common/GTMPageview";
 
 // Import English font
 const englishFont = localFont({
@@ -64,6 +65,11 @@ export default async function LocaleLayout({ children, params: { locale } }) {
     return (
         <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
             <head>
+            
+            </head>
+           
+
+            <body className={selectedFont.className}>
             <Script id="gtm-script" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -73,10 +79,6 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             })(window,document,'script','dataLayer','${GTM_ID}');
           `}
         </Script>
-            </head>
-           
-
-            <body className={selectedFont.className}>
             <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
@@ -95,6 +97,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                                 <MobileHeader />
                                 {children}
                                 <MobileFooter1 />
+                                <GTMPageView/>
                                 {/* Modals and Asides */}
                                 <LoginFormPopup />
                                 <SizeGuide />
