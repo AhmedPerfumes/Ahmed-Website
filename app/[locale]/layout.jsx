@@ -28,7 +28,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
-import GTMPageView from "@/components/common/GTMPageview";
+import GTMPageView from "@/components/common/GTMPageView";
 
 // Import English font
 const englishFont = localFont({
