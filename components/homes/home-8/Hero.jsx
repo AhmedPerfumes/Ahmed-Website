@@ -31,7 +31,7 @@ export default function Hero() {
         } = useMenu();
     
         if (isMenuLoading) {
-            return <div></div>;
+            return <div>Loading...</div>;
         }
         if (error) {
             return <div>{error}</div>;
@@ -41,7 +41,7 @@ export default function Hero() {
             className="swiper-container js-swiper-slider slideshow minh-100 swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events"
             {...swiperOptions}
         >
-            {homeSliders.map((elm, i) => (
+            {homeSliders?.map((elm, i) => (
                 <SwiperSlide key={i} className="swiper-slide">
                     <div className="overflow-hidden position-relative h-100">
                         <div className="slideshow-bg">
@@ -59,25 +59,25 @@ export default function Hero() {
                         <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
                             {elm.title && (
                                 <h6
-                                    className={`t-subtitle text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3 ${elm.color}`}
+                                    className={`t-subtitle text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3`} style={{ 'color': elm.color}}
                                 >
                                     {t(elm.season)}
                                 </h6>
                             )}
                             <h2
-                                className={`h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5 ${elm.color}`}
+                                className={`h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5`} style={{ 'color': elm.color}}
                             >
                                 {t(elm.title)}
                             </h2>
                             <h2
-                                className={`h1 fw-bold mb-2 animate animate_fade animate_btt animate_delay-5 ${elm.color}`}
+                                className={`h1 fw-bold mb-2 animate animate_fade animate_btt animate_delay-5`} style={{ 'color': elm.color}}
                             >
                                 {t(elm.sub_title)}
                             </h2>
                             {elm.title && (
                                 <Link
                                     href={`${locale}/${elm.link}`}
-                                    className={`btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7 ${elm.color}`}
+                                    className={`btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7`} style={{ 'color': elm.color}}
                                 >
                                     {t("Discover More")}
                                 </Link>

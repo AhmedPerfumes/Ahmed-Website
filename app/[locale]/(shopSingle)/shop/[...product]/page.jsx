@@ -134,18 +134,18 @@ export async function generateMetadata({ params }) {
         const data = await getProductSEO(categoryName, subCategoryName, product);
         console.log(JSON.parse(data.meta_value)[0]);
         return {
-            title: `${JSON.parse(data.meta_value)[0].seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes`,
-            description: JSON.parse(data.meta_value)[0].seo_description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
-            openGraph: {
-                // title: data.product_name,
-                // description: data.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
-                // url: `https://ae.ahmedalmaghribi.com/en/shop/${categoryName}/${subCategoryName}/${data.product_name
-                //     .split(" ")
-                //     .join("-")
-                //     .toLowerCase()}`,
-                images: `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(data.meta_value)[0].seo_image}`,
-                // type: "product.item",
-            }
+            title: `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes`,
+            description: JSON.parse(data.meta_value)[0]?.seo_description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
+            // openGraph: {
+            //     // title: data.product_name,
+            //     // description: data.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
+            //     // url: `https://ae.ahmedalmaghribi.com/en/shop/${categoryName}/${subCategoryName}/${data.product_name
+            //     //     .split(" ")
+            //     //     .join("-")
+            //     //     .toLowerCase()}`,
+            //     images: `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(data.meta_value)[0]?.seo_image}`,
+            //     // type: "product.item",
+            // }
         };
     } catch (error) {
         return {
