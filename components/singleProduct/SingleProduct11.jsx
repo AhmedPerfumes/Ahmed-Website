@@ -127,55 +127,50 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <h6 style={{ color: "red" }}>{error && error}</h6>
             <form onSubmit={(e) => e.preventDefault()}>
-              {product.product_qty > 0 &&
-              <div className="product-single__addtocart">
-                <div className="qty-control position-relative">
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={
-                      isIncludeCard() ? isIncludeCard().quantity : quantity
-                    }
-                    min="1"
-                    onChange={(e) =>
-                      setQuantityCartItem(product.product_id, e.target.value)
-                    }
-                    className="qty-control__number text-center"
-                    readOnly
-                  />
-                  <div
-                    onClick={() =>
-                      setQuantityCartItem(
-                        product.product_id,
-                        isIncludeCard()?.quantity - 1 || quantity - 1
-                      )
-                    }
-                    className="qty-control__reduce"
-                  >
-                    -
-                  </div>
-                  <div
-                    onClick={() =>
-                      setQuantityCartItem(
-                        product.product_id,
-                        isIncludeCard()?.quantity + 1 || quantity + 1
-                      )
-                    }
-                    className="qty-control__increase"
-                  >
-                    +
-                  </div>
-                </div>
-                {/* <!-- .qty-control --> */}
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-addtocart js-open-aside"
-                  onClick={() => addToCart()}
-                >
-                  {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
-                </button>
-              </div>
-              }
+            {product.product_qty > 0 ? (
+  <div className="product-single__addtocart">
+    <div className="qty-control position-relative">
+      <input
+        type="number"
+        name="quantity"
+        value={isIncludeCard() ? isIncludeCard().quantity : quantity}
+        min="1"
+        onChange={(e) => setQuantityCartItem(product.product_id, e.target.value)}
+        className="qty-control__number text-center"
+        readOnly
+      />
+      <div
+        onClick={() => setQuantityCartItem(product.product_id, isIncludeCard()?.quantity - 1 || quantity - 1)}
+        className="qty-control__reduce"
+      >
+        -
+      </div>
+      <div
+        onClick={() => setQuantityCartItem(product.product_id, isIncludeCard()?.quantity + 1 || quantity + 1)}
+        className="qty-control__increase"
+      >
+        +
+      </div>
+    </div>
+    {/* <!-- .qty-control --> */}
+    <button
+      type="submit"
+      className="btn btn-primary btn-addtocart js-open-aside"
+      onClick={() => addToCart()}
+    >
+      {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
+    </button>
+  </div>
+) : (
+  <div className="out-of-stock">
+  <span className="badge bg-red fs-5">Out of Stock</span>
+  <p className="text-red mt-2">
+    This product is currently unavailable.
+  </p>
+ 
+</div>
+)}
+
             </form>
             <div className="product-single__addtolinks">
               <ShareComponent title={product.product_name} />
@@ -212,8 +207,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
           <div className="product-single__details-list__content text-white">
             <AdditionalInfo product_name={ product.product_name } video={ product.video && JSON.parse(product.video)[0][0].value } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
           </div>
+          
         </div>
-      </section></> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
+      </section>
+      </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
     </>
   );
 }
