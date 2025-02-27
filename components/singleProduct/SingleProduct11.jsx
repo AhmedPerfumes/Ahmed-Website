@@ -163,7 +163,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
   </div>
 ) : (
   <div className="out-of-stock">
-  <span className="badge bg-red fs-5">Out of Stock</span>
+  <span className="badge fs-5 text-uppercase">Out of Stock</span>
   <p className="text-red mt-2">
     This product is currently unavailable.
   </p>
