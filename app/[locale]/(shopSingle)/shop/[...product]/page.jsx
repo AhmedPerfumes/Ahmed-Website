@@ -50,38 +50,38 @@ async function getproduct(categoryName, subCategoryName, product) {
     return response.json();
 }
 
-// async function getProductSEO(categoryName, subCategoryName, product) {
-//     // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
-//     //   method: 'POST',
-//     //   headers: {
-//     //     'Content-Type': 'application/json',
-//     //   },
-//     //   body: JSON.stringify({
-//     //     category: categoryName.split("-").join(" ").toUpperCase(),
-//     //     subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
-//     //     product: product.split("-").join(" ").toUpperCase(),
-//     //   })
-//     // });
-//     const response = await fetch(
-//         `${process.env.NEXT_PUBLIC_API_URL}api/productSEO`,
-//         {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 category: categoryName.split("-").join(" ").toUpperCase(),
-//                 subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
-//                 product: product.split("-").join(" ").toUpperCase(),
-//             }),
-//             cache: "no-store",
-//         }
-//     );
-//     if (!response.ok) {
-//         throw new Error("Network response was not ok");
-//     }
-//     return response.json();
-// }
+async function getProductSEO(categoryName, subCategoryName, product) {
+    // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     category: categoryName.split("-").join(" ").toUpperCase(),
+    //     subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
+    //     product: product.split("-").join(" ").toUpperCase(),
+    //   })
+    // });
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/productSEO`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                category: categoryName.split("-").join(" ").toUpperCase(),
+                subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
+                product: product.split("-").join(" ").toUpperCase(),
+            }),
+            cache: "no-store",
+        }
+    );
+    if (!response.ok) {
+        throw new Error("Network response was not ok");
+    }
+    return response.json();
+}
 
 // JSON-LD Schema for SEO
 const ProductSchema = ({ category, subcategory, product }) => {
@@ -127,33 +127,33 @@ const ProductSchema = ({ category, subcategory, product }) => {
     );
 };
 
-// export async function generateMetadata({ params }) {
-//     const [categoryName, subCategoryName, product] = params.product;
+export async function generateMetadata({ params }) {
+    const [categoryName, subCategoryName, product] = params.product;
 
-//     try {
-//         const data = await getProductSEO(categoryName, subCategoryName, product);
-//         console.log(JSON.parse(data.meta_value)[0]);
-//         return {
-//             title: `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes`,
-//             description: JSON.parse(data.meta_value)[0]?.seo_description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
-//             // openGraph: {
-//             //     // title: data.product_name,
-//             //     // description: data.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
-//             //     // url: `https://ae.ahmedalmaghribi.com/en/shop/${categoryName}/${subCategoryName}/${data.product_name
-//             //     //     .split(" ")
-//             //     //     .join("-")
-//             //     //     .toLowerCase()}`,
-//             //     images: `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(data.meta_value)[0]?.seo_image}`,
-//             //     // type: "product.item",
-//             // }
-//         };
-//     } catch (error) {
-//         return {
-//             title: "Product Not Found | Ahmed Al Maghribi Perfumes",
-//             description: "This product is currently unavailable. Browse our collection for more fragrances.",
-//         };
-//     }
-// }
+    try {
+        const data = await getProductSEO(categoryName, subCategoryName, product);
+        console.log(JSON.parse(data.meta_value)[0]);
+        return {
+            title: `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes`,
+            description: JSON.parse(data.meta_value)[0]?.seo_description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
+            // openGraph: {
+            //     // title: data.product_name,
+            //     // description: data.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
+            //     // url: `https://ae.ahmedalmaghribi.com/en/shop/${categoryName}/${subCategoryName}/${data.product_name
+            //     //     .split(" ")
+            //     //     .join("-")
+            //     //     .toLowerCase()}`,
+            //     images: `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(data.meta_value)[0]?.seo_image}`,
+            //     // type: "product.item",
+            // }
+        };
+    } catch (error) {
+        return {
+            title: "Product Not Found | Ahmed Al Maghribi Perfumes",
+            description: "This product is currently unavailable. Browse our collection for more fragrances.",
+        };
+    }
+}
 
 const ProductDetailsPage16 = async ({ params }) => {
     const [categoryName, subCategoryName, product] = params.product;
