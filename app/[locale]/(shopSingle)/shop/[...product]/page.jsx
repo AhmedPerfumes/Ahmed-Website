@@ -155,8 +155,8 @@ export async function generateMetadata({ params }) {
         };
     } catch (error) {
         return {
-            title: "Product Not Found | Ahmed Al Maghribi Perfumes",
-            description: "This product is currently unavailable. Browse our collection for more fragrances.",
+            title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+            description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
         };
     }
 }
