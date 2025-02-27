@@ -46,6 +46,7 @@ export default function QuickView() {
     const item = cartProducts.filter((elm) => elm.product_id == quickViewItem.product_id)[0];
     return item;
   };
+  
   const setQuantityCartItem = (id, quantity) => {
     if (isIncludeCard()) {
       if (quantity >= 1 && quantity <= quickViewItem.product_qty) {
@@ -241,7 +242,9 @@ export default function QuickView() {
                     </div>
                   </div>
                 </div> */}
-                {quickViewItem.product_qty > 0 &&
+                {quickViewItem.product_qty > 0 ? (
+                  
+                
                 <div className="product-single__addtocart">
                   <div className="qty-control position-relative">
                     <input
@@ -289,7 +292,13 @@ export default function QuickView() {
                       ? t("Already Added")
                       : t("Add To Cart")}
                   </button>
-                </div>
+                </div>) : (
+                  <div className="out-of-stock">
+                    <span className="badge fs-5 text-uppercase">Out of Stock</span>
+                    <p className="text-red mt-2">
+                      This product is currently unavailable.
+                    </p>
+                  </div>)
                 }
               </form>
               <div className="product-single__addtolinks">
