@@ -3,12 +3,13 @@ import HomePage8 from "./(homes)/home-8/page";
 import {useTranslations} from 'next-intl';
 
 export const metadata = {
-  title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
-  description: "Buy Best Perfumes Online Ahmed Perfume",
+  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
   icons: {
-    icon: 'https://www.ahmedalmaghribi.com/wp-content/uploads/2021/08/Ahmed-Logo-e1631552829722-100x100.png',
+      icon: "/assets/images/ahmed-favicon.png",
   },
 };
+
 export default function Home() {
   const t = useTranslations();
   return (

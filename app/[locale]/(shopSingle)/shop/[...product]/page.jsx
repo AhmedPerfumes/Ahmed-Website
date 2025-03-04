@@ -10,8 +10,8 @@ import Head from "next/head";
 // import { headers } from "next/headers";
 
 // export const metadata = {
-//     title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
-//     description: "Buy Best Perfumes Online Ahmed Perfume",
+//     title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+//     description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
 //     icons: {
 //         icon: "/assets/images/ahmed-favicon.png",
 //     },

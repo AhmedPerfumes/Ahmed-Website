@@ -14,8 +14,8 @@ import NewsLetter from "@/components/modals/NewsLetter";
 //   ssr: false, // Disable server-side rendering for this component
 // });
 export const metadata = {
-    title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
-    description: "Buy Best Perfumes Online Ahmed Perfume",
+    title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+    description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
     icons: {
         icon: "/assets/images/ahmed-favicon.png",
     },
