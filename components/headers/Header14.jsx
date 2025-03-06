@@ -6,6 +6,7 @@ import { openCart } from "@/utlis/openCart";
 import User from "./components/User";
 import { currencyOptions, languageOptions2 } from "@/data/footer";
 import { slideData1000 } from "@/data/heroslides";
+import Image from "next/image";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
@@ -325,13 +326,16 @@ export default function Header14() {
                                 </div>
                             </div>
                             <div className="logo">
-                                <a href="/">
-                                    <img
+                                <Link href="/">
+                                    <Image
+                                        loading="lazy"
                                         src="/assets/images/about/ahmed-logo.png"
-                                        width="100px"
-                                        alt="Ahmed"
+                                        width="100"
+                                        height="100"
+                                        alt="Ahmed Al Maghribi"
                                     />
-                                </a>
+                                    
+                                </Link>
                             </div>
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
                                 <div className="header-search search-field d-none d-lg-flex  mx-4">

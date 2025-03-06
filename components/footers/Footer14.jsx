@@ -124,7 +124,7 @@ export default function Footer14() {
         <div className="row row-cols-lg-5 row-cols-2">
           <div className="footer-column footer-store-info col-12 mb-4 mb-lg-0">
             <div className="logo">
-              <a href="/">
+              <Link href="/">
                 <Image
                   src="/assets/images/about/ahmed-logo.png"
                   width={100}
@@ -132,7 +132,7 @@ export default function Footer14() {
                   alt="Ahmed"
                   className="logo__image d-block"
                 />
-              </a>
+              </Link>
             </div>
             {/* <!-- /.logo --> */}
             <p className="footer-address">
