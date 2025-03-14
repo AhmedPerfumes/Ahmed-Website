@@ -511,7 +511,7 @@ export const slideData1000 = [
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "Natural Glow",
     description:
-      "Ramadan Kareem ☽︎",
+      "Ramadan Kareem ",
   },
   // {
   //   id: 3,
