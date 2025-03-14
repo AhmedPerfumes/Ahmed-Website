@@ -506,6 +506,13 @@ export const slideData1000 = [
     description:
       "A huge selection of best fragrance",
   },
+  {
+    id: 2,
+    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+    title: "Natural Glow",
+    description:
+      "Ramadan Kareem",
+  },
   // {
   //   id: 3,
   //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
