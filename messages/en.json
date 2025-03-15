@@ -395,6 +395,9 @@
   "AHL": "AHL",
   "Kawkab":"Kawkab",
   "O clock": "O'clock",
+  "Brulee": "Brulee",
+  "Dulce": "Dulce",
+  "Candylicious": "Candylicious",
 
   "----------Gel Category---------":"----------Gel Category---------",
   "Marj Body Gel":"Marj Body Gel",
@@ -425,6 +428,7 @@
 "Bidun Esam Hair Mist":"Bidun Esam Hair Mist",
 "Oud & Roses Hair Mist":"Oud & Roses Hair Mist",
 "Rose Noir Hair Mist":"Rose Noir Hair Mist",
+"Marj Hair Mist":"Marj Hair Mist",
 
 "----------Checkout Pages--------":"----------Checkout Pages--------",
 "Shipping and Checkout":"Shipping and Checkout",
@@ -467,6 +471,9 @@
 "AHL Description":"Ahl is more than just a fragrance, it's a feeling of home, a scent that lingers like the embrace of loved ones, exuding warmth and refinement in every drop.",
 "Kawkab Description":"Kawkab is a sophisticated fragrance that blends radiant florals with rich, woody depths.Kawkab is a statement of elegance and timeless charm,EDP 75ml.",
 "O clock Description":"O’ Clock is a fragrance for those who appreciate the art of fine perfumery—a perfect balance of freshness, warmth, and sophistication.",
+"Brulee Description":"Brulee is a fragrance that evokes the warmth and comfort of a cozy evening by the fire, enveloping you in a sweet, creamy embrace.",
+"Dulce Description":"Dulce is a fragrance that captures the essence of sweetness and light, evoking the joy and delight of a carefree summer day.",
+"Candylicious Description":"Candylicious is a fragrance that embodies the playful spirit of youth, capturing the joy and exuberance of carefree days in the sun.",
 
 
 "Shay Jadeed Content": "<p>Besiege in with tickling prefusions of shay jadeed. Let go the scents beyond the Middle East. Just a trifling amount of splash, fills your essence with liveliness; as juicy citruses sums the top the note with thier zesty flavors. </p>",
@@ -505,6 +512,9 @@
 "Mystique Pink Content":"At the outset, delicate peony merges with zesty mandarin and refreshing citrus, initiating a mesmerizing journey. Unveiling its heart, osmanthus and rose intertwine, adding an air of floral sophistication. Anchored by base notes of pink pepper, patchouli, and sandalwood, its enigmatic charm persists, leaving a lasting impression. Mystique Pink transcends ordinary fragrances—it's an invitation to explore the enigmatic, a voyage into the unknown with every spritz.",
 "Kawkab Content":"Kawkab is a luxurious fragrance that blends radiant florals with deep, woody notes. It opens with vibrant rose, peony, saffron, and citrus, leading to a warm heart of Isparta rose, black tea, and amber. The scent settles into a rich base of musk, oud Ahmed Kinam, cedarwood, and patchouli, leaving a lasting impression of elegance and sophistication.",
 "O clock Content":"O’ Clock is a sophisticated fragrance that captures the essence of elegance and refinement, making every moment unforgettable. This exquisite scent opens with a vibrant blend of crisp apple, soothing lavender, warm cinnamon, invigorating bergamot, zesty grapefruit, and effervescent malt notes, creating a refreshing yet spicy introduction.At its heart, delicate orange blossom, enchanting lily of the valley, and rich leather come together, adding depth and a touch of sensuality. This harmonious fusion seamlessly transitions into a warm and captivating base of luxurious vanilla CO2, soft musk, earthy patchouli, and rich amber, leaving an irresistible and lasting impression.",
+"Brulee Content":"",
+"Dulce Content":"",
+"Candylicious Content":"",
 
 "Shay Jadeed Notes": "<p>Top – citrus (Lemon) <br>heart – Flower (lavender vanilla) <br>base - woody (agarwood, frankincense)</p>",
 "Saba Horoof Notes": "<p>Top - Citrus </p><p>Heart - White floral -rosy </p><p>Base - Musky - woody </p>",
@@ -542,6 +552,9 @@
 "Mystique Pink Notes":"<p>Top Notes: PEONY, MANDARIN, CITRUS. </p><p>Heart Notes: OSMANTHUS, ROSE. </p><p>Base - PINK PEPPER, PATCHOULI, SANDALWOOD.</p>",
 "Kawkab Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/kawkab-first-notes.jpg\" alt=\"Top Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Top Notes</h3><p>It opens with a vibrant rose bouquet, complemented by peony, saffron, mango, and citrus notes, creating a fresh yet luxurious introduction.</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/kawkab-heart-notes.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">Heart Notes</h3><p>The heart reveals the richness of Isparta rose, black tea, iris, and amber, adding warmth and depth.</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/kawkab-base-notes.jpg\" alt=\"Bottom Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Bottom Notes</h3><p>The fragrance settles into an elegant base of musk, oud Ahmed Kinam, cypriol, cedarwood, and patchouli, leaving a lasting and distinguished impression</p></div></div>",
 "O clock Notes": "<p>TOP : APPLE, LAVENDER, CINNAMON, BERGAMOT, GRAPEFRUIT, SPARKLING MALT NOTES </p><p>HEART : ORANGE BLOSSOM, LILY OF THE VALLEY, LEATHER. </p><p>BASE : VANILLA CO2, MUSK, PATCHOULI, AMBER. </p>",
+"Brulee Notes":"",
+"Dulce Notes":"",
+"Candylicious Notes":"",
 
 "----------EAU DE Parfum Single Product Page Occidental Fragrance":"----------EAU DE Parfum Single Product Page Occidental Fragrance",
 "Instance 60ML Description": "<p><span>Instance Perfume is a timeless and versatile fragrance that suits every occasion.</span></p>",
@@ -1035,18 +1048,21 @@
 "Bidun Esam Hair Mist Description": "<p>Experience hydrated, shiny hair with the luxurious, floral-spiced scent of Bidun Esam Hair Mist.</p>",
 "Oud Roses Hair Mist Description": "<p>Experience healthy, nourished hair with a radiant shine and the elegant scent of Oud &amp; Roses Hair Mist.</p>",
 "Rose Noir Hair Mist Description": "<p>Indulge your hair with the luxurious Rose Noir Hair Mist, blending care and captivating fragrance for a perfect finish</p>",
+"Marj Hair Mist Description": "<p>Marj Hair Mist 50ml</p>",
 
 "Supreme Hair Mist Content": "<p>Introducing Supreme Hair Mist: a refreshing blend of nourishment and fragrance for your hair. Crafted with care and enriched with premium ingredients, it revitalizes your locks with every spritz, leaving them subtly scented and vibrant. Embrace the elegance of Supreme Hair Mist and elevate your hair care routine today.</p><p>E 50ml.</p>",
 "Shaikha Hind Hair Mist Content": "<p>Introducing Shaikha Hind Hair Mist in a convenient 50ml size. Elevate your haircare routine to new heights with this exquisite blend of fragrances designed to leave an enchanting trail wherever you go.</p>",
 "Bidun Esam Hair Mist Content": "<p>Elevate your hair care routine with our new Bidun Esam Hair Mist, a perfect blend of hydration and fragrance that nourishes each strand for a natural, healthy shine. Made with hair-safe ingredients, this 50ml essence envelops you in a delicate, lasting scent that captivates.</p>",
 "Oud Roses Hair Mist Content": "<p>Transform your hair care routine with the luxurious Oud &amp; Roses Hair Mist, crafted to hydrate and nourish your hair while bestowing a radiant shine and a lingering, delicate scent. Formulated with hair-safe ingredients, this 50ml mist brings elegance to every application.</p>",
 "Rose Noir Hair Mist Content": "<p>Elevate your hair care routine with Rose Noir Hair Mist, where the art of fragrance meets the science of nourishment. This 50ml mist infuses your hair with a delicate blend of citrusy rose top notes, complemented by a heart of warm vanilla and a touch of salt. The scent deepens into a rich, woody base of ambergris, sandalwood, and cashmere wood, leaving your hair irresistibly soft and radiant. Crafted with hair-safe ingredients, Rose Noir not only perfumes but also hydrates and enhances your hair’s natural shine, embodying luxury with every spritz.</p>",
+"Marj Hair Mist Content": "<p>Marj Hair Mist 50ml</p>",
 
 "Supreme Hair Mist Notes": "",
 "Shaikha Hind Hair Mist Notes": "<p><span style=\"color:hsl(0,0%,100%);\"><strong>Top Notes: Black currant , cassia , grapes, red berries</strong></span>  <br><span style=\"color:hsl(0,0%,100%);\"><strong>Heart Notes: Peony, violet,lily of the valley, jasmine</strong></span>  <br><span style=\"color:hsl(0,0%,100%);\"><strong>Base Notes: Agarwood.</strong></span></p>",
 "Bidun Esam Hair Mist Notes": "<p>Top - Spicy Floral (Saffron, Roses) <br>Heart - Floral (White flowers) <br>Base - Musky Woody (Notes: Top – Spicy Floral (Saffron, Roses) Heart – Floral (White flowers) Base – Musky Woody (Cambodian oud, Musk, ambeCambodian oud, Musk, amber)</p>",
 "Oud Roses Hair Mist Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/top-notes-oud-roses.jpg\" alt=\"Top Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Top Notes</h3><p>Floral (Turkish rose, lavender, lemon, peony)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/heart-images-oud-roses.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">Heart Notes</h3><p>Sweet (sandalwood, white flowers, frankincense)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/bottom-notes-oud-roses.jpg\" alt=\"Bottom Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Bottom Notes</h3><p>Musky( agarwood, guaiac wood, oak moss, Musk, amber)</p></div></div>",
 "Rose Noir Hair Mist Notes": "<p>Top Notes: Citrus Rosy (Mandarin, Rose)</p><p>Heart Notes: Vanilla (Vanilla, Salt)</p><p>Base Notes: Woody (Ambergris, Sandalwood, Cashmere Wood)</p>",
+"Marj Hair Mist Notes": "",
 
 "----------Collections Single Product Page Collections":"----------Collections Single Product Page Collections",
 "Bidun Esam Collection Description": "<p>The Collection Contains Bidun Esam EDP 50 ML, Bidun Esam Air Freshener 180 ML, Bidun Esam Oil 12 ML &amp; Bidun Esam Hair Mist 50 ML plus get <strong>15% off.</strong></p>",
