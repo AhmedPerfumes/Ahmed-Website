@@ -620,6 +620,9 @@
 "Moonlit Description":"",
 "AHL Description":"” أهل” ليس مجرد عطر، إنه شعور بالوطن، رائحة تبقى كعناق الأحبة، تنشر الدفء والرقي في كل قطرة",
 "O clock Description":"او كلوك هو عطر لمن يقدّرون فن صناعة العطور الفاخرة—توازن مثالي بين الانتعاش، الدفء، والأناقة.",
+"Brulee Description":"",
+"Dulce Description":"",
+"Candylicious Description":"",
 
 "Instance 60ML Content": "<p><span>\"سواء كنت تستعد لقضاء أمسية خاصة، أو اجتماع احترافي، أو تريد فقط أن تشعر بأفضل ما لديك كل يوم، فإن هذا العطر يكمل أسلوبك وشخصيتك دون عناء. تتناغم المكونات المختارة بعناية في هذا العطر لتكوين رائحة أنيقة لا تُنسى، مما يترك انطباعًا دائمًا في قلوب وعقول من حولك. احتضن قوة عطر إنستانس واجعل حضورك محسوسًا، مما يجعل كل لحظة مثالًا لا يُنسى من الجمال\"</span></p>",
 
@@ -702,6 +705,9 @@
 "Cocoblend Content":"في القلب، تتشابك باقة غنية من العود والجمال الخالد لورد بلغاري مع زهر البرتقال ونجيل الهند الرقيقين، مما يخلق تناغمًا متطورًا. تثير النفحات الهادئة من زنبق الماء والورد الدمشقي، المعززة بزهرة فرانجيباني الغريبة، هالة من النعمة والإثارة. تنسج هذه العناصر معًا عطرًا ساحرًا يفوح بالأناقة والجاذبية، ويترك انطباعًا لا ينسى يأسر الحواس وينقلك إلى عالم من الفخامة الراقية.",
 "Moonlit Content":"",
 "O clock Content":"أو'كلوك هو عطر راقٍ يجسد جوهر الأناقة والرقي، مما يجعل كل لحظة لا تُنسى. تبدأ هذه الرائحة الفاخرة بمزيج نابض بالحياة من التفاح المنعش، والخزامى المهدئ، والقرفة الدافئة، والبرغموت المنشط، والجريب فروت المنعش، ونفحات المالت الفوّاحة، مما يخلق مقدمة منعشة ولكنها حارة في ذات الوقت.",
+"Brulee Content":"",
+"Dulce Content":"",
+"Candylicious Content":"",
 
 "Instance 60ML Notes": "<p><strong>Notes</strong></p><p>العليا - الكمثرى، البرغموت، الفلفل الوردي<br>الوسطى- الورد، الياسمين<br>القاعدة - المسك الأبيض، الفانيليا، الباتشولي، الأرز</p>",
 "Oud Roses Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/top-notes-oud-roses.jpg\" alt=\"Top Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">المكونات العليا</h3><p>زهري (الورد التركي، الخزامى، الليمون، الفاوانيا)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/heart-images-oud-roses.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">المكونات الوسطى</h3><p>سويتي (خشب الصندل، الزهور البيضاء، اللبان)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/product-notes-images/bottom-notes-oud-roses.jpg\" alt=\"Bottom Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">القاعدة</h3><p>مسكي (خشب العود، خشب الغاياك، طحلب البلوط، المسك، العنبر)</p></div></div>",
@@ -752,6 +758,9 @@
 "Musk Roses Notes": "<p>العليا - زهرية - توت العليق</p><p>الوسطى - ورد</p><p>القاعدة - مسكية</p>",
 "Musk Ahmed Notes": "<p>العليا: الحمضيات، الزهرة</p><p>الوسطى: الورد، الياسمين</p><p>القاعدة: المسك، العنبر</p>",
 "O clock Notes": "<p>العليا : تفاح، خزامى، قرفة، برغموت، جريب فروت، نفحات المالت الفوّاحة. </p><p>الوسطى : زهرة البرتقال، زنبق الوادي، جلد. </p><p>القاعدة : فانيليا CO2، مسك، باتشولي، عنبر </p>",
+"Brulee Notes":"",
+"Dulce Notes":"",
+"Candylicious Notes":"",
 
 "Marj Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/second-notes.jpg\" alt=\"second-notes.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">المكونات العليا</h3><p>إن نفحات الحمضيات المتلألئة في البرغموت تجعل قلبك ينبض بالحياة، في حين أن لقمة الفلفل الوردي الحارة ستثير ذوقك على النار. يتم إطلاق حلاوة اليوسفي المنعشة بشكل طبيعي ونغمات جوزة الطيب الحارة بشكل متناغم مع رائحة الإيليمي النشطة. إن إضافة نكهة العود المدخنة وثراء العسل الحلو يرفع من جوهره</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/first-notes-3.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">المكونات الوسطى</h3><p>استرخي ودع نفسك تدلل نفسك حيث تعمل رائحة الباتشولي الترابية على تهدئة مشاعرك. يتم الترحيب بك في القلب بباقة احتفالية من الورود العطرة والزعفران والياسمين سوف يضفي عليك نجيل الهند جودة متناغمة وصوفية. تمت إضافة هزة من القرفة، والتي تغلفك أيضًا داخل دفء أخشاب الكشمير. مزج النغمات الزهرية الحيوانية لزهر البرتقال مع عناصر نظيفة أخرى لخلق رائحة منعشة. دلل نفسك بالروعة التي تحيط بك في كل مكان</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/third-notes-2.jpg\" alt=\"third-notes-2.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">القاعدة</h3><p>الجانب الفاكهي وسط نفحات الكمثرى من بذور الأمبريت يأخذ مكانه في قاعدة الروائح، وهو ملفوف في احتضان دافئ من العنبر الذهبي والمسك اللطيف والعنبر. تضفي إضافة التوت بريقًا طازجًا ولذيذًا على الرائحة. يمنحه الزعفران والجلد ميزة، بينما يعمل خشب الصندل وطحلب البلوط على تهدئة أعصابك بلطف. يتوج العطر بمزيج دقيق من خشب العود والبنفسج، بينما يعمل الأمبروكسان على إثراء الكولاجين <br> </p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p> </p><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/artboard-1-min.jpg\" alt=\"artboard-1-min.jpg\"></p><p> </p><div class=\"content-wrapper col-lg-4 px-lg-4\"><h4 style=\"text-align:center;\"><span style=\"color:hsl(342,28%,69%);font-size:18px;\">الشعور بالأناقة المطلقة والمودة</span></h4><p style=\"text-align:center;\">اسم مرج ، رائحة تم ابتكارها لتجسيد الفخامة.<br> </p></div><p> </p><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/artboard-3-min.jpg\" alt=\"artboard-3-min.jpg\"></p></div>",
 "Little Hearts Notes": "<p>العليا: الحمضيات-الحلوى (برتقال الليمون الحلو).</p><p>الوسطى: الفواكه (المانجو-الأناناس، الفواكه المختلطة).</p><p>القاعدة: العنبر (راتنج العنبر-المسك، الفانيليا).</p>",
@@ -1055,6 +1064,7 @@
 "Oud Roses Hair Mist Description": "<p>كتشفي عطر الشعر الجديد عود أند روز . يعمل على ترطيب الشعر وتغذيته ليمنحه لمعاناً صحياً ورائحة رقيقة. مصنوع من مكونات صحية وآمنة للشعر.50 مل.</p>",
 "Rose Noir Hair Mist Description": "<p>مصنوع من المكونات صحية وآمنة للشعر.50 مل.</p>",
 
+
 "Supreme Hair Mist Content": "<p>نقدم لكم رذاذ الشعر الفائق: مزيج منعش من التغذية والعطر لشعرك. مصنوع بعناية وغني بمكونات فاخرة، فهو ينشط خصلات شعرك مع كل رشة، ويتركها معطرة ونابضة بالحياة. استمتعي بأناقة معطر الشعر سبريم وارفعي من روتين العناية بشعرك اليوم.</p><p>50مل.</p>",
 "Shaikha Hind Hair Mist Content": "<p>نقدم لكم معطر الشعر الشيخة هند بحجم مناسب 50 مل. العناية بالشعر الخاص بك إلى آفاق جديدة مع هذا المزيج الرائع من العطور المصممة لتترك أثراً ساحراً أينما كنت.</p>",
 "Bidun Esam Hair Mist Content": "<p>كتشفي معطر الشعر الجديد من بدون إسم . يعمل على ترطيب الشعر وتغذيته ليمنحه لمعاناً صحياً ورائحة رقيقة. مصنوع من مكونات صحية وآمنة للشعر. وهو مزيج جرئ من الروائح الخشبية والزهرية والمسكية . تترك تركيبته الشعر ناعماً ولامعاُ . مصنوع من المكونات صحية وآمنة للشعر.50 مل.</p>",
@@ -1066,6 +1076,7 @@
 "Bidun Esam Hair Mist Notes": "<p>العليا : الأزهار الحارة (الزعفران والورد) <br>لوسطى : الأزهار (الزهور البيضاء) <br>القاعدة : أخشاب ، المسك (العود الكمبودي، المسك، العنبر)</p>",
 "Oud Roses Hair Mist Notes": "<p>العليا  – الأزهار (الورد التركي، الخزامى، الليمون، الفاوانيا)</p><p>الوسطى – حلو (خشب الصندل، الزهور البيضاء، اللبان)</p><p>القاعدة – المسك (خشب العود، خشب الغاياك، طحلب البلوط، المسك، العنبر)</p><p>بالإضافة حبة السوداء ، جنين القمح ، زيت الجوجوبا ، زيت أملا.</p>",
 "Rose Noir Hair Mist Notes": "<p>العليا: الحمضيات الوردية (اليوسفي، الورد)</p><p>الوسطى: الفانيليا (الفانيليا والملح)</p><p>القاعدة: الأخشاب (العنبر، خشب الصندل، خشب الكشمير)</p>",
+"Marj Hair Mist Notes":"",
 
 "----------Collections Single Product Page Collections":"----------Collections Single Product Page Collections",
 "Bidun Esam Collection Description": "<p>The Collection Contains Bidun Esam EDP 50 ML, Bidun Esam Air Freshener 180 ML, Bidun Esam Oil 12 ML &amp; Bidun Esam Hair Mist 50 ML plus get <strong>15% off.</strong></p>",
