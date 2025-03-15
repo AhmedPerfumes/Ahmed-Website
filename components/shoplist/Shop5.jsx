@@ -48,29 +48,54 @@ const Shop5 = () => {
         onInit={handleSlideChange} // Call handleSlideChange on Swiper initialization
       >
         <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
-            alt="Oud and Roses Gift Set"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/Qarnain-Gift-Set.jpg"
-            alt="Qarnain gift set"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/Ihdakhaas-banner.jpg"
-            alt="Bidun Esam Gift Set"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
-            alt="The Dukhoon Collection"
-          />
-        </SwiperSlide>
+  <picture>
+    <source
+      media="(max-width: 768px)"
+      srcSet="/assets/images/home/demo8/gift-sets/oud-roses.jpg"
+    />
+    <img
+      src="/assets/images/home/demo8/gift-sets/oud-and-roses-gift-set-bnr.jpg"
+      alt="Oud and Roses Gift Set"
+    />
+  </picture>
+</SwiperSlide>
+<SwiperSlide className="panel">
+  <picture>
+    <source
+      media="(max-width: 768px)"
+      srcSet="/assets/images/home/demo8/gift-sets/qarnain-giftset.jpg"
+    />
+    <img
+      src="/assets/images/home/demo8/gift-sets/Qarnain-Gift-Set.jpg"
+      alt="Qarnain gift set"
+    />
+  </picture>
+</SwiperSlide>
+<SwiperSlide className="panel">
+  <picture>
+    <source
+      media="(max-width: 768px)"
+      srcSet="/assets/images/home/demo8/gift-sets/ihda-khas.jpg"
+    />
+    <img
+      src="/assets/images/home/demo8/gift-sets/Ihdakhaas-banner.jpg"
+      alt="Bidun Esam Gift Set"
+    />
+  </picture>
+</SwiperSlide>
+<SwiperSlide className="panel">
+  <picture>
+    <source
+      media="(max-width: 768px)"
+      srcSet="/assets/images/home/demo8/gift-sets/Dakhoon-collection.jpg"
+    />
+    <img
+      src="/assets/images/home/demo8/gift-sets/dakhoon-collection-bnr.jpg"
+      alt="The Dukhoon Collection"
+    />
+  </picture>
+</SwiperSlide>
+
       </Swiper>
 
       {/* This is the next section to scroll to */}
