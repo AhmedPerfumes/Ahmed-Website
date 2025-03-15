@@ -4,6 +4,11 @@
   overflow: hidden; /* Hide scrollbars */
   position: relative;
 }
+.scrollify-mobile-container {
+  height: 75vh; /* Full screen height */
+  overflow: hidden; /* Hide scrollbars */
+  position: relative;
+}
 
 .panel {
   display: flex;
@@ -41,4 +46,9 @@ object-fit: cover;
 .circle-pagination.swiper-pagination-bullet-active {
   opacity: 1; /* Active circle opacity */
   background: #ffffff; /* Active circle color */
+}
+.mobile-panel{
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
 }

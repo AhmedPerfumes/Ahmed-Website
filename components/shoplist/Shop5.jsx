@@ -31,7 +31,6 @@ const Shop5 = () => {
   };
 
   return (
-      <>
     <div className="scrollify-container d-none d-lg-block">
       <Swiper
         ref={swiperRef} // Attach the ref to the Swiper
@@ -77,51 +76,6 @@ const Shop5 = () => {
       {/* This is the next section to scroll to */}
   
     </div>
-    <div className="scrollify-container d-lg-none">
-      <Swiper
-        ref={swiperRef} // Attach the ref to the Swiper
-        direction="vertical"
-        mousewheel={true}
-        modules={[Mousewheel, Pagination]} // Add Pagination module
-        pagination={{
-          clickable: true, // Make pagination circles clickable
-          renderBullet: (index, className) => {
-            return `<span class="${className} circle-pagination"></span>`; // Custom rendering of pagination circles
-          },
-        }}
-        style={{ height: "100vh" }} // Make sure Swiper takes full height
-        onSlideChange={handleSlideChange} // Handle slide change event
-        onInit={handleSlideChange} // Call handleSlideChange on Swiper initialization
-      >
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/oud-roses.jpg"
-            alt="Oud and Roses Gift Set"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/qarnain-giftset.jpg"
-            alt="Qarnain gift set"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/ihda-khas.jpg"
-            alt="Bidun Esam Gift Set"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="panel">
-          <img
-            src="/assets/images/home/demo8/gift-sets/Dakhoon-collection.jpg"
-            alt="The Dukhoon Collection"
-          />
-        </SwiperSlide>
-      </Swiper>
-
-  
-    </div>
-    </>
     
   );
 };
