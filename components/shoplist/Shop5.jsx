@@ -31,7 +31,7 @@ const Shop5 = () => {
   };
 
   return (
-    <div className="scrollify-container d-none d-lg-block">
+    <div className="scrollify-container">
       <Swiper
         ref={swiperRef} // Attach the ref to the Swiper
         direction="vertical"
@@ -76,7 +76,6 @@ const Shop5 = () => {
       {/* This is the next section to scroll to */}
   
     </div>
-    
   );
 };
 
