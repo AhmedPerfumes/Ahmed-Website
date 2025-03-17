@@ -88,7 +88,7 @@ export default function NewsLetter() {
                                             alt="image"
                                         /> */}
                                          <VideoPanel
-                                        src="/assets/videos/Kawkab.mp4"
+                                        src="/assets/videos/KawkabPopUp.mp4"
                                         section="hundred"
                                     />
 
