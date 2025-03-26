@@ -4,35 +4,8 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
-const slides = [
-  {
-    id: 1,
-    backgroundColor: "#f5e6e0",
-    title: "Women's ACCESSORIES",
-    content:
-      "Accessories are the best way to update your look. Add a title edge with new styles and new colors, or go for timeless pieces.",
-    imagePath: "/assets/images/shop/shop_banner3.jpg",
-    alt: "Women's accessories",
-  },
-  {
-    id: 2,
-    backgroundColor: "#f5e6e0",
-    title: "Choose Your Best Suits",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    imagePath: "/assets/images/shop/shop_banner3.jpg",
-    alt: "Women's accessories",
-  },
-  {
-    id: 3,
-    backgroundColor: "#f5e6e0",
-    title: "World's Leading Quality",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    imagePath: "/assets/images/shop/shop_banner3.jpg",
-    alt: "Women's accessories",
-  },
-];
+
+
 
 export default function Banner3() {
   const swiperOptions = {
