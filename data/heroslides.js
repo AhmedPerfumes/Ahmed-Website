@@ -101,13 +101,13 @@ export const slidesData33 = [
 
 
 export const slideData1000 = [
-  {
-    id: 0,
-    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
-    title: "Natural Glow",
-    description:
-      "Eid Mubarak! 🌙✨ Wishing You Joy, Peace & Blessings!",
-  },
+  // {
+  //   id: 0,
+  //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+  //   title: "Natural Glow",
+  //   description:
+  //     "Eid Mubarak! 🌙✨ Wishing You Joy, Peace & Blessings!",
+  // },
   {
     id: 1,
     bgImage: "/assets/images/home/demo15/slider1_bg.jpg",
