@@ -175,7 +175,7 @@ export default function CartDrawer() {
         <div className="free-shipping-progress mt-3">
               {totalPrice < freeShippingThreshold ? (
                 <div>
-                  <h3 className="fs-5 text-bold note mb-2 text-center">Note : All Order will be processed after Eid </h3>
+                  <h3 className="fs-5 text-bold note mb-2 text-center">Note : All Order will be processed after Eid holidays</h3>
                   <p className="fs-6">
                     {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
                     shipping! ⛟
