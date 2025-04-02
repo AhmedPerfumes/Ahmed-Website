@@ -1118,6 +1118,7 @@ export default function Checkout() {
                                         </tbody>
                                     </table>
                                 </div>
+                            
                                 <div>
                                     {/* <form
                   onSubmit={applyCoupon}

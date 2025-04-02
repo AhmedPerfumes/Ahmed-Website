@@ -63,7 +63,7 @@ export default function RootLayout({ children }) {
               {/* <ShopFilter /> */}
               <ProductDescription />
               <ProductAdditionalInformation />
-              <ProductReviews />
+              {/* <ProductReviews /> */}
             </MenuProvider>
           </UserProvider>
         </Context>
