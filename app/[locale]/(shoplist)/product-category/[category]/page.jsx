@@ -40,7 +40,9 @@ async function getCategorySubCategory(categoryName) {
     cache: 'no-store'
   });
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    const errorMessage = await response.text(); // Get the error message from the server
+      console.error("API Error:", errorMessage);
+      throw new Error(`API Error: ${errorMessage}`);
   }
   return response.json();
 }

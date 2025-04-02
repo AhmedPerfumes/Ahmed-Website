@@ -253,6 +253,13 @@ export default function Checkout() {
                 setError(null);
                 // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
                 router.push(data.redirect_url);
+            } else if (
+                data.qtyMessage
+            ) {
+                // setSuccess();
+                setError(data.qtyMessage);
+                // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+                // router.push(data.redirect_url);
             } else {
                 if (data.products) {
                     setError(data.products);
