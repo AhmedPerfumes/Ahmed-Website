@@ -260,7 +260,16 @@ export default function Checkout() {
                 setError(data.qtyMessage);
                 // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
                 // router.push(data.redirect_url);
-            } else {
+            } else if (data.discountMessage) {
+                // setSuccess();
+                setError(data.discountMessage);
+                setTimeout(() => {
+                  localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
+                  setCartProducts([]); // update the cartProducts state to an empty array
+                }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
+                // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+                // router.push(data.redirect_url);
+              } else {
                 if (data.products) {
                     setError(data.products);
                 }
@@ -559,7 +568,7 @@ export default function Checkout() {
             if (
                 new Date(current_date_time) >=
                     new Date(elm.coupon.start_date) &&
-                new Date(current_date_time) <= new Date(elm.coupon.end_date)
+                new Date(current_date_time) <= new Date(elm.coupon.end_date) && elm.coupon.code == couponData.code
             ) {
                 return (
                     <td>

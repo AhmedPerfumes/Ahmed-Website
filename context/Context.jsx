@@ -27,7 +27,7 @@ export default function Context({ children }) {
           return accumulator + product.quantity * discount_price;
         }
       } else if(product?.coupon && couponDataContext != null) {
-        if(new Date(current_date_time) >= new Date(product.coupon.start_date) && new Date(current_date_time) <= new Date(product.coupon.end_date)) {
+        if(new Date(current_date_time) >= new Date(product.coupon.start_date) && new Date(current_date_time) <= new Date(product.coupon.end_date) && product.coupon.code == couponDataContext.code) {
           const coupon_price = (product.price - (product.price / 100 * product.coupon.value)).toFixed(2);
           return accumulator + product.quantity * coupon_price;
         }
@@ -113,6 +113,7 @@ export default function Context({ children }) {
     freeShippingFlag,
     setOrderDetails,
     orderDetails,
+    couponDataContext,
     setCouponDataContext
   };
   return (
