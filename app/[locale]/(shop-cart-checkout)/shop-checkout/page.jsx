@@ -21,7 +21,7 @@ export default function () {
       <main className="page-wrapper">
         <div className="mb-4 pb-4"></div>
         <section className="shop-checkout container">
-          <h4 className="badge fs-4">Note : All Orders will get processed after Eid holidays</h4>
+       
           <h2 className="page-title">Shipping and Checkout</h2>
           <ChectoutSteps />
           <Checkout />
