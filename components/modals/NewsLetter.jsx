@@ -6,19 +6,12 @@ import { useLocale } from "next-intl";
 import VideoPanel from "../VideoPanel";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMenu } from "@/context/MenuContext";
 
 export default function NewsLetter() {
     const modalElement = useRef(null);
     const [hasScrolled, setHasScrolled] = useState(false);
     const locale = useLocale();
     let modalInstance = null;
-
-    const{
-        dynamic_sections
-    }=useMenu();
-    console.log('test'+ dynamic_sections);
-    
 
     useEffect(() => {
         const bootstrap = require("bootstrap");
@@ -70,7 +63,6 @@ export default function NewsLetter() {
             data-bs-backdrop="true"
             aria-hidden="true"
         >
-            
             <div className="modal-dialog newsletter-popup modal-dialog-centered">
                 <div className="modal-content">
                     {/* Explicit close button handling */}
@@ -79,8 +71,6 @@ export default function NewsLetter() {
                         className="btn-close"
                         aria-label="Close"
                     ></button>
-                    
-                        {dynamic_sections?.map((elm, i) => (
                     <div className="row p-0 m-0">
                         <div className="col-md-8 p-0">
                             <div className="newsletter-popup__bg w-100">
@@ -93,31 +83,23 @@ export default function NewsLetter() {
                                             height={650}
                                             style={{ height: "fit-content" }}
                                             loading="lazy"
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.image}`}
+                                            src="/assets/images/home/Kawkab-Web-banner.jpg"
                                             className="h-100 w-100 object-fit-cover d-block"
                                             alt="image"
                                         /> */}
                                          <VideoPanel
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.video1}`}
+                                        src="/assets/videos/KawkabPopUp.mp4"
                                         section="hundred"
                                     />
 
                                     </a>
                                 </div>
                                 <div className="d-sm-block d-md-none">
-                                {/* <Image
-                                            width={250}
-                                            height={400}
-                                            style={{ height: "fit-content" }}
-                                            loading="lazy"
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${ elm.image}`}
-                                            className="h-100 w-100 object-fit-cover d-block"
-                                            alt="image"
-                                        /> */}
                                     <VideoPanel
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.video2}`}
+                                        src="/assets/videos/KawkabPopUp.mp4"
                                         section="hundred"
                                     />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -134,27 +116,21 @@ export default function NewsLetter() {
                                     </span> */}
                                 </h3>
                                 <p>
-                                    {/* {elm.description} */}
                                 Kawkab is a statement of elegance and timeless charm.Kawkab is a sophisticated fragrance that blends radiant florals with rich, woody depths
-                                    {/* <b className="sub-title">Don't miss out.</b> */}
-                                    
+                                {/* {elm.description} */}
+                                    {/* <b className="sub-title">Don't miss out.</b> */}                                                 
                                 </p>
                                 <a
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                                    href={`${locale}/${elm.link}`}
+                                    href={`/${locale}/shop/perfumes/oriental-fragrance/Kawkab`}
                                 >
                                     Shop Now
                                 </a>
                             </div>
                         </div>
                     </div>
-                    ))}
-
                 </div>
             </div>
-            
-
-        
         </div>
     );
 }
