@@ -38,6 +38,7 @@ export default function Checkout() {
         freeShippingFlag,
         setOrderDetails,
         setCouponDataContext,
+        setCartProducts
     } = useContextElement();
     const { isLoggedIn } = useUser();
     // const [selectedRegion, setSelectedRegion] = useState("");
