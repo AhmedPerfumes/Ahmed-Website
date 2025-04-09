@@ -127,15 +127,15 @@ export default function NewsLetter() {
                                     className="section-title fw-normal mb-3 pb-2"
                                     style={{ color: "#cfa91a" }}
                                 >
-                                   {/* Kawkab */}
-                                   {elm.heading}
+                                   Kawkab
+                                   {/* {elm.heading} */}
                                     {/* <span class="t-subtitle">
                                         The Essence of Belonging
                                     </span> */}
                                 </h3>
                                 <p>
-                                    {elm.description}
-                                {/* Kawkab is a statement of elegance and timeless charm.Kawkab is a sophisticated fragrance that blends radiant florals with rich, woody depths */}
+                                    {/* {elm.description} */}
+                                Kawkab is a statement of elegance and timeless charm.Kawkab is a sophisticated fragrance that blends radiant florals with rich, woody depths
                                     {/* <b className="sub-title">Don't miss out.</b> */}
                                     
                                 </p>
