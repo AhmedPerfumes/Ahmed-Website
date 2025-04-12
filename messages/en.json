@@ -867,6 +867,7 @@
 "Bakhoor Ahmed 20 Tabs Description": "<p>20 Tablets infused with woody &amp; Exotic flower notes</p>",
 "Bakhoor Hind Description":"Bakhoor Hind, an oriental fragrance, ensures that your surrounding is perfumed with delightful aromas, creating a mood that warmly welcomes fresh woody scent.",
 "Bakhoor Rasiyat Description":"Bakhoor Rasiyat is a rich, oriental-musky blend designed to infuse your space with elegance and tranquility.",
+"Bakhoor Marj Description":"Bakhoor Marjan is a luxurious bakhoor that combines the richness of oud with the freshness of floral notes.",
 
 
 "Marrah Content": "<p>Marrah Bakhoor is a premium home fragrance product that exudes luxury and warmth.</p>",
@@ -887,6 +888,7 @@
 "Bakhoor Ahmed 40 Tabs Content": "<p>Bakhoor Ahmed brings the garden's ethereal beauty closer to your soul, Giving in to the bliss of Oriental, White Musk-scented florals.<br>The smoky woodiness of the scent, the warm amber, incense, and sandalwood towards the end are enough to make anyone fall into the overwhelming desire to relish the moment.</p><p>One small touch of this bakhoor on a woodchip is all it takes to transform any environment into a pleasant oasis.</p><p> </p>",
 "Bakhoor Ahmed 20 Tabs Content": "<p>Bakhoor Ahmed brings the garden’s ethereal beauty closer to your soul, Giving in to the bliss of Oriental,White Musk-scented florals.<br>The smoky woodiness of the scent, the warm amber, incense, and sandalwood towards the end are enough to make anyone fall into the overwhelming desire to relish the moment.</p><p>One small touch of this bakhoor on a woodchip is all it takes to transform any environment into a pleasant oasis.</p><p>The most popular amongst our Bakhoors, Bakhoor Ahmed, is available in a 20-tablet container</p>",
 "Bakhoor Rasiyat Content":"Bakhoor Rasiyat is a rich, oriental-musky blend designed to infuse your space with elegance and tranquility.It opens with the zesty brightness of mandarin, gracefully transitioning into the opulent aroma of Indian roses. The heart unveils the profound woody richness of Dehnal Oud, adding depth and refinement.The base is a captivating harmony of amber, white musk, white flowers, and black musk, delivering a warm, lingering scent that balances floral softness with musky allure.Perfect for creating an inviting ambiance, Bakhoor Rasiyat transforms any setting into a sanctuary of timeless luxury.",
+"Bakhoor Marj Content":"<p>Bakhoor Marjan is a luxurious bakhoor that combines the richness of oud with the freshness of floral notes. The top notes feature a delightful blend of citrus and fruity accords, creating an uplifting and vibrant opening. As it unfolds, the heart reveals a bouquet of delicate flowers, adding a touch of elegance and sophistication. The base notes are anchored by warm and earthy oud, providing depth and longevity to the fragrance. Bakhoor Marjan is perfect for creating a serene and inviting atmosphere in any space.</p>",
 
 "Marrah Notes": "<p>Marrah Bakhoor is a premium home fragrance product that exudes luxury and warmth.</p>",
 "Bakhoor Ghars 40 Tabs Notes": "<p>TOP : Aldhydes, Bergamot, Tuberose.</p><p>HEART : Rose, Jasmine, Ylang-Ylang, Violet </p><p>BOTTOM : Ambroxan, Oakmoss, Vetluer, Sandalwood, Musk, Resins, Amber and Patchouli  </p>",
@@ -905,6 +907,7 @@
 "Bakhoor Ahmed 10 Tabs Notes": "<p>Notes - Fresh woody ( Citrus fruits, bulgarian roses, white exotic flowers, saffron, musk amber)</p>",
 "Bakhoor Ahmed 40 Tabs Notes": "<p>Notes - Fresh woody ( Citrus fruits, bulgarian roses, white exotic flowers, saffron, musk amber) </p>",
 "Bakhoor Ahmed 20 Tabs Notes": "<p>Notes - Fresh woody ( Citrus fruits, bulgarian roses, white exotic flowers, saffron, musk amber)</p>",
+"Bakhoor Marj Notes":"",
 
 "----------Dakhoon Single Product Page Oud Maattar":"----------Dakhoon Single Product Page Oud Maattar",
 "Oud al Amber 3TL Description": "<p>The pairing of oud with amber often results in a scent that lingers on the skin for hours, leaving a sensual trail.</p>",
@@ -1084,7 +1087,30 @@
 
 "Bidun Esam Collection Notes": "",
 
-"Spring Collection":""
+"Spring Collection":"",
+"Lavender Morning":"Lavender Morning",
+"Fragrance of Flora":"Fragrance of Flora",
+"Scented Bloom":"Scented Bloom",
+"Garden of Scent":"Garden of Scent",
+"Eternal Blossom":"Eternal Blossom",
+"Spring Collection Description":"<p>Spring Collection</p>",
+"Spring Collection Content":"<p>Spring Collection</p>",
+"Spring Collection Notes":"",
+"Lavender Morning Description":"<p>Collection consist of Oud Lavender Edp , Bakhoor Ghair Aadi 10tabs , Hirfah Body gel,Xtasy and Rose Noir Hair Mist 50ml</p>",
+"Lavender Morning Content":"<p>Lavender Morning</p>",
+"Lavender Morning Notes":"",
+"Fragrance of Flora Description":"<p>Collection consist of Oud & Roses Edp,Bakhoor Oud & Roses,Oud & Roses Hair Mist 50ml,Oud & Roses Body Gel 30ml and Aqua Oud</p>",
+"Fragrance of Flora Content":"<p>Fragrance of Flora</p>",
+"Fragrance of Flora Notes":"",
+"Scented Bloom Description":"<p>Collection consist of Marj,Oud MTR Malliki,Supreme Hair mist,Marj Body gel and Is it me EDP</p>",
+"Scented Bloom Content":"<p>Scented Bloom</p>",
+"Scented Bloom Notes":"",
+"Garden of Scent Description":"<p>Collection consist of Gardenia,Bakhoor Tabakhkhar,Shaikha Hind Hair Mist,Little Hearts Body Gel and Joud</p>",
+"Garden of Scent Content":"<p>Garden of Scent</p>",
+"Garden of Scent Notes":"",
+"Eternal Blossom Description":"<p>Collection consist of Ignite Rose,Rose Noir,Oud Kiflain,Ghali and Hayyana</p>",
+"Eternal Blossom Content":"<p>Eternal Blossom</p>",
+"Eternal Blossom Notes":""
 
 
 
