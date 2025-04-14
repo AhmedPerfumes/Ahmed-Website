@@ -10,6 +10,7 @@ export function MenuProvider({ children }) {
   const [currency, setCurrency] = useState('د.إ');
   const [homeSliders, setHomeSliders] = useState([]);
   const [homeMobileSliders, setHomeMobileSliders] = useState([]);
+  const [dynamic_sections, setDynamicSections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -70,6 +71,13 @@ export function MenuProvider({ children }) {
             setHomeSliders(null);
             setError(data);
           }
+          if(data && data.dynamic_sections) {
+            setError(null);
+            setDynamicSections(data.dynamic_sections);
+          } else {
+            setDynamicSections(null);
+            setError(data);
+          }
 
           if(data && data.home_mobile_sliders) {
             setError(null);
@@ -94,7 +102,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders, dynamic_sections }}>
       {children}
     </MenuContext.Provider>
   );

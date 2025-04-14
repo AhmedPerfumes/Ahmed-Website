@@ -52,7 +52,7 @@ const productSlider = ({ prodSlide }) => {
                                             {t("Zumar")}
                                         </div>
                                         <div
-                                            class="t-subtitle"
+                                            className="t-subtitle"
                                             data-v-8967c2b9=""
                                         >
                                             {t(
@@ -129,7 +129,7 @@ const productSlider = ({ prodSlide }) => {
                                     {t("Zumar")}
                                 </div>
                                 <div
-                                    class="t-subtitle mb-3 text-center"
+                                    className="t-subtitle mb-3 text-center"
                                     data-v-8967c2b9=""
                                 >
                                     {t(
@@ -189,7 +189,7 @@ const productSlider = ({ prodSlide }) => {
                                             {t("Bin Shaikh")}
                                         </div>
                                         <div
-                                            class="t-subtitle"
+                                            className="t-subtitle"
                                             data-v-8967c2b9=""
                                         >
                                             {t(
@@ -266,7 +266,7 @@ const productSlider = ({ prodSlide }) => {
                                     {t("Bin Shaikh")}
                                 </div>
                                 <div
-                                    class="t-subtitle mb-3 text-center"
+                                    className="t-subtitle mb-3 text-center"
                                     data-v-8967c2b9=""
                                 >
                                     {t("concocted in royalty and lavishness")}
@@ -324,7 +324,7 @@ const productSlider = ({ prodSlide }) => {
                                             {t("Ignite Oud")}
                                         </div>
                                         <div
-                                            class="t-subtitle"
+                                            className="t-subtitle"
                                             data-v-8967c2b9=""
                                         >
                                             {t(
@@ -401,7 +401,7 @@ const productSlider = ({ prodSlide }) => {
                                     {t("Ignite Oud")}
                                 </div>
                                 <div
-                                    class="t-subtitle mb-3 text-center"
+                                    className="t-subtitle mb-3 text-center"
                                     data-v-8967c2b9=""
                                 >
                                     {t(
@@ -461,7 +461,7 @@ const productSlider = ({ prodSlide }) => {
                                             {t("Marj")}
                                         </div>
                                         <div
-                                            class="t-subtitle"
+                                            className="t-subtitle"
                                             data-v-8967c2b9=""
                                         >
                                             {t(
@@ -538,7 +538,7 @@ const productSlider = ({ prodSlide }) => {
                                     {t("Marj")}
                                 </div>
                                 <div
-                                    class="t-subtitle mb-3 text-center"
+                                    className="t-subtitle mb-3 text-center"
                                     data-v-8967c2b9=""
                                 >
                                     {t(
@@ -598,7 +598,7 @@ const productSlider = ({ prodSlide }) => {
                                             {t("Oud & Roses")}
                                         </div>
                                         <div
-                                            class="t-subtitle"
+                                            className="t-subtitle"
                                             data-v-8967c2b9=""
                                         >
                                             {t(
@@ -675,7 +675,7 @@ const productSlider = ({ prodSlide }) => {
                                     {t("Oud & Roses")}
                                 </div>
                                 <div
-                                    class="t-subtitle mb-3 text-center"
+                                    className="t-subtitle mb-3 text-center"
                                     data-v-8967c2b9=""
                                 >
                                     {t("like a lush garden awakened in spring")}
@@ -733,7 +733,7 @@ const productSlider = ({ prodSlide }) => {
                                             {t("Kaaf")}
                                         </div>
                                         <div
-                                            class="t-subtitle"
+                                            className="t-subtitle"
                                             data-v-8967c2b9=""
                                         >
                                             {t(
@@ -810,7 +810,7 @@ const productSlider = ({ prodSlide }) => {
                                     {t("Kaaf")}
                                 </div>
                                 <div
-                                    class="t-subtitle mb-3 text-center"
+                                    className="t-subtitle mb-3 text-center"
                                     data-v-8967c2b9=""
                                 >
                                     {t(
