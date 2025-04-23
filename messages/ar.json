@@ -411,6 +411,8 @@
   "Brulee": "برولي",
   "Dulce": "دولسي",
   "Candylicious": "كانديليشيوس",
+  "Frost Ice": "فروست آيس",
+  "Peachy Peach": "بيتشي بيتش ",
   
   "----------Gel Category---------":"----------Gel Category---------",
   "Marj Body Gel":"مرج (بودي جل)",
@@ -518,6 +520,8 @@
 "Zumar Content": "<p>يبدأ هذا العطر الآسر بمكونات عليا مثيرة من الزعفران، مما يضفي عمقًا عطريًا غنيًا؛ يضيف الكمثرى والتوت الأحمر حلاوة منعشة توقظ الحواس. ويخلق عود كينام عود تفاعلًا مبهجًا بين العناصر الفاكهية والعطرية. ومع تطور العطر، يكشف عن قلب زهري مذهل يتكون من الغردينيا والياسمين والورد البلغاري وروز جراس والفرانجيباني، مما يغلف مرتديه بهالة رومانسية وساحرة. أخيرًا، يتوج عطر زمر بقاعدة فاخرة تتميز بالسكر البني والكاكاو، وتتناغم بشكل جميل مع الثراء الترابي للباتشولي والعود، إلى جانب دفء المسك الأبيض وعمق راتنجات الورد، مما يؤدي إلى لمسة نهائية مخملية تدوم على الجلد، مما يخلق لمسة نهائية مخملية تدوم طويلاً على البشرة. جاذبية مغناطيسية تترك انطباعًا دائمًا</p>",
 "AHL Content":"أهل هو اسم يرمز إلى الأسرة، القرابة، والشعور العميق بالانتماء. هذا العطر هو تكريم لدفء الروابط الثمينة، يحيط بك بمزيج آسر من النفحات الفاخرة التي تثير شعورًا بالراحة والأناقة والرقي.أهل ليس مجرد عطر، إنه شعور بالوطن، رائحة تبقى كعناق الأحبة، تنشر الدفء والرقي في كل قطرة.",
 "Kawkab Content":"كوكب هو عطر راقٍ يمزج بين الزهور المشرقة وعمق الأخشاب الغنية. يبدأ بمقدمة نابضة بالحياة من باقة الورد، مع نفحات من الفاوانيا، الزعفران، المانجو، والحمضيات، مما يخلق افتتاحية منعشة وفاخرة في آنٍ واحد. يتكشف قلب العطر عن غنى ورد إسبرطة، الشاي الأسود، السوسن، والعنبر، مما يضفي عليه دفئًا وعمقًا مميزًا. ويستقر العطر على قاعدة أنيقة من المسك، وعود أحمد كينام، والسبرول، وخشب الأرز، والباتشولي، تاركًا انطباعًا مميزًا ودائمًا. كوكب هو تعبير عن الأناقة والسحر الخالد.",
+"Frost Ice Content":"",
+"Peachy Peach Content":"",
 
 
 "Shay Jadeed Notes": "<p>العليا - الحمضيات (الليمون) <br>الوسطى- الزهرة (الخزامى والفانيليا) <br>القاعدة - الخشبية (خشب العود واللبان)</p>",
@@ -556,6 +560,7 @@
 
 "AHL Notes":"<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/ingridient-1.jpg\" alt=\"second-notes.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">المكونات العليا</h3><p>بداية نابضة بالحياة ومنعشة مع إشراقة الحمضيات من البرغموت والبرتقال البرازيلي واللافندر، متناسقة مع الدفء الغامض للهيل والفلفل الوردي. لمسة فريدة من جوز الهند، الشمام، الموز، والتوت تضيف لمسة فاكهية استوائية، مما يجعل الانطباع الأول دافئًا ومثيرًا.</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/heart-notes.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">المكونات الوسطى</h3><p>تتفتح باقة زهرية غنية في القلب، تجمع بين النقاء المنعش لنفحات البحر، السيكلامين، زنبق الوادي، الورد، والتوليب، وبين فخامة خشب الكشمير، السوسن، الياسمين، زهر البرتقال، والماغنوليا. لمسة خفيفة من الباتشولي تضيف عمقًا وغموضًا، مما يخلق جوهرًا متوازنًا بشكل رائع.</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/ingridient-2.jpg\" alt=\"third-notes-2.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">القاعدة</h3><p>قاعدة حسية وطويلة الأمد من خشب الصندل، المسك الأبيض، التونكا، والطحلب، معززة بدفء العنبر، العود التايلاندي، والكراميل. لمسة نهائية من الفانيليا تترك أثرًا ناعمًا وكريميًا لا يقاوم، مما يضمن حضورًا لا يُنسى.<br> </p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p> </p><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/ahl-artwork-2.jpg\" alt=\"artboard-1-min.jpg\"></p><p> </p><div class=\"content-wrapper col-lg-4 px-lg-4\"><h4 style=\"text-align:center;\"><span style=\"color:hsl(342,28%,69%);font-size:18px;\">أهل – جوهر الانتماء</span></h4><p style=\"text-align:center;\">أهل هو اسم يرمز إلى الأسرة والقرابة والشعور العميق بالانتماء. هذا العطر هو تكريم لدفء الروابط الثمينة، يحيط بك بمزيج آسر من النفحات الفاخرة التي تثير شعورًا بالراحة والأناقة والرقي.<br> </p></div><p> </p><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/notes/ahl-artwork-1.jpg\" alt=\"artboard-3-min.jpg\"></p></div>",
 "Kawkab Notes":"<p>العليا : باقة ورد، ورد، فاوانيا، زعفران، مانجو، برغموت، زهر البرتقال، فلفل وردي، ليمون، جريب فروت.</p><p>الوسطى : ورد إسبرطة، شاي أسود، سوسن، عنبر، براوليني، زعفران.</p><p>القاعدة : مِسك، خشب الجواياك، اتفاقية عود أحمد كينام، سبرول، نغارموثا، سدر، خشب الأرز، تونكا، باتشولي.</p>",
+"Frost Ice Notes":"",
 
 
 "----------EAU DE Parfum Single Product Page Occidental Fragrance":"----------EAU DE Parfum Single Product Page Occidental Fragrance",
@@ -627,6 +632,8 @@
 "Brulee Description":"",
 "Dulce Description":"",
 "Candylicious Description":"",
+"Frost Ice Description":"",
+"Peachy Peach Description":"",
 
 "Instance 60ML Content": "<p><span>\"سواء كنت تستعد لقضاء أمسية خاصة، أو اجتماع احترافي، أو تريد فقط أن تشعر بأفضل ما لديك كل يوم، فإن هذا العطر يكمل أسلوبك وشخصيتك دون عناء. تتناغم المكونات المختارة بعناية في هذا العطر لتكوين رائحة أنيقة لا تُنسى، مما يترك انطباعًا دائمًا في قلوب وعقول من حولك. احتضن قوة عطر إنستانس واجعل حضورك محسوسًا، مما يجعل كل لحظة مثالًا لا يُنسى من الجمال\"</span></p>",
 
@@ -1099,22 +1106,20 @@
 "Scented Bloom":"Scented Bloom",
 "Garden of Scent":"Garden of Scent",
 "Eternal Blossom":"Eternal Blossom",
-"Spring Collection Description":"<p>Spring Collection</p>",
-"Spring Collection Content":"<p>Spring Collection</p>",
-"Spring Collection Notes":"",
-"Lavender Morning Description":"<p>Collection consist of Oud Lavender Edp , Bakhoor Ghair Aadi 10tabs , Hirfah Body gel,Xtasy and Rose Noir Hair Mist 50ml</p>",
+
+"Lavender Morning Description":"<p>Awaken your senses with the serene charm of our Lavender Morning Collection.Perfect for those who seek beauty in simplicity, peace in routine, and elegance in everyday moments.Collection consist of Oud Lavender Edp , Bakhoor Ghair Aadi 10tabs , Hirfah Body gel,Xtasy and Rose Noir Hair Mist 50ml</p>",
 "Lavender Morning Content":"<p>Awaken your senses with the serene charm of our Lavender Morning Collection.Perfect for those who seek beauty in simplicity, peace in routine, and elegance in everyday moments.</p>",
 "Lavender Morning Notes":"",
-"Fragrance of Flora Description":"<p>Collection consist of Oud & Roses Edp,Bakhoor Oud & Roses,Oud & Roses Hair Mist 50ml,Oud & Roses Body Gel 30ml and Aqua Oud</p>",
+"Fragrance of Flora Description":"<p>Fragrance of Flora is a celebration of nature’s most enchanting blooms. This collection captures the essence of delicate petals, lush gardens, and the timeless elegance of floral beauty.Collection consist of Oud & Roses Edp,Bakhoor Oud & Roses,Oud & Roses Hair Mist 50ml,Oud & Roses Body Gel 30ml and Aqua Oud</p>",
 "Fragrance of Flora Content":"<p>Fragrance of Flora is a celebration of nature’s most enchanting blooms. This collection captures the essence of delicate petals, lush gardens, and the timeless elegance of floral beauty.</p>",
 "Fragrance of Flora Notes":"",
-"Scented Bloom Description":"<p>Collection consist of Marj,Oud MTR Malliki,Supreme Hair mist,Marj Body gel and Is it me EDP</p>",
+"Scented Bloom Description":"<p>Scented Bloom is a tribute to nature's most radiant moments. This perfume collection blends soft florals with fresh, airy notes to create fragrances that feel like a blooming garden in every spritzCollection consist of Marj,Oud MTR Malliki,Supreme Hair mist,Marj Body gel and Is it me EDP</p>",
 "Scented Bloom Content":"<p>Scented Bloom is a tribute to nature's most radiant moments. This perfume collection blends soft florals with fresh, airy notes to create fragrances that feel like a blooming garden in every spritz</p>",
 "Scented Bloom Notes":"",
-"Garden of Scent Description":"<p>Collection consist of Gardenia,Bakhoor Tabakhkhar,Shaikha Hind Hair Mist,Little Hearts Body Gel and Joud</p>",
+"Garden of Scent Description":"<p>Garden of Scent invites you into a world where every fragrance is a blooming escape. Inspired by lush gardens and nature’s most aromatic blossoms, this collection captures the essence of serenity, beauty, and timeless floral elegance.Collection consist of Gardenia,Bakhoor Tabakhkhar,Shaikha Hind Hair Mist,Little Hearts Body Gel and Joud</p>",
 "Garden of Scent Content":"<p>Garden of Scent invites you into a world where every fragrance is a blooming escape. Inspired by lush gardens and nature’s most aromatic blossoms, this collection captures the essence of serenity, beauty, and timeless floral elegance.</p>",
 "Garden of Scent Notes":"",
-"Eternal Blossom Description":"<p>Collection consist of Ignite Rose,Rose Noir,Oud Kiflain,Ghali and Hayyana</p>",
+"Eternal Blossom Description":"<p>Eternal Blossom is a celebration of everlasting beauty. Each fragrance in this collection captures the delicate grace of flowers in full bloom — timeless, romantic, and endlessly captivating. A scent that lingers like a memory.Collection consist of Ignite Rose,Rose Noir,Oud Kiflain,Ghali and Hayyana</p>",
 "Eternal Blossom Content":"<p>Eternal Blossom is a celebration of everlasting beauty. Each fragrance in this collection captures the delicate grace of flowers in full bloom — timeless, romantic, and endlessly captivating. A scent that lingers like a memory.</p>",
 "Eternal Blossom Notes":""
 
