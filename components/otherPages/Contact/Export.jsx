@@ -23,7 +23,7 @@ export default function Export() {
         <Image
           loading="lazy"
           className="w-100 h-auto d-lg-none pt-5"
-          src="/assets/images/export/map-banner-mob.jpg"
+          src="/assets/images/export/export_mobile.jpg"
           alt="image"
           width={500}
           height={500}
