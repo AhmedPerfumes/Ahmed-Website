@@ -25,10 +25,12 @@ import MobileFooter1 from "@/components/footers/MobileFooter1";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
+import { headers } from 'next/headers';
+import { getCountryFromIP } from './lib/getCountryFromIP';
 
 export const metadata = {
     title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -49,9 +51,18 @@ const arabicFont = localFont({
 });
 
 // Import Sofia Pro Regular font as a secondary font
-    const sofiaFont = localFont({
+const sofiaFont = localFont({
     src: "../../public/assets/fonts/sofia/SofiaProRegular.ttf",
 });
+
+const COUNTRY_DOMAINS = {
+    AE: 'https://ae.ahmedalmaghribi.com',
+    SA: 'https://ksa.ahmedalmaghribi.com',
+    BH: 'https://bh.ahmedalmaghribi.com',
+    KW: 'https://kw.ahmedalmaghribi.com',
+    QA: 'https://qa.ahmedalmaghribi.com',
+    OM: 'https://om.ahmedalmaghribi.com',
+};
 
 export default async function LocaleLayout({ children, params: { locale } }) {
     if (!routing.locales.includes(locale)) {
@@ -69,6 +80,39 @@ export default async function LocaleLayout({ children, params: { locale } }) {
     // Fetch translation messages
     const messages = await getMessages();
     const GTM_ID = "GTM-M4B7GLV";
+
+    const headersList = headers();
+    const ip = headersList.get('x-forwarded-for')?.split(',')[0] || '217.165.35.39';
+    // const ip = '62.215.0.0'; // KW
+    // const ip = '92.97.63.173'; // UAE
+    // const ip = '159.0.14.172'; // KSA
+    // const ip = '37.210.202.22'; // QA
+    // const ip = '37.41.136.118'; // OM
+    // const ip = '88.201.99.52'; // BH
+
+    const countryCode = await getCountryFromIP(ip);
+    // const redirectUrl = COUNTRY_DOMAINS[countryCode];
+
+    const currentHost = headersList.get('host');
+
+    const countryDomain = COUNTRY_DOMAINS[countryCode];
+
+    if (countryDomain) {
+        let expectedHost = null;
+        try {
+            expectedHost = new URL(countryDomain).host;
+        } catch (err) {
+            console.error('Failed to parse expected country domain:', err);
+        }
+
+        if (expectedHost && currentHost !== expectedHost) {
+            const currentPath = headersList.get('x-next-url') || `/${locale}`;
+            const redirectUrl = `${countryDomain}${currentPath}`;
+            redirect(redirectUrl); // This should NOT be inside the try-catch
+        }
+    }
+
+    // console.log('=============================================================================', new URL(countryDomain).host, currentHost, headersList.get('x-next-url'));
 
     return (
         <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
