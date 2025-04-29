@@ -1127,49 +1127,48 @@ export default function Checkout() {
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            
-                                <div>
-                                    {/* <form
-                  onSubmit={applyCoupon}
-                  className="position-relative bg-body"
-                > */}
-                                    {couponError ? (
-                                        <div style={{ color: "red" }}>
-                                            {couponError}
-                                        </div>
-                                    ) : (
-                                        <div style={{ color: "green" }}>
-                                            {couponSuccess}
-                                        </div>
-                                    )}
-                                    <input
-                                        className="form-control mb-1"
-                                        type="text"
-                                        name="coupon_code"
-                                        placeholder="Coupon Code"
-                                        value={couponCode}
-                                        onChange={handleCouponChange}
-                                    />
-                                    {!couponData ? (
+                                </div>                            
+                                    <div>
+                                        {/* <form
+                    onSubmit={applyCoupon}
+                    className="position-relative bg-body"
+                    > */}
+                                        {couponError ? (
+                                            <div style={{ color: "red" }}>
+                                                {couponError}
+                                            </div>
+                                        ) : (
+                                            <div style={{ color: "green" }}>
+                                                {couponSuccess}
+                                            </div>
+                                        )}
                                         <input
-                                            className=""
-                                            type="button"
-                                            value="APPLY COUPON"
-                                            onClick={applyCoupon}
+                                            className="form-control mb-1"
+                                            type="text"
+                                            name="coupon_code"
+                                            placeholder="Coupon Code"
+                                            value={couponCode}
+                                            onChange={handleCouponChange}
                                         />
-                                    ) : (
-                                        <input
-                                            className=""
-                                            type="button"
-                                            value="REMOVE COUPON"
-                                            onClick={removeCoupon}
-                                        />
-                                    )}
-                                    {/* </form> */}
-                                    <br /><br />
-                                    {/* <button className="btn btn-light">UPDATE CART</button> */}
-                                </div>
+                                        {!couponData ? (
+                                            <input
+                                                className=""
+                                                type="button"
+                                                value="APPLY COUPON"
+                                                onClick={applyCoupon}
+                                            />
+                                        ) : (
+                                            <input
+                                                className=""
+                                                type="button"
+                                                value="REMOVE COUPON"
+                                                onClick={removeCoupon}
+                                            />
+                                        )}
+                                        {/* </form> */}
+                                        <br /><br />
+                                        {/* <button className="btn btn-light">UPDATE CART</button> */}
+                                    </div>
                                 <div className="checkout__payment-methods">
                                     <div className="form-check">
                                         <input

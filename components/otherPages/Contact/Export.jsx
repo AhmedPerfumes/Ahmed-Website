@@ -9,11 +9,11 @@ export default function Export() {
   const t = useTranslations();
   return (
     <>
-      <div className="container-fluid p-0 pt-2">
+      <div className="container-fluid p-0 pt-5">
         <Image
           loading="lazy"
           className="w-100 h-auto d-none d-lg-block"
-          src="/assets/images/export/map-banner-desk.jpg"
+          src="/assets/images/export/export_banner.jpg"
           alt="image"
           width={1500}
           height={550}

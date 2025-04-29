@@ -99,6 +99,7 @@ export default function NewsLetter() {
                                         src="/assets/videos/KawkabPopUp.mp4"
                                         section="hundred"
                                     />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -109,13 +110,15 @@ export default function NewsLetter() {
                                     style={{ color: "#cfa91a" }}
                                 >
                                    Kawkab
+                                   {/* {elm.heading} */}
                                     {/* <span class="t-subtitle">
                                         The Essence of Belonging
                                     </span> */}
                                 </h3>
                                 <p>
                                 Kawkab is a statement of elegance and timeless charm.Kawkab is a sophisticated fragrance that blends radiant florals with rich, woody depths
-                                    {/* <b className="sub-title">Don't miss out.</b> */}
+                                {/* {elm.description} */}
+                                    {/* <b className="sub-title">Don't miss out.</b> */}                                                 
                                 </p>
                                 <a
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
