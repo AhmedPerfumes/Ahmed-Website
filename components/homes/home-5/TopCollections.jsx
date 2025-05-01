@@ -118,6 +118,23 @@ export default function TopCollections() {
     return cleanedStr;
   }
 
+  const price = (elm) => {
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    if(elm?.discount) {
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span></>;
+      } else {
+        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+      }
+    } else if(elm?.sale_price) {
+      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}{ currency.symbol }</span></>;
+    } else {
+      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+    }
+  };
+
   if (isMenuLoading) {
       return <div><Pagination1 /></div>;
   }
@@ -194,7 +211,23 @@ export default function TopCollections() {
                         }
                         </Link>
                       {/* ))} */}
-                      <button
+                      {elm?.label_name && (
+                        <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                          { elm?.label_name }
+                        </div>
+                      )}
+                      {elm.product_qty <= 0 ? (
+                        <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                          Out Of Stock
+                        </div>
+                      ) : (
+                        elm.discount && (
+                          <div style={{ backgroundColor: '#198754' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            Sale {elm.discount.value}%
+                          </div>
+                        )
+                      )}
+                      {/* <button
                         className="pc__atc btn btn-lg anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
                         onClick={() => addProductToCart({...elm, category_name: 'Collections', subcategory_name: 'Online Exclusive'})}
                         title={
@@ -206,7 +239,22 @@ export default function TopCollections() {
                         {isAddedToCartProducts(elm.product_id)
                           ? "Already Added"
                           : "Add To Cart"}
-                      </button>
+                      </button> */}
+                      {
+                        isAddedToCartProducts(elm?.product_id) ? 
+                        elm.product_qty > 0 && <button
+                            className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                            title="Already Added"
+                          >
+                          Already Added
+                        </button> : elm.product_qty > 0 && <button
+                          className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
+                          onClick={() => addProductToCart({...elm, category_name: 'Collections', subcategory_name: 'Online Exclusive'})}
+                          title="Add to Cart"
+                        >
+                          Add To Cart
+                        </button>
+                      }
                       {/* <div className="anim_appear-right position-absolute top-0 mt-2 me-2">
                         <button
                           className="btn btn-round-sm btn-hover-red d-block border-0 text-uppercase mb-2 js-quick-view"
@@ -251,7 +299,7 @@ export default function TopCollections() {
                       <Link href={`/${locale}/shop//online-exclusive/online-exclusive/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
                       </h6>
                       <div className="product-card__price d-flex">
-                        {elm.priceOld && (
+                        {/* {elm.priceOld && (
                           <>
                             <span className="money price price-old">
                               {elm.priceOld}{ currency.symbol }
@@ -263,7 +311,8 @@ export default function TopCollections() {
                         )}
                         {!elm.priceOld && (
                           <span className="money price">{elm.price}{ currency.symbol }</span>
-                        )}
+                        )} */}
+                        { price(elm) }
                       </div>
                     </div>
                   </SwiperSlide>

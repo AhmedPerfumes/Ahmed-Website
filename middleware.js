@@ -7,6 +7,7 @@ export const config = {
   // Match only internationalized pathnames
   matcher: ['/', '/(ar|en)/:path*']
 };
+
 // import { NextRequest, NextResponse } from 'next/server';
 // import createMiddleware from 'next-intl/middleware';
 // import { routing } from './i18n/routing';
@@ -41,7 +42,7 @@ export const config = {
 
 //     // Fetch GeoIP data from API route (use fixed 'en' locale to avoid loops)
 //     console.log(`Fetching GeoIP from ${request.nextUrl.origin}/en/api/geoip for IP:`, ip);
-//     const response = await fetch(`${request.nextUrl.origin}/en/api/geoip`, {
+//     const response = await fetch(`http://localhost:3000/en/api/geoip`, {
 //       headers: { 'x-forwarded-for': ip },
 //     });
 
