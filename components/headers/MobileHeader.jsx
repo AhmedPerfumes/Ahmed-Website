@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import User from "./components/User";
 import { useUser } from "../../context/UserContext";
-
+import { IoLocationOutline } from "react-icons/io5";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 export default function MobileHeader() {
@@ -199,7 +199,7 @@ export default function MobileHeader() {
         {/* <!-- /.container --> */}
 
         <div className="border-top mt-2 pb-2">
-          <div className="customer-links container mt-4 mb-2 pb-1">
+          <div className="customer-links border-bottom container mt-4 mb-2 pb-4">
             {/* <svg
               className="d-inline-block align-middle"
               width="20"
@@ -212,7 +212,7 @@ export default function MobileHeader() {
             </svg> */}
             {!isLoggedIn ? (
                 <Link
-                    className="js-open-aside"
+                    className="js-open-aside d-flex"
                     href="#"
                 >
                     <User /><span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
@@ -226,20 +226,14 @@ export default function MobileHeader() {
             )}
             
           </div>
-          {/* <div className="header-tools__item hover-container">
-            {!isLoggedIn ? (
-                <Link
-                    className="js-open-aside"
-                    href="#"
-                >
-                    <User />
-                </Link>
-            ) : (
-                <Link href="#" onClick={handleLogout}>
-                    <FiLogOut size={20} />
-                </Link>
-            )}
-        </div> */}
+          <div className="customer-links border-bottom container mt-4 mb-2 pb-4">
+          <Link href={`/${locale}/store-locator`}>
+              <IoLocationOutline size={20} />
+              <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
+              Find a store
+            </span>
+          </Link>
+          </div>
       <div className="d-flex">
           <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
@@ -282,13 +276,14 @@ export default function MobileHeader() {
             </select>
           </div>
           </div>
+          
 
           <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">
             {socialLinks.map((link, index) => (
               <li key={index}>
                 <Link
                   href={link.href}
-                  className="footer__social-link d-block color-white"
+                  className="footer__social-link d-block"
                 >
                   <svg
                     className={link.className}
