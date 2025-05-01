@@ -40,7 +40,7 @@ export const categories2 = [
 ];
 
 export const categories3 = [
-  
+
 ];
 
 
@@ -54,7 +54,7 @@ export const categories8 = [
     videoSrc: "/assets/videos/giftsets/antee.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/antee.jpg",
     link: "/shop/gift-sets/gift-sets/antee-gift-set-05",
-    btn:"/shop/gift-sets/gift-sets/antee-gift-set-05"
+    btn: "/shop/gift-sets/gift-sets/antee-gift-set-05"
   },
   {
     id: 2,
@@ -93,8 +93,8 @@ export const categories8 = [
     subText: "A Legacy of Grace",
     videoSrc: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
     imgSrc2: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
-    link: "/shop/gift-sets/gift-sets/shauque-al-shuyookh",
-    btn: "/shop/gift-sets/gift-sets/shauque-al-shuyookh"
+    link: "/product-category/gift-sets",
+    btn: "/product-category/gift-sets"
   },
   // {
   //   id: 6,
@@ -131,7 +131,7 @@ export const categories88 = [
     videoSrc: "/assets/videos/vlogs/gauhar-khan.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/gauhar-khan.jpg",
     link: "/shop?q=rawdha",
-    btn:"/shop?q=rawdha"
+    btn: "/shop?q=rawdha"
   },
   // {
   //   id: 2,
@@ -146,7 +146,6 @@ export const categories88 = [
     id: 3,
     imgSrc: "/assets/images/home/demo15/category-3.jpg",
     altText: "Laathani",
-    subText: "Uncover your signature glow",
     videoSrc: "/assets/videos/vlogs/neeb.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Neeb.jpg",
     link: "/shop/perfumes/oriental-fragrance/laathani",
@@ -156,7 +155,6 @@ export const categories88 = [
     id: 4,
     imgSrc: "/assets/images/home/demo15/category-4.jpg",
     altText: "Kaaf",
-    subText: "Radiate pure, refined luxury",
     videoSrc: "/assets/videos/vlogs/rico.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Rico.jpg",
     link: "/shop/perfumes/oriental-fragrance/kaaf",
@@ -166,7 +164,6 @@ export const categories88 = [
     id: 5,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Oud & Roses",
-    subText: "Embrace unforgettable elegance",
     videoSrc: "/assets/videos/vlogs/sana-Khan.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Sana-Khan.jpg",
     link: "/shop/perfumes/occidental-fragrance/oud-roses",
@@ -176,7 +173,6 @@ export const categories88 = [
     id: 6,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Rose Noir",
-    subText: "Embrace unforgettable elegance",
     videoSrc: "/assets/videos/vlogs/yassersalahsalem.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/yassersalahsalem.jpg",
     link: "/shop/perfumes/occidental-fragrance/rose-noir",
@@ -185,12 +181,11 @@ export const categories88 = [
   {
     id: 7,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Bin Shaikh",
-    subText: "Embrace unforgettable elegance",
-    videoSrc: "/assets/videos/vlogs/cologne-boy.mp4",
-    imgSrc2: "/assets/videos/vlogs/thumbnails/The-Cologne-Boy.jpg",
-    link: "/shop/perfumes/oriental-fragrance/bin-shaikh",
-    btn: "/shop/perfumes/oriental-fragrance/bin-shaikh"
+    altText: "Rawdha Oil",
+    videoSrc: "https://www.ahmedalmaghribi.co.in/wp-content/uploads/2025/04/Jannat.mp4",
+    imgSrc2: "/assets/videos/vlogs/thumbnails/jannat-zubair.png",
+    link: "/shop?q=rawdha",
+    btn: "/shop?q=rawdha"
   },
   {
     id: 8,
