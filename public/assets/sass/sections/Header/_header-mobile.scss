@@ -27,7 +27,8 @@
 
 .header-mobile__navigation {
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
+  ;
   height: 0;
   max-height: 0;
   transition: max-height .35s, height .35s;
@@ -77,6 +78,7 @@
 }
 
 .mobile-nav-activator {
+
   .nav-icon,
   .btn-close-lg {
     transition: all .24s;
@@ -90,7 +92,7 @@
 }
 
 .mobile-menu-opened {
-  overflow: hidden;
+  overflow: auto;
 
   .header-mobile {
     z-index: $zindex-modal;
