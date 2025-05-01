@@ -46,8 +46,8 @@ export async function middleware(request) {
     console.log('Client IP:', ip);
 
     // Fetch GeoIP data from API route (use currentDomain to avoid localhost)
-    console.log(`Fetching GeoIP from ${currentDomain}/en/api/geoip for IP:`, ip);
-    const resp = await fetch(`${currentDomain}/en/api/geoip`, {
+    console.log(`Fetching GeoIP from http://localhost:3000/en/api/geoip for IP:`, ip);
+    const resp = await fetch(`http://localhost:3000/en/api/geoip`, {
       headers: { 'x-forwarded-for': ip },
     });
 
