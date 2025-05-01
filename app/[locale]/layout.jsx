@@ -29,6 +29,7 @@ import { notFound, redirect } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
+// import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 
 export const metadata = {
     title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -121,6 +122,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                     </Context>
                     <div className="page-overlay" id="pageOverlay"></div>
                     <ScrollTop />
+                    {/* <CountryMismatchPopup /> */}
                 </NextIntlClientProvider>
             </body>
         </html>
