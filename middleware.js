@@ -26,12 +26,29 @@ export async function middleware(request) {
   }
 
   // Get the actual domain from headers (handle proxy pass)
-  const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000';
-  // const host = 'ae.ahmedalmaghribi.com';
-  const protocol = request.headers.get('x-forwarded-proto') || 'http';
+  let host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'http://localhost:3000';
+  // let host = 'https://ae.ahmedalmaghribi.com, ae.ahmedalmaghribi.com';
+  // const protocol = request.headers.get('x-forwarded-proto') || 'http';
   // const protocol = 'https';
-  const currentDomain = `${protocol}://${host}`;
+  // Clean host: take first value, remove ports, trim whitespace, and handle commas
+  host = host.split(',')[0].trim();
+  // .split(':')[1].trim();
+  // console.log('Raw headers:', {
+  //   'x-forwarded-host': request.headers.get('x-forwarded-host'),
+  //   host: request.headers.get('host'),
+  //   'x-forwarded-proto': request.headers.get('x-forwarded-proto'),
+  // });
+  // console.log('Cleaned host:', host);
+
+  // // Validate host
+  // if (!host || host.includes(',')) {
+  //   console.error('Invalid host detected:', host);
+  //   host = 'ae.ahmedalmaghribi.com'; // Fallback to default domain
+  // }
+  // const currentDomain = `${protocol}://${host}`;
+  const currentDomain = `${host}`;
   console.log('Current domain (from headers):', currentDomain);
+  // return;
 
   // Perform GeoIP lookup via API route
   try {
