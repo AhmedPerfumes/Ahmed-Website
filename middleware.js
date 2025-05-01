@@ -16,7 +16,7 @@ import { routing } from './i18n/routing';
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request) {
-  const { pathname, origin } = request.nextUrl;
+  const { pathname } = request.nextUrl;
   console.log('Middleware triggered for URL:', request.url);
 
   // Skip middleware for API routes, including /<locale>/api/*
@@ -24,6 +24,14 @@ export async function middleware(request) {
     console.log('Skipping middleware for API route:', pathname);
     return NextResponse.next();
   }
+
+  // Get the actual domain from headers (handle proxy pass)
+  const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000';
+  // const host = 'ae.ahmedalmaghribi.com';
+  const protocol = request.headers.get('x-forwarded-proto') || 'http';
+  // const protocol = 'https';
+  const currentDomain = `${protocol}://${host}`;
+  console.log('Current domain (from headers):', currentDomain);
 
   // Perform GeoIP lookup via API route
   try {
@@ -37,18 +45,18 @@ export async function middleware(request) {
     // const ip = '88.201.99.52'; // BH
     console.log('Client IP:', ip);
 
-    // Fetch GeoIP data from API route (use fixed 'en' locale to avoid loops)
-    console.log(`Fetching GeoIP from http://localhost:3000/en/api/geoip for IP:`, ip);
-    const res = await fetch(`http://localhost:3000/en/api/geoip`, {
+    // Fetch GeoIP data from API route (use currentDomain to avoid localhost)
+    console.log(`Fetching GeoIP from ${currentDomain}/en/api/geoip for IP:`, ip);
+    const resp = await fetch(`${currentDomain}/en/api/geoip`, {
       headers: { 'x-forwarded-for': ip },
     });
 
-    if (!res.ok) {
-      console.error(`GeoIP API route error: Status ${res.status}, ${res.statusText}`);
-      throw new Error(`GeoIP API route failed with status ${res.status}`);
+    if (!resp.ok) {
+      console.error(`GeoIP API route error: Status ${resp.status}, ${resp.statusText}`);
+      throw new Error(`GeoIP API route failed with status ${resp.status}`);
     }
 
-    const data = await res.json();
+    const data = await resp.json();
     const countryCode = data.countryCode || 'AE';
     console.log('GeoIP API route response: Country Code =', countryCode);
 
@@ -65,17 +73,17 @@ export async function middleware(request) {
 
     // Determine target domain based on country
     const targetDomain = domainMap[countryCode] || domainMap.default;
-    console.log('Current origin:', origin, 'Target domain:', targetDomain);
+    console.log('Target domain:', targetDomain);
 
     // Check for country mismatch
     const response = intlMiddleware(request);
-    if (origin !== targetDomain) {
-      console.log('Country mismatch detected. Setting X-Country-Mismatch header.');
-      // response.headers.set('X-Country-Mismatch', countryCode);
-      // Optionally set a cookie instead of a header
+    if (currentDomain !== targetDomain) {
+      console.log('Country mismatch detected. Setting countryMismatch cookie.');
       response.cookies.set('countryMismatch', countryCode, { path: '/' }); //, httpOnly: false
     } else {
       console.log('No country mismatch. Proceeding normally.');
+      // Optionally clear the cookie if no mismatch
+      response.cookies.delete('countryMismatch');
     }
 
     return response;
