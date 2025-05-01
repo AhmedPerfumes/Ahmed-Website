@@ -1,12 +1,101 @@
+// import createMiddleware from 'next-intl/middleware';
+// import {routing} from './i18n/routing';
+ 
+// export default createMiddleware(routing);
+ 
+// export const config = {
+//   // Match only internationalized pathnames
+//   matcher: ['/', '/(ar|en)/:path*']
+// };
+
+import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
- 
-export default createMiddleware(routing);
- 
+import { routing } from './i18n/routing';
+
+// Initialize next-intl middleware
+const intlMiddleware = createMiddleware(routing);
+
+export async function middleware(request) {
+  const { pathname, origin } = request.nextUrl;
+  console.log('Middleware triggered for URL:', request.url);
+
+  // Skip middleware for API routes, including /<locale>/api/*
+  if (pathname.startsWith('/api') || pathname.match(/^\/(en|ar)\/api/)) {
+    console.log('Skipping middleware for API route:', pathname);
+    return NextResponse.next();
+  }
+
+  // Perform GeoIP lookup via API route
+  try {
+    // Get client IP
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.ip || '217.165.35.39';
+    // const ip = '62.215.0.0'; // KW
+    // const ip = '92.97.63.173'; // UAE
+    // const ip = '159.0.14.172'; // KSA
+    // const ip = '37.210.202.22'; // QA
+    // const ip = '37.41.136.118'; // OM
+    // const ip = '88.201.99.52'; // BH
+    console.log('Client IP:', ip);
+
+    // Fetch GeoIP data from API route (use fixed 'en' locale to avoid loops)
+    console.log(`Fetching GeoIP from http://localhost:3000/en/api/geoip for IP:`, ip);
+    const res = await fetch(`http://localhost:3000/en/api/geoip`, {
+      headers: { 'x-forwarded-for': ip },
+    });
+
+    if (!res.ok) {
+      console.error(`GeoIP API route error: Status ${res.status}, ${res.statusText}`);
+      throw new Error(`GeoIP API route failed with status ${res.status}`);
+    }
+
+    const data = await res.json();
+    const countryCode = data.countryCode || 'AE';
+    console.log('GeoIP API route response: Country Code =', countryCode);
+
+    // Define domain mapping based on country
+    const domainMap = {
+      AE: 'https://ae.ahmedalmaghribi.com', // UAE
+      SA: 'https://ksa.ahmedalmaghribi.com', // Saudi Arabia
+      QA: 'https://qa.ahmedalmaghribi.com', // Qatar
+      OM: 'https://om.ahmedalmaghribi.com', // Oman
+      BH: 'https://bh.ahmedalmaghribi.com', // Bahrain
+      KW: 'https://kw.ahmedalmaghribi.com', // Kuwait
+      default: 'https://ae.ahmedalmaghribi.com', // Others
+    };
+
+    // Determine target domain based on country
+    const targetDomain = domainMap[countryCode] || domainMap.default;
+    console.log('Current origin:', origin, 'Target domain:', targetDomain);
+
+    // Check for country mismatch
+    const response = intlMiddleware(request);
+    if (origin !== targetDomain) {
+      console.log('Country mismatch detected. Setting X-Country-Mismatch header.');
+      // response.headers.set('X-Country-Mismatch', countryCode);
+      // Optionally set a cookie instead of a header
+      response.cookies.set('countryMismatch', countryCode, { path: '/' }); //, httpOnly: false
+    } else {
+      console.log('No country mismatch. Proceeding normally.');
+    }
+
+    return response;
+  } catch (error) {
+    console.error('GeoIP middleware error:', error.message);
+    // Proceed with next-intl middleware on error (no popup)
+    console.log('Error occurred, proceeding with next-intl for:', pathname);
+    return intlMiddleware(request);
+  }
+}
+
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(ar|en)/:path*']
+  matcher: [
+    '/((?!api/|_next/static|_next/image|favicon.ico|assets|en\/api|ar\/api).*)',
+    '/',
+    '/(ar|en)/:path*',
+  ],
 };
+
+export const runtime = 'experimental-edge';
 
 // import { NextRequest, NextResponse } from 'next/server';
 // import createMiddleware from 'next-intl/middleware';
