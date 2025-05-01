@@ -9,6 +9,8 @@ import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
 import Link from "next/link";
+import User from "./components/User";
+import { useUser } from "../../context/UserContext";
 
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
@@ -16,6 +18,10 @@ export default function MobileHeader() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+
+   //  const pathname = usePathname();
+  
+      const { isLoggedIn } = useUser();
 
   const [scrollDirection, setScrollDirection] = useState("down");
 
@@ -193,8 +199,8 @@ export default function MobileHeader() {
         {/* <!-- /.container --> */}
 
         <div className="border-top mt-2 pb-2">
-          {/* <div className="customer-links container mt-4 mb-2 pb-1">
-            <svg
+          <div className="customer-links container mt-4 mb-2 pb-1">
+            {/* <svg
               className="d-inline-block align-middle"
               width="20"
               height="20"
@@ -202,12 +208,38 @@ export default function MobileHeader() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <use href="#icon_user" />
-            </svg>
-            <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
+              <use className="js-open-aside" href="#icon_user" />
+            </svg> */}
+            {!isLoggedIn ? (
+                <Link
+                    className="js-open-aside"
+                    href="#"
+                >
+                    <User /><span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
               My Account
             </span>
-          </div> */}
+                </Link>
+            ) : (
+                <Link href="#" onClick={handleLogout}>
+                    <FiLogOut size={20} />
+                </Link>
+            )}
+            
+          </div>
+          {/* <div className="header-tools__item hover-container">
+            {!isLoggedIn ? (
+                <Link
+                    className="js-open-aside"
+                    href="#"
+                >
+                    <User />
+                </Link>
+            ) : (
+                <Link href="#" onClick={handleLogout}>
+                    <FiLogOut size={20} />
+                </Link>
+            )}
+        </div> */}
       <div className="d-flex">
           <div className="container d-flex align-items-center">
             <label className="me-2 text-secondary">Language</label>
