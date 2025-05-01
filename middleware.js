@@ -26,12 +26,12 @@ export async function middleware(request) {
   }
 
   // Get the actual domain from headers (handle proxy pass)
-  let host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'http://localhost:3000';
-  // let host = 'https://ae.ahmedalmaghribi.com, ae.ahmedalmaghribi.com';
+  // let host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'http://localhost:3000';
+  // let hostHeader = 'https://ae.ahmedalmaghribi.com, ae.ahmedalmaghribi.com';
   // const protocol = request.headers.get('x-forwarded-proto') || 'http';
   // const protocol = 'https';
   // Clean host: take first value, remove ports, trim whitespace, and handle commas
-  host = host.split(',')[0].trim();
+  // host = host.split(',')[0].trim();
   // .split(':')[1].trim();
   // console.log('Raw headers:', {
   //   'x-forwarded-host': request.headers.get('x-forwarded-host'),
@@ -46,8 +46,14 @@ export async function middleware(request) {
   //   host = 'ae.ahmedalmaghribi.com'; // Fallback to default domain
   // }
   // const currentDomain = `${protocol}://${host}`;
-  const currentDomain = `${host}`;
-  console.log('Current domain (from headers):', currentDomain);
+  // Normalize the host
+  let hostHeader = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000';
+  hostHeader = hostHeader.split(',')[0].trim();               // Take first if multiple
+  hostHeader = hostHeader.replace(/^https?:\/\//, '');        // Remove protocol
+  const domainOnly = hostHeader.split(':')[0].trim();         // Remove port if present
+
+  const currentDomain = `https://${domainOnly}`;
+  console.log('Normalized current domain:', currentDomain);
   // return;
 
   // Perform GeoIP lookup via API route
