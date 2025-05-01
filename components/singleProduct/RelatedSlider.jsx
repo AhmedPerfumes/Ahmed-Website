@@ -6,7 +6,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from 'he';
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 
 export default function RelatedSlider({ relatedProds }) {
@@ -15,6 +15,7 @@ export default function RelatedSlider({ relatedProds }) {
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
+  const t = useTranslations();
   const swiperOptions = {
     autoplay: false,
     slidesPerView: 4,
@@ -179,9 +180,9 @@ export default function RelatedSlider({ relatedProds }) {
               </div>
 
               <div className="pc__info position-relative">
-                <p className="pc__category">{elm.category_name}</p>
+                <p className="pc__category">{t(elm.category_name)}</p>
                 <h6 className="pc__title">
-                  <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                  <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && t(he.decode(elm?.product_name))}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
                   { price(elm) }
