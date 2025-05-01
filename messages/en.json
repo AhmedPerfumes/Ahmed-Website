@@ -414,6 +414,8 @@
   "Frost Ice": "Frost Ice",
   "Peachy Peach": "Peachy Peach",
   "Tiff Tiff": "Tiff Tiff",
+  "Black Fume": "Black Fume",
+  
 
   "----------Gel Category---------":"----------Gel Category---------",
   "Marj Body Gel":"Marj Body Gel",
@@ -494,6 +496,8 @@
 "Frost Ice Description":"<p>FROST ICE is a perfect choice for those who seek a scent that embodies vitality and elegance, making it an essential addition to any collection.Edp 100ml</p>",
 "Peachy Peach Description":"PEACHY PEACH is the perfect expression of cheerful elegance, making it an essential addition to any fragrance collection.",
 "Tiff Tiff Description":"Tiff Tiff is a captivating fragrance that blends sweetness and sophistication. Tiff Tiff is perfect for those who appreciate a light and playful fragrance that embodies joy and sophistication.",
+"Cinder Description":"Cinder is a fragrance that captures the essence of warmth and comfort, evoking the feeling of a cozy evening by the fire.",
+"Black Fume Description":"Black Fume is a fragrance that embodies the essence of mystery and allure, perfect for those who appreciate a bold and captivating scent.",
 
 "Shay Jadeed Content": "<p>Besiege in with tickling prefusions of shay jadeed. Let go the scents beyond the Middle East. Just a trifling amount of splash, fills your essence with liveliness; as juicy citruses sums the top the note with thier zesty flavors. </p>",
 "Abaan Content":"Abaan is a fragrance for confident & courageous. EDP 100 ML",
@@ -537,6 +541,8 @@
 "Frost Ice Content":"Experience the refreshing embrace of FROST ICE, a fragrance that captures the essence of a crisp, invigorating breeze. The scent opens with a burst of vibrant sea notes, complemented by the juicy sweetness of watermelon, grapefruit, and mandarin orange, creating an uplifting and lively introduction. As the fragrance develops, the heart unveils delicate jasmine and aromatic rosemary, adding a touch of floral sophistication to the composition. The journey concludes with a warm and earthy base of ambergris, rich woods, moss, and patchouli, which together create a harmonious balance of freshness and depth.",
 "Peachy Peach Content":"Indulge in the delightful sweetness of PEACHY PEACH, a fragrance that captures the spirit of ripe, juicy fruits. The scent opens with a luscious blend of vanilla, pear, and marshmallow, enhanced by the fresh green notes of violet leaves and the exotic touch of ylang-ylang, creating a whimsical and inviting introduction. As the fragrance unfolds, the heart reveals playful notes of bubblegum and jelly bean, complemented by the richness of caramel, jasmine, and labdanum, evoking a sense of nostalgia and joy. The base is a warm, comforting blend of sugar, patchouli, tonka, cashmere wood, sandalwood, and vetiver, anchored by the softness of white musk.",
 "Tiff Tiff Content":" Tiff Tiff opens with a delightful fusion of sugar, dates, mandarin, and red berries, creating a luscious first impression. The heart reveals an elegant bouquet of Bulgarian rose, peony, and rich vanilla, intertwined with indulgent cacao for a touch of warmth. Finally, the scent settles into a sensual base of white musk, amber, and tonka, leaving a lasting trail of elegance and allure.",
+"Cinder Content":"Cinder is a captivating fragrance that opens with a burst of fresh citrus notes, including bergamot and lemon, creating an invigorating introduction. The heart reveals a delicate blend of floral notes, featuring lavender and vanilla, which adds a touch of sweetness and warmth. As the scent evolves, it settles into a rich base of woody accords, including agarwood and frankincense, providing depth and complexity. Cinder is a fragrance that embodies elegance and sophistication, making it perfect for any occasion.",
+"Black Fume Content":"Black Fume is a bold and enigmatic fragrance that opens with a burst of juicy raspberry, leading into a smoky heart of orris and a burnt wood effect. Its base is rich and addictive, blending labdanum, oud, tobacco, and ambroxan for a deep, lingering trail that exudes mystery and intensity. Black Fume is a fragrance that captures the essence of mystery and intrigue, making it perfect for those who appreciate a fragrance that evokes a sense of mystery and intrigue.",
 
 "Shay Jadeed Notes": "<p>Top – citrus (Lemon) <br>heart – Flower (lavender vanilla) <br>base - woody (agarwood, frankincense)</p>",
 "Saba Horoof Notes": "<p>Top - Citrus </p><p>Heart - White floral -rosy </p><p>Base - Musky - woody </p>",
@@ -580,6 +586,8 @@
 "Frost Ice Notes":"<p>TOP : SEA NOTES, WATERMELON, GRAPEFRUIT, MANDARIN ORANGE.</p><p>HEART : JASMINE, ROSEMARY.</p><p>BOTTOM : AMBERGRIS, WOODS, MOSS, PATCHOULI.</p>",
 "Peachy Peach Notes":"<p>TOP : VANILLA, PEAR, MARSHMALLOW. VIOLET LEAVES, YLANG-YLANG.</p><p>HEART : BUBBLEGUM, JELLY BEAN, CARAMEL. JASMINE, LABDANUM.</p><p>BOTTOM : SUGAR, PATCHOULI, TONKA, CASHMERE WOOD, SANDAL WOOD,VETIVER. WHITE MUSK.</p>",
 "Tiff Tiff Notes":"<p>TOP : sugar, dates, Mandarin, red berries</p><p>HEART : bulgarian rose, peony, vanilla, cacao.</p><p>BOTTOM : white musk, amber, tonka.</p>",
+"Cinder Notes":"<p>TOP : bergamot, davana, pink pepper.</p><p>HEART : agarwood, white amber, Rosemary.</p><p>BOTTOM : leather, Musk, Haitian Vetiver, ambroxan.</p>",
+"Black Fume Notes":"<p>TOP : raspberry.</p><p>HEART : orris, burnt wood effect.</p><p>BOTTOM : labdanum, oud, tobacco, ambroxan.</p>",
 
 "----------EAU DE Parfum Single Product Page Occidental Fragrance":"----------EAU DE Parfum Single Product Page Occidental Fragrance",
 "Instance 60ML Description": "<p><span>Instance Perfume is a timeless and versatile fragrance that suits every occasion.</span></p>",

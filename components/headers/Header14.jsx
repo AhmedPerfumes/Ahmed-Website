@@ -168,7 +168,7 @@ export default function Header14() {
                         >
                             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
                                 <Link
-                                    href="#"
+                                    href={`/${locale}/${elm.btnLink}`}
                                     className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white"
                                 >
                                     {t(
@@ -369,9 +369,9 @@ export default function Header14() {
                                     )}
                                 </div>
 
-                                <a className="header-tools__item" href={`/${locale}/store-locator`}>
+                                <Link className="header-tools__item" href={`/${locale}/store-locator`}>
                                     <IoLocationOutline size={20} />
-                                </a>
+                                </Link>
 
                                 <a
                                     onClick={() => openCart()}
