@@ -163,7 +163,7 @@ pipeline {
             steps {
                 git url: 'https://github.com/AhmedPerfumes/Ahmed-Website.git',
                     branch: 'yazil-FE', 
-                    credentialsId: 'github-credentials'
+                    credentialsId: 'github-credentials-AMG'
             }
         }
         stage('Build Docker Image') {
