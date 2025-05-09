@@ -20,7 +20,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "express": "^4.21.1",
-    "fast-xml-parser": "^4.5.1",
+    "fast-xml-parser": "^4.5.3",
     "framer-motion": "^11.3.19",
     "gsap": "^3.12.5",
     "gsap-trial": "^3.12.5",
