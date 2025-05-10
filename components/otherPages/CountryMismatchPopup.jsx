@@ -3,9 +3,12 @@
 
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import "../HomePage.css";
+import Link from "next/link";
+import { auto } from '@popperjs/core';
 
 const countryNames = {
-  AE: 'United Arab Emirates',
+  AE: 'The United Arab Emirates',
   SA: 'Saudi Arabia',
   QA: 'Qatar',
   OM: 'Oman',
@@ -33,40 +36,78 @@ export default function CountryMismatchPopup() {
   if (!mismatchCountry) return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      background: 'white',
-      padding: '20px',
-      border: '1px solid #ccc',
-      zIndex: 1000,
-      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-    }}>
-      <h2>Country Mismatch</h2>
-      <p>
-        It looks like you are accessing this site from {countryNames[mismatchCountry]}. Would you like to visit our site for {countryNames[mismatchCountry]}?
-      </p>
-      <button
-        onClick={() => {
-          // Redirect to the correct domain (optional)
-          const domainMap = {
-            AE: 'https://ae.ahmedalmaghribi.com',
-            SA: 'https://ksa.ahmedalmaghribi.com',
-            QA: 'https://qa.ahmedalmaghribi.com',
-            OM: 'https://om.ahmedalmaghribi.com',
-            BH: 'https://bh.ahmedalmaghribi.com',
-            KW: 'https://kw.ahmedalmaghribi.com',
-          };
-          window.location.href = domainMap[mismatchCountry] || 'https://ae.ahmedalmaghribi.com';
-        }}
-      >
-        Visit {countryNames[mismatchCountry]} Site
-      </button>
-      <button onClick={handleClose} style={{ marginLeft: '10px' }}>
-        Stay Here
-      </button>
+    // <div className='ipmodal-dialog'>
+    //   <div className='ipmodal-content' >
+    //       <div className='ipmodal-header'>
+    //         Welcome To AhmedAlMaghribi.com
+    //       </div>
+    //       <p className='ipmodal-text'>
+    //       It seems you are visiting us from {countryNames[mismatchCountry]}, Would you like to go to our  {countryNames[mismatchCountry]}?
+    //       </p>
+        
+    //       <div className='ipmodal-btn'>
+    //         <div className='btn-left'>
+    //           <Link href="#"
+    //             onClick={() => {
+    //               // Redirect to the correct domain (optional)
+    //               const domainMap = {
+    //                 AE: 'https://ae.ahmedalmaghribi.com',
+    //                 SA: 'https://ksa.ahmedalmaghribi.com',
+    //                 QA: 'https://qa.ahmedalmaghribi.com',
+    //                 OM: 'https://om.ahmedalmaghribi.com',
+    //                 BH: 'https://bh.ahmedalmaghribi.com',
+    //                 KW: 'https://kw.ahmedalmaghribi.com',
+    //               };
+    //               window.location.href = domainMap[mismatchCountry] || 'https://ae.ahmedalmaghribi.com';
+    //             }} style={{ minWidth: '13.875rem', width: 'auto' }}>
+    //             Visit {countryNames[mismatchCountry]} Site
+    //           </Link>
+    //         </div>
+
+    //         <div className='btn-right'>
+    //           <Link href="#" onClick={handleClose} style={{minWidth: '13.875rem', width: 'auto', color: '#fff',  }}>
+    //             Stay Here
+    //           </Link>
+    //       </div>
+    //     </div>  
+    //   </div>    
+    // </div>
+    <>
+    <div className="ipmodal-backdrop" onClick={handleClose}></div>
+    <div className="ipmodal-dialog">
+      <div className="ipmodal-content">
+        <button className="ipmodal-close" onClick={handleClose}>&times;</button>
+        <div className="ipmodal-header">Welcome To AhmedAlMaghribi.com</div>
+        <p className="ipmodal-text">
+          It seems you are visiting us from {countryNames[mismatchCountry]}. Would you like to go to our {countryNames[mismatchCountry]} site?
+        </p>
+        <div className="ipmodal-btn">
+          <div className="btn-left">
+            <Link
+              href="#"
+              onClick={() => {
+                const domainMap = {
+                  AE: 'https://ae.ahmedalmaghribi.com',
+                  SA: 'https://ksa.ahmedalmaghribi.com',
+                  QA: 'https://qa.ahmedalmaghribi.com',
+                  OM: 'https://om.ahmedalmaghribi.com',
+                  BH: 'https://bh.ahmedalmaghribi.com',
+                  KW: 'https://kw.ahmedalmaghribi.com',
+                };
+                window.location.href = domainMap[mismatchCountry] || 'https://ae.ahmedalmaghribi.com';
+              }} style={{ minWidth: '13.875rem', width: 'auto',}}
+            >
+              Visit {countryNames[mismatchCountry]} Site
+            </Link>
+          </div>
+          <div className="btn-right">
+            <Link href="#" onClick={handleClose} style={{ minWidth: '13.875rem', width: 'auto', color: '#fff',  }}>
+              No, Stay Here
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
+  </>
   );
 }
