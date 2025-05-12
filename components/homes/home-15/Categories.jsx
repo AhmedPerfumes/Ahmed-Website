@@ -78,9 +78,9 @@ export default function Categories({ section }) {
                     >
                         {t(elm.altText)}
                         <br />
-                        <span className="fs-14 text-secondary fst-italic">
+                        {/* <span className="fs-14 text-secondary fst-italic">
                             {t(elm.subText)}
-                        </span>
+                        </span> */}
                     </Link>
                 </div>
                 <div className="d-flex justify-content-center">
