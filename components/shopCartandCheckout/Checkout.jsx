@@ -534,7 +534,7 @@ export default function Checkout() {
     }
 
     const subTotalPrice = (elm) => {
-        if (elm.isGift) {
+        if (elm.is_gift) {
             return <td>0.00{currency.symbol} (Free Gift)</td>;
         }
         const currentUTC = new Date(); // Current UTC time

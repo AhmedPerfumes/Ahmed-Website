@@ -7,6 +7,7 @@ import he from 'he';
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Discount } from '@mui/icons-material';
 
 const swiperOptions = {
   autoplay: true,
@@ -50,18 +51,20 @@ const thresholds = [
     max: 500,
     gifts: [
       {
-        product_id: 'gift1',
+        product_id: 29,
         product_name: 'Free Mug',
-        price: 0,
+        price: "0",
         image: '/images/mug.jpg',
-        isGift: true,
+        is_gift: true,
+        discount: null
       },
       {
-        product_id: 'gift2',
+        product_id: 30,
         product_name: 'Free Bag',
-        price: 0,
+        price: "0",
         image: '/images/tote.jpg',
-        isGift: true,
+        is_gift: true,
+        discount: null
       },
     ],
   },
@@ -69,18 +72,20 @@ const thresholds = [
     min: 500,
     gifts: [
       {
-        product_id: 'gift3',
+        product_id: 31,
         product_name: 'Free Headphones',
-        price: 0,
+        price: "0",
         image: '/images/headphones.jpg',
-        isGift: true,
+        is_gift: true,
+        discount: null
       },
       {
-        product_id: 'gift4',
+        product_id: 32,
         product_name: 'Free Card',
-        price: 0,
+        price: "0",
         image: '/images/giftcard.jpg',
-        isGift: true,
+        is_gift: true,
+        discount: null
       },
     ],
   },
@@ -131,7 +136,7 @@ const FreeGiftFeature = () => {
     } else if (selectedGift) {
       // Check if the selected gift is still in the cart
       const giftInCart = cartProducts.find(
-        (item) => item.isGift && item.product_id === selectedGift
+        (item) => item.is_gift && item.product_id === selectedGift
       );
       if (!giftInCart) {
         console.log('Selected gift not in cart, clearing selectedGift');

@@ -99,7 +99,7 @@ export default function Context({ children }) {
   }, [wishList]);
 
   const removeGiftFromCart = () => {
-    const updatedCart = cartProducts.filter((item) => !item.isGift);
+    const updatedCart = cartProducts.filter((item) => !item.is_gift);
     setCartProducts(updatedCart);
     localStorage.setItem('cartList', JSON.stringify(updatedCart));
   };
