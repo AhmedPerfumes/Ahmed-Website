@@ -10,11 +10,11 @@ import "swiper/css/pagination";
 import { Discount } from '@mui/icons-material';
 
 const swiperOptions = {
-  autoplay: true,
-  slidesPerView: 4,
+  autoplay: false,
+  slidesPerView: 6,
   slidesPerGroup: 4,
   effect: "none",
-  loop: true,
+  // loop: true,
   modules: [Pagination, Navigation],
   pagination: {
     el: ".products-pagination",
@@ -29,17 +29,17 @@ const swiperOptions = {
     320: {
       slidesPerView: 2,
       slidesPerGroup: 2,
-      spaceBetween: 14,
+      // spaceBetween: 14,
     },
     768: {
       slidesPerView: 3,
       slidesPerGroup: 3,
-      spaceBetween: 24,
+      // spaceBetween: 24,
     },
     992: {
       slidesPerView: 4,
       slidesPerGroup: 4,
-      spaceBetween: 30,
+      // spaceBetween: 30,
     },
   },
 };
@@ -51,18 +51,34 @@ const thresholds = [
     max: 500,
     gifts: [
       {
-        product_id: 29,
-        product_name: 'Free Mug',
+        product_id: 190,
+        product_name: 'Endless',
         price: "0",
-        image: '/images/mug.jpg',
+        image: 'epdnew/endless-1.jpg',
         is_gift: true,
         discount: null
       },
       {
-        product_id: 30,
-        product_name: 'Free Bag',
+        product_id: 189,
+        product_name: 'Sapphire',
         price: "0",
-        image: '/images/tote.jpg',
+        image: 'epdnew/sapphire.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 185,
+        product_name: 'Xtasy',
+        price: "0",
+        image: 'epdnew/xtasy.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 194,
+        product_name: 'Ruby',
+        price: "0",
+        image: 'epdnew/ruby.jpg',
         is_gift: true,
         discount: null
       },
@@ -72,18 +88,74 @@ const thresholds = [
     min: 500,
     gifts: [
       {
-        product_id: 31,
-        product_name: 'Free Headphones',
+        product_id: 182,
+        product_name: 'Blue Oud',
         price: "0",
-        image: '/images/headphones.jpg',
+        image: 'epdnew/blu-oud.jpg',
         is_gift: true,
         discount: null
       },
       {
-        product_id: 32,
-        product_name: 'Free Card',
+        product_id: 180,
+        product_name: 'Blue By Ahmed',
         price: "0",
-        image: '/images/giftcard.jpg',
+        image: 'epdnew/blu-by-ahmed.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 149,
+        product_name: 'Joud',
+        price: "0",
+        image: 'epdnew/joud-100ml.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 179,
+        product_name: 'Azure Royal',
+        price: "0",
+        image: 'epdnew/azure-royal.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 257,
+        product_name: 'Couture Noir',
+        price: "0",
+        image: 'epdnew/couture-noir.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 181,
+        product_name: 'Zeleny',
+        price: "0",
+        image: 'epdnew/zeleny.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 246,
+        product_name: 'Cinder',
+        price: "0",
+        image: 'epdnew/cinder-1.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 245,
+        product_name: 'Moonlit',
+        price: "0",
+        image: 'epdnew/moonlit-1.jpg',
+        is_gift: true,
+        discount: null
+      },
+      {
+        product_id: 244,
+        product_name: 'Mosaic',
+        price: "0",
+        image: 'epdnew/mosaic-1.jpg',
         is_gift: true,
         discount: null
       },
@@ -185,7 +257,7 @@ const FreeGiftFeature = () => {
                 <SwiperSlide key={i} className="swiper-slide product-card">
                   <div className="pc__img-wrapper">
                     <Image
-                      src={product.image}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}storage/${product.image}`}
                       alt={he.decode(product.product_name)}
                       width="330"
                       height="400"
