@@ -1,15 +1,17 @@
-"use client";
+import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Wedding() {
+  const t = useTranslations();
   return (
-    <div className="bg-white">
-      <div className="container text-center pt-5 ">
-        <h4 className="fs-4 text-uppercase">
+    <div style={{ backgroundColor: "#fffaef" }}>
+      <div className="container text-center pt-5 mt-5 mb-5 pb-5" >
+        <h4 className="fs-4 text-uppercase" style={{ color: "#c68d12" }}>
           We would like to create your memorable day to be remembered forever!
         </h4>
-        <h2 className="fs-2 text-uppercase pt-4">Wedding packages</h2>
+        <h2 className="fs-2 text-uppercase pt-4">Elevate your wedding experience</h2>
       </div>
       <div className="container">
         <div className="row align-items-center">
@@ -37,18 +39,19 @@ export default function Wedding() {
               Trust us to make your wedding an unforgettable sensory experience.
             </p>
 
-            <div className="d-flex justify-content-center">
+            {/* <div className="d-flex justify-content-center">
               <Link
                 href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
-      <div className="container">
+
+      {/* <div className="container">
         <div className="row align-items-center">
           <div className="col-md-6 px-5 mb-2">
             <p className="fs-2 text-center text-uppercase">
@@ -64,15 +67,6 @@ export default function Wedding() {
               that captivate and embrace, leaving an indelible mark of
               sophistication and luxury.
             </p>
-
-            <div className="d-flex justify-content-center">
-              <Link
-                href="/shop"
-                className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-              >
-                Know More
-              </Link>
-            </div>
           </div>
 
           <div className="col-md-6">
@@ -83,7 +77,36 @@ export default function Wedding() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
+      <div className="container">
+  <div className="row align-items-center">
+    {/* Image column - shown first on mobile/tablet, second on desktop */}
+    <div className="col-md-6 order-1 order-md-2">
+      <img
+        src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/multiple-products-2.png"
+        className="img-fluid"
+        alt="Description of image"
+      />
+    </div>
+
+    {/* Text column - shown second on mobile/tablet, first on desktop */}
+    <div className="col-md-6 px-5 mb-2 order-2 order-md-1">
+      <p className="fs-2 text-center text-uppercase">
+        Wedding Service we offer
+      </p>
+      <p className="fs-6 text-center">
+        We provide a perfuming service for the purpose of welcoming your
+        guests with some of the best Arabic and French perfumes as well as
+        luxury oils with incense and Oud Ma'attar.
+      </p>
+      <p className="fs-6 text-center">
+        Elevate every welcoming moment with a delicate blend of scents
+        that captivate and embrace, leaving an indelible mark of
+        sophistication and luxury.
+      </p>
+    </div>
+  </div>
+</div>
 
       <div className="container pt-5">
         <h2 className="fs-2 text-uppercase text-center mb-5">
@@ -101,7 +124,7 @@ export default function Wedding() {
             <h3 className="fs-3 text-uppercase">Enchanting Harbor</h3>
             <h4 className="fs-6 text-uppercase fw-bold">package 1</h4>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-              6000 Aed
+              AED 6,000
             </h4>
 
             <p className="lh-sm">With AMG Luxury Stand (Enchanting Harbor)</p>
@@ -111,14 +134,14 @@ export default function Wedding() {
             <p className="lh-sm">2 types of incense</p>
             <p className="lh-sm">2 types of scented oud</p>
 
-            <div className="d-flex justify-content-center pt-4">
+            {/* <div className="d-flex justify-content-center pt-4">
               <Link
                 href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium "
               >
                 Know More
               </Link>
-            </div>
+            </div> */}
           </div>
 
           <div className="col-md-6 text-center">
@@ -131,7 +154,7 @@ export default function Wedding() {
             <h3 className="fs-3 text-uppercase">Modern Bliss</h3>
             <h4 className="fs-6 text-uppercase fw-bold pt-1">package 2</h4>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-              4000 Aed
+              AED 4,000 
             </h4>
 
             <p className="lh-sm">With AMG Golden stand (Modern Bliss)</p>
@@ -139,14 +162,14 @@ export default function Wedding() {
             <p className="lh-sm">2 types of luxury oils (Arabic & French)</p>
             <p className="lh-sm">2 types of incense</p>
             <p className="lh-sm">2 types of scented oud</p>
-            <div className="d-flex justify-content-center pt-4">
+            {/* <div className="d-flex justify-content-center pt-4">
               <Link
                 href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -159,25 +182,25 @@ export default function Wedding() {
               className="img-fluid mb-3"
               alt="First Wedding Package"
             />
-            <h3 className="fs-2 text-uppercase">Enchanting Harbor</h3>
+            <h3 className="fs-3 text-uppercase">Precious</h3>
             <h4 className="fs-4 text-uppercase fw-bold">package 3</h4>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-              2000 Aed
+              AED 2,000 
             </h4>
 
-            <p className="lh-sm">With AMG Golden stand (Modern Bliss)</p>
+            <p className="lh-sm">With AMG Metallic stand (Precious)</p>
             <p className="lh-sm">15 best-selling perfumes</p>
             <p className="lh-sm">2 types of luxury oils (Arabic & French)</p>
             <p className="lh-sm">2 types of incense</p>
             <p className="lh-sm">2 types of scented oud</p>
-            <div className="d-flex justify-content-center pt-4">
+            {/* <div className="d-flex justify-content-center pt-4">
               <Link
                 href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
               </Link>
-            </div>
+            </div> */}
           </div>
 
           <div className="col-md-6 text-center">
@@ -187,25 +210,25 @@ export default function Wedding() {
               className="img-fluid mb-3"
               alt="Second Wedding Package"
             />
-            <h3 className="fs-2 text-uppercase">Modern Bliss</h3>
+            <h3 className="fs-3 text-uppercase">Bouquet of Scents</h3>
             <h4 className="fs-4 text-uppercase fw-bold">package 4</h4>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-              1500 Aed
+              AED 1,500 
             </h4>
 
-            <p className="lh-sm">With AMG Golden stand (Modern Bliss)</p>
+            <p className="lh-sm">Without AMG stand</p>
             <p className="lh-sm">15 best-selling perfumes</p>
             <p className="lh-sm">2 types of luxury oils (Arabic & French)</p>
             <p className="lh-sm">2 types of incense</p>
             <p className="lh-sm">2 types of scented oud</p>
-            <div className="d-flex justify-content-center pt-4">
+            {/* <div className="d-flex justify-content-center pt-4">
               <Link
                 href="/shop"
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
               >
                 Know More
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -213,15 +236,15 @@ export default function Wedding() {
   <h2 className="fs-2 text-uppercase text-center">Giveaways</h2>
   <div className="row align-items-center mt-4">
     <div className="col-md-4">
-      <img width={350} src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/memories-1.png" className="img-fluid" alt="Giveaway" />
+      <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/memories-1.png" className="img-fluid" alt="Giveaway" />
     </div>
     <div className="col-md-8">
       <div className="row">
         <div className="col-md-4">
           <div className="p-3  text-center">
-            <p className="text-uppercase fw-bold">Memory box 1</p>
+            <p className="text-uppercase fw-bold">Memory Box 1</p>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-            Price: 10.50 AED
+            Price: AED 10.50 
             </h4>
             <div className="d-flex text-center flex-column">
 
@@ -234,9 +257,9 @@ export default function Wedding() {
         </div>
         <div className="col-md-4">
         <div className="p-3  text-center">
-            <p className="text-uppercase fw-bold">Memory box 1</p>
+            <p className="text-uppercase fw-bold">Memory Box 2</p>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-            Price: 10.50 AED
+            Price: AED 15.75
             </h4>
             <div className="d-flex text-center flex-column">
 
@@ -250,9 +273,9 @@ export default function Wedding() {
         </div>
         <div className="col-md-4">
         <div className="p-3  text-center">
-            <p className="text-uppercase fw-bold">Memory box 1</p>
+            <p className="text-uppercase fw-bold">Memory Box 3</p>
             <h4 className="fs-5 fw-bold" style={{ color: "#C58B14" }}>
-            Price: 10.50 AED
+            Price: AED 21.00
             </h4>
             <div className="d-flex text-center flex-column">
 
@@ -273,7 +296,7 @@ export default function Wedding() {
         <div className="row align-items-center">
           <div className="col-md-6 px-5 mb-2">
             <p className="fs-2 text-center text-uppercase">
-              Indulge in the scent of{" "}
+              For the Joy of a Lifetime... a Fragrance that Lasts a Lifetime{" "}
             </p>
             <p className="fs-6 text-center">
               The wedding day is a day that will be remembered forever. And how
@@ -287,15 +310,6 @@ export default function Wedding() {
               types of incense, luxurious oils, fragrant oud perfumes that are
               presented in coordination distinctive honoring guests.
             </p>
-
-            <div className="d-flex justify-content-center pt-3">
-              <Link
-                href="/shop"
-                className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-              >
-                Know More
-              </Link>
-            </div>
           </div>
 
           <div className="col-md-6">
@@ -304,6 +318,31 @@ export default function Wedding() {
               className="img-fluid"
               alt="Description of image"
             />
+          </div>
+        </div>
+      </div>
+      <div className="pt-5"></div>
+      <div className="container pt-5" style={{border:"1px solid #cecece", backgroundColor: "#fffbf3" }}>
+        <div className="row align-items-center">
+          <div className="col-md-12 px-5 mb-2">
+            <p className="fs-2 text-center text-uppercase">
+              For Customization and additional services{" "}
+            </p>
+            <p className="fs-4 fw-bold text-center text-uppercase">
+              Contact{" "}
+            </p>
+            <p className="fs-6 fw-bold text-center" >
+              <Link
+                href="mailto:customersupport@ahmedalmaghribi.com"
+                className="btn-link btn-link_lg fw-bold" style={{ color: "#C58B14" }}
+              >
+                customersupport@ahmedalmaghribi.com
+              </Link>
+              
+            </p>
+            <p className="fs-6 fw-bold text-center" style={{ color: "#C58B14" }}>
+              +971 504894006 / 67420602 
+            </p>
           </div>
         </div>
       </div>
