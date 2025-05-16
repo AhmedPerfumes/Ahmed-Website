@@ -47,7 +47,7 @@ export async function GET(request) {
 
     // Perform GeoIP lookup
     const { country } = reader.country(ip);
-    const countryCode = country?.isoCode || 'AE'; // Fallback to US
+    const countryCode = country?.isoCode || 'AE'; // Fallback to AE
     console.log(`GeoIP API route: Country Code=${countryCode}`);
     return NextResponse.json({ countryCode });
   } catch (error) {

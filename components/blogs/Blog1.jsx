@@ -132,12 +132,12 @@ export default function Blog1() {
                   <span className="blog-grid__item-meta__date">{new Date(elm.created_at).toLocaleDateString()}</span>
                 </div>
                 <div className="blog-grid__item-title">
-                  <Link href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
+                  <Link href={elm.permalink ? `/${locale}/blog/${elm.permalink.key}` : `/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}>{elm.name}</Link>
                 </div>
                 <div className="blog-grid__item-content">
                   <p>{elm.description}</p>
                   <Link
-                    href={`/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
+                    href={elm.permalink ? `/${locale}/blog/${elm.permalink.key}` : `/${locale}/blog/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}`}
                     className="readmore-link"
                   >
                     Continue Reading
