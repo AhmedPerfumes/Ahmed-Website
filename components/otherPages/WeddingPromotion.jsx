@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-export default function Wedding() {
+export default function WeddingPromotion() {
   const t = useTranslations();
   return (
     <div style={{ backgroundColor: "#fffaef" }}>

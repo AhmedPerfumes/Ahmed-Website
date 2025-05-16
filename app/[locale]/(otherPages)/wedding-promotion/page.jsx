@@ -3,12 +3,12 @@ import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 import Header14 from "@/components/headers/Header14";
 // import Loader from "@/components/loader/Loader";
-import Wedding from "@/components/otherPages/Wedding";
+import WeddingPromotion from "@/components/otherPages/WeddingPromotion";
 import React from "react";
 
 export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+  title: "Ahmed Al Maghribi Wedding Promotion - Ahmed Al Maghribi Perfumes",
+  description: "Elevate your wedding experience with our enchanting perfume setup",
   icons: {
       icon: "/assets/images/ahmed-favicon.png",
   },
@@ -21,7 +21,7 @@ export default function WeddingPage() {
       <Header14 />
       <main className="">
         {/* <div className="mb-4 pb-4"></div> */}
-        <Wedding />
+        <WeddingPromotion />
         {/* <Services /> */}
         {/* <Clients /> */}
       </main>
