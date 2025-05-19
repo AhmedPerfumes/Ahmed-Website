@@ -15,11 +15,16 @@ export default function WeddingPromotion() {
       </div>
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-md-6">
-            <img
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/multiple-products-1.png"
-              className="img-fluid"
-              alt="Description of image"
+          <div className="col-md-6"  >
+            <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid"
+                src="/assets/images/wedding/multiple-products-1.png"
+                alt="wedding-products"
+                loading="lazy"
+                style={{ width:'100%', height: 'auto'}}
             />
           </div>
           <div className="col-md-6 px-5 mb-2">
@@ -38,55 +43,23 @@ export default function WeddingPromotion() {
             <p className="fs-6 text-center">
               Trust us to make your wedding an unforgettable sensory experience.
             </p>
-
-            {/* <div className="d-flex justify-content-center">
-              <Link
-                href="/shop"
-                className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-              >
-                Know More
-              </Link>
-            </div> */}
           </div>
         </div>
       </div>
-
-      {/* <div className="container">
-        <div className="row align-items-center">
-          <div className="col-md-6 px-5 mb-2">
-            <p className="fs-2 text-center text-uppercase">
-              Wedding Service we offer
-            </p>
-            <p className="fs-6 text-center">
-              We provide a perfuming service for the purpose of welcoming your
-              guests with some of the best Arabic and French perfumes as well as
-              luxury oils with incense and Oud Ma'attar.
-            </p>
-            <p className="fs-6 text-center">
-              Elevate every welcoming moment with a delicate blend of scents
-              that captivate and embrace, leaving an indelible mark of
-              sophistication and luxury.
-            </p>
-          </div>
-
-          <div className="col-md-6">
-            <img
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/multiple-products-2.png"
-              className="img-fluid"
-              alt="Description of image"
-            />
-          </div>
-        </div>
-      </div> */}
       <div className="container">
   <div className="row align-items-center">
     {/* Image column - shown first on mobile/tablet, second on desktop */}
     <div className="col-md-6 order-1 order-md-2">
-      <img
-        src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/multiple-products-2.png"
-        className="img-fluid"
-        alt="Description of image"
-      />
+      <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid"
+                src="/assets/images/wedding/multiple-products-2.png"
+                alt="wedding-products"
+                loading="lazy"
+                style={{ width:'100%', height: 'auto'}}
+            />
     </div>
 
     {/* Text column - shown second on mobile/tablet, first on desktop */}
@@ -115,11 +88,16 @@ export default function WeddingPromotion() {
 
         <div className="row">
           <div className="col-md-6 text-center">
-            <img
-              width={500}
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-1.png"
-              className="img-fluid mb-3"
-              alt="First Wedding Package"
+            
+            <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid mb-3"
+                src="/assets/images/wedding/setup-1.png"
+                alt="First Wedding Package"
+                loading="lazy"
+                style={{ width:'500px', height: 'auto'}}
             />
             <h3 className="fs-3 text-uppercase">Enchanting Harbor</h3>
             <h4 className="fs-6 text-uppercase fw-bold">package 1</h4>
@@ -145,11 +123,15 @@ export default function WeddingPromotion() {
           </div>
 
           <div className="col-md-6 text-center">
-            <img
-              width={500}
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-2.png"
-              className="img-fluid mb-3"
-              alt="Second Wedding Package"
+            <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid mb-3"
+                src="/assets/images/wedding/setup-2.png"
+                alt="Wedding Package 2"
+                loading="lazy"
+                style={{ width:'500px', height: 'auto'}}
             />
             <h3 className="fs-3 text-uppercase">Modern Bliss</h3>
             <h4 className="fs-6 text-uppercase fw-bold pt-1">package 2</h4>
@@ -176,11 +158,15 @@ export default function WeddingPromotion() {
       <div className="container pt-5">
         <div className="row">
           <div className="col-md-6 text-center">
-            <img
-              width={500}
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-1.png"
-              className="img-fluid mb-3"
-              alt="First Wedding Package"
+            <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid mb-3"
+                src="/assets/images/wedding/setup-3.png"
+                alt="Wedding Package 3"
+                loading="lazy"
+                style={{ width:'500px', height: 'auto'}}
             />
             <h3 className="fs-3 text-uppercase">Precious</h3>
             <h4 className="fs-4 text-uppercase fw-bold">package 3</h4>
@@ -204,11 +190,15 @@ export default function WeddingPromotion() {
           </div>
 
           <div className="col-md-6 text-center">
-            <img
-              width={500}
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/setup-2.png"
-              className="img-fluid mb-3"
-              alt="Second Wedding Package"
+            <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid mb-3"
+                src="/assets/images/wedding/setup-4.png"
+                alt="Wedding Package 4"
+                loading="lazy"
+                style={{ width:'500px', height: 'auto'}}
             />
             <h3 className="fs-3 text-uppercase">Bouquet of Scents</h3>
             <h4 className="fs-4 text-uppercase fw-bold">package 4</h4>
@@ -236,7 +226,16 @@ export default function WeddingPromotion() {
   <h2 className="fs-2 text-uppercase text-center">Giveaways</h2>
   <div className="row align-items-center mt-4">
     <div className="col-md-4">
-      <img src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/memories-1.png" className="img-fluid" alt="Giveaway" />
+      <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid mb-3"
+                src="/assets/images/wedding/memories-1.png"
+                alt="Giveaway"
+                loading="lazy"
+                style={{ width:'auto', height: 'auto'}}
+            />
     </div>
     <div className="col-md-8">
       <div className="row">
@@ -313,10 +312,15 @@ export default function WeddingPromotion() {
           </div>
 
           <div className="col-md-6">
-            <img
-              src="https://www.ahmedalmaghribi.com/wp-content/uploads/2023/11/weeding-min.png"
-              className="img-fluid"
-              alt="Description of image"
+            <Image
+                width={0}
+                height={0}
+                sizes="100%"
+                className="img-fluid mb-3"
+                src="/assets/images/wedding/weeding-min.png"
+                alt="Wedding Package"
+                loading="lazy"
+                style={{ width:'100%', height: 'auto'}}
             />
           </div>
         </div>
