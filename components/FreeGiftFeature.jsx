@@ -234,17 +234,19 @@ const FreeGiftFeature = () => {
     }
     const nextThreshold = thresholds.find((threshold) => totalPrice < threshold.min);
     if (nextThreshold) {
-      return `Spend AED ${(nextThreshold.min - totalPrice).toFixed(2)} more to unlock a free gift!`;
+      return <span className='t-subtitle' style={{ color:'#c00000',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>Spend AED {(nextThreshold.min - totalPrice).toFixed(2)} more to unlock a free gift!</span>;
     }
     return 'Add more items to unlock a free gift!';
   };
 
   return (
-    <div className="my-8 px-4">
+    <div className="my-4 px-4">
       {activeThreshold ? (
         <div>
           <h4 className="font-bold mb-4">
-            Congratulations! Choose Your Free Gift
+            <span className='t-subtitle' style={{ color:'#c00000',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
+            You've Earned a Free Gift – Choose Yours Below!
+            </span>
           </h4>
           <Swiper
             {...swiperOptions}

@@ -1,10 +1,11 @@
 export const footerLinks1 = [
   { href: "/about", text: "Company Information" },
+  { href: "/blog", text: "Blog" },
+  { href: "/export", text: "Worldwide Distributions" },
+  { href: "/wedding-promotion", text: "Wedding Promotion" },
   { href: "/privacy", text: "Privacy Policy" },
   { href: "/terms", text: "Terms & Conditions" },
-  { href: "/blog", text: "Blog" },
   { href: "/contact", text: "Contact Us" },
-  { href: "/export", text: "Worldwide Distributions" },
   { href: "/shipping-and-delivery", text: "Shipping & Delivery" },
   { href: "/refund-policy", text: "Refund Policy" }
 ];
