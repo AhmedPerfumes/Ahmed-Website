@@ -6,7 +6,7 @@ import { socialLinks } from "@/data/socials";
 import React, { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import CartLength from "./components/CartLength";
-import { FiLogOut } from "react-icons/fi";
+
 import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
