@@ -28,12 +28,7 @@ export default function MobileHeader() {
   const [scrollDirection, setScrollDirection] = useState("down");
 
   const [searchKeyWord, setSearchKeyWord] = useState("");
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/";
-};
+
 
   const handleChange = (event) => {
     setSearchKeyWord(event.target.value);
