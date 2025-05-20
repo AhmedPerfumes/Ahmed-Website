@@ -32,7 +32,7 @@ export default function Context({ children }) {
           return accumulator + product.quantity * coupon_price;
         }
       } else if(product?.sale_price) {
-        const sale_price = (product.price - (product.price / 100 * product.sale_price)).toFixed(2);
+        const sale_price = (product.sale_price).toFixed(2);
         return accumulator + product.quantity * sale_price;
       }
       return accumulator + product.quantity * product.price;

@@ -38,7 +38,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
         console.log('else if');
         return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     } else if(elm?.sale_price) {
-        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{(((elm.price * 1.05) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     } else {
         return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }

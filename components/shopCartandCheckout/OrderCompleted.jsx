@@ -56,7 +56,7 @@ export default function OrderCompleted() {
         return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
       }
     } else if(elm?.sale_price) {
-        return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{((elm.sale_price) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     } else {
         return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }

@@ -604,7 +604,7 @@ export default function Checkout() {
             return (
                 <td>
                     {(
-                        (elm.price - (elm.price / 100) * elm.sale_price) *
+                        (elm.sale_price) *
                         elm.quantity
                     ).toFixed(2)}
                     {currency.symbol}

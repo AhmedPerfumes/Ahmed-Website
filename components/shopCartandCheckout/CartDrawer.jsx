@@ -60,7 +60,7 @@ export default function CartDrawer() {
         return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+      return <span className="cart-drawer-item__price money price">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     } else {
       return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     }

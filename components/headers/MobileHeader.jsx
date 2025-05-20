@@ -5,6 +5,7 @@ import { socialLinks } from "@/data/socials";
 
 import React, { useEffect, useState } from "react";
 import CartLength from "./components/CartLength";
+import { FiLogOut } from "react-icons/fi";
 import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
@@ -26,6 +27,12 @@ export default function MobileHeader() {
   const [scrollDirection, setScrollDirection] = useState("down");
 
   const [searchKeyWord, setSearchKeyWord] = useState("");
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+};
 
   const handleChange = (event) => {
     setSearchKeyWord(event.target.value);
