@@ -105,7 +105,7 @@ export default function Cart() {
         return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+      return <span className="shopping-cart__subtotal">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     } else {
       return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     }
@@ -119,7 +119,7 @@ export default function Cart() {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}{ currency.symbol }</span>;
+      return <span className="shopping-cart__product-price">{(elm.sale_price).toFixed(2)}{ currency.symbol }</span>;
     } else {
       return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
     }

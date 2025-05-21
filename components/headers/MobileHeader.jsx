@@ -4,7 +4,9 @@ import { currencyOptions, languageOptions } from "@/data/footer";
 import { socialLinks } from "@/data/socials";
 
 import React, { useEffect, useState } from "react";
+import { FiLogOut } from "react-icons/fi";
 import CartLength from "./components/CartLength";
+
 import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
@@ -28,8 +30,16 @@ export default function MobileHeader() {
 
   const [searchKeyWord, setSearchKeyWord] = useState("");
 
+
   const handleChange = (event) => {
     setSearchKeyWord(event.target.value);
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
   };
 
   useEffect(() => {
@@ -223,7 +233,7 @@ export default function MobileHeader() {
                 </Link>
             ) : (
                 <Link href="#" onClick={handleLogout}>
-                    <FiLogOut size={20} />
+                    <FiLogOut size={20} /> Logout
                 </Link>
             )}
             
