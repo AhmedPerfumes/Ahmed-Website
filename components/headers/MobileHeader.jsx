@@ -12,6 +12,7 @@ import Link from "next/link";
 import User from "./components/User";
 import { useUser } from "../../context/UserContext";
 import { IoLocationOutline } from "react-icons/io5";
+import { IoReorderTwoSharp } from "react-icons/io5";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 export default function MobileHeader() {
@@ -199,7 +200,7 @@ export default function MobileHeader() {
         {/* <!-- /.container --> */}
 
         <div className="border-top mt-2 pb-2">
-          <div className="customer-links border-bottom container mt-4 mb-2 pb-4">
+          <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
             {/* <svg
               className="d-inline-block align-middle"
               width="20"
@@ -215,9 +216,10 @@ export default function MobileHeader() {
                     className="js-open-aside d-flex"
                     href="#"
                 >
-                    <User /><span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-              My Account
-            </span>
+                    <User />
+                    <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
+                      My Account
+                    </span>
                 </Link>
             ) : (
                 <Link href="#" onClick={handleLogout}>
@@ -226,7 +228,15 @@ export default function MobileHeader() {
             )}
             
           </div>
-          <div className="customer-links border-bottom container mt-4 mb-2 pb-4">
+          <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
+          <Link href={`/${locale}/order-tracking`}>
+              <IoReorderTwoSharp size={20} />
+              <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
+              Track Order
+            </span>
+          </Link>
+          </div>
+          <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
           <Link href={`/${locale}/store-locator`}>
               <IoLocationOutline size={20} />
               <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
