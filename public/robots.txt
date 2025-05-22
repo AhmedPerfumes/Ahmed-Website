@@ -1,4 +1,9 @@
+# Block Amazon's Product Discovery bot
+User-agent: AmazonProductDiscovery
+Disallow: /
+
+# Allow everything else
 User-agent: *
 Disallow: 
-Disallow: /cgi-bin/
+
 Sitemap: https://ae.ahmedalmaghribi.com/assets/sitemap.xml
