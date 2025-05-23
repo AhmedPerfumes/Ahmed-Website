@@ -4,7 +4,7 @@ export default function Pagination1() {
   return (
     <div
       className="mt-3 mb-3 ms-auto me-auto"
-      style={{ width: "70px", textAlign: "center", color: "#a67b30", paddingTop: "40rem" }}
+      style={{ width: "50px", textAlign: "center", color: "#a67b30", paddingTop: "40rem" }}
     >
       {/* <div
         className="progress-bar"
@@ -15,7 +15,7 @@ export default function Pagination1() {
         aria-valuemax="100"
       ></div> */}
       <img src="/assets/images/pre-loader.gif" alt="loading"/>
-      LOADING
+      -- LOADING --
     </div>
   );
 }
