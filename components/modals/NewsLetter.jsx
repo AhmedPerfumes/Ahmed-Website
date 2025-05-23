@@ -88,7 +88,7 @@ export default function NewsLetter() {
                                             alt="image"
                                         /> */}
                                          <VideoPanel
-                                        src="/assets/videos/KawkabPopUp.mp4"
+                                        src="/assets/videos/azz-o-azeez-popup.mp4"
                                         section="hundred"
                                     />
 
@@ -96,7 +96,7 @@ export default function NewsLetter() {
                                 </div>
                                 <div className="d-sm-block d-md-none">
                                     <VideoPanel
-                                        src="/assets/videos/KawkabPopUp.mp4"
+                                        src="/assets/videos/azz-o-azeez-popup.mp4"
                                         section="hundred"
                                     />
                                     
@@ -107,22 +107,22 @@ export default function NewsLetter() {
                             <div className="block-newsletter w-100">
                                 <h3
                                     className="section-title fw-normal mb-3 pb-2"
-                                    style={{ color: "#cfa91a" }}
+                                    style={{ color: "#5c6137" }}
                                 >
-                                   Kawkab
+                                   Aazz O Azeez
                                    {/* {elm.heading} */}
                                     {/* <span class="t-subtitle">
                                         The Essence of Belonging
                                     </span> */}
                                 </h3>
                                 <p>
-                                Kawkab is a statement of elegance and timeless charm.Kawkab is a sophisticated fragrance that blends radiant florals with rich, woody depths
+                                The Aazz O Azeez Gift Set is a testament to the artistry of perfumery, blending rich notes and exquisite ingredients to create a harmonious olfactory experience. Contains : Aaz EDP 100ml and Oud Azeez 
                                 {/* {elm.description} */}
                                     {/* <b className="sub-title">Don't miss out.</b> */}                                                 
                                 </p>
                                 <a
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                                    href={`/${locale}/shop/perfumes/oriental-fragrance/Kawkab`}
+                                    href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                 >
                                     Shop Now
                                 </a>

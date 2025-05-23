@@ -287,6 +287,8 @@
 
 .slideshow-text {
 	font-style: italic;
+	font-family: Lato, 'SofiaProRegular';
+	color: #bb8c1c !important;
 }
 
 /* @media screen and (min-width: 320px) and (max-width: 768px) {
@@ -935,4 +937,9 @@ button[data-v-7aa9e1a2] {
 		width: 100%;
 		min-width: auto;
 	}
+}
+
+.header-mobile {
+	height: auto;
+	min-height: auto;
 }

@@ -124,6 +124,22 @@ export const slideData1000 = [
       "A huge selection of best fragrance",
     btnLink: "shop",
   },
+  {
+    id: 3,
+    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+    title: "",
+    description:
+      "Purchase above AED 250 & Select a Free Gift",
+    btnLink: "shop",
+  },
+  {
+    id: 4,
+    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+    title: "",
+    description:
+      "EXCLUSIVE OFFER! Get upto 30% OFF : Shop Now",
+    btnLink: "shop",
+  },
 ];
 
 
