@@ -11,6 +11,8 @@ import Shop5 from "@/components/shoplist/Shop5";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 
 import QuickView from "@/components/modals/QuickView";
+import Banner5 from "@/components/shoplist/Banner5";
+import Categories from "@/components/shoplist/Categories";
 
 export const metadata = {
   title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -48,8 +50,13 @@ async function getCategorySubCategory(categoryName) {
       <>
         <QuickView />
         <Header14 />
+         <Banner5 image={ data.image } mobile_image={data.mobile_image}/>
+         <Categories description={ data.description } subCategories={ data.productSubCategories }/>
+
         <main>
-          <Shop5 />
+          {/* <Shop5 /> */}
+          
+
           <Shop10 products={ data.products }/>
         </main>
 
