@@ -939,7 +939,7 @@ button[data-v-7aa9e1a2] {
 	}
 }
 
-.header-mobile {
-	height: auto;
-	min-height: auto;
-}
+/* .header-mobile {
+	height: auto !important;
+	min-height: auto !important;
+} */
