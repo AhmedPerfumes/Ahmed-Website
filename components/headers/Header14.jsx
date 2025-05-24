@@ -146,7 +146,7 @@ export default function Header14() {
                         ? `header header_sticky bg-white ${
                               scrollDirection == "up"
                                   ? "header_sticky-active"
-                                  : ""
+                                  : "position-relative"
                           } `
                         : "header header_sticky position-sticky w-100 bg-white"
                 }
@@ -155,7 +155,7 @@ export default function Header14() {
                 <Swiper
                     className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
                     {...swiperOptions}
-                    style={{ height: "3rem" }}
+                    style={{ height: "2.5rem" }}
                 >
                     {slideData1000.map((elm, i) => (
                         <SwiperSlide
