@@ -76,7 +76,7 @@ export default function NewsLetter() {
                             <div className="newsletter-popup__bg w-100">
                                 <div className="d-none d-lg-block">
                                     <a
-                                        href={`/${locale}/shop/perfumes/oriental-fragrance/Kawkab`}
+                                        href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                     >
                                         {/* <Image
                                             width={550}
