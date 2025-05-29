@@ -26,6 +26,18 @@ export default function NewsLetter() {
             if (!hasScrolled) {
                 modalInstance.show();
                 setHasScrolled(true);
+
+                let progress = 0;
+            const progressBar = modalElement.current.querySelector("#modalProgressBar");
+            const interval = setInterval(() => {
+                progress += 1;
+                if (progressBar) progressBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    modalInstance.hide();
+                }
+            }, 70); // 7
             }
         };
 
@@ -63,6 +75,7 @@ export default function NewsLetter() {
             data-bs-backdrop="true"
             aria-hidden="true"
         >
+
             <div className="modal-dialog newsletter-popup modal-dialog-centered">
                 <div className="modal-content">
                     {/* Explicit close button handling */}
@@ -127,10 +140,25 @@ export default function NewsLetter() {
                                     Shop Now
                                 </a>
                             </div>
+                            
                         </div>
                     </div>
+                    <div className="progress" style={{ height: "5px" }}>
+    <div
+        id="modalProgressBar"
+        className="progress-bar"
+        role="progressbar"
+        style={{ width: "0%" }}
+        aria-valuenow="0"
+        aria-valuemin="0"
+        aria-valuemax="100"
+    ></div>
+</div>
+
                 </div>
+                
             </div>
+            
         </div>
     );
 }
