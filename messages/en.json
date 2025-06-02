@@ -429,6 +429,7 @@
   "Min Al Qalb": "Min Al Qalb",
   "Aazz O Azeez": "Aazz-O-Azeez",
 "Ya Haajj": "YA HAAJJ",
+"Zikra": "Zikra",
 
   "----------Hair Mist Category": "----------Hair Mist Category",
   "Supreme Hair Mist": "Supreme Hair Mist",
@@ -1005,6 +1006,7 @@
   "Alf Shauk Description": "The Alf Shauq Gift Set is a luxurious collection of four premium fragrances, each crafted to capture the richness of Arabian perfumery.Perfect for gifting or personal indulgence, the Alf Shauq Gift Set is a celebration of tradition, elegance, and perfumery artistry.",
   "Aazz O Azeez Description": "<p>The Aazz O Azeez Gift Set is a luxurious collection of fragrances that embodies the essence of elegance and sophistication. This exquisite set features a selection of premium perfumes, each crafted to perfection, making it an ideal gift for those who appreciate the finer things in life.</p>",
 "Ya Haajj Description":"<p>Each element of this set is crafted to provide a harmonious balance of fragrance and tranquility, allowing you to embody the sacredness and elegance of the Hajj experience in every breath and ritual.</p>",
+"Zikra Description":"<p>Introducing the Zikra Scarf Giftset, a luxurious collection designed to evoke cherished memories and celebrate the essence of love and connection. This exquisite set features a selection of premium fragrances, each crafted to perfection, making it an ideal gift for those who appreciate the finer things in life.</p>",
 
 
   "Qarnain Content": "<p>Elevate your EID festivities with our exquisite Qarnain Giftset, crafted with love and designed to capture the spirit of this joyous occasion.</p><p style=\"text-align:left;\">The Qarnain Gift Set is a trio set with Dehn Al Oud Indian Seufi 1.2ml, Dehn Al Oud Combodi 1.2ml, and Dehn Al Oud Mubakhkhar 1.2ml. Each one has a unique scent that everyone likes.</p><p>Celebrate the spirit of togetherness and generosity with our Qarnain Giftset, a token of appreciation that honors cherished traditions while embracing the spirit of modern elegance. Make this EID unforgettable with the perfect gift that speaks volumes of love, respect, and appreciation.</p><p>Experience the magic of EID with Qarnain Giftset - where tradition meets luxury. Order now and spread joy this festive season!</p>",
@@ -1025,6 +1027,7 @@
   "Alf Shauk Content": "The Alf Shauq Gift Set is a luxurious collection of four premium fragrances, each crafted to capture the richness of Arabian perfumery. This exquisite set includes Lathani, a refined blend of floral and woody accords; Oud Classic, a timeless composition showcasing the deep, warm, and resinous essence of pure oud; Mubakhkhar, an opulent fusion of incense and spices that evokes the ambiance of an authentic Arabian majlis; and Oud Cambodian, a rare and precious oud variety with a rich, smoky, and earthy depth that lingers beautifully. Perfect for gifting or personal indulgence, the Alf Shauq Gift Set is a celebration of tradition, elegance, and perfumery artistry.",
   "Aazz O Azeez Content": "<p>The Aazz O Azeez Gift Set is a luxurious collection of fragrances that embodies the essence of elegance and sophistication. This exquisite set features a selection of premium perfumes, each crafted to perfection, making it an ideal gift for those who appreciate the finer things in life.</p><p>Each fragrance in the Aazz O Azeez Gift Set is a testament to the artistry of perfumery, blending rich notes and exquisite ingredients to create a harmonious olfactory experience. Perfect for special occasions or everyday indulgence, this gift set is a celebration of luxury and refinement.</p>",
 "Ya Haajj Content": "<p>The YA HAJJ Gift Set is a thoughtfully curated collection designed to elevate your spiritual journey and honor the sacred rituals of Hajj. This set features the refreshing and pure Summer Oud, the timeless and classic Oud Classic, the deeply nourishing Kafa Oil, and the serene, spiritually uplifting Mariya Oud Mubakkhar. Each element of this set is crafted to provide a harmonious balance of fragrance and tranquility, allowing you to embody the sacredness and elegance of the Hajj experience in every breath and ritual.</p>",
+"Zikra Content":"The Zikra Scarf Gift Set is an exquisite ensemble that brings together elegance and charm. It features the delicate and sophisticated La Roses fragrance, the nourishing and refreshing Marj Gel, and a beautifully crafted scarf to complete the set. This thoughtfully curated collection is perfect for gifting, allowing your loved one to embrace a sense of timeless style and luxurious self-care.",
 
   "Qarnain Notes": "<p>Dehn Al Oud Indian Seufi 1.2ml<br>Dehn Al Oud Combodi 1.2ml<br>Dehn Al Oud Mubakhkhar 1.2ml</p>",
   "Shauque Al Shuyookh Notes": "<p>Bin Shaikh Perfume<br>Oud Classic Perfume<br>Dehn Al Oudh Mubakhar<br>Mabkhar<br>Prayer Mat</p>",
@@ -1044,6 +1047,7 @@
   "Alf Shauk Notes": "",
   "Aazz O Azeez Notes": "The Gift Set Contains (OUD AZEEZ and AAZZ EDP 100ML)",
   "Ya Haajj Notes": "<p>The Gift Set Contains Summer Oud, Oud Classic, Kafa Oil, Mariya Oud Mubakkhar</p>",
+  "Zikra Notes": "<p>La Roses fragrance, Marj Gel, Scarf</p>",
 
   "----------Gel Single Product Page Body Gel": "----------Gel Single Product Page Body Gel",
   "Marj Body Gel Description": "<p>Experience pampered, refreshed skin with the elegant, multi-note fragrance of our enchanting body gel.</p>",
