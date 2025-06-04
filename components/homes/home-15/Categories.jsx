@@ -94,7 +94,7 @@ export default function Categories({ section }) {
                         href={`/${locale}${elm.btn}`}
                         className="btn-videos btn-link_lg text-uppercase fw-medium "
                     >
-                        {t("Discover Now")}
+                        {t("Shop Now")}
                     </Link>
                 </div>
             </SwiperSlide>

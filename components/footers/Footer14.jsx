@@ -105,10 +105,10 @@ export default function Footer14() {
               </div>
               <div className="service-promotion__content-wrap">
                 <h3 className="service-promotion__title h6 text-uppercase mb-1 text-white">
-                  {t("Convenient Cash on Delivery")}
+                  {t("Convenient Customer Support")}
                 </h3>
                 <p className="service-promotion__content text-secondary mb-0 text-white">
-                  {t("Pay conveniently upon receiving your order")}
+                  {t("Contact us via landline or WhatsApp for assistance")}
                 </p>
               </div>
             </div>
