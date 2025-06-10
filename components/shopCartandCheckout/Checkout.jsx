@@ -440,6 +440,9 @@ export default function Checkout() {
 
     const handleCouponChange = (e) => {
         setCouponCode(e.target.value);
+        setCouponSuccess(null);
+        setCouponData(null);
+        setCouponDataContext(null);
     };
 
     const removeCoupon = (e) => {
@@ -460,10 +463,11 @@ export default function Checkout() {
 
         let product_coupon = false;
         cartProducts.map((item) => {
-            if (item.coupon?.code == couponCode) {
-                product_coupon = true;
+            // console.log(item.coupon[couponCode.toLowerCase()]?.code, couponCode.toLowerCase());
+            if(item.coupon[couponCode.toLowerCase()]?.code == couponCode.toLowerCase() && !item.sale_price) {
+              product_coupon = true;
             }
-        });
+          });
 
         if (!product_coupon) {
             setCouponError("Invalid Coupon Code for this products");
@@ -568,38 +572,28 @@ export default function Checkout() {
                     </td>
                 );
             }
-        } else if (elm?.coupon && couponData != null && couponCode != null) {
-            console.log("else if");
-            if (
-                new Date(current_date_time) >=
-                    new Date(elm.coupon.start_date) &&
-                new Date(current_date_time) <= new Date(elm.coupon.end_date) && elm.coupon.code == couponData.code
-            ) {
-                return (
-                    <td>
-                        <span className="money price price-old">
-                            {elm?.price}
-                            {currency.symbol}
-                        </span>
-                        <span className="money price price-sale">
-                            {(
-                                (elm.price -
-                                    (elm.price / 100) * elm.coupon.value) *
-                                elm.quantity
-                            ).toFixed(2)}
-                            {currency.symbol}
-                        </span>
-                    </td>
-                );
-            } else {
-                return (
-                    <td>
-                        {(elm.price * elm.quantity).toFixed(2)}
-                        {currency.symbol}
-                    </td>
-                );
-            }
-        } else if (elm?.sale_price) {
+        } else if(elm?.coupon && couponData != null && couponCode != null) {
+            console.log('else if', elm);
+            // elm.map((item) => {
+              // return elm.coupon.map((item, ind) => {
+              //   // if() {
+              //     if(new Date(current_date_time) >= new Date(item.start_date) && new Date(current_date_time) <= new Date(item.end_date) && item.code == couponData.code) {
+              //       console.log('iffff', elm);
+              //       return <td key={elm.ind}><span className="money price price-old">{elm?.price}{ currency.symbol }</span><span className="money price price-sale">{((elm.price - (elm.price / 100 * item.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></td>; // <td>{((elm.price - (elm.price / 100 * i.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
+              //     }
+              //     else {
+              //       console.log('elseeee', elm);
+              //       return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
+              //     }
+              //   // }
+              // });
+            // });
+              if(new Date(current_date_time) >= new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) && elm.coupon[couponCode.toLowerCase()].code == couponData.code.toLowerCase()) {
+                return <td><span className="money price price-old">{ currency.symbol }{elm?.price}</span><span className="money price price-sale">{ currency.symbol }{((elm.price - (elm.price / 100 * elm.coupon[couponCode.toLowerCase()]?.value)) * elm.quantity).toFixed(2)}</span></td>;
+              } else {
+                return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
+              }
+          } else if (elm?.sale_price) {
             console.log("else if 2");
             return (
                 <td>
