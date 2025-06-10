@@ -1,20 +1,24 @@
+"use client";
+import { useEffect } from "react";
+import Image from "next/image";
+
 const accordionData = [
   {
     id: 1,
-    heading: "Bring of had which their whose you're it own?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
-    expanded: true,
+    heading: "What payment methods are available for my order?",
+    body: `We provide a variety of easy payment options for your convenience. You can choose between cash on delivery or secure online payment through our website.`,
+    expanded: false,
   },
   {
     id: 2,
-    heading: "Over shall air can't subdue fly divide him?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+    heading: "What should I do if my order is delivered in a damaged condition?",
+    body: `We want you to enjoy your Ahmed Al Maghribi fragrance in perfect condition. If your order arrives damaged, kindly contact our customer service team within a reasonable time. Please include clear photos of the damaged item(s) via email or WhatsApp. Make sure not to discard any products until you've heard back from us.`,
     expanded: false,
   },
   {
     id: 3,
-    heading: "Waters one you'll creeping?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+    heading: "Am I allowed to cancel my order?",
+    body: `We want you to enjoy your Ahmed Al Maghribi fragrance in perfect condition. If your order arrives damaged, kindly contact our customer service team within a reasonable time. Please include clear photos of the damaged item(s) via email or WhatsApp. Make sure not to discard any products until you've heard back from us.`,
     expanded: false,
   },
 ];
@@ -22,45 +26,76 @@ const accordionData = [
 const accordionData2 = [
   {
     id: 1,
-    heading: "Bring of had which their whose you're it own?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
-    expanded: true,
+    heading: "I placed my order today, how soon will it be shipped?",
+    body: `Your items will typically arrive within 2 to 5 days after your order is confirmed. If, for any reason, there is a delay beyond one week, please feel free to reach out to our customer care team.`,
+    expanded: false,
   },
   {
     id: 2,
-    heading: "Over shall air can't subdue fly divide him?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+    heading: "What steps should I take if I wasn't available to receive my delivery?",
+    body: `Please reach out to our Support team via WhatsApp, Email, or Chat. We'll be happy to assist you in rescheduling your delivery.`,
     expanded: false,
   },
   {
     id: 3,
-    heading: "Waters one you'll creeping?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+    heading: "Is it possible to select a preferred delivery time for my order?",
+    body: `Since we work with an external courier service, we can pass along your preferred delivery time, but we cannot guarantee it. If you have a specific time in mind, feel free to contact us via WhatsApp for further assistance.`,
+    expanded: false,
+  },
+  {
+    id: 4,
+    heading: "Am I allowed to return a perfume if I've already tried it?",
+    body: `Unfortunately, we cannot accept returns on products that have been opened or used.`,
+    expanded: false,
+  },
+  {
+    id: 5,
+    heading: "What should I do if I receive an incorrect item with my order?",
+    body: `We strive to deliver your chosen fragrance exactly as ordered. If you happen to receive the wrong item, please get in touch with our customer service team right away. Share a clear photo of the item you received along with your invoice, and we'll promptly arrange to send you the correct fragrance.`,
     expanded: false,
   },
 ];
 const accordionData3 = [
   {
     id: 1,
-    heading: "Bring of had which their whose you're it own?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
-    expanded: true,
+    heading: "Is it possible to use a card for payment if I select cash on delivery?",
+    body: `Card payments are not supported with the cash on delivery option. You’ll need to pay in cash when your order is delivered. If you'd like to pay by card, please choose our online payment method during checkout.`,
+    expanded: false,
   },
   {
     id: 2,
-    heading: "Over shall air can't subdue fly divide him?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+    heading: "Is it possible to use foreign currency when paying by Cash on Delivery?",
+    body: `Unfortunately, we can only accept local currency for Cash on Delivery orders.`,
     expanded: false,
   },
   {
     id: 3,
-    heading: "Waters one you'll creeping?",
-    body: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+    heading: "If I use a Credit or Debit Card to pay for my order, how long will it take to receive a refund?",
+    body: `Generally, refunds to credit or debit cards take between 7 to 14 working days to appear in your original account or card.`,
     expanded: false,
   },
 ];
 export default function Faq() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Import the script only on the client side
+      import("bootstrap/dist/js/bootstrap.esm").then(() => {
+        // Module is imported, you can access any exported functionality if
+      });
+    }
+  }, []);
   return (
+    <>
+    <div className="container-fluid p-0 mb-5">
+              <Image
+                loading="lazy"
+                className="w-100 h-auto d-block"
+                src="/assets/images/blog/blogs-banner.jpg"
+                alt="image"
+                width={1500}
+                height={550}
+              />
+            </div>
     <section className="container mw-930 lh-30">
       <h2 className="section-title text-uppercase fw-bold mb-5">
         FREQUENTLY ASKED QUESTIONS
@@ -210,5 +245,6 @@ export default function Faq() {
         ))}
       </div>
     </section>
+    </>
   );
 }
