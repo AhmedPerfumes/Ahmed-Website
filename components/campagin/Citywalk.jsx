@@ -20,7 +20,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
-                        src="/assets/images/home/demo5/city-walk.jpg"
+                        src="/assets/images/campaigns/fathers-day-web-lp.jpg"
                         alt="image"
                         width={1500}
                         height={550}
@@ -30,7 +30,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/home/demo5/mobile-city.jpg"
+                        src="/assets/images/campaigns/fathers-day-mob.jpg"
                         alt="image"
                         width={1500}
                         height={550}
@@ -115,7 +115,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/azz-o-azeezs.jpg"
+                            src="/assets/images/campaigns/bin-shaikh.jpg"
                             alt="Wedding products display"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -126,22 +126,14 @@ function CityWalk() {
                     {/* Text column - shown second on mobile/tablet, first on desktop */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                            Aazz-O-Azeez
+                            Bin Shaikh
                         </p>
                         <p className="fs-6 mb-3">
-                            Celebrate Dad with the Aazz O Azeez Gift Set — a
-                            luxurious fragrance collection that captures the
-                            essence of strength, elegance, and timeless
-                            sophistication. Thoughtfully curated with premium
-                            perfumes, each scent is crafted to perfection —
-                            making it the perfect gift for the father who
-                            deserves nothing but the finest. This Father's Day,
-                            honor him with a touch of class and a scent that
-                            lasts.
+                            Like priceless wisdom passed down over the ages, the Bin Shaikh was passed down from our forefathers, making this vintage scent a truly priceless work of art. An exotic blend of distinct aromas.
                         </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                            href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                         >
                             Shop Now
                         </a>
@@ -199,26 +191,26 @@ function CityWalk() {
             </section>
             <section className="d-flex flex-column align-items-center pt-5">
                             <span className="t-subtitle text-uppercase fs-4">
-                                {"Discover More Men Fragrances"}
+                                {"Gift sets to give him the special treatment he deserves"}
                             </span>
                             <div className="d-flex flex-row align-items-center ">
                                 <div className="mt-4 mb-5 d-none d-md-block">
                                     <a
-                                        href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                                        href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                     >
                                         <Image
                                             loading="lazy"
-                                            src="/assets/images/Ihda-khas-giftset.jpg"
+                                            src="/assets/images/campaigns/Azzo-Azzeez.jpg"
                                             width="600"
                                             height="600"
-                                            alt="Ihda-khas-giftset"
+                                            alt="Aazz-o-Azzeez"
                                             className="px-1"
                                             style={{ objectFit: "contain" }}
                                         />
                                     </a>
                                     <div className="d-flex justify-content-center pt-3">
                                         <Link
-                                            href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                         >
                                             {t("Shop Now")}
