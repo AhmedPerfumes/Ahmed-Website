@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-import FreeGiftFeature from '@/components/FreeGiftFeature';
+// import FreeGiftFeature from '@/components/FreeGiftFeature';
 
 export default function Checkout() {
     const {
@@ -416,6 +416,15 @@ export default function Checkout() {
                 setOTPError(data.message);
             } else if (data.message && data.message.split(" ")[0] == "OTP") {
                 setOTPSuccess(data.message);
+                // setCustomerDataContext(data.customer);
+                if(data.customer) {
+                    setCouponCode(data.coupon.code);
+                    setCouponData(data.coupon);
+                    setCouponDataContext(data.coupon);
+                    setCouponSuccess(
+                        `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
+                    );
+                }
                 setIsOTPVerified(true);
                 setIsDisabled(false);
                 setOTPError(null);
@@ -516,6 +525,7 @@ export default function Checkout() {
                     setCouponError(data["mobile_number"]);
                 } else {
                     setCouponError(data.message);
+                    setCouponCode('');
                 }
             }
         } catch (err) {
@@ -619,7 +629,7 @@ export default function Checkout() {
         <>
             {cartProducts.length ? (
                 <>
-                    <FreeGiftFeature />
+                    {/* <FreeGiftFeature /> */}
                     <form onSubmit={onOrder}>
                         <div className="checkout-form">
                             <div className="billing-info__wrapper">
@@ -877,7 +887,7 @@ export default function Checkout() {
                                                                 type="number"
                                                                 className="form-control"
                                                                 id="otp"
-                                                                placeholder="Eg. 1234 *"
+                                                                placeholder="Eg. 123456 *"
                                                                 name="otp"
                                                                 value={formData.otp}
                                                                 onChange={
@@ -885,7 +895,7 @@ export default function Checkout() {
                                                                 }
                                                             />
                                                             <label htmlFor="checkout_otp">
-                                                                OTP (Eg. 1234)*
+                                                                OTP (Eg. 123456)*
                                                             </label>
                                                         </div>
                                                         <button

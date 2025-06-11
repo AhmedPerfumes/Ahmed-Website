@@ -1,7 +1,7 @@
 "use client";
 import { useContextElement } from "@/context/Context";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import { useLocale } from "next-intl";
@@ -15,7 +15,12 @@ export default function Cart() {
   // const [couponCode, setCouponCode] = useState("");
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext } = useContextElement();
+
+  useEffect(() => {
+    setCouponDataContext(null);
+  }, []);
+
   const setQuantity = async (id, quantity, productQty) => {
     if (quantity >= 1 && quantity <= productQty) {
       setError(null);
