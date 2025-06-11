@@ -887,7 +887,7 @@ export default function Checkout() {
                                                                 type="number"
                                                                 className="form-control"
                                                                 id="otp"
-                                                                placeholder="Eg. 123456 *"
+                                                                placeholder="Eg. 1234 *"
                                                                 name="otp"
                                                                 value={formData.otp}
                                                                 onChange={
@@ -895,7 +895,7 @@ export default function Checkout() {
                                                                 }
                                                             />
                                                             <label htmlFor="checkout_otp">
-                                                                OTP (Eg. 123456)*
+                                                                OTP (Eg. 1234)*
                                                             </label>
                                                         </div>
                                                         <button
