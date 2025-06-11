@@ -121,7 +121,7 @@ export default function Context({ children }) {
     orderDetails,
     couponDataContext,
     setCouponDataContext,
-    removeGiftFromCart
+    removeGiftFromCart,
   };
   return (
     <dataContext.Provider value={contextElement}>
