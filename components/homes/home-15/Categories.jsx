@@ -156,7 +156,7 @@ export default function Categories({ section }) {
                 </h2>
                 <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
                     {t(
-                        "Timeless Perfumes for Dad"
+                        "A special line just for Dads"
                     )}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
