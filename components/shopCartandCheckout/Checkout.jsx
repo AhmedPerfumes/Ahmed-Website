@@ -473,7 +473,7 @@ export default function Checkout() {
         let product_coupon = false;
         cartProducts.map((item) => {
             // console.log(item.coupon[couponCode.toLowerCase()]?.code, couponCode.toLowerCase());
-            if(item.coupon[couponCode.toLowerCase()]?.code == couponCode.toLowerCase() && !item.sale_price) {
+            if(item.coupon[couponCode.toLowerCase()]?.code == couponCode.toLowerCase() && !item.sale_price && !item.discount) {
               product_coupon = true;
             }
           });
@@ -558,7 +558,7 @@ export default function Checkout() {
             .slice(0, 19)
             .replace("T", " ");
         if (elm?.discount) {
-            console.log("if");
+            console.log("if", elm);
             if (
                 new Date(current_date_time) >=
                     new Date(elm.discount.start_date) &&
@@ -582,7 +582,7 @@ export default function Checkout() {
                     </td>
                 );
             }
-        } else if(elm?.coupon && couponData != null && couponCode != null) {
+        } else if(elm?.coupon && !Array.isArray(elm.coupon) && couponData != null && couponCode != null) {
             console.log('else if', elm);
             // elm.map((item) => {
               // return elm.coupon.map((item, ind) => {
@@ -604,7 +604,7 @@ export default function Checkout() {
                 return <td>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
               }
           } else if (elm?.sale_price) {
-            console.log("else if 2");
+            console.log("else if 2", elm);
             return (
                 <td>
                     {(
