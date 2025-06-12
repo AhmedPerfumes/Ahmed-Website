@@ -41,19 +41,21 @@ function CityWalk() {
                 <div className="">
                     <div className="section-content">
                         <div className="d-flex flex-column justify-content-around ">
-                            <div className="section-head pt-5 pb-5">
-                                <h2 className="text-center">
-                                    {"A Gift as Majestic as Your Love"}
-                                    <br />
-                                    <span className="text-uppercase">
-                                        {"Happy Father's Day"}
-                                    </span>
-                                </h2>
-                            </div>
+                        <div className="section-head pt-5 pb-5 text-uppercase w-100">
+  <h2 className="text-center">
+    <span className="d-block h3 h3-sm h2-md">
+      A Gift as Majestic as Your Love
+    </span>
+    <span className="d-block text-uppercase h3 h3-sm h3-md">
+      Happy Father's Day
+    </span>
+  </h2>
+</div>
+
                             <div className="d-none d-md-block pb-3">
                                 <div className="videoarea d-flex align-items-center">
                                     <VideoPanel
-                                        src="/assets/videos/multi-product.mp4"
+                                        src="/assets/videos/FathersDay.mp4"
                                         section=""
                                     />
                                 </div>
@@ -61,7 +63,7 @@ function CityWalk() {
                             <div className="d-block d-sm-none pb-3">
                                 <div className="videoarea d-flex align-items-center">
                                     <VideoPanel
-                                        src="/assets/videos/multi-product-mobile.mp4"
+                                        src="/assets/videos/FatherDayMobile.mp4"
                                         section="hundred"
                                     />
                                 </div>
@@ -69,6 +71,13 @@ function CityWalk() {
                         </div>
                     </div>
                 </div>
+                <a
+                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
+                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                        >
+                            Shop Now
+                        </a>
+
             </section>
             {/* <div className="container pt-2 mt-3">
         <div className="section2 text-center">
@@ -190,7 +199,7 @@ function CityWalk() {
                 </div>
             </section>
             <section className="d-flex flex-column align-items-center pt-5">
-                            <span className="t-subtitle text-uppercase fs-4">
+                            <span className="t-subtitle text-uppercase fs-4 text-center">
                                 {"Gift sets to give him the special treatment he deserves"}
                             </span>
                             <div className="d-flex flex-row align-items-center ">
@@ -242,24 +251,26 @@ function CityWalk() {
                             </div>
             
                             <div className="mt-4 mb-5 d-block d-sm-none d-flex flex-column">
-                                <a href={`/${locale}/shop/dakhoon/gift-sets`}>
-                                    <Image
-                                        loading="lazy"
-                                        src="/assets/images/Ihda-khas-giftset.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Ihda-khas-giftset"
-                                        className="w-100 h-100 px-1"
-                                        style={{ paddingTop: "1rem", objectFit: "contain" }}
-                                    />
-                                </a>
-                                <div className="d-flex justify-content-center pt-3">
-                                    <Link
-                                        href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
-                                        className="btn-rounded btn-link_lg text-uppercase fw-medium "
+                            <a
+                                        href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                     >
-                                        {t("Shop Now")}
-                                    </Link>
+                                        <Image
+                                            loading="lazy"
+                                            src="/assets/images/campaigns/Azzo-Azzeez.jpg"
+                                            width="600"
+                                            height="600"
+                                            alt="Aazz-o-Azzeez"
+                                            className="px-1"
+                                            style={{ objectFit: "contain" }}
+                                        />
+                                    </a>
+                                <div className="d-flex justify-content-center pt-3">
+                                <Link
+                                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
+                                        >
+                                            {t("Shop Now")}
+                                        </Link>
                                 </div>
                                 <a href={`/${locale}/shop/dakhoon/gift-sets`}>
                                     <Image
