@@ -90,8 +90,13 @@ export default function OrderTrack() {
       console.log('else if');
         return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     } else if(elm?.sale_price) {
+      console.log('else if 2');
         return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     } else {
+        console.log('else');
+        if(elm?.product_category && elm.product_category == 'Collections') {
+          return <td>{ elm.gross_amount }{ currency.symbol }</td>;
+        }
         return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
