@@ -43,7 +43,7 @@ function CityWalk() {
                         <div className="d-flex flex-column justify-content-around ">
                         <div className="section-head pt-5 pb-5 text-uppercase w-100">
   <h2 className="text-center">
-    <span className="d-block h3 h3-sm h2-md">
+    <span className="d-block h3  h3-sm h2-md">
       A Gift as Majestic as Your Love
     </span>
     <span className="d-block text-uppercase h3 h3-sm h3-md">
@@ -228,11 +228,11 @@ function CityWalk() {
                                 </div>
                                 <div className="mt-4 mb-5 d-none d-md-block">
                                     <a
-                                        href={`/${locale}/shop/gift-sets/gift-sets/antee-gift-set-05`}
+                                        href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
                                     >
                                         <Image
                                             className="px-1"
-                                            src="/assets/images/Antee-05-Giftset.jpg"
+                                            src="/assets/images/Ihda-khas-giftset.jpg"
                                             width="600"
                                             height="600"
                                             alt="Antee"
@@ -241,7 +241,7 @@ function CityWalk() {
                                     </a>
                                     <div className="d-flex justify-content-center pt-3">
                                         <Link
-                                            href={`/${locale}/shop/gift-sets/gift-sets/antee-gift-set-05`}
+                                            href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                         >
                                             {t("Shop Now")}
@@ -272,10 +272,10 @@ function CityWalk() {
                                             {t("Shop Now")}
                                         </Link>
                                 </div>
-                                <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                                <a href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}>
                                     <Image
                                         className="w-100 h-100 px-1"
-                                        src="/assets/images/Antee-05-Giftset.jpg"
+                                        src="/assets/images/Ihda-khas-giftset.jpg"
                                         width="600"
                                         height="600"
                                         alt="Oud-Asateen"
@@ -284,7 +284,7 @@ function CityWalk() {
                                 </a>
                                 <div className="d-flex justify-content-center pt-3">
                                     <Link
-                                        href={`/${locale}/shop/gift-sets/gift-sets/antee-gift-set-05`}
+                                        href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
                                         className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                     >
                                         {t("Shop Now")}
