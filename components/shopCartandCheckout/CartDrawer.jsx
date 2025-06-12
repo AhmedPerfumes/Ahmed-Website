@@ -13,7 +13,7 @@ export default function CartDrawer() {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, couponDataContext } = useContextElement();
   const pathname = usePathname();
   const t= useTranslations();
   const closeCart = () => {
