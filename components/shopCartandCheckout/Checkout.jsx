@@ -629,7 +629,7 @@ export default function Checkout() {
         <>
             {cartProducts.length ? (
                 <>
-                    <FreeGiftFeature />
+                    <FreeGiftFeature  couponData={couponData}/>
                     <form onSubmit={onOrder}>
                         <div className="checkout-form">
                             <div className="billing-info__wrapper">
