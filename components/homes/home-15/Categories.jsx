@@ -5,6 +5,7 @@ import {
     categories88,
     categoriesTop,
     categoriesInfluencers,
+    fatherDay,
 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -160,7 +161,7 @@ export default function Categories({ section }) {
                     )}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
-                    {renderSlides(categoriesTop)}
+                    {renderSlides(fatherDay)}
                     <div className="swiper-pagination"></div>
                     <div className="swiper-button-next"></div>
                     <div className="swiper-button-prev"></div>
