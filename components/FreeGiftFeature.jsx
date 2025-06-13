@@ -282,7 +282,7 @@ const FreeGiftFeature = () => {
         <div>
           <h4 className="font-bold mb-4">
             <span className='t-subtitle' style={{ color:'#c00000',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
-            You've Earned a Free Gift – Choose Yours Below!
+            Father's Day Special :- You've Earned a Free Gift – Choose 1 Perfume From Below!
             </span>
           </h4>
           <Swiper
