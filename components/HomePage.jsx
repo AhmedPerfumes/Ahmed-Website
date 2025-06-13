@@ -566,19 +566,31 @@ const ScrollSnapHorizontalBootstrap = () => {
                         <Link
                             href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
                         >
-                            <img
+                            <Image
+                                width={0}
+                                height={0}
+                                sizes="100%"
                                 className="w-100"
                                 src="/assets/images/bakhoor-ahmed.jpg"
                                 alt="Bakhoor Ahmed"
+                                loading="lazy"
+                                style={{ width: "100%", height: "auto" }}
+                                aria-label="Bakhoor Ahmed"
                             />
                         </Link>
                         <Link
                             href={`/${locale}/shop/dakhoon/oud-maattar/oud-kiflain`}
                         >
-                            <img
+                            <Image
+                                width={0}
+                                height={0}
+                                sizes="100%"
                                 className="w-100"
                                 src="/assets/images/oud-kiflain.jpg"
-                                alt="Oud Asateen"
+                                alt="Bakhoor Ahmed"
+                                loading="lazy"
+                                style={{ width: "100%", height: "auto" }}
+                                aria-label="Bakhoor Ahmed"
                             />
                         </Link>
                     </div>
@@ -698,11 +710,16 @@ const ScrollSnapHorizontalBootstrap = () => {
                         <p className="section-paragraph">{t("Steps")}</p>
                     </div>
                     <div className="order-0 order-md-1 mb-5">
-                        <img
-                            className="h-auto w-100"
-                            src="/assets/images/home/demo8/Shop.jpg"
-                            alt="image"
-                        />
+                        <Image
+                                width={0}
+                                height={0}
+                                sizes="100%"
+                                className="h-auto w-100"
+                                src="/assets/images/home/demo8/Shop.jpg"
+                                alt="Ahmed Al Maghribi Perfumes"
+                                loading="lazy"
+                                style={{ width: "100%", height: "auto" }}
+                            />
                     </div>
                 </div>
             </section>
