@@ -129,7 +129,7 @@ export const slideData1000 = [
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "",
     description:
-      "Purchase above AED 250 & Select a Free Gift",
+      "Purchase above AED 500 & Select a Free Gift",
     btnLink: "shop",
   },
   {
