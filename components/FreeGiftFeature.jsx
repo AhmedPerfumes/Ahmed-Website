@@ -173,7 +173,7 @@ const thresholds = [
   },
 ];
 
-const FreeGiftFeature = () => {
+const FreeGiftFeature = ({ couponData }) => {
   const { cartProducts, totalPrice, addProductToCart, setCartProducts, removeGiftFromCart } = useContextElement();
   const [selectedGift, setSelectedGift] = useState(null);
 
@@ -183,9 +183,22 @@ const FreeGiftFeature = () => {
     item.discount === null
   );
 
+  const currentUTC = new Date(); // Current UTC time
+  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+
   // Total price of non-Collections products
   const nonCollectionTotalPrice = nonCollectionProducts.reduce(
-    (acc, item) => acc + (parseFloat(item.price) * item.quantity),
+    (acc, item) => {
+      // console.log('0000000', new Date(current_date_time), new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date), item.coupon[couponData?.code.toLowerCase()]);
+      if(couponData?.code && new Date(current_date_time) >= new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon[couponData?.code.toLowerCase()]?.end_date) && item.coupon[couponData?.code.toLowerCase().toLowerCase()].code == couponData?.code.toLowerCase()) {
+        // console.log('iffffffffffffffffffff');
+        return acc + (parseFloat(item.price - (item.price / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
+      } else {
+        // console.log('elseeeeeeeeeeeeeeee');
+        return acc + (parseFloat(item.price) * item.quantity);
+      }
+    },
     0
   );
 
