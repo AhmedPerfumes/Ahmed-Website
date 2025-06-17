@@ -39,7 +39,6 @@ export default function Categories({ section }) {
     const renderSlides = (categories) =>
         categories.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide">
-<<<<<<< HEAD
                 {
                     section != "sectionTop" ? 
                     <Link href={`${locale}${elm.link}`}
@@ -57,18 +56,6 @@ export default function Categories({ section }) {
                     {/* Video overlay */}
                      
                         <video
-=======
-                <Link
-                    href={elm.link} locale={locale}
-                    className="menu-link h6 fw-medium"
-                >
-                    <video
-                        loading="lazy"
-                        className="w-100 mb-3"
-                        width="330"
-                        height="400"
-                        style={{ height: "fit-content" }}
->>>>>>> dev-final
                         muted
                         loop
                         preload="none"
@@ -166,12 +153,8 @@ export default function Categories({ section }) {
                     {t("A special line just for Dads")}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
-<<<<<<< HEAD
-                    {renderSlides(categoriesTop)}
-=======
                     {renderSlides(fatherDay)}
                     <div className="swiper-pagination"></div>
->>>>>>> dev-final
                     <div className="swiper-button-next"></div>
                     <div className="swiper-button-prev"></div>
                 </Swiper>
