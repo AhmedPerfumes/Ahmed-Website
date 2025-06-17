@@ -148,7 +148,8 @@ const thresholds = [
         price: "0",
         image: 'epdnew/sage-1.jpg',
         is_gift: true,
-        discount: null
+        discount: null,
+        coupon: []
       },
       {
         product_id: 248,
@@ -156,7 +157,8 @@ const thresholds = [
         price: "0",
         image: 'epdnew/tanuf-1.jpg',
         is_gift: true,
-        discount: null
+        discount: null,
+        coupon: []
       },
       {
         product_id: 66,
@@ -164,13 +166,14 @@ const thresholds = [
         price: "0",
         image: 'epdnew/sheukh.jpg',
         is_gift: true,
-        discount: null
+        discount: null,
+        coupon: []
       },
     ],
   },
 ];
 
-const FreeGiftFeature = () => {
+const FreeGiftFeature = ({ couponData }) => {
   const { cartProducts, totalPrice, addProductToCart, setCartProducts, removeGiftFromCart } = useContextElement();
   const [selectedGift, setSelectedGift] = useState(null);
 
@@ -180,9 +183,22 @@ const FreeGiftFeature = () => {
     item.discount === null
   );
 
+  const currentUTC = new Date(); // Current UTC time
+  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+
   // Total price of non-Collections products
   const nonCollectionTotalPrice = nonCollectionProducts.reduce(
-    (acc, item) => acc + (parseFloat(item.price) * item.quantity),
+    (acc, item) => {
+      // console.log('0000000', new Date(current_date_time), new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date), item.coupon[couponData?.code.toLowerCase()]);
+      if(couponData?.code && new Date(current_date_time) >= new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon[couponData?.code.toLowerCase()]?.end_date) && item.coupon[couponData?.code.toLowerCase().toLowerCase()].code == couponData?.code.toLowerCase()) {
+        // console.log('iffffffffffffffffffff');
+        return acc + (parseFloat(item.price - (item.price / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
+      } else {
+        // console.log('elseeeeeeeeeeeeeeee');
+        return acc + (parseFloat(item.price) * item.quantity);
+      }
+    },
     0
   );
 
@@ -279,7 +295,7 @@ const FreeGiftFeature = () => {
         <div>
           <h4 className="font-bold mb-4">
             <span className='t-subtitle' style={{ color:'#c00000',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
-            You've Earned a Free Gift – Choose Yours Below!
+            Father's Day Special :- You've Earned a Free Gift – Choose 1 Perfume From Below!
             </span>
           </h4>
           <Swiper
