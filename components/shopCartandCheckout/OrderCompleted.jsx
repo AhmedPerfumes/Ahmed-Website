@@ -147,6 +147,12 @@ export default function OrderCompleted() {
                 <th>SERVICE FEE</th>
                 <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
               </tr>
+              { orderDetails.payment_method === "cod" && (
+                                                    <tr>
+                                                        <th>COD Charges</th>
+                                                        <td>10.00</td>
+                                                    </tr>
+                                                )}
               <tr>
                 <th>TOTAL</th>
                 <td>{parseFloat(orderDetails.total).toFixed(2)}{ currency.symbol } (includes { orderDetails.shipping_amount > 0 ? (
