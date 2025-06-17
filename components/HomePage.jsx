@@ -393,11 +393,11 @@ const ScrollSnapHorizontalBootstrap = () => {
                 <div className="d-flex flex-row align-items-center ">
                     <div className="mt-4 mb-5 d-none d-md-block">
                         <a
-                            href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                         >
                             <Image
                                 loading="lazy"
-                                src="/assets/images/Ihda-khas-giftset.jpg"
+                                src="/assets/images/campaigns/Azzo-Azzeez.jpg"
                                 width="600"
                                 height="600"
                                 alt="Ihda-khas-giftset"
@@ -407,7 +407,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         </a>
                         <div className="d-flex justify-content-center pt-3">
                             <Link
-                                href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                                href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                 className="btn-rounded btn-link_lg text-uppercase fw-medium "
                             >
                                 {t("Shop Now")}

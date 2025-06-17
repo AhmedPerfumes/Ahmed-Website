@@ -1,56 +1,66 @@
-import Footer14 from "@/components/footers/Footer14";
-import Header14 from "@/components/headers/Header14";
-// import Animation from "@/components/Animation";
-import HomePage from "@/components/HomePage";
-import MobileFooter2 from "@/components/footers/MobileFooter2";
-import React from "react";
-// import CanvasAnimation from "@/components/CanvasAnimation";
-// import MobileAnimation from "@/components/MobileAnimation";
-import NewsLetter from "@/components/modals/NewsLetter";
-// import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import Footer14 from '@/components/footers/Footer14';
+import Header14 from '@/components/headers/Header14';
+import HomePage from '@/components/HomePage';
+import MobileFooter2 from '@/components/footers/MobileFooter2';
+import NewsLetter from '@/components/modals/NewsLetter';
+import React from 'react';
 
-// const MobileAnimation = dynamic(() => import('@/components/MobileAnimation'), {
-//   loading: () => <p>Loading...</p>,
-//   ssr: false, // Disable server-side rendering for this component
-// });
 export const metadata = {
-    title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-    description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-    icons: {
-        icon: "/assets/images/ahmed-favicon.png",
-    },
+  title: 'Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes',
+  description: 'Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.',
+  icons: {
+    icon: '/assets/images/ahmed-favicon.png',
+  },
 };
 
 export default function HomePage8() {
-    return (
-        <div
-            style={{
-                backgroundImage: `url(/assets/background-ivory.webp)`,
-            }}
-        >
-            <NewsLetter />
-            <Header14 />
-            <div className="d-none d-lg-block">
-                {/* CanvasAnimation will render first for large screens */}
-                {/* <CanvasAnimation /> */}
-            </div>
-            <div className="d-sm-block d-md-none">
-                {/* MobileAnimation will render for small screens */}
-                {/* <MobileAnimation /> */}
-            </div>
-            <main id="">
-                {/* Animation component will render after CanvasAnimation */}
-                <HomePage />
-                {/* <Animation /> */}
-            </main>
-            <section className="d-none d-md-block" style={{ height: "100%" }}>
-                <Footer14 />
-            </section>
-            <section className="d-sm-block d-md-none bg-dark pt-5">
-                <div className="MobileFooter">
-                    <MobileFooter2 />
-                </div>
-            </section>
+  return (
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      {/* 
+        This fixed <div> sits behind everything and stretches to fill the viewport.
+        Next/Image with `priority` will:
+         - preload your LCP image,
+         - add fetchpriority="high" under the hood,
+         - load it eagerly.
+      */}
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: -1,
+          pointerEvents: 'none',
+        }}
+      >
+        <Image
+          src="/assets/background-ivory.webp"
+          alt=""               // decorative
+          fill
+          style={{ objectFit: 'cover' }}
+          priority            // eager + high fetch priority
+        />
+      </div>
+
+      {/* Your actual page content */}
+      <NewsLetter />
+      <Header14 />
+
+      <div className="d-none d-lg-block">{/* CanvasAnimation */}</div>
+      <div className="d-sm-block d-md-none">{/* MobileAnimation */}</div>
+
+      <main>
+        <HomePage />
+      </main>
+
+      <section className="d-none d-md-block" style={{ height: '100%' }}>
+        <Footer14 />
+      </section>
+
+      <section className="d-sm-block d-md-none bg-dark pt-5">
+        <div className="MobileFooter">
+          <MobileFooter2 />
         </div>
-    );
+      </section>
+    </div>
+  );
 }

@@ -10,101 +10,102 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
+import Pagination1 from "@/components/common/Pagination1";
 
 export default function Categories({ section }) {
     const t = useTranslations();
     const locale = useLocale();
     const swiperOptions = {
-        autoplay: {
-            delay: 5000,
-        },
+        autoplay: { delay: 5000 },
         modules: [Autoplay, Navigation],
         slidesPerView: 4,
         slidesPerGroup: 4,
         effect: "none",
         loop: false,
-        // pagination: {
-        //   el: ".swiper-pagination",
-        //   clickable: true,
-        // },
         navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
         grabCursor: true,
         breakpoints: {
-            320: {
-                slidesPerView: 2,
-                slidesPerGroup: 2,
-                spaceBetween: 14,
-            },
-            768: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-                spaceBetween: 24,
-            },
-            992: {
-                slidesPerView: 5,
-                slidesPerGroup: 1,
-                spaceBetween: 30,
-            },
+            320: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 14 },
+            768: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 24 },
+            992: { slidesPerView: 5, slidesPerGroup: 1, spaceBetween: 30 },
         },
     };
-
-    let categoryRend;
 
     const renderSlides = (categories) =>
         categories.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide">
-                <Link
-                    href={`${locale}${elm.link}`}
-                    className="menu-link h6 fw-medium"
-                >
-                    <video
-                        loading="lazy"
-                        className="w-100 mb-3"
-                        width="330"
-                        height="400"
-                        style={{ height: "fit-content" }}
+                {
+                    section != "sectionTop" ? 
+                    <Link href={`${locale}${elm.link}`}
+                      className="d-block mb-3 position-relative"
+                      style={{ width: '100%', maxWidth: 330, aspectRatio: '330 / 500' }}>
+                    {/* Responsive poster image */}
+                    <Image
+                        src={elm.imgSrc2}
+                        alt={t(elm.altText)}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 576px) 50vw, (max-width: 768px) 33vw, 330px"
+                        quality={75}
+                    />
+                    {/* Video overlay */}
+                     
+                        <video
                         muted
                         loop
-                        onMouseOver={(event) => event.target.play()}
-                        onMouseOut={(event) => event.target.pause()}
                         preload="none"
-                        poster={elm.imgSrc2}
+                        onMouseOver={(e) => e.currentTarget.play()}
+                        onMouseOut={(e) => e.currentTarget.pause()}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                        }}
                     >
                         <source type="video/mp4" src={elm.videoSrc} />
                     </video>
+                    
+                </Link> : 
+                <Link href={`${locale}${elm.link}`}
+                      className="d-block mb-3 position-relative"
+                      style={{ width: '100%', maxWidth: 330, aspectRatio: '330 / 400' }}>
+                    {/* Responsive poster image */}
+                    <Image
+                        src={elm.imgSrc2}
+                        alt={t(elm.altText)}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 576px) 50vw, (max-width: 768px) 33vw, 330px"
+                        quality={75}
+                    />
                 </Link>
+                }
+                
                 <div className="text-center">
-                    <Link
-                        href={`${locale}${elm.link}`}
-                        className="menu-link h6 fw-medium"
-                    >
+                    <Link href={`${locale}${elm.link}`} className="menu-link h6 fw-medium">
                         {t(elm.altText)}
-                        <br />
-                        {/* <span className="fs-14 text-secondary fst-italic">
-                            {t(elm.subText)}
-                        </span> */}
                     </Link>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <Link
-                        href={`/${locale}${elm.btn}`}
-                        className="btn-videos btn-link_lg text-uppercase fw-medium "
-                    >
+                    <Link href={`/${locale}${elm.btn}`} className="btn-videos btn-link_lg text-uppercase fw-medium">
                         {t("Shop Now")}
                     </Link>
                 </div>
             </SwiperSlide>
         ));
 
+    let categoryRend;
+
     if (section === "section3") {
         categoryRend = (
             <Swiper className="swiper-container" {...swiperOptions}>
                 {renderSlides(categories8)}
-                <div className="swiper-pagination"></div>
                 <div className="swiper-button-next"></div>
                 <div className="swiper-button-prev"></div>
             </Swiper>
@@ -116,13 +117,10 @@ export default function Categories({ section }) {
                     {t("Iconic Indulgence")}
                 </h2>
                 <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
-                    {t(
-                        "See luxury in motion through the eyes of those who know it best"
-                    )}
+                    {t("See luxury in motion through the eyes of those who know it best")}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
                     {renderSlides(categories88)}
-                    <div className="swiper-pagination"></div>
                     <div className="swiper-button-next"></div>
                     <div className="swiper-button-prev"></div>
                 </Swiper>
@@ -135,40 +133,32 @@ export default function Categories({ section }) {
                     {t("Cherished by All")}
                 </h2>
                 <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
-                    {t(
-                        "Long-lasting fragrance in every drop"
-                    )}
+                    {t("Long-lasting fragrance in every drop")}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
                     {renderSlides(categoriesTop)}
-                    <div className="swiper-pagination"></div>
                     <div className="swiper-button-next"></div>
                     <div className="swiper-button-prev"></div>
                 </Swiper>
             </>
         );
-    } 
-    else if (section === "fathersDay") {
+    } else if (section === "fathersDay") {
         categoryRend = (
             <>
                 <h2 className="section-title text-uppercase fs-2 fw-medium text-center mb-2">
                     {t("Father’s Day Fragrances")}
                 </h2>
                 <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
-                    {t(
-                        "A special line just for Dads"
-                    )}
+                    {t("A special line just for Dads")}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
                     {renderSlides(categoriesTop)}
-                    <div className="swiper-pagination"></div>
                     <div className="swiper-button-next"></div>
                     <div className="swiper-button-prev"></div>
                 </Swiper>
             </>
         );
-    }
-    else {
+    } else {
         categoryRend = (
             <>
                 <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">
@@ -179,7 +169,6 @@ export default function Categories({ section }) {
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
                     {renderSlides(categoriesInfluencers)}
-                    <div className="swiper-pagination"></div>
                     <div className="swiper-button-next"></div>
                     <div className="swiper-button-prev"></div>
                 </Swiper>
