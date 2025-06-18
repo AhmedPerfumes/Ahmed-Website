@@ -1,4 +1,4 @@
-import Head from "next/head";
+// import Head from "next/head";
 import Script from "next/script";
 import Svgs from "@/components/common/Svgs";
 import "react-tooltip/dist/react-tooltip.css";
@@ -13,7 +13,7 @@ import { MenuProvider } from "@/context/MenuContext";
 import { UserProvider } from "@/context/UserContext";
 import CartDrawer from "@/components/shopCartandCheckout/CartDrawer";
 import SiteMap from "@/components/modals/SiteMap";
-import NewsLetter from "@/components/modals/NewsLetter";
+// import NewsLetter from "@/components/modals/NewsLetter";
 import MobileHeader from "@/components/headers/MobileHeader";
 import SizeGuide from "@/components/modals/SizeGuide";
 import Delivery from "@/components/modals/Delivery";
