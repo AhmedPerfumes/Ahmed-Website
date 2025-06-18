@@ -7,33 +7,28 @@ const nextConfig = {
   reactStrictMode: false,
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'phpstack-667016-4904984.cloudwaysapps.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'admin.ahmedalmaghribi.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'ae.ahmedalmaghribi.com',  // ← add this
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-      },
+      { protocol: 'https', hostname: 'phpstack-667016-4904984.cloudwaysapps.com' },
+      { protocol: 'https', hostname: 'admin.ahmedalmaghribi.com' },
+      { protocol: 'https', hostname: 'ae.ahmedalmaghribi.com' },
+      { protocol: 'http', hostname: 'localhost' },
     ],
   },
   productionBrowserSourceMaps: true,
-  productionBrowserSourceMaps: true,
   async headers() {
     return [
+      // your existing videos rule…
       {
         source: '/assets/videos/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+
+      // **new** rule for your Facebook scripts
+      {
+        source: '/js/:path*',
         headers: [
           {
             key: 'Cache-Control',
+            // 1 year + immutable
             value: 'public, max-age=31536000, immutable',
           },
         ],
