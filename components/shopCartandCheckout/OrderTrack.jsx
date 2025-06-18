@@ -231,12 +231,7 @@ export default function OrderTrack() {
                   <th>SERVICE FEE { orderDetails.payment_method === "cod" && '(Including COD Charges)'}</th>
                   <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }{ currency.symbol }</td> 
                 </tr>
-                { orderDetails.payment_method === "cod" && (
-                                                    <tr>
-                                                        <th>COD Charges</th>
-                                                        <td>10.00</td>
-                                                    </tr>
-                                                )}
+                
                 <tr>
                 
                   <th>TOTAL</th>
