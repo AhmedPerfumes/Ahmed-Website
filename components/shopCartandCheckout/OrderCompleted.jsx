@@ -98,12 +98,14 @@ export default function OrderCompleted() {
                 (
                   (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                   (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
-                  (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                  (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                  (orderDetails.payment_method === "cod" ? (parseFloat( shippingServiceCharges[2].price) - parseFloat( shippingServiceCharges[2].price) / (1 + parseFloat(vatTax.percentage / 100))) : parseFloat(0.00))
                 ).toFixed(2)) : (
                 (
                   0 +
                   (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
-                  (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                  (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                  (orderDetails.payment_method === "cod" ? (parseFloat( shippingServiceCharges[2].price) - parseFloat( shippingServiceCharges[2].price) / (1 + parseFloat(vatTax.percentage / 100))) : parseFloat(0.00))
                 ).toFixed(2)) }{ currency.symbol } VAT)
           </span>
         </div>
@@ -159,12 +161,14 @@ export default function OrderCompleted() {
                     (
                       (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
-                      (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                      (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                      (orderDetails.payment_method === "cod" ? (parseFloat( shippingServiceCharges[2].price) - parseFloat( shippingServiceCharges[2].price) / (1 + parseFloat(vatTax.percentage / 100))) : parseFloat(0.00))
                     ).toFixed(2)) : (
                     (
                       0 +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
-                      (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                      (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                      (orderDetails.payment_method === "cod" ? (parseFloat( shippingServiceCharges[2].price) - parseFloat( shippingServiceCharges[2].price) / (1 + parseFloat(vatTax.percentage / 100))) : parseFloat(0.00))
                     ).toFixed(2)) }{ currency.symbol } VAT)
                 </td>
               </tr>

@@ -172,11 +172,12 @@ export default function Checkout() {
             ? parseFloat(shippingServiceCharges[0].price) +
             totalPrice +
             parseFloat(shippingServiceCharges[1].price) +
-            parseFloat(selectedOption === "cod"?shippingServiceCharges[2].price:0.00)
+            (selectedOption === "cod" ? parseFloat( shippingServiceCharges[2].price) : parseFloat(0.00))
             : (
                 0 +
                 totalPrice +
-                parseFloat(shippingServiceCharges[1].price)
+                parseFloat(shippingServiceCharges[1].price) +
+                (selectedOption === "cod" ? parseFloat( shippingServiceCharges[2].price) : parseFloat(0.00))
               ).toFixed(2)
         const servicePrice =
             selectedOption === "cod"
@@ -423,7 +424,19 @@ export default function Checkout() {
             } else if (data.message && data.message.split(" ")[0] == "OTP") {
                 setOTPSuccess(data.message);
                 // setCustomerDataContext(data.customer);
-                if (data.customer) {
+                let product_coupon = false;
+                cartProducts.map((item) => {
+                    // console.log(item.coupon[couponCode.toLowerCase()]?.code, couponCode.toLowerCase());
+                    if (
+                        item.coupon[data.coupon.code.toLowerCase()]?.code ==
+                            data.coupon.code.toLowerCase() &&
+                        !item.sale_price
+                    ) {
+                        product_coupon = true;
+                    }
+                    // console.log('0000', product_coupon);
+                });
+                if (data.customer && product_coupon) {
                     setCouponCode(data.coupon.code);
                     setCouponData(data.coupon);
                     setCouponDataContext(data.coupon);
@@ -1091,25 +1104,26 @@ export default function Checkout() {
                                                 {selectedOption === "cod" && (
                                                     <tr>
                                                         <th>COD Charges</th>
-                                                        <td>10.00</td>
+                                                        <td>{ shippingServiceCharges[2].price }</td>
                                                     </tr>
                                                 )}
                                                 <tr>
                                                     <th>TOTAL</th>
                                                     <td>
                                                     {!freeShippingFlag
-  ? (
-      parseFloat(shippingServiceCharges[0].price) +
-      totalPrice +
-      parseFloat(shippingServiceCharges[1].price) +
-      parseFloat(selectedOption === "cod"?shippingServiceCharges[2].price:0.00)
-    )
-  : (
-      0 +
-      totalPrice +
-      parseFloat(shippingServiceCharges[1].price)
-    ).toFixed(2)
-}
+                                                        ? (
+                                                            parseFloat(shippingServiceCharges[0].price) +
+                                                            totalPrice +
+                                                            parseFloat(shippingServiceCharges[1].price) +
+                                                            (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.00))
+                                                            ).toFixed(2)
+                                                        : (
+                                                            0 +
+                                                            totalPrice +
+                                                            parseFloat(shippingServiceCharges[1].price) +
+                                                            (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.00))
+                                                            ).toFixed(2)
+                                                        }
 
                                                         {currency.symbol}{" "}
                                                         (includes{" "}
@@ -1151,8 +1165,21 @@ export default function Checkout() {
                                                                               parseFloat(
                                                                                   vatTax.percentage /
                                                                                       100
-                                                                              )))
-                                                              ).toFixed(2)
+                                                                              ))) +
+                                                                  (selectedOption === "cod" ? (parseFloat(
+                                                                            shippingServiceCharges[2]
+                                                                                .price
+                                                                        ) -
+                                                                            parseFloat(
+                                                                                shippingServiceCharges[2]
+                                                                                    .price
+                                                                            ) /
+                                                                                (1 +
+                                                                                    parseFloat(
+                                                                                        vatTax.percentage /
+                                                                                            100
+                                                                            ))) : parseFloat(0.00))
+                                                            ).toFixed(2)
                                                             : (
                                                                   0 +
                                                                   (parseFloat(
@@ -1178,7 +1205,20 @@ export default function Checkout() {
                                                                               parseFloat(
                                                                                   vatTax.percentage /
                                                                                       100
-                                                                              )))
+                                                                              ))) +
+                                                                    (selectedOption === "cod" ? (parseFloat(
+                                                                            shippingServiceCharges[2]
+                                                                                .price
+                                                                        ) -
+                                                                            parseFloat(
+                                                                                shippingServiceCharges[2]
+                                                                                    .price
+                                                                            ) /
+                                                                                (1 +
+                                                                                    parseFloat(
+                                                                                        vatTax.percentage /
+                                                                                            100
+                                                                            ))) : parseFloat(0.00))
                                                               ).toFixed(2)}
                                                         {currency.symbol} VAT)
                                                     </td>
