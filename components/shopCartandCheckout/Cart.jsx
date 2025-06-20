@@ -15,10 +15,11 @@ export default function Cart() {
   // const [couponCode, setCouponCode] = useState("");
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart} = useContextElement();
 
   useEffect(() => {
     setCouponDataContext(null);
+    removeGiftFromCart();
   }, []);
 
   const setQuantity = async (id, quantity, productQty) => {
