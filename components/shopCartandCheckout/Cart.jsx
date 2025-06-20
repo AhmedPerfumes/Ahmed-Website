@@ -103,29 +103,6 @@ export default function Cart() {
   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
 
   // Define non-collection product total (excluding collections and discounted items)
-const nonCollectionProducts = cartProducts.filter(
-  (item) =>
-    item.category_name?.toLowerCase() !== "collections" &&
-    item.discount === null &&
-    !item.is_gift // exclude the gift itself from calculation
-);
-
-const nonCollectionTotalPrice = nonCollectionProducts.reduce((acc, item) => {
-  return acc + parseFloat(item.price) * item.quantity;
-}, 0);
-
-// Check if threshold (e.g., 500) is met
-const thresholdAmount = 500;
-const isBelowThreshold = nonCollectionTotalPrice < thresholdAmount;
-
-// Remove gift if below threshold
-useEffect(() => {
-  const giftInCart = cartProducts.find((item) => item.is_gift);
-  if (isBelowThreshold && giftInCart) {
-    setCartProducts((prev) => prev.filter((item) => !item.is_gift));
-  }
-}, [nonCollectionTotalPrice, cartProducts]);
-
 
   const subTotalPrice = (elm) => {
     if(elm?.discount) {
