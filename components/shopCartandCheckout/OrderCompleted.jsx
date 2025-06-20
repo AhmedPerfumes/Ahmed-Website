@@ -152,7 +152,7 @@ export default function OrderCompleted() {
               { orderDetails.payment_method === "cod" && (
                                                     <tr>
                                                         <th>COD Charges</th>
-                                                        <td>{shippingServiceCharges[2].price}</td>
+                                                        <td>{shippingServiceCharges[2].price}{ currency.symbol }</td>
                                                     </tr>
                                                 )}
               <tr>
