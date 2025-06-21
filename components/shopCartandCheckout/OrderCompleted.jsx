@@ -150,11 +150,11 @@ export default function OrderCompleted() {
                 <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
               </tr>
               { orderDetails.payment_method === "cod" && (
-                                                    <tr>
-                                                        <th>COD Charges</th>
-                                                        <td>{shippingServiceCharges[2].price}{ currency.symbol }</td>
-                                                    </tr>
-                                                )}
+                  <tr>
+                      <th>COD CHARGES</th>
+                      <td>{shippingServiceCharges[2].price}{ currency.symbol }</td>
+                  </tr>
+              )}
               <tr>
                 <th>TOTAL</th>
                 <td>{parseFloat(orderDetails.total).toFixed(2)}{ currency.symbol } (includes { orderDetails.shipping_amount > 0 ? (
