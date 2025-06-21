@@ -228,10 +228,15 @@ export default function OrderTrack() {
                   <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${(orderDetails.shipping_amount * 1.05).toFixed(2)}${ currency.symbol }`}</td>
                 </tr>
                 <tr>
-                  <th>SERVICE FEE { orderDetails.payment_method === "cod" && '(Including COD Charges)'}</th>
+                  <th>SERVICE FEE</th>
                   <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }{ currency.symbol }</td> 
                 </tr>
-                
+                 { orderDetails.payment_method === "cod" && (
+                    <tr>
+                        <th>COD CHARGES</th>
+                        <td>{ (orderDetails.cod_charge * 1.05).toFixed(2) }{ currency.symbol }</td> 
+                    </tr>
+                )}
                 <tr>
                 
                   <th>TOTAL</th>

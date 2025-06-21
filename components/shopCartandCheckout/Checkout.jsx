@@ -179,11 +179,14 @@ export default function Checkout() {
                 parseFloat(shippingServiceCharges[1].price) +
                 (selectedOption === "cod" ? parseFloat( shippingServiceCharges[2].price) : parseFloat(0.00))
               ).toFixed(2)
-        const servicePrice =
-            selectedOption === "cod"
-                ? parseFloat(shippingServiceCharges[1].price) + parseFloat(shippingServiceCharges[2].price)
-                : shippingServiceCharges[1].price;
+        const servicePrice = shippingServiceCharges[1].price;
         const servicePriceVat = (servicePrice / 100) * vatTax.percentage;
+
+        const codPrice =
+            selectedOption === "cod"
+                ? shippingServiceCharges[2].price
+                : 0.00;
+        const codPriceVat = (codPrice / 100) * vatTax.percentage;
 
         let userJson = null;
         if (isLoggedIn) {
@@ -205,6 +208,8 @@ export default function Checkout() {
             customer_id: userJson ? userJson.id : null,
             locale,
             couponCode,
+            codPrice,
+            codPriceVat
         };
 
         try {
