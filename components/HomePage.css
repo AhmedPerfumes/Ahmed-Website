@@ -290,6 +290,16 @@
 	font-family: Lato, 'SofiaProRegular';
 	color: #bb8c1c !important;
 }
+@media (max-width: 576px) {
+	.slideshow-text {
+	  font-style: italic;
+	  font-family: Lato, 'SofiaProRegular';
+	  color: #bb8c1c !important;
+	  margin-top: -10rem;
+	  margin-bottom: 1.5rem;
+	}
+  }
+  
 
 /* @media screen and (min-width: 320px) and (max-width: 768px) {
 	.slideshow-text {
