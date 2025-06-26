@@ -21,48 +21,31 @@ export default function NewsLetter() {
             keyboard: false,
         });
 
-        // Function to show the modal
+        // Show modal only once
         const showModal = () => {
             if (!hasScrolled) {
                 modalInstance.show();
                 setHasScrolled(true);
-
-                let progress = 0;
-            const progressBar = modalElement.current.querySelector("#modalProgressBar");
-            const interval = setInterval(() => {
-                progress += 1;
-                if (progressBar) progressBar.style.width = `${progress}%`;
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    modalInstance.hide();
-                }
-            }, 70); // 7
             }
         };
 
-        // Handle scroll event
+        // Scroll event
         const handleScroll = () => {
             if (window.scrollY > 3500 && !hasScrolled) {
                 showModal();
             }
         };
 
-        // Add event listener for close button
+        // Close button handler
         const closeButton = modalElement.current.querySelector(".btn-close");
-        closeButton.addEventListener("click", () => {
-            modalInstance.hide(); // Programmatically hide the modal
-        });
+        closeButton.addEventListener("click", () => modalInstance.hide());
 
-        // Listen for scroll events
         window.addEventListener("scroll", handleScroll);
 
-        // Cleanup event listeners on unmount
+        // Cleanup
         return () => {
             window.removeEventListener("scroll", handleScroll);
-            closeButton.removeEventListener("click", () =>
-                modalInstance.hide()
-            );
+            closeButton.removeEventListener("click", () => modalInstance.hide());
         };
     }, [hasScrolled]);
 
@@ -75,10 +58,8 @@ export default function NewsLetter() {
             data-bs-backdrop="true"
             aria-hidden="true"
         >
-
             <div className="modal-dialog newsletter-popup modal-dialog-centered">
                 <div className="modal-content">
-                    {/* Explicit close button handling */}
                     <button
                         type="button"
                         className="btn-close"
@@ -91,20 +72,10 @@ export default function NewsLetter() {
                                     <a
                                         href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
                                     >
-                                        {/* <Image
-                                            width={550}
-                                            height={650}
-                                            style={{ height: "fit-content" }}
-                                            loading="lazy"
-                                            src="/assets/images/home/Kawkab-Web-banner.jpg"
-                                            className="h-100 w-100 object-fit-cover d-block"
-                                            alt="image"
-                                        /> */}
-                                         <VideoPanel
-                                        src="/assets/videos/azz-o-azeez-popup.mp4"
-                                        section="hundred"
-                                    />
-
+                                        <VideoPanel
+                                            src="/assets/videos/azz-o-azeez-popup.mp4"
+                                            section="hundred"
+                                        />
                                     </a>
                                 </div>
                                 <div className="d-sm-block d-md-none">
@@ -112,7 +83,6 @@ export default function NewsLetter() {
                                         src="/assets/videos/azz-o-azeez-popup.mp4"
                                         section="hundred"
                                     />
-                                    
                                 </div>
                             </div>
                         </div>
@@ -122,16 +92,10 @@ export default function NewsLetter() {
                                     className="section-title fw-normal mb-3 pb-2"
                                     style={{ color: "#5c6137" }}
                                 >
-                                   Aazz O Azeez
-                                   {/* {elm.heading} */}
-                                    {/* <span class="t-subtitle">
-                                        The Essence of Belonging
-                                    </span> */}
+                                    Aazz O Azeez
                                 </h3>
                                 <p>
-                                The Aazz O Azeez Gift Set is a testament to the artistry of perfumery, blending rich notes and exquisite ingredients to create a harmonious olfactory experience. Contains : Aaz EDP 100ml and Oud Azeez 
-                                {/* {elm.description} */}
-                                    {/* <b className="sub-title">Don't miss out.</b> */}                                                 
+                                    The Aazz O Azeez Gift Set is a testament to the artistry of perfumery, blending rich notes and exquisite ingredients to create a harmonious olfactory experience. Contains: Aaz EDP 100ml and Oud Azeez
                                 </p>
                                 <a
                                     className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
@@ -140,25 +104,10 @@ export default function NewsLetter() {
                                     Shop Now
                                 </a>
                             </div>
-                            
                         </div>
                     </div>
-                    <div className="progress" style={{ height: "5px" }}>
-    <div
-        id="modalProgressBar"
-        className="progress-bar"
-        role="progressbar"
-        style={{ width: "0%" }}
-        aria-valuenow="0"
-        aria-valuemin="0"
-        aria-valuemax="100"
-    ></div>
-</div>
-
                 </div>
-                
             </div>
-            
         </div>
     );
 }

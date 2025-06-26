@@ -153,6 +153,13 @@ body {
     color: #fff !important;
   }
 }
+.btn-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1055; /* Bootstrap modals use 1050+ */
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
