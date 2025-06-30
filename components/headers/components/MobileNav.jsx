@@ -68,7 +68,7 @@ export default function MobileNav() {
         .sub-menu {
           max-height: 0;
           overflow: hidden;
-          transition: max-height 0.3s ease;
+          transition: max-height 1.3s ease;
         }
         .sub-menu.open {
           max-height: 500px;
