@@ -392,7 +392,7 @@ useEffect(() => {
                           }
                         </Link>
                         {elm?.label_name && (
-                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
                             { elm?.label_name }
                           </div>
                         )}
