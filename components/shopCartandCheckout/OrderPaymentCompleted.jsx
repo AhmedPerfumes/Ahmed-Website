@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useMenu } from '@/context/MenuContext';
 import Pagination1 from "../common/Pagination1";
 
-export default function OrderPaymentCompleted({ orderDetails }) {
+export default function OrderPaymentCompleted({ orderDetails, payment_status, payment_method }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { setCartProducts } = useContextElement();
   const [showDate, setShowDate] = useState(false);
@@ -60,7 +60,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     <>
     {orderDetails.order_id ? <><div className="order-complete">
       <div className="order-complete__message">
-        {orderDetails.payment_status != 'failed' && <svg
+        {payment_status != 'failed' && <svg
           width="80"
           height="80"
           viewBox="0 0 80 80"
@@ -73,10 +73,10 @@ export default function OrderPaymentCompleted({ orderDetails }) {
             fill="white"
           />
         </svg>}
-        {orderDetails.payment_status != 'failed' ? <h3>Your order is completed!</h3> : <h3>Your order is failed!</h3>}
-        {orderDetails.payment_status != 'failed' && <p>Thank you. Your order has been received.</p>}
+        {payment_status != 'failed' ? <h3>Your order is completed!</h3> : <h3>Your order is failed!</h3>}
+        {payment_status != 'failed' && <p>Thank you. Your order has been received.</p>}
       </div>
-      {orderDetails.payment_status != 'failed' ? <>
+      {payment_status != 'failed' ? <>
       <div className="order-info">
         <div className="order-info__item">
           <label>Order Number</label>
@@ -94,7 +94,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
         </div>
         <div className="order-info__item">
           <label>Paymetn Method</label>
-          <span>{ orderDetails.payment_method }</span>
+          <span>{ payment_method }</span>
         </div>
       </div>
       <div className="checkout__totals-wrapper">

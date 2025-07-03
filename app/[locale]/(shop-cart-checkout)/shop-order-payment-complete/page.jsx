@@ -39,7 +39,7 @@ async function getOrderDetails(order_id) {
 }
 
 const ShopOrderPaymentComplete = async ({ searchParams  }) => {
-  const { q } = searchParams;
+  const { q, payment_status } = searchParams;
   console.log(q);
   try {
     const data = await getOrderDetails(q && atob(q));
@@ -50,8 +50,8 @@ const ShopOrderPaymentComplete = async ({ searchParams  }) => {
           <main className="page-wrapper">
             <div className="mb-4 pb-4"></div>
             <section className="shop-checkout container">
-              <h2 className="page-title">{data.payment_status != 'failed' ? 'ORDER RECEIVED' : 'ORDER FAILED'}</h2>
-              <OrderPaymentCompleted orderDetails={ data }/>
+              <h2 className="page-title">{payment_status && atob(payment_status) != 'failed' ? 'ORDER RECEIVED' : 'ORDER FAILED'}</h2>
+              <OrderPaymentCompleted orderDetails={ data } payment_status={ payment_status && atob(payment_status)} payment_method='paytabs'/>
             </section>
           </main>
           <section className="d-none d-lg-block" style={{ height: "100%" }}>

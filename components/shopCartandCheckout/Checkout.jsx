@@ -930,7 +930,7 @@ export default function Checkout() {
                                                 {OTPSuccess}
                                             </div>
                                         )}
-                                        {isOTPButton ? (
+                                        {!isOTPButton ? (
                                             <button
                                                 className="btn btn-primary w-100 text-uppercase"
                                                 type="button"
@@ -1384,6 +1384,31 @@ export default function Checkout() {
                                                     height="20"
                                                     alt="Cropped Faux leather Jacket"
                                                 /> */}
+                                                {/* <span className="option-detail d-block">
+                        Phasellus sed volutpat orci. Fusce eget lore mauris
+                        vehicula elementum gravida nec dui. Aenean aliquam varius
+                        ipsum, non ultricies tellus sodales eu. Donec dignissim
+                        viverra nunc, ut aliquet magna posuere eget.
+                        </span> */}
+                                            </label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input form-check-input_fill"
+                                                type="radio"
+                                                name="checkout_payment_method"
+                                                id="checkout_payment_method_5"
+                                                value={"paytabs_discount"}
+                                                checked={
+                                                    selectedOption === "paytabs_discount"
+                                                }
+                                                onChange={handleRadioChange}
+                                            />
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor="checkout_payment_method_5"
+                                            >
+                                                PayTabs - NBD Discount
                                                 {/* <span className="option-detail d-block">
                         Phasellus sed volutpat orci. Fusce eget lore mauris
                         vehicula elementum gravida nec dui. Aenean aliquam varius
