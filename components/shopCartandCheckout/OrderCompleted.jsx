@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import he from 'he';
 import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
+import FeedbackForm from "../common/Feedback";
+
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, couponDataContext } = useContextElement();
@@ -65,6 +67,7 @@ export default function OrderCompleted() {
   return (
     <>
     {Object.keys(orderDetails).length ? <><div className="order-complete">
+      <FeedbackForm orderId={orderDetails.id} customerName={orderDetails.customer_name}/>
       <div className="order-complete__message">
         <svg
           width="80"
@@ -175,6 +178,9 @@ export default function OrderCompleted() {
             </tbody>
           </table>
         </div>
+      
+        
+    
         <a href='/'
           className="btn btn-primary w-100 text-uppercase mb-3"
         >
