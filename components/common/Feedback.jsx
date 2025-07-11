@@ -7,6 +7,7 @@ export default function FeedbackForm({ orderId, customerName }) {
   const [hoverRating, setHoverRating] = useState(0);
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false); // New state to track form submission
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,13 +28,10 @@ export default function FeedbackForm({ orderId, customerName }) {
       });
 
       if (response.ok) {
-        alert("Feedback submitted successfully!");
-        setRating(0);
-        setHoverRating(0);
-        setMessage("");
+        setSubmitted(true); // Hide form on successful submission
       } else {
         const error = await response.json();
-        alert("Error submitting feedback: " + error.message || "Server error.");
+        alert("Error submitting feedback: " + (error.message || "Server error."));
       }
     } catch (err) {
       console.error(err);
@@ -42,6 +40,16 @@ export default function FeedbackForm({ orderId, customerName }) {
       setSubmitting(false);
     }
   };
+
+  if (submitted) {
+    return (
+      <div className="container mt-5 text-center">
+        <div className="alert alert-success" role="alert">
+          Thank you for your feedback!
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5">
