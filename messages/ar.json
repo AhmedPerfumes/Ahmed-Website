@@ -427,6 +427,7 @@
   "Peachy Peach": "بيتشي بيتش ",
   "Tiff Tiff": "تف تف",
   "Black Fume": "بلاك فيوم",
+  "Ainaak": "عَيناك",
   
   
   "----------Gel Category---------":"----------Gel Category---------",
@@ -502,6 +503,7 @@
 "Ghali Description": "<p>غالي رائحة الفخامة والكمال النقي</p>",
 "Ghawi Description": "<p>تعكس كل قطرة نقاء الطبيعة وأناقتها الخالدة</p>",
 "Musk Ahmed Description":"كل الفروق الدقيقة في هذا العطر سوف تدهش وتنوم حواسك. عطر 50 مل",
+"Ainaak Description":"",
 "Oud Couture 100ML Description":"”عود كوتشر ” عطر مناسب للمناسبات الخاصة أو للارتداء اليومي. عطر 100 مل.",
 "Kawkab Description":"كوكب هو عطر راقٍ يمزج بين الزهور المشرقة وعمق الأخشاب الغنية. كوكب هو تعبير عن الأناقة والسحر الخالد.",
 "Shay Jadeed Content": "<p>حاصر نفسك مع دغدغة شئ جديد. اترك الروائح خارج منطقة الشرق الأوسط. مجرد كمية ضئيلة او قليلة من الرذاذ، تملأ جوهرك بالحيوية؛ حيث أن الحمضيات العصيرية تلخص الجزء العلوي من النوتة بنكهاتها الحارة</p>",
@@ -544,6 +546,7 @@
 "Tiff Tiff Content":"",
 "Black Fume Description":"",
 "Black Fume Content":"",
+"Ainaak Content":"",
 
 
 
@@ -578,6 +581,7 @@
 "Aayah Notes": "<p>العليا – الفواكه واليوسفي والورد</p><p>الوسطى  – خشب الصندل والورد وزهرة البرتقال</p><p>قاعدة العطر – العود الماليزي، العود الهندي، العود الفيتنامي، المسك، الأمبروكسان</p>",
 "Ghali Notes": "<p> العليا: العود الهندي، الجلد.</p><p>الوسطى: الزهور البيضاء، الفانيليا</p><p>القاعدة: المسك الأبيض، العنبر.</p>",
 "Ghawi Notes": "<p>العليا - رائحة الأزهار، الأعشاب</p><p>الوسطى - الورد الهندي، الفانيليا، النفحات البودرية </p><p>القاعدة - رائحة هندية وعطرية. نوتات العود الكمبودي، العنبر، المسك</p>",
+"Ainaak Notes":"",
 
 "Zumar Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/pear-and-saffron.jpg\" alt=\"pear-and-saffron.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">المكونات العليا</h3><p>تفتح المكونات العليا مع ثنائي مثير من الزعفران والكمثرى، مما يوفر حلاوة ودفء جذابًا يلفت الانتباه على الفور</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/rose-and-honey.jpg\" alt=\"rose-and-honey.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">المكونات الوسطى</h3><p>استرخي ودع نفسك تدلل نفسك حيث تعمل رائحة الباتشولي الترابية على تهدئة مشاعرك. يتم الترحيب بك في القلب بباقة احتفالية من الورود العطرة والزعفران والياسمين. سوف يضفي عليك نجيل الهند جودة متناغمة وصوفية. تمت إضافة هزة من القرفة، والتي تغلفك أيضًا داخل دفء أخشاب الكشمير. مزج النغمات الزهرية الحيوانية لزهر البرتقال مع عناصر نظيفة أخرى لخلق رائحة منعشة. دلل نفسك بالروعة التي تحيط بك في كل مكان</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/oud-base.jpg\" alt=\"oud-base.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">القاعدة</h3><p>الجانب الفاكهي وسط نفحات الكمثرى من بذور الأمبريت يأخذ مكانه في قاعدة الروائح، وهو ملفوف في احتضان دافئ من العنبر الذهبي والمسك اللطيف والعنبر. تضفي إضافة التوت بريقًا طازجًا ولذيذًا على الرائحة. يمنحه الزعفران والجلد ميزة، بينما يعمل خشب الصندل وطحلب البلوط على تهدئة أعصابك بلطف. يتوج العطر بمزيج دقيق من خشب العود والبنفسج، بينما يعمل الأمبروكسان على إثراء الكولاجين<br> </p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p> </p><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/zumar-1.jpg\" alt=\"oud-base.jpg\"></p><p> </p><div class=\"content-wrapper col-lg-4 px-lg-4\"><h3 style=\"text-align:center;\"><span style=\"color:hsl(40,100%,77%);\">يعيد تعريف الفخامة ويثير روح الملوكية</span></h3><p style=\"text-align:center;\">ما يميز زمر هو استخدامه الاستثنائي لرائحة عود الكينام ومعجون الورد الفرنسي، وهما من العناصر الأكثر قيمة في عالم صناعة العطور. ينضح عود الكينام، المشهور بعمقه وتعقيده الذي لا مثيل له، بثراء ترابي جذري وغامض في نفس الوقت، في حين يعزز معجون الورد الفرنسي المظهر الزهري بجوهره المخملي والفخم. ويشكلان معًا جوهر شخصية زمر الفريدة، حيث يغلف مرتديها بحضن ملكي.</p></div><p> </p><p><img src=\"https://phpstack-667016-4904984.cloudwaysapps.com/public/storage/zumar-2.jpg\" alt=\"artboard-3-min.jpg\"></p></div>",
 

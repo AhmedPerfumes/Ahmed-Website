@@ -405,6 +405,7 @@
   "Rawdha Oil": "Rawdha Oil",
   "Musk Amiri":"Musk Amiri",
   "Ameer Al Oud":"Ameer Al Oud",
+  "Ainaak":"Ainaak",
   "----------Gel Category---------": "----------Gel Category---------",
   "Marj Body Gel": "Marj Body Gel",
   "Hirfah Body Gel": "Hirfah Body Gel",
@@ -486,6 +487,7 @@
   "Black Fume Description": "Black Fume is a fragrance that embodies the essence of mystery and allure, perfect for those who appreciate a bold and captivating scent.",
   "Musk Amiri Description": "Musk Amiri is a fragrance that captures the essence of sophistication and elegance, making it an essential addition to any fragrance collection.",
   "Ameer Al Oud Description":"Ameer Al Oud is a fragrance that captures the essence of refined luxury and timeless elegance, making it an essential addition to any fragrance collection.",
+  "Ainaak Description":"Ainaak a signature scent for those who lead with presence and leave an indelible impression.",
 
   "Shay Jadeed Content": "<p>Besiege in with tickling prefusions of shay jadeed. Let go the scents beyond the Middle East. Just a trifling amount of splash, fills your essence with liveliness; as juicy citruses sums the top the note with thier zesty flavors. </p>",
   "Abaan Content": "Abaan is a fragrance for confident & courageous. EDP 100 ML",
@@ -533,6 +535,7 @@
   "Black Fume Content": "Black Fume is a bold and enigmatic fragrance that opens with a burst of juicy raspberry, leading into a smoky heart of orris and a burnt wood effect. Its base is rich and addictive, blending labdanum, oud, tobacco, and ambroxan for a deep, lingering trail that exudes mystery and intensity. Black Fume is a fragrance that captures the essence of mystery and intrigue, making it perfect for those who appreciate a fragrance that evokes a sense of mystery and intrigue.",
   "Musk Amiri Content":"Musk Amiri is a lovely blend of delicate florals and musky notes. The top notes feature peony and aldehydes, giving a fresh start. In the heart, white flowers and rose add grace and femininity. The base settles into musky tones and warm amber, leaving a lasting impression. With it's perfect for those who love a generous supply of this enchanting scent.",
   "Ameer Al Oud Content":"Ameer Al Oud is a distinguished fragrance that embodies refined luxury and timeless elegance. It opens with luminous aldehydes and the opulence of saffron, setting an inviting tone. The heart reveals a sophisticated blend of rose, smooth vanilla, and warm woody nuances, while the base settles into an exquisite harmony of rich labdanum, deep agarwood, and creamy vanilla. Crafted for those who appreciate a bold and enduring scent, Ameer Al Oud leaves a lasting impression of prestige and grace.",
+  "Ainaak Content":"Ainaak is an arresting fragrance crafted for the confident soul. It opens with a vibrant burst of grapefruit, bergamot, and ginger, uplifted by the spicy brightness of pink pepper and the herbal warmth of davana, setting the tone for a bold experience.As the scent evolves, the heart reveals a refined fusion of ambrette, creamy white amber, and rich agarwood, delicately accented by fresh rosemary, offering a modern twist to a timeless profile.",
 
   
   "Shay Jadeed Notes": "<div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/product-notes-images/ain/top-notes.jpg\" alt=\"Top Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Top Notes</h3><p>citrus (Lemon)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row\"><p class=\"order-1 order-lg-2\"><img class=\"img-fluid\" src=\"https://admin.ahmedalmaghribi.com/public/storage/product-notes-images/joud/vanilla.jpg\" alt=\"first-notes-3.jpg\"></p><div class=\"content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1\"><h3 class=\"mb-3 text-white\">Heart Notes</h3><p>Flower (lavender vanilla)</p></div></div><div class=\"d-lg-flex align-items-lg-center mb-5\"><p><img src=\"https://admin.ahmedalmaghribi.com/public/storage/product-notes-images/royal-wood/agarwood-top-notea.jpg\" alt=\"Bottom Notes oud &amp; roses\" loading=\"lazy\"><br> </p><div class=\"content-wrapper col-lg-7 px-lg-5\"><h3 class=\"mb-3 text-white\">Bottom Notes</h3><p>woody (agarwood, frankincense)</p></div></div>",
@@ -581,6 +584,7 @@
   "Black Fume Notes": "<p>TOP : raspberry.</p><p>HEART : orris, burnt wood effect.</p><p>BOTTOM : labdanum, oud, tobacco, ambroxan.</p>",
   "Musk Amiri Notes": "<p>PEONY , ALDEHYDES</p><p>HEART : WHITE FLOWERS, ROSE </p><p>BOTTOM : MUSKY, AMBER</p>",
   "Ameer Al Oud Notes": "<p>TOP : ALDEHYDES, SAFFRON</p><p>HEART : ROSE, VANILLA, WOODS.</p><p>BASE : LABDANUM, AGARWOODS, VANILLA.</p>",
+  "Ainaak Notes":"<p>TOP : Grapefruit, Bergamot, Ginger</p><p>HEART : Ambrette, White Amber, Agarwood, Rosemary</p><p>BASE : Ambroxan, Patchouli, Vetiver, Musk, Leather</p>",
 
   "----------EAU DE Parfum Single Product Page Occidental Fragrance": "----------EAU DE Parfum Single Product Page Occidental Fragrance",
   "Instance 60ML Description": "<p><span>Instance Perfume is a timeless and versatile fragrance that suits every occasion.</span></p>",
