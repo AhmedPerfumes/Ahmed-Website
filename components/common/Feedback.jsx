@@ -52,13 +52,13 @@ export default function FeedbackForm({ orderId, customerName }) {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <div className="card shadow-sm mx-auto" style={{ maxWidth: "600px" }}>
         <div className="card-body">
-          <h4 className="card-title text-center mb-4">We Value Your Feedback</h4>
+          <h4 className="text-center section-paragraph">Your feedback helps us improve</h4>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text-center">
-              <label className="form-label d-block fw-semibold">Rate Your Experience:</label>
+              <p className="form-label d-block fw-semibold">Rate Your Experience:</p>
               <div className="d-flex justify-content-center">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
@@ -82,7 +82,7 @@ export default function FeedbackForm({ orderId, customerName }) {
 
             <div className="mb-4">
               <label htmlFor="feedbackMessage" className="form-label fw-semibold">
-                How was the process? Did you face any difficulty while ordering?
+                <h4 className="text-center section-paragraph">How was your experience? We'd appreciate your feedback</h4>
               </label>
               <textarea
                 className="form-control"
@@ -95,10 +95,10 @@ export default function FeedbackForm({ orderId, customerName }) {
               />
             </div>
 
-            <div className="text-center">
+            <div className="d-flex justify-content-center ">
               <button
                 type="submit"
-                className="btn btn-primary px-4 py-2"
+                className="btn-rounded btn-link_lg  text-uppercase fw-medium"
                 disabled={submitting || rating === 0 || !message.trim()}
               >
                 {submitting ? "Submitting..." : "Submit Feedback"}
