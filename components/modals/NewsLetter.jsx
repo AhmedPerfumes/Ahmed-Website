@@ -70,19 +70,37 @@ export default function NewsLetter() {
                             <div className="newsletter-popup__bg w-100">
                                 <div className="d-none d-lg-block">
                                     <a
-                                        href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                        href={`/${locale}/login_register#register-tab`}
                                     >
-                                        <VideoPanel
+                                        {/* <VideoPanel
                                             src="/assets/videos/azz-o-azeez-popup.mp4"
                                             section="hundred"
+                                        /> */}
+                                        <Image
+                                            width={550}
+                                            height={650}
+                                            style={{ height: "fit-content" }}
+                                            loading="lazy"
+                                            src="/assets/images/new-user-signup.jpg"
+                                            className="h-100 w-100 object-fit-cover d-block"
+                                            alt="image"
                                         />
                                     </a>
                                 </div>
                                 <div className="d-sm-block d-md-none">
-                                    <VideoPanel
+                                    {/* <VideoPanel
                                         src="/assets/videos/azz-o-azeez-popup.mp4"
                                         section="hundred"
-                                    />
+                                    /> */}
+                                    <Image
+                                            width={550}
+                                            height={650}
+                                            style={{ height: "fit-content" }}
+                                            loading="lazy"
+                                            src="/assets/images/new-user-signup.jpg"
+                                            className="h-100 w-100 object-fit-cover d-block"
+                                            alt="image"
+                                        />
                                 </div>
                             </div>
                         </div>
@@ -92,17 +110,19 @@ export default function NewsLetter() {
                                     className="section-title fw-normal mb-3 pb-2"
                                     style={{ color: "#5c6137" }}
                                 >
-                                    Aazz O Azeez
+                                    Sign Up & Save 10%
                                 </h3>
                                 <p>
-                                    The Aazz O Azeez Gift Set is a testament to the artistry of perfumery, blending rich notes and exquisite ingredients to create a harmonious olfactory experience. Contains: Aaz EDP 100ml and Oud Azeez
+                                    Register now and enjoy exclusive savings on your first order.
                                 </p>
+                                <div className="d-flex justify-content-center">
                                 <a
-                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                                    href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                    className="btn-rounded btn-link_lg text-uppercase fw-medium"
+                                    href={`/${locale}/login_register#register-tab`}
                                 >
-                                    Shop Now
+                                    Register
                                 </a>
+                                </div>
                             </div>
                         </div>
                     </div>
