@@ -291,7 +291,7 @@
 	color: #bb8c1c !important;
 }
 @media (max-width: 576px) {
-	.slideshow-text {
+	.banner-text{
 	  font-style: italic;
 	  font-family: Lato, 'SofiaProRegular';
 	  color: #bb8c1c !important;
