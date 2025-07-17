@@ -18,7 +18,9 @@ export default function Context({ children }) {
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
 
-  const { shippingServiceCharges } = useMenu();
+  // const { shippingServiceCharges } = useMenu();
+
+  // console.log('shippingServiceCharges', shippingServiceCharges[3]?.price);
 
   useEffect(() => {
     const currentUTC = new Date(); // Current UTC time
@@ -42,7 +44,8 @@ export default function Context({ children }) {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
-    setFreeShippingFlag((subtotal).toFixed(2) >= shippingServiceCharges[3]?.price ? true : false);
+    // console.log('shippingServiceCharges2', shippingServiceCharges[3]?.price, (subtotal).toFixed(2));
+    setFreeShippingFlag((subtotal).toFixed(2) >= 100 ? true : false);
   }, [cartProducts, couponDataContext]);
 
   const addProductToQuickView = (product) => {
