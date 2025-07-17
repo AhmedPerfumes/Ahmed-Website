@@ -70,7 +70,7 @@ export default function NewsLetter() {
                             <div className="newsletter-popup__bg w-100">
                                 <div className="d-none d-lg-block">
                                     <a
-                                        href={`/${locale}/login_register#register-tab`}
+                                        href={`/${locale}/shop`}
                                     >
                                         {/* <VideoPanel
                                             src="/assets/videos/azz-o-azeez-popup.mp4"
@@ -118,7 +118,7 @@ export default function NewsLetter() {
                                 <div className="d-flex justify-content-center">
                                 <a
                                     className="btn-rounded btn-link_lg text-uppercase fw-medium"
-                                    href={`/${locale}/login_register`}
+                                    href={`/${locale}/shop`}
                                 >
                                     Register
                                 </a>

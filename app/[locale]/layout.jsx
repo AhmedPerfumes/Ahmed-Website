@@ -99,27 +99,27 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
                 <NextIntlClientProvider messages={messages}>
                     <Svgs />
-                    <Context>
-                        <UserProvider>
-                            <FacebookPixelEvents />
-                            <MenuProvider>
-                                <MobileHeader />
-                                {children}
-                                <MobileFooter1 />
-                                <GTMPageView/>
-                                {/* Modals and Asides */}
-                                <LoginFormPopup />
-                                <SizeGuide />
-                                <Delivery />
-                                <CartDrawer />
-                                <SiteMap />
-                                <CustomerLogin />
-                                <ProductDescription />
-                                <ProductAdditionalInformation />
-                                <ProductReviews />
-                            </MenuProvider>
-                        </UserProvider>
-                    </Context>
+                        <MenuProvider>
+                            <Context>
+                                <UserProvider>
+                                    <FacebookPixelEvents />
+                                        <MobileHeader />
+                                        {children}
+                                        <MobileFooter1 />
+                                        <GTMPageView/>
+                                        {/* Modals and Asides */}
+                                        <LoginFormPopup />
+                                        <SizeGuide />
+                                        <Delivery />
+                                        <CartDrawer />
+                                        <SiteMap />
+                                        <CustomerLogin />
+                                        <ProductDescription />
+                                        <ProductAdditionalInformation />
+                                        <ProductReviews />
+                                </UserProvider>
+                            </Context>
+                        </MenuProvider>
                     <div className="page-overlay" id="pageOverlay"></div>
                     <ScrollTop />
                     <CountryMismatchPopup />

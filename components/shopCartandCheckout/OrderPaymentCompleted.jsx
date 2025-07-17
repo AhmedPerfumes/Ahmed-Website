@@ -128,7 +128,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{orderDetails.sub_total >= 400 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * 1.05).toFixed(2) }${ currency.symbol }`}</td>
+                <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * 1.05).toFixed(2) }${ currency.symbol }`}</td>
               </tr>
               <tr>
                 

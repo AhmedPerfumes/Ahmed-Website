@@ -122,12 +122,12 @@ export default function Cart() {
   const price = (elm) => {
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span>;
+        return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="price price-sale">{ currency.symbol }{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
       } else {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__product-price">{(elm.sale_price).toFixed(2)}{ currency.symbol }</span>;
+      return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="price price-sale">{ currency.symbol }{(elm.sale_price).toFixed(2)}</span></>;
     } else {
       return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
     }

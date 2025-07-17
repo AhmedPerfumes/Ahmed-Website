@@ -10,7 +10,7 @@ import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 
 export default function CartDrawer() {
-  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
+  const { isLoading: isMenuLoading, error: isMenuError, currency, shippingServiceCharges } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, couponDataContext } = useContextElement();
@@ -43,7 +43,7 @@ export default function CartDrawer() {
   }, [pathname]);
 
   // Calculate progress towards free shipping
-  const freeShippingThreshold = 400;
+  const freeShippingThreshold = shippingServiceCharges[3]?.price;
   const progressPercentage = Math.min(
     (totalPrice / freeShippingThreshold) * 100,
     100
@@ -55,12 +55,12 @@ export default function CartDrawer() {
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+        return  <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
       } else {
         return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="cart-drawer-item__price money price">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+      return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
     } else if(elm?.coupon && !Array.isArray(elm.coupon) && couponDataContext?.code && couponDataContext?.code != null) {
       console.log('0000else if', elm);
         if(new Date(current_date_time) >= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.end_date) && elm.coupon[couponDataContext?.code.toLowerCase()].code == couponDataContext?.code.toLowerCase()) {

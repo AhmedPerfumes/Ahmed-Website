@@ -594,12 +594,18 @@ export default function Checkout() {
             ) {
                 return (
                     <td>
-                        {(
-                            (elm.price -
-                                (elm.price / 100) * elm.discount.value) *
-                            elm.quantity
-                        ).toFixed(2)}
-                        {currency.symbol}
+                        <span className="money price price-old">
+                            {currency.symbol}
+                            {elm?.price}
+                        </span>
+                        <span className="money price price-sale">
+                            {currency.symbol}
+                            {(
+                                (elm.price -
+                                    (elm.price / 100) * elm.discount.value) *
+                                elm.quantity
+                            ).toFixed(2)}
+                        </span>
                     </td>
                 );
             } else {
@@ -666,8 +672,14 @@ export default function Checkout() {
             console.log("else if 2");
             return (
                 <td>
-                    {(elm.sale_price * elm.quantity).toFixed(2)}
-                    {currency.symbol}
+                    <span className="money price price-old">
+                        {currency.symbol}
+                        {elm?.price}
+                    </span>
+                    <span className="money price price-sale">
+                        {currency.symbol}
+                        {(elm.sale_price * elm.quantity).toFixed(2)}
+                    </span>
                 </td>
             );
         } else {
@@ -1021,7 +1033,7 @@ export default function Checkout() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-12">
+                                {/* <div className="col-md-12">
                                     <div className="mt-3 mb-3">
                                         <textarea
                                             className="form-control form-control_gray"
@@ -1033,7 +1045,7 @@ export default function Checkout() {
                                             value={formData.note}
                                         ></textarea>
                                     </div>
-                                </div>
+                                </div> */}
                                 {createAccount && (
                                     <div className="col-md-12">
                                         <div className="form-floating my-3">
