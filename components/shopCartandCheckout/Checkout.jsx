@@ -91,6 +91,8 @@ export default function Checkout() {
     const [couponSuccess, setCouponSuccess] = useState(null);
     const [couponData, setCouponData] = useState(null);
 
+    console.log('shippingServiceChargesCH', freeShippingFlag);
+
     const handleRadioChange = (event) => {
         setSelectedOption(event.target.value);
     };
