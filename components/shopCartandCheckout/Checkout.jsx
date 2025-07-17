@@ -594,12 +594,18 @@ export default function Checkout() {
             ) {
                 return (
                     <td>
-                        {(
-                            (elm.price -
-                                (elm.price / 100) * elm.discount.value) *
-                            elm.quantity
-                        ).toFixed(2)}
-                        {currency.symbol}
+                        <span className="money price price-old">
+                            {currency.symbol}
+                            {elm?.price}
+                        </span>
+                        <span className="money price price-sale">
+                            {currency.symbol}
+                            {(
+                                (elm.price -
+                                    (elm.price / 100) * elm.discount.value) *
+                                elm.quantity
+                            ).toFixed(2)}
+                        </span>
                     </td>
                 );
             } else {
@@ -666,8 +672,14 @@ export default function Checkout() {
             console.log("else if 2");
             return (
                 <td>
-                    {(elm.sale_price * elm.quantity).toFixed(2)}
-                    {currency.symbol}
+                    <span className="money price price-old">
+                        {currency.symbol}
+                        {elm?.price}
+                    </span>
+                    <span className="money price price-sale">
+                        {currency.symbol}
+                        {(elm.sale_price * elm.quantity).toFixed(2)}
+                    </span>
                 </td>
             );
         } else {
@@ -930,7 +942,7 @@ export default function Checkout() {
                                                 {OTPSuccess}
                                             </div>
                                         )}
-                                        {!isOTPButton ? (
+                                        {isOTPButton ? (
                                             <button
                                                 className="btn btn-primary w-100 text-uppercase"
                                                 type="button"
@@ -1021,7 +1033,7 @@ export default function Checkout() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-12">
+                                {/* <div className="col-md-12">
                                     <div className="mt-3 mb-3">
                                         <textarea
                                             className="form-control form-control_gray"
@@ -1033,7 +1045,7 @@ export default function Checkout() {
                                             value={formData.note}
                                         ></textarea>
                                     </div>
-                                </div>
+                                </div> */}
                                 {createAccount && (
                                     <div className="col-md-12">
                                         <div className="form-floating my-3">
@@ -1384,31 +1396,6 @@ export default function Checkout() {
                                                     height="20"
                                                     alt="Cropped Faux leather Jacket"
                                                 /> */}
-                                                {/* <span className="option-detail d-block">
-                        Phasellus sed volutpat orci. Fusce eget lore mauris
-                        vehicula elementum gravida nec dui. Aenean aliquam varius
-                        ipsum, non ultricies tellus sodales eu. Donec dignissim
-                        viverra nunc, ut aliquet magna posuere eget.
-                        </span> */}
-                                            </label>
-                                        </div>
-                                        <div className="form-check">
-                                            <input
-                                                className="form-check-input form-check-input_fill"
-                                                type="radio"
-                                                name="checkout_payment_method"
-                                                id="checkout_payment_method_5"
-                                                value={"paytabs_discount"}
-                                                checked={
-                                                    selectedOption === "paytabs_discount"
-                                                }
-                                                onChange={handleRadioChange}
-                                            />
-                                            <label
-                                                className="form-check-label"
-                                                htmlFor="checkout_payment_method_5"
-                                            >
-                                                PayTabs - NBD Discount
                                                 {/* <span className="option-detail d-block">
                         Phasellus sed volutpat orci. Fusce eget lore mauris
                         vehicula elementum gravida nec dui. Aenean aliquam varius

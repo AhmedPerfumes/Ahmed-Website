@@ -2,6 +2,8 @@
 import { allProducts } from "@/data/products";
 import React, { useEffect } from "react";
 import { useContext, useState } from "react";
+import { useMenu } from './MenuContext';
+
 const dataContext = React.createContext();
 export const useContextElement = () => {
   return useContext(dataContext);
@@ -15,6 +17,8 @@ export default function Context({ children }) {
   const [freeShippingFlag, setFreeShippingFlag] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
+
+  const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
     const currentUTC = new Date(); // Current UTC time
@@ -38,7 +42,7 @@ export default function Context({ children }) {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
-    setFreeShippingFlag((subtotal).toFixed(2) >= 400 ? true : false);
+    setFreeShippingFlag((subtotal).toFixed(2) >= shippingServiceCharges[3]?.price ? true : false);
   }, [cartProducts, couponDataContext]);
 
   const addProductToQuickView = (product) => {
