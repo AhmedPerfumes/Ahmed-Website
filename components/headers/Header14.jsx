@@ -85,6 +85,7 @@ export default function Header14() {
 
     const {
         categoriesSubCategories,
+        top_header,
         isLoading: isMenuLoading,
         error,
     } = useMenu();
@@ -157,7 +158,7 @@ export default function Header14() {
                     {...swiperOptions}
                     style={{ height: "2.5rem" }}
                 >
-                    {slideData1000.map((elm, i) => (
+                    {top_header.map((elm, i) => (
                         <SwiperSlide
                             key={i}
                             style={{
@@ -168,11 +169,11 @@ export default function Header14() {
                         >
                             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
                                 <Link
-                                    href={`/${locale}/${elm.btnLink}`}
+                                    href={`/${locale}/${elm.color}`}
                                     className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white"
                                 >
                                     {t(
-                                        elm.description
+                                        elm.title
                                             .split(" ")
                                             .slice(0, 13)
                                             .join(" ")
