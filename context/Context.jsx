@@ -18,7 +18,7 @@ export default function Context({ children }) {
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
 
-  // const { shippingServiceCharges } = useMenu();
+  const { shippingServiceCharges } = useMenu();
 
   // console.log('shippingServiceCharges', shippingServiceCharges[3]?.price);
 
@@ -44,9 +44,10 @@ export default function Context({ children }) {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
-    // console.log('shippingServiceCharges2', shippingServiceCharges[3]?.price, (subtotal).toFixed(2));
-    setFreeShippingFlag((subtotal).toFixed(2) >= 100 ? true : false);
-  }, [cartProducts, couponDataContext]);
+    console.log('shippingServiceCharges', shippingServiceCharges[3]?.price, (subtotal).toFixed(2));
+    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
+    setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
+  }, [cartProducts, couponDataContext, shippingServiceCharges]);
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
