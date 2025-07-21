@@ -21,7 +21,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
-                        src="/assets/images/campaigns/fathers-day-web-lp.jpg"
+                        src="/assets/images/campaigns/main-banner.jpg"
                         alt="Father's Day Web"
                         width={1500}
                         height={550}
@@ -33,7 +33,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/campaigns/mobile-banner.jpg"
+                        src="/assets/images/campaigns/mobile-banners.jpg"
                         alt="Father's Day Mobile"
                         width={1500}
                         height={550}
@@ -128,7 +128,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/campaigns/bin-shaikh.jpg"
+                            src="/assets/images/campaigns/oud-amber.jpg"
                             alt="Wedding products display"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -163,7 +163,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/zumar 2.jpg"
+                            src="/assets/images/campaigns/rasiyaat.jpg"
                             alt="Aazz-O-Azeez Gift Set"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -174,14 +174,14 @@ function CityWalk() {
                     {/* Text column - shown second on desktop, first on mobile/tablet */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-2">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                        OUD KIFLAIN
+                        Bakhoor Rasiyat
                         </p>
                         <p className="fs-6 mb-3">
-                        The Oud Ma'attar Kiflain is a luxurious blend of balsamic, musky and leathery notes. A warmth of calming aroma,It will make your special occasions even more so, with the captivating accents of Aryan Oud and the distinct beachy whiff of Ambergris.
+                        Bakhoor Rasiyat is a rich, earthy blend that fills your space with deep, woody notes and a hint of spice, creating a warm and inviting atmosphere rooted in traditional Arabian luxury.
                         </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-kiflain`}
+                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-rasiyat`}
                         >
                             Shop Now
                         </a>
