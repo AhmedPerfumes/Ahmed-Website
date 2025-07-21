@@ -147,10 +147,10 @@ export default function Categories({ section }) {
         categoryRend = (
             <>
                 <h2 className="section-title text-uppercase fs-2 fw-medium text-center mb-2">
-                    {t("Indulge in the Rich")}
+                    {t("Timeless Fragrance,")}
                 </h2>
                 <p className="fs-3 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
-                    {t("Aroma of Bakhoor")}
+                    {t("Eternal Bakhoor")}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
                     {renderSlides(fatherDay)}
