@@ -186,7 +186,9 @@ export default function Header14() {
 
                 <div
                     ref={containerRef}
-                    className={`header-tools__item hover-container ${
+                    className={`
+                        
+                        ${
                         isPopupOpen ? "js-content_visible" : ""
                     }`}
                 >

@@ -29,11 +29,11 @@ function CityWalk() {
                 </Link>
             </div>
             <div className="container-fluid p-0 pt-2">
-                <Link href={`/${locale}/shop`}>
+                <Link href={`/${locale}/product-category/dakhoon`}>
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/campaigns/fathers-day-mob.jpg"
+                        src="/assets/images/campaigns/mobile-banner.jpg"
                         alt="Father's Day Mobile"
                         width={1500}
                         height={550}
@@ -48,10 +48,10 @@ function CityWalk() {
                         <div className="section-head pt-5 pb-5 text-uppercase w-100">
   <h2 className="text-center">
     <span className="d-block h3  h3-sm h2-md">
-      A Gift as Majestic as Your Love
+    Essence of Bakhoor
     </span>
     <span className="d-block text-uppercase h3 h3-sm h3-md">
-      Happy Father's Day
+    Experience its timeless aroma.
     </span>
   </h2>
 </div>
@@ -59,7 +59,7 @@ function CityWalk() {
                             <div className="d-none d-md-block pb-3">
                                 <div className="videoarea d-flex align-items-center">
                                     <VideoPanel
-                                        src="/assets/videos/FathersDay.mp4"
+                                        src="/assets/videos/Dakhoon.mp4"
                                         section=""
                                     />
                                 </div>
@@ -67,7 +67,7 @@ function CityWalk() {
                             <div className="d-block d-sm-none pb-3">
                                 <div className="videoarea d-flex align-items-center">
                                     <VideoPanel
-                                        src="/assets/videos/FatherDayMobile.mp4"
+                                        src="/assets/videos/mobile video.mp4"
                                         section="hundred"
                                     />
                                 </div>
@@ -77,7 +77,7 @@ function CityWalk() {
                 </div>
                 <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                            href={`/${locale}/product-category/dakhoon/oud-maattar`}
                         >
                             Shop Now
                         </a>
@@ -139,14 +139,14 @@ function CityWalk() {
                     {/* Text column - shown second on mobile/tablet, first on desktop */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                            Bin Shaikh
+                           Oud Amber
                         </p>
                         <p className="fs-6 mb-3">
-                            Like priceless wisdom passed down over the ages, the Bin Shaikh was passed down from our forefathers, making this vintage scent a truly priceless work of art. An exotic blend of distinct aromas.
+                        The combination of oud and amber creates a fragrance that is both opulent and balanced. The oud brings a smoky, leathery edge, while the amber adds a smooth, golden warmth. This balance of darkness and light gives Oud Amber its richness and depth.
                         </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
+                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-al-amber-3tl`}
                         >
                             Shop Now
                         </a>
@@ -174,19 +174,14 @@ function CityWalk() {
                     {/* Text column - shown second on desktop, first on mobile/tablet */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-2">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                            Zumar
+                        OUD KIFLAIN
                         </p>
                         <p className="fs-6 mb-3">
-                            Show Dad how much he means to you with Zumar Eau de
-                            Parfum. A rich, aromatic fragrance that blends bold
-                            saffron, fresh pear, and red berries with a
-                            captivating floral heart. The warm, earthy base of
-                            patchouli and cacao creates a sensual finish —
-                            perfect for the man who leaves a lasting impression.
+                        The Oud Ma'attar Kiflain is a luxurious blend of balsamic, musky and leathery notes. A warmth of calming aroma,It will make your special occasions even more so, with the captivating accents of Aryan Oud and the distinct beachy whiff of Ambergris.
                         </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
+                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-kiflain`}
                         >
                             Shop Now
                         </a>
@@ -204,16 +199,16 @@ function CityWalk() {
             </section>
             <section className="d-flex flex-column align-items-center pt-5">
                             <span className="t-subtitle text-uppercase fs-4 text-center">
-                                {"Gift sets to give him the special treatment he deserves"}
+                                {"Unveil the Charm of Traditional Bakhoor"}
                             </span>
                             <div className="d-flex flex-row align-items-center ">
                                 <div className="mt-4 mb-5 d-none d-md-block">
                                     <a
-                                        href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                        href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-marj`}
                                     >
                                         <Image
                                             loading="lazy"
-                                            src="/assets/images/campaigns/Azzo-Azzeez.jpg"
+                                            src="/assets/images/campaigns/Bakhoor-Marj.jpg"
                                             width="600"
                                             height="600"
                                             alt="Aazz-o-Azzeez"
@@ -223,7 +218,7 @@ function CityWalk() {
                                     </a>
                                     <div className="d-flex justify-content-center pt-3">
                                         <Link
-                                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-marj`}
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                         >
                                             {t("Shop Now")}
@@ -232,11 +227,11 @@ function CityWalk() {
                                 </div>
                                 <div className="mt-4 mb-5 d-none d-md-block">
                                     <a
-                                        href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                                        href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-oud-roses`}
                                     >
                                         <Image
                                             className="px-1"
-                                            src="/assets/images/Ihda-khas-giftset.jpg"
+                                            src="/assets/images/campaigns/bakhoor-oud-roses.jpg"
                                             width="600"
                                             height="600"
                                             alt="Antee"
@@ -245,7 +240,7 @@ function CityWalk() {
                                     </a>
                                     <div className="d-flex justify-content-center pt-3">
                                         <Link
-                                            href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-oud-roses`}
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                         >
                                             {t("Shop Now")}
@@ -256,11 +251,11 @@ function CityWalk() {
             
                             <div className="mt-4 mb-5 d-block d-sm-none d-flex flex-column">
                             <a
-                                        href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                        href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-marj`}
                                     >
                                         <Image
                                             loading="lazy"
-                                            src="/assets/images/campaigns/Azzo-Azzeez.jpg"
+                                            src="/assets/images/campaigns/Bakhoor-Marj.jpg"
                                             width="600"
                                             height="600"
                                             alt="Aazz-o-Azzeez"
@@ -269,17 +264,18 @@ function CityWalk() {
                                         />
                                     </a>
                                 <div className="d-flex justify-content-center pt-3">
+                                    
                                 <Link
-                                            href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
+                                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-marj`}
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                         >
                                             {t("Shop Now")}
                                         </Link>
                                 </div>
-                                <a href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}>
+                                <a href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-oud-roses`}>
                                     <Image
                                         className="w-100 h-100 px-1"
-                                        src="/assets/images/Ihda-khas-giftset.jpg"
+                                        src="/assets/images/campaigns/bakhoor-oud-roses.jpg"
                                         width="600"
                                         height="600"
                                         alt="Oud-Asateen"
@@ -288,7 +284,7 @@ function CityWalk() {
                                 </a>
                                 <div className="d-flex justify-content-center pt-3">
                                     <Link
-                                        href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}
+                                        href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-oud-roses`}
                                         className="btn-rounded btn-link_lg text-uppercase fw-medium "
                                     >
                                         {t("Shop Now")}
@@ -298,7 +294,7 @@ function CityWalk() {
                         </section>
                         
 
-            <Contact_campaign/>
+            {/* <Contact_campaign/> */}
         </>
     );
 }
