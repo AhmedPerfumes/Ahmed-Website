@@ -17,7 +17,7 @@ function CityWalk() {
             {/* Hero Section */}
             <div>
             <div className="container-fluid p-0 pt-2">
-                <Link href={`/${locale}/shop`}>
+                <Link href={`/${locale}/product-category/dakhoon`}>
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
