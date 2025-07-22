@@ -265,6 +265,14 @@ $card-image-height: 121.212122%;
     line-height: $line-height-base;
   }
 }
+@media (max-width: 767px) {
+  .pc__atc {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    margin-bottom: 10px;
+  }
+}
 
 // Product card add to cart
 .pc__atc {

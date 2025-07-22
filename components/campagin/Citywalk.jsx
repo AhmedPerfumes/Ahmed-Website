@@ -8,6 +8,8 @@ import { useLocale, useTranslations } from "use-intl";
 import Categories from "@/components/homes/home-15/Categories";
 import VideoPanel from "../VideoPanel";
 import Contact_campaign from "../otherPages/Contact/Contact_campaign";
+import Products from "../homes/home-2/Products";
+import TopCollections from "../homes/home-5/TopCollections";
 
 function CityWalk() {
     const locale = useLocale();
@@ -189,14 +191,7 @@ function CityWalk() {
                 </div>
             </div>
 
-            <section className="d-flex flex-direction-column bg-white mt-5 ">
-                <div className="panel2 mb-4">
-                    <div className="inner2 mt-5 d-flex align-items-center">
-                        {/* Limited Quantity */}
-                        <Categories section="fathersDay" />
-                    </div>
-                </div>
-            </section>
+            <TopCollections categoryId={12} category={"dakhoon"} sub_category={"bakhoor"} title={"Indulge in the Rich Aroma of Bakhoor"}/>
             <section className="d-flex flex-column align-items-center pt-5">
                             <span className="t-subtitle text-uppercase fs-4 text-center">
                                 {"Unveil the Charm of Traditional Bakhoor"}
@@ -292,6 +287,7 @@ function CityWalk() {
                                 </div>
                             </div>
                         </section>
+                        <TopCollections categoryId={14} category={"dakhoon"} sub_category={"oud-maattar"} title={"The Essence of Oud Ma'Attar"}/>
                         
 
             {/* <Contact_campaign/> */}
