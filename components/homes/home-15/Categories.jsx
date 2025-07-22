@@ -41,7 +41,7 @@ export default function Categories({ section }) {
             <SwiperSlide key={i} className="swiper-slide">
                 {
                     section != "sectionTop" ? 
-                    <Link href={`${locale}${elm.link}`}
+                    <Link href={`/${locale}${elm.link}`}
                       className="d-block mb-3 position-relative"
                       style={{ width: '100%', maxWidth: 330, aspectRatio: '330 / 500' }}>
                     {/* Responsive poster image */}
@@ -73,7 +73,7 @@ export default function Categories({ section }) {
                     </video>
                     
                 </Link> : 
-                <Link href={`${locale}${elm.link}`}
+                <Link href={`/${locale}${elm.link}`}
                       className="d-block mb-3 position-relative"
                       style={{ width: '100%', maxWidth: 330, aspectRatio: '330 / 400' }}>
                     {/* Responsive poster image */}
@@ -147,10 +147,10 @@ export default function Categories({ section }) {
         categoryRend = (
             <>
                 <h2 className="section-title text-uppercase fs-2 fw-medium text-center mb-2">
-                    {t("Father’s Day Fragrances")}
+                    {t("Timeless Fragrance,")}
                 </h2>
-                <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
-                    {t("A special line just for Dads")}
+                <p className="fs-3 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
+                    {t("Eternal Bakhoor")}
                 </p>
                 <Swiper className="swiper-container" {...swiperOptions}>
                     {renderSlides(fatherDay)}

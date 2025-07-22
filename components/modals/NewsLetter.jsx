@@ -118,7 +118,7 @@ export default function NewsLetter() {
                                 <div className="d-flex justify-content-center">
                                 <a
                                     className="btn-rounded btn-link_lg text-uppercase fw-medium"
-                                    href={`/${locale}/shop`}
+                                    href={`/${locale}/login_register?tab=register`}
                                 >
                                     Register
                                 </a>
