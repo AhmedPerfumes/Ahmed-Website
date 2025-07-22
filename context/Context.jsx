@@ -106,11 +106,19 @@ export default function Context({ children }) {
     localStorage.setItem("wishlist", JSON.stringify(wishList));
   }, [wishList]);
 
-  const removeGiftFromCart = () => {
-    const updatedCart = cartProducts.filter((item) => !item.is_gift);
-    setCartProducts(updatedCart);
-    localStorage.setItem('cartList', JSON.stringify(updatedCart));
-  };
+  const removeGiftFromCart = (productIdToRemove = null) => {
+  setCartProducts((prev) => {
+    if (!productIdToRemove) {
+      // Remove all gifts
+      return prev.filter((item) => !item.is_gift);
+    }
+
+    // Remove specific gift
+    return prev.filter(
+      (item) => !(item.is_gift && item.product_id === productIdToRemove)
+    );
+  });
+};
 
   const contextElement = {
     cartProducts,

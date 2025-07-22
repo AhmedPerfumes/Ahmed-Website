@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 // import FreeGiftFeature from '@/components/FreeGiftFeature';
+import BogoFeature from '@/components/BogoFeature';
 
 export default function Checkout() {
     const {
@@ -700,6 +701,7 @@ export default function Checkout() {
             {cartProducts.length ? (
                 <>
                     {/* <FreeGiftFeature /> */}
+                    <BogoFeature />
                     <form onSubmit={onOrder}>
                         <div className="checkout-form">
                             <div className="billing-info__wrapper">
