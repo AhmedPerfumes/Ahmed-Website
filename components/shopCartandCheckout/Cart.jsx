@@ -124,7 +124,16 @@ export default function Cart() {
   const price = (elm) => {
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="price price-sale">{ currency.symbol }{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}</span></>;
+        return (
+          <>
+            <span className="price price-sale">
+              {currency.symbol}{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}
+            </span>
+            <span className="money price price-old">
+              {currency.symbol}{elm?.price}
+            </span>
+          </>
+        );
       } else {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
