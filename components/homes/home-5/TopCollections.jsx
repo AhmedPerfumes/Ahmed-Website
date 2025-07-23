@@ -132,7 +132,7 @@ export default function TopCollections({ categoryId,title,category,sub_category}
       <div className="mb-4 mb-xl-5 pt-1 pb-5" />
       <section className="products-carousel container">
         <h2 className="section-title fw-normal text-center mb-3 pb-xl-3 mb-xl-3">
-          {}
+          {title}
         </h2>
 
         <div className="tab-content" id="collections-tab-content">
