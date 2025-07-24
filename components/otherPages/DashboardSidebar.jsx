@@ -4,6 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 export default function DashboardSidebar() {
   const pathname = usePathname();
+  const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+    };
   return (
     <div className="col-lg-3">
       <ul className="account-nav">

@@ -23,6 +23,13 @@ export const homePages = [
   { id: 22, title: "Home 22", href: "/home-22" },
 ];
 
+export const handleLogout = (e) => {
+  e.preventDefault();
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "/";
+};
+
 export const shopList = [
   {
     id: 1,
