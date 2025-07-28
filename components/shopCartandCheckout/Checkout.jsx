@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-// import FreeGiftFeature from '@/components/FreeGiftFeature';
+import FreeGiftFeature from '@/components/FreeGiftFeature';
 import BogoFeature from '@/components/BogoFeature';
 
 export default function Checkout() {
@@ -280,10 +280,10 @@ export default function Checkout() {
             } else if (data.discountMessage) {
                 // setSuccess();
                 setError(data.discountMessage);
-                setTimeout(() => {
-                    localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
-                    setCartProducts([]); // update the cartProducts state to an empty array
-                }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
+                // setTimeout(() => {
+                //     localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
+                //     setCartProducts([]); // update the cartProducts state to an empty array
+                // }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
                 // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
                 // router.push(data.redirect_url);
             } else {
@@ -700,7 +700,7 @@ export default function Checkout() {
         <>
             {cartProducts.length ? (
                 <>
-                    {/* <FreeGiftFeature /> */}
+                    <FreeGiftFeature />
                     <BogoFeature />
                     <form onSubmit={onOrder}>
                         <div className="checkout-form">
@@ -946,7 +946,7 @@ export default function Checkout() {
                                                 {OTPSuccess}
                                             </div>
                                         )}
-                                        {isOTPButton ? (
+                                        {!isOTPButton ? (
                                             <button
                                                 className="btn btn-primary w-100 text-uppercase"
                                                 type="button"

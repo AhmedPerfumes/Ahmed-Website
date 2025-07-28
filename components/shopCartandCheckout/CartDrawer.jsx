@@ -25,11 +25,27 @@ export default function CartDrawer() {
   const setQuantity = (id, quantity, productQty) => {
     if (quantity >= 1 && quantity <= productQty) {
       setError(null);
-      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
       const items = [...cartProducts];
-      const itemIndex = items.indexOf(item);
-      item.quantity = quantity;
-      items[itemIndex] = item;
+
+      // Update the paid product
+      const paidItemIndex = items.findIndex(
+        (item) => item.product_id == id && !item.is_gift
+      );
+
+      if (paidItemIndex !== -1) {
+        items[paidItemIndex].quantity = quantity;
+      }
+
+      // Also update the matching gift (if exists)
+      const giftItemIndex = items.findIndex(
+        (item) => item.product_id == id && item.is_gift
+      );
+
+      if (giftItemIndex !== -1) {
+        items[giftItemIndex].quantity = quantity;
+      }
+
       setCartProducts(items);
     } else {
       setError("Quantity is more than available quantity");
@@ -146,7 +162,7 @@ export default function CartDrawer() {
                         >
                           +
                         </div>
-                      </div> : 1}
+                      </div> : elm.quantity}
 
                         {subTotalPrice(elm)}
                       
