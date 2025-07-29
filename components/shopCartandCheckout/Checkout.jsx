@@ -606,11 +606,7 @@ export default function Checkout() {
             ) {
                 return (
                     <td>
-                        <span className="money price price-old">
-                            {currency.symbol}
-                            {elm?.price}
-                        </span>
-                        <span className="money price price-sale">
+                         <span className="money price price-sale">
                             {currency.symbol}
                             {(
                                 (elm.price -
@@ -618,6 +614,11 @@ export default function Checkout() {
                                 elm.quantity
                             ).toFixed(2)}
                         </span>
+                        <span className="money price price-old">
+                            {currency.symbol}
+                            {elm?.price}
+                        </span>
+                       
                     </td>
                 );
             } else {
