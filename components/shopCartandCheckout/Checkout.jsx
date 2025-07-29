@@ -280,6 +280,15 @@ export default function Checkout() {
             } else if (data.discountMessage) {
                 // setSuccess();
                 setError(data.discountMessage);
+                setTimeout(() => {
+                    localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
+                    setCartProducts([]); // update the cartProducts state to an empty array
+                }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
+                // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+                // router.push(data.redirect_url);
+            } else if (data.couponMessage) {
+                // setSuccess();
+                setError(data.couponMessage);
                 // setTimeout(() => {
                 //     localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
                 //     setCartProducts([]); // update the cartProducts state to an empty array
@@ -619,7 +628,7 @@ export default function Checkout() {
                     </td>
                 );
             }
-        } else if (elm?.coupon && couponData != null && couponCode != null) {
+        } else if (elm?.coupon && elm.coupon.length != 0 && couponData != null && couponCode != null) {
             console.log("else if", elm);
             // elm.map((item) => {
             // return elm.coupon.map((item, ind) => {
@@ -946,7 +955,7 @@ export default function Checkout() {
                                                 {OTPSuccess}
                                             </div>
                                         )}
-                                        {!isOTPButton ? (
+                                        {isOTPButton ? (
                                             <button
                                                 className="btn btn-primary w-100 text-uppercase"
                                                 type="button"
