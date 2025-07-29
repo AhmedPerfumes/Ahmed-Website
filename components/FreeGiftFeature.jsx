@@ -7,7 +7,7 @@ import he from 'he';
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Discount } from '@mui/icons-material';
+import { Campaign, Discount } from '@mui/icons-material';
 
 const swiperOptions = {
   autoplay: false,
@@ -87,87 +87,95 @@ const thresholds = [
   {
     min: 500,
     gifts: [
-      // {
-      //   product_id: 182,
-      //   product_name: 'Blue Oud',
-      //   price: "0",
-      //   image: 'epdnew/blu-oud.jpg',
-      //   is_gift: true,
-      //   discount: null
-      // },
       {
-        product_id: 46,
-        product_name: 'Leather',
+        product_id: 77,
+        product_name: 'Rose Noir Hair Mist',
         price: "0",
-        image: 'epdnew/leather.jpg',
+        image: 'hairmistnew/rose-noir-hair-mist.jpg',
         is_gift: true,
         discount: null,
-        coupon: []
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
       },
       {
-        product_id: 55,
-        product_name: 'Oud Classic',
+        product_id: 81,
+        product_name: 'Supreme Hair Mist',
         price: "0",
-        image: 'epdnew/oud-classic.jpg',
+        image: 'hairmistnew/supreme-hair-mist.jpg',
         is_gift: true,
         discount: null,
-        coupon: []
-      },
-    
-      {
-        product_id: 50,
-        product_name: 'Musk Ahmed',
-        price: "0",
-        image: 'epdnew/musk-ahmed.jpg',
-        is_gift: true,
-        discount: null,
-        coupon: []
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
       },
       {
-        product_id: 63,
-        product_name: 'Saif',
+        product_id: 80,
+        product_name: 'Shaikha Hind Hair Mist',
         price: "0",
-        image: 'epdnew/saif.jpg',
+        image: 'hairmistnew/shaikha-hind-hair-mist.jpg',
         is_gift: true,
         discount: null,
-        coupon: []
-      },
-  
-      {
-        product_id: 35,
-        product_name: 'Zuraique',
-        price: "0",
-        image: 'epdnew/zuraique.jpg',
-        is_gift: true,
-        discount: null,
-        coupon: []
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
       },
       {
-        product_id: 192,
-        product_name: 'Sage',
+        product_id: 251,
+        product_name: 'Marj Hair Mist',
         price: "0",
-        image: 'epdnew/sage-1.jpg',
+        image: 'hairmistnew/marj-hair-mist-bottle.jpg',
         is_gift: true,
         discount: null,
-        coupon: []
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
       },
       {
-        product_id: 248,
-        product_name: 'Tanuf',
+        product_id: 79,
+        product_name: 'Bidun Esam Hair Mist',
         price: "0",
-        image: 'epdnew/tanuf-1.jpg',
+        image: 'hairmistnew/bidun-esam-hair-mist.jpg',
         is_gift: true,
         discount: null,
-        coupon: []
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
       },
       {
-        product_id: 66,
-        product_name: 'Sheukh',
+        product_id: 78,
+        product_name: 'Oud & Roses Hair Mist',
         price: "0",
-        image: 'epdnew/sheukh.jpg',
+        image: 'hairmistnew/oud-roses-hair-mist.jpg',
         is_gift: true,
         discount: null,
-        coupon: []
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
+      },
+      {
+        product_id: 124,
+        product_name: 'Oud & Roses Air Freshener',
+        price: "0",
+        image: 'air-freshener/air-freshener-oud-roses.jpg',
+        is_gift: true,
+        discount: null,
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
+      },
+      {
+        product_id: 129,
+        product_name: 'Little Hearts Air Freshener',
+        price: "0",
+        image: 'air-freshener/air-freshener-little-hearts.jpg',
+        is_gift: true,
+        discount: null,
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
+      },
+      {
+        product_id: 127,
+        product_name: 'Oud Lavender Air Freshener',
+        price: "0",
+        image: 'air-freshener/air-freshener-oud-lavender.jpg',
+        is_gift: true,
+        discount: null,
+        coupon: [],
+        campaign: 'summer_vibes_2025_campaign'
       },
     ],
   },
@@ -180,7 +188,8 @@ const FreeGiftFeature = ({ couponData }) => {
   // Filter out "Collections" products
   const nonCollectionProducts = cartProducts.filter(
     (item) => item.category_name?.toLowerCase() !== "collections" &&
-    item.discount === null
+    item.discount === null &&
+    item.category_name?.toLowerCase() !== 'online exclusive'
   );
 
   const currentUTC = new Date(); // Current UTC time
@@ -233,7 +242,7 @@ const FreeGiftFeature = ({ couponData }) => {
   const handleGiftSelect = (product) => {
     try {
       console.log('Gift selected:', product.product_id, product.product_name);
-      removeGiftFromCart();
+      removeGiftFromCart(null, 'summer_vibes_2025_campaign');
       addProductToCart({ ...product, quantity: 1 });
       setSelectedGift(product.product_id);
       console.log('Cart updated, selectedGift set to:', product.product_id);
@@ -248,7 +257,7 @@ const FreeGiftFeature = ({ couponData }) => {
     console.log('Checking selectedGift:', selectedGift, 'Cart products:', cartProducts);
     if (!activeThreshold && selectedGift) {
       console.log('No active threshold, removing gift and clearing selectedGift');
-      removeGiftFromCart();
+      removeGiftFromCart(null, 'summer_vibes_2025_campaign');
       setSelectedGift(null);
     } else if (selectedGift) {
       // Check if the selected gift is still in the cart
@@ -265,7 +274,7 @@ const FreeGiftFeature = ({ couponData }) => {
         );
         if (!isValidGift) {
           console.log('Invalid gift for threshold, removing gift and clearing selectedGift');
-          removeGiftFromCart();
+          removeGiftFromCart(null, 'summer_vibes_2025_campaign');
           setSelectedGift(null);
         }
       }
@@ -281,7 +290,7 @@ const FreeGiftFeature = ({ couponData }) => {
       (threshold) => nonCollectionTotalPrice < threshold.min
     );
     if (nextThreshold) {
-      return <span className='t-subtitle' style={{ color:'#c00000',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>Spend AED {(nextThreshold.min - nonCollectionTotalPrice).toFixed(2)} more to unlock a free gift!</span>;
+      return <span className='t-subtitle' style={{ color:'#198754',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>Spend AED {(nextThreshold.min - nonCollectionTotalPrice).toFixed(2)} more to unlock a free gift!</span>;
     }
     return 'Add more items to unlock a free gift!';
   };
@@ -294,8 +303,8 @@ const FreeGiftFeature = ({ couponData }) => {
       {activeThreshold ? (
         <div>
           <h4 className="font-bold mb-4">
-            <span className='t-subtitle' style={{ color:'#c00000',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
-            Father's Day Special :- You've Earned a Free Gift – Choose 1 Perfume From Below!
+            <span className='t-subtitle' style={{ color:'#198754',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
+            Summer Vibes Special :- You've Earned a Free Gift – Choose 1 Perfume From Below!
             </span>
           </h4>
           <Swiper
