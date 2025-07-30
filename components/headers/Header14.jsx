@@ -85,7 +85,7 @@ export default function Header14() {
 
     const {
         categoriesSubCategories,
-        top_header,
+        topHeader,
         isLoading: isMenuLoading,
         error,
     } = useMenu();
@@ -159,7 +159,7 @@ export default function Header14() {
                     {...swiperOptions}
                     style={{ height: "2.5rem" }}
                 >
-                    {top_header.map((elm, i) => (
+                    {topHeader.map((elm, i) => (
                         <SwiperSlide
                             key={i}
                             style={{

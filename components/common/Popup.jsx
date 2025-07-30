@@ -10,7 +10,7 @@ export default function PopUp() {
   const modalRef = useRef(null);
   const locale = useLocale();
   const { push } = useRouter();
-  const {pop_up}=useMenu();
+  const {popUp}=useMenu();
 
   useEffect(() => {
     let modalInstance;
@@ -55,7 +55,7 @@ export default function PopUp() {
             data-bs-dismiss="modal"
             aria-label="Close"
             ></button>
-            {pop_up.map((elm, i) => (
+            {popUp.map((elm, i) => (
           <div className="row p-0 m-0">
             {/* Left Image Section */}
             <div className="col-md-8 p-0">
