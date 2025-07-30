@@ -43,8 +43,8 @@ export default function HomePage8() {
       </div>
 
       {/* Your actual page content */}
-      {/* <NewsLetter /> */}
-      <PopUp/>
+      <NewsLetter />
+      {/* <PopUp/> */}
       <Header14 />
 
       <div className="d-none d-lg-block">{/* CanvasAnimation */}</div>

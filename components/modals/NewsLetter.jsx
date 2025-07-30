@@ -6,12 +6,14 @@ import { useLocale } from "next-intl";
 import VideoPanel from "../VideoPanel";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useMenu } from "@/context/MenuContext";
 
 export default function NewsLetter() {
     const modalElement = useRef(null);
     const [hasScrolled, setHasScrolled] = useState(false);
     const locale = useLocale();
     let modalInstance = null;
+    const { popUp } = useMenu();
 
     useEffect(() => {
         const bootstrap = require("bootstrap");
@@ -31,7 +33,7 @@ export default function NewsLetter() {
 
         // Scroll event
         const handleScroll = () => {
-            if (window.scrollY > 3500 && !hasScrolled) {
+            if (window.scrollY > 2000 && !hasScrolled) {
                 showModal();
             }
         };
@@ -58,6 +60,7 @@ export default function NewsLetter() {
             data-bs-backdrop="true"
             aria-hidden="true"
         >
+        
             <div className="modal-dialog newsletter-popup modal-dialog-centered">
                 <div className="modal-content">
                     <button
@@ -65,6 +68,7 @@ export default function NewsLetter() {
                         className="btn-close"
                         aria-label="Close"
                     ></button>
+                       {popUp.map((elm, i) => (
                     <div className="row p-0 m-0">
                         <div className="col-md-8 p-0">
                             <div className="newsletter-popup__bg w-100">
@@ -81,7 +85,7 @@ export default function NewsLetter() {
                                             height={650}
                                             style={{ height: "fit-content" }}
                                             loading="lazy"
-                                            src="/assets/images/new-user-signup.jpg"
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
                                             className="h-100 w-100 object-fit-cover d-block"
                                             alt="image"
                                         />
@@ -110,10 +114,10 @@ export default function NewsLetter() {
                                     className="section-title fw-normal mb-3 pb-2"
                                     style={{ color: "#5c6137" }}
                                 >
-                                    Sign Up & Save 10%
+                                    {/* Sign Up & Save 10% */}{elm.name}
                                 </h3>
                                 <p>
-                                    Register now and enjoy exclusive savings on your first order.
+                                    {/* Register now and enjoy exclusive savings on your first order. */}{elm.description}
                                 </p>
                                 <div className="d-flex justify-content-center">
                                 <a
@@ -126,8 +130,13 @@ export default function NewsLetter() {
                             </div>
                         </div>
                     </div>
+                         ))}
                 </div>
             </div>
+       
         </div>
+
+        
     );
+
 }
