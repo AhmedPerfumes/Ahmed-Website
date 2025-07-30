@@ -24,7 +24,7 @@ export default function PopUp() {
         modalInstance = new Modal(modalRef.current);
         setTimeout(() => {
           modalInstance.show();
-        }, 3500);
+        }, 8000);
       }
     };
 
