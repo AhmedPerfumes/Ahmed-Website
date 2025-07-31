@@ -194,7 +194,7 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-       
+       <p className="text-center fs-6 fw-medium success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
         <div className="free-shipping-progress mt-3">
               {totalPrice < freeShippingThreshold ? (
                 <div>
