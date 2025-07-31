@@ -195,7 +195,9 @@ export default function CartDrawer() {
           alt="image"
         /> */}
        <p className="text-center fs-6 fw-bold success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
+       <hr class="cart-drawer-divider"></hr>
         <div className="free-shipping-progress mt-3">
+          
               {totalPrice < freeShippingThreshold ? (
                 <div>
                   
@@ -203,6 +205,7 @@ export default function CartDrawer() {
                     {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
                     shipping! ⛟
                   </p>
+                  
                   <div className="progress">
                     <div
                       className="progress-bar"
@@ -213,9 +216,12 @@ export default function CartDrawer() {
                       aria-valuemax="100"
                     ></div>
                   </div>
-                </div>
+              
+                </div>  
+                
               ) : (
-                <h4 className="success">☆ Congratulations! You qualify for free shipping!</h4>
+                
+                <h4 className="success fw-bold fs-6">☆ Congratulations! You qualify for free shipping!</h4>
               )}
         </div>
           <hr className="cart-drawer-divider" />
