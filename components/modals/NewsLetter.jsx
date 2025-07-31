@@ -60,7 +60,6 @@ export default function NewsLetter() {
             data-bs-backdrop="true"
             aria-hidden="true"
         >
-        
             <div className="modal-dialog newsletter-popup modal-dialog-centered">
                 <div className="modal-content">
                     <button
@@ -68,75 +67,78 @@ export default function NewsLetter() {
                         className="btn-close"
                         aria-label="Close"
                     ></button>
-                       {popUp.map((elm, i) => (
-                    <div className="row p-0 m-0">
-                        <div className="col-md-8 p-0">
-                            <div className="newsletter-popup__bg w-100">
-                                <div className="d-none d-lg-block">
-                                    <a
-                                        href={`/${locale}/shop`}
-                                    >
-                                        {/* <VideoPanel
-                                            src="/assets/videos/azz-o-azeez-popup.mp4"
-                                            section="hundred"
-                                        /> */}
+                    {popUp.map((elm, i) => (
+                        <div className="row p-0 m-0" key={i}>
+                            <div className="col-md-8 p-0">
+                                <div className="newsletter-popup__bg w-100">
+                                    <div className="d-none d-lg-block">
+                                        <a
+                                            href={`/${locale}/shop`}
+                                            className="hover-effect"
+                                        >
+                                            <Image
+                                                width={550}
+                                                height={650}
+                                                style={{ height: "fit-content" }}
+                                                loading="lazy"
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
+                                                className="h-100 w-100 object-fit-cover d-block"
+                                                alt="image"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div className="d-sm-block d-md-none">
                                         <Image
                                             width={550}
                                             height={650}
                                             style={{ height: "fit-content" }}
                                             loading="lazy"
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
-                                            className="h-100 w-100 object-fit-cover d-block"
-                                            alt="image"
-                                        />
-                                    </a>
-                                </div>
-                                <div className="d-sm-block d-md-none">
-                                    {/* <VideoPanel
-                                        src="/assets/videos/azz-o-azeez-popup.mp4"
-                                        section="hundred"
-                                    /> */}
-                                    <Image
-                                            width={550}
-                                            height={650}
-                                            style={{ height: "fit-content" }}
-                                            loading="lazy"
                                             src="/assets/images/new-user-signup.jpg"
-                                            className="h-100 w-100 object-fit-cover d-block"
+                                            className="h-100 w-100 object-fit-cover d-block hover-effect"
                                             alt="image"
                                         />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-4 p-0 d-flex align-items-center text-center">
+                                <div className="block-newsletter w-100 px-3 py-4">
+                                    <h3
+                                        className="section-title fw-normal mb-3"
+                                        style={{ color: "#5c6137" }}
+                                    >
+                                        {elm.name}
+                                    </h3>
+
+                                    <p
+                                        className="mb-3"
+                                        style={{ fontSize: "1rem", color: "#333" }}
+                                    >
+                                        {elm.description}
+                                    </p>
+
+                                    <div
+                                        className="mb-4"
+                                        style={{ fontSize: "0.95rem", color: "#555" }}
+                                        dangerouslySetInnerHTML={{
+                                            __html: elm.content.replace(/<\/?p>/g, ""),
+                                        }}
+                                    />
+
+                                    <div className="d-flex justify-content-center">
+                                        <a
+                                            className="btn-rounded btn-link_lg text-uppercase fw-medium hover-effect"
+                                            href={`/${locale}/login_register?tab=register`}
+                                        >
+                                            Register
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-4 p-0 d-flex align-items-center text-center">
-                            <div className="block-newsletter w-100">
-                                <h3
-                                    className="section-title fw-normal mb-3 pb-2"
-                                    style={{ color: "#5c6137" }}
-                                >
-                                    {/* Sign Up & Save 10% */}{elm.name}
-                                </h3>
-                                <p>
-                                    {/* Register now and enjoy exclusive savings on your first order. */}{elm.description}
-                                </p>
-                                <div className="d-flex justify-content-center">
-                                <a
-                                    className="btn-rounded btn-link_lg text-uppercase fw-medium"
-                                    href={`/${locale}/login_register?tab=register`}
-                                >
-                                    Register
-                                </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                         ))}
+                    ))}
                 </div>
             </div>
-       
         </div>
-
-        
     );
 
 }
