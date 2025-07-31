@@ -194,12 +194,12 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-       <p className="text-center fs-6 fw-medium success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
+       <p className="text-center fs-6 fw-bold success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
         <div className="free-shipping-progress mt-3">
               {totalPrice < freeShippingThreshold ? (
                 <div>
                   
-                  <p className="fs-6">
+                  <p className="fs-6 fw-bold">
                     {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
                     shipping! ⛟
                   </p>
