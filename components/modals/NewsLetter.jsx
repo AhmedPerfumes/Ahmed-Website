@@ -6,12 +6,14 @@ import { useLocale } from "next-intl";
 import VideoPanel from "../VideoPanel";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useMenu } from "@/context/MenuContext";
 
 export default function NewsLetter() {
     const modalElement = useRef(null);
     const [hasScrolled, setHasScrolled] = useState(false);
     const locale = useLocale();
     let modalInstance = null;
+    const { popUp } = useMenu();
 
     useEffect(() => {
         const bootstrap = require("bootstrap");
@@ -31,7 +33,7 @@ export default function NewsLetter() {
 
         // Scroll event
         const handleScroll = () => {
-            if (window.scrollY > 3500 && !hasScrolled) {
+            if (window.scrollY > 2000 && !hasScrolled) {
                 showModal();
             }
         };
@@ -65,69 +67,78 @@ export default function NewsLetter() {
                         className="btn-close"
                         aria-label="Close"
                     ></button>
-                    <div className="row p-0 m-0">
-                        <div className="col-md-8 p-0">
-                            <div className="newsletter-popup__bg w-100">
-                                <div className="d-none d-lg-block">
-                                    <a
-                                        href={`/${locale}/shop`}
-                                    >
-                                        {/* <VideoPanel
-                                            src="/assets/videos/azz-o-azeez-popup.mp4"
-                                            section="hundred"
-                                        /> */}
+                    {popUp.map((elm, i) => (
+                        <div className="row p-0 m-0" key={i}>
+                            <div className="col-md-8 p-0">
+                                <div className="newsletter-popup__bg w-100">
+                                    <div className="d-none d-lg-block">
+                                        <a
+                                            href={`/${locale}/shop`}
+                                            className="hover-effect"
+                                        >
+                                            <Image
+                                                width={550}
+                                                height={650}
+                                                style={{ height: "fit-content" }}
+                                                loading="lazy"
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
+                                                className="h-100 w-100 object-fit-cover d-block"
+                                                alt="image"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div className="d-sm-block d-md-none">
                                         <Image
                                             width={550}
                                             height={650}
                                             style={{ height: "fit-content" }}
                                             loading="lazy"
                                             src="/assets/images/new-user-signup.jpg"
-                                            className="h-100 w-100 object-fit-cover d-block"
+                                            className="h-100 w-100 object-fit-cover d-block hover-effect"
                                             alt="image"
                                         />
-                                    </a>
+                                    </div>
                                 </div>
-                                <div className="d-sm-block d-md-none">
-                                    {/* <VideoPanel
-                                        src="/assets/videos/azz-o-azeez-popup.mp4"
-                                        section="hundred"
-                                    /> */}
-                                    <Image
-                                            width={550}
-                                            height={650}
-                                            style={{ height: "fit-content" }}
-                                            loading="lazy"
-                                            src="/assets/images/new-user-signup.jpg"
-                                            className="h-100 w-100 object-fit-cover d-block"
-                                            alt="image"
-                                        />
+                            </div>
+                            <div className="col-md-4 p-0 d-flex align-items-center text-center">
+                                <div className="block-newsletter w-100 px-3 py-4">
+                                    <h3
+                                        className="section-title fw-normal mb-3"
+                                        style={{ color: "#5c6137" }}
+                                    >
+                                        {elm.name}
+                                    </h3>
+
+                                    <p
+                                        className="mb-3"
+                                        style={{ fontSize: "1rem", color: "#333" }}
+                                    >
+                                        {elm.description}
+                                    </p>
+
+                                    <div
+                                        className="mb-4"
+                                        style={{ fontSize: "0.95rem", color: "#555" }}
+                                        dangerouslySetInnerHTML={{
+                                            __html: elm.content.replace(/<\/?p>/g, ""),
+                                        }}
+                                    />
+
+                                    <div className="d-flex justify-content-center">
+                                        <a
+                                            className="btn-rounded btn-link_lg text-uppercase fw-medium hover-effect"
+                                            href={`/${locale}/login_register?tab=register`}
+                                        >
+                                            Register
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-4 p-0 d-flex align-items-center text-center">
-                            <div className="block-newsletter w-100">
-                                <h3
-                                    className="section-title fw-normal mb-3 pb-2"
-                                    style={{ color: "#5c6137" }}
-                                >
-                                    Sign Up & Save 10%
-                                </h3>
-                                <p>
-                                    Register now and enjoy exclusive savings on your first order.
-                                </p>
-                                <div className="d-flex justify-content-center">
-                                <a
-                                    className="btn-rounded btn-link_lg text-uppercase fw-medium"
-                                    href={`/${locale}/login_register?tab=register`}
-                                >
-                                    Register
-                                </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>
     );
+
 }

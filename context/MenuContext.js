@@ -10,8 +10,9 @@ export function MenuProvider({ children }) {
   const [currency, setCurrency] = useState('د.إ');
   const [homeSliders, setHomeSliders] = useState([]);
   const [homeMobileSliders, setHomeMobileSliders] = useState([]);
-  const [dynamic_sections, setDynamicSections] = useState([]);
-  const [top_header,setTopHeader] = useState([]);
+  const [popUp, setPopUp] = useState([]);
+  // const [dynamic_sections, setDynamicSections] = useState([]);
+  const [topHeader,setTopHeader] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -72,19 +73,26 @@ export function MenuProvider({ children }) {
             setHomeSliders(null);
             setError(data);
           }
-          if(data && data.dynamic_sections) {
-            setError(null);
-            setDynamicSections(data.dynamic_sections);
-          } else {
-            setDynamicSections(null);
-            setError(data);
-          }
+          // if(data && data.dynamic_sections) {
+          //   setError(null);
+          //   setDynamicSections(data.dynamic_sections);
+          // } else {
+          //   setDynamicSections(null);
+          //   setError(data);
+          // }
 
           if(data && data.home_mobile_sliders) {
             setError(null);
             setHomeMobileSliders(data.home_mobile_sliders);
           } else {
             setHomeMobileSliders(null);
+            setError(data);
+          }
+          if(data && data.pop_up) {
+            setError(null);
+            setPopUp(data.pop_up);
+          } else {
+            setPopUp(null);
             setError(data);
           }
           if(data && data.top_header) {
@@ -111,7 +119,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders, dynamic_sections, top_header }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders,popUp, topHeader }}>
       {children}
     </MenuContext.Provider>
   );
