@@ -1,9 +1,11 @@
 import React from 'react'
+import ProductGrid from '../common/ProductGrid'
+
 
 function Bogo() {
   return (
     <div>
-        <h1>BOGO</h1>
+        <ProductGrid category={"online-exclusive"} sub_category={"online-exclusive"}/>
     </div>
   )
 }
