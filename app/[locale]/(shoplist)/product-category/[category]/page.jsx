@@ -10,6 +10,7 @@ import MobileFooter2 from "@/components/footers/MobileFooter2";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 // import Link from "next/link";
 import QuickView from "@/components/modals/QuickView";
+import { headers } from 'next/headers';
 
 // export const metadata = {
 //   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -18,6 +19,19 @@ import QuickView from "@/components/modals/QuickView";
 //       icon: "/assets/images/ahmed-favicon.png",
 //   },
 // };
+
+function getRequestOrigin() {
+  const headersList = headers();
+  const host = headersList.get('host') || process.env.NEXT_PUBLIC_DEFAULT_ORIGIN; // e.g., 'localhost:3000' or 'yourdomain.com'
+  const protocol = headersList.get('x-forwarded-proto') || 'https'; // or 'https'
+  
+  // if (!host) {
+  //   // Fallback for local development or edge cases
+  //   return process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || 'http://localhost:3000';
+  // }
+
+  return `${protocol}://${host}`;
+}
 
 async function getCategorySubCategory(categoryName) {
   // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
@@ -29,10 +43,13 @@ async function getCategorySubCategory(categoryName) {
   //     category: categoryName.split("-").join(" ").toUpperCase(),
   //   })
   // });
+  const origin = getRequestOrigin();
+  // console.log('Origin:----------------------------------------------------------------------------------------------------------------------------------------------------------', origin);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'origin': origin,
     },
     body: JSON.stringify({
       category: categoryName.split("-").join(" ").toUpperCase(),
@@ -60,12 +77,15 @@ async function getProductCategorySEO(categoryName) {
   //     product: product.split("-").join(" ").toUpperCase(),
   //   })
   // });
+  const origin = getRequestOrigin();
+  // console.log('Origin:----------------------------------------------------------------------------------------------------------------------------------------------------------', origin);
   const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}api/productCategorySEO`,
       {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
+              'origin': origin,
           },
           body: JSON.stringify({
               category: categoryName.split("-").join(" ").toUpperCase(),
