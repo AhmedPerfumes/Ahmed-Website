@@ -189,7 +189,8 @@ const FreeGiftFeature = ({ couponData }) => {
   const nonCollectionProducts = cartProducts.filter(
     (item) => item.category_name?.toLowerCase() !== "collections" &&
     item.discount === null &&
-    item.category_name?.toLowerCase() !== 'online exclusive'
+    item.category_name?.toLowerCase() !== 'online exclusive' &&
+    !item.is_gift
   );
 
   const currentUTC = new Date(); // Current UTC time
