@@ -208,6 +208,24 @@ export default function ProductGrid({ category, subcategory }) {
 
   return (
     <>
+    {/* Image Banner  */}
+    <div
+  className="mx-auto position-relative overflow-hidden w-100"
+  style={{
+    maxWidth: "1410px",
+    height: "auto",
+    aspectRatio: "1410 / 570", // Keeps aspect ratio
+  }}
+>
+  <Image
+    src="/assets/images/campaigns/Bogo.jpg"
+    alt="Banner Image"
+    fill
+    style={{ objectFit: "cover" }}
+    priority
+  />
+</div>
+
       <div className="mb-4 pb-lg-3"></div>
       <section className="shop-main container">
         <div className="d-flex justify-content-between mb-4 pb-md-2">
