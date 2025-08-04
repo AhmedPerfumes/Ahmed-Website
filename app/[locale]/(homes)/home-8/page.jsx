@@ -5,6 +5,7 @@ import HomePage from '@/components/HomePage';
 import MobileFooter2 from '@/components/footers/MobileFooter2';
 import NewsLetter from '@/components/modals/NewsLetter';
 import React from 'react';
+import PopUp from '@/components/common/Popup';
 
 export const metadata = {
   title: 'Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes',
@@ -43,6 +44,7 @@ export default function HomePage8() {
 
       {/* Your actual page content */}
       <NewsLetter />
+      {/* <PopUp/> */}
       <Header14 />
 
       <div className="d-none d-lg-block">{/* CanvasAnimation */}</div>

@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-// import FreeGiftFeature from '@/components/FreeGiftFeature';
+import FreeGiftFeature from '@/components/FreeGiftFeature';
 import BogoFeature from '@/components/BogoFeature';
 
 export default function Checkout() {
@@ -284,6 +284,24 @@ export default function Checkout() {
                     localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
                     setCartProducts([]); // update the cartProducts state to an empty array
                 }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
+                // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+                // router.push(data.redirect_url);
+            } else if (data.couponMessage) {
+                // setSuccess();
+                setError(data.couponMessage);
+                // setTimeout(() => {
+                //     localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
+                //     setCartProducts([]); // update the cartProducts state to an empty array
+                // }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
+                // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
+                // router.push(data.redirect_url);
+            } else if (data.duplicateOrderMessage) {
+                // setSuccess();
+                setError(data.duplicateOrderMessage);
+                // setTimeout(() => {
+                //     localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
+                //     setCartProducts([]); // update the cartProducts state to an empty array
+                // }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
                 // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
                 // router.push(data.redirect_url);
             } else {
@@ -620,7 +638,7 @@ export default function Checkout() {
                     </td>
                 );
             }
-        } else if (elm?.coupon && couponData != null && couponCode != null) {
+        } else if (elm?.coupon && elm.coupon.length != 0 && couponData != null && couponCode != null) {
             console.log("else if", elm);
             // elm.map((item) => {
             // return elm.coupon.map((item, ind) => {
@@ -676,17 +694,18 @@ export default function Checkout() {
             console.log("else if 2");
             return (
                 <td>
-                    <span className="money price price-old">
-                        {currency.symbol}
-                        {elm?.price}
-                    </span>
                     <span className="money price price-sale">
                         {currency.symbol}
                         {(elm.sale_price * elm.quantity).toFixed(2)}
                     </span>
+                    <span className="money price price-old">
+                        {currency.symbol}
+                        {elm?.price}
+                    </span>
                 </td>
             );
-        } else {
+        }
+         else {
             console.log("else");
             return (
                 <td>
@@ -701,7 +720,7 @@ export default function Checkout() {
         <>
             {cartProducts.length ? (
                 <>
-                    {/* <FreeGiftFeature /> */}
+                    <FreeGiftFeature />
                     <BogoFeature />
                     <form onSubmit={onOrder}>
                         <div className="checkout-form">

@@ -25,11 +25,27 @@ export default function CartDrawer() {
   const setQuantity = (id, quantity, productQty) => {
     if (quantity >= 1 && quantity <= productQty) {
       setError(null);
-      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
       const items = [...cartProducts];
-      const itemIndex = items.indexOf(item);
-      item.quantity = quantity;
-      items[itemIndex] = item;
+
+      // Update the paid product
+      const paidItemIndex = items.findIndex(
+        (item) => item.product_id == id && !item.is_gift
+      );
+
+      if (paidItemIndex !== -1) {
+        items[paidItemIndex].quantity = quantity;
+      }
+
+      // Also update the matching gift (if exists)
+      const giftItemIndex = items.findIndex(
+        (item) => item.product_id == id && item.is_gift
+      );
+
+      if (giftItemIndex !== -1) {
+        items[giftItemIndex].quantity = quantity;
+      }
+
       setCartProducts(items);
     } else {
       setError("Quantity is more than available quantity");
@@ -146,7 +162,7 @@ export default function CartDrawer() {
                         >
                           +
                         </div>
-                      </div> : 1}
+                      </div> : elm.quantity}
 
                         {subTotalPrice(elm)}
                       
@@ -178,15 +194,18 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-       
+       <p className="text-center fs-6 fw-bold success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
+       <hr class="cart-drawer-divider"></hr>
         <div className="free-shipping-progress mt-3">
+          
               {totalPrice < freeShippingThreshold ? (
                 <div>
                   
-                  <p className="fs-6">
+                  <p className="fs-6 fw-bold">
                     {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
                     shipping! ⛟
                   </p>
+                  
                   <div className="progress">
                     <div
                       className="progress-bar"
@@ -197,9 +216,12 @@ export default function CartDrawer() {
                       aria-valuemax="100"
                     ></div>
                   </div>
-                </div>
+              
+                </div>  
+                
               ) : (
-                <h4 className="success">☆ Congratulations! You qualify for free shipping!</h4>
+                
+                <h4 className="success fw-bold fs-6">☆ Congratulations! You qualify for free shipping!</h4>
               )}
         </div>
           <hr className="cart-drawer-divider" />

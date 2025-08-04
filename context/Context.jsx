@@ -56,7 +56,7 @@ export default function Context({ children }) {
   const addProductToCart = (product) => {
     const item = {
       ...product,
-      quantity: 1,
+      quantity: product.campaign == 'bogo_2025_campaign' ? product.quantity : 1,
     };
     setCartProducts((prevCart) => [...prevCart, item]);
 
@@ -106,19 +106,25 @@ export default function Context({ children }) {
     localStorage.setItem("wishlist", JSON.stringify(wishList));
   }, [wishList]);
 
-  const removeGiftFromCart = (productIdToRemove = null) => {
-  setCartProducts((prev) => {
-    if (!productIdToRemove) {
-      // Remove all gifts
-      return prev.filter((item) => !item.is_gift);
-    }
+  const removeGiftFromCart = (productIdToRemove = null, campaignKey = null) => {
+    setCartProducts((prev) => {
+      if (!productIdToRemove && campaignKey) {
+        return prev.filter(
+          (item) => !(item.is_gift && item.campaign === campaignKey)
+        );
+      }
 
-    // Remove specific gift
-    return prev.filter(
-      (item) => !(item.is_gift && item.product_id === productIdToRemove)
-    );
-  });
-};
+      // Remove a specific gift by ID (optional: still respect campaignKey)
+      if (productIdToRemove) {
+        return prev.filter(
+          (item) => !(item.is_gift && item.product_id === productIdToRemove)
+        );
+      }
+
+      // Default: remove all gifts
+      return prev.filter((item) => !item.is_gift);
+      });
+  };
 
   const contextElement = {
     cartProducts,

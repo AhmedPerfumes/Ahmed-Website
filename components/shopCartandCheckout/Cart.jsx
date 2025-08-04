@@ -138,7 +138,13 @@ export default function Cart() {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="price price-sale">{ currency.symbol }{(elm.sale_price).toFixed(2)}</span></>;
+      return (
+        <>
+          <span className="price price-sale">{currency.symbol}{(elm.sale_price).toFixed(2)}</span>
+          <span className="money price price-old">{currency.symbol}{elm?.price}</span>
+        </>
+      );
+      
     } else {
       return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
     }

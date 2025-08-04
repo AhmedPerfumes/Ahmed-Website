@@ -6,6 +6,7 @@ import SingleProductWithoutTrans from "@/components/singleProduct/SingleProductW
 import React from "react";
 import { allProducts } from "@/data/products";
 import MobileFooterWithoutTrans2 from "@/components/footers/MobileFooterWithoutTrans2";
+import { headers } from 'next/headers';
 
 export const metadata = {
   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -14,6 +15,19 @@ export const metadata = {
       icon: "/assets/images/ahmed-favicon.png",
   },
 };
+
+function getRequestOrigin() {
+  const headersList = headers();
+  const host = headersList.get('host') || process.env.NEXT_PUBLIC_DEFAULT_ORIGIN; // e.g., 'localhost:3000' or 'yourdomain.com'
+  const protocol = headersList.get('x-forwarded-proto') || 'https'; // or 'https'
+  
+  // if (!host) {
+  //   // Fallback for local development or edge cases
+  //   return process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || 'http://localhost:3000';
+  // }
+
+  return `${protocol}://${host}`;
+}
 
 async function getproduct(categoryName, subCategoryName, product) {
   // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
@@ -27,10 +41,13 @@ async function getproduct(categoryName, subCategoryName, product) {
   //     product: product.split("-").join(" ").toUpperCase(),
   //   })
   // });
+  const origin = getRequestOrigin();
+  // console.log('Origin:----------------------------------------------------------------------------------------------------------------------------------------------------------', origin);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'origin': origin,
     },
     body: JSON.stringify({
       category: categoryName.split("-").join(" ").toUpperCase(),

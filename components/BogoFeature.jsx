@@ -3,15 +3,15 @@ import Image from 'next/image';
 import { useContextElement } from '@/context/Context';
 
 const bogoProducts = [
-  { product_id: 208, product_name: 'Is It Me 90ML', price: "0", image: 'epdnew/is-it-me.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 240, product_name: 'Red Jewel', price: "0", image: 'epdnew/red-jewel-1.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 199, product_name: 'Royal Cherry', price: "0", image: 'epdnew/royal-cherry.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 197, product_name: 'Royal Wood 100ML', price: "0", image: 'epdnew/royal-wood.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 239, product_name: 'Coco Blend', price: "0", image: 'epdnew/coco-blend-1.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 302, product_name: 'Tiff Tiff', price: "0", image: 'epdnew/tiff-tiff-1500x1500.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 223, product_name: 'Mystique Pink', price: "0", image: 'epdnew/mystique-pink.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 329, product_name: 'Ainaak', price: "0", image: 'epdnew/ainaak-bottle.jpg', is_gift: true, discount: null, coupon: [] },
-  { product_id: 328, product_name: 'Jree', price: "0", image: 'epdnew/jree.jpeg', is_gift: true, discount: null, coupon: [] },
+  { product_id: 208, product_name: 'Is It Me 90ML', price: "0", image: 'epdnew/is-it-me.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign'},
+  { product_id: 240, product_name: 'Red Jewel', price: "0", image: 'epdnew/red-jewel-1.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 199, product_name: 'Royal Cherry', price: "0", image: 'epdnew/royal-cherry.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 197, product_name: 'Royal Wood 100ML', price: "0", image: 'epdnew/royal-wood.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 239, product_name: 'Coco Blend', price: "0", image: 'epdnew/coco-blend-1.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 302, product_name: 'Tiff Tiff', price: "0", image: 'epdnew/tiff-tiff-1500x1500.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 223, product_name: 'Mystique Pink', price: "0", image: 'epdnew/mystique-pink.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 329, product_name: 'Ainaak', price: "0", image: 'epdnew/ainaak-bottle.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
+  { product_id: 328, product_name: 'Jree', price: "0", image: 'epdnew/jree.jpeg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
 ];
 
 const BOGOFeature = () => {
@@ -49,7 +49,7 @@ const BOGOFeature = () => {
       quantity: p.quantity,
     }));
 
-    const currentGifts = cartProducts.filter((p) => p.is_gift);
+    const currentGifts = cartProducts.filter((p) => p.is_gift && p.campaign === 'bogo_2025_campaign');
 
     // Remove only outdated gifts
     currentGifts.forEach((gift) => {
@@ -58,7 +58,8 @@ const BOGOFeature = () => {
       );
 
       if (!matchingProduct || matchingProduct.quantity !== gift.quantity) {
-        removeGiftFromCart(gift.product_id); // Remove only that mismatched gift
+        console.log('Removing gift BOGO:', gift.product_id);
+        removeGiftFromCart(gift.product_id, 'bogo_2025_campaign'); // Remove only that mismatched gift
       }
     });
 
@@ -98,7 +99,7 @@ const BOGOFeature = () => {
         <span
           className="t-subtitle"
           style={{
-            color: '#c00000',
+            color: '#000000',
             fontSize: '18px',
             lineHeight: '1.5rem',
             textAlign: 'center',
