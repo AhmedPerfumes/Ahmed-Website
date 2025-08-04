@@ -187,8 +187,8 @@ export default function DiscountedProductsSlider({
                     if (!isAddedToCartProducts(elm.product_id)) {
                       addProductToCart({
                         ...elm,
-                        category_name: "Collections",
-                        subcategory_name: "Online Exclusive",
+                        category_name: elm.category_name,
+                        subcategory_name: elm.subcategory,
                       });
                     }
                   }}
