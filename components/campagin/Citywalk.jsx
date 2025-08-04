@@ -139,7 +139,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/campaigns/Zumar.jpg"
+                            src="/assets/images/campaigns/oud roses.jpg"
                             alt="Wedding products display"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -150,19 +150,14 @@ function CityWalk() {
                     {/* Text column - shown second on mobile/tablet, first on desktop */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                           Zumar
+                        Oud & Roses
                         </p>
                         <p className="fs-6 mb-3">
-                            "Zumar is a fragrance that captures the essence of
-                            strength, elegance, and timeless sophistication. It
-                            is a luxurious fragrance collection that captures the
-                            essence of strength, elegance, and timeless
-                            sophistication. Thoughtfully curated with premium
-                            perfumes, each scent is crafted to perfection
+                        A timeless fusion of elegance and depth, Oud & Roses opens with a luminous bouquet of Turkish rose, lavender, and peony kissed by fresh lemon. At its heart, soft sandalwood and white florals entwine with a whisper of frankincense, leading to a rich, musky base of agarwood, amber, and oak moss. A truly captivating scent that lingers with sensual warmth.
                             </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
+                            href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                         >
                             Shop Now
                         </a>
