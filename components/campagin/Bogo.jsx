@@ -5,7 +5,7 @@ import ProductGrid from '../common/ProductGrid'
 function Bogo() {
   return (
     <div>
-        <ProductGrid category={"online-exclusive"} sub_category={"online-exclusive"}/>
+        <ProductGrid category={"Online Exclusive"} sub_category={"Online Exclusive"}/>
     </div>
   )
 }

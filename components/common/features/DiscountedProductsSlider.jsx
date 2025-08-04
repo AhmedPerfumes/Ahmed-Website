@@ -12,8 +12,6 @@ import Link from "next/link";
 
 export default function DiscountedProductsSlider({
   title,
-  category,
-  sub_category,
   onlyDiscounted = false,
 }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -55,6 +53,28 @@ export default function DiscountedProductsSlider({
       ?.replace(/\s+/g, " ")
       ?.trim();
   };
+  const isSubcategory = (category, subcategory) => {
+    let subcat = "";
+    if (subcategory != null) {
+      return subcat =
+        removeSpecialCharactersAndAmp(subcategory.subcategory_name)
+          .split(" ")
+          .join("-")
+          .toLowerCase();
+    } else {
+      if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
+        // console.log("gift-sets");
+        return subcat = "gift-sets";
+      } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
+        // console.log("hair-mist");
+        return subcat = "hair-mist";
+      } else if (removeSpecialCharactersAndAmp(category) == "extrait-de-parfum") {
+        return subcat = "extrait-de-parfum";
+      } else {
+        return subcat = "online-exclusive";
+      }
+    }
+  }
 
   const price = (elm) => {
     const currentGST = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
@@ -121,12 +141,7 @@ export default function DiscountedProductsSlider({
         {filteredProducts.map((elm, i) => (
           <SwiperSlide key={i} className="swiper-slide product-card">
             <div className="pc__img-wrapper">
-              <Link
-                href={`/${locale}/shop/${category}/${sub_category}/${removeSpecialCharactersAndAmp(elm?.product_name)
-                  ?.split(" ")
-                  .join("-")
-                  .toLowerCase()}`}
-              >
+            <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                 {JSON.parse(elm.images)[0] && (
                   <Image
                     loading="lazy"
@@ -192,12 +207,7 @@ export default function DiscountedProductsSlider({
 
             <div className="pc__info position-relative">
               <h6 className="pc__title">
-                <Link
-                  href={`/${locale}/shop/${category}/${sub_category}/${removeSpecialCharactersAndAmp(elm?.product_name)
-                    ?.split(" ")
-                    .join("-")
-                    .toLowerCase()}`}
-                >
+              <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                   {elm?.product_name && he.decode(elm.product_name)}
                 </Link>
               </h6>

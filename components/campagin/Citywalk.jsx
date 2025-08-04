@@ -11,6 +11,7 @@ import Contact_campaign from "../otherPages/Contact/Contact_campaign";
 import Products from "../homes/home-2/Products";
 import TopCollections from "../homes/home-5/TopCollections";
 import DiscountedProductsSlider from "../common/features/DiscountedProductsSlider";
+import DiscountedProductsGrid from "../common/features/DiscountedProductsGrid";
 
 function CityWalk() {
     const locale = useLocale();
@@ -24,7 +25,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
-                        src="/assets/images/campaigns/landingpage.jpg"
+                        src="/assets/images/campaigns/landing-page.jpg"
                         alt="Father's Day Web"
                         width={1500}
                         height={550}
@@ -36,7 +37,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/campaigns/SummerMob.jpg"
+                        src="/assets/images/campaigns/SummerMobile.jpg"
                         alt="Father's Day Mobile"
                         width={1500}
                         height={550}
@@ -91,7 +92,7 @@ function CityWalk() {
                         </a>
 
             </section>
-            
+            {/* <DiscountedProductsGrid onlyDiscounted={true} /> */}
 
             {/* <div className="container pt-2 mt-3">
         <div className="section2 text-center">
