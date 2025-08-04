@@ -274,7 +274,7 @@ useEffect(() => {
               ))}
             </select>
 
-            {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
+            <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
 
             <div className="col-size align-items-center order-1 d-none d-lg-flex">
               <span className="text-uppercase fw-medium me-2">View</span>
@@ -289,20 +289,41 @@ useEffect(() => {
                   {elm}
                 </button>
               ))}
-            </div> */}
+            </div>
             {/* <!-- /.col-size --> */}
+            <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
 
-            {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
+            <div className="shop-filter d-flex align-items-center order-0 order-md-3">
+              <button
+                className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
+                onClick={openModalShopFilter}
+              >
+                <svg
+                  className="d-inline-block align-middle me-2"
+                  width="14"
+                  height="10"
+                  viewBox="0 0 14 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <use href="#icon_filter" />
+                </svg>
+                <span className="text-uppercase fw-medium d-inline-block align-middle">
+                  Filter
+                </span>
+              </button>
+            </div>
+            <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div>
 
             
-            {/* <div
+            <div
             id="accordion-filter-price"
             className="accordion-collapse collapse show border-0"
             aria-labelledby="accordion-heading-price"
             data-bs-parent="#price-filters"
           >
             
-          </div> */}
+          </div>
             {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
           <div
             ref={ref}

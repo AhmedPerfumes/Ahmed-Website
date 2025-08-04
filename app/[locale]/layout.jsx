@@ -14,6 +14,7 @@ import { UserProvider } from "@/context/UserContext";
 import CartDrawer from "@/components/shopCartandCheckout/CartDrawer";
 import SiteMap from "@/components/modals/SiteMap";
 // import NewsLetter from "@/components/modals/NewsLetter";
+import ShopFilter from "@/components/asides/ShopFilter";
 import MobileHeader from "@/components/headers/MobileHeader";
 import SizeGuide from "@/components/modals/SizeGuide";
 import Delivery from "@/components/modals/Delivery";
@@ -114,6 +115,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                                         <CartDrawer />
                                         <SiteMap />
                                         <CustomerLogin />
+                                        <ShopFilter />
                                         <ProductDescription />
                                         <ProductAdditionalInformation />
                                         <ProductReviews />

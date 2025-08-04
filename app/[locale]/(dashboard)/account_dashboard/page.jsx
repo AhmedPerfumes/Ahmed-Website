@@ -6,8 +6,11 @@ import DashboardSidebar from "@/components/otherPages/DashboardSidebar";
 import React from "react";
 
 export const metadata = {
-  title: "Dashboard-account || Uomo eCommerce React Nextjs Template",
-  description: "Uomo eCommerce React Nextjs Template",
+  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+  icons: {
+      icon: "/assets/images/ahmed-favicon.png",
+  },
 };
 export default function AccountPage() {
   return (

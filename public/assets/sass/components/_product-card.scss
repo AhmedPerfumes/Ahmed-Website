@@ -20,6 +20,7 @@ $card-image-height: 121.212122%;
   }
 
   &:hover {
+
     .pc__img-next,
     .pc__img-prev,
     .pc__img-second {
@@ -31,6 +32,7 @@ $card-image-height: 121.212122%;
       visibility: visible;
     }
   }
+
   &.hover-overlay {
     .pc__img-wrapper {
       &::before {
@@ -133,7 +135,7 @@ $card-image-height: 121.212122%;
   width: 1rem;
   text-align: center;
 
-  > svg {
+  >svg {
     height: auto;
     width: 0.625rem;
   }
@@ -151,8 +153,9 @@ $card-image-height: 121.212122%;
 .pc__info {
   margin-top: 1rem;
   display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'SofiaProRegular';
 
   &.hover__content {
     margin-top: 0;
@@ -265,6 +268,7 @@ $card-image-height: 121.212122%;
     line-height: $line-height-base;
   }
 }
+
 @media (max-width: 767px) {
   .pc__atc {
     opacity: 1 !important;
@@ -558,7 +562,7 @@ $card-image-height: 121.212122%;
   background: #fff;
   white-space: nowrap;
 
-  & > * {
+  &>* {
     display: none;
 
     @include media-breakpoint-up(xl) {

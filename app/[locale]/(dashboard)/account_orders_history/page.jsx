@@ -1,7 +1,7 @@
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import Header14 from "@/components/headers/Header14";
-import AccountOrders from "@/components/otherPages/AccountOrders";
+import AccountOrdersHistory from "@/components/otherPages/AccountOrdersHistory";
 import DashboardSidebar from "@/components/otherPages/DashboardSidebar";
 import React from "react";
 
@@ -12,7 +12,6 @@ export const metadata = {
       icon: "/assets/images/ahmed-favicon.png",
   },
 };
-
 export default function AccountOrderPage() {
   return (
     <>
@@ -23,7 +22,7 @@ export default function AccountOrderPage() {
           <h2 className="page-title">Orders</h2>
           <div className="row">
             <DashboardSidebar />
-            <AccountOrders />
+            <AccountOrdersHistory />
           </div>
         </section>
       </main>
