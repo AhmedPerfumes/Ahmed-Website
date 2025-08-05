@@ -19,40 +19,88 @@ import { useUser } from "../../context/UserContext";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 
+// Add this CSS to your stylesheet (e.g., header.module.css)
+const headerStyles = `
+  .header {
+    transition: transform 0.3s ease-in-out;
+  }
+  .header-hidden {
+    transform: translateY(-100%);
+  }
+  .header-visible {
+    transform: translateY(0);
+  }
+  .header_sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+  }
+`;
 export default function Header14() {
     const [scrollDirection, setScrollDirection] = useState("down");
+    const [scrollState, setScrollState] = useState("visible");
     const locale = useLocale();
     // console.log(locale);
     const t = useTranslations();
-
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isHeaderOpen, setIsHeaderOpen] = useState(false);
     const containerRef = useRef(null);
+    const lastScrollY = useRef(0);
+
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const currentScrollY = window.scrollY;
+
+    //         if (currentScrollY > 250) {
+    //             if (currentScrollY > lastScrollY.current) {
+    //                 // Scrolling down
+    //                 setScrollDirection("down");
+    //             } else {
+    //                 // Scrolling up
+    //                 setScrollDirection("up");
+    //             }
+    //         } else {
+    //             // Below 250px
+    //             setScrollDirection("down");
+    //         }
+
+    //         lastScrollY.current = currentScrollY;
+    //     };
+    //     const lastScrollY = { current: window.scrollY };
+
+    //     // Add scroll event listener
+    //     window.addEventListener("scroll", handleScroll);
+
+    //     // Cleanup: remove event listener when component unmounts
+    //     return () => {
+    //         window.removeEventListener("scroll", handleScroll);
+    //     };
+    // }, []);
+
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            if (currentScrollY > 250) {
-                if (currentScrollY > lastScrollY.current) {
-                    // Scrolling down
-                    setScrollDirection("down");
-                } else {
-                    // Scrolling up
-                    setScrollDirection("up");
-                }
-            } else {
-                // Below 250px
-                setScrollDirection("down");
+            // Show header when at the top or scrolling up
+            if (currentScrollY <= 50) {
+                setScrollState("visible");
+            } else if (
+                currentScrollY > lastScrollY.current &&
+                currentScrollY > 50
+            ) {
+                // Scrolling down past 50px: hide header
+                setScrollState("hidden");
+            } else if (currentScrollY < lastScrollY.current) {
+                // Scrolling up: show header
+                setScrollState("visible");
             }
 
             lastScrollY.current = currentScrollY;
         };
-        const lastScrollY = { current: window.scrollY };
 
-        // Add scroll event listener
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
 
-        // Cleanup: remove event listener when component unmounts
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
@@ -60,7 +108,6 @@ export default function Header14() {
 
     const router = useRouter();
     const pathname = usePathname();
-
     const [searchKeyWord, setSearchKeyWord] = useState("");
 
     const handleChange = (event) => {
@@ -140,8 +187,16 @@ export default function Header14() {
 
     return (
         <>
-        
+            <style>{headerStyles}</style>
             <header
+                id="header"
+                className={`header header_sticky bg-white ${
+                    scrollState === "visible"
+                        ? "header-visible"
+                        : "header-hidden"
+                } ${pathname !== "/" ? "position-sticky w-100" : ""}`}
+            >
+                {/* <header
                 id="header"
                 className={
                     pathname == "/"
@@ -153,7 +208,7 @@ export default function Header14() {
                         : "header header_sticky position-sticky w-100 bg-white"
                 }
                 style={pathname == "/" ? {} : {}}
-            >
+            > */}
                 <Swiper
                     className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
                     {...swiperOptions}
@@ -336,7 +391,6 @@ export default function Header14() {
                                         height="100"
                                         alt="Ahmed Al Maghribi"
                                     />
-                                    
                                 </Link>
                             </div>
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
@@ -371,7 +425,10 @@ export default function Header14() {
                                     )}
                                 </div>
 
-                                <Link className="header-tools__item" href={`/${locale}/store-locator`}>
+                                <Link
+                                    className="header-tools__item"
+                                    href={`/${locale}/store-locator`}
+                                >
                                     <IoLocationOutline size={20} />
                                 </Link>
 
