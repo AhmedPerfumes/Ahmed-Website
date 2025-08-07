@@ -62,7 +62,7 @@ export default function Export() {
           </div>
         </div>
       </div>
-       <TopCollections categoryId={19} category={"online-exclusive"} sub_category={"online-exclusive"} title={t("Top Collections")} />
+       <TopCollections categoryId={19} category={"Online Exclusive"} sub_category={"Online Exclusive"} title={t("Top Collections")} />
 
       {/* <div className="container d-flex justify-content-center">
   <video
