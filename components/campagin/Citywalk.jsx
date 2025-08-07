@@ -11,6 +11,7 @@ import Contact_campaign from "../otherPages/Contact/Contact_campaign";
 import Products from "../homes/home-2/Products";
 import TopCollections from "../homes/home-5/TopCollections";
 import DiscountedProductsSlider from "../common/features/DiscountedProductsSlider";
+import DiscountedProductsGrid from "../common/features/DiscountedProductsGrid";
 
 function CityWalk() {
     const locale = useLocale();
@@ -24,7 +25,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
-                        src="/assets/images/campaigns/landingpage.jpg"
+                        src="/assets/images/campaigns/landing-page.jpg"
                         alt="Father's Day Web"
                         width={1500}
                         height={550}
@@ -36,7 +37,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/campaigns/SummerMob.jpg"
+                        src="/assets/images/campaigns/SummerMobile.jpg"
                         alt="Father's Day Mobile"
                         width={1500}
                         height={550}
@@ -91,7 +92,7 @@ function CityWalk() {
                         </a>
 
             </section>
-            
+            {/* <DiscountedProductsGrid onlyDiscounted={true} /> */}
 
             {/* <div className="container pt-2 mt-3">
         <div className="section2 text-center">
@@ -138,7 +139,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/campaigns/Zumar.jpg"
+                            src="/assets/images/campaigns/oud roses.jpg"
                             alt="Wedding products display"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -149,19 +150,14 @@ function CityWalk() {
                     {/* Text column - shown second on mobile/tablet, first on desktop */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                           Zumar
+                        Oud & Roses
                         </p>
                         <p className="fs-6 mb-3">
-                            "Zumar is a fragrance that captures the essence of
-                            strength, elegance, and timeless sophistication. It
-                            is a luxurious fragrance collection that captures the
-                            essence of strength, elegance, and timeless
-                            sophistication. Thoughtfully curated with premium
-                            perfumes, each scent is crafted to perfection
+                        A timeless fusion of elegance and depth, Oud & Roses opens with a luminous bouquet of Turkish rose, lavender, and peony kissed by fresh lemon. At its heart, soft sandalwood and white florals entwine with a whisper of frankincense, leading to a rich, musky base of agarwood, amber, and oak moss. A truly captivating scent that lingers with sensual warmth.
                             </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
+                            href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
                         >
                             Shop Now
                         </a>

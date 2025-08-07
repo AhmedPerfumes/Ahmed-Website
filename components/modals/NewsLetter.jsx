@@ -120,7 +120,7 @@ export default function NewsLetter() {
                                         className="mb-4"
                                         style={{ fontSize: "0.95rem", color: "#555" }}
                                         dangerouslySetInnerHTML={{
-                                            __html: elm.content.replace(/<\/?p>/g, ""),
+                                            __html: elm.content?.replace(/<\/?p>/g, ""),
                                         }}
                                     />
 

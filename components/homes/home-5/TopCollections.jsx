@@ -196,7 +196,7 @@ export default function TopCollections({
                             !isAddedToCartProducts(elm.product_id) &&
                             addProductToCart({
                               ...elm,
-                              category_name: "Collections",
+                              category_name: "Online Exclusive",
                               subcategory_name: "Online Exclusive",
                             })
                           }

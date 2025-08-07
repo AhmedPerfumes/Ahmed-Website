@@ -140,8 +140,7 @@ const ShopPage8 = async ({ params }) => {
   try {
     const data = await getCategorySubCategory(category);
     console.log(data);
-    
-    
+        
     return data && (
       <>
         <QuickView />

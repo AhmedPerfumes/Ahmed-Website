@@ -521,7 +521,7 @@ export default function Checkout() {
             if (
                 item.coupon[couponCode.toLowerCase()]?.code ==
                     couponCode.toLowerCase() &&
-                !item.sale_price
+                !item.sale_price && !item.discount
             ) {
                 product_coupon = true;
             }
