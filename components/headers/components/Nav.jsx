@@ -91,7 +91,7 @@ export default function Nav({ categoriesSubCategories }) {
           <div className="mega-menu">
             <div className="container d-flex">
               <div className="col pe-4">
-                <p href="#" className="sub-menu__title">
+                <p href="#" className="sub-menu__title border-bottom">
                 {t("PRODUCT TYPES")}
                 </p>
                 <ul className="sub-menu__list list-unstyled">
