@@ -167,9 +167,9 @@ export default function SingleProduct11({ category, subcategory, product }) {
   <p className="text-red mt-2">
     This product is currently unavailable.
   </p>
-  <button className="btn border  mt-2 mb-4 text-uppercase fw-semibold">
+  {/* <button className="btn border  mt-2 mb-4 text-uppercase fw-semibold">
     Notify Me 🔔
-  </button>
+  </button> */}
 </div>
 
 )}
