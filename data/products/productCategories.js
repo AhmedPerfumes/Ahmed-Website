@@ -12,7 +12,7 @@ export const menuCategories = [
 
 export const sortingOptions = [
   // { label: "Default Sorting", value: "", selected: true },
-  { label: "Sort by popularity", value: "popularity", selected: true},
+  { label: "Sort by popularity", value: "popularity", selected: true },
   // { label: "Sort by average rating", value: "rating" },
   { label: "Sort by latest", value: "date" },
   { label: "Sort by price: low to high", value: "price" },

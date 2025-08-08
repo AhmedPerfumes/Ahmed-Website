@@ -4,6 +4,7 @@ import CartLength from "./components/CartLength";
 import Nav from "./components/Nav";
 import { openCart } from "@/utlis/openCart";
 import User from "./components/User";
+import UserLoggedIn from "./components/UserLoggedIn";
 import { currencyOptions, languageOptions2 } from "@/data/footer";
 import { slideData1000 } from "@/data/heroslides";
 import Image from "next/image";
@@ -419,8 +420,8 @@ export default function Header14() {
                                             <User />
                                         </Link>
                                     ) : (
-                                        <Link href="#" onClick={handleLogout}>
-                                            <FiLogOut size={20} />
+                                        <Link href="/account_dashboard">
+                                            <UserLoggedIn />
                                         </Link>
                                     )}
                                 </div>

@@ -23,6 +23,13 @@ export const homePages = [
   { id: 22, title: "Home 22", href: "/home-22" },
 ];
 
+export const handleLogout = (e) => {
+  e.preventDefault();
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "/";
+};
+
 export const shopList = [
   {
     id: 1,
@@ -224,13 +231,23 @@ export const dashboardMenuItems = [
   {
     id: 1,
     href: "/account_dashboard",
-    title: "Dashboard",
+    title: "Account Overview",
   },
   {
     id: 2,
     href: "/account_orders",
-    title: "Orders",
+    title: "My Purchases",
   },
+  // {
+  //   id: 3,
+  //   href: "/account_orders_history",
+  //   title: "My Purchases",
+  // },
+  // {
+  //   id: 4,
+  //   href: "/account_edit",
+  //   title: "Account Details",
+  // },
   {
     id: 3,
     href: "/account_edit_address",
@@ -238,13 +255,13 @@ export const dashboardMenuItems = [
   },
   {
     id: 4,
-    href: "/account_edit",
-    title: "Account Details",
+    href: "/account_coupons",
+    title: "My Coupons",
   },
   {
     id: 5,
-    href: "/account_wishlist",
-    title: "Wishlist",
+    href: "/account_loyalty",
+    title: "Loyalty Points",
   },
   {
     id: 6,

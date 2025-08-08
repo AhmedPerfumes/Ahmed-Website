@@ -17,7 +17,7 @@ $sidebar-space: 3.75rem;
 .shop-list {
   max-width: 100%;
 
-  @include media-breakpoint-up(lg){
+  @include media-breakpoint-up(lg) {
     max-width: calc(100% - #{$sidebar-width + $sidebar-space});
   }
 }
@@ -47,7 +47,7 @@ $sidebar-space: 3.75rem;
 
   @include media-breakpoint-up(lg) {
     position: sticky;
-    top: 0;
+    top: 20%;
     right: auto;
     left: 0;
     width: $sidebar-width;
