@@ -140,10 +140,7 @@ const ShopPage8 = async ({ params }) => {
   try {
     const data = await getCategorySubCategory(category);
     console.log(data);
-
-    const dummyDescription = "Discover our exquisite collection of fashion items, designed to elevate your style and make every moment special. From timeless classics to modern trends, our curated selection offers something for everyone. Crafted with premium materials and unparalleled attention to detail, each piece reflects sophistication and elegance. Explore the perfect blend of comfort and fashion, and find the ideal addition to your wardrobe today. Discover our exquisite collection of fashion items, designed to elevate your style and make every moment special. From timeless classics to modern trends, our curated selection offers something for everyone. Crafted with premium materials and unparalleled attention to detail, each piece reflects sophistication and elegance. Explore the perfect blend of comfort and fashion, and find the ideal addition to your wardrobe today.";
-    
-    
+        
     return data && (
       <>
         <QuickView />

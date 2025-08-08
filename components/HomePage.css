@@ -290,16 +290,17 @@
 	font-family: Lato, 'SofiaProRegular';
 	color: #bb8c1c !important;
 }
+
 @media (max-width: 576px) {
-	.banner-text{
-	  font-style: italic;
-	  font-family: Lato, 'SofiaProRegular';
-	  color: #bb8c1c !important;
-	  margin-top: -10rem;
-	  margin-bottom: 1.5rem;
+	.banner-text {
+		font-style: italic;
+		font-family: Lato, 'SofiaProRegular';
+		color: #bb8c1c !important;
+		margin-top: -10rem;
+		margin-bottom: 1.5rem;
 	}
-  }
-  
+}
+
 
 /* @media screen and (min-width: 320px) and (max-width: 768px) {
 	.slideshow-text {
@@ -953,3 +954,7 @@ button[data-v-7aa9e1a2] {
 	height: auto !important;
 	min-height: auto !important;
 } */
+
+.account-modal {
+	font-family: SofiaProRegular !important;
+}

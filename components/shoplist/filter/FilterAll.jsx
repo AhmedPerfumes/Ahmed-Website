@@ -1,339 +1,383 @@
 "use client";
 
-import {
-  brands,
-  categories,
-  colors,
-  filters,
-  sizes,
-} from "@/data/products/productFilterOptions";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useCallback, useRef, useState } from "react";
 import Slider from "rc-slider";
-import { useMenu } from '@/context/MenuContext';
+import { Button } from "react-bootstrap";
+import { motion, AnimatePresence } from "framer-motion";
+import "rc-slider/assets/index.css";
+import { useMenu } from "@/context/MenuContext";
+import { useShopFilter } from "@/context/ShopFilterContext";
 
-export default function FilterAll() {
-  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
-  const [activeColor, setActiveColor] = useState(colors[0]);
-  const [activeSizes, setActiveSizes] = useState([]);
-  const [filterFacts, setFilterFacts] = useState(filters);
-  const toggleSize = (size) => {
-    if (activeSizes.includes(size)) {
-      setActiveSizes((pre) => [...pre.filter((elm) => elm != size)]);
-    } else {
-      setActiveSizes((pre) => [...pre, size]);
-    }
-  };
-  const [activeBrands, setActiveBrands] = useState([]);
-  const toggleBrands = (brand) => {
-    if (activeBrands.includes(brand)) {
-      setActiveBrands((pre) => [...pre.filter((elm) => elm != brand)]);
-    } else {
-      setActiveBrands((pre) => [...pre, brand]);
-    }
-  };
-  const [searchQuery, setSearchQuery] = useState("");
-  useEffect(() => {
-    setActiveBrands((pre) => [
-      ...pre.filter((elm) =>
-        elm.name.toLowerCase().includes(searchQuery.toLowerCase())
-      ),
-    ]);
-  }, [searchQuery]);
-  const [price, setPrice] = useState([500, 0]);
+const STOCK_OPTIONS = [
+  { label: "All Items", value: "all" },
+  { label: "In Stock", value: "in_stock" },
+];
 
-  const handleOnChange = (value) => {
-    // console.log(value);
-    setPrice(value);
-  };
+const CATEGORY_OPTIONS = [
+  "Luxury",
+  "Premium",
+  "All time favourite",
+  "Hot Selling",
+  "New Launch",
+  "Upcoming",
+];
+
+const CAP_OPTIONS = ["100ml", "90ml", "70ml", "50ml"];
+
+function PillButton({ active, onClick, children }) {
   return (
-    <>
-      {/* <div className="accordion" id="categories-list">
-        <div className="accordion-item mb-4">
-          <h5 className="accordion-header" id="accordion-heading-11">
-            <button
-              className="accordion-button p-0 border-0 fs-5 text-uppercase"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#accordion-filter-1"
-              aria-expanded="true"
-              aria-controls="accordion-filter-1"
-            >
-              Product Categories
-              <svg className="accordion-button__icon" viewBox="0 0 14 14">
-                <g aria-hidden="true" stroke="none" fillRule="evenodd">
-                  <path
-                    className="svg-path-vertical"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                  <path
-                    className="svg-path-horizontal"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                </g>
-              </svg>
-            </button>
-          </h5>
-          <div
-            id="accordion-filter-1"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-11"
-            data-bs-parent="#categories-list"
+    <button
+      type="button"
+      onClick={onClick}
+      className={`btn btn-sm rounded-pill me-2 mb-2 ${
+        active ? "btn-primary text-white" : "btn-outline-secondary"
+      }`}
+      style={{ cursor: "pointer" }}
+    >
+      {children}
+    </button>
+  );
+}
+
+const sectionVariants = {
+  hidden: { height: 0, opacity: 0, transition: { duration: 0.25 } },
+  visible: { height: "auto", opacity: 1, transition: { duration: 0.3 } },
+};
+
+export default function FilterAll({ products = [] }) {
+  const { currency } = useMenu();
+  const {
+    priceRange,
+    setPriceRange,
+    stockAvailability,
+    setStockAvailability,
+    promotionalOnly,
+    setPromotionalOnly,
+  } = useShopFilter();
+
+  // local UI state
+  const [activeCategories, setActiveCategories] = useState([]);
+  const [activeCaps, setActiveCaps] = useState([]);
+
+  // accordion open/closed
+  const [openSections, setOpenSections] = useState({
+    price: true,
+    stock: true,
+    categories: true,
+    caps: true,
+    promo: true,
+  });
+  const toggleSection = (key) =>
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  // derive price slider bounds
+  const [derivedMin, derivedMax] = useMemo(() => {
+    if (!products.length) return [0, 700];
+    const ps = products
+      .map((p) => Number(p.price))
+      .filter((v) => !isNaN(v));
+    if (!ps.length) return [0, 700];
+    return [Math.floor(Math.min(...ps)), Math.ceil(Math.max(...ps))];
+  }, [products]);
+
+  // sync initial priceRange
+  const initializedRef = useRef(false);
+  const prevDerivedRef = useRef([null, null]);
+  useEffect(() => {
+    if (!initializedRef.current) {
+      setPriceRange([derivedMin, derivedMax]);
+      initializedRef.current = true;
+    } else {
+      const [prevMin, prevMax] = prevDerivedRef.current;
+      if (
+        priceRange[0] === prevMin &&
+        priceRange[1] === prevMax &&
+        (derivedMin !== prevMin || derivedMax !== prevMax)
+      ) {
+        setPriceRange([derivedMin, derivedMax]);
+      }
+    }
+    prevDerivedRef.current = [derivedMin, derivedMax];
+  }, [derivedMin, derivedMax, priceRange, setPriceRange]);
+
+  const formatPrice = useCallback(
+    (val) => (val != null ? `${val}${currency?.symbol || ""}` : ""),
+    [currency]
+  );
+
+  const toggleCategory = (cat) =>
+    setActiveCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  const toggleCap = (cap) =>
+    setActiveCaps((prev) =>
+      prev.includes(cap) ? prev.filter((c) => c !== cap) : [...prev, cap]
+    );
+
+  const handleReset = () => {
+    setPriceRange([derivedMin, derivedMax]);
+    setStockAvailability("all");
+    setPromotionalOnly(false);
+    setActiveCategories([]);
+    setActiveCaps([]);
+  };
+
+  return (
+    <div
+      className="filter-all p-2"
+      style={{
+        maxWidth: 400,
+        textTransform: "uppercase",
+        fontFamily: "SofiaProRegular",
+      }}
+    >
+      <div className="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+        <h5 className="mb-0 fw-semibold">Refine By</h5>
+        <Button variant="link" size="sm" onClick={handleReset}>
+          Reset
+        </Button>
+      </div>
+
+      {/* Price Section */}
+      <div className="mb-3 border-bottom pb-2">
+        <div
+          className="d-flex justify-content-between align-items-center mb-2"
+          onClick={() => toggleSection("price")}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
+          <div className="fw-medium">Price</div>
+          <motion.div
+            animate={{ rotate: openSections.price ? 0 : 180 }}
+            transition={{ duration: 0.2 }}
+            style={{ fontSize: 18, fontWeight: 700 }}
           >
-            <div className="accordion-body px-0 pb-0">
-              <ul className="list list-inline row row-cols-2 mb-0">
-                {categories.map((category, index) => (
-                  <li key={index} className="list-item">
-                    <Link href="#" className="menu-link py-1">
-                      {category}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div> 
-      </div> */}
-      {/* /.accordion-item */}
-      {/* <div className="accordion" id="color-filters">
-        <div className="accordion-item mb-4">
-          <h5 className="accordion-header" id="accordion-heading-1">
-            <button
-              className="accordion-button p-0 border-0 fs-5 text-uppercase"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#accordion-filter-2"
-              aria-expanded="true"
-              aria-controls="accordion-filter-2"
-            >
-              Color
-              <svg className="accordion-button__icon" viewBox="0 0 14 14">
-                <g aria-hidden="true" stroke="none" fillRule="evenodd">
-                  <path
-                    className="svg-path-vertical"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                  <path
-                    className="svg-path-horizontal"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                </g>
-              </svg>
-            </button>
-          </h5>
-          <div
-            id="accordion-filter-2"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-1"
-            data-bs-parent="#color-filters"
-          >
-            <div className="accordion-body px-0 pb-0">
-              <div className="d-flex flex-wrap">
-                {colors.map((swatch, index) => (
-                  <a
-                    onClick={() => setActiveColor(swatch)}
-                    key={index}
-                    className={`swatch-color js-filter ${
-                      activeColor == swatch ? "swatch_active" : ""
-                    }`}
-                    style={{ color: swatch.color }}
-                  ></a>
-                ))}
-              </div>
-            </div>
-          </div>
+            {openSections.price ? "−" : "+"}
+          </motion.div>
         </div>
-      </div> */}
-      {/* /.accordion */}
-      {/* <div className="accordion" id="size-filters">
-        <div className="accordion-item mb-4">
-          <h5 className="accordion-header" id="accordion-heading-size">
-            <button
-              className="accordion-button p-0 border-0 fs-5 text-uppercase"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#accordion-filter-size"
-              aria-expanded="true"
-              aria-controls="accordion-filter-size"
+        <AnimatePresence initial={false}>
+          {openSections.price && (
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{ overflow: "visible", paddingBottom: 8, maxWidth: "95%" }}
             >
-              Sizes
-              <svg className="accordion-button__icon" viewBox="0 0 14 14">
-                <g aria-hidden="true" stroke="none" fillRule="evenodd">
-                  <path
-                    className="svg-path-vertical"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                  <path
-                    className="svg-path-horizontal"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                </g>
-              </svg>
-            </button>
-          </h5>
-          <div
-            id="accordion-filter-size"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-size"
-            data-bs-parent="#size-filters"
-          >
-            <div className="accordion-body px-0 pb-0">
-              <div className="d-flex flex-wrap">
-                {sizes.map((elm, i) => (
-                  <a
-                    key={i}
-                    onClick={() => toggleSize(elm)}
-                    className={`swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter ${
-                      activeSizes.includes(elm) ? "swatch_active" : ""
-                    } `}
-                  >
-                    {elm}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* /.accordion */}
-      {/* <div className="accordion" id="brand-filters">
-        <div className="accordion-item mb-4">
-          <h5 className="accordion-header" id="accordion-heading-brand">
-            <button
-              className="accordion-button p-0 border-0 fs-5 text-uppercase"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#accordion-filter-brand"
-              aria-expanded="true"
-              aria-controls="accordion-filter-brand"
-            >
-              Brands
-              <svg className="accordion-button__icon" viewBox="0 0 14 14">
-                <g aria-hidden="true" stroke="none" fillRule="evenodd">
-                  <path
-                    className="svg-path-vertical"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                  <path
-                    className="svg-path-horizontal"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                </g>
-              </svg>
-            </button>
-          </h5>
-          <div
-            id="accordion-filter-brand"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-brand"
-            data-bs-parent="#brand-filters"
-          >
-            <div className="search-field multi-select accordion-body px-0 pb-0">
-              <div className="search-field__input-wrapper mb-3">
-                <input
-                  type="text"
-                  name="search_text"
-                  className="search-field__input form-control form-control-sm border-light border-2"
-                  placeholder="SEARCH"
-                  onChange={(e) => setSearchQuery(e.target.value)}
+              <div className="px-2 mb-3">
+                <Slider
+                  range
+                  min={derivedMin}
+                  max={derivedMax}
+                  value={priceRange}
+                  onChange={setPriceRange}
+                  allowCross={false}
+                  trackStyle={[{ height: 8, borderRadius: 4 }]}
+                  handleStyle={[
+                    {
+                      borderWidth: 2,
+                      height: 24,
+                      width: 24,
+                      marginTop: -8,
+                      background: "#fff",
+                      boxShadow: "0 0 6px rgba(0,0,0,0.15)",
+                    },
+                    {
+                      borderWidth: 2,
+                      height: 24,
+                      width: 24,
+                      marginTop: -8,
+                      background: "#fff",
+                      boxShadow: "0 0 6px rgba(0,0,0,0.15)",
+                    },
+                  ]}
                 />
               </div>
-              <ul className="multi-select__list list-unstyled">
-                {brands
-                  .filter((elm) =>
-                    elm.name.toLowerCase().includes(searchQuery.toLowerCase())
-                  )
-                  .map((elm, i) => (
-                    <li
-                      key={i}
-                      onClick={() => toggleBrands(elm)}
-                      className={`search-suggestion__item multi-select__item text-primary js-search-select js-multi-select ${
-                        activeBrands.includes(elm)
-                          ? "mult-select__item_selected"
-                          : ""
-                      }`}
-                    >
-                      <span className="me-auto">{elm.name}</span>
-                      <span className="text-secondary">{elm.count}</span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* /.accordion */}
-      <div className="accordion" id="price-filters">
-        <div className="accordion-item mb-4">
-          <h5 className="accordion-header mb-2" id="accordion-heading-price">
-            <button
-              className="accordion-button p-0 border-0 fs-5 text-uppercase"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#accordion-filter-price"
-              aria-expanded="true"
-              aria-controls="accordion-filter-price"
-            >
-              Price
-              <svg className="accordion-button__icon" viewBox="0 0 14 14">
-                <g aria-hidden="true" stroke="none" fillRule="evenodd">
-                  <path
-                    className="svg-path-vertical"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                  <path
-                    className="svg-path-horizontal"
-                    d="M14,6 L14,8 L0,8 L0,6 L14,6"
-                  />
-                </g>
-              </svg>
-            </button>
-          </h5>
-          <div
-            id="accordion-filter-price"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-price"
-            data-bs-parent="#price-filters"
-          >
-            <Slider
-              range
-              formatLabel={() => ``}
-              max={500}
-              min={0}
-              defaultValue={price}
-              onChange={(value) => handleOnChange(value)}
-              id="slider"
-            />
-            <div className="price-range__info d-flex align-items-center mt-2">
-              <div className="me-auto">
-                <span className="text-secondary">Max Price: </span>
-                <span className="price-range__max">{price[1]}{ currency.symbol }</span>
+              <div className="d-flex justify-content-between small text-secondary">
+                <div>Min: {formatPrice(priceRange[0])}</div>
+                <div>Max: {formatPrice(priceRange[1])}</div>
               </div>
-              <div>
-                <span className="text-secondary">Min Price: </span>
-                <span className="price-range__min">{price[0]}{ currency.symbol }</span>
-              </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-      {/* /.accordion */}
-      {/* <div className="filter-active-tags pt-2">
-        {filterFacts.map((filter) => (
-          <button
-            onClick={() =>
-              setFilterFacts((pre) => [
-                ...pre.filter((elm) => elm.label != filter.label),
-              ])
-            }
-            key={filter.id}
-            className="filter-tag d-inline-flex align-items-center mb-3 me-3 text-uppercase js-filter"
+
+      {/* Stock Availability Section */}
+      <div className="mb-3 border-bottom pb-2">
+        <div
+          className="d-flex justify-content-between align-items-center mb-2"
+          onClick={() => toggleSection("stock")}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
+          <div className="fw-medium">Stock Availability</div>
+          <motion.div
+            animate={{ rotate: openSections.stock ? 0 : 180 }}
+            transition={{ duration: 0.2 }}
+            style={{ fontSize: 18, fontWeight: 700 }}
           >
-            <i className="btn-close-xs d-inline-block" />
-            <span className="ms-2">{filter.label}</span>
-          </button>
-        ))}
-        <div></div>
+            {openSections.stock ? "−" : "+"}
+          </motion.div>
+        </div>
+        <AnimatePresence initial={false}>
+          {openSections.stock && (
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{ overflow: "hidden" }}
+            >
+              <div className="d-flex flex-wrap gap-1">
+                {STOCK_OPTIONS.map(({ label, value }) => (
+                  <PillButton
+                    key={value}
+                    active={stockAvailability === value}
+                    onClick={() => setStockAvailability(value)}
+                  >
+                    {label}
+                  </PillButton>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Categories Section */}
+      {/* <div className="mb-3 border-bottom pb-2">
+        <div
+          className="d-flex justify-content-between align-items-center mb-2"
+          onClick={() => toggleSection("categories")}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
+          <div className="fw-medium">Categories</div>
+          <motion.div
+            animate={{ rotate: openSections.categories ? 0 : 180 }}
+            transition={{ duration: 0.2 }}
+            style={{ fontSize: 18, fontWeight: 700 }}
+          >
+            {openSections.categories ? "−" : "+"}
+          </motion.div>
+        </div>
+        <AnimatePresence initial={false}>
+          {openSections.categories && (
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{ overflow: "hidden" }}
+            >
+              {CATEGORY_OPTIONS.map((cat) => (
+                <div className="form-check mb-2" key={cat}>
+                  <input
+                    type="checkbox"
+                    id={`cat-${cat}`}
+                    className="form-check-input"
+                    checked={activeCategories.includes(cat)}
+                    onChange={() => toggleCategory(cat)}
+                  />
+                  <label className="form-check-label" htmlFor={`cat-${cat}`}>
+                    {cat}
+                  </label>
+                </div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div> */}
-    </>
+
+      {/* Size (Caps) Section */}
+      {/* <div className="mb-3 border-bottom pb-2">
+        <div
+          className="d-flex justify-content-between align-items-center mb-2"
+          onClick={() => toggleSection("caps")}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
+          <div className="fw-medium">Size</div>
+          <motion.div
+            animate={{ rotate: openSections.caps ? 0 : 180 }}
+            transition={{ duration: 0.2 }}
+            style={{ fontSize: 18, fontWeight: 700 }}
+          >
+            {openSections.caps ? "−" : "+"}
+          </motion.div>
+        </div>
+        <AnimatePresence initial={false}>
+          {openSections.caps && (
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{ overflow: "hidden" }}
+            >
+              {CAP_OPTIONS.map((cap) => (
+                <div className="form-check mb-2" key={cap}>
+                  <input
+                    type="checkbox"
+                    id={`cap-${cap}`}
+                    className="form-check-input"
+                    checked={activeCaps.includes(cap)}
+                    onChange={() => toggleCap(cap)}
+                  />
+                  <label className="form-check-label" htmlFor={`cap-${cap}`}>
+                    {cap}
+                  </label>
+                </div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div> */}
+
+      {/* Promotional Section */}
+      <div className="mb-4">
+        <div
+          className="d-flex justify-content-between align-items-center mb-2"
+          onClick={() => toggleSection("promo")}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
+          <div className="fw-medium">Promotional</div>
+          <motion.div
+            animate={{ rotate: openSections.promo ? 0 : 180 }}
+            transition={{ duration: 0.2 }}
+            style={{ fontSize: 18, fontWeight: 700 }}
+          >
+            {openSections.promo ? "−" : "+"}
+          </motion.div>
+        </div>
+        <AnimatePresence initial={false}>
+          {openSections.promo && (
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{ overflow: "hidden" }}
+            >
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={promotionalOnly}
+                  onChange={() => setPromotionalOnly((p) => !p)}
+                />
+                <label className="form-check-label">Only active promos</label>
+              </div>
+              <div className="small text-secondary" style={{ textTransform: "capitalize" }}>
+                *Show only products with active promotions*
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Actions */}
+      <div className="d-flex gap-2 mt-2">
+        <Button variant="outline-secondary" className="flex-grow-1" onClick={handleReset}>
+          Clear
+        </Button>
+      </div>
+    </div>
   );
 }

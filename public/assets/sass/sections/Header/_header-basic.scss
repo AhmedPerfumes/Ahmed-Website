@@ -9,6 +9,7 @@
     height: 2.5rem;
     padding: 0.375rem 2.025rem 0.3rem 1.125rem;
     background-image: escape-svg($svg-arrow-down-bg);
+    font-family: 'SofiaProRegular';
 
     &.color-white {
       background-image: escape-svg($svg-arrow-down-white-bg);
@@ -184,7 +185,9 @@
     background-image: escape-svg($btn-close-lg-white-bg);
   }
 
-  .mega-menu, .box-menu, .default-menu {
+  .mega-menu,
+  .box-menu,
+  .default-menu {
     a {
       color: $primary;
     }
