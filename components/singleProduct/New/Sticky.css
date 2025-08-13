@@ -1,0 +1,99 @@
+/* Sticky.css */
+.sticky-container {
+  bottom: 1rem;
+  z-index: 1050;
+  width: clamp(250px, 90vw, 350px);
+  padding: clamp(0.25rem, 1vw, 0.5rem) clamp(0.75rem, 2vw, 1rem);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  gap: 0.75rem;
+}
+
+.sticky-container img {
+  width: clamp(1.5rem, 4vw, 2rem);
+  height: clamp(1.5rem, 4vw, 2rem);
+  object-fit: cover;
+  border-color: #d1d5db;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.sticky-container .flex-grow-1 p:first-child {
+  font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+  font-family: "Lobster", cursive;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sticky-container .flex-grow-1 p:last-child {
+  font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+  font-family: "Cinzel", serif;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.sticky-container button {
+  font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+  font-family: "Merriweather", serif;
+  gap: 0.375rem;
+  padding: clamp(0.25rem, 1vw, 0.375rem) clamp(0.75rem, 2vw, 1rem);
+}
+
+.sticky-container button svg {
+  width: clamp(12px, 3vw, 14px);
+  height: clamp(12px, 3vw, 14px);
+}
+
+@media (min-width: 992px) {
+  .sticky-container {
+    width: clamp(300px, 30vw, 400px);
+    padding: 0.375rem 1.25rem;
+  }
+
+  .sticky-container img {
+    width: clamp(2rem, 4vw, 2.5rem);
+    height: clamp(2rem, 4vw, 2.5rem);
+  }
+
+  .sticky-container .flex-grow-1 p {
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  }
+
+  .sticky-container button {
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    padding: 0.5rem 1.25rem;
+  }
+
+  .sticky-container button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sticky-container {
+    bottom: 4rem;
+    width: clamp(200px, 95vw, 300px);
+    padding: 0.25rem 0.75rem;
+  }
+
+  .sticky-container img {
+    width: clamp(1.25rem, 4vw, 1.5rem);
+    height: clamp(1.25rem, 4vw, 1.5rem);
+  }
+
+  .sticky-container .flex-grow-1 p {
+    font-size: clamp(0.5rem, 1.5vw, 0.625rem);
+  }
+
+  .sticky-container button {
+    font-size: clamp(0.5rem, 1.5vw, 0.625rem);
+    padding: 0.25rem 0.75rem;
+  }
+
+  .sticky-container button svg {
+    width: 12px;
+    height: 12px;
+  }
+}
