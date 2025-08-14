@@ -23,9 +23,9 @@ export default function ResetPasswordOTP() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
+  const [resendTimer, setResendTimer] = useState(0);
 
-  // ENV
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "https://example.com/"
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // 🚫 Block access if logged in
   useEffect(() => {
@@ -33,15 +33,28 @@ export default function ResetPasswordOTP() {
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("user");
       if (token || user) {
-        // already logged in, redirect (change path if you prefer)
-        router.replace("/account_dashboard"); 
+        router.replace("/account_dashboard");
       }
     } catch {}
   }, [router]);
 
-  // Step 1: Send OTP
+  // Start resend countdown
+  const startResendTimer = () => {
+    setResendTimer(60);
+    const timerInterval = setInterval(() => {
+      setResendTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerInterval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  // Step 1 & resend: Send OTP
   const handleSendOTP = async (e) => {
-    e.preventDefault();
+    if (e?.preventDefault) e.preventDefault();
     setLoading(true);
     setMessage(null);
     setError(null);
@@ -57,6 +70,7 @@ export default function ResetPasswordOTP() {
       if (res.ok) {
         setMessage(data.message || "OTP sent successfully.");
         setStep(2);
+        startResendTimer();
       } else {
         setError(data.message || "Failed to send OTP.");
       }
@@ -85,14 +99,18 @@ export default function ResetPasswordOTP() {
         }),
       });
       const data = await res.json();
-      // console.log("VERIFY OTP RESPONSE:", data);
 
-      // Expecting: { message: "OTP Verified Successfully", data: { id, ... }, access_token, ... }
       if (res.ok && data.message?.toLowerCase().includes("verified")) {
         setCustomerId(data?.data?.id ?? null);
         if (data?.access_token) setAccessToken(data.access_token);
         setMessage(data.message || "OTP verified successfully.");
-        setStep(3); // go to new password
+
+        // Hide success message after 2 seconds
+        setTimeout(() => {
+          setMessage(null);
+        }, 2000);
+
+        setStep(3);
       } else {
         setError(data.message || "Invalid Mobile Number or OTP");
       }
@@ -110,7 +128,6 @@ export default function ResetPasswordOTP() {
     setMessage(null);
     setError(null);
 
-    // Basic client-side validation (adjust to your password policy)
     if (newPassword.length < 6) {
       setError("Password must be at least 6 characters.");
       setLoading(false);
@@ -130,8 +147,8 @@ export default function ResetPasswordOTP() {
         method: "POST",
         headers,
         body: JSON.stringify({
-          customer_id: customerId,                 // from verifyOTP -> data.id
-          customer_password: newPassword,          // ✅ exact key your API expects
+          customer_id: customerId,
+          customer_password: newPassword,
           flag: "fpassword",
         }),
       });
@@ -139,7 +156,6 @@ export default function ResetPasswordOTP() {
 
       if (res.ok) {
         setMessage(data.message || "Password updated successfully.");
-        // Optional: redirect to login after a short delay
         setTimeout(() => router.replace("/login_register"), 1500);
       } else {
         setError(data.message || "Failed to update password.");
@@ -151,10 +167,18 @@ export default function ResetPasswordOTP() {
     }
   };
 
+  // Resend OTP click
+  const handleResendOTP = async () => {
+    await handleSendOTP();
+    setStep(2);
+  };
+
   return (
     <section className="login-register container">
       <h2 className="section-title text-center fs-3 mb-xl-5">
-        Reset Your Password
+        {step === 1 && "Reset Your Password"}
+        {step === 2 && "Verify OTP"}
+        {step === 3 && "Set Your New Password"}
       </h2>
 
       <div className="reset-form">
@@ -164,22 +188,31 @@ export default function ResetPasswordOTP() {
         {/* Step 1: Mobile Number */}
         {step === 1 && (
           <form onSubmit={handleSendOTP} className="needs-validation">
-            <div className="form-floating mb-3">
+            <div className="form-floating mb-1">
               <input
-                type="tel"
-                inputMode="tel"
+                type="text"
                 value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, "").slice(0, 10);
+                  setMobile(val);
+                }}
                 className="form-control"
-                placeholder="Mobile Number *"
+                placeholder="Eg. 0500000000 *"
                 required
               />
-              <label>Mobile Number *</label>
+              <label>Mobile Number (Eg. 0500000000)*</label>
             </div>
+
+            {mobile.length > 0 && !/^05\d{8}$/.test(mobile) && (
+              <small className="text-danger">
+                Please enter a valid UAE mobile number starting with 05 (10 digits total).
+              </small>
+            )}
+
             <button
-              className="btn btn-primary w-100"
+              className="btn btn-primary w-100 mt-2"
               type="submit"
-              disabled={loading || !mobile.trim()}
+              disabled={loading || !/^05\d{8}$/.test(mobile)}
             >
               {loading ? "Sending OTP..." : "Send OTP"}
             </button>
@@ -204,7 +237,7 @@ export default function ResetPasswordOTP() {
 
             <div className="d-flex gap-2">
               <button
-                className="btn btn-secondary flex-1 w-50"
+                className="btn btn-secondary flex-1 w-50 text-white"
                 type="button"
                 disabled={loading}
                 onClick={() => setStep(1)}
@@ -219,6 +252,21 @@ export default function ResetPasswordOTP() {
               >
                 {loading ? "Verifying..." : "Verify OTP"}
               </button>
+            </div>
+
+            <div className="text-center mt-3">
+              {resendTimer > 0 ? (
+                <small className="text-muted">Resend OTP in {resendTimer}s</small>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-link p-0 text-uppercase"
+                  onClick={handleResendOTP}
+                  disabled={loading}
+                >
+                  Resend OTP
+                </button>
+              )}
             </div>
           </form>
         )}

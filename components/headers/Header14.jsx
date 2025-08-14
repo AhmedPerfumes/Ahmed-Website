@@ -441,7 +441,7 @@ export default function Header14() {
                                         </Link>
                                     )}
                                 </div> */}
-                                <div className="header-tools__item hover-container">
+                                <div className="header-tools__item hover-account">
                                 {!isLoggedIn ? (
                                     <Link className="js-open-aside" href="#">
                                     <User />

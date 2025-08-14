@@ -960,7 +960,7 @@ button[data-v-7aa9e1a2] {
 }
 
 /* container & alignment */
-.hover-container {
+.hover-account {
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -988,8 +988,8 @@ button[data-v-7aa9e1a2] {
 	z-index: 1000;
 }
 
-.hover-container:hover .account-hover-menu,
-.hover-container:focus-within .account-hover-menu {
+.hover-account:hover .account-hover-menu,
+.hover-account:focus-within .account-hover-menu {
 	opacity: 1;
 	transform: translateY(0);
 	pointer-events: auto;
