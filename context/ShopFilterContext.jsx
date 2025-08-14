@@ -1,36 +1,39 @@
+// context/ShopFilterContext.jsx
 "use client";
 
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState } from "react";
 
 const ShopFilterContext = createContext();
-export const useShopFilter = () => {
-  const ctx = useContext(ShopFilterContext);
-  if (!ctx) throw new Error("useShopFilter must be used inside ShopFilterProvider");
-  return ctx;
-};
+
+export const useShopFilter = () => useContext(ShopFilterContext);
 
 export function ShopFilterProvider({ children }) {
   const [rawProducts, setRawProducts] = useState([]);
-  const [priceRange, setPriceRange] = useState([0, 0]); // [min, max]
-  const [stockAvailability, setStockAvailability] = useState("all"); 
+  const [priceRange, setPriceRange] = useState([0, 0]);
+  const [stockAvailability, setStockAvailability] = useState("all");
   const [promotionalOnly, setPromotionalOnly] = useState(false);
 
-  const value = useMemo(
-    () => ({
-      rawProducts,
-      setRawProducts,
-      priceRange,
-      setPriceRange,
-      stockAvailability,
-      setStockAvailability,
-      promotionalOnly,
-      setPromotionalOnly,
-    }),
-    [rawProducts, priceRange, stockAvailability, promotionalOnly]
-  );
+  // New: label/tag selections
+  const [selectedLabels, setSelectedLabels] = useState([]); // array of label_name strings
+  const [selectedTags, setSelectedTags] = useState([]);     // array of tag strings
 
   return (
-    <ShopFilterContext.Provider value={value}>
+    <ShopFilterContext.Provider
+      value={{
+        rawProducts,
+        setRawProducts,
+        priceRange,
+        setPriceRange,
+        stockAvailability,
+        setStockAvailability,
+        promotionalOnly,
+        setPromotionalOnly,
+        selectedLabels,
+        setSelectedLabels,
+        selectedTags,
+        setSelectedTags,
+      }}
+    >
       {children}
     </ShopFilterContext.Provider>
   );

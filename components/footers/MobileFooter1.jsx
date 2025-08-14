@@ -3,10 +3,14 @@ import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
+import UserLoggedIn from "../headers/components/UserLoggedIn";
+import User from "../headers/components/User";
+import { useUser } from "../../context/UserContext";
 
 export default function MobileFooter1() {
     const locale = useLocale();
     const [showFooter, setShowFooter] = useState(false);
+    const { isLoggedIn } = useUser();
     const { wishList, cartProducts } = useContextElement();
     useEffect(() => {
         setShowFooter(true);
@@ -19,7 +23,7 @@ export default function MobileFooter1() {
             }`}
         >
             <div className="row text-center">
-                <div className="col-4">
+                <div className="col-3">
                     <a
                         href="/"
                         className="footer-mobile__link d-flex flex-column align-items-center"
@@ -39,7 +43,7 @@ export default function MobileFooter1() {
                 </div>
                 {/* <!-- /.col-3 --> */}
 
-                <div className="col-4">
+                <div className="col-3">
                     <Link
                         href={`/${locale}/shop`}
                         className="footer-mobile__link d-flex flex-column align-items-center"
@@ -58,8 +62,29 @@ export default function MobileFooter1() {
                     </Link>
                 </div>
                 {/* <!-- /.col-3 --> */}
+                <div className="col-3">
+                    {!isLoggedIn ? (
+                <Link
+                    className="footer-mobile__link d-flex flex-column align-items-center"
+                    href="#"
+                >
+                    <User  />
+                    <span>
+                      LogIn
+                    </span>
+                </Link>
+            ) : (
+                <Link href="/account_dashboard" className="footer-mobile__link d-flex flex-column align-items-center">
+                    <UserLoggedIn />
+                    <span>
+                      Account
+                    </span>
+                </Link>
+            )}
+                </div>
+                {/* <!-- /.col-3 --> */}
 
-                <div className="col-4">
+                <div className="col-3">
                     <Link
                         href={`/${locale}/shop-cart`}
                         className="footer-mobile__link d-flex flex-column align-items-center"
