@@ -158,7 +158,7 @@ export default function ResetPasswordOTP() {
       </h2>
 
       <div className="reset-form">
-        {message && <p className="text-success">{message}</p>}
+        {message && <p className="sub-menu__title border-bottom">{message}</p>}
         {error && <p className="text-danger">{error}</p>}
 
         {/* Step 1: Mobile Number */}
