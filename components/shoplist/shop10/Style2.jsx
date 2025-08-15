@@ -159,33 +159,33 @@ export default function Style2({ category, subcategory, products }) {
                         </div>
                       )} */}
                       {/* Multiple labels stacked on right */}
-{Array.isArray(elm.labels) && elm.labels.length > 0 && (
-  <div
-    className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
-    style={{ gap: "4px" }}
-  >
-    {elm.labels.map((lbl, idx) => (
-      <LabelIcon
-        key={idx}
-        name={lbl.label_name}
-        title={lbl.label_name}
-        icon={lbl.label_color}
-        size={50}
-      />
-    ))}
-  </div>
-)}
+                      {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                        <div
+                          className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
+                          style={{ gap: "4px" }}
+                        >
+                          {elm.labels.map((lbl, idx) => (
+                            <LabelIcon
+                              key={idx}
+                              name={lbl.label_name}
+                              title={lbl.label_name}
+                              icon={lbl.label_color}
+                              size={50}
+                            />
+                          ))}
+                        </div>
+                      )}
 
-{/* Legacy single label */}
-{!Array.isArray(elm.labels) && elm.label_name && (
-  <div className="position-absolute top-0 end-0 mt-2 me-2">
-    <LabelIcon
-      name={elm.label_name}
-      title={elm.label_name}
-      size={50}
-    />
-  </div>
-)}
+                      {/* Legacy single label */}
+                      {!Array.isArray(elm.labels) && elm.label_name && (
+                        <div className="position-absolute top-0 end-0 mt-2 me-2">
+                          <LabelIcon
+                            name={elm.label_name}
+                            title={elm.label_name}
+                            size={50}
+                          />
+                        </div>
+                      )}
                       {elm.product_qty <= 0 ? (
                         <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                           {t("Out Of Stock")}
