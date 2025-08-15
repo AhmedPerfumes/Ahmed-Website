@@ -60,8 +60,12 @@ export default function ProductGrid({ category, subcategory }) {
         const rawProducts = Array.isArray(data) ? data : data.data || [];
 
         // Filter products with specific label
-        const filteredByLabel = rawProducts.filter(
-          (product) => product.label_name === "Buy 1 Get 1 Free"
+        // const filteredByLabel = rawProducts.filter(
+        //   (product) => product.label_name === "Buy 1 Get 1 Free"
+        // );
+
+        const filteredByLabel = rawProducts.filter((product) =>
+          product.labels?.some(label => label.label_name === "Buy 1 Get 1 Free")
         );
 
         // Apply price filter
