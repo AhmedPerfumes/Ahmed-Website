@@ -1,208 +1,207 @@
 "use client";
-import { products51 } from "@/data/products/fashion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Star from "../common/Star";
-import ColorSelection from "../common/ColorSelection";
-import { Navigation } from "swiper/modules";
-import Pagination1 from "../common/Pagination1";
-import { useEffect, useState, useRef } from "react";
+
+import { useEffect, useState, useMemo } from "react";
 import BreadCumb from "./BreadCumb";
 import Link from "next/link";
-import { useContextElement } from "@/context/Context";
-const itemPerRow = [2, 3, 4];
 import Image from "next/image";
+import Pagination1 from "../common/Pagination1";
+import { useContextElement } from "@/context/Context";
+import { useLocale, useTranslations } from "next-intl";
+import { useMenu } from "@/context/MenuContext";
+import { useShopFilter } from "@/context/ShopFilterContext";
+import FilterAll from "./filter/FilterAll";
+import { sortingOptions } from "@/data/products/productCategories";
 import { openModalShopFilter } from "@/utlis/aside";
-import {
-  menuCategories,
-  sortingOptions,
-} from "@/data/products/productCategories";
-import he from 'he';
-import Slider from "rc-slider";
+import he from "he";
+import LabelIcon from "@/components/labels/LabelIcon";
 
-import {useLocale, useTranslations} from 'next-intl';
-import { useMenu } from '@/context/MenuContext';
+const itemPerRow = [2, 3, 4];
 
 export default function Shop1({ search }) {
-  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
+  const { currency } = useMenu();
   const locale = useLocale();
-  const { toggleWishlist, isAddedtoWishlist } = useContextElement();
-  const [selectedColView, setSelectedColView] = useState(3);
-  const t= useTranslations();
-
+  const t = useTranslations();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
-  
-  const [products, setProducts] = useState([]);
+
+  const [selectedColView, setSelectedColView] = useState(3);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1); // Pagination state
-  const limit = 6; // Number of items per page
-  const [totalPages, setTotalPages] = useState(null);
-  const [currentPage, setCurrentPage] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const offset = 2500;
-  const [sortOption, setSortOption] = useState('popularity');
-  const [price, setPrice] = useState([500, 0]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [isDDActive, setIsDDActive] = useState(false);
-  const ref = useRef(null);
+  const [sortOption, setSortOption] = useState("popularity");
+
+  const {
+    rawProducts,
+    setRawProducts,
+    priceRange,
+    setPriceRange,
+    stockAvailability,
+    promotionalOnly,
+    selectedLabels,
+    selectedTags,
+  } = useShopFilter();
 
   useEffect(() => {
-    const fetchData = async (page) => {
+    const fetchAll = async () => {
       setLoading(true);
-      // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts?page=${page}&limit=${limit}&search=${search?.split('-').join(' ')}`);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          page: page,
-          limit: limit,
-          search: search ? search.split('-').join(' ') : '',
-        }),
-      });
-      const newData = await response.json();
-      const { data, total, to } = newData;
-      if (data.length === 0) {
-        setHasMore(false);
+      try {
+        const head = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/allProducts`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              page: 1,
+              limit: 1,
+              search: search?.replace(/-/g, " ") || "",
+            }),
+          }
+        );
+        const { total } = await head.json();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/allProducts`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              page: 1,
+              limit: total,
+              search: search?.replace(/-/g, " ") || "",
+            }),
+          }
+        );
+        const { data = [] } = await res.json();
+        const norm = data.map((p) => ({ ...p, price: Number(p.price) }));
+        setRawProducts(sortItems(norm, sortOption));
+      } catch (e) {
+        console.error("Error fetching products:", e);
+      } finally {
+        setLoading(false);
       }
-      // console.log('Data', data);
-      // setProducts((prevData) => [...prevData, ...data]); // Append new data
-      setProducts((prevData) => {
-        // console.log('Products', ...prevData);
-        return sortItems([...prevData, ...data], sortOption)
-      });
-
-      const filtered = data.filter(product => {
-        // console.log(product.price,'>=',price[0],'&&',product.price,'<=',price[1]);
-        return product.price <= price[0] && product.price >= price[1]
-      });
-      // console.log('filteredData', filtered);
-
-      setFilteredProducts((prevDataa) => {
-        // console.log('FilteredProducts', ...prevData);
-        return sortItems([...prevDataa, ...filtered], sortOption)
-      });
-      setTotalPages(total);
-      setCurrentPage(to);
-      setLoading(false);
     };
+    fetchAll();
+  }, [search, sortOption, setRawProducts]);
 
-    fetchData(page);
-  }, [page, limit]); // Fetch data on page change
+  useEffect(() => {
+    if (!rawProducts.length) return;
+    const vals = rawProducts.map((p) => p.price).filter((v) => !isNaN(v));
+    if (!vals.length) return;
+    setPriceRange([Math.floor(Math.min(...vals)), Math.ceil(Math.max(...vals))]);
+  }, [rawProducts, setPriceRange]);
 
-useEffect(() => {
-  const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop + offset < document.documentElement.offsetHeight || loading || !hasMore) return;
-    setPage((prevPage) => prevPage + 1); // Load next page
-  };
-
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, [loading]); // Clean up on component unmount
-
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    // Check if the click is outside the referenced element
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsDDActive(false);
-    }
-  };
-
-  // Add event listener to document
-  document.addEventListener("click", handleClickOutside);
-
-  // Clean up the event listener on component unmount
-  return () => {
-    document.removeEventListener("click", handleClickOutside);
-  };
-}, []);
-
-  function removeSpecialCharactersAndAmp(str) {
-    // Remove the specific word "&amp;"
-    let cleanedStr = str.replace(/&amp;/g, '');
-
-    // Remove all special characters
-    cleanedStr = cleanedStr.replace(/[^\w\s-]/g, '');
-
-    // Replace multiple spaces with a single space and trim
-    cleanedStr = cleanedStr.replace(/\s+/g, ' ').trim();
-
-    return cleanedStr;
-  }
-
-  const isSubcategory = (category, subcategory) => {
-    let subcat = "";
-    if (subcategory != null) {
-      return subcat =
-        removeSpecialCharactersAndAmp(subcategory.subcategory_name)
-          .split(" ")
-          .join("-")
-          .toLowerCase();
-    } else {
-      if (removeSpecialCharactersAndAmp(category) == "gift-sets") {
-        // console.log("gift-sets");
-        return subcat = "gift-sets";
-      } else if (removeSpecialCharactersAndAmp(category) == "hair-mist") {
-        // console.log("hair-mist");
-        return subcat = "hair-mist";
-      } else if (removeSpecialCharactersAndAmp(category) == "extrait-de-parfum") {
-        return subcat = "extrait-de-parfum";
-      } else {
-        return subcat = "online-exclusive";
-      }
-    }
-  }
-
-   // Sorting function
-   const sortItems = (items, option) => {
-    // console.log(items, option);
-    switch (option) {
-      case 'popularity':
-        return [...items].sort((a, b) => b.sales - a.sales);
-      case 'date':
-        return [...items].sort((a, b) => b.product_id - a.product_id);
-      case 'price':
-        return [...items].sort((a, b) => a.price - b.price);
-      case 'price-desc':
-        return [...items].sort((a, b) => b.price - a.price);
+  const sortItems = (items, opt) => {
+    switch (opt) {
+      case "popularity":
+        return [...items].sort((a, b) => (b.sales || 0) - (a.sales || 0));
+      case "date":
+        return [...items].sort((a, b) => (b.product_id || 0) - (a.product_id || 0));
+      case "price":
+        return [...items].sort((a, b) => (a.price || 0) - (b.price || 0));
+      case "price-desc":
+        return [...items].sort((a, b) => (b.price || 0) - (a.price || 0));
       default:
         return items;
     }
   };
-
-  const handleSortChange = (event) => {
-    // setLoading(true);
-    setSortOption(event.target.value);
-    setProducts(sortItems(products, event.target.value));
-    setFilteredProducts(sortItems(filteredProducts, event.target.value));
-    // setLoading(false);
+  const handleSortChange = (e) => {
+    const v = e.target.value;
+    setSortOption(v);
+    setRawProducts((prev) => sortItems(prev, v));
   };
 
-  const handleFilterChange = (value) => {
-    // console.log(value);
-    setPrice(value);
+  const filteredProducts = useMemo(() => {
+    const [low, high] = priceRange;
 
-    const filtered = products.filter(product => 
-      product.price >= value[0] && product.price <= value[1]
+    const matchesLabels = (p) => {
+      if (!selectedLabels?.length) return true;
+      const labels = Array.isArray(p?.labels) ? p.labels : [];
+      return labels.some((l) => selectedLabels.includes(l?.label_name));
+    };
+
+    const matchesTags = (p) => {
+      if (!selectedTags?.length) return true;
+      const tags = Array.isArray(p?.tags) ? p.tags : [];
+      return tags.some((t) => selectedTags.includes(t));
+    };
+
+    return sortItems(
+      rawProducts
+        .filter((p) => {
+          if (stockAvailability === "in_stock") return p.product_qty > 0;
+          if (stockAvailability === "upcoming") return p.product_qty <= 0;
+          return true;
+        })
+        .filter((p) => {
+          const pr = p.price;
+          if (isNaN(pr)) return false;
+          if (low === 0 && high === 0) return true;
+          return pr >= low && pr <= high;
+        })
+        .filter((p) =>
+          promotionalOnly ? p.discount != null || p.sale_price != null : true
+        )
+        .filter(matchesLabels)
+        .filter(matchesTags),
+      sortOption
     );
-    setFilteredProducts(filtered);
+  }, [
+    rawProducts,
+    priceRange,
+    stockAvailability,
+    promotionalOnly,
+    sortOption,
+    selectedLabels,
+    selectedTags,
+  ]);
+
+  const clean = (s) =>
+    s
+      .replace(/&amp;/g, "")
+      .replace(/[^\w\s-]/g, "")
+      .trim()
+      .split(" ")
+      .join("-")
+      .toLowerCase();
+
+  const isSubcat = (cat, sub) =>
+    sub
+      ? clean(sub.subcategory_name)
+      : ["gift-sets", "hair-mist", "extrait-de-parfum"].includes(clean(cat))
+      ? clean(cat)
+      : "online-exclusive";
+
+  const fmt = (v) => `${Number(v).toFixed(2)}${currency.symbol}`;
+
+  const isDiscountActive = (elm) => {
+    if (!elm?.discount) return false;
+    const now = new Date(Date.now() + 4 * 3600e3)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+    return now >= elm.discount.start_date && now <= elm.discount.end_date;
   };
 
   const discPrice = (elm) => {
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span></>;
-      } else {
-        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
-      }
-    } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.sale_price).toFixed(2)}{ currency.symbol }</span></>;
-    } else {
-      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+    const base = Number(elm.price);
+
+    if (isDiscountActive(elm)) {
+      const sale = base - (base * Number(elm.discount.value || 0)) / 100;
+      return (
+        <>
+          <span className="money price price-old">{fmt(base)}</span>{" "}
+          <span className="money price price-sale">{fmt(sale)}</span>
+        </>
+      );
     }
+
+    if (elm.sale_price) {
+      const sp = Number(elm.sale_price);
+      return (
+        <>
+          <span className="money price price-old">{fmt(base)}</span>{" "}
+          <span className="money price price-sale">{fmt(sp)}</span>
+        </>
+      );
+    }
+
+    return <span className="money price">{fmt(base)}</span>;
   };
 
   return (
@@ -220,338 +219,269 @@ useEffect(() => {
               <Image
                 loading="lazy"
                 src="/assets/images/shop/multiple-products-banner.jpg"
-                width="1759"
-                height="420"
+                width={1759}
+                height={420}
                 alt="Pattern"
                 className="slideshow-bg__img object-fit-cover"
               />
             </div>
-
-            {/* <div className="shop-banner__content container position-absolute start-50 top-50 translate-middle">
-              <h2 className="stroke-text h1 smooth-16 text-uppercase fw-bold mb-3 mb-xl-4 mb-xl-5">
-                Shop
-              </h2>
-              <ul className="d-flex flex-wrap list-unstyled text-uppercase h6">
-                {menuCategories.map((elm, i) => (
-                  <li key={i} className="me-3 me-xl-4 pe-1">
-                    <a
-                      onClick={() => setCurrentCategory(elm)}
-                      className={`menu-link menu-link_us-s ${
-                        currentCategory == elm ? "menu-link_active" : ""
-                      }`}
-                    >
-                      {elm}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div> */}
-            {/* <!-- /.shop-banner__content --> */}
           </div>
-          {/* <!-- /.shop-banner position-relative --> */}
         </div>
-        {/* <!-- /.full-width_border --> */}
       </section>
+
       <div className="mb-4 pb-lg-3"></div>
-      <section className="shop-main container">
-        <div className="d-flex justify-content-between mb-4 pb-md-2">
-          <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-            <BreadCumb category={null} subcategory={null}/>
-          </div>
 
-          <div className="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-            <select
-              className="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0"
-              aria-label="Sort Items"
-              name="total-number"
-              value={sortOption}
-              onChange={handleSortChange}
-            >
-              {sortingOptions.map((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-
-            {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
-
-            <div className="col-size align-items-center order-1 d-none d-lg-flex">
-              <span className="text-uppercase fw-medium me-2">View</span>
-              {itemPerRow.map((elm, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelectedColView(elm)}
-                  className={`btn-link fw-medium me-2 js-cols-size ${
-                    selectedColView == elm ? "btn-link_active" : ""
-                  } `}
-                >
-                  {elm}
-                </button>
-              ))}
-            </div> */}
-            {/* <!-- /.col-size --> */}
-
-            {/* <div className="shop-asc__seprator mx-3 bg-light d-none d-lg-block order-md-1"></div> */}
-
-            
-            {/* <div
-            id="accordion-filter-price"
-            className="accordion-collapse collapse show border-0"
-            aria-labelledby="accordion-heading-price"
-            data-bs-parent="#price-filters"
-          >
-            
-          </div> */}
-            {/* <!-- /.col-size d-flex align-items-center ms-auto ms-md-3 --> */}
+      <section className="shop-main container d-flex">
+        <div className="shop-sidebar side-sticky bg-body">
           <div
-            ref={ref}
-            className={`position-relative hover-container d-none d-lg-block  px-1 ${
-              isDDActive ? "js-content_visible" : ""
-            }`}
+            onClick={openModalShopFilter}
+            className="aside-header d-flex d-lg-none align-items-center"
           >
-            <div
-              onClick={() => setIsDDActive((pre) => !pre)}
-              className="js-hover__open"
-            >
-              <span className="multi-select__actor fw-medium text-uppercase js-no-update">
-                Price
-              </span>
-            </div>
-            <div className="filters-container js-hidden-content mt-2">
-                <Slider
-                  range
-                  formatLabel={() => ``}
-                  max={500}
-                  min={0}
-                  defaultValue={price}
-                  onChange={(value) => handleFilterChange(value)}
-                  id="slider"
-                />
-                <div className="price-range__info d-flex align-items-center mt-2">
-                  <div className="me-auto">
-                    <span className="text-secondary">Min Price: </span>
-                    <span className="price-range__max">{price[0]}{ currency.symbol }</span>
-                  </div>
-                  <div>
-                    <span className="text-secondary">Max Price: </span>
-                    <span className="price-range__min">{price[1]}{ currency.symbol }</span>
-                  </div>
-                </div>
-            </div>
+            <h3 className="text-uppercase fs-6 mb-0">Filter</h3>
+            <button className="btn-close-lg js-close-aside btn-close-aside ms-auto" />
           </div>
+          <div className="pt-4 pt-lg-0" />
+          <FilterAll products={rawProducts} />
         </div>
-          {/* <!-- /.shop-acs --> */}
-        </div>
-        {/* <!-- /.d-flex justify-content-between --> */}
 
-        <div
-          className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}
-          id="products-grid"
-        >
-          {filteredProducts?.map((elm, i) => (
-            <div key={i} className="product-card-wrapper">
-              <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-                <div className="pc__img-wrapper">
-                  <Swiper
-                    className="swiper swiper-container swiper-initialized swiper-horizontal swiper-backface-hidden background-img js-swiper-slider"
-                    slidesPerView={1}
-                    modules={[Navigation]}
-                    navigation={{
-                      prevEl: ".prev" + i,
-                      nextEl: ".next" + i,
-                    }}
+        <div className="shop-list flex-grow-1">
+          {/* Alignment fixed here */}
+          <div className="shop-header-row d-flex flex-wrap align-items-center justify-content-between mb-4 pb-md-2">
+            <div className="breadcrumb mb-2 mb-md-0">
+              <BreadCumb category={null} subcategory={null} />
+            </div>
+
+            <div className="d-flex align-items-center flex-wrap gap-3">
+              {/* Sort */}
+              <div className="d-flex align-items-center">
+                <label className="sort-label me-2 mb-0">SORT BY</label>
+                <div className="sort-control position-relative">
+                  <select
+                    className="sort-select"
+                    value={sortOption}
+                    onChange={handleSortChange}
                   >
-                    {/* {elm?.images && JSON.parse(elm.images).map((image, ind) => ( */}
-                      <SwiperSlide key={i} className="swiper-slide">
-                        <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
-                          {elm?.images &&
-                          // JSON.parse(elm.images).map((image, ind) => (
-                              <>
-                                {JSON.parse(elm.images)[0] && <Image
-                                  loading="lazy"
-                                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
-                                  width="330"
-                                  height="400"
-                                  alt="img"
-                                  className="pc__img"
-                                />
-                                }
-
-                                {JSON.parse(elm.images)[1] && <Image
-                                  loading="lazy"
-                                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
-                                  width="330"
-                                  height="400"
-                                  alt="img"
-                                  className="pc__img pc__img-second"
-                                />
-                                }
-                              </>
-                          // ))
-                          }
-                        </Link>
-                        {elm?.label_name && (
-                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
-                            { elm?.label_name }
-                          </div>
-                        )}
-                        {elm.product_qty <= 0 ? (
-                          <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                            Out Of Stock
-                          </div>
-                        ) : (
-                          elm.discount && (
-                            <div style={{ backgroundColor: '#198754' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                              Sale {elm.discount.value}%
-                            </div>
-                          )
-                        )}
-                      </SwiperSlide>
-                    {/* ))} */}
-
-                    <span
-                      className={`cursor-pointer pc__img-prev ${"prev" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_prev_sm" />
-                      </svg>
-                    </span>
-                    <span
-                      className={`cursor-pointer pc__img-next ${"next" + i} `}
-                    >
-                      <svg
-                        width="7"
-                        height="11"
-                        viewBox="0 0 7 11"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#icon_next_sm" />
-                      </svg>
-                    </span>
-                  </Swiper>
-                  {
-                    isAddedToCartProducts(elm?.product_id) ? 
-                    elm.product_qty > 0 && <button
-                        className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                        title="Already Added"
-                      >
-                      {t("Already Added")}
-                    </button> : elm.product_qty > 0 && <button
-                      className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
-                      title="Add to Cart"
-                    >
-                      {t("Add To Cart")}
-                    </button>
-                  }
-                  {/* {elm.product_qty > 0 && <button
-                    className="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                    onClick={() => addProductToCart(elm)}
-                    title={
-                      isAddedToCartProducts(elm.product_id)
-                        ? "Already Added"
-                        : "Add to Cart"
-                    }
-                  >
-                    {isAddedToCartProducts(elm.product_id)
-                      ? "Already Added"
-                      : "Add To Cart"}
-                  </button>} */}
+                    {sortingOptions.map((o, i) => (
+                      <option key={i} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="sort-caret" aria-hidden="true" />
                 </div>
+              </div>
 
-                <div className="pc__info position-relative">
-                  <p className="pc__category">{t(elm.category_name)}</p>
-                  <h6 className="pc__title">
-                    <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && t(he.decode(elm?.product_name))}</Link>
-                  </h6>
-                  <div className="product-card__price d-flex">
-                    {/* {elm.price ? (
-                      <>
-                        {" "}
-                        <span className="money price price-old">
-                          ${elm.price}
-                        </span>
-                        <span className="money price price-sale">
-                          ${elm.price}
-                        </span>
-                      </>
-                    ) : ( */}
-                      { discPrice(elm) }
-                    {/* )} */}
-                  </div>
-                  {/* {elm.colors && (
-                    <div className="d-flex align-items-center mt-1">
-                      {" "}
-                      <ColorSelection />{" "}
-                    </div>
-                  )}
-                  {elm.reviews && (
-                    <div className="product-card__review d-flex align-items-center">
-                      <div className="reviews-group d-flex">
-                        <Star stars={elm.rating} />
-                      </div>
-                      <span className="reviews-note text-lowercase text-secondary ms-1">
-                        {elm.reviews}
-                      </span>
-                    </div>
-                  )} */}
-
-                  {/* <button
-                    className={`pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist ${
-                      isAddedtoWishlist(elm.product_id) ? "active" : ""
-                    }`}
-                    onClick={() => toggleWishlist(elm.product_id)}
-                    title="Add To Wishlist"
+              {/* View */}
+              <div className="d-flex align-items-center">
+                <span className="text-uppercase fw-medium me-2">View</span>
+                {itemPerRow.map((c, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedColView(c)}
+                    className={`view-btn-minimal ${selectedColView === c ? "active" : ""}`}
+                    aria-label={`View ${c} columns`}
                   >
                     <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 20 20"
-                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke={selectedColView === c ? "#fff" : "#666"}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      <use href="#icon_heart" />
+                      {Array.from({ length: c }).map((_, idx) => (
+                        <line
+                          key={idx}
+                          x1={4 + idx * (16 / (c - 1))}
+                          y1="5"
+                          x2={4 + idx * (16 / (c - 1))}
+                          y2="19"
+                        />
+                      ))}
                     </svg>
-                  </button> */}
-                </div>
-                {elm.discont && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__right ms-auto">
-                      <span className="pc-label pc-label_sale d-block text-white">
-                        -{elm.discont}%
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {elm.isNew && (
-                  <div className="pc-labels position-absolute top-0 start-0 w-100 d-flex justify-content-between">
-                    <div className="pc-labels__left">
-                      <span className="pc-label pc-label_new d-block bg-white">
-                        NEW
-                      </span>
-                    </div>
-                  </div>
-                )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Filter button (mobile only) */}
+              <div className="shop-filter d-flex align-items-center d-lg-none">
+                <button
+                  className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
+                  onClick={openModalShopFilter}
+                >
+                  <svg className="d-inline-block align-middle me-2" width="14" height="10">
+                    <use href="#icon_filter" />
+                  </svg>
+                  <span className="text-uppercase fw-medium align-middle">
+                    {t("Filter")}
+                  </span>
+                </button>
               </div>
             </div>
-          ))}
-        </div>
-        {/* <!-- /.products-grid row --> */}
-        {/* {loading && <p>Loading...</p>} */}
-        {!loading && <p className="mb-5 text-center fw-medium">SHOWING {currentPage ? currentPage : filteredProducts.length} {currentPage ? 'of': 'of'} {totalPages} items</p>}
-        {loading && <Pagination1 />}
+          </div>
 
-        {/* <div className="text-center">
-          <Link className="btn-link btn-link_lg text-uppercase fw-medium" href="#">
-            Show More
-          </Link>
-        </div> */}
+          <div
+            className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}
+          >
+            {filteredProducts.map((elm, i) => {
+              return (
+                <div key={i} className="product-card-wrapper">
+                  <div className="product-card mb-3 mb-md-4 mb-xxl-5">
+                    <div className="pc__img-wrapper">
+                      <Link
+                        href={`/${locale}/shop/${clean(
+                          elm.category_name
+                        )}/${isSubcat(
+                          elm.category_name,
+                          elm.subcategory
+                        )}/${clean(elm.product_name)}`}
+                      >
+                        {elm.images && (
+                          <>
+                            {JSON.parse(elm.images)[0] && (
+                              <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(
+                                  elm.images
+                                )[0]}`}
+                                width={330}
+                                height={400}
+                                alt={elm.product_name}
+                                className="pc__img"
+                              />
+                            )}
+                            {JSON.parse(elm.images)[1] && (
+                              <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(
+                                  elm.images
+                                )[1]}`}
+                                width={330}
+                                height={400}
+                                alt={elm.product_name}
+                                className="pc__img pc__img-second"
+                              />
+                            )}
+                          </>
+                        )}
+                      </Link>
+
+                      {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                        <div
+                          className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
+                          style={{ gap: "4px" }}
+                        >
+                          {elm.labels.map((lbl, idx) => (
+                            <LabelIcon
+                              key={idx}
+                              name={lbl.label_name}
+                              title={lbl.label_name}
+                              icon={lbl.label_color}
+                              size={50}
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      {!Array.isArray(elm.labels) && elm.label_name && (
+                        <div className="position-absolute top-0 end-0 mt-2 me-2">
+                          <LabelIcon
+                            name={elm.label_name}
+                            title={elm.label_name}
+                            size={50}
+                          />
+                        </div>
+                      )}
+
+                      {elm.product_qty <= 0 ? (
+                        <div
+                          className="product-label text-uppercase text-white top-0 start-0 mt-2 mx-2"
+                          style={{ backgroundColor: "#dc3545" }}
+                        >
+                          Out Of Stock
+                        </div>
+                      ) : (
+                        (elm.discount || elm.sale_price) && (() => {
+                          let discountPercent = null;
+
+                          if (elm?.discount?.value) {
+                            discountPercent = Number(elm.discount.value);
+                          } else if (elm.sale_price) {
+                            const base = Number(elm.price);
+                            const sale = Number(elm.sale_price);
+                            if (base > 0 && sale < base) {
+                              discountPercent = Math.round(((base - sale) / base) * 100);
+                            }
+                          }
+
+                          return discountPercent !== null ? (
+                            <div
+                              className="product-label text-uppercase text-white top-0 start-0 mt-2 mx-2"
+                              style={{ backgroundColor: "#198754" }}
+                            >
+                              {`SALE ${discountPercent}%`}
+                            </div>
+                          ) : null;
+                        })()
+                      )}
+
+                      {elm.product_qty > 0 &&
+                        (isAddedToCartProducts(elm.product_id) ? (
+                          <button className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium">
+                            {t("Already Added")}
+                          </button>
+                        ) : (
+                          <button
+                            className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
+                            onClick={() =>
+                              addProductToCart({
+                                ...elm,
+                                category_name: elm.category_name,
+                                subcategory_name:
+                                  elm.subcategory?.subcategory_name,
+                              })
+                            }
+                          >
+                            {t("Add To Cart")}
+                          </button>
+                        ))}
+                    </div>
+
+                    <div className="pc__info position-relative">
+                      <p className="pc__category">{t(elm.category_name)}</p>
+                      <h6 className="pc__title">
+                        <Link
+                          href={`/${locale}/shop/${clean(
+                            elm.category_name
+                          )}/${isSubcat(
+                            elm.category_name,
+                            elm.subcategory
+                          )}/${clean(elm.product_name)}`}
+                        >
+                          {t(he.decode(elm.product_name))}
+                        </Link>
+                      </h6>
+                      <div className="product-card__price d-flex">
+                        {discPrice(elm)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {loading && <Pagination1 />}
+
+          {!loading && (
+            <h4 className="mb-5 text-center fw-medium">
+              {t("Showing")} {filteredProducts.length} {t("items")}
+            </h4>
+          )}
+        </div>
       </section>
     </>
   );

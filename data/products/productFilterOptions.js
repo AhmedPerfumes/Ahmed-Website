@@ -11,16 +11,11 @@ export const colors = [
   { color: "#bfdcc4", active: false },
 ];
 export const categories = [
-  "Dresses",
-  "Shorts",
-  "Sweatshirts",
-  "Swimwear",
-  "Jackets",
-  "T-Shirts & Tops",
-  "Jeans",
-  "Trousers",
-  "Men",
-  "Jumpers & Cardigans",
+  "Luxury",
+  "Premium",
+  "All time favourite",
+  "Hot Selling",
+  "New Launch"
 ];
 
 export const sizes = ["XS", "S", "M", "L", "XL", "XXL"];

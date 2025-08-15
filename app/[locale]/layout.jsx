@@ -14,6 +14,7 @@ import { UserProvider } from "@/context/UserContext";
 import CartDrawer from "@/components/shopCartandCheckout/CartDrawer";
 import SiteMap from "@/components/modals/SiteMap";
 // import NewsLetter from "@/components/modals/NewsLetter";
+import ShopFilter from "@/components/asides/ShopFilter";
 import MobileHeader from "@/components/headers/MobileHeader";
 import SizeGuide from "@/components/modals/SizeGuide";
 import Delivery from "@/components/modals/Delivery";
@@ -25,61 +26,59 @@ import MobileFooter1 from "@/components/footers/MobileFooter1";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
+import { ShopFilterProvider } from "@/context/ShopFilterContext";
 
 export const metadata = {
-    title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-    description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-    icons: {
-        icon: "/assets/images/ahmed-favicon.png",
-    },
+  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+  icons: {
+    icon: "/assets/images/ahmed-favicon.png",
+  },
 };
 
 // Import English font
 const englishFont = localFont({
-    src: "../../public/assets/fonts/wulkan/WulkanDisplayRegular.ttf",
+  src: "../../public/assets/fonts/wulkan/WulkanDisplayRegular.ttf",
 });
 
 // Import Arabic font
 const arabicFont = localFont({
-    src: "../../public/assets/fonts/alexandria-arabic/static/Alexandria-Regular.ttf",
+  src: "../../public/assets/fonts/alexandria-arabic/static/Alexandria-Regular.ttf",
 });
 
 // Import Sofia Pro Regular font as a secondary font
 const sofiaFont = localFont({
-    src: "../../public/assets/fonts/sofia/SofiaProRegular.ttf",
+  src: "../../public/assets/fonts/sofia/SofiaProRegular.ttf",
 });
 
 export default async function LocaleLayout({ children, params: { locale } }) {
-    if (!routing.locales.includes(locale)) {
-        notFound();
-    }
+  if (!routing.locales.includes(locale)) {
+    notFound();
+  }
 
-    // Select the font based on locale
-    let selectedFont = englishFont;
-    if (locale === "ar") {
-        selectedFont = arabicFont;
-    } else if (locale === "secondary") {
-        selectedFont = sofiaFont;
-    }
+  // Select the font based on locale
+  let selectedFont = englishFont;
+  if (locale === "ar") {
+    selectedFont = arabicFont;
+  } else if (locale === "secondary") {
+    selectedFont = sofiaFont;
+  }
 
-    // Fetch translation messages
-    const messages = await getMessages();
-    const GTM_ID = "GTM-M4B7GLV";
+  // Fetch translation messages
+  const messages = await getMessages();
+  const GTM_ID = "GTM-M4B7GLV";
 
-    return (
-        <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
-            <head>
-            
-            </head>
-           
+  return (
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+      <head></head>
 
-            <body className={selectedFont.className}>
-            <Script id="gtm-script" strategy="afterInteractive">
+      <body className={selectedFont.className}>
+        <Script id="gtm-script" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -88,7 +87,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             })(window,document,'script','dataLayer','${GTM_ID}');
           `}
         </Script>
-            <noscript>
+        <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
@@ -97,34 +96,37 @@ export default async function LocaleLayout({ children, params: { locale } }) {
           />
         </noscript>
 
-                <NextIntlClientProvider messages={messages}>
-                    <Svgs />
-                        <MenuProvider>
-                            <Context>
-                                <UserProvider>
-                                    <FacebookPixelEvents />
-                                        <MobileHeader />
-                                        {children}
-                                        <MobileFooter1 />
-                                        <GTMPageView/>
-                                        {/* Modals and Asides */}
-                                        <LoginFormPopup />
-                                        <SizeGuide />
-                                        <Delivery />
-                                        <CartDrawer />
-                                        <SiteMap />
-                                        <CustomerLogin />
-                                        <ProductDescription />
-                                        <ProductAdditionalInformation />
-                                        <ProductReviews />
-                                </UserProvider>
-                            </Context>
-                        </MenuProvider>
-                    <div className="page-overlay" id="pageOverlay"></div>
-                    <ScrollTop />
-                    <CountryMismatchPopup />
-                </NextIntlClientProvider>
-            </body>
-        </html>
-    );
+        <NextIntlClientProvider messages={messages}>
+          <Svgs />
+          <MenuProvider>
+            <Context>
+              <UserProvider>
+                <FacebookPixelEvents />
+                <MobileHeader />
+                <ShopFilterProvider>
+                  {children}
+                  <MobileFooter1 />
+                  <GTMPageView />
+                  {/* Modals and Asides */}
+                  <LoginFormPopup />
+                  <SizeGuide />
+                  <Delivery />
+                  <CartDrawer />
+                  <SiteMap />
+                  <CustomerLogin />
+                  <ShopFilter />
+                  <ProductDescription />
+                  <ProductAdditionalInformation />
+                  <ProductReviews />
+                </ShopFilterProvider>
+              </UserProvider>
+            </Context>
+          </MenuProvider>
+          <div className="page-overlay" id="pageOverlay"></div>
+          <ScrollTop />
+          <CountryMismatchPopup />
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
 }

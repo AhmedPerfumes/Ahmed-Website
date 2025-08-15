@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
-
 import { closeModalShopFilter } from "@/utlis/aside";
-
 import FilterAll from "../shoplist/filter/FilterAll";
+import { useShopFilter } from "@/context/ShopFilterContext";
+
 export default function ShopFilter() {
+  const { rawProducts } = useShopFilter();
+
   useEffect(() => {
     const pageOverlay = document.getElementById("pageOverlay");
-
-    pageOverlay.addEventListener("click", closeModalShopFilter);
-
+    if (pageOverlay) {
+      pageOverlay.addEventListener("click", closeModalShopFilter);
+    }
     return () => {
-      pageOverlay.removeEventListener("click", closeModalShopFilter);
+      if (pageOverlay) {
+        pageOverlay.removeEventListener("click", closeModalShopFilter);
+      }
     };
   }, []);
 
@@ -25,11 +29,9 @@ export default function ShopFilter() {
           className="btn-close-lg js-close-aside btn-close-aside ms-auto"
         />
       </div>
-      {/* /.aside-header */}
       <div className="aside-content">
-        <FilterAll />
+        <FilterAll products={rawProducts} />
       </div>
-      {/* /.aside-content */}
     </div>
   );
 }

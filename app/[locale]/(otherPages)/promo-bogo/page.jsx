@@ -11,7 +11,7 @@ export default function BOGO() {
           {/* <Loader/> */}
           <Header14 />
     
-           <Bogo />
+           <Bogo/>
           <section className="d-none d-lg-block" style={{ height: "100%" }}>
             <Footer14 />
           </section>

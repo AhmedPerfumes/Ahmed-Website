@@ -10,6 +10,7 @@ import Image from "next/image";
 import he from "he";
 import { useLocale, useTranslations} from "next-intl";
 import { useMenu } from '@/context/MenuContext';
+import LabelIcon from "@/components/labels/LabelIcon";
 
 export default function Style2({ category, subcategory, products }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -149,14 +150,42 @@ export default function Style2({ category, subcategory, products }) {
                         // ))
                         }
                       </Link>
-                      {elm?.label_name && (
+                      {/* {elm?.label_name && (
                         <div
                           style={{ backgroundColor: elm.label_color }}
                           className="product-label text-white right-0 top-0 left-auto mt-2 mx-2"
                         >
                           {elm?.label_name}
                         </div>
-                      )}
+                      )} */}
+                      {/* Multiple labels stacked on right */}
+{Array.isArray(elm.labels) && elm.labels.length > 0 && (
+  <div
+    className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
+    style={{ gap: "4px" }}
+  >
+    {elm.labels.map((lbl, idx) => (
+      <LabelIcon
+        key={idx}
+        name={lbl.label_name}
+        title={lbl.label_name}
+        icon={lbl.label_color}
+        size={50}
+      />
+    ))}
+  </div>
+)}
+
+{/* Legacy single label */}
+{!Array.isArray(elm.labels) && elm.label_name && (
+  <div className="position-absolute top-0 end-0 mt-2 me-2">
+    <LabelIcon
+      name={elm.label_name}
+      title={elm.label_name}
+      size={50}
+    />
+  </div>
+)}
                       {elm.product_qty <= 0 ? (
                         <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                           {t("Out Of Stock")}
