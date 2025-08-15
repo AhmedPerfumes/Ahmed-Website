@@ -15,6 +15,7 @@ import { sortingOptions } from "@/data/products/productCategories"; // Import so
 import "swiper/css";
 import "swiper/css/navigation";
 import "rc-slider/assets/index.css";
+import LabelIcon from "@/components/labels/LabelIcon";
 
 export default function ProductGrid({ category, subcategory }) {
   const locale = useLocale();
@@ -60,8 +61,12 @@ export default function ProductGrid({ category, subcategory }) {
         const rawProducts = Array.isArray(data) ? data : data.data || [];
 
         // Filter products with specific label
-        const filteredByLabel = rawProducts.filter(
-          (product) => product.label_name === "Buy 1 Get 1 Free"
+        // const filteredByLabel = rawProducts.filter(
+        //   (product) => product.label_name === "Buy 1 Get 1 Free"
+        // );
+
+        const filteredByLabel = rawProducts.filter((product) =>
+          product.labels?.some(label => label.label_name === "Buy 1 Get 1 Free")
         );
 
         // Apply price filter
@@ -318,12 +323,39 @@ export default function ProductGrid({ category, subcategory }) {
                               className="pc__img"
                             />
                           </Link>
-                          {elm.label_name && (
+                          {/* {elm.label_name && (
                             <div
                               style={{ backgroundColor: elm.label_color }}
                               className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2"
                             >
                               {elm.label_name}
+                            </div>
+                          )} */}
+                          {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                            <div
+                              className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
+                              style={{ gap: "4px" }}
+                            >
+                              {elm.labels.map((lbl, idx) => (
+                                <LabelIcon
+                                  key={idx}
+                                  name={lbl.label_name}
+                                  title={lbl.label_name}
+                                  icon={lbl.label_color}
+                                  size={50}
+                                />
+                              ))}
+                            </div>
+                          )}
+                          
+                          {/* Legacy single label */}
+                          {!Array.isArray(elm.labels) && elm.label_name && (
+                            <div className="position-absolute top-0 end-0 mt-2 me-2">
+                              <LabelIcon
+                                name={elm.label_name}
+                                title={elm.label_name}
+                                size={50}
+                              />
                             </div>
                           )}
                           {elm.product_qty <= 0 ? (
