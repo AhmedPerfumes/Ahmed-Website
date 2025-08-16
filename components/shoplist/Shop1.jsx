@@ -27,14 +27,17 @@ export default function Shop1({ search }) {
   const [availableViews, setAvailableViews] = useState(allViews);
   const [selectedColView, setSelectedColView] = useState(3);
 
+  // 🔧 Only coerce when crossing breakpoints; preserve user's valid choice
   useEffect(() => {
     const updateViews = () => {
-      if (window.innerWidth < 992) {
+      const isSmall = window.innerWidth < 992;
+
+      if (isSmall) {
         setAvailableViews(smallViews);
-        setSelectedColView(1);
+        setSelectedColView((prev) => (smallViews.includes(prev) ? prev : 1));
       } else {
         setAvailableViews(allViews);
-        setSelectedColView(3);
+        setSelectedColView((prev) => (allViews.includes(prev) ? prev : 3));
       }
     };
     updateViews();
@@ -313,9 +316,9 @@ export default function Shop1({ search }) {
                       {Array.from({ length: c }).map((_, idx) => (
                         <line
                           key={idx}
-                          x1={4 + idx * (16 / (c - 1))}
+                          x1={idx === 0 ? 10 : 4 + idx * (16 / (c - 1))}
                           y1="5"
-                          x2={4 + idx * (16 / (c - 1))}
+                          x2={idx === 0 ? 10 : 4 + idx * (16 / (c - 1))}
                           y2="19"
                         />
                       ))}
@@ -460,7 +463,7 @@ export default function Shop1({ search }) {
                       {elm.product_qty > 0 &&
                         (isAddedToCartProducts(elm.product_id) ? (
                           <button
-                            className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
+                            className="pc__atc btn btn-secondary text-white anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
                             onClick={() =>
                               addProductToCart(
                                 {
@@ -476,7 +479,7 @@ export default function Shop1({ search }) {
                           </button>
                         ) : (
                           <button
-                            className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
+                            className="pc__atc btn btn-primary anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
                             onClick={() =>
                               addProductToCart({
                                 ...elm,

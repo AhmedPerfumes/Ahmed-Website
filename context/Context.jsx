@@ -220,7 +220,7 @@ export default function Context({ children }) {
             <div className="toast-icon">✔</div>
             <div>
               <strong>‘{toastData.name}’</strong>
-              <div>Successfully added to your basket</div>
+              <div>Successfully added to your cart</div>
             </div>
           </div>
           <button className="toast-close" onClick={() => setShowToast(false)}>✕</button>

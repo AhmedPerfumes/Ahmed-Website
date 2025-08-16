@@ -177,7 +177,6 @@ export default function FilterAll({ products = [] }) {
       className="filter-all p-2"
       style={{
         maxWidth: 400,
-        textTransform: "uppercase",
         fontFamily: "SofiaProRegular",
       }}
     >
