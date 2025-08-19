@@ -313,15 +313,12 @@ export default function Shop1({ search }) {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      {Array.from({ length: c }).map((_, idx) => (
-                        <line
-                          key={idx}
-                          x1={idx === 0 ? 10 : 4 + idx * (16 / (c - 1))}
-                          y1="5"
-                          x2={idx === 0 ? 10 : 4 + idx * (16 / (c - 1))}
-                          y2="19"
-                        />
-                      ))}
+                      {Array.from({ length: c }).map((_, idx) => {
+                        // evenly spread between x=4 and x=20
+                        const spacing = 16 / (c + 1);
+                        const x = 4 + spacing * (idx + 1);
+                        return <line key={idx} x1={x} y1="5" x2={x} y2="19" />;
+                      })}
                     </svg>
                   </button>
                 ))}
