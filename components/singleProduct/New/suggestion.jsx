@@ -60,20 +60,6 @@ const Suggestion = () => {
       viewport={{ once: true, amount: 0.2 }}
       variants={containerVariants}
     >
-      <motion.h2
-        className="fw-bold mb-3 pb-2 border-bottom"
-        style={{
-          fontFamily: "'Cinzel', serif",
-          fontSize: "1.75rem", // ~text-2xl
-          
-        }}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        You May Also Like
-      </motion.h2>
-
       <motion.div className="row g-3 g-sm-4" variants={containerVariants}>
         {relatedProducts.map((product, idx) => (
           <motion.div
@@ -83,11 +69,16 @@ const Suggestion = () => {
             whileHover={{ scale: 1.03 }}
           >
             <div
-              className="border rounded shadow-sm bg-white"
+              className="shadow-sm bg-white"
               style={{
                 backdropFilter: "blur(8px)",
                 transition: "box-shadow 0.2s ease",
                 cursor: "pointer",
+                
+                border: "1px solid rgba(0, 0, 0, 0.125)",
+                borderRadius: "0.5rem",
+                boxShadow: "0 .125rem .25rem rgba(0,0,0,.075)",
+                backgroundColor: "#fff",
               }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.boxShadow =
@@ -100,10 +91,12 @@ const Suggestion = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="rounded-top w-100"
+                className="w-100"
                 style={{
                   height: "280px", // mobile default
                   objectFit: "cover",
+                  borderTopLeftRadius: "0.5rem",
+                  borderTopRightRadius: "0.5rem"
                 }}
               />
               <div className="p-3 d-flex flex-column gap-2">

@@ -80,21 +80,25 @@ export default function Header14() {
     // }, []);
 
     useEffect(() => {
+        let hideThreshold = 150; // px distance before hiding
+        let lastShowY = 0; // where header was last shown
+
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            // Show header when at the top or scrolling up
             if (currentScrollY <= 50) {
+                // Always show at very top
                 setScrollState("visible");
-            } else if (
-                currentScrollY > lastScrollY.current &&
-                currentScrollY > 50
-            ) {
-                // Scrolling down past 50px: hide header
-                setScrollState("hidden");
+                lastShowY = currentScrollY;
+            } else if (currentScrollY > lastScrollY.current) {
+                // Scrolling down
+                if (currentScrollY - lastShowY > hideThreshold) {
+                    setScrollState("hidden");
+                }
             } else if (currentScrollY < lastScrollY.current) {
-                // Scrolling up: show header
+                // Scrolling up → show header again and reset baseline
                 setScrollState("visible");
+                lastShowY = currentScrollY;
             }
 
             lastScrollY.current = currentScrollY;
@@ -402,9 +406,8 @@ export default function Header14() {
                                             type="text"
                                             name="search-keyword"
                                             placeholder={t("Search Products")}
-                                            onClick={() =>
-                                                setIsPopupOpen((pre) => !pre)
-                                            }
+                                            onFocus={() => setIsPopupOpen(true)} // open when active
+                                            onBlur={() => setIsPopupOpen(false)} // close when inactive
                                             value={searchKeyWord}
                                             onChange={handleChange}
                                         />

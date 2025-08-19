@@ -1,3 +1,6 @@
+import "./accordian.css";
+import InfoCard from "./Common/InfoCard";
+
 const ProductAccordion = () => {
     return (
         <div
@@ -5,21 +8,19 @@ const ProductAccordion = () => {
             id="productAccordion"
             style={{
                 backgroundColor: "#FAF9F7",
-                maxWidth: "500px",
+                maxWidth: "600px",
+                margin: "0 auto",
                 fontFamily: "serif",
                 display: "flex",
                 flexDirection: "column",
-                // alignItems: "center", // center horizontally
-                // justifyContent: "center", // center vertically
-                minHeight: "100vh", // optional for full screen vertical centering
-                // textAlign: "center" // optional for text alignment
+                minHeight: "100vh",
             }}
         >
             {/* Product Overview */}
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingOne">
                     <button
-                        className="accordion-button collapsed fw-semibold"
+                        className="accordion-button collapsed fw-semibold accordion-btn-custom"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseOne"
@@ -28,8 +29,6 @@ const ProductAccordion = () => {
                         style={{
                             backgroundColor: "#FAF9F7",
                             color: "#222",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
                             fontFamily: "Cinzel, serif",
                             border: "none",
                             borderBottom: "1px solid #ddd",
@@ -37,10 +36,8 @@ const ProductAccordion = () => {
                     >
                         Product Overview
                         <svg
-                            className="accordion-arrow ms-auto"
+                            className="accordion-arrow ms-auto accordion-icon-custom"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
                             fill="currentColor"
                             viewBox="0 0 16 16"
                         >
@@ -51,14 +48,19 @@ const ProductAccordion = () => {
                         </svg>
                     </button>
                 </h2>
+
                 <div
                     id="collapseOne"
                     className="accordion-collapse collapse"
                     aria-labelledby="headingOne"
                     data-bs-parent="#productAccordion"
-                    style={{ backgroundColor: "#FAF9F7", border: "none", borderBottom: "1px solid #ddd" }}
+                    style={{
+                        backgroundColor: "#FAF9F7",
+                        border: "none",
+                        borderBottom: "1px solid #ddd",
+                    }}
                 >
-                    <div className="accordion-body  ">
+                    <div className="accordion-body">
                         <div className="row">
                             {[
                                 {
@@ -83,40 +85,12 @@ const ProductAccordion = () => {
                                 },
                             ].map((item, i) => (
                                 <div className="col-md-6 mb-3" key={i}>
-                                    <div
-                                        className="d-flex align-items-start p-3"
-                                        style={{
-                                            backgroundColor: "#fff",
-                                            border: "1px solid #eee",
-                                            borderRadius: "10px",
-                                            boxShadow:
-                                                "0 1px 3px rgba(0,0,0,0.05)",
-                                        }}
-                                    >
-                                        <img
-                                            src={item.icon}
-                                            alt="icon"
-                                            style={{
-                                                width: "24px",
-                                                height: "24px",
-                                                marginRight: "10px",
-                                            }}
-                                        />
-                                        <div>
-                                            <h6
-                                                className="mb-1"
-                                                style={{ fontSize: "0.85rem" }}
-                                            >
-                                                {item.label}
-                                            </h6>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{ fontSize: "12px" }}
-                                            >
-                                                {item.desc}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <InfoCard
+                                        icon={item.icon}
+                                        title={item.label}
+                                        description={item.desc}
+                                        layout="column"
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -128,7 +102,7 @@ const ProductAccordion = () => {
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingTwo">
                     <button
-                        className="accordion-button fw-semibold"
+                        className="accordion-button fw-semibold accordion-btn-custom"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo"
@@ -137,8 +111,6 @@ const ProductAccordion = () => {
                         style={{
                             backgroundColor: "#FAF9F7",
                             color: "#222",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
                             fontFamily: "Cinzel, serif",
                             border: "none",
                             borderBottom: "1px solid #ddd",
@@ -146,10 +118,8 @@ const ProductAccordion = () => {
                     >
                         Fragrance Profile
                         <svg
-                            className="accordion-arrow ms-auto"
+                            className="accordion-arrow ms-auto accordion-icon-custom"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
                             fill="currentColor"
                             viewBox="0 0 16 16"
                         >
@@ -165,7 +135,11 @@ const ProductAccordion = () => {
                     className="accordion-collapse collapse show"
                     aria-labelledby="headingTwo"
                     data-bs-parent="#productAccordion"
-                    style={{ backgroundColor: "#FAF9F7", border: "none", borderBottom: "1px solid #ddd" }}
+                    style={{
+                        backgroundColor: "#FAF9F7",
+                        border: "none",
+                        borderBottom: "1px solid #ddd",
+                    }}
                 >
                     <div className="accordion-body  ">
                         <div className="d-flex justify-content-center gap-3 mb-4">
@@ -192,53 +166,29 @@ const ProductAccordion = () => {
                                 },
                             ].map((note, index) => (
                                 <div
+                                    className="note-card"
                                     key={index}
-                                    className="text-center p-3"
-                                    style={{
-                                        width: "220px",
-                                        height: "190px",
-                                        backgroundColor: "#fff",
-                                        border: "1px solid #eee",
-                                        borderRadius: "12px",
-                                        boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                                        cursor: "pointer",
-                                        position: "relative",
-                                        padding: "1rem",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                    }}
                                     data-bs-toggle="modal"
                                     data-bs-target={`#noteModal${index}`}
                                 >
-                                    <img
-                                        src={note.image}
-                                        alt={note.type}
-                                        className="rounded-circle mb-2"
-                                        style={{
-                                            width: "64px",
-                                            height: "64px",
-                                            objectFit: "cover",
-                                            mixBlendMode: "multiply",
-                                        }}
-                                    />
-                                    <h6 style={{ fontSize: "0.85rem" }}>
-                                        {note.type}
-                                    </h6>
-                                    <p style={{ fontSize: "12px" }}>
-                                        {note.ingredients}
-                                    </p>
-                                    {/* <p style={{ fontSize: "12px" }}>{note.description}</p> */}
-                                    <p
-                                        style={{
-                                            color: "#99a1af",
-                                            fontSize: "0.6rem",
-                                            marginTop: "auto",
-                                        }}
-                                    >
-                                        click for more
-                                    </p>
+                                    {/* Centered Image + Label */}
+                                    <div className="note-top">
+                                        <img
+                                            src={note.image}
+                                            alt={note.type}
+                                            className="note-image"
+                                        />
+                                        <h6 className="note-type">
+                                            {note.type}
+                                        </h6>
+                                        {/* Ingredients */}
+                                        <p className="note-ingredients">
+                                            {note.ingredients}
+                                        </p>
+                                    </div>
+
+                                    {/* Bottom: Click for more */}
+                                    <p className="note-click">click for more</p>
                                 </div>
                             ))}
                         </div>
@@ -256,50 +206,18 @@ const ProductAccordion = () => {
                                 },
                             ].map((item, i) => (
                                 <div className="col-md-6 mb-3" key={i}>
-                                    <div
-                                        className="d-flex align-items-start h-100 p-3"
-                                        style={{
-                                            backgroundColor: "#fff",
-                                            border: "1px solid #eee",
-                                            borderRadius: "10px",
-                                            boxShadow:
-                                                "0 1px 3px rgba(0,0,0,0.05)",
-                                            minHeight: "100px",
-                                        }}
-                                    >
-                                        <img
-                                            src={item.icon}
-                                            alt="icon"
-                                            style={{
-                                                width: "28px",
-                                                height: "28px",
-                                                marginRight: "12px",
-                                                flexShrink: 0,
-                                                objectFit: "contain",
-                                            }}
-                                        />
-                                        <div>
-                                            <h6
-                                                className="mb-1"
-                                                style={{ fontSize: "0.85rem" }}
-                                            >
-                                                {item.label}
-                                            </h6>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{ fontSize: "12px" }}
-                                            >
-                                                {item.desc}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <InfoCard
+                                        icon={item.icon}
+                                        title={item.label}
+                                        description={item.desc}
+                                        layout="column"
+                                    />
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
-
             {/* Modals for Fragrance Profile Notes */}
             {[
                 {
@@ -396,7 +314,7 @@ const ProductAccordion = () => {
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingThree">
                     <button
-                        className="accordion-button collapsed fw-semibold"
+                        className="accordion-button collapsed fw-semibold accordion-btn-custom"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseThree"
@@ -405,19 +323,15 @@ const ProductAccordion = () => {
                         style={{
                             backgroundColor: "#FAF9F7",
                             color: "#222",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
                             fontFamily: "Cinzel, serif",
                             border: "none",
                             borderBottom: "1px solid #ddd",
                         }}
                     >
-                        Product Features & Key Highlights
+                        Key Highlights
                         <svg
-                            className="accordion-arrow ms-auto"
+                            className="accordion-arrow ms-auto accordion-icon-custom"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
                             fill="currentColor"
                             viewBox="0 0 16 16"
                         >
@@ -433,7 +347,11 @@ const ProductAccordion = () => {
                     className="accordion-collapse collapse"
                     aria-labelledby="headingThree"
                     data-bs-parent="#productAccordion"
-                    style={{ backgroundColor: "#FAF9F7", border: "none", borderBottom: "1px solid #ddd" }}
+                    style={{
+                        backgroundColor: "#FAF9F7",
+                        border: "none",
+                        borderBottom: "1px solid #ddd",
+                    }}
                 >
                     <div className="accordion-body  ">
                         <div className="row">
@@ -451,33 +369,16 @@ const ProductAccordion = () => {
                                     icon: "https://www.svgrepo.com/show/509955/gem.svg",
                                 },
                             ].map((item, idx) => (
-                                <div className="col-md-6 mb-3" key={idx}>
-                                    <div
-                                        className="d-flex align-items-start p-3"
-                                        style={{
-                                            backgroundColor: "#fff",
-                                            border: "1px solid #eee",
-                                            borderRadius: "10px",
-                                            boxShadow:
-                                                "0 1px 3px rgba(0,0,0,0.05)",
-                                        }}
-                                    >
-                                        <img
-                                            src={item.icon}
-                                            alt="icon"
-                                            style={{
-                                                width: "24px",
-                                                height: "24px",
-                                                marginRight: "10px",
-                                            }}
-                                        />
-                                        <p
-                                            className="mb-0 text-muted"
-                                            style={{ fontSize: "12px" }}
-                                        >
-                                            {item.text}
-                                        </p>
-                                    </div>
+                                <div
+                                    className="col-md-4 col-lg-4 col-sm-4 mb-3"
+                                    key={idx}
+                                >
+                                    <InfoCard
+                                        icon={item.icon}
+                                        // title={item.text}
+                                        description={item.text}
+                                        layout="column"
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -489,7 +390,7 @@ const ProductAccordion = () => {
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingFour">
                     <button
-                        className="accordion-button collapsed fw-semibold"
+                        className="accordion-button collapsed fw-semibold accordion-btn-custom"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseFour"
@@ -498,8 +399,6 @@ const ProductAccordion = () => {
                         style={{
                             backgroundColor: "#FAF9F7",
                             color: "#222",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
                             fontFamily: "Cinzel, serif",
                             border: "none",
                             borderBottom: "1px solid #ddd",
@@ -507,10 +406,8 @@ const ProductAccordion = () => {
                     >
                         Usage & Application
                         <svg
-                            className="accordion-arrow ms-auto"
+                            className="accordion-arrow ms-auto accordion-icon-custom"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
                             fill="currentColor"
                             viewBox="0 0 16 16"
                         >
@@ -526,26 +423,22 @@ const ProductAccordion = () => {
                     className="accordion-collapse collapse"
                     aria-labelledby="headingFour"
                     data-bs-parent="#productAccordion"
-                    style={{ backgroundColor: "#FAF9F7", border: "none", borderBottom: "1px solid #ddd" }}
+                    style={{
+                        backgroundColor: "#FAF9F7",
+                        border: "none",
+                        borderBottom: "1px solid #ddd",
+                    }}
                 >
                     <div className="accordion-body  ">
-                        <h6 className="mb-1" style={{ fontSize: "0.85rem" }}>
-                            How to Apply:
-                        </h6>
-                        <p
-                            className="mb-2 text-muted"
-                            style={{ fontSize: "12px" }}
-                        >
+                        <h6 className="mb-3 usage-head">How to Apply:</h6>
+                        <p className="mb-2 text-muted usage-body">
                             For the most captivating and long-lasting
                             experience, apply the perfume directly to your pulse
                             points — such as the wrists, neck, and behind the
                             ears. These naturally warm areas help to diffuse and
                             enhance the fragrance throughout the day.
                         </p>
-                        <p
-                            className="mb-2 text-muted"
-                            style={{ fontSize: "12px" }}
-                        >
+                        <p className="mb-2 text-muted usage-body">
                             For best results, spray after moisturizing to help
                             lock in the scent. Avoid rubbing the fragrance after
                             application, as it can break down the delicate top
@@ -564,7 +457,7 @@ const ProductAccordion = () => {
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingFive">
                     <button
-                        className="accordion-button collapsed fw-semibold"
+                        className="accordion-button collapsed fw-semibold accordion-btn-custom"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseFive"
@@ -573,8 +466,6 @@ const ProductAccordion = () => {
                         style={{
                             backgroundColor: "#FAF9F7",
                             color: "#222",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
                             fontFamily: "Cinzel, serif",
                             border: "none",
                             borderBottom: "1px solid #ddd",
@@ -582,10 +473,8 @@ const ProductAccordion = () => {
                     >
                         Crafted with Intention
                         <svg
-                            className="accordion-arrow ms-auto"
+                            className="accordion-arrow ms-auto accordion-icon-custom"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
                             fill="currentColor"
                             viewBox="0 0 16 16"
                         >
@@ -601,7 +490,11 @@ const ProductAccordion = () => {
                     className="accordion-collapse collapse"
                     aria-labelledby="headingFive"
                     data-bs-parent="#productAccordion"
-                    style={{ backgroundColor: "#FAF9F7", border: "none", borderBottom: "1px solid #ddd" }}
+                    style={{
+                        backgroundColor: "#FAF9F7",
+                        border: "none",
+                        borderBottom: "1px solid #ddd",
+                    }}
                 >
                     <div className="accordion-body  ">
                         <div
@@ -650,7 +543,7 @@ const ProductAccordion = () => {
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingSix">
                     <button
-                        className="accordion-button collapsed fw-semibold"
+                        className="accordion-button collapsed fw-semibold accordion-btn-custom"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseSix"
@@ -659,8 +552,6 @@ const ProductAccordion = () => {
                         style={{
                             backgroundColor: "#FAF9F7",
                             color: "#222",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
                             fontFamily: "Cinzel, serif",
                             border: "none",
                             borderBottom: "1px solid #ddd",
@@ -668,10 +559,8 @@ const ProductAccordion = () => {
                     >
                         Delivery Information
                         <svg
-                            className="accordion-arrow ms-auto"
+                            className="accordion-arrow ms-auto accordion-icon-custom"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
                             fill="currentColor"
                             viewBox="0 0 16 16"
                         >
@@ -687,9 +576,13 @@ const ProductAccordion = () => {
                     className="accordion-collapse collapse"
                     aria-labelledby="headingSix"
                     data-bs-parent="#productAccordion"
-                    style={{ backgroundColor: "#FAF9F7", border: "none", borderBottom: "1px solid #ddd" }}
+                    style={{
+                        backgroundColor: "#FAF9F7",
+                        border: "none",
+                        borderBottom: "1px solid #ddd",
+                    }}
                 >
-                    <div className="accordion-body  ">
+                    <div className="accordion-body">
                         <div className="row">
                             {[
                                 {
@@ -713,51 +606,19 @@ const ProductAccordion = () => {
                                     icon: "https://www.svgrepo.com/show/511034/leaf.svg",
                                 },
                             ].map((item, i) => (
-                                <div className="col-md-6 mb-3" key={i}>
-                                    <div
-                                        className="d-flex align-items-start p-3"
-                                        style={{
-                                            backgroundColor: "#fff",
-                                            border: "1px solid #eee",
-                                            borderRadius: "10px",
-                                            boxShadow:
-                                                "0 1px 3px rgba(0,0,0,0.05)",
-                                        }}
-                                    >
-                                        <img
-                                            src={item.icon}
-                                            alt="icon"
-                                            style={{
-                                                width: "24px",
-                                                height: "24px",
-                                                marginRight: "10px",
-                                            }}
-                                        />
-                                        <div>
-                                            <h6
-                                                className="mb-1"
-                                                style={{ fontSize: "0.85rem" }}
-                                            >
-                                                {item.label}
-                                            </h6>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{ fontSize: "12px" }}
-                                            >
-                                                {item.desc}
-                                            </p>
-                                        </div>
-                                    </div>
+                                <div
+                                    className="col-md-6 col-lg-6 mb-3 "
+                                    key={i}
+                                >
+                                    <InfoCard
+                                        icon={item.icon}
+                                        title={item.label}
+                                        description={item.desc}
+                                        layout="column"
+                                    />
                                 </div>
                             ))}
                         </div>
-                        <p
-                            className="text-muted fst-italic pt-2"
-                            style={{ fontSize: "12px" }}
-                        >
-                            * All orders are trackable. You'll receive tracking
-                            details via email once dispatched.
-                        </p>
                     </div>
                 </div>
             </div>

@@ -112,38 +112,74 @@
   }
 }
 
+// .header-search {
+//   display: flex;
+//   align-items: center;
+//   // padding: $header-search-box-padding;
+//   height: $header-search-box-height;
+//   width: $header-search-box-width;
+//   border: $header-search-box-border;
+//   border-radius: $header-search-box-border-radius;
+//   background-color: $header-search-box-bg;
+
+//   > :first-child {
+//     padding-left: 0;
+//   }
+
+//   > :last-child {
+//     margin-left: $header-search-box-padding-r;
+//   }
+
+//   .hover-container {
+//     display: none;
+
+//     @include media-breakpoint-up(xl) {
+//       display: block;
+//     }
+//   }
+// }
+
+// .header-search__input {
+//   padding: 0 0 0 $header-search-box-padding-r;
+//   border: 0;
+//   background-color: transparent;
+//   color: $header-search-color;
+//   outline: none;
+// }
 .header-search {
   display: flex;
   align-items: center;
-  padding: $header-search-box-padding;
+  height: $header-search-box-height;
+  width: $header-search-box-width;
   border: $header-search-box-border;
   border-radius: $header-search-box-border-radius;
   background-color: $header-search-box-bg;
+  overflow: hidden; // prevent child overflow
 
-  > :first-child {
-    padding-left: 0;
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex; // ensure input fills
   }
 
-  > :last-child {
-    margin-left: $header-search-box-padding-r;
-  }
+  .header-search__input {
+    flex: 1;                // take full width
+    height: 100%;           // fill parent height
+    padding: 0 $header-search-box-padding-r; // keep same look
+    border: 0;
+    background-color: transparent;
+    color: $header-search-color;
+    outline: none;
+    text-align: center;     // center placeholder + text vertically
+    font-size: inherit;     // keep consistent typography
 
-  .hover-container {
-    display: none;
-
-    @include media-breakpoint-up(xl) {
-      display: block;
+    &::placeholder {
+      color: $header-search-placeholder;
+      text-align: center;   // center placeholder horizontally
     }
   }
 }
 
-.header-search__input {
-  padding: 0 0 0 $header-search-box-padding-r;
-  border: 0;
-  background-color: transparent;
-  color: $header-search-color;
-  outline: none;
-}
 
 .header-search__btn {
   padding: 0;
