@@ -1,8 +1,8 @@
 "use client";
+
 import { allProducts } from "@/data/products";
 import React, { useEffect, useContext, useState } from "react";
 import { useMenu } from "./MenuContext";
-// import { openCartDrawer } from "@/utlis/aside";
 import { openCart } from "@/utlis/openCart";
 
 const dataContext = React.createContext();
@@ -26,9 +26,13 @@ export default function Context({ children }) {
   const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
-    const currentUTC = new Date();
-    const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    const currentUTC = new Date(); 
+    const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); 
+    const current_date_time = currentGST
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
     const subtotal = cartProducts.reduce((accumulator, product) => {
       if (product?.discount) {
         if (
@@ -41,12 +45,20 @@ export default function Context({ children }) {
           ).toFixed(2);
           return accumulator + product.quantity * discount_price;
         }
-      } else if (product?.coupon && !Array.isArray(product.coupon) && couponDataContext != null) {
+      } else if (
+        product?.coupon &&
+        !Array.isArray(product.coupon) &&
+        couponDataContext != null
+      ) {
         if (
           new Date(current_date_time) >=
-            new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.start_date) &&
+            new Date(
+              product.coupon[couponDataContext?.code.toLowerCase()]?.start_date
+            ) &&
           new Date(current_date_time) <=
-            new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.end_date) &&
+            new Date(
+              product.coupon[couponDataContext?.code.toLowerCase()]?.end_date
+            ) &&
           product.coupon[couponDataContext?.code.toLowerCase()]?.code ==
             couponDataContext?.code.toLowerCase()
         ) {
@@ -65,6 +77,7 @@ export default function Context({ children }) {
     }, 0);
 
     setTotalPrice(subtotal);
+
     const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
     setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
   }, [cartProducts, couponDataContext, shippingServiceCharges]);
@@ -73,25 +86,21 @@ export default function Context({ children }) {
     setQuickViewItem(product);
   };
 
-  // --- helper: build image url for toast ---
+  // helper to build toast image
   const buildToastImageUrl = (product) => {
     const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/?$/, "/");
 
-    // 1) if product.image exists and is absolute, use it
     if (product?.image) {
       if (/^https?:\/\//i.test(product.image)) return product.image;
-      // relative path
       return `${base}storage/${product.image.replace(/^\/+/, "")}`;
     }
 
-    // 2) if product.images is an array, use first
     if (Array.isArray(product?.images) && product.images.length) {
       const first = product.images[0];
       if (/^https?:\/\//i.test(first)) return first;
       return `${base}storage/${String(first).replace(/^\/+/, "")}`;
     }
 
-    // 3) if product.images is a JSON string, parse and use first
     if (typeof product?.images === "string" && product.images.trim()) {
       try {
         const arr = JSON.parse(product.images);
@@ -100,38 +109,84 @@ export default function Context({ children }) {
           if (/^https?:\/\//i.test(first)) return first;
           return `${base}storage/${String(first).replace(/^\/+/, "")}`;
         }
-      } catch {
-        // ignore parse errors
-      }
+      } catch {}
     }
 
-    // 4) fallback
     return "/placeholder.png";
   };
 
   const addProductToCart = (product) => {
-    setCartProducts((prevCart) => {
-      const existingProduct = prevCart.find(
-        (p) => p.product_id === product.product_id
-      );
-      if (existingProduct) {
-        return prevCart.map((p) =>
-          p.product_id === product.product_id
-            ? { ...p, quantity: p.quantity + 1 }
-            : p
-        );
-      }
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
+  setCartProducts((prevCart) => {
+    const existingIndex = prevCart.findIndex(
+      (item) => item.product_id === product.product_id
+    );
 
-    // Show toast (with correct image)
+    // If already in cart
+    if (existingIndex !== -1) {
+      if (product.campaign === "bogo_2025_campaign") {
+        // BOGO already applied → no new add
+        setToastData({
+          name: product.product_name,
+          image: buildToastImageUrl(product),
+          message: "This BOGO deal is already in your cart!",
+        });
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        return prevCart;
+      }
+
+      // Normal product → increment qty
+      const updatedCart = [...prevCart];
+      updatedCart[existingIndex] = {
+        ...updatedCart[existingIndex],
+        quantity: updatedCart[existingIndex].quantity + 1,
+      };
+
+      setToastData({
+        name: product.product_name,
+        image: buildToastImageUrl(product),
+        message: "Quantity updated in your cart",
+      });
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 4000);
+
+      return updatedCart;
+    }
+
+    // New product
+    const item = {
+      ...product,
+      quantity:
+        product.campaign === "bogo_2025_campaign" ? product.quantity : 1,
+    };
+
+    let newCart = [...prevCart, item];
+
+    // Add free gift(s) if BOGO
+    if (product.campaign === "bogo_2025_campaign" && product.free_gift) {
+      const giftItem = {
+        ...product.free_gift,
+        is_gift: true,
+        campaign: product.campaign,
+        quantity: 1,
+      };
+      newCart.push(giftItem);
+    }
+
     setToastData({
       name: product.product_name,
       image: buildToastImageUrl(product),
+      message:
+        product.campaign === "bogo_2025_campaign"
+          ? "BOGO deal added to your cart!"
+          : "Added to your cart",
     });
     setShowToast(true);
     setTimeout(() => setShowToast(false), 4000);
-  };
+
+    return newCart;
+  });
+};
 
   const isAddedToCartProducts = (id) => {
     return cartProducts.some((elm) => elm.product_id == id);
@@ -213,12 +268,11 @@ export default function Context({ children }) {
     <dataContext.Provider value={contextElement}>
       {children}
 
-      {/* Toast Notification */}
-      {/* Toast Notification */}
+      {/* Custom Toast */}
       {toastData && (
         <div
           className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
-          onClick={openCart} // whole toast clickable
+          onClick={openCart}
           style={{ cursor: "pointer" }}
         >
           <img src={toastData.image} alt={toastData.name} className="toast-img" />
@@ -227,9 +281,9 @@ export default function Context({ children }) {
               <strong>‘{toastData.name}’</strong>
               <div>Successfully added to your cart</div>
               <button
-                className="btn btn-sm btn-secondary text-white  mt-1"
+                className="btn btn-sm btn-dark text-white mt-1"
                 onClick={(e) => {
-                  e.stopPropagation(); // prevent double triggers
+                  e.stopPropagation();
                   openCart();
                 }}
               >
@@ -240,7 +294,7 @@ export default function Context({ children }) {
           <button
             className="toast-close"
             onClick={(e) => {
-              e.stopPropagation(); // don’t open cart
+              e.stopPropagation();
               setShowToast(false);
             }}
           >
@@ -281,18 +335,6 @@ export default function Context({ children }) {
           display: flex;
           gap: 8px;
           align-items: center;
-        }
-        .toast-icon {
-          background: #4caf50;
-          color: white;
-          border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 12px;
-          flex-shrink: 0;
         }
         .toast-close {
           background: none;
