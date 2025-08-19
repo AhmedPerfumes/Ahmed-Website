@@ -2,7 +2,8 @@
 import { allProducts } from "@/data/products";
 import React, { useEffect, useContext, useState } from "react";
 import { useMenu } from "./MenuContext";
-import { openCartDrawer } from "@/utlis/aside";
+// import { openCartDrawer } from "@/utlis/aside";
+import { openCart } from "@/utlis/openCart";
 
 const dataContext = React.createContext();
 export const useContextElement = () => {
@@ -213,17 +214,38 @@ export default function Context({ children }) {
       {children}
 
       {/* Toast Notification */}
+      {/* Toast Notification */}
       {toastData && (
-        <div className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}>
+        <div
+          className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
+          onClick={openCart} // whole toast clickable
+          style={{ cursor: "pointer" }}
+        >
           <img src={toastData.image} alt={toastData.name} className="toast-img" />
           <div className="toast-content">
-            <div className="toast-icon">✔</div>
             <div>
               <strong>‘{toastData.name}’</strong>
               <div>Successfully added to your cart</div>
+              <button
+                className="btn btn-sm btn-secondary text-white  mt-1"
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent double triggers
+                  openCart();
+                }}
+              >
+                View Cart
+              </button>
             </div>
           </div>
-          <button className="toast-close" onClick={() => setShowToast(false)}>✕</button>
+          <button
+            className="toast-close"
+            onClick={(e) => {
+              e.stopPropagation(); // don’t open cart
+              setShowToast(false);
+            }}
+          >
+            ✕
+          </button>
         </div>
       )}
 
