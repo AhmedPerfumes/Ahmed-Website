@@ -1,8 +1,9 @@
 "use client";
+
 import { allProducts } from "@/data/products";
-import React, { useEffect } from "react";
-import { useContext, useState } from "react";
-import { useMenu } from './MenuContext';
+import React, { useEffect, useContext, useState } from "react";
+import { useMenu } from "./MenuContext";
+import { openCart } from "@/utlis/openCart";
 
 const dataContext = React.createContext();
 export const useContextElement = () => {
@@ -18,33 +19,65 @@ export default function Context({ children }) {
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
 
+  // Toast state
+  const [toastData, setToastData] = useState(null); // {name, image}
+  const [showToast, setShowToast] = useState(false);
+
   const { shippingServiceCharges } = useMenu();
 
-  // console.log('shippingServiceCharges', shippingServiceCharges[3]?.price);
-
   useEffect(() => {
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    const currentUTC = new Date(); 
+    const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); 
+    const current_date_time = currentGST
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
     const subtotal = cartProducts.reduce((accumulator, product) => {
-      if(product?.discount) {
-        if(new Date(current_date_time) >= new Date(product.discount.start_date) && new Date(current_date_time) <= new Date(product.discount.end_date)) {
-          const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
+      if (product?.discount) {
+        if (
+          new Date(current_date_time) >= new Date(product.discount.start_date) &&
+          new Date(current_date_time) <= new Date(product.discount.end_date)
+        ) {
+          const discount_price = (
+            product.price -
+            (product.price / 100) * product.discount.value
+          ).toFixed(2);
           return accumulator + product.quantity * discount_price;
         }
-      } else if(product?.coupon && !Array.isArray(product.coupon) && couponDataContext != null) {
-        if(new Date(current_date_time) >= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.end_date) && product.coupon[couponDataContext?.code.toLowerCase()]?.code == couponDataContext?.code.toLowerCase()) {
-          const coupon_price = (product.price - (product.price / 100 * product.coupon[couponDataContext?.code.toLowerCase()]?.value)).toFixed(2);
+      } else if (
+        product?.coupon &&
+        !Array.isArray(product.coupon) &&
+        couponDataContext != null
+      ) {
+        if (
+          new Date(current_date_time) >=
+            new Date(
+              product.coupon[couponDataContext?.code.toLowerCase()]?.start_date
+            ) &&
+          new Date(current_date_time) <=
+            new Date(
+              product.coupon[couponDataContext?.code.toLowerCase()]?.end_date
+            ) &&
+          product.coupon[couponDataContext?.code.toLowerCase()]?.code ==
+            couponDataContext?.code.toLowerCase()
+        ) {
+          const coupon_price = (
+            product.price -
+            (product.price / 100) *
+              product.coupon[couponDataContext?.code.toLowerCase()]?.value
+          ).toFixed(2);
           return accumulator + product.quantity * coupon_price;
         }
-      } else if(product?.sale_price) {
-        const sale_price = (product.sale_price).toFixed(2);
+      } else if (product?.sale_price) {
+        const sale_price = product.sale_price.toFixed(2);
         return accumulator + product.quantity * sale_price;
       }
       return accumulator + product.quantity * product.price;
     }, 0);
+
     setTotalPrice(subtotal);
-    console.log('shippingServiceCharges', shippingServiceCharges[3]?.price, (subtotal).toFixed(2));
+
     const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
     setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
   }, [cartProducts, couponDataContext, shippingServiceCharges]);
@@ -53,40 +86,128 @@ export default function Context({ children }) {
     setQuickViewItem(product);
   };
 
+  // helper to build toast image
+  const buildToastImageUrl = (product) => {
+    const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/?$/, "/");
+
+    if (product?.image) {
+      if (/^https?:\/\//i.test(product.image)) return product.image;
+      return `${base}storage/${product.image.replace(/^\/+/, "")}`;
+    }
+
+    if (Array.isArray(product?.images) && product.images.length) {
+      const first = product.images[0];
+      if (/^https?:\/\//i.test(first)) return first;
+      return `${base}storage/${String(first).replace(/^\/+/, "")}`;
+    }
+
+    if (typeof product?.images === "string" && product.images.trim()) {
+      try {
+        const arr = JSON.parse(product.images);
+        if (Array.isArray(arr) && arr.length) {
+          const first = arr[0];
+          if (/^https?:\/\//i.test(first)) return first;
+          return `${base}storage/${String(first).replace(/^\/+/, "")}`;
+        }
+      } catch {}
+    }
+
+    return "/placeholder.png";
+  };
+
   const addProductToCart = (product) => {
+  setCartProducts((prevCart) => {
+    const existingIndex = prevCart.findIndex(
+      (item) => item.product_id === product.product_id
+    );
+
+    // If already in cart
+    if (existingIndex !== -1) {
+      if (product.campaign === "bogo_2025_campaign") {
+        // BOGO already applied → no new add
+        setToastData({
+          name: product.product_name,
+          image: buildToastImageUrl(product),
+          message: "This BOGO deal is already in your cart!",
+        });
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        return prevCart;
+      }
+
+      // Normal product → increment qty
+      const updatedCart = [...prevCart];
+      updatedCart[existingIndex] = {
+        ...updatedCart[existingIndex],
+        quantity: updatedCart[existingIndex].quantity + 1,
+      };
+
+      setToastData({
+        name: product.product_name,
+        image: buildToastImageUrl(product),
+        message: "Quantity updated in your cart",
+      });
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 4000);
+
+      return updatedCart;
+    }
+
+    // New product
     const item = {
       ...product,
-      quantity: product.campaign == 'bogo_2025_campaign' ? product.quantity : 1,
+      quantity:
+        product.campaign === "bogo_2025_campaign" ? product.quantity : 1,
     };
-    setCartProducts((prevCart) => [...prevCart, item]);
 
-    document
-      .getElementById("cartDrawerOverlay")
-      .classList.add("page-overlay_visible");
-    document.getElementById("cartDrawer").classList.add("aside_visible");
-  };
-  const isAddedToCartProducts = (id) => {
-    if (cartProducts.filter((elm) => elm.product_id == id)[0]) {
-      return true;
+    let newCart = [...prevCart, item];
+
+    // Add free gift(s) if BOGO
+    if (product.campaign === "bogo_2025_campaign" && product.free_gift) {
+      const giftItem = {
+        ...product.free_gift,
+        is_gift: true,
+        campaign: product.campaign,
+        quantity: 1,
+      };
+      newCart.push(giftItem);
     }
-    return false;
+
+    setToastData({
+      name: product.product_name,
+      image: buildToastImageUrl(product),
+      message:
+        product.campaign === "bogo_2025_campaign"
+          ? "BOGO deal added to your cart!"
+          : "Added to your cart",
+    });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
+
+    return newCart;
+  });
+};
+
+  const isAddedToCartProducts = (id) => {
+    return cartProducts.some((elm) => elm.product_id == id);
   };
 
   const toggleWishlist = (id) => {
     if (wishList.includes(id)) {
-      setWishList((pre) => [...pre.filter((elm) => elm != id)]);
+      setWishList((pre) => pre.filter((elm) => elm != id));
     } else {
       setWishList((pre) => [...pre, id]);
     }
   };
+
   const isAddedtoWishlist = (id) => {
-    if (wishList.includes(id)) {
-      return true;
-    }
-    return false;
+    return wishList.includes(id);
   };
+
   useEffect(() => {
-    const items = localStorage.getItem("cartList") && JSON.parse(localStorage.getItem("cartList"));
+    const items =
+      localStorage.getItem("cartList") &&
+      JSON.parse(localStorage.getItem("cartList"));
     if (items?.length) {
       setCartProducts(items);
     }
@@ -95,6 +216,7 @@ export default function Context({ children }) {
   useEffect(() => {
     localStorage.setItem("cartList", JSON.stringify(cartProducts));
   }, [cartProducts]);
+
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("wishlist"));
     if (items?.length) {
@@ -113,17 +235,13 @@ export default function Context({ children }) {
           (item) => !(item.is_gift && item.campaign === campaignKey)
         );
       }
-
-      // Remove a specific gift by ID (optional: still respect campaignKey)
       if (productIdToRemove) {
         return prev.filter(
           (item) => !(item.is_gift && item.product_id === productIdToRemove)
         );
       }
-
-      // Default: remove all gifts
       return prev.filter((item) => !item.is_gift);
-      });
+    });
   };
 
   const contextElement = {
@@ -145,9 +263,94 @@ export default function Context({ children }) {
     setCouponDataContext,
     removeGiftFromCart,
   };
+
   return (
     <dataContext.Provider value={contextElement}>
       {children}
+
+      {/* Custom Toast */}
+      {toastData && (
+        <div
+          className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
+          onClick={openCart}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={toastData.image} alt={toastData.name} className="toast-img" />
+          <div className="toast-content">
+            <div>
+              <strong>‘{toastData.name}’</strong>
+              <div>Successfully added to your cart</div>
+              <button
+                className="btn btn-sm btn-dark text-white mt-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openCart();
+                }}
+              >
+                View Cart
+              </button>
+            </div>
+          </div>
+          <button
+            className="toast-close"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowToast(false);
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      <style jsx>{`
+        .custom-toast {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background: #fff;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 14px;
+          max-width: 350px;
+          transition: all 0.3s ease;
+          transform: translateY(100px);
+          opacity: 0;
+          z-index: 9999;
+        }
+        .custom-toast.show {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        .toast-img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+        .toast-content {
+          flex: 1;
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+        .toast-close {
+          background: none;
+          border: none;
+          font-size: 16px;
+          cursor: pointer;
+          color: #666;
+        }
+        @media (max-width: 576px) {
+          .custom-toast {
+            right: 10px;
+            left: 10px;
+            max-width: unset;
+          }
+        }
+      `}</style>
     </dataContext.Provider>
   );
 }

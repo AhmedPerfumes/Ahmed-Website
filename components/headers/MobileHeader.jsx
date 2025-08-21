@@ -6,7 +6,7 @@ import { socialLinks } from "@/data/socials";
 import React, { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import CartLength from "./components/CartLength";
-
+import UserLoggedIn from "./components/UserLoggedIn";
 import { openCart } from "@/utlis/openCart";
 import MobileNav from "./components/MobileNav";
 import Image from "next/image";
@@ -256,20 +256,10 @@ export default function MobileHeader() {
         {/* <!-- /.container --> */}
 
         <div className="border-top mt-2 pb-2">
-          <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
-            {/* <svg
-              className="d-inline-block align-middle"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <use className="js-open-aside" href="#icon_user" />
-            </svg> */}
+          {/* <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
             {!isLoggedIn ? (
                 <Link
-                    className="js-open-aside d-flex"
+                    className="js-open-aside"
                     href="#"
                 >
                     <User />
@@ -278,12 +268,11 @@ export default function MobileHeader() {
                     </span>
                 </Link>
             ) : (
-                <Link href="#" onClick={handleLogout}>
-                    <FiLogOut size={20} /> Logout
+                <Link href="/account_dashboard">
+                    <UserLoggedIn />
                 </Link>
             )}
-            
-          </div>
+          </div> */}
           <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
           <Link href={`/${locale}/order-tracking`}>
               <IoReorderTwoSharp size={20} />

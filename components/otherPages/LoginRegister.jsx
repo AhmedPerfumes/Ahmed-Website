@@ -185,6 +185,36 @@ export default function LoginRegister() {
             <button className="btn btn-primary w-100 text-uppercase" type="submit" disabled={isLoading}>
               {isLoading ? "Loading..." : "Login"}
             </button>
+            <div className="d-flex align-items-center mb-3 pb-2">
+                <div className="form-check mb-0">
+                  <input
+                    name="remember"
+                    className="form-check-input form-check-input_fill"
+                    type="checkbox"
+                    defaultValue=""
+                  />
+                  <label className="form-check-label text-secondary">
+                    Remember me
+                  </label>
+                </div>
+                <Link href="/reset_password" className="btn-text ms-auto">
+                  Lost password?
+                </Link>
+              </div>
+
+              <div className="customer-option mt-4 text-center">
+                <span className="text-secondary">No account yet?</span>{" "}
+                {/* <a href="/login_register#register-tab" className="btn-text js-show-register">
+                  Create Account
+                </a> */}
+                <button
+                type="button"
+                className={`border-0 bg-transparent btn-text js-show-register ${activeTab === "register" ? "active" : ""}`}
+                onClick={() => setActiveTab("register")}
+              >
+                Create Account
+              </button>
+              </div>
           </form>
         </div>
 

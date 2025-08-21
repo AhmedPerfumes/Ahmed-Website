@@ -49,6 +49,16 @@ export default function Header14() {
     const containerRef = useRef(null);
     const lastScrollY = useRef(0);
 
+    const items = [
+        { href: "/account_dashboard",        label: "My Profile" },
+        { href: "/account_orders",        label: "My Purchases" },
+        { href: "/account_edit_address",  label: "Addresses" },
+        { href: "/account_coupons",       label: "My Coupons" },
+        { href: "/account_loyalty",       label: "Loyalty Points" },
+    ];
+
+    const isActive = (href) => pathname === href || pathname.startsWith(href);
+
     // useEffect(() => {
     //     const handleScroll = () => {
     //         const currentScrollY = window.scrollY;
@@ -120,11 +130,17 @@ export default function Header14() {
     };
 
     const handleLogout = (e) => {
-        e.preventDefault();
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.href = "/";
-    };
+  e.preventDefault();
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
+  router.replace("/login_register");
+  setTimeout(() => {
+    window.location.reload();
+  }, 50); // give router a moment to redirect
+};
+
 
     const handleLangChange = (e) => {
         // console.log(pathname, e.target.value);
@@ -414,7 +430,7 @@ export default function Header14() {
                                     </form>
                                 </div>
 
-                                <div className="header-tools__item hover-container">
+                                {/* <div className="header-tools__item hover-container">
                                     {!isLoggedIn ? (
                                         <Link
                                             className="js-open-aside"
@@ -427,7 +443,45 @@ export default function Header14() {
                                             <UserLoggedIn />
                                         </Link>
                                     )}
+                                </div> */}
+                                <div className="header-tools__item hover-account">
+                                {!isLoggedIn ? (
+                                    <Link className="js-open-aside" href="#">
+                                    <User />
+                                    </Link>
+                                ) : (
+                                    <Link href="/account_dashboard" className="account-icon-link" aria-haspopup="true">
+                                    <UserLoggedIn />
+                                    </Link>
+                                )}
+
+                                {/* Hover menu */}
+                                <div className="account-hover-menu" role="menu">
+                                    {isLoggedIn ? (
+                                    <>
+                                        <div className="menu-title">Manage Account</div>
+                                        <ul>
+                                        {items.map((it) => (
+                                            <li key={it.href} className={isActive(it.href) ? "active" : ""}>
+                                            <Link href={it.href}>{it.label}</Link>
+                                            </li>
+                                        ))}
+                                        <li className="divider" aria-hidden="true" />
+                                        <li className="logout">
+                                            <a href="#" onClick={handleLogout}>Logout</a>
+                                        </li>
+                                        </ul>
+                                    </>
+                                    ) : (
+                                    <ul>
+                                        <li>
+                                        <Link href="/login_register">Login / Register</Link>
+                                        </li>
+                                    </ul>
+                                    )}
                                 </div>
+                                </div>
+
 
                                 <Link
                                     className="header-tools__item"

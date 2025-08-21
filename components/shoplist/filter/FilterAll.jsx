@@ -13,17 +13,6 @@ const STOCK_OPTIONS = [
   { label: "In Stock", value: "in_stock" },
 ];
 
-const CATEGORY_OPTIONS = [
-  "Luxury",
-  "Premium",
-  "All time favourite",
-  "Hot Selling",
-  "New Launch",
-  "Upcoming",
-];
-
-const CAP_OPTIONS = ["100ml", "90ml", "70ml", "50ml"];
-
 function PillButton({ active, onClick, children }) {
   return (
     <button
@@ -53,13 +42,19 @@ export default function FilterAll({ products = [] }) {
     setStockAvailability,
     promotionalOnly,
     setPromotionalOnly,
+
+    // context selections for the new filters
+    selectedLabels,
+    setSelectedLabels,
+    selectedTags,
+    setSelectedTags,
   } = useShopFilter();
 
-  // local UI state
-  const [activeCategories, setActiveCategories] = useState([]);
-  const [activeCaps, setActiveCaps] = useState([]);
+  // fetched filter options to render
+  const [availableLabels, setAvailableLabels] = useState([]); // [{label_name, label_color}]
+  const [availableTags, setAvailableTags] = useState([]);     // ["75ML", ...]
 
-  // accordion open/closed
+  // accordion state
   const [openSections, setOpenSections] = useState({
     price: true,
     stock: true,
@@ -70,12 +65,63 @@ export default function FilterAll({ products = [] }) {
   const toggleSection = (key) =>
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
+  // fetch Labels (categories) & Tags (sizes)
+  useEffect(() => {
+    let cancelled = false;
+    const fetchFilters = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/getFilters`
+        );
+        const json = await res.json();
+        if (cancelled) return;
+
+        const labels = Array.isArray(json.labels)
+          ? json.labels
+              .filter((l) => l && typeof l === "object" && l.label_name)
+              .map((l) => ({
+                label_name: l.label_name,
+                label_color: l.label_color,
+              }))
+          : [];
+
+        const tags = Array.isArray(json.tags)
+          ? json.tags.filter((t) => typeof t === "string")
+          : [];
+
+        setAvailableLabels(labels);
+        setAvailableTags(tags);
+      } catch (err) {
+        // fallback: derive from products if API fails
+        const lm = new Map();
+        products.forEach((p) =>
+          p?.labels?.forEach?.((l) => {
+            if (l?.label_name) lm.set(l.label_name, l.label_color || "");
+          })
+        );
+        const lbls = Array.from(lm, ([label_name, label_color]) => ({
+          label_name,
+          label_color,
+        }));
+
+        const ts = new Set();
+        products.forEach((p) => p?.tags?.forEach?.((t) => ts.add(t)));
+
+        setAvailableLabels(lbls);
+        setAvailableTags(Array.from(ts));
+        console.error("Error fetching filters:", err);
+      }
+    };
+    fetchFilters();
+    return () => {
+      cancelled = true;
+    };
+  }, [products]);
+
   // derive price slider bounds
   const [derivedMin, derivedMax] = useMemo(() => {
     if (!products.length) return [0, 700];
-    const ps = products
-      .map((p) => Number(p.price))
-      .filter((v) => !isNaN(v));
+    const ps = products.map((p) => Number(p.price)).filter((v) => !isNaN(v));
     if (!ps.length) return [0, 700];
     return [Math.floor(Math.min(...ps)), Math.ceil(Math.max(...ps))];
   }, [products]);
@@ -105,21 +151,25 @@ export default function FilterAll({ products = [] }) {
     [currency]
   );
 
-  const toggleCategory = (cat) =>
-    setActiveCategories((prev) =>
-      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+  // toggles for labels/tags (write to context)
+  const toggleCategory = (labelName) =>
+    setSelectedLabels((prev) =>
+      prev.includes(labelName)
+        ? prev.filter((c) => c !== labelName)
+        : [...prev, labelName]
     );
-  const toggleCap = (cap) =>
-    setActiveCaps((prev) =>
-      prev.includes(cap) ? prev.filter((c) => c !== cap) : [...prev, cap]
+
+  const toggleCap = (tag) =>
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((c) => c !== tag) : [...prev, tag]
     );
 
   const handleReset = () => {
     setPriceRange([derivedMin, derivedMax]);
     setStockAvailability("all");
     setPromotionalOnly(false);
-    setActiveCategories([]);
-    setActiveCaps([]);
+    setSelectedLabels([]);
+    setSelectedTags([]);
   };
 
   return (
@@ -127,7 +177,6 @@ export default function FilterAll({ products = [] }) {
       className="filter-all p-2"
       style={{
         maxWidth: 400,
-        textTransform: "uppercase",
         fontFamily: "SofiaProRegular",
       }}
     >
@@ -138,7 +187,7 @@ export default function FilterAll({ products = [] }) {
         </Button>
       </div>
 
-      {/* Price Section */}
+      {/* Price */}
       <div className="mb-3 border-bottom pb-2">
         <div
           className="d-flex justify-content-between align-items-center mb-2"
@@ -201,7 +250,7 @@ export default function FilterAll({ products = [] }) {
         </AnimatePresence>
       </div>
 
-      {/* Stock Availability Section */}
+      {/* Stock */}
       <div className="mb-3 border-bottom pb-2">
         <div
           className="d-flex justify-content-between align-items-center mb-2"
@@ -242,8 +291,8 @@ export default function FilterAll({ products = [] }) {
         </AnimatePresence>
       </div>
 
-      {/* Categories Section */}
-      {/* <div className="mb-3 border-bottom pb-2">
+      {/* Categories (Labels) */}
+      <div className="mb-3 border-bottom pb-2">
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           onClick={() => toggleSection("categories")}
@@ -267,27 +316,27 @@ export default function FilterAll({ products = [] }) {
               exit="hidden"
               style={{ overflow: "hidden" }}
             >
-              {CATEGORY_OPTIONS.map((cat) => (
-                <div className="form-check mb-2" key={cat}>
+              {availableLabels.map(({ label_name }, idx) => (
+                <div className="form-check mb-2 me-3" key={`${label_name}-${idx}`}>
                   <input
                     type="checkbox"
-                    id={`cat-${cat}`}
+                    id={`cat-${idx}`}
                     className="form-check-input"
-                    checked={activeCategories.includes(cat)}
-                    onChange={() => toggleCategory(cat)}
+                    checked={selectedLabels.includes(label_name)}
+                    onChange={() => toggleCategory(label_name)}
                   />
-                  <label className="form-check-label" htmlFor={`cat-${cat}`}>
-                    {cat}
+                  <label className="form-check-label" htmlFor={`cat-${idx}`}>
+                    {label_name}
                   </label>
                 </div>
               ))}
             </motion.div>
           )}
         </AnimatePresence>
-      </div> */}
+      </div>
 
-      {/* Size (Caps) Section */}
-      {/* <div className="mb-3 border-bottom pb-2">
+      {/* Size (Tags) */}
+      <div className="mb-3 border-bottom pb-2">
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           onClick={() => toggleSection("caps")}
@@ -311,26 +360,26 @@ export default function FilterAll({ products = [] }) {
               exit="hidden"
               style={{ overflow: "hidden" }}
             >
-              {CAP_OPTIONS.map((cap) => (
-                <div className="form-check mb-2" key={cap}>
+              {availableTags.map((tag, idx) => (
+                <div className="form-check mb-2 me-3" key={`${tag}-${idx}`}>
                   <input
                     type="checkbox"
-                    id={`cap-${cap}`}
+                    id={`cap-${idx}`}
                     className="form-check-input"
-                    checked={activeCaps.includes(cap)}
-                    onChange={() => toggleCap(cap)}
+                    checked={selectedTags.includes(tag)}
+                    onChange={() => toggleCap(tag)}
                   />
-                  <label className="form-check-label" htmlFor={`cap-${cap}`}>
-                    {cap}
+                  <label className="form-check-label" htmlFor={`cap-${idx}`}>
+                    {tag}
                   </label>
                 </div>
               ))}
             </motion.div>
           )}
         </AnimatePresence>
-      </div> */}
+      </div>
 
-      {/* Promotional Section */}
+      {/* Promotional */}
       <div className="mb-4">
         <div
           className="d-flex justify-content-between align-items-center mb-2"
@@ -364,7 +413,10 @@ export default function FilterAll({ products = [] }) {
                 />
                 <label className="form-check-label">Only active promos</label>
               </div>
-              <div className="small text-secondary" style={{ textTransform: "capitalize" }}>
+              <div
+                className="small text-secondary"
+                style={{ textTransform: "capitalize" }}
+              >
                 *Show only products with active promotions*
               </div>
             </motion.div>
@@ -372,9 +424,13 @@ export default function FilterAll({ products = [] }) {
         </AnimatePresence>
       </div>
 
-      {/* Actions */}
+      {/* Clear */}
       <div className="d-flex gap-2 mt-2">
-        <Button variant="outline-secondary" className="flex-grow-1" onClick={handleReset}>
+        <Button
+          variant="outline-secondary"
+          className="flex-grow-1"
+          onClick={handleReset}
+        >
           Clear
         </Button>
       </div>

@@ -41,7 +41,7 @@
 }
 
 .section-1 {
-	background-image: url('/assets/images/home/demo8/avif/multiple-products-banner.avif');
+	background-image: url('/assets/images/home/demo8/avif/top-banner-full.avif');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: bottom;
@@ -55,7 +55,7 @@
 
 @media screen and (min-width: 320px) and (max-width: 1024px) {
 	.section-1 {
-		background-image: url('/assets/images/home/demo8/avif/multiple-products-banner.avif');
+		background-image: url('/assets/images/home/demo8/avif/top-banner-mob.avif');
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: right;
@@ -768,13 +768,13 @@ img.img-classic.loading-background {
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-	font-size: 24px;
+	font-size: 30px;
 	color: #bb8c1c;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-	font-size: 24px;
+	font-size: 30px;
 	color: #bb8c1c;
 }
 
@@ -957,4 +957,202 @@ button[data-v-7aa9e1a2] {
 
 .account-modal {
 	font-family: SofiaProRegular !important;
+}
+
+/* container & alignment */
+.hover-account {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+}
+
+/* dropdown card */
+.account-hover-menu {
+	position: absolute;
+	top: calc(100% + 1px);
+	/* sits just below the icon */
+	right: 0;
+	/* right-aligned to the icon */
+	min-width: 240px;
+	background: #fff;
+	border: 1px solid #eee;
+	border-radius: 10px;
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+	overflow: hidden;
+
+	/* animation + hover/focus behavior */
+	opacity: 0;
+	transform: translateY(8px);
+	pointer-events: none;
+	transition: opacity .22s ease, transform .22s ease;
+	z-index: 1000;
+}
+
+.hover-account:hover .account-hover-menu,
+.hover-account:focus-within .account-hover-menu {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+
+/* little arrow */
+.account-hover-menu::before {
+	content: "";
+	position: absolute;
+	top: -8px;
+	right: 18px;
+	/* keeps arrow aligned with icon */
+	border-width: 8px 8px 0 8px;
+	border-style: solid;
+	border-color: #fff transparent transparent transparent;
+	filter: drop-shadow(0 -1px 0 #eee);
+}
+
+/* list + rows */
+.account-hover-menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 6px;
+	max-height: 70vh;
+	overflow: auto;
+}
+
+.account-hover-menu .menu-title {
+	padding: 12px 14px;
+	font-size: 12px;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: #a87a35;
+	/* gold tone */
+	background: #f8fbff;
+	border-bottom: 1px solid #f0efe9;
+	font-weight: 700;
+}
+
+.account-hover-menu li {
+	border-radius: 8px;
+	margin: 4px 4px;
+}
+
+.account-hover-menu li a {
+	display: block;
+	padding: 12px 14px;
+	font-size: 14px;
+	color: #222;
+	text-decoration: none;
+	transition: background .18s ease, color .18s ease;
+}
+
+.account-hover-menu li:hover a {
+	background: #f6f6f6;
+}
+
+/* active state (based on current route) */
+.account-hover-menu li.active a {
+	background: #f8fbff;
+	/* light gold tint */
+	color: #a87a35;
+	font-weight: 600;
+	border-left: 3px solid #7b6f3d;
+	padding-left: 11px;
+	/* compensate for left border */
+}
+
+/* divider + logout */
+.account-hover-menu .divider {
+	height: 1px;
+	background: #f0f0f0;
+	margin: 6px 4px;
+}
+
+.account-hover-menu .logout a {
+	color: #b00020;
+}
+
+/* Sorting UI — matches the screenshot look */
+.sort-label {
+	font-size: 14px;
+	color: #333;
+	white-space: nowrap;
+}
+
+.sort-control {
+	position: relative;
+	display: inline-block;
+}
+
+.sort-select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	background-color: #fff;
+	border: 1px solid #e6e6e6;
+	border-radius: 12px;
+	min-width: 180px;
+
+	padding: 10px 36px 10px 14px;
+	/* space for caret on right */
+	font-size: 14px;
+	line-height: 1.2;
+
+	transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.sort-select:hover {
+	border-color: #d7d7d7;
+}
+
+.sort-select:focus {
+	outline: none;
+	border-color: #cfcfcf;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom caret */
+.sort-caret {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+	width: 10px;
+	height: 6px;
+}
+
+.sort-caret::before {
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 6px solid #444;
+	/* caret color */
+}
+
+.view-btn-minimal {
+	border: 1px solid #ddd;
+	background: #fff;
+	padding: 6px 8px;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	margin: 2px;
+}
+
+.view-btn-minimal:hover {
+	border-color: #bbb;
+}
+
+.view-btn-minimal.active {
+	background: #000;
+	border-color: #000;
+}
+
+.view-btn-minimal.active svg line {
+	stroke: #fff;
 }

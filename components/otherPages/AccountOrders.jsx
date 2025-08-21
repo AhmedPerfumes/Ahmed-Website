@@ -202,11 +202,7 @@ export default function AccountOrders() {
           <tbody>
             {rows.length ? rows.map(row => (
               <React.Fragment key={row.id}>
-                <tr className="modern-table-row">
-                  {row.getVisibleCells().map(cell => (
-                    <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                  ))}
-                </tr>
+                
                 {/* PRODUCT SUMMARY ROW */}
                 <tr className="product-summary-row">
                   <td colSpan={columns.length} style={{ padding: 0, background: "#f8fbff" }}>
@@ -253,6 +249,11 @@ export default function AccountOrders() {
                       }
                     </div>
                   </td>
+                </tr>
+                <tr className="modern-table-row">
+                  {row.getVisibleCells().map(cell => (
+                    <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                  ))}
                 </tr>
               </React.Fragment>
             )) : (
@@ -408,7 +409,7 @@ export default function AccountOrders() {
           onSelect={setActiveStatus}
           className="mb-4 border-bottom flex-nowrap"
         >
-          <Nav.Item style={{ width: "auto" }}>
+          <Nav.Item style={{ width: "auto", marginBottom: "2rem" }}>
             <Nav.Link eventKey="all" className="text-uppercase fw-semibold">
               All Status
             </Nav.Link>
