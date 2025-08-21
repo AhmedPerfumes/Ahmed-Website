@@ -69,21 +69,39 @@ export default function DiscountedProductsGrid({ title, onlyDiscounted = false }
     const end = new Date(elm?.discount?.end_date);
 
     if (elm?.discount && now >= start && now <= end) {
-      const discounted = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
-      return (
-        <>
-          <span className="money price price-old">{elm.price}{currency.symbol}</span>
-          <span className="money price price-sale">{discounted}{currency.symbol}</span>
-        </>
-      );
-    } else if (elm?.sale_price) {
-      return (
-        <>
-          <span className="money price price-old">{elm.price}{currency.symbol}</span>
-          <span className="money price price-sale">{elm.sale_price.toFixed(2)}{currency.symbol}</span>
-        </>
-      );
+      if (elm.discount.discount_type == "percent") {
+        const discounted = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
+        return (
+          <>
+            <span className="money price price-old">{elm.price}{currency.symbol}</span>
+            <span className="money price price-sale">{discounted}{currency.symbol}</span>
+          </>
+        );
+      } else if (elm.discount.discount_type == "amount") {
+        const discounted = (elm.price - elm.discount.value).toFixed(2);
+        return (
+          <>
+            <span className="money price price-old">{elm.price}{currency.symbol}</span>
+            <span className="money price price-sale">{discounted}{currency.symbol}</span>
+          </>
+        );
+      }
+      // const discounted = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
+      // return (
+      //   <>
+      //     <span className="money price price-old">{elm.price}{currency.symbol}</span>
+      //     <span className="money price price-sale">{discounted}{currency.symbol}</span>
+      //   </>
+      // );
     }
+    // else if (elm?.sale_price) {
+    //   return (
+    //     <>
+    //       <span className="money price price-old">{elm.price}{currency.symbol}</span>
+    //       <span className="money price price-sale">{elm.sale_price.toFixed(2)}{currency.symbol}</span>
+    //     </>
+    //   );
+    // }
     return <span className="money price">{elm.price}{currency.symbol}</span>;
   };
 

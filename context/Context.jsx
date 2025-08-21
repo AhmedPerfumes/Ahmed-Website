@@ -29,18 +29,26 @@ export default function Context({ children }) {
     const subtotal = cartProducts.reduce((accumulator, product) => {
       if(product?.discount) {
         if(new Date(current_date_time) >= new Date(product.discount.start_date) && new Date(current_date_time) <= new Date(product.discount.end_date)) {
-          const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
-          return accumulator + product.quantity * discount_price;
+          if(product.discount.discount_type == 'percent') {
+            const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
+            return accumulator + product.quantity * discount_price;
+          } else if(product.discount.discount_type == 'amount') {
+            const discount_price = (product.price - product.discount.value).toFixed(2);
+            return accumulator + product.quantity * discount_price;
+          }
+          // const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
+          // return accumulator + product.quantity * discount_price;
         }
       } else if(product?.coupon && !Array.isArray(product.coupon) && couponDataContext != null) {
         if(new Date(current_date_time) >= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.end_date) && product.coupon[couponDataContext?.code.toLowerCase()]?.code == couponDataContext?.code.toLowerCase()) {
           const coupon_price = (product.price - (product.price / 100 * product.coupon[couponDataContext?.code.toLowerCase()]?.value)).toFixed(2);
           return accumulator + product.quantity * coupon_price;
         }
-      } else if(product?.sale_price) {
-        const sale_price = (product.sale_price).toFixed(2);
-        return accumulator + product.quantity * sale_price;
       }
+      // else if(product?.sale_price) {
+      //   const sale_price = (product.sale_price).toFixed(2);
+      //   return accumulator + product.quantity * sale_price;
+      // }
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);

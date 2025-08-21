@@ -41,11 +41,18 @@ export default function OrderCompleted() {
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
-      console.log('...', elm.discount);
-      console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
+      // console.log('...', elm.discount);
+      // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         console.log('if...');
-        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        if(elm.discount.discount_type == 'percent') {
+          console.log('percent...', elm);
+          return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        } else if(elm.discount.discount_type == 'amount') {
+          console.log('amount...', elm);
+          return <td>{((elm.price - elm.discount.value) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        }
+        // return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       } else {
         console.log('else...');
         return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;

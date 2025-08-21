@@ -91,23 +91,41 @@ export default function TopCollections({
       const start = new Date(elm.discount.start_date);
       const end = new Date(elm.discount.end_date);
       if (currentGST >= start && currentGST <= end) {
-        const discountedPrice = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
-        return (
-          <>
-            <span className="money price price-old">{elm.price}{currency.symbol}</span>
-            <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
-          </>
-        );
+        if (elm.discount.discount_type == "percent") {
+          const discountedPrice = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
+          return (
+            <>
+              <span className="money price price-old">{elm.price}{currency.symbol}</span>
+              <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
+            </>
+          );
+        } else if (elm.discount.discount_type == "amount") {
+          const discountedPrice = (elm.price - elm.discount.value).toFixed(2);
+          return (
+            <>
+              <span className="money price price-old">{elm.price}{currency.symbol}</span>
+              <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
+            </>
+          );
+        }
+        // const discountedPrice = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
+        // return (
+        //   <>
+        //     <span className="money price price-old">{elm.price}{currency.symbol}</span>
+        //     <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
+        //   </>
+        // );
       }
-    } else if (elm?.sale_price) {
-      const discountedPrice = (elm.price - (elm.price * elm.sale_price) / 100).toFixed(2);
-      return (
-        <>
-          <span className="money price price-old">{elm.price}{currency.symbol}</span>
-          <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
-        </>
-      );
     }
+    // else if (elm?.sale_price) {
+    //   const discountedPrice = (elm.price - (elm.price * elm.sale_price) / 100).toFixed(2);
+    //   return (
+    //     <>
+    //       <span className="money price price-old">{elm.price}{currency.symbol}</span>
+    //       <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
+    //     </>
+    //   );
+    // }
 
     return <span className="money price">{elm?.price}{currency.symbol}</span>;
   };
@@ -179,7 +197,7 @@ export default function TopCollections({
                           Out Of Stock
                         </div>
                       ) : (
-                        elm.discount && (
+                        elm.discount && elm.discount.discount_type == "percent" && (
                           <div
                             style={{ backgroundColor: "#198754" }}
                             className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"

@@ -182,24 +182,34 @@ export default function Shop1({ search }) {
     const base = Number(elm.price);
 
     if (isDiscountActive(elm)) {
-      const sale = base - (base * Number(elm.discount.value || 0)) / 100;
-      return (
-        <>
-          <span className="money price price-old">{fmt(base)}</span>{" "}
-          <span className="money price price-sale">{fmt(sale)}</span>
-        </>
-      );
+      if(elm.discount.discount_type == "percent") {
+        const sale = base - (base * Number(elm.discount.value || 0)) / 100;
+        return (
+          <>
+            <span className="money price price-old">{fmt(base)}</span>{" "}
+            <span className="money price price-sale">{fmt(sale)}</span>
+          </>
+        );
+      } else if(elm.discount.discount_type == "amount") {
+        const sale = base - Number(elm.discount.value || 0);
+        return (
+          <>
+            <span className="money price price-old">{fmt(base)}</span>{" "}
+            <span className="money price price-sale">{fmt(sale)}</span>
+          </>
+        );
+      }
     }
 
-    if (elm.sale_price) {
-      const sp = Number(elm.sale_price);
-      return (
-        <>
-          <span className="money price price-old">{fmt(base)}</span>{" "}
-          <span className="money price price-sale">{fmt(sp)}</span>
-        </>
-      );
-    }
+    // if (elm.sale_price) {
+    //   const sp = Number(elm.sale_price);
+    //   return (
+    //     <>
+    //       <span className="money price price-old">{fmt(base)}</span>{" "}
+    //       <span className="money price price-sale">{fmt(sp)}</span>
+    //     </>
+    //   );
+    // }
 
     return <span className="money price">{fmt(base)}</span>;
   };
@@ -404,20 +414,29 @@ export default function Shop1({ search }) {
                           Out Of Stock
                         </div>
                       ) : (
-                        (elm.discount || elm.sale_price) && (() => {
+                        (elm.discount) && (() => {
                           let discountPercent = null;
 
                           if (elm?.discount?.value) {
-                            discountPercent = Number(elm.discount.value);
-                          } else if (elm.sale_price) {
-                            const base = Number(elm.price);
-                            const sale = Number(elm.sale_price);
-                            if (base > 0 && sale < base) {
-                              discountPercent = Math.round(((base - sale) / base) * 100);
+                            if(elm.discount.discount_type == "percent") {
+                              discountPercent = Number(elm.discount.value);
+                            } else if(elm.discount.discount_type == "amount") {
+                              const base = Number(elm.price);
+                              const sale = base - Number(elm.discount.value || 0);
+                              if (base > 0 && sale < base) {
+                                discountPercent = sale;
+                              }
                             }
                           }
+                          // else if (elm.sale_price) {
+                          //   const base = Number(elm.price);
+                          //   const sale = Number(elm.sale_price);
+                          //   if (base > 0 && sale < base) {
+                          //     discountPercent = Math.round(((base - sale) / base) * 100);
+                          //   }
+                          // }
 
-                          return discountPercent !== null ? (
+                          return discountPercent !== null && elm.discount.discount_type == "percent" ? (
                             <div
                               className="product-label text-uppercase text-white top-0 start-0 mt-2 mx-2"
                               style={{ backgroundColor: "#198754" }}

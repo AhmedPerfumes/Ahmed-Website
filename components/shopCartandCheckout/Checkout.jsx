@@ -12,7 +12,7 @@ const countries = [
 import { useContextElement } from "@/context/Context";
 import { useUser } from "@/context/UserContext";
 import { useMenu } from "@/context/MenuContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import he from "he";
@@ -97,6 +97,10 @@ export default function Checkout() {
     const handleRadioChange = (event) => {
         setSelectedOption(event.target.value);
     };
+
+    useEffect(() => {
+        setCouponDataContext(null);
+      }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -280,10 +284,10 @@ export default function Checkout() {
             } else if (data.discountMessage) {
                 // setSuccess();
                 setError(data.discountMessage);
-                setTimeout(() => {
-                    localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
-                    setCartProducts([]); // update the cartProducts state to an empty array
-                }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
+                // setTimeout(() => {
+                //     localStorage.setItem("cartList", JSON.stringify([])); // store an empty array in localStorage
+                //     setCartProducts([]); // update the cartProducts state to an empty array
+                // }, 2000); // time in milliseconds (e.g., 1000ms = 1 second)
                 // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
                 // router.push(data.redirect_url);
             } else if (data.couponMessage) {
@@ -613,23 +617,40 @@ export default function Checkout() {
                     new Date(elm.discount.start_date) &&
                 new Date(current_date_time) <= new Date(elm.discount.end_date)
             ) {
-                return (
-                    <td>
-                         <span className="money price price-sale">
-                            {currency.symbol}
-                            {(
-                                (elm.price -
-                                    (elm.price / 100) * elm.discount.value) *
-                                elm.quantity
-                            ).toFixed(2)}
-                        </span>
-                        <span className="money price price-old">
-                            {currency.symbol}
-                            {elm?.price}
-                        </span>
-                       
-                    </td>
-                );
+                if(elm.discount.discount_type == "percent") {
+                    return (
+                        <td>
+                            <span className="money price price-sale">
+                                {currency.symbol}
+                                {(
+                                    (elm.price -
+                                        (elm.price / 100) * elm.discount.value) *
+                                    elm.quantity
+                                ).toFixed(2)}
+                            </span>
+                            <span className="money price price-old">
+                                {currency.symbol}
+                                {elm?.price}
+                            </span>
+                        
+                        </td>
+                    ); 
+                } else if(elm.discount.discount_type == "amount") {
+                    return (
+                        <td>
+                            <span className="money price price-sale">
+                                {currency.symbol}
+                                {(
+                                    elm.price - elm.discount.value
+                                ).toFixed(2)}
+                            </span>
+                            <span className="money price price-old">
+                                {currency.symbol}
+                                {elm?.price}
+                            </span>
+                        </td>
+                    );
+                }
             } else {
                 return (
                     <td>
@@ -690,21 +711,22 @@ export default function Checkout() {
                     </td>
                 );
             }
-        } else if (elm?.sale_price) {
-            console.log("else if 2");
-            return (
-                <td>
-                    <span className="money price price-sale">
-                        {currency.symbol}
-                        {(elm.sale_price * elm.quantity).toFixed(2)}
-                    </span>
-                    <span className="money price price-old">
-                        {currency.symbol}
-                        {elm?.price}
-                    </span>
-                </td>
-            );
         }
+        // else if (elm?.sale_price) {
+        //     console.log("else if 2");
+        //     return (
+        //         <td>
+        //             <span className="money price price-sale">
+        //                 {currency.symbol}
+        //                 {(elm.sale_price * elm.quantity).toFixed(2)}
+        //             </span>
+        //             <span className="money price price-old">
+        //                 {currency.symbol}
+        //                 {elm?.price}
+        //             </span>
+        //         </td>
+        //     );
+        // }
          else {
             console.log("else");
             return (
@@ -966,7 +988,7 @@ export default function Checkout() {
                                                 {OTPSuccess}
                                             </div>
                                         )}
-                                        {isOTPButton ? (
+                                        {!isOTPButton ? (
                                             <button
                                                 className="btn btn-primary w-100 text-uppercase"
                                                 type="button"
