@@ -23,10 +23,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
   const locale = useLocale();
   const t = useTranslations();
 
-  useEffect(() =>   {
-    console.log(category, "categ")
-  }, [product])
-
   const isIncludeCard = () => {
     const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
     return item;

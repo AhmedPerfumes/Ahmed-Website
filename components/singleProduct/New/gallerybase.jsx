@@ -7,6 +7,7 @@ import Top from "./Common/top";
 
 const GalleryBase = ({
   images,
+  product,
   activeIndex,
   setActiveIndex,
   onThumbnailClick,
@@ -19,7 +20,7 @@ const GalleryBase = ({
       }}
     >
       <div className="d-lg-none">
-        <Top />
+        <Top product={product} />
       </div>
 
       {/* Carousel wrapper: flex on desktop only */}

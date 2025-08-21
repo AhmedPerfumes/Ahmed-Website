@@ -39,6 +39,7 @@ const Base = ({product}) => {
                     <div className="gallery-container d-flex justify-content-center order-1 order-lg-2">
                         <GalleryBase
                             images={images}
+                            product={product}
                             activeIndex={activeIndex}
                             setActiveIndex={setActiveIndex}
                             onThumbnailClick={setActiveIndex}
@@ -50,7 +51,7 @@ const Base = ({product}) => {
                     </div>
                 </div>
 
-                <Sticky image={images[0]} name={cleanName} price={product?.price || "0.00"} />
+                <Sticky image={images[0]} name={cleanName} price={product?.price || "0.00"} product={product} />
             </div>
         </div>
     );

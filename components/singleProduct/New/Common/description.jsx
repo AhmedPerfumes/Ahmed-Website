@@ -2,14 +2,23 @@ import React, { useRef, useState, useEffect } from "react";
 
 const Description = ({ description }) => {
   const [expanded, setExpanded] = useState(false);
-  const [height, setHeight] = useState("0px");
+  const [showToggle, setShowToggle] = useState(false);
+  const [height, setHeight] = useState("60px");
   const contentRef = useRef(null);
+  const maxCollapsedHeight = 60; // in pixels; can be made a prop for flexibility
 
   useEffect(() => {
     if (contentRef.current) {
-      setHeight(expanded ? `${contentRef.current.scrollHeight}px` : "60px");
+      const sh = contentRef.current.scrollHeight;
+      setShowToggle(sh > maxCollapsedHeight);
+      if (sh <= maxCollapsedHeight) {
+        setExpanded(false); // Reset expanded if content is short
+        setHeight(`${sh}px`);
+      } else {
+        setHeight(expanded ? `${sh}px` : `${maxCollapsedHeight}px`);
+      }
     }
-  }, [expanded]);
+  }, [expanded, description]);
 
   return (
     <div
@@ -32,10 +41,10 @@ const Description = ({ description }) => {
           lineHeight: "1.5"
         }}
       >
-        {description}
+        {description || ''}
       </div>
 
-      {description.length > 100 && (
+      {showToggle && (
         <div className="d-flex justify-content-end">
           <button
             onClick={() => setExpanded(!expanded)}
@@ -48,6 +57,7 @@ const Description = ({ description }) => {
             }}
             onMouseOver={(e) => (e.target.style.color = "#1C1C1E")}
             onMouseOut={(e) => (e.target.style.color = "#6E6E73")}
+            aria-expanded={expanded}
           >
             {expanded ? "Show less" : "...Read more"}
           </button>

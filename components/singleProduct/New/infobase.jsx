@@ -15,7 +15,7 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
   useEffect(() => {
     // Runs only on client
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 992);
     };
     // console.log(product?.product_name && t(he.decode(product?.product_name)), "Product Name");
 

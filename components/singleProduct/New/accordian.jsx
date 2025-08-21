@@ -99,7 +99,7 @@ const ProductAccordion = () => {
             </div>
 
             {/* Fragrance Profile */}
-            <div className="accordion-item">
+            {/* <div className="accordion-item">
                 <h2 className="accordion-header" id="headingTwo">
                     <button
                         className="accordion-button fw-semibold accordion-btn-custom"
@@ -171,7 +171,6 @@ const ProductAccordion = () => {
                                     data-bs-toggle="modal"
                                     data-bs-target={`#noteModal${index}`}
                                 >
-                                    {/* Centered Image + Label */}
                                     <div className="note-top">
                                         <img
                                             src={note.image}
@@ -181,13 +180,11 @@ const ProductAccordion = () => {
                                         <h6 className="note-type">
                                             {note.type}
                                         </h6>
-                                        {/* Ingredients */}
                                         <p className="note-ingredients">
                                             {note.ingredients}
                                         </p>
                                     </div>
 
-                                    {/* Bottom: Click for more */}
                                     <p className="note-click">click for more</p>
                                 </div>
                             ))}
@@ -218,7 +215,6 @@ const ProductAccordion = () => {
                     </div>
                 </div>
             </div>
-            {/* Modals for Fragrance Profile Notes */}
             {[
                 {
                     type: "Top Notes",
@@ -308,10 +304,10 @@ const ProductAccordion = () => {
                         </div>
                     </div>
                 </div>
-            ))}
+            ))} */}
 
             {/* Product Features & Key Highlights */}
-            <div className="accordion-item">
+            {/* <div className="accordion-item">
                 <h2 className="accordion-header" id="headingThree">
                     <button
                         className="accordion-button collapsed fw-semibold accordion-btn-custom"
@@ -384,7 +380,7 @@ const ProductAccordion = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Usage & Application */}
             <div className="accordion-item">
@@ -420,7 +416,7 @@ const ProductAccordion = () => {
                 </h2>
                 <div
                     id="collapseFour"
-                    className="accordion-collapse collapse"
+                    className="accordion-collapse collapse show"
                     aria-labelledby="headingFour"
                     data-bs-parent="#productAccordion"
                     style={{
@@ -429,7 +425,7 @@ const ProductAccordion = () => {
                         borderBottom: "1px solid #ddd",
                     }}
                 >
-                    <div className="accordion-body  ">
+                    <div className="accordion-body how-body">
                         <h6 className="mb-3 usage-head">How to Apply:</h6>
                         <p className="mb-2 text-muted usage-body">
                             For the most captivating and long-lasting
@@ -454,7 +450,7 @@ const ProductAccordion = () => {
             </div>
 
             {/* Crafted with Intention */}
-            <div className="accordion-item">
+            {/* <div className="accordion-item">
                 <h2 className="accordion-header" id="headingFive">
                     <button
                         className="accordion-button collapsed fw-semibold accordion-btn-custom"
@@ -537,7 +533,7 @@ const ProductAccordion = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Delivery Information */}
             <div className="accordion-item">
