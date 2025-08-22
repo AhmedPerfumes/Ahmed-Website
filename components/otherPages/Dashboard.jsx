@@ -78,6 +78,15 @@ export default function MyDetails() {
           customer_email: json.customer_email || "",
           customer_mobile: json.customer_mobile || "",
         });
+
+        // ✅ Update localStorage with normalized keys
+        const user = {
+          id: customerId,
+          name: json.customer_name || "",
+          email: json.customer_email || "",
+          phone: json.customer_mobile || "",
+        };
+        localStorage.setItem("user", btoa(JSON.stringify(user)));
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -193,6 +202,16 @@ export default function MyDetails() {
         customer_email: values.customer_email,
         customer_mobile: values.customer_mobile,
       });
+
+      // ✅ Update localStorage with normalized keys
+      const updatedUser = {
+        id: customerId,
+        name: values.customer_name,
+        email: values.customer_email,
+        phone: values.customer_mobile,
+      };
+      localStorage.setItem("user", btoa(JSON.stringify(updatedUser)));
+
       setEdit({
         customer_name: false,
         customer_email: false,
@@ -217,7 +236,7 @@ export default function MyDetails() {
   // Fields to display
   const FIELDS = [
     { key: "customer_name", label: "NAME" },
-    { key: "customer_email", label: "E‑MAIL" },
+    { key: "customer_email", label: "E-MAIL" },
     { key: "customer_mobile", label: "MOBILE" },
     { key: "password", label: "PASSWORD" },
   ];
