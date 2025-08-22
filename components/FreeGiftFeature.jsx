@@ -56,7 +56,8 @@ const FreeGiftFeature = ({ couponData }) => {
     (item) => item.category_name?.toLowerCase() !== "collections" &&
     item.discount === null &&
     item.category_name?.toLowerCase() !== 'online exclusive' &&
-    !item.is_gift
+    !item.is_gift &&
+    item.coupon.length == 0
   );
 
   const currentUTC = new Date(); // Current UTC time
@@ -125,7 +126,7 @@ const FreeGiftFeature = ({ couponData }) => {
   const handleGiftSelect = (product) => {
     try {
       console.log('Gift selected:', product.product_id, product.product_name);
-      removeGiftFromCart(null, 'summer_vibes_2025_campaign');
+      removeGiftFromCart(null, product.campaign);
       addProductToCart({ ...product, quantity: 1 });
       setSelectedGift(product.product_id);
       console.log('Cart updated, selectedGift set to:', product.product_id);
@@ -137,10 +138,11 @@ const FreeGiftFeature = ({ couponData }) => {
 
   // Synchronize selectedGift with cartProducts
   useEffect(() => {
-    console.log('Checking selectedGift:', selectedGift, 'Cart products:', cartProducts);
+    console.log('Checking selectedGift:', selectedGift, 'Cart products:', cartProducts, thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');
     if (!activeThreshold && selectedGift) {
       console.log('No active threshold, removing gift and clearing selectedGift');
-      removeGiftFromCart(null, 'summer_vibes_2025_campaign');
+      thresholds.length > 0 && removeGiftFromCart(null, thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');
+      // removeGiftFromCart(null, 'summer_vibes_2025_campaign');
       setSelectedGift(null);
     } else if (selectedGift) {
       // Check if the selected gift is still in the cart
@@ -156,8 +158,9 @@ const FreeGiftFeature = ({ couponData }) => {
           (gift) => gift.product_id === selectedGift
         );
         if (!isValidGift) {
-          console.log('Invalid gift for threshold, removing gift and clearing selectedGift');
-          removeGiftFromCart(null, 'summer_vibes_2025_campaign');
+          console.log('Invalid gift for threshold, removing gift and clearing selectedGift', thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');
+          thresholds.length > 0 && removeGiftFromCart(null, thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');
+          // removeGiftFromCart(null, 'summer_vibes_2025_campaign');
           setSelectedGift(null);
         }
       }

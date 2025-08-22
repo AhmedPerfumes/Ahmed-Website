@@ -115,6 +115,7 @@ export default function Context({ children }) {
   }, [wishList]);
 
   const removeGiftFromCart = (productIdToRemove = null, campaignKey = null) => {
+    console.log('productIdToRemove', productIdToRemove, campaignKey);
     setCartProducts((prev) => {
       if (!productIdToRemove && campaignKey) {
         return prev.filter(

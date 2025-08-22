@@ -14,6 +14,8 @@ import he from 'he';
 // import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 
+import { renderPrice } from "@/utlis/priceRenderer";
+
 export default function SingleProduct11({ category, subcategory, product }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { cartProducts, setCartProducts } = useContextElement();
@@ -87,28 +89,28 @@ export default function SingleProduct11({ category, subcategory, product }) {
               .join(' '); // Join the words back into a sentence
   }
 
-  const price = (elm) => {
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        if(elm.discount.discount_type == "percent") {
-          return <><span className="money price price-old">{ currency.symbol }{elm?.price}</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span></>;
-        } else if(elm.discount.discount_type == "amount") {
-          return <><span className="money price price-old">{ currency.symbol }{elm?.price}</span> <span className="money price price-sale"> { currency.symbol }{(elm.price - elm.discount.value).toFixed(2)}</span></>;
-        }
-      } else {
-        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
-      }
-    }
-    // else if(elm?.sale_price) {
-    //   return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}{ currency.symbol }</span></>;
-    // }
-    else {
-      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
-    }
-  };
+  // const price = (elm) => {
+  //   const currentUTC = new Date(); // Current UTC time
+  //   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+  //   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+  //   if(elm?.discount) {
+  //     if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+  //       if(elm.discount.discount_type == "percent") {
+  //         return <><span className="money price price-old">{ currency.symbol }{elm?.price}</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{ currency.symbol }</span></>;
+  //       } else if(elm.discount.discount_type == "amount") {
+  //         return <><span className="money price price-old">{ currency.symbol }{elm?.price}</span> <span className="money price price-sale"> { currency.symbol }{(elm.price - elm.discount.value).toFixed(2)}</span></>;
+  //       }
+  //     } else {
+  //       return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+  //     }
+  //   }
+  //   // else if(elm?.sale_price) {
+  //   //   return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(2)}{ currency.symbol }</span></>;
+  //   // }
+  //   else {
+  //     return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+  //   }
+  // };
 
   return (
     <>
@@ -126,7 +128,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <h1 className="product-single__name">{product?.product_name && he.decode(product?.product_name)}</h1>
             <div className="product-single__price">
-              { price(product) }
+              {/* { price(product) } */}
+              { renderPrice(product, currency) }
             </div>
             <div className="product-single__short-desc">
               <div dangerouslySetInnerHTML={{ __html: product.description }}></div>

@@ -81,7 +81,7 @@ export default function OrderTrack() {
       // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         // console.log('if...');
-        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{(((elm.price * (1 + elm.vat / 100)) - ((elm.price * (1 + elm.vat / 100)) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // } else {
       //   console.log('else...');
       //   return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
@@ -92,14 +92,14 @@ export default function OrderTrack() {
     }
     // else if(elm?.sale_price) {
     //   console.log('else if 2');
-    //     return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+    //     return <td>{(((elm.price * (1 + elm.vat / 100)) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     // }
     else {
         console.log('else');
         if(elm.discount_amount && elm.discount_amount != '0') {
           return <td>{ elm.gross_amount }{ currency.symbol }</td>;
         }
-        return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{((elm.price * (1 + elm.vat / 100)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
 
@@ -227,16 +227,16 @@ export default function OrderTrack() {
                 </tr>
                 <tr>
                   <th>SHIPPING</th>
-                  <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${(orderDetails.shipping_amount * 1.05).toFixed(2)}${ currency.symbol }`}</td>
+                  <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${(orderDetails.shipping_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2)}${ currency.symbol }`}</td>
                 </tr>
                 <tr>
                   <th>SERVICE FEE</th>
-                  <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }{ currency.symbol }</td> 
+                  <td>{ (orderDetails.service_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2) }{ currency.symbol }</td> 
                 </tr>
                  { orderDetails.payment_method === "cod" && (
                     <tr>
                         <th>COD CHARGES</th>
-                        <td>{ (orderDetails.cod_charge * 1.05).toFixed(2) }{ currency.symbol }</td> 
+                        <td>{ (orderDetails.cod_charge * (1 + orderDetails.vat_amount / 100)).toFixed(2) }{ currency.symbol }</td> 
                     </tr>
                 )}
                 <tr>
