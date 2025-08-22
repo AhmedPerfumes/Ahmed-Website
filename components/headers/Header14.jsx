@@ -22,21 +22,86 @@ import { useRouter, usePathname } from "../../i18n/routing";
 
 // Add this CSS to your stylesheet (e.g., header.module.css)
 const headerStyles = `
-  .header {
-    transition: transform 0.3s ease-in-out;
-  }
-  .header-hidden {
-    transform: translateY(-100%);
-  }
-  .header-visible {
-    transform: translateY(0);
-  }
-  .header_sticky {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: white;
-  }
+    .header {
+        transition: transform 0.3s ease-in-out;
+    }
+    .header-hidden {
+        transform: translateY(-100%);
+    }
+    .header-visible {
+        transform: translateY(0);
+    }
+    .header_sticky {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: white;
+    }
+    .search-popup {
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: opacity 0.50s ease, transform 0.50s ease;
+        z-index: 1200;
+    }
+    .js-content_visible .search-popup {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    .js-content_hidden .search-popup {
+        opacity: 0;
+        transform: translateY(-50px);
+        pointer-events: none;
+    }
+    .search-minimal {
+        margin-left: auto; /* pushes it to the right side */
+    }
+    .search-minimal form {
+        width: 220px; /* adjust width as needed */
+    }
+    .search-minimal .form-control {
+        border: 1px solid #e3e3e3;
+        border-bottom: 1px solid #111;
+        border-radius: 0;
+        padding: 8px 40px 8px 12px;
+        font-size: 14px;
+        letter-spacing: 0.04em;
+        box-shadow: none;
+        outline: none;
+    }
+    .search-minimal .form-control::placeholder {
+        color: #6b7280;
+        font-weight: 500;
+    }
+    .search-minimal .form-control:focus {
+        border-color: #cfcfcf;
+        border-bottom-color: #a67b30;
+        box-shadow: none;
+    }
+    .search-minimal .search-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #111;
+        pointer-events: none;
+    }
+
+    .search-popup__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  z-index: 5;
+}
+.search-popup__close:hover {
+  color: #000;
+}
 `;
 export default function Header14() {
     const [scrollDirection, setScrollDirection] = useState("down");
@@ -58,6 +123,30 @@ export default function Header14() {
     ];
 
     const isActive = (href) => pathname === href || pathname.startsWith(href);
+
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+    if (isPopupOpen) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+    }, [isPopupOpen]);
+
+    useEffect(() => {
+    const handleEsc = (e) => {
+        if (e.key === "Escape") setIsPopupOpen(false);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+    }, []);
+
+    useEffect(() => {
+    if (isPopupOpen && inputRef.current) {
+        inputRef.current.focus();
+    }
+    }, [isPopupOpen]);
 
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -262,99 +351,98 @@ export default function Header14() {
                 </Swiper>
 
                 <div
-                    ref={containerRef}
-                    className={`header-tools__item hover-container ${
-                        isPopupOpen ? "js-content_visible" : ""
-                    }`}
-                >
-                    <div className="search-popup js-hidden-content">
-                        <form
-                            onSubmit={onSearch}
-                            className="search-field container"
-                        >
-                            <p className="text-uppercase text-secondary fw-medium mb-4">
-                                {t("title")}
-                            </p>
-                            <div className="position-relative">
-                                <input
-                                    className="search-field__input search-popup__input w-100 fw-medium"
-                                    type="text"
-                                    name="search-keyword"
-                                    placeholder={t("Search Products")}
-                                    value={searchKeyWord}
-                                    onChange={handleChange}
-                                />
-                                <button
-                                    className="btn-icon search-popup__submit"
-                                    type="submit"
-                                >
-                                    <svg
-                                        className="d-block"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <use href="#icon_search" />
-                                    </svg>
-                                </button>
-                                <button
-                                    className="btn-icon btn-close-lg search-popup__reset"
-                                    type="reset"
-                                ></button>
-                            </div>
+  ref={containerRef}
+  className={`header-tools__item hover-container ${
+    isPopupOpen ? "js-content_visible" : "js-content_hidden"
+  }`}
+>
+  <div className="search-popup js-hidden-content">
+    {/* Close button */}
+    <button
+      type="button"
+      className="btn-close search-popup__close"
+      aria-label="Close"
+      onClick={() => setIsPopupOpen(false)}
+    >
+      ✕
+    </button>
 
-                            <div className="search-popup__results">
-                                <div className="sub-menu search-suggestion">
-                                    <h6 className="sub-menu__title fs-base">
-                                        {t("Quicklinks")}
-                                    </h6>
-                                    <ul className="sub-menu__list list-unstyled">
-                                        <li className="sub-menu__item">
-                                            <Link
-                                                href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
-                                                className="menu-link menu-link_us-s"
-                                            >
-                                                {t("Zumar")}
-                                            </Link>
-                                        </li>
-                                        <li className="sub-menu__item">
-                                            <Link
-                                                href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
-                                                className="menu-link menu-link_us-s"
-                                            >
-                                                {t("Marj")}
-                                            </Link>
-                                        </li>
-                                        <li className="sub-menu__item">
-                                            <Link
-                                                href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
-                                                className="menu-link menu-link_us-s"
-                                            >
-                                                {t("Oud & Roses")}
-                                            </Link>
-                                        </li>
-                                        <li className="sub-menu__item">
-                                            <Link
-                                                href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
-                                                className="menu-link menu-link_us-s"
-                                            >
-                                                {t("Bin Shaikh")}
-                                            </Link>
-                                        </li>
-                                        {/* <li className="sub-menu__item">
-                      <a href="/shop/perfumes/oriental-fragrance/oud-&-roses" className="menu-link menu-link_us-s">
-                        Oud &amp; Roses
-                      </a>
-                    </li> */}
-                                    </ul>
-                                </div>
-                                <div className="search-result row row-cols-5"></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <form onSubmit={onSearch} className="search-field container">
+      <p className="text-uppercase text-secondary fw-medium mb-4">
+        {t("title")}
+      </p>
+      <div className="position-relative">
+        <input
+          ref={inputRef}
+          className="search-field__input search-popup__input w-100 fw-medium"
+          type="text"
+          name="search-keyword"
+          placeholder={t("Search Products")}
+          value={searchKeyWord}
+          onChange={handleChange}
+        />
+        <button className="btn-icon search-popup__submit" type="submit">
+          <svg
+            className="d-block"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <use href="#icon_search" />
+          </svg>
+        </button>
+        <button
+          className="btn-icon btn-close-lg search-popup__reset"
+          type="reset"
+        ></button>
+      </div>
+
+      <div className="search-popup__results">
+        <div className="sub-menu search-suggestion">
+          <h6 className="sub-menu__title fs-base">{t("Quicklinks")}</h6>
+          <ul className="sub-menu__list list-unstyled">
+            <li className="sub-menu__item">
+              <Link
+                href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
+                className="menu-link menu-link_us-s"
+              >
+                {t("Zumar")}
+              </Link>
+            </li>
+            <li className="sub-menu__item">
+              <Link
+                href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
+                className="menu-link menu-link_us-s"
+              >
+                {t("Marj")}
+              </Link>
+            </li>
+            <li className="sub-menu__item">
+              <Link
+                href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
+                className="menu-link menu-link_us-s"
+              >
+                {t("Oud & Roses")}
+              </Link>
+            </li>
+            <li className="sub-menu__item">
+              <Link
+                href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
+                className="menu-link menu-link_us-s"
+              >
+                {t("Bin Shaikh")}
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="search-result row row-cols-5"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
 
                 <div className="header-desk_type_8">
                     <div className="header-middle">
@@ -415,7 +503,7 @@ export default function Header14() {
                                 </Link>
                             </div>
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
-                                <div className="header-search search-field d-none d-lg-flex  mx-4">
+                                {/* <div className="header-search search-field d-none d-lg-flex  mx-4">
                                     <form onSubmit={onSearch}>
                                         <input
                                             className="header-search__input w-100"
@@ -428,7 +516,32 @@ export default function Header14() {
                                             onChange={handleChange}
                                         />
                                     </form>
-                                </div>
+                                </div> */}
+
+                                <div className="d-none d-lg-flex search-minimal me-4">
+                                    <form onSubmit={onSearch} className="position-relative">
+                                        <input
+                                        type="text"
+                                        name="search-keyword"
+                                        placeholder="SEARCH"
+                                        value={searchKeyWord}
+                                        onChange={handleChange}
+                                        onClick={() => setIsPopupOpen(true)}
+                                        className="form-control pe-5"
+                                        />
+                                        <span className="search-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                                            <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.8"/>
+                                            <line x1="16" y1="16" x2="21" y2="21" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                                        </svg>
+                                        </span>
+                                    </form>
+
+                                    <style jsx>{`
+                                        
+                                    `}</style>
+                                    </div>
+
 
                                 {/* <div className="header-tools__item hover-container">
                                     {!isLoggedIn ? (
