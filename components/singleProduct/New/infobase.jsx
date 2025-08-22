@@ -8,11 +8,12 @@ import Description from "./Common/description";
 import Checkout from "./Common/checkout";
 
 const InfoBase = ({ images, product, onThumbnailClick }) => {
-  const description = "This expressive scent shall envelop every ripple of your being like slippery smooth silk and become one with your soul. The heady notes of musk wafting upwards through the fresh and sweet rose notes and tangy flavourful raspberry top notes is similar to the raw earthy smells of damp mud reaching you through the overlying bed of blooming flowers interspersed with juicy ripe berries. The white square bottle embodies the raw beauty of human touch and intimacy through its untouched notes of musk and rose, making this fragrance feel like a part of you.";
+  const description = product?.description;
 
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    console.log(product, "in infobase")
     // Runs only on client
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 992);
@@ -42,7 +43,7 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
         <Top product={product} />
       </div>
       <div className="h1"></div>
-      <Description description={description} />
+      <Description description={<span dangerouslySetInnerHTML={{ __html: description }} />} />
       <ThumbLarge images={images} onThumbnailClick={onThumbnailClick} />
       <Checkout product={product} />
     </div>

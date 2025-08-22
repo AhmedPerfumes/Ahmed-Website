@@ -47,7 +47,7 @@ const Base = ({product}) => {
                     </div>
 
                     <div className="accordion-container order-3 order-lg-3">
-                        <ProductAccordion />
+                        <ProductAccordion product={product}/>
                     </div>
                 </div>
 

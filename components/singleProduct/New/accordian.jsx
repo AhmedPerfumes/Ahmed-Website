@@ -1,7 +1,109 @@
 import "./accordian.css";
 import InfoCard from "./Common/InfoCard";
 
-const ProductAccordion = () => {
+const ProductAccordion = ({ product }) => {
+    const howToApplyContent = {
+        "Care Essentials": {
+            "Hair mist": {
+                text: [
+                    "For a refreshing and long-lasting scent, spray the hair mist lightly onto your hair, holding the bottle 20–25 cm away. Focus on the mid-lengths and ends to avoid scalp contact.",
+                    "Apply on clean, dry hair or after styling. Avoid rubbing or brushing immediately after spraying to maintain the fragrance’s delicate notes.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+            "Body gel": {
+                text: [
+                    "Apply a small amount of body gel evenly onto clean skin. Massage gently until fully absorbed to nourish the skin and enhance the fragrance experience.",
+                    "For optimal results, use after showering or moisturizing. Avoid applying on irritated or broken skin to preserve both skin health and fragrance quality.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+        "hair-mist": {
+            "hair-mist": {
+                text: [
+                    "For a refreshing and long-lasting scent, spray the hair mist lightly onto your hair, holding the bottle 20–25 cm away. Focus on the mid-lengths and ends to avoid scalp contact.",
+                    "Apply on clean, dry hair or after styling. Avoid rubbing or brushing immediately after spraying to maintain the fragrance’s delicate notes.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+        gel: {
+            "body-gel": {
+                text: [
+                    "Apply a small amount of body gel evenly onto clean skin. Massage gently until fully absorbed to nourish the skin and enhance the fragrance experience.",
+                    "For optimal results, use after showering or moisturizing. Avoid applying on irritated or broken skin to preserve both skin health and fragrance quality.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+
+        "concentrated-parfum": {
+            "concentrated-oil": {
+                text: [
+                    "Apply a small drop of concentrated oil directly to pulse points — such as wrists, neck, and behind the ears. These naturally warm areas help diffuse and enhance the fragrance.",
+                    "Avoid rubbing after application, as it can break down the delicate top notes. A single drop is enough for a long-lasting and captivating scent.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+            "dehn-al-oud": {
+                text: [
+                    "Dab a small amount of Dehn Al Oud oil on your pulse points — wrists, neck, and behind the ears. Let it absorb naturally to enjoy a rich and luxurious aroma.",
+                    "Avoid rubbing, as it can alter the fragrance. Use sparingly for a long-lasting effect that develops throughout the day.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+        dakhoon: {
+            bakhoor: {
+                text: [
+                    "Place a piece of bakhoor on a hot charcoal or electric incense burner. Let the smoke fill your space for a rich and inviting fragrance experience.",
+                    "Avoid leaving the charcoal unattended. For best results, use in a well-ventilated area and keep out of reach of children.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-2.png",
+            },
+            "oud-maattar": {
+                text: [
+                    "Apply a small amount of Oud Ma’Attar on clothing or use in a diffuser. Pulse points can also be gently dabbed for a personal long-lasting aroma.",
+                    "Use sparingly to avoid overpowering. Let the fragrance evolve naturally for a rich and sophisticated scent.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-2.png",
+            },
+            "air-freshener": {
+                text: [
+                    "Spray the air freshener evenly around the room from a distance of 30 cm. Focus on corners, curtains, and soft furnishings to distribute the fragrance effectively.",
+                    "For a longer-lasting effect, repeat the application periodically and avoid spraying directly onto delicate surfaces that may be sensitive to moisture.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+        "online-exclusive": {
+            "online-exclusive": {
+                text: [
+                    "For the most captivating and long-lasting experience, apply the perfume directly to your pulse points — wrists, neck, and behind the ears.",
+                    "Spray after moisturizing to help lock in the scent. Avoid rubbing the fragrance after application to preserve the delicate top notes.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+        perfumes: {
+            "oriental-fragrance": {
+                text: [
+                    "Apply lightly on pulse points — wrists, neck, and behind ears. This helps the warm, rich notes evolve naturally throughout the day.",
+                    "For best results, apply after moisturizing and avoid rubbing. A few spritzes are enough for a long-lasting, captivating scent.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+            "occidental-fragrance": {
+                text: [
+                    "Spray the perfume on pulse points — wrists, neck, and behind the ears — to allow the fragrance to develop naturally.",
+                    "Avoid rubbing after application to preserve the delicate top notes. Apply after moisturizing for a longer-lasting scent.",
+                ],
+                imgSrc: "/assets/images/musk-roses-test/perfume-1.png",
+            },
+        },
+    };
+
     return (
         <div
             className="accordion"
@@ -17,7 +119,7 @@ const ProductAccordion = () => {
             }}
         >
             {/* Product Overview */}
-            <div className="accordion-item">
+            {/* <div className="accordion-item">
                 <h2 className="accordion-header" id="headingOne">
                     <button
                         className="accordion-button collapsed fw-semibold accordion-btn-custom"
@@ -96,7 +198,7 @@ const ProductAccordion = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Fragrance Profile */}
             {/* <div className="accordion-item">
@@ -426,25 +528,46 @@ const ProductAccordion = () => {
                     }}
                 >
                     <div className="accordion-body how-body">
-                        <h6 className="mb-3 usage-head">How to Apply:</h6>
-                        <p className="mb-2 text-muted usage-body">
-                            For the most captivating and long-lasting
-                            experience, apply the perfume directly to your pulse
-                            points — such as the wrists, neck, and behind the
-                            ears. These naturally warm areas help to diffuse and
-                            enhance the fragrance throughout the day.
-                        </p>
-                        <p className="mb-2 text-muted usage-body">
-                            For best results, spray after moisturizing to help
-                            lock in the scent. Avoid rubbing the fragrance after
-                            application, as it can break down the delicate top
-                            notes.
-                        </p>
-                        <img
-                            src="/assets/images/musk-roses-test/perfume.gif"
-                            alt="How to Apply Perfume"
-                            className="w-100 rounded shadow-sm"
-                        />
+                        {product?.category && product?.subcategory && (
+                            <>
+                                {howToApplyContent[product?.category] && (
+                                    <>
+                                        <h6 className="mb-3 usage-head">
+                                            How to Use:
+                                        </h6>
+                                        {(
+                                            howToApplyContent[
+                                                product?.category
+                                            ][product.subcategory] ||
+                                            howToApplyContent[product?.category]
+                                                .default
+                                        )?.text.map((text, idx) => (
+                                            <p
+                                                key={idx}
+                                                className="mb-2 text-muted usage-body"
+                                            >
+                                                {text}
+                                            </p>
+                                        ))}
+                                        <img
+                                            src={
+                                                (
+                                                    howToApplyContent[
+                                                        product?.category
+                                                    ][product?.subcategory] ||
+                                                    howToApplyContent[
+                                                        product?.category
+                                                    ].default
+                                                )?.imgSrc
+                                            }
+                                            alt="How to Use"
+                                            className="w-100"
+                                            style={{ borderRadius: "10px" }}
+                                        />
+                                    </>
+                                )}
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -582,24 +705,24 @@ const ProductAccordion = () => {
                         <div className="row">
                             {[
                                 {
-                                    label: "Standard Delivery",
-                                    desc: "Delivered in 2–4 business days. Free on orders over AED 100.",
+                                    label: "SWIFT & COMPLIMENTARY SHIPPING",
+                                    desc: "Free delivery on orders over AED 100.",
                                     icon: "https://www.svgrepo.com/show/378704/shipping-box-v1.svg",
                                 },
                                 {
-                                    label: "Express Delivery",
-                                    desc: "Next-day delivery available at checkout. Charges may apply.",
-                                    icon: "https://www.svgrepo.com/show/447599/delivery-fast.svg",
-                                },
-                                {
-                                    label: "International Shipping",
-                                    desc: "Available to selected countries. Delivery time varies by region.",
+                                    label: "SECURE PAYMENT SOLUTIONS",
+                                    desc: "Your payments are safe with our secure online system.",
                                     icon: "https://www.svgrepo.com/show/513157/globe-1.svg",
                                 },
                                 {
-                                    label: "Sustainable Packaging",
-                                    desc: "Your order is shipped in fully recyclable, luxury-grade packaging.",
-                                    icon: "https://www.svgrepo.com/show/511034/leaf.svg",
+                                    label: "CONVENIENT CASH ON DELIVERY",
+                                    desc: "Contact us via landline or WhatsApp for assistance.",
+                                    icon: "https://www.svgrepo.com/show/447599/delivery-fast.svg",
+                                },
+                                {
+                                    label: "TRACK YOUR ORDER",
+                                    desc: "Easily track your order status online anytime.",
+                                    icon: "https://www.svgrepo.com/show/532539/location-pin.svg",
                                 },
                             ].map((item, i) => (
                                 <div

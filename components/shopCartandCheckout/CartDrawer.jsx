@@ -179,7 +179,7 @@ export default function CartDrawer() {
            
           </div>
         ) : (
-          <div className="fs-18 mt-5 px-5">
+          <div className="fs-18 mt-5 px-5 cart-drawer-items-list">
             {t("Your cart is empty Start shopping")}
           </div>
         )}

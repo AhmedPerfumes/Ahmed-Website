@@ -5,7 +5,7 @@ const Description = ({ description }) => {
   const [showToggle, setShowToggle] = useState(false);
   const [height, setHeight] = useState("60px");
   const contentRef = useRef(null);
-  const maxCollapsedHeight = 60; // in pixels; can be made a prop for flexibility
+  const maxCollapsedHeight = 40; // in pixels; can be made a prop for flexibility
 
   useEffect(() => {
     if (contentRef.current) {

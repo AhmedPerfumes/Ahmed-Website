@@ -94,9 +94,9 @@
 }
 
 .how-body {
-    background: #fffdf9;
+    /* background: #fffdf9; */
     padding: 20px;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+    /* box-shadow: inset 0 0 8px rgba(0,0,0,0.05); */
 }
 
 .usage-head {
