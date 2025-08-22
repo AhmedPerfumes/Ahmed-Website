@@ -695,8 +695,8 @@ export default function Checkout() {
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">
-              <div className="billing-info__wrapper">
-                <h4>BILLING DETAILS</h4>
+              <div className="billing-info__wrapper text-uppercase">
+                <h4>Billing Details</h4>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-floating my-3">
@@ -960,211 +960,202 @@ export default function Checkout() {
                     </div>
                   </div>
                   {formData.shippingAdd && (
-  <div className="accordion mt-3" id="shippingAddressAccordion">
-    <div className="accordion-item">
-      <h2 className="accordion-header" id="headingShipping">
-        <button
-          className="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseShipping"
-          aria-expanded="true"
-          aria-controls="collapseShipping"
-        >
-          Shipping Address
-        </button>
-      </h2>
-      <div
-        id="collapseShipping"
-        className="accordion-collapse collapse show"
-        aria-labelledby="headingShipping"
-        data-bs-parent="#shippingAddressAccordion"
-      >
-        <div className="accordion-body">
-          <div className="row">
-            {/* Shipping First Name */}
-            <div className="col-md-6">
-              <div className="form-floating my-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="shipping_first_name"
-                  placeholder="First Name"
-                  name="shippingAddress.first_name"
-                  value={formData.shippingAddress.first_name}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="shipping_first_name">First Name</label>
-              </div>
-            </div>
-
-            {/* Shipping Last Name */}
-            <div className="col-md-6">
-              <div className="form-floating my-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="shipping_last_name"
-                  placeholder="Last Name"
-                  name="shippingAddress.last_name"
-                  value={formData.shippingAddress.last_name}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="shipping_last_name">Last Name</label>
-              </div>
-            </div>
-
-            {/* Shipping Area */}
-            <div className="col-md-12">
-              <div className="form-floating my-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="shipping_area"
-                  placeholder="Area / Mantaqa"
-                  name="shippingAddress.area"
-                  value={formData.shippingAddress.area}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="shipping_area">Area / Mantaqa *</label>
-              </div>
-            </div>
-
-            {/* Shipping Building */}
-            <div className="col-md-12">
-              <div className="form-floating my-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="shipping_building"
-                  placeholder="Building / Villa / Apartment"
-                  name="shippingAddress.building"
-                  value={formData.shippingAddress.building}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="shipping_building">
-                  Building / Villa / Apartment
-                </label>
-              </div>
-            </div>
-
-            {/* Shipping Emirates Dropdown */}
-            <div className="col-md-12">
-              <div className="search-field my-3">
-                <label htmlFor="shipping_emirates" className="form-label">
-                  Emirates*
-                </label>
-                <select
-                  id="shipping_emirates"
-                  className="form-control"
-                  name="shippingAddress.emirates"
-                  value={formData.shippingAddress.emirates}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select Emirate...</option>
-                  {countries.map((em, i) => (
-                    <option key={i} value={em}>
-                      {em}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Shipping Email */}
-            <div className="col-md-12">
-              <div className="form-floating my-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="shipping_email"
-                  placeholder="Your Mail"
-                  name="shippingAddress.email"
-                  value={formData.shippingAddress.email}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="shipping_email">Email Address *</label>
-              </div>
-            </div>
-
-            {/* Shipping Phone */}
-            <div className="col-md-12">
-              <div className="form-floating my-3">
-                <input
-                  type="tel"
-                  className="form-control"
-                  id="shipping_mobile"
-                  placeholder="Eg. 0500000000"
-                  name="shippingAddress.mobile"
-                  value={formData.shippingAddress.mobile}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="shipping_mobile">
-                  Mobile Number (Eg. 0500000000)*
-                </label>
-              </div>
-            </div>
-
-            {/* OTP only for logged-in users on shipping */}
-            {isLoggedIn && (
-              <div className="col-md-12">
-                {OTPError ? (
-                  <div style={{ color: "red" }}>{OTPError}</div>
-                ) : (
-                  <div style={{ color: "green" }}>{OTPSuccess}</div>
-                )}
-                {isOTPButton ? (
-                  <button
-                    className="btn btn-primary w-100 text-uppercase"
-                    type="button"
-                    disabled={isSendOTPLoading}
-                    onClick={sendOTP}
-                  >
-                    {isSendOTPLoading ? "Loading..." : "Send OTP"}
-                  </button>
-                ) : (
-                  <>
-                    {!isOTPVerified && (
-                      <>
-                        <div className="form-floating my-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="shipping_otp"
-                            placeholder="Eg. 1234"
-                            name="otp"
-                            value={formData.otp}
-                            onChange={handleChange}
-                          />
-                          <label htmlFor="shipping_otp">OTP (Eg. 1234)*</label>
-                        </div>
-                        <button
-                          className="btn btn-primary w-100 text-uppercase"
-                          type="button"
-                          disabled={isSendOTPLoading}
-                          onClick={verifyOTP}
+                    <div className="accordion mt-3" id="shippingAddressAccordion">
+                        <div className="accordion-item">
+                        <h4 className="accordion-header" id="headingShipping">
+                            Shipping Details
+                        </h4>
+                        <div
+                            id="collapseShipping"
+                            className="accordion-collapse collapse show"
+                            aria-labelledby="headingShipping"
+                            data-bs-parent="#shippingAddressAccordion"
                         >
-                          {isSendOTPLoading ? "Loading..." : "Verify OTP"}
-                        </button>
-                      </>
+                            <div>
+                            <div className="row">
+                                {/* Shipping First Name */}
+                                <div className="col-md-6">
+                                <div className="form-floating my-3">
+                                    <input
+                                    type="text"
+                                    className="form-control"
+                                    id="shipping_first_name"
+                                    placeholder="First Name"
+                                    name="shippingAddress.first_name"
+                                    value={formData.shippingAddress.first_name}
+                                    onChange={handleChange}
+                                    required
+                                    />
+                                    <label htmlFor="shipping_first_name">First Name</label>
+                                </div>
+                                </div>
+
+                                {/* Shipping Last Name */}
+                                <div className="col-md-6">
+                                <div className="form-floating my-3">
+                                    <input
+                                    type="text"
+                                    className="form-control"
+                                    id="shipping_last_name"
+                                    placeholder="Last Name"
+                                    name="shippingAddress.last_name"
+                                    value={formData.shippingAddress.last_name}
+                                    onChange={handleChange}
+                                    required
+                                    />
+                                    <label htmlFor="shipping_last_name">Last Name</label>
+                                </div>
+                                </div>
+
+                                {/* Shipping Area */}
+                                <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                    <input
+                                    type="text"
+                                    className="form-control"
+                                    id="shipping_area"
+                                    placeholder="Area / Mantaqa"
+                                    name="shippingAddress.area"
+                                    value={formData.shippingAddress.area}
+                                    onChange={handleChange}
+                                    required
+                                    />
+                                    <label htmlFor="shipping_area">Area / Mantaqa *</label>
+                                </div>
+                                </div>
+
+                                {/* Shipping Building */}
+                                <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                    <input
+                                    type="text"
+                                    className="form-control"
+                                    id="shipping_building"
+                                    placeholder="Building / Villa / Apartment"
+                                    name="shippingAddress.building"
+                                    value={formData.shippingAddress.building}
+                                    onChange={handleChange}
+                                    required
+                                    />
+                                    <label htmlFor="shipping_building">
+                                    Building / Villa / Apartment
+                                    </label>
+                                </div>
+                                </div>
+
+                                {/* Shipping Emirates Dropdown */}
+                                <div className="col-md-12">
+                                <div className="search-field my-3">
+                                    <label htmlFor="shipping_emirates" className="form-label">
+                                    Emirates*
+                                    </label>
+                                    <select
+                                    id="shipping_emirates"
+                                    className="form-control"
+                                    name="shippingAddress.emirates"
+                                    value={formData.shippingAddress.emirates}
+                                    onChange={handleChange}
+                                    required
+                                    >
+                                    <option value="">Select Emirate...</option>
+                                    {countries.map((em, i) => (
+                                        <option key={i} value={em}>
+                                        {em}
+                                        </option>
+                                    ))}
+                                    </select>
+                                </div>
+                                </div>
+
+                                {/* Shipping Email */}
+                                <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                    <input
+                                    type="email"
+                                    className="form-control"
+                                    id="shipping_email"
+                                    placeholder="Your Mail"
+                                    name="shippingAddress.email"
+                                    value={formData.shippingAddress.email}
+                                    onChange={handleChange}
+                                    required
+                                    />
+                                    <label htmlFor="shipping_email">Email Address *</label>
+                                </div>
+                                </div>
+
+                                {/* Shipping Phone */}
+                                <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                    <input
+                                    type="tel"
+                                    className="form-control"
+                                    id="shipping_mobile"
+                                    placeholder="Eg. 0500000000"
+                                    name="shippingAddress.mobile"
+                                    value={formData.shippingAddress.mobile}
+                                    onChange={handleChange}
+                                    required
+                                    />
+                                    <label htmlFor="shipping_mobile">
+                                    Mobile Number (Eg. 0500000000)*
+                                    </label>
+                                </div>
+                                </div>
+
+                                {/* OTP only for logged-in users on shipping */}
+                                {isLoggedIn && (
+                                <div className="col-md-12">
+                                    {OTPError ? (
+                                    <div style={{ color: "red" }}>{OTPError}</div>
+                                    ) : (
+                                    <div style={{ color: "green" }}>{OTPSuccess}</div>
+                                    )}
+                                    {isOTPButton ? (
+                                    <button
+                                        className="btn btn-primary w-100 text-uppercase"
+                                        type="button"
+                                        disabled={isSendOTPLoading}
+                                        onClick={sendOTP}
+                                    >
+                                        {isSendOTPLoading ? "Loading..." : "Send OTP"}
+                                    </button>
+                                    ) : (
+                                    <>
+                                        {!isOTPVerified && (
+                                        <>
+                                            <div className="form-floating my-3">
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                id="shipping_otp"
+                                                placeholder="Eg. 1234"
+                                                name="otp"
+                                                value={formData.otp}
+                                                onChange={handleChange}
+                                            />
+                                            <label htmlFor="shipping_otp">OTP (Eg. 1234)*</label>
+                                            </div>
+                                            <button
+                                            className="btn btn-primary w-100 text-uppercase"
+                                            type="button"
+                                            disabled={isSendOTPLoading}
+                                            onClick={verifyOTP}
+                                            >
+                                            {isSendOTPLoading ? "Loading..." : "Verify OTP"}
+                                            </button>
+                                        </>
+                                        )}
+                                    </>
+                                    )}
+                                </div>
+                                )}
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                     )}
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
 
                 </div>
 
