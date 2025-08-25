@@ -36,57 +36,80 @@ export default function EditAddress() {
 
   // Fetch customer_id and addresses from localStorage / API
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const raw = localStorage.getItem("user");
-    let customer_id = null;
-    if (raw) {
-      try {
-        const user = JSON.parse(atob(raw));
-        customer_id = user.id;
-      } catch {}
-    }
-    setCustomerId(customer_id);
+  if (typeof window === "undefined") return;
 
-    if (customer_id) {
-      fetch(`${API_BASE}api/customerAddressDetails`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customer_id }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.addresses && data.addresses.length) {
-            const home = data.addresses[0] || {};
-            const other = data.addresses[1] || {};
-            setAddresses([
-              {
-                id: home.id,
-                name: home.name || "",
-                email: home.email || "",
-                mobile: home.phone || "",
-                area: home.city || "",
-                building: home.address || "",
-                emirates: home.state || "",
-                isDefault: home.is_default === 1,
-              },
-              {
-                id: other.id ?? -1,
-                name: other.name || "",
-                email: other.email || "",
-                mobile: other.phone || "",
-                area: other.city || "",
-                building: other.address || "",
-                emirates: other.state || "",
-                isDefault: other.is_default === 1,
-              },
-            ]);
+  const raw = localStorage.getItem("user");
+  let customer_id = null;
+  if (raw) {
+    try {
+      const user = JSON.parse(atob(raw));
+      customer_id = user.id;
+    } catch {}
+  }
+  setCustomerId(customer_id);
+
+  if (customer_id) {
+    fetch(`${API_BASE}api/customerAddressDetails`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ customer_id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.addresses && data.addresses.length) {
+          // 🔹 Step 1: parse API response
+          const parsed = data.addresses.map((addr) => ({
+            id: addr.id,
+            name: addr.name || "",
+            email: addr.email || "",
+            mobile: addr.phone || "",
+            area: addr.city || "",
+            building: addr.address || "",
+            emirates: addr.state || "",
+            isDefault: addr.is_default === 1,
+          }));
+
+          // 🔹 Step 2: check localStorage for last default
+          const stored = localStorage.getItem("address");
+          if (stored) {
+            try {
+              const def = JSON.parse(atob(stored));
+              parsed.forEach((a) => {
+                a.isDefault = a.id === def.id;
+              });
+            } catch {}
           }
-        })
-        .catch(() => {
-          /* handle fetch errors if needed */
-        });
-    }
-  }, []);
+
+          // 🔹 Step 3: keep array of exactly 2
+          setAddresses([
+            parsed[0] || {
+              id: -1,
+              name: "",
+              email: "",
+              mobile: "",
+              area: "",
+              building: "",
+              emirates: "",
+              isDefault: false,
+            },
+            parsed[1] || {
+              id: -1,
+              name: "",
+              email: "",
+              mobile: "",
+              area: "",
+              building: "",
+              emirates: "",
+              isDefault: false,
+            },
+          ]);
+        }
+      })
+      .catch(() => {
+        /* handle fetch errors */
+      });
+  }
+}, []);
 
   const openModal = (idx) => {
     setEditingIndex(idx);
@@ -95,7 +118,7 @@ export default function EditAddress() {
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, checked } = e.target;
     if (name === "isDefault") {
       setForm((f) => ({ ...f, isDefault: checked }));
     } else {
@@ -103,81 +126,68 @@ export default function EditAddress() {
     }
   };
 
-  // Save address with true “only one default” behavior
-  const save = async () => {
-    if (!customerId) return;
+  // inside save function where we update localStorage
+const save = async () => {
+  if (!customerId) return;
 
-    // Determine the other address index
-    const otherIndex = editingIndex === 0 ? 1 : 0;
-    const other = addresses[otherIndex];
+  const otherIndex = editingIndex === 0 ? 1 : 0;
 
-    // If marking this one default, first unset the other in the DB
-    if (form.isDefault && other.id > 0) {
-      await fetch(`${API_BASE}api/customerAddressUpdate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          address_id: other.id,
-          customer_id: customerId,
-          name: other.name,
-          email: other.email,
-          mobile: other.mobile,
-          address: other.building,
-          city: other.area,
-          state: other.emirates,
-          is_default: 0,
-        }),
-      }).catch(() => {
-        /* ignoring errors on unsetting the other */
-      });
+  // 🔹 Update state immediately
+  setAddresses((prev) => {
+    const updated = [...prev];
+    updated[editingIndex] = { ...form };
+
+    if (form.isDefault) {
+      updated[otherIndex] = { ...updated[otherIndex], isDefault: false };
     }
 
-    // Now update the edited address (either default or just saving edits)
-    const payload = {
-      address_id: form.id,
-      customer_id: customerId,
-      name: form.name,
-      email: form.email,
-      mobile: form.mobile,
-      address: form.building,
-      city: form.area,
-      state: form.emirates,
-      is_default: form.isDefault ? 1 : 0,
-    };
-
-    try {
-      const res = await fetch(`${API_BASE}api/customerAddressUpdate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
-
-      setAddresses((addrs) => {
-        const updated = [...addrs];
-        // Merge updated address fields
-        updated[editingIndex] = {
-          ...updated[editingIndex],
-          area: data.addresses.city || updated[editingIndex].area,
-          building: data.addresses.address || updated[editingIndex].building,
-          emirates: data.addresses.state || updated[editingIndex].emirates,
-          isDefault: data.addresses.is_default === 1,
-        };
-        // Enforce single-default in local state
-        if (form.isDefault) {
-          updated[otherIndex] = {
-            ...updated[otherIndex],
-            isDefault: false,
-          };
-        }
-        return updated;
-      });
-
-      setShow(false);
-    } catch (e) {
-      alert("Failed to update address.");
+    // ✅ Save ONLY the default address under key "address"
+    const defaultAddr = updated.find((addr) => addr.isDefault);
+    if (defaultAddr) {
+      localStorage.setItem(
+        "address",
+        btoa(
+          JSON.stringify({
+            id: defaultAddr.id,
+            name: defaultAddr.name,
+            email: defaultAddr.email,
+            phone: defaultAddr.mobile,
+            state: defaultAddr.emirates,
+            city: defaultAddr.area,
+            address: defaultAddr.building,
+            customer_id: customerId,
+            is_default: 1,
+          })
+        )
+      );
     }
-  };
+
+    return updated;
+  });
+
+  setShow(false);
+
+  // 🔹 Sync to API (after UI update)
+  try {
+    await fetch(`${API_BASE}api/customerAddressUpdate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        address_id: form.id,
+        customer_id: customerId,
+        name: form.name,
+        email: form.email,
+        mobile: form.mobile,
+        address: form.building,
+        city: form.area,
+        state: form.emirates,
+        is_default: form.isDefault ? 1 : 0,
+      }),
+    });
+  } catch (e) {
+    console.error("API update failed", e);
+  }
+};
 
   return (
     <>
@@ -195,9 +205,7 @@ export default function EditAddress() {
             >
               <div>
                 <h6 className="mb-1 fw-medium">{label}</h6>
-                <p className="mb-0 text-dark fw-bold">
-                  {addresses[idx].name}
-                </p>
+                <p className="mb-0 text-dark fw-bold">{addresses[idx].name}</p>
                 <p className="mb-0 text-muted small">
                   {addresses[idx].email} | {addresses[idx].mobile}
                 </p>
@@ -260,16 +268,27 @@ export default function EditAddress() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
-                Emirates
-              </Form.Label>
-              <Form.Control
-                name="emirates"
-                value={form.emirates}
-                onChange={handleChange}
-                className="rounded-2 px-2 py-1"
-              />
-            </Form.Group>
+            <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
+              Emirates
+            </Form.Label>
+            <Form.Select
+              name="emirates"
+              value={form.emirates}
+              onChange={handleChange}
+              className="rounded-2 px-2 py-1"
+              required
+            >
+              <option value="">Select Emirate...</option>
+              <option value="Abu Dhabi">Abu Dhabi</option>
+              <option value="Ajman">Ajman</option>
+              <option value="Al Ain">Al Ain</option>
+              <option value="Dubai">Dubai</option>
+              <option value="Fujairah">Fujairah</option>
+              <option value="Ras Al Khaymah">Ras Al Khaymah</option>
+              <option value="Sharjah">Sharjah</option>
+              <option value="Umm Al Quwain">Umm Al Quwain</option>
+            </Form.Select>
+          </Form.Group>
             <Form.Group className="mb-4">
               <Form.Check
                 type="checkbox"
