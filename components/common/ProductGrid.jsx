@@ -361,7 +361,7 @@ export default function ProductGrid({ category, subcategory }) {
                           {elm.product_qty <= 0 ? (
                             <div
                               style={{ backgroundColor: "#dc3545" }}
-                              className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
+                              className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-index-1"
                             >
                               {t("Out Of Stock")}
                             </div>
