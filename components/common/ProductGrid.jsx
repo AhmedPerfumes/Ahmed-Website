@@ -369,7 +369,7 @@ export default function ProductGrid({ category, subcategory }) {
                             elm.discount && (
                               <div
                                 style={{ backgroundColor: "#198754" }}
-                                className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
+                                className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-index-1"
                               >
                                 {t("Sale")} {elm.discount.value}%
                               </div>
