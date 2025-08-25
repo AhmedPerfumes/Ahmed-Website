@@ -43,8 +43,6 @@ export const categories3 = [
 
 ];
 
-
-
 export const categories8 = [
   {
     id: 1,

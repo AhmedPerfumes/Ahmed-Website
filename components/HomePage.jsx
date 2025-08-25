@@ -21,6 +21,7 @@ import Link from "next/link";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
+import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -156,6 +157,7 @@ const ScrollSnapHorizontalBootstrap = () => {
             <div className="d-block d-lg-none">
                 <Hero2 />
             </div>
+            <ProductShowcase/>
 
             <section className="scroll-section d-flex flex-direction-column bg-white">
                 <div className="panel2 mb-4">

@@ -1,0 +1,361 @@
+/* --- Main Layout --- */
+.showcase-container {
+    --background-color: #fff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6c757d;
+    --text-light: #ffffff;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--background-color);
+    font-family: var(--font-body);
+}
+
+.showcase-section {
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 3rem 4rem;
+    box-sizing: border-box;
+}
+
+/* --- Section 1: Banner --- */
+.banner-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 33.33vw;
+    z-index: 1;
+    padding: 0;
+}
+
+.showcase-container .banner-section {
+    background-image: url('/assets/images/campaigns/marj.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* --- Section 2: Text --- */
+.text-section {
+    width: 33.33vw;
+    text-align: left;
+    align-items: flex-start;
+    padding: 3rem 4rem;
+}
+
+.text-content {
+    transition: color 0.5s ease;
+    width: 100%;
+}
+
+.text-content h2 {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.text-content h1 {
+    font-family: var(--font-body);
+    font-size: 60px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 0.9;
+}
+
+/* Explored state for Text Section */
+/* .showcase-container.explored .text-section {
+    align-items: center;
+    text-align: center;
+} */
+
+.showcase-container.explored .text-section .text-content h1,
+.showcase-container.explored .text-section .text-content h2 {
+    color: var(--text-light);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Section 3: Products --- */
+.products-section {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: var(--background-color);
+    align-items: center;
+}
+
+/* Button containers */
+.text-section .button-container {
+    margin-top: 2.5rem;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.products-section .button-container {
+    margin-top: 2.5rem;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.showcase-container.explored .products-section .button-container {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: auto;
+    margin-top: 0;
+}
+
+/* Buttons */
+.explore-button {
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 1rem 2.5rem;
+    border: none;
+    background-color: var(--text-primary);
+    color: var(--text-light);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.2s ease;
+    font-weight: 600;
+}
+
+.explore-button:hover {
+    transform: scale(1.03);
+}
+
+.back-button {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    padding: 0.9rem 2.2rem;
+    border: 1px solid var(--text-primary);
+    background-color: var(--text-primary);
+    color: var(--text-light);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.back-button:hover {
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+
+/* --- Swiper & Product Cards --- */
+.swiper-container {
+    width: 100%;
+    height: 500px;
+    max-width: 1600px;
+}
+
+.product-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.product-card {
+    width: 100%;
+    height: 90%;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-name {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.shop-now-container {
+    display: flex;
+    justify-content: center;
+}
+
+.shop-now-link {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Swiper Pagination Dots */
+.product-swiper .swiper-pagination-bullet {
+    background-color: var(--text-primary);
+    opacity: 0.4;
+}
+
+.product-swiper .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* =================================== */
+/* Responsive Design Adjustments       */
+/* =================================== */
+
+/* --- Tablet and Smaller Desktops --- */
+@media (max-width: 1024px) {
+    .showcase-section {
+        padding: 2.5rem 2rem;
+    }
+
+    .text-content h1 {
+        font-size: 50px;
+    }
+
+    .swiper-container {
+        height: 450px;
+    }
+
+    .product-image {
+        height: 300px;
+    }
+
+    .product-name {
+        font-size: 1.3rem;
+    }
+}
+
+
+/* --- Mobile Devices --- */
+@media (max-width: 767px) {
+    .showcase-container {
+        /* Use svh (small viewport height) for better mobile browser compatibility */
+        height: 100svh;
+    }
+
+    /* 1. Hide the desktop banner; its image will be used on the text section */
+    .banner-section {
+        display: none;
+    }
+
+    /* 2. Repurpose the text section as the full-screen initial view */
+    .text-section {
+        /* Override Framer Motion styles for a full-screen layout.
+           !important is needed to win against inline styles from the animation library. */
+        width: 100vw !important;
+        left: 0 !important;
+        position: absolute !important;
+        background-image: url('/assets/images/campaigns/marj.jpg');
+        background-size: cover;
+        background-position: center;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .text-content {
+        background-color: rgba(29, 29, 29, 0.5); /* Overlay for text readability */
+        padding: 2rem;
+        border-radius: 8px;
+    }
+
+    .text-content h1,
+    .text-content h2 {
+        color: var(--text-light);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .text-content h1 {
+        font-size: 44px;
+    }
+    
+    .text-section .button-container {
+        justify-content: center;
+    }
+
+    /* 3. Position the products section off-screen, ready to slide in */
+    .products-section {
+        width: 100vw !important;
+        left: 100vw !important; /* Start off-screen to the right */
+        position: absolute !important;
+        padding: 4rem 1rem 1rem 1rem;
+        justify-content: flex-start;
+    }
+
+    /* 4. Define the 'explored' state animation for mobile */
+    .showcase-container.explored .text-section {
+        /* Slide the text section out of view */
+        left: -100vw !important;
+    }
+
+    .showcase-container.explored .products-section {
+        /* Slide the products section into view */
+        left: 0 !important;
+    }
+    
+    /* 5. Adjust the Swiper for a mobile-friendly view */
+    .swiper-container {
+        height: auto;
+        max-height: calc(100svh - 120px);
+    }
+
+    .product-swiper {
+        padding-bottom: 50px; /* Extra space for pagination */
+    }
+    
+    .product-card {
+        height: 420px;
+    }
+    
+    .product-image {
+        height: 280px;
+    }
+    
+    /* 6. Center the 'Go Back' button for a better mobile UX */
+    .showcase-container.explored .products-section .button-container {
+        bottom: 1.5rem;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        z-index: 20;
+    }
+    
+    .back-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.8rem;
+        border: 1px solid var(--text-light); /* Make it visible on products */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+}

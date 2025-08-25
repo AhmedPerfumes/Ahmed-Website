@@ -1,4 +1,4 @@
-import "./accordian.css";
+// import "./accordian.css";
 import InfoCard from "./Common/InfoCard";
 
 const ProductAccordion = () => {

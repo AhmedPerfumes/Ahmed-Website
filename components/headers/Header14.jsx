@@ -244,7 +244,6 @@ export default function Header14() {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-
                 <div
                     ref={containerRef}
                     className={`header-tools__item hover-container ${
