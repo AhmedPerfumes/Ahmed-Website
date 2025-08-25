@@ -146,12 +146,12 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                 )}
 
                 {elm.product_qty <= 0 ? (
-                  <div style={{ backgroundColor: "#dc3545" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-index-1">
+                  <div style={{ backgroundColor: "#dc3545" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-1">
                     Out Of Stock
                   </div>
                 ) : (
                   elm.discount && (
-                    <div style={{ backgroundColor: "#198754" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-index-1">
+                    <div style={{ backgroundColor: "#198754" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-1">
                       Sale {elm.discount.value}%
                     </div>
                   )
