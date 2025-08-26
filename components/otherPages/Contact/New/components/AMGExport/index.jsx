@@ -6,6 +6,7 @@ import ProductShowcase from './ProductShowcase';
 import Testimonials from './Testimonials';
 import EnquirySection from './EnquirySection';
 import Modal from './Modal';
+import '../../styles/globals.css'
 // Note: We no longer import the CSS file here directly.
 // Next.js handles this automatically when using CSS Modules.
 // The global CSS should be imported in your root layout file.

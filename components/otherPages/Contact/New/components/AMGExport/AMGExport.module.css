@@ -9,24 +9,23 @@
 
 /* Hero Section */
 .heroSection {
-    color: white;
-    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1920x1080/1a1a1a/ffffff?text=Luxury+Perfumes');
+    color: #E3E2CF;
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('/assets/images/export/export_banner_new.jpeg');
     background-size: cover;
     background-position: center;
     padding: 8rem 1.5rem;
-    text-align: center;
 }
 .heroSection h1 {
+    color: #E3E2CF;
     font-family: var(--font-serif);
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 .heroSection p {
     font-size: 1.125rem;
-    max-width: 56rem;
-    margin: 0 auto 2rem auto;
-    color: #d1d5db;
+    max-width: 42rem;
+    color: #bebead;
 }
 .btnGold {
     display: inline-block;
