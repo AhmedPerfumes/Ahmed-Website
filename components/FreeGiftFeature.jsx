@@ -102,7 +102,7 @@ const FreeGiftFeature = ({ couponData }) => {
 
     const fetchThresholds = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/freeGiftProductss`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/freeGiftProducts`);
         if (!response.ok) throw new Error("Failed to fetch thresholds");
 
         const data = await response.json();
@@ -138,7 +138,7 @@ const FreeGiftFeature = ({ couponData }) => {
 
   // Synchronize selectedGift with cartProducts
   useEffect(() => {
-    console.log('Checking selectedGift:', selectedGift, 'Cart products:', cartProducts, thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');
+    // console.log('Checking selectedGift:', selectedGift, 'Cart products:', cartProducts, thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');
     if (!activeThreshold && selectedGift) {
       console.log('No active threshold, removing gift and clearing selectedGift');
       thresholds.length > 0 && removeGiftFromCart(null, thresholds[0].name.replace(/ /g, '_').toLowerCase()+'_2025_campaign');

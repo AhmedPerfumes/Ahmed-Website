@@ -39,7 +39,7 @@ export default function CartDrawer() {
 
       // Also update the matching gift (if exists)
       const giftItemIndex = items.findIndex(
-        (item) => item.product_id == id && item.is_gift
+        (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
       );
 
       if (giftItemIndex !== -1) {

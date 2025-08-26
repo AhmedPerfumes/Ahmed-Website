@@ -62,9 +62,10 @@ export default function Context({ children }) {
   };
 
   const addProductToCart = (product) => {
+    console.log('000product', product);
     const item = {
       ...product,
-      quantity: product.campaign == 'bogo_2025_campaign' ? product.quantity : 1,
+      quantity: product.quantity??1,
     };
     setCartProducts((prevCart) => [...prevCart, item]);
 
