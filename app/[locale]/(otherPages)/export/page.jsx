@@ -1,3 +1,4 @@
+
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import Export from "@/components/otherPages/Contact/Export"
@@ -7,6 +8,7 @@ import Contact from "@/components/otherPages/Contact/Contact";
 import LocationMap from "@/components/otherPages/Contact/LocationMap";
 
 import React from "react";
+import AMGExport from "@/components/otherPages/Contact/New/components/AMGExport";
 // import Loader from "@/components/loader/Loader";
 
 export const metadata = {
@@ -22,7 +24,8 @@ const ExportPage = () => {
     <>
       {/* <Loader/> */}
       <Header14 />
-      <Export />
+      {/* <Export /> */}
+      <AMGExport/>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
       </section>
