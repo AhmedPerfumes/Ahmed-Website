@@ -882,7 +882,7 @@ export default function Checkout() {
                   </div>
 
                   {/* OTP for LOGGED OUT users (billing section) */}
-                  {!isLoggedIn && (
+                  {/* {!isLoggedIn && ( */}
                     <div className="col-md-12">
                       {OTPError ? (
                         <div style={{ color: "red" }}>{OTPError}</div>
@@ -927,7 +927,7 @@ export default function Checkout() {
                         </>
                       )}
                     </div>
-                  )}
+                  {/* )} */}
 
                   <div className="col-md-12">
                     {!isLoggedIn && (
