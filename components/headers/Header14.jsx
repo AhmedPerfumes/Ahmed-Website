@@ -556,12 +556,12 @@ export default function Header14() {
                                 </div> */}
                                 <div className="header-tools__item hover-account">
                                 {!isLoggedIn ? (
-                                    <Link className="js-open-aside" href="#">
-                                    <User />
+                                    <Link href="/login_register" className="account-icon-link">
+                                        <User />
                                     </Link>
                                 ) : (
                                     <Link href="/account_dashboard" className="account-icon-link" aria-haspopup="true">
-                                    <UserLoggedIn />
+                                        <UserLoggedIn />
                                     </Link>
                                 )}
 

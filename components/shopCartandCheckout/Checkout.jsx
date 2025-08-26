@@ -843,9 +843,19 @@ export default function Checkout() {
                               ))}
                           </ul>
                         </div>
+                        {isLoggedIn && (
+                          <Link
+                            className="btn-link btn-link_lg default-underline fw-bold pt-4"
+                            href={`/${locale}/account_edit_address`}
+                            target="_blank"
+                          >
+                            - Click to Edit Address -
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>
+                  
                   <div className="col-md-12">
                     <div className="form-floating my-3">
                       <input
@@ -1391,7 +1401,7 @@ export default function Checkout() {
                     <span>
                       I have read and agree to the website{" "}
                       <Link
-                        href="https://www.ahmedalmaghribi.com/terms-and-condition/"
+                        href={`/${locale}/terms`}
                         target="_blank"
                       >
                         terms and conditions
