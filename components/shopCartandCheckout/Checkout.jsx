@@ -41,6 +41,7 @@ export default function Checkout() {
         setOrderDetails,
         setCouponDataContext,
         setCartProducts,
+        removeGiftFromCart
     } = useContextElement();
     const { isLoggedIn } = useUser();
     // const [selectedRegion, setSelectedRegion] = useState("");
@@ -100,6 +101,7 @@ export default function Checkout() {
 
     useEffect(() => {
         setCouponDataContext(null);
+        removeGiftFromCart();
       }, []);
 
     const handleChange = (event) => {

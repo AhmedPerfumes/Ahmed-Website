@@ -62,7 +62,7 @@ export default function Context({ children }) {
   };
 
   const addProductToCart = (product) => {
-    console.log('000product', product);
+    console.log('222product', product);
     const item = {
       ...product,
       quantity: product.quantity??1,
