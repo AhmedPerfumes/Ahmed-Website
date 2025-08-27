@@ -163,7 +163,7 @@ const filteredProducts = products
                 {Array.isArray(elm.labels) && elm.labels.length > 0 && (
                                             <div
                                               className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
-                                              style={{ gap: "4px" }}
+                                              style={{ gap: "4px" , zIndex: "1" }}
                                             >
                                               {elm.labels.map((lbl, idx) => (
                                                 <LabelIcon
