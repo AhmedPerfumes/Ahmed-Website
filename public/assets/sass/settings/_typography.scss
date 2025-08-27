@@ -93,12 +93,12 @@ h6 {
   @include media-breakpoint-up(xxl) {
     display: block;
     position: absolute;
-    bottom: 5rem;
-    margin-left: -1.5em;
+    bottom: 6rem;
+    margin-left: -1.3em;
     -webkit-text-stroke-width: 3px;
     -webkit-text-stroke-color: $color-white;
     color: transparent;
-    font-size: 7.5rem;
+    font-size: 6.5rem;
     transform: rotate(90deg);
     transform-origin: bottom right;
     opacity: 0.8;

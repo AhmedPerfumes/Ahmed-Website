@@ -36,40 +36,33 @@ export default function Hero() {
         <SwiperSlide
           key={i}
           className="swiper-slide full-width_border border-1"
-          style={{ borderColor: "#f5e6e0" }}
+
         >
           <div className="overflow-hidden position-relative h-100">
             <div
               className="slideshow-bg"
-              style={{ backgroundColor: "#f5e6e0" }}
+            
             >
               <Image
                 loading="lazy"
-                src="/assets/images/slideshow-pattern.png"
+                src={elm.image}
                 width="1761"
                 height="778"
                 alt="Pattern"
-                className="slideshow-bg__img object-fit-cover"
+                className="w-100 h-100 object-fit-cover"
               />
             </div>
             {/* <!-- <p className="slideshow_markup font-special text-uppercase position-absolute end-0 bottom-0">Summer</p> --> */}
             <div className="slideshow-character position-absolute bottom-0 pos_right-center">
-              <Image
-                loading="lazy"
-                src={elm.characterImg}
-                width="400"
-                height="733"
-                alt="Woman Fashion 1"
-                className="slideshow-character__img animate animate_fade animate_btt animate_delay-9 h-auto w-auto"
-              />
-              <div className="character_markup">
-                <p className="text-uppercase font-sofia fw-bold animate animate_fade animate_rtl animate_delay-10">
+              
+              <div className="character_markup text-primary">
+                {/* <p className="text-black text-uppercase font-sofia fw-bold animate animate_fade animate_rtl animate_delay-10">
                   {elm.characterText}
-                </p>
+                </p> */}
               </div>
             </div>
             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-              <h6 className="text_dash text-uppercase text-red fs-base fw-medium animate animate_fade animate_btt animate_delay-3">
+              <h6 className="text_dash text-uppercase text-gray fs-base fw-medium animate animate_fade animate_btt animate_delay-3">
                 {elm.text1}
               </h6>
               <h2 className="text-uppercase h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5">
@@ -93,40 +86,18 @@ export default function Hero() {
                 href={`${locale}/shop`}
                 className="btn-link btn-link_lg default-underline text-uppercase fw-medium animate animate_fade animate_btt animate_delay-7"
               >
-                {t("Discover More")}  
+              "Discover More"
               </Link>
             </div>
           </div>
         </SwiperSlide>
       ))}
       <div className="container">
-        <div className="slideshow-pagination d-flex align-items-center position-absolute bottom-0 mb-5"></div>
+        {/* <div className="slideshow-pagination d-flex align-items-center position-absolute bottom-0 mb-5"></div> */}
         {/* <!-- /.products-pagination --> */}
       </div>
       {/* <!-- /.container --> */}
-      <div className="slideshow-social-follow d-none d-xxl-block position-absolute top-50 start-0 translate-middle-y text-center">
-        <ul className="social-links list-unstyled mb-0 text-secondary">
-          {socialLinks.map((link, index) => (
-            <li key={index}>
-              <Link href={link.href} className="footer__social-link d-block">
-                <svg
-                  className={link.className}
-                  width={link.width}
-                  height={link.height}
-                  viewBox={link.viewBox}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href={link.icon} />
-                </svg>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        {/* <!-- /.social-links list-unstyled mb-0 text-secondary --> */}
-        <span className="slideshow-social-follow__title d-block mt-5 text-uppercase fw-medium text-secondary">
-          Follow Us
-        </span>
-      </div>
+     
       {/* <!-- /.slideshow-social-follow --> */}
       <a
         href="#section-collections-grid_masonry"

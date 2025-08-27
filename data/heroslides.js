@@ -1,4 +1,17 @@
+export const slides1=[
+  {
+    id:1,
+    characterImg: "/assets/images/home/demo8/top/bin-shaikh.jpg",
+    imgSrc: "/assets/images/home/demo8/top/bottles/bin-shaikh.png",
+    image:"/assets/images/Niswaah.jpg",
 
+    text1:"New Launch ",
+    text2:"Introducing",
+    text3:"Niswah",
+    
+  },
+
+]
 
 export const slides6 = [
   {
