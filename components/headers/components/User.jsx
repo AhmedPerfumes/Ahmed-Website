@@ -1,11 +1,30 @@
 "use client";
 
 import { openModalUserlogin } from "@/utlis/aside";
+import { useEffect, useState } from "react";
 
 export default function User() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // adjust breakpoint if needed
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const handleClick = () => {
+    if (isMobile) {
+      openModalUserlogin();
+    }
+  };
+
   return (
     <svg
-      onClick={openModalUserlogin}
+      onClick={handleClick}
       className="d-block"
       width="18"
       height="18"
