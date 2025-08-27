@@ -192,8 +192,8 @@ const save = async () => {
   return (
     <>
       <div className="col-lg-9">
-        <p className="fs-sm text-secondary mb-4">
-          Default addresses used at checkout
+        <p className="sub-menu__title border-bottom mb-4">
+          Default address will be used at checkout
         </p>
         <div className="d-flex gap-3 flex-column">
           {["Home Address", "Other Address"].map((label, idx) => (
