@@ -125,6 +125,38 @@ a {
     padding-top: 80px;
   }
 }
+.btn-link_lg {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-link_lg:hover {
+  color: #fff !important;              /* text becomes white */
+  background-color: #000;              /* smooth dark background */
+  transform: translateY(-3px);         /* subtle lift */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.btn-link_lg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
+  transition: all 0.5s ease;
+}
+
+.btn-link_lg:hover::after {
+  left: 100%; /* smooth shimmer effect */
+}
+
 
 .hero-8 .swiper-pagination-bullet:first-child {
   margin-left: 4px !important;
