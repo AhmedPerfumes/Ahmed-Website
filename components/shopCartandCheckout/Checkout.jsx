@@ -1300,6 +1300,29 @@ export default function Checkout() {
                             {currency.symbol} VAT)
                           </td>
                         </tr>
+                        {/* ✅ Added surprise gift notification right AFTER TOTAL row */}
+                          {(
+                            (!freeShippingFlag
+                              ? parseFloat(shippingServiceCharges[0].price) +
+                                totalPrice +
+                                parseFloat(shippingServiceCharges[1].price) +
+                                (selectedOption === "cod"
+                                  ? parseFloat(shippingServiceCharges[2].price)
+                                  : 0)
+                              : 0 +
+                                totalPrice +
+                                parseFloat(shippingServiceCharges[1].price) +
+                                (selectedOption === "cod"
+                                  ? parseFloat(shippingServiceCharges[2].price)
+                                  : 0)) >= 200
+                          ) && (
+                            <tr>
+                              <td colSpan={2} style={{ color: "green", fontWeight: "bold" }}>
+                                🎁 You have received a surprise gift
+                              </td>
+                            </tr>
+                          )}
+                          {/* ✅ End of new code */}
                       </tbody>
                     </table>
                   </div>
