@@ -1,3 +1,6 @@
+import Footer14 from '@/components/footers/Footer14'
+import MobileFooter2 from '@/components/footers/MobileFooter2'
+import Header14 from '@/components/headers/Header14'
 import NewLaunch from '@/components/otherPages/NewLaunch'
 import React from 'react'
 
