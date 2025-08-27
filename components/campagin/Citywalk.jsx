@@ -207,7 +207,7 @@ function CityWalk() {
             </section> */}
            
 
-            <section className="d-flex flex-column align-items-center pt-5">
+            {/* <section className="d-flex flex-column align-items-center pt-5">
                             <span className="t-subtitle text-uppercase fs-4 text-center">
                                 {"Scent for Womens: Fresh & Vibrant Perfumes"}
                             </span>
@@ -301,7 +301,7 @@ function CityWalk() {
                                     </Link>
                                 </div>
                             </div>
-                        </section>
+                        </section> */}
                         {/* <TopCollections
   categoryId={8}
   category={"perfumes"}
