@@ -9,6 +9,7 @@ import Pagination1 from "../Pagination1";
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Link from "next/link";
+import LabelIcon from "@/components/labels/LabelIcon";
 
 function NewLaunchGrid({ title, onlyDiscounted = false, onlyNew = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
