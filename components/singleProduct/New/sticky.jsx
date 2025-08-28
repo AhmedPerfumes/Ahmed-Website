@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useContextElement } from "@/context/Context"; // ✅ hook from your reference
 import { useTranslations } from "next-intl";
 import "./Sticky.css";
+import { useMenu } from "@/context/MenuContext";
 
 const Sticky = ({ image, name, price, product }) => {
     const [show, setShow] = useState(false);
@@ -13,6 +14,7 @@ const Sticky = ({ image, name, price, product }) => {
     let category = product?.category;
     let subcategory = product?.subcategory;
     const [quantity, setQuantity] = useState(1);
+    const { isLoading: isMenuLoading, error: isMenuError, currency, } = useMenu();
 
     // check if already in cart
     const isIncludeCard = () => {
@@ -85,7 +87,7 @@ const Sticky = ({ image, name, price, product }) => {
                 <p className="mb-0 fw-medium" title={name}>
                     {name}
                 </p>
-                <p className="mb-0 fw-bold">{price} AED</p>
+                <p className="mb-0 fw-bold">{price} {currency.symbol}</p>
             </div>
 
             <button

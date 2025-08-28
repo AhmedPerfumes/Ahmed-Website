@@ -1,203 +1,324 @@
+/* ==========================================================================
+   A. CORE ACCORDION & DESIGN SYSTEM
+   ========================================================================== */
+
+/* Establishing a consistent design language for the entire component. */
 .accordion {
-    --bs-accordion-border-color: none;
-    --bs-accordion-btn-padding-x: 1rem;
-    --bs-accordion-btn-padding-y: 1rem;
-    --bs-accordion-body-padding-x: 1rem;
-    --bs-accordion-body-padding-y: 1rem;
-    --bs-accordion-active-bg: #faf9f7;
-    --bs-accordion-active-color: #222;
+    --bs-accordion-border-width: 0;
     --bs-accordion-btn-focus-box-shadow: none;
+    --bs-accordion-active-bg: transparent;
+    --bs-accordion-active-color: #1a1a1a;
+
+    /* Color Palette */
+    --color-background: #faf9f7;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #666;
+    --color-border-subtle: #e5e5e5;
+    --color-accent: #c9b49a; /* A muted, elegant gold/tan accent */
+
+    /* Typography */
+    --font-heading: "Cinzel", serif;
+    --font-body: "Merriweather", serif;
+
+    /* Spacing Scale */
+    --space-xs: 0.25rem; /* 4px */
+    --space-sm: 0.5rem; /* 8px */
+    --space-md: 1rem; /* 16px */
+    --space-lg: 1.5rem; /* 24px */
+    --space-xl: 2rem; /* 32px */
+}
+
+.accordion-item {
+    background-color: var(--color-background) !important;
+    color: var(--color-text-primary);
+    border: none !important;
+    border-bottom: 1px solid var(--color-border-subtle) !important;
+}
+
+/* The last item should not have a bottom border for a clean finish. */
+.accordion-item:last-child {
+    border-bottom: none !important;
+}
+
+.accordion-header,
+.accordion-button,
+.accordion-collapse,
+.accordion-body {
+    background-color: inherit !important;
+    color: inherit;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .accordion-button {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    padding: var(--space-lg) var(--space-md);
+    width: 100%;
+    display: flex;
+    align-items: center; /* Perfect vertical alignment */
+}
+
+/* Replacing the default Bootstrap arrow with a cleaner, custom one. */
+.accordion-button::after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid var(--color-text-primary);
+    border-bottom: 2px solid var(--color-text-primary);
+    transform: rotate(45deg);
+    transition: transform 0.3s ease-in-out;
+    margin-left: auto;
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: rotate(-135deg);
+    margin-top: -6px; /* Fine-tune position when open */
+}
+
+.accordion-body {
+    padding: var(--space-sm) var(--space-md) var(--space-xl);
+    font-family: var(--font-body);
+}
+
+/* NEW: A simple, elegant separator for use within accordion bodies */
+.section-divider {
+    border: none;
+    border-top: 1px solid var(--color-border-subtle);
+    margin: var(--space-xl) 0;
+}
+
+/* ==========================================================================
+   B. CONTENT PANEL STYLES
+   ========================================================================== */
+
+/* --- 1. Product Overview & Delivery Info --- */
+.product-specs-list {
+    display: grid;
+    /* This two-column grid ensures perfect alignment. */
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: var(--space-md) var(--space-lg);
+}
+.spec-item {
+    /* This selector targets every odd child in the grid (the labels) */
+    grid-column: 1 / 2;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: var(--space-sm);
+}
+.spec-value {
+    /* This selector targets every even child in the grid (the values) */
+    grid-column: 2 / 3;
+    justify-self: end; /* Aligns the value to the right edge */
+    font-weight: 600;
+}
+.spec-icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
+}
+.spec-label {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
 }
 
-.accordion-button:not(.collapsed) {
-    box-shadow: none;
+/* --- 2. Fragrance Profile (Scent Journey) --- */
+.notes-journey-container {
+    position: relative;
+    border-left: 1px solid var(--color-border-subtle);
+    padding: var(--space-sm) 0 var(--space-sm) var(--space-xl);
+}
+.note-item {
+    display: flex;
+    align-items: flex-start; /* Aligns image with the top of the text */
+    gap: var(--space-md);
+    position: relative;
+}
+.note-item:not(:last-child) {
+    padding-bottom: var(--space-xl);
+}
+.note-item::before {
+    content: "";
+    position: absolute;
+    /* Precise positioning for the timeline marker */
+    left: calc(-1 * var(--space-xl) - 6px);
+    top: 1.5rem; /* Align with the first line of text */
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-background);
+    border: 2px solid var(--color-accent);
+    border-radius: 50%;
+    z-index: 1;
+}
+.note-item-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+.note-item-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    font-size: 1.1rem;
+}
+.note-item-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
 }
 
-.accordion-button:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.accordion-btn-custom {
-    font-size: 16px;
-    padding: 12px 0;
-}
-
-.accordion-icon-custom {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s ease;
-}
-
-.accordion-button:not(.collapsed) .accordion-icon-custom {
-    transform: rotate(180deg);
-}
-
-.note-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    max-width: 140px;
-    margin: 0 auto;
-}
-
-.note-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.note-top {
+/* --- 3. Key Highlights --- */
+.highlights-list {
     display: flex;
     flex-direction: column;
+    gap: var(--space-xl);
+}
+.highlight-item {
+    display: flex;
     align-items: center;
+    gap: var(--space-md);
 }
-
-.note-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 8px;
+.highlight-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    margin-bottom: 0.37rem;
+    color: var(--color-accent);
 }
-
-.note-type {
-    font-size: 14px;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 4px;
-    font-family: "Cinzel", serif;
-}
-
-.note-ingredients {
-    font-size: 12px;
-    color: #555;
-    margin-bottom: 8px;
-    font-family: "Merriweather", serif;
-}
-
-.note-click {
-    font-size: 10px;
-    color: #888;
+/* Refined Typography for better hierarchy */
+.highlight-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+}
+.highlight-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
 }
 
-.how-body {
-    /* background: #fffdf9; */
-    padding: 20px;
-    /* box-shadow: inset 0 0 8px rgba(0,0,0,0.05); */
+/* ==========================================================================
+   4. Usage & Application (Redesigned for Line Art)
+   ========================================================================== */
+
+.usage-guide {
+  /* A simple vertical layout is perfect for this content */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg); /* Consistent spacing between image and text */
 }
 
-.usage-head {
-    font-size: 18px;
-    font-weight: 600;
-    font-family: "Cinzel", serif;
-    color: #8b7d6f; /* luxury gold-brown accent */
-    margin-bottom: 14px;
-    text-align: left;
+.usage-image {
+  width: 100%;
+  height: auto; /* Maintains the image's natural aspect ratio */
+  object-fit: contain; /* Ensures the entire line art is visible without cropping */
+  border-radius: 8px;
+  background-color: #f0f0f0; /* A light background for transparent line art */
+  border: 1px solid var(--color-border-subtle); /* A subtle frame */
+  padding: var(--space-sm); /* A little breathing room inside the frame */
 }
 
-.usage-body {
-    font-size: 13px;
-    line-height: 1.7;
-    font-family: "Merriweather", serif;
-    color: #333;
-    margin-bottom: 12px;
-    padding-left: 16px;
-    border-left: 3px solid #e3c08d;
+.usage-text {
+  /* This container for the text needs no special styling */
+}
+
+.usage-guide h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  font-size: 1.1rem;
+  text-align: center; /* Centering the title feels more intentional */
+}
+
+.usage-steps {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: steps-counter;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.usage-steps li {
+  counter-increment: steps-counter;
+  display: flex;
+  /* Using flex-start ensures alignment even if text wraps to multiple lines */
+  align-items: flex-start;
+  gap: var(--space-md);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.usage-steps li::before {
+  content: '0' counter(steps-counter) '.';
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-accent);
 }
 
 
-
-/* Responsiveness at 1500px */
-@media (max-width: 1500px) {
-    .accordion {
-        max-width: 90%;
-    }
-
-    .note-card {
-        max-width: 120px;
-    }
-
-    .note-image {
-        width: 50px;
-        height: 50px;
-    }
-
-    .accordion-btn-custom {
-        font-size: 15px;
-    }
-    .note-type {
-        font-size: 12px;
-    }
-
-    .note-ingredients {
-        font-size: 10px;
-    }
-
-    .note-click {
-        font-size: 8px;
-    }
+/* --- 5. Crafted with Intention --- */
+.story-content blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-lg);
+    margin: var(--space-sm) 0;
+    font-style: italic;
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.8;
 }
 
-/* Responsiveness at 992px */
+/* ==========================================================================
+   C. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
 
-/* Responsiveness at 576px */
-@media (max-width: 992px) {
-    .accordion {
-        max-width: 100%;
-        padding: 0 10px;
+@media (max-width: 768px) {
+    .accordion-button {
+        padding: var(--space-md);
+    }
+    .accordion-body {
+        padding: var(--space-sm) var(--space-md) var(--space-lg);
     }
 
-    .note-card {
-        max-width: 100%;
-        width: 100%;
-        padding: 8px;
+    .product-specs-list {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        gap: var(--space-md);
     }
+    .spec-value {
+        justify-self: start;
+    } /* Left-align values on mobile */
+}
 
-    .note-image {
-        width: 50px;
-        height: 50px;
+@media (min-width: 768px) {
+    /* Side-by-side layout for usage guide on desktop */
+    .usage-guide {
+        grid-template-columns: 1fr 200px;
+        align-items: center;
+        gap: var(--space-xl);
     }
+}
+.usage-summary {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0; /* A light separator line */
+}
 
-    .note-type {
-        font-size: 12px;
-    }
+.usage-summary h4 {
+  margin-bottom: 8px;
+  font-size: 1rem; /* Adjust size as needed */
+  font-weight: 600;
+}
 
-    .note-ingredients {
-        font-size: 10px;
-    }
-
-    .note-click {
-        font-size: 9px;
-    }
-
-    .accordion-btn-custom {
-        font-size: 13px;
-        padding: 10px 0;
-    }
-
-    .accordion-icon-custom {
-        width: 14px;
-        height: 14px;
-    }
-
-    .usage-head {
-        font-size: 12px;
-    }
-
-    .usage-body {
-        font-size: 10px;
-    }
+.usage-summary p {
+  line-height: 1.6;
+  color: var(--color-text-secondary);;
 }

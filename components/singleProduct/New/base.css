@@ -41,7 +41,7 @@
 @media (min-width: 992px) {
   .gallery-container {
     max-width: 33.3333%;
-    min-height: 80vh; /* Adjusted for desktop */
+    min-height: auto; /* Adjusted for desktop */
   }
   .info-container,
   .accordion-container {
@@ -52,7 +52,7 @@
 
 @media (max-width: 991.98px) {
   .gallery-container {
-    min-height: 60vh;
+    min-height: auto;
     max-width: 100%;
   }
   .info-container,
