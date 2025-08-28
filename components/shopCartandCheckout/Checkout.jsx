@@ -1492,7 +1492,7 @@ export default function Checkout() {
                                     <button
                                         className="btn btn-primary w-100 text-uppercase"
                                         type="submit"
-                                        disabled={isDisabled || isLoading}
+                                        disabled={!isDisabled || isLoading}
                                     >
                                         {isLoading
                                             ? "Loading..."
