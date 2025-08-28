@@ -9,8 +9,9 @@ import Pagination1 from "../Pagination1";
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Link from "next/link";
+import LabelIcon from "@/components/labels/LabelIcon";
 
-function DiscountGrid({ title, onlyDiscounted = false }) {
+function NewLaunchGrid({ title, onlyDiscounted = false, onlyNew = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -19,7 +20,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   const [products, setProducts] = useState([]);
   const [selectedColView, setSelectedColView] = useState(3);
   const [page, setPage] = useState(1);
-  const perPage = 9; // ✅ Always show 10 products
+  const perPage = 9;
   const t = useTranslations();
 
   useEffect(() => {
@@ -31,7 +32,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ page: 1, limit: 1000 }), // ✅ Fetch all once
+            body: JSON.stringify({ page: 1, limit: 1000 }),
           }
         );
         const result = await response.json();
@@ -56,8 +57,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     if (subcategory) {
       return removeSpecialCharactersAndAmp(subcategory.subcategory_name)
         .split(" ")
-        .join("-")
-        .toLowerCase();
+        .join("-");
     }
     const clean = removeSpecialCharactersAndAmp(category);
     if (clean === "gift-sets") return "gift-sets";
@@ -67,14 +67,13 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   };
 
   const discPrice = (elm) => {
-    const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST
+    const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
     const start = new Date(elm?.discount?.start_date);
     const end = new Date(elm?.discount?.end_date);
 
     if (elm?.discount && now >= start && now <= end) {
       const discounted = (
-        elm.price -
-        (elm.price * elm.discount.value) / 100
+        elm.price - (elm.price * elm.discount.value) / 100
       ).toFixed(2);
       return (
         <>
@@ -101,11 +100,17 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     return <span className="money price">{elm.price}{currency.symbol}</span>;
   };
 
-  // ✅ Filter discounted/in-stock products
-  const filteredProducts = products
-    .filter((p) => p.product_qty > 0)
-    .filter((p) => p.category_id !== 7)
-    .filter((p) => !onlyDiscounted || (p.discount && p.discount.value > 0));
+  // ✅ Filter logic (onlyDiscounted & onlyNew)
+  // ✅ Filter logic
+const filteredProducts = products
+  .filter((p) => p.product_qty > 0)
+  .filter((p) => {
+    if (onlyDiscounted) return p.discount && p.discount.value > 0;
+    if (onlyNew) return p.labels?.some(label => label.label_name === "New Launch");
+    if (labelName) return p.labels?.some(label => label.label_name === labelName);
+    return true;
+  });
+
 
   const totalPages = Math.ceil(filteredProducts.length / perPage);
   const currentProducts = filteredProducts.slice((page - 1) * perPage, page * perPage);
@@ -115,7 +120,14 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
 
   return (
     <section className="container py-4">
-      <h2 className="section-title fw-normal text-center mb-4">{title}</h2>
+     <h2 class="section-title fw-bold text-center mb-3 display-6 text-uppercase text-primary">
+  {title}
+</h2>
+<p class="fw-light text-center fs-5 text-muted mx-auto">
+  Each fragrance is a journey, meticulously composed to evoke emotion and memory.
+</p>
+
+
       <div className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}>
         {currentProducts.map((elm, i) => (
           <div key={i} className="product-card-wrapper">
@@ -125,7 +137,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                   {JSON.parse(elm.images).map((img, index) => (
                     <SwiperSlide key={index}>
                       <Link
-                        href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(" ").join("-").toLowerCase()}/${isSubcategory(elm.category_name, elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(" ").join("-").toLowerCase()}`}
+                        href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(" ").join("-")}/${isSubcategory(elm.category_name, elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(" ").join("-")}`}
                       >
                         <Image
                           loading="lazy"
@@ -140,11 +152,41 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                   ))}
                 </Swiper>
 
-                {elm.label_name && (
-                  <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
+                {/* {elm.label_name && (
+                  <div
+                    style={{ backgroundColor: elm.label_color }}
+                    className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2"
+                  >
                     {elm.label_name}
                   </div>
-                )}
+                )} */}
+                {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                                            <div
+                                              className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
+                                              style={{ gap: "4px" , zIndex: "1" }}
+                                            >
+                                              {elm.labels.map((lbl, idx) => (
+                                                <LabelIcon
+                                                  key={idx}
+                                                  name={lbl.label_name}
+                                                  title={lbl.label_name}
+                                                  icon={lbl.label_color}
+                                                  size={50}
+                                                />
+                                              ))}
+                                            </div>
+                                          )}
+                                          
+                                          {/* Legacy single label */}
+                                          {!Array.isArray(elm.labels) && elm.label_name && (
+                                            <div className="position-absolute top-0 end-0 mt-2 me-2">
+                                              <LabelIcon
+                                                name={elm.label_name}
+                                                title={elm.label_name}
+                                                size={50}
+                                              />
+                                            </div>
+                                          )}
 
                 {elm.product_qty <= 0 ? (
                   <div style={{ backgroundColor: "#dc3545" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 ">
@@ -179,7 +221,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                 <p className="pc__category">{t(elm.category_name)}</p>
                 <h6 className="pc__title">
                   <Link
-                    href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(" ").join("-").toLowerCase()}/${isSubcategory(elm.category_name, elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(" ").join("-").toLowerCase()}`}
+                    href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(" ").join("-")}/${isSubcategory(elm.category_name, elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(" ").join("-")}`}
                   >
                     {t(he.decode(elm.product_name))}
                   </Link>
@@ -191,7 +233,6 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
         ))}
       </div>
 
-      {/* ✅ Pagination Controls */}
       {totalPages > 1 && (
         <div className="d-flex justify-content-center mt-4">
           <button
@@ -217,4 +258,4 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   );
 }
 
-export default DiscountGrid;
+export default NewLaunchGrid;

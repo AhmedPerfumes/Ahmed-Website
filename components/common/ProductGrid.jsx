@@ -361,7 +361,7 @@ export default function ProductGrid({ category, subcategory }) {
                           {elm.product_qty <= 0 ? (
                             <div
                               style={{ backgroundColor: "#dc3545" }}
-                              className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-index-1"
+                              className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
                             >
                               {t("Out Of Stock")}
                             </div>
@@ -369,7 +369,7 @@ export default function ProductGrid({ category, subcategory }) {
                             elm.discount && (
                               <div
                                 style={{ backgroundColor: "#198754" }}
-                                className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 z-index-1"
+                                className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2"
                               >
                                 {t("Sale")} {elm.discount.value}%
                               </div>

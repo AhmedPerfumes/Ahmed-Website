@@ -843,9 +843,19 @@ export default function Checkout() {
                               ))}
                           </ul>
                         </div>
+                        {isLoggedIn && (
+                          <Link
+                            className="btn-link btn-link_lg default-underline fw-bold pt-4"
+                            href={`/${locale}/account_edit_address`}
+                            target="_blank"
+                          >
+                            - Click to Edit Address -
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>
+                  
                   <div className="col-md-12">
                     <div className="form-floating my-3">
                       <input
@@ -1290,6 +1300,29 @@ export default function Checkout() {
                             {currency.symbol} VAT)
                           </td>
                         </tr>
+                        {/* ✅ Added surprise gift notification right AFTER TOTAL row */}
+                          {(
+                            (!freeShippingFlag
+                              ? parseFloat(shippingServiceCharges[0].price) +
+                                totalPrice +
+                                parseFloat(shippingServiceCharges[1].price) +
+                                (selectedOption === "cod"
+                                  ? parseFloat(shippingServiceCharges[2].price)
+                                  : 0)
+                              : 0 +
+                                totalPrice +
+                                parseFloat(shippingServiceCharges[1].price) +
+                                (selectedOption === "cod"
+                                  ? parseFloat(shippingServiceCharges[2].price)
+                                  : 0)) >= 200
+                          ) && (
+                            <tr>
+                              <td colSpan={2} style={{ color: "green", fontWeight: "bold" }}>
+                                🎁 You have received a surprise gift
+                              </td>
+                            </tr>
+                          )}
+                          {/* ✅ End of new code */}
                       </tbody>
                     </table>
                   </div>
@@ -1391,7 +1424,7 @@ export default function Checkout() {
                     <span>
                       I have read and agree to the website{" "}
                       <Link
-                        href="https://www.ahmedalmaghribi.com/terms-and-condition/"
+                        href={`/${locale}/terms`}
                         target="_blank"
                       >
                         terms and conditions
