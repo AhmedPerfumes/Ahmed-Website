@@ -14,7 +14,6 @@ export default function MyDetails() {
   const [customerId, setCustomerId] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Edit state for all fields
   const [edit, setEdit] = useState({
     customer_name: false,
     customer_email: false,
@@ -25,19 +24,22 @@ export default function MyDetails() {
     customer_name: "",
     customer_email: "",
     customer_mobile: "",
-    password: "", // for display only, not edited here
+    password: "",
     new_password: "",
     confirm_password: "",
   });
 
-  // Save dialog/modal
   const [saveDialog, setSaveDialog] = useState(false);
   const [verifyPassword, setVerifyPassword] = useState("");
   const [saveLoading, setSaveLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Get customer_id from localStorage
+  const [fieldErrors, setFieldErrors] = useState({
+    customer_email: "",
+    customer_mobile: "",
+  });
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const raw = localStorage.getItem("user");
@@ -49,7 +51,6 @@ export default function MyDetails() {
     }
   }, []);
 
-  // Fetch user details
   useEffect(() => {
     if (!customerId) return;
     setLoading(true);
@@ -79,7 +80,6 @@ export default function MyDetails() {
           customer_mobile: json.customer_mobile || "",
         });
 
-        // ✅ Update localStorage with normalized keys
         const user = {
           id: customerId,
           name: json.customer_name || "",
@@ -92,18 +92,16 @@ export default function MyDetails() {
       .finally(() => setLoading(false));
   }, [customerId]);
 
-  // Whether any field is edited
   const isEdited =
     values.customer_name !== initialDetails.customer_name ||
     values.customer_email !== initialDetails.customer_email ||
     values.customer_mobile !== initialDetails.customer_mobile ||
     (values.new_password && values.confirm_password);
 
-  // Open inline edit
   const startEdit = (field) => {
     setEdit((e) => ({ ...e, [field]: true }));
   };
-  // Cancel inline edit
+
   const cancelEdit = (field) => {
     setValues((v) => ({
       ...v,
@@ -113,26 +111,25 @@ export default function MyDetails() {
     }));
     setEdit((e) => ({ ...e, [field]: false }));
   };
-  // Save inline edit to values (not backend yet)
+
   const handleChange = (field, value) => {
     setValues((v) => ({ ...v, [field]: value }));
   };
 
-  // Show Save Changes modal
   const handleShowSave = () => {
     setVerifyPassword("");
     setError("");
     setSuccess("");
+    setFieldErrors({ customer_email: "", customer_mobile: "" });
     setSaveDialog(true);
   };
 
-  // Save to backend (with password verification)
   const handleSave = async () => {
     setSaveLoading(true);
     setError("");
     setSuccess("");
+    setFieldErrors({ customer_email: "", customer_mobile: "" });
 
-    // Password check for password change
     if (values.new_password || values.confirm_password) {
       if (values.new_password.length < 6) {
         setError("New password must be at least 6 characters.");
@@ -146,7 +143,6 @@ export default function MyDetails() {
       }
     }
 
-    // 1. Verify current password with /customerPasswordCheck
     try {
       const passCheckResp = await fetch(`${API_BASE}api/customerPasswordCheck`, {
         method: "POST",
@@ -172,7 +168,6 @@ export default function MyDetails() {
       return;
     }
 
-    // 2. Call update API
     try {
       const resp = await fetch(`${API_BASE}api/customerUpdate`, {
         method: "POST",
@@ -186,12 +181,41 @@ export default function MyDetails() {
         }),
       });
       const res = await resp.json();
-      if (res.status === false || res.error) {
-        setError(res.error || res.message || "Could not save. Please check password.");
+
+      setFieldErrors({ customer_email: "", customer_mobile: "" });
+
+      if (res.status === false || res.error || res.customer_email || res.customer_mobile) {
+        if (res.error?.customer_mobile) {
+          setFieldErrors((f) => ({
+            ...f,
+            customer_mobile: "Mobile already exists",
+          }));
+        }
+        if (res.error?.customer_email) {
+          setFieldErrors((f) => ({
+            ...f,
+            customer_email: "Email already exists",
+          }));
+        }
+
+        if (Array.isArray(res.customer_email) && res.customer_email.length > 0) {
+          setFieldErrors((f) => ({
+            ...f,
+            customer_email: "Email already exists",
+          }));
+        }
+        if (Array.isArray(res.customer_mobile) && res.customer_mobile.length > 0) {
+          setFieldErrors((f) => ({
+            ...f,
+            customer_mobile: "Mobile already exists",
+          }));
+        }
+
+        setError(res.message || "Data already exists. Please check inputs.");
         setSaveLoading(false);
         return;
       }
-      // Success!
+
       setDetails({
         customer_name: values.customer_name,
         customer_email: values.customer_email,
@@ -203,7 +227,6 @@ export default function MyDetails() {
         customer_mobile: values.customer_mobile,
       });
 
-      // ✅ Update localStorage with normalized keys
       const updatedUser = {
         id: customerId,
         name: values.customer_name,
@@ -233,7 +256,6 @@ export default function MyDetails() {
     }
   };
 
-  // Fields to display
   const FIELDS = [
     { key: "customer_name", label: "NAME" },
     { key: "customer_email", label: "E-MAIL" },
@@ -242,83 +264,39 @@ export default function MyDetails() {
   ];
 
   return (
-    <div
-      style={{
-        maxWidth: 520,
-        margin: "60px auto",
-        fontFamily: "Lato, SofiaProRegular",
-      }}
-    >
-      <h2
-        className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-4"
-        style={{letterSpacing: ".02em" }}
-      >
+    <div style={{ maxWidth: 520, margin: "60px auto", fontFamily: "Lato, SofiaProRegular" }}>
+      <h2 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-4" style={{ letterSpacing: ".02em" }}>
         MY DETAILS
       </h2>
       <div>
         {FIELDS.map((f) => (
-          <div
-            key={f.key}
-            className="d-flex align-items-center py-3"
-            style={{ borderBottom: "1px solid #ececec" }}
-          >
+          <div key={f.key} className="d-flex align-items-center py-3" style={{ borderBottom: "1px solid #ececec" }}>
             <div style={{ flex: 2 }}>
-              <div
-                style={{
-                  textTransform: "uppercase",
-                  fontSize: 17,
-                }}
-              >
-                {f.label}
-              </div>
+              <div style={{ textTransform: "uppercase", fontSize: 17 }}>{f.label}</div>
               <div style={{ fontSize: 16, fontWeight: 400, marginTop: 1 }}>
-                {/* Inline edit for all except password */}
                 {edit[f.key] ? (
                   f.key === "password" ? (
                     <>
-                      <Form.Control
-                        type="password"
-                        placeholder="New password"
-                        className="mb-2"
-                        value={values.new_password}
-                        onChange={(e) =>
-                          handleChange("new_password", e.target.value)
-                        }
-                        autoFocus
-                      />
-                      <Form.Control
-                        type="password"
-                        placeholder="Confirm new password"
-                        value={values.confirm_password}
-                        onChange={(e) =>
-                          handleChange("confirm_password", e.target.value)
-                        }
-                      />
+                      <Form.Control type="password" placeholder="New password" className="mb-2"
+                        value={values.new_password} onChange={(e) => handleChange("new_password", e.target.value)} autoFocus />
+                      <Form.Control type="password" placeholder="Confirm new password"
+                        value={values.confirm_password} onChange={(e) => handleChange("confirm_password", e.target.value)} />
                       <div className="mt-1">
-                        <Button
-                          size="sm"
-                          variant="link"
-                          onClick={() => cancelEdit("password")}
-                          style={{ textDecoration: "underline" }}
-                        >
+                        <Button size="sm" variant="link" onClick={() => cancelEdit("password")} style={{ textDecoration: "underline" }}>
                           Cancel
                         </Button>
                       </div>
                     </>
                   ) : (
                     <>
-                      <Form.Control
-                        value={values[f.key]}
-                        onChange={(e) => handleChange(f.key, e.target.value)}
-                        autoFocus
-                      />
+                      <Form.Control value={values[f.key]} onChange={(e) => handleChange(f.key, e.target.value)} autoFocus />
+                      {fieldErrors[f.key] && (
+                        <div className="text-danger mt-1" style={{ fontSize: 14 }}>
+                          {fieldErrors[f.key]}
+                        </div>
+                      )}
                       <div className="mt-1">
-                        <Button
-                          size="sm"
-                          variant="link"
-                          onClick={() => cancelEdit(f.key)}
-                          style={{ textDecoration: "underline" }}
-                        >
+                        <Button size="sm" variant="link" onClick={() => cancelEdit(f.key)} style={{ textDecoration: "underline" }}>
                           Cancel
                         </Button>
                       </div>
@@ -335,12 +313,7 @@ export default function MyDetails() {
             </div>
             <div style={{ flex: 1, textAlign: "right" }}>
               {!edit[f.key] && (
-                <Button
-                  variant="link"
-                  className="fw-semibold text-dark p-0"
-                  style={{ fontSize: 17, textDecoration: "underline" }}
-                  onClick={() => startEdit(f.key)}
-                >
+                <Button size="sm" variant="link" onClick={() => startEdit(f.key)} style={{ textDecoration: "underline" }}>
                   Edit
                 </Button>
               )}
@@ -348,59 +321,35 @@ export default function MyDetails() {
           </div>
         ))}
       </div>
-      {/* Save Changes button */}
+
       <div className="text-center mt-4">
-        <Button
-          variant="dark"
-          size="lg"
-          style={{
-            paddingLeft: 40,
-            paddingRight: 40,
-            borderRadius: 24,
-            fontWeight: 500,
-            fontSize: 17,
-          }}
-          onClick={handleShowSave}
-          disabled={!isEdited}
-        >
+        <Button disabled={!isEdited} onClick={handleShowSave}>
           Save Changes
         </Button>
       </div>
-      {/* Password Confirmation Modal */}
+
       <Modal show={saveDialog} onHide={() => setSaveDialog(false)} centered>
-        <Modal.Header closeButton className="border-0">
-          <Modal.Title>Confirm Your Password</Modal.Title>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Save</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {error && <Alert variant="danger">{error}</Alert>}
           {success && <Alert variant="success">{success}</Alert>}
           <Form.Group>
-            <Form.Label>
-              Please enter your current password to save changes
-            </Form.Label>
+            <Form.Label>Enter your current password to save changes</Form.Label>
             <Form.Control
               type="password"
               value={verifyPassword}
               onChange={(e) => setVerifyPassword(e.target.value)}
-              autoFocus
             />
           </Form.Group>
         </Modal.Body>
-        <Modal.Footer className="border-0">
+        <Modal.Footer>
           <Button variant="secondary" onClick={() => setSaveDialog(false)}>
             Cancel
           </Button>
-          <Button
-            variant="dark"
-            onClick={handleSave}
-            disabled={
-              !verifyPassword ||
-              saveLoading ||
-              (values.new_password &&
-                values.new_password !== values.confirm_password)
-            }
-          >
-            {saveLoading ? "Saving..." : "Save"}
+          <Button variant="primary" onClick={handleSave} disabled={saveLoading}>
+            {saveLoading ? "Saving…" : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>
