@@ -104,7 +104,6 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   // ✅ Filter discounted/in-stock products
   const filteredProducts = products
     .filter((p) => p.product_qty > 0)
-    .filter((p) => p.category_id !== 7)
     .filter((p) => !onlyDiscounted || (p.discount && p.discount.value > 0));
 
   const totalPages = Math.ceil(filteredProducts.length / perPage);

@@ -12,6 +12,7 @@ import Products from "../homes/home-2/Products";
 import TopCollections from "../homes/home-5/TopCollections";
 import DiscountedProductsSlider from "../common/features/DiscountedProductsSlider";
 import DiscountedProductsGrid from "../common/features/DiscountedProductsGrid";
+import DiscountGrid from "../common/features/DiscountGrid";
 
 function CityWalk() {
     const locale = useLocale();
@@ -47,7 +48,7 @@ function CityWalk() {
         </div>
         <div className="pt-5 mt-5">
 
-        <DiscountedProductsSlider title="Summer Vibes, Cooler Prices!" onlyDiscounted={true}/>
+        <DiscountGrid title="Summer Vibes, Cooler Prices!" onlyDiscounted={true}/>
         </div>
             <section className="d-flex section-3">
                 <div className="">
