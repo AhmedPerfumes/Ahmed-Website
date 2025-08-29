@@ -1,16 +1,66 @@
 "use client";
 import { allProducts } from "@/data/products";
-import React, { useEffect } from "react";
-import { useContext, useState } from "react";
+import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
 import { useMenu } from './MenuContext';
 
-const dataContext = React.createContext();
-export const useContextElement = () => {
-  return useContext(dataContext);
+const dataContext = createContext();
+export const useContextElement = () => useContext(dataContext);
+
+const cartReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_PRODUCT':
+      const existingProduct = state.products.find(
+        (p) => p.product_id === action.payload.product_id && p.campaign === action.payload.campaign
+      );
+      if (existingProduct) {
+        return {
+          ...state,
+          products: state.products.map((p) =>
+            p.product_id === action.payload.product_id && p.campaign === action.payload.campaign
+              ? { ...p, quantity: (p.quantity || 0) + (action.payload.quantity || 1) }
+              : p
+          ),
+          isProcessing: false,
+        };
+      }
+      return {
+        ...state,
+        products: [...state.products, { ...action.payload, quantity: action.payload.quantity || 1 }],
+        isProcessing: false,
+      };
+    case 'REMOVE_GIFT':
+      return {
+        ...state,
+        products: state.products.filter(
+          (p) =>
+            !p.is_gift ||
+            (action.payload.productId && p.product_id !== action.payload.productId) ||
+            (action.payload.campaign && p.campaign !== action.payload.campaign)
+        ),
+        isProcessing: false,
+      };
+    case 'REMOVE_PRODUCT':
+      return {
+        ...state,
+        products: state.products.filter((p) => p.product_id !== action.payload.productId),
+        isProcessing: false,
+      };
+    case 'SET_PRODUCTS':
+      // Ensure payload is an array
+      const newProducts = Array.isArray(action.payload) ? action.payload : [];
+      return { ...state, products: newProducts, isProcessing: false };
+    case 'SET_PROCESSING':
+      return { ...state, isProcessing: action.payload };
+    default:
+      return state;
+  }
 };
 
 export default function Context({ children }) {
-  const [cartProducts, setCartProducts] = useState([]);
+  const [state, dispatch] = useReducer(cartReducer, {
+    products: [], // Ensure initial state is an array
+    isProcessing: false,
+  });
   const [wishList, setWishList] = useState([]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -20,94 +70,36 @@ export default function Context({ children }) {
 
   const { shippingServiceCharges } = useMenu();
 
-  // console.log('shippingServiceCharges', shippingServiceCharges[3]?.price);
-
   useEffect(() => {
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    const subtotal = cartProducts.reduce((accumulator, product) => {
-      if(product?.discount) {
-        if(new Date(current_date_time) >= new Date(product.discount.start_date) && new Date(current_date_time) <= new Date(product.discount.end_date)) {
-          if(product.discount.discount_type == 'percent') {
-            const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
-            return accumulator + product.quantity * discount_price;
-          } else if(product.discount.discount_type == 'amount') {
-            const discount_price = (product.price - product.discount.value).toFixed(2);
-            return accumulator + product.quantity * discount_price;
-          }
-          // const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
-          // return accumulator + product.quantity * discount_price;
-        }
-      } else if(product?.coupon && !Array.isArray(product.coupon) && couponDataContext != null) {
-        if(new Date(current_date_time) >= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.end_date) && product.coupon[couponDataContext?.code.toLowerCase()]?.code == couponDataContext?.code.toLowerCase()) {
-          const coupon_price = (product.price - (product.price / 100 * product.coupon[couponDataContext?.code.toLowerCase()]?.value)).toFixed(2);
-          return accumulator + product.quantity * coupon_price;
-        }
+    try {
+      const items = JSON.parse(localStorage.getItem("cartList"));
+      if (Array.isArray(items)) {
+        console.log('Loading cart from localStorage:', items);
+        dispatch({ type: 'SET_PRODUCTS', payload: items });
+      } else {
+        console.log('No valid cart in localStorage, setting empty array');
+        dispatch({ type: 'SET_PRODUCTS', payload: [] });
       }
-      // else if(product?.sale_price) {
-      //   const sale_price = (product.sale_price).toFixed(2);
-      //   return accumulator + product.quantity * sale_price;
-      // }
-      return accumulator + product.quantity * product.price;
-    }, 0);
-    setTotalPrice(subtotal);
-    console.log('shippingServiceCharges', shippingServiceCharges[3]?.price, (subtotal).toFixed(2));
-    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
-    setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
-  }, [cartProducts, couponDataContext, shippingServiceCharges]);
-
-  const addProductToQuickView = (product) => {
-    setQuickViewItem(product);
-  };
-
-  const addProductToCart = (product) => {
-    // console.log('222product', product);
-    const item = {
-      ...product,
-      quantity: product.quantity??1,
-    };
-    setCartProducts((prevCart) => [...prevCart, item]);
-
-    document
-      .getElementById("cartDrawerOverlay")
-      .classList.add("page-overlay_visible");
-    document.getElementById("cartDrawer").classList.add("aside_visible");
-  };
-  const isAddedToCartProducts = (id) => {
-    if (cartProducts.filter((elm) => elm.product_id == id)[0]) {
-      return true;
-    }
-    return false;
-  };
-
-  const toggleWishlist = (id) => {
-    if (wishList.includes(id)) {
-      setWishList((pre) => [...pre.filter((elm) => elm != id)]);
-    } else {
-      setWishList((pre) => [...pre, id]);
-    }
-  };
-  const isAddedtoWishlist = (id) => {
-    if (wishList.includes(id)) {
-      return true;
-    }
-    return false;
-  };
-  useEffect(() => {
-    const items = localStorage.getItem("cartList") && JSON.parse(localStorage.getItem("cartList"));
-    if (items?.length) {
-      setCartProducts(items);
+    } catch (error) {
+      console.error('Error parsing cartList from localStorage:', error);
+      dispatch({ type: 'SET_PRODUCTS', payload: [] });
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cartList", JSON.stringify(cartProducts));
-  }, [cartProducts]);
+    console.log('Saving cartProducts to localStorage:', state.products);
+    localStorage.setItem("cartList", JSON.stringify(state.products));
+  }, [state.products]);
+
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("wishlist"));
-    if (items?.length) {
-      setWishList(items);
+    try {
+      const items = JSON.parse(localStorage.getItem("wishlist")) || [];
+      if (Array.isArray(items)) {
+        setWishList(items);
+      }
+    } catch (error) {
+      console.error('Error parsing wishlist from localStorage:', error);
+      setWishList([]);
     }
   }, []);
 
@@ -115,32 +107,115 @@ export default function Context({ children }) {
     localStorage.setItem("wishlist", JSON.stringify(wishList));
   }, [wishList]);
 
-  const removeGiftFromCart = (productIdToRemove = null, campaignKey = null) => {
-    console.log('productIdToRemove', productIdToRemove, campaignKey);
-    setCartProducts((prev) => {
-      if (!productIdToRemove && campaignKey) {
-        return prev.filter(
-          (item) => !(item.is_gift && item.campaign === campaignKey)
-        );
+  useEffect(() => {
+    const currentUTC = new Date();
+    const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    const subtotal = state.products.reduce((accumulator, product) => {
+      if (product?.discount) {
+        if (
+          new Date(current_date_time) >= new Date(product.discount.start_date) &&
+          new Date(current_date_time) <= new Date(product.discount.end_date)
+        ) {
+          if (product.discount.discount_type === 'percent') {
+            const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
+            return accumulator + product.quantity * discount_price;
+          } else if (product.discount.discount_type === 'amount') {
+            const discount_price = (product.price - product.discount.value).toFixed(2);
+            return accumulator + product.quantity * discount_price;
+          }
+        }
+      } else if (product?.coupon && !Array.isArray(product.coupon) && couponDataContext) {
+        if (
+          new Date(current_date_time) >= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.start_date) &&
+          new Date(current_date_time) <= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.end_date) &&
+          product.coupon[couponDataContext?.code.toLowerCase()]?.code === couponDataContext?.code.toLowerCase()
+        ) {
+          const coupon_price = (product.price - (product.price / 100 * product.coupon[couponDataContext?.code.toLowerCase()]?.value)).toFixed(2);
+          return accumulator + product.quantity * coupon_price;
+        }
       }
+      return accumulator + product.quantity * product.price;
+    }, 0);
+    setTotalPrice(subtotal);
+    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
+    setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
+  }, [state.products, couponDataContext, shippingServiceCharges]);
 
-      // Remove a specific gift by ID (optional: still respect campaignKey)
-      if (productIdToRemove) {
-        return prev.filter(
-          (item) => !(item.is_gift && item.product_id === productIdToRemove)
-        );
+  const addProductToCart = (product) => {
+    if (state.isProcessing) {
+      console.log('Skipping addProductToCart: processing in progress');
+      return;
+    }
+    console.log('addProductToCart:', product);
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'ADD_PRODUCT', payload: product });
+    document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+    document.getElementById("cartDrawer")?.classList.add("aside_visible");
+  };
+
+  const removeGiftFromCart = (productId = null, campaign = null) => {
+    if (state.isProcessing) {
+      console.log('Skipping removeGiftFromCart: processing in progress', { productId, campaign });
+      return;
+    }
+    console.log('removeGiftFromCart:', { productId, campaign });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
+  };
+
+  const removeProduct = (productId) => {
+    if (state.isProcessing) {
+      console.log('Skipping removeProduct: processing in progress', { productId });
+      return;
+    }
+    console.log('removeProduct:', { productId });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'REMOVE_PRODUCT', payload: { productId } });
+  };
+
+  const setCartProducts = (productsOrFn) => {
+    console.log('setCartProducts called:', productsOrFn);
+    if (typeof productsOrFn === 'function') {
+      // Handle functional update
+      const newProducts = productsOrFn(state.products);
+      if (!Array.isArray(newProducts)) {
+        console.error('setCartProducts: Functional update returned non-array', newProducts);
+        return;
       }
+      dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+    } else {
+      // Direct array update
+      if (!Array.isArray(productsOrFn)) {
+        console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
+        return;
+      }
+      dispatch({ type: 'SET_PRODUCTS', payload: productsOrFn });
+    }
+  };
 
-      // Default: remove all gifts
-      return prev.filter((item) => !item.is_gift);
-      });
+  const addProductToQuickView = (product) => {
+    setQuickViewItem(product);
+  };
+
+  const isAddedToCartProducts = (id) => {
+    return state.products.some((elm) => elm.product_id === id);
+  };
+
+  const toggleWishlist = (id) => {
+    setWishList((prev) => prev.includes(id) ? prev.filter((elm) => elm !== id) : [...prev, id]);
+  };
+
+  const isAddedtoWishlist = (id) => {
+    return wishList.includes(id);
   };
 
   const contextElement = {
-    cartProducts,
+    cartProducts: state.products,
     setCartProducts,
     totalPrice,
     addProductToCart,
+    removeProduct, // New function for removing non-gift products
     isAddedToCartProducts,
     toggleWishlist,
     isAddedtoWishlist,
@@ -155,9 +230,6 @@ export default function Context({ children }) {
     setCouponDataContext,
     removeGiftFromCart,
   };
-  return (
-    <dataContext.Provider value={contextElement}>
-      {children}
-    </dataContext.Provider>
-  );
+
+  return <dataContext.Provider value={contextElement}>{children}</dataContext.Provider>;
 }

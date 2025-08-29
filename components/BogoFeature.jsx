@@ -45,7 +45,7 @@ const BOGOFeature = () => {
   const [selectedGifts, setSelectedGifts] = useState({});
   const prevCartRef = useRef([]);
   const [promotions, setPromotions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading ] = useState(true);
   const lastAddedGiftRef = useRef(null);
 
   useEffect(() => {
@@ -202,6 +202,8 @@ const BOGOFeature = () => {
                   addProductToCart({
                     ...bogoGift,
                     is_gift: true,
+                    discount: null,
+                    coupon: [],
                     price: '0',
                     quantity: giftQuantity,
                     campaign,
@@ -229,6 +231,8 @@ const BOGOFeature = () => {
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
+                  discount: null,
+                  coupon: [],
                   price: '0',
                   quantity: giftQuantity,
                   campaign,
@@ -260,6 +264,8 @@ const BOGOFeature = () => {
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
+                  discount: null,
+                  coupon: [],
                   price: '0',
                   quantity: giftQuantity,
                   campaign,
@@ -344,12 +350,16 @@ const BOGOFeature = () => {
               });
             }
           });
+          let remainingGifts = giftsAllowed - newGiftsToAdd
+            .filter((g) => g.campaign === campaign)
+            .reduce((sum, g) => sum + (g.quantity || 0), 0);
           eligibleProducts.forEach((product) => {
+            if (remainingGifts <= 0) return;
             const giftExists = currentGifts.find((g) => g.product_id === product.product_id);
-            if (!giftExists && giftsAllowed > currentGifts.reduce((sum, g) => sum + (g.quantity || 0), 0)) {
+            if (!giftExists) {
               const bogoGift = free_products.find((fp) => fp.product_id === product.product_id);
               if (bogoGift) {
-                const giftQuantity = Math.min(product.quantity, giftsAllowed);
+                const giftQuantity = Math.min(product.quantity, remainingGifts);
                 console.log(`111 Adding gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
                 addProductToCart({
                   ...bogoGift,
@@ -364,8 +374,9 @@ const BOGOFeature = () => {
                   quantity: giftQuantity,
                   campaign,
                 });
+                remainingGifts -= giftQuantity;
               }
-            } else if (giftExists) {
+            } else {
               newGiftsToAdd.push({
                 product_id: product.product_id,
                 quantity: giftExists.quantity,
@@ -455,6 +466,8 @@ const BOGOFeature = () => {
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
+                  discount: null,
+                  coupon: [],
                   price: '0',
                   quantity: giftQuantity,
                   campaign,

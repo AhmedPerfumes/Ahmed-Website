@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -48,9 +48,9 @@ const FreeGiftFeature = ({ couponData }) => {
 
   // Filter out "Collections" products
   const nonCollectionProducts = cartProducts.filter(
-    (item) => item.category_name?.toLowerCase() !== "collections" &&
-    item.discount === null &&
+    (item) =>item.category_name?.toLowerCase() !== "collections" &&
     item.category_name?.toLowerCase() !== 'online exclusive' &&
+    item.discount === null &&
     !item.is_gift &&
     item.coupon.length == 0
   );
@@ -118,7 +118,7 @@ const FreeGiftFeature = ({ couponData }) => {
           removeGiftFromCart(null, item.campaign);
         }
       });
-      addProductToCart({ ...product, quantity: 1 });
+      addProductToCart({ ...product, quantity: 1, is_gift: true, campaign: product.campaign });
       setSelectedGift(product.product_id);
       console.log('Cart updated, selectedGift set to:', product.product_id);
       console.log('Updated cartProducts:', cartProducts);
@@ -141,14 +141,19 @@ const FreeGiftFeature = ({ couponData }) => {
         setSelectedGift(null);
       }
     } else {
-      // Check if there’s a gift in the cart
-      const giftInCart = cartProducts.find((item) => item.is_gift);
+      // Determine the campaign for the threshold
+      const thresholdCampaign = activeThreshold.gifts[0]?.campaign || '';
+      // Check if there’s a gift in the cart for this threshold's campaign
+      const giftInCart = cartProducts.find((item) => item.is_gift && item.campaign === thresholdCampaign);
       if (activeThreshold.gifts.length === 1) {
         // Single gift: auto-add if not already in cart
         const singleGift = activeThreshold.gifts[0];
         if (!giftInCart || giftInCart.product_id !== singleGift.product_id) {
           console.log('Auto-adding single gift:', singleGift.product_id);
           handleGiftSelect(singleGift);
+        } else if (giftInCart.product_id !== selectedGift) {
+          // Update selectedGift to match cart
+          setSelectedGift(giftInCart.product_id);
         }
       } else if (giftInCart) {
         // Multiple gifts: ensure the gift in cart is valid for the current threshold
