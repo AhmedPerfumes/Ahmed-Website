@@ -1337,7 +1337,7 @@ export default function Checkout() {
                           </td>
                         </tr>
                         {/* ✅ Added surprise gift notification right AFTER TOTAL row */}
-                          {(
+                          {/* {(
                             (!freeShippingFlag
                               ? parseFloat(shippingServiceCharges[0].price) +
                                 totalPrice +
@@ -1357,7 +1357,7 @@ export default function Checkout() {
                                 🎁 You have received a surprise gift
                               </td>
                             </tr>
-                          )}
+                          )} */}
                           {/* ✅ End of new code */}
                       </tbody>
                     </table>
