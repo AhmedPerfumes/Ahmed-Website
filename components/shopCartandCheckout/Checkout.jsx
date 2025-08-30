@@ -239,7 +239,7 @@ export default function Checkout() {
 
   // Validate billing fields
   if (!billing.first_name.trim()) newErrors.first_name = "First Name is required";
-  if (!billing.last_name.trim()) newErrors.last_name = "Last Name is required";
+  // if (!billing.last_name.trim()) newErrors.last_name = "Last Name is required";
   if (!billing.country.trim()) newErrors.country = "Country is required";
   if (!billing.area.trim()) newErrors.area = "Area / Mantaqa is required";
   if (!billing.building.trim()) newErrors.building = "Building / Villa / Apartment is required";
@@ -369,7 +369,7 @@ export default function Checkout() {
       } else {
         if (data.products) setError(data.products);
         if (data["billingAddress.first_name"]) setError(data["billingAddress.first_name"]);
-        if (data["billingAddress.last_name"]) setError(data["billingAddress.last_name"]);
+        // if (data["billingAddress.last_name"]) setError(data["billingAddress.last_name"]);
         if (data["billingAddress.email"]) setError(data["billingAddress.email"]);
         if (data["billingAddress.mobile"]) setError(data["billingAddress.mobile"]);
         if (data["billingAddress.area"]) setError(data["billingAddress.area"]);
@@ -753,7 +753,6 @@ export default function Checkout() {
                         name="billingAddress.last_name"
                         value={formData.billingAddress.last_name}
                         onChange={handleChange}
-                        required
                       />
                       <label htmlFor="checkout_last_name">Last Name</label>
                       {/* {fieldErrors.last_name && (
