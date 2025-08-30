@@ -13,7 +13,6 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    console.log(product, "in infobase")
     // Runs only on client
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 992);

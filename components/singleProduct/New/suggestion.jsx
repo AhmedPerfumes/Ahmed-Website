@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 
 const relatedProducts = [
@@ -88,7 +89,7 @@ const Suggestion = () => {
                 (e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.1)")
               }
             >
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
                 className="w-100"

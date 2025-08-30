@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useRef, useState } from "react";
 
 const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
@@ -51,7 +52,9 @@ const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <img
+      <Image
+        height={1000}
+        width={1000}
         src={src}
         alt="Product"
         className="w-100"
@@ -62,6 +65,7 @@ const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
           transition: "filter 0.3s ease",
           filter: visible ? "blur(2px)" : "none",
         }}
+        loading="lazy"
       />
 
       <div

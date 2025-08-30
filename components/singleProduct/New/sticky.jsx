@@ -6,6 +6,7 @@ import { useContextElement } from "@/context/Context"; // ✅ hook from your ref
 import { useTranslations } from "next-intl";
 import "./Sticky.css";
 import { useMenu } from "@/context/MenuContext";
+import Image from "next/image";
 
 const Sticky = ({ image, name, price, product }) => {
     const [show, setShow] = useState(false);
@@ -14,7 +15,11 @@ const Sticky = ({ image, name, price, product }) => {
     let category = product?.category;
     let subcategory = product?.subcategory;
     const [quantity, setQuantity] = useState(1);
-    const { isLoading: isMenuLoading, error: isMenuError, currency, } = useMenu();
+    const {
+        isLoading: isMenuLoading,
+        error: isMenuError,
+        currency,
+    } = useMenu();
 
     // check if already in cart
     const isIncludeCard = () => {
@@ -77,17 +82,21 @@ const Sticky = ({ image, name, price, product }) => {
 
     return (
         <div className="sticky-container d-flex align-items-center position-fixed start-50 translate-middle-x shadow rounded-pill border bg-white">
-            <img
+            <Image
+                width={100}
+                height={100}
                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${image}`}
                 alt={`Thumbnail for ${product.name}`}
-                className="rounded-circle border"
+                className="rounded-circle border img"
             />
 
             <div className="flex-grow-1 text-truncate">
                 <p className="mb-0 fw-medium" title={name}>
                     {name}
                 </p>
-                <p className="mb-0 fw-bold">{price} {currency.symbol}</p>
+                <p className="mb-0 fw-bold">
+                    {price} {currency.symbol}
+                </p>
             </div>
 
             <button

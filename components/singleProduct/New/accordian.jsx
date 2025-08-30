@@ -1,6 +1,7 @@
 import React from "react";
 import "./accordian.css";
 import { useMenu } from "@/context/MenuContext";
+import Image from "next/image";
 // The InfoCard component is no longer used in this design, so you could remove the import.
 
 const howToApplyContent = {
@@ -255,41 +256,8 @@ const ProductAccordion = ({ product }) => {
 
     const usageInfo = getUsageInfo(product);
 
-    const storyText =
-        "A captivating infusion of opposites... Bold yet soft. Intimate yet powerful. This fragrance is a tribute to contrasts in perfect harmony."; // This should ideally come from product.story
-
     return (
         <div className="accordion" id="productAccordion">
-            {/* --- Product Overview --- */}
-            {productOverviewData && productOverviewData.length > 0 && (
-                <AccordionItem title="Product Overview" id="One">
-                    <div className="row g-4">
-                        {productOverviewData.map((item, idx) => (
-                            <div
-                                className="col-12 col-md-6"
-                                style={{ maxWidth: "50%" }}
-                                key={idx}
-                            >
-                                <div className="highlight-grid-item">
-                                    <img
-                                        src={item.icon}
-                                        alt=""
-                                        className="highlight-icon"
-                                    />
-                                    <div className="highlight-text">
-                                        <h6 className="highlight-title">
-                                            {item.head}
-                                        </h6>
-                                        <p className="highlight-desc">
-                                            {item.text}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </AccordionItem>
-            )}
 
             {/* --- Fragrance Profile --- */}
             {(notesData?.length > 0 || fragranceSummaryData?.length > 0) && (
@@ -303,7 +271,9 @@ const ProductAccordion = ({ product }) => {
                         <div className="notes-journey-container">
                             {notesData.map((note) => (
                                 <div className="note-item" key={note.id}>
-                                    <img
+                                    <Image
+                                        height={500}
+                                        width={500}
                                         src={note.image}
                                         alt={note.type}
                                         className="note-item-image"
@@ -335,10 +305,12 @@ const ProductAccordion = ({ product }) => {
                         <div className="highlights-list">
                             {fragranceSummaryData.map((item, idx) => (
                                 <div className="highlight-item" key={idx}>
-                                    <img
+                                    <Image
                                         src={item.icon}
                                         alt=""
                                         className="highlight-icon"
+                                        height={500}
+                                        width={500}
                                     />
                                     <div className="highlight-text">
                                         <h6 className="highlight-title">
@@ -355,16 +327,51 @@ const ProductAccordion = ({ product }) => {
                 </AccordionItem>
             )}
 
+            {/* --- Product Overview --- */}
+            {productOverviewData && productOverviewData.length > 0 && (
+                <AccordionItem title="Product Overview" id="One">
+                    <div className="row g-4">
+                        {productOverviewData.map((item, idx) => (
+                            <div
+                                className="col-12 col-md-6"
+                                style={{ maxWidth: "50%" }}
+                                key={idx}
+                            >
+                                <div className="highlight-grid-item">
+                                    <Image
+                                        src={item.icon}
+                                        alt=""
+                                        className="highlight-icon"
+                                        height={500}
+                                        width={500}
+                                    />
+                                    <div className="highlight-text">
+                                        <h6 className="highlight-title">
+                                            {item.head}
+                                        </h6>
+                                        <p className="highlight-desc">
+                                            {item.text}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </AccordionItem>
+            )}
+
             {/* --- Key Highlights --- */}
             {keyHighlightsData && keyHighlightsData.length > 0 && (
                 <AccordionItem title="Key Highlights" id="Three">
                     <div className="highlights-list">
                         {keyHighlightsData.map((item, idx) => (
                             <div className="highlight-item" key={idx}>
-                                <img
+                                <Image
                                     src={item.icon}
                                     alt=""
                                     className="highlight-icon"
+                                    height={500}
+                                    width={500}
                                 />
                                 <div className="highlight-text">
                                     <h6 className="highlight-title">
@@ -385,10 +392,12 @@ const ProductAccordion = ({ product }) => {
                 <AccordionItem title="Usage & Application" id="Four">
                     <div className="usage-guide">
                         {/* The instructional image is now the hero element, placed at the top */}
-                        <img
+                        <Image
                             src={usageInfo.imgSrc}
                             alt={`How to apply ${usageInfo.title || "product"}`}
                             className="usage-image"
+                            height={500}
+                            width={500}
                         />
 
                         <div className="usage-text">
@@ -430,10 +439,12 @@ const ProductAccordion = ({ product }) => {
                             key={idx}
                         >
                             <div className="highlight-grid-item">
-                                <img
+                                <Image
                                     src={item.icon}
                                     alt=""
                                     className="highlight-icon"
+                                    height={500}
+                                    width={500}
                                 />
                                 <div className="highlight-text">
                                     <h6 className="highlight-title">

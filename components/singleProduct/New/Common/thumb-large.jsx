@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 const ThumbLarge = ({ images, onThumbnailClick }) => {
@@ -7,7 +8,9 @@ const ThumbLarge = ({ images, onThumbnailClick }) => {
         style={{ backgroundColor: "#FAF9F7" }}
       >
         {images.map((img, i) => (
-          <img
+          <Image
+            height={500}
+            width={500}
             key={i}
             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${img}`}
             alt={`thumb-${i}`}

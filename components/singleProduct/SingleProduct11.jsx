@@ -14,6 +14,7 @@ import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 import Base from "./New/base";
+import ProductDescription from "./New/ProductDescription";
 
 export default function SingleProduct11({ category, subcategory, product }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -193,7 +194,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
        
       <Base product={{...product, category, subcategory}} />
 
-      <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
+      {/* <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
         <div className="product-single__details-list">
           <h2 className="product-single__details-list__title text-white">
             Description
@@ -211,7 +212,9 @@ export default function SingleProduct11({ category, subcategory, product }) {
           </div>
           
         </div>
-      </section>
+      </section> */}
+
+      <ProductDescription product={{...product, category, subcategory}} />
       </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
     </>
   );

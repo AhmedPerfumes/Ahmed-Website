@@ -1,0 +1,130 @@
+/*
+ * 1. Styling the "FRAGRANCE NOTES" heading to match the image
+ */
+.product-single__details-list__title {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px; /* Adds space before the first note block */
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Optional subtle underline */
+}
+
+
+/*
+ * 2. The main container for a single note (e.g., Top Notes)
+ */
+.note-block {
+    display: flex;
+    align-items: center;
+    gap: 60px; /* Space between image and text */
+    margin-bottom: 60px; /* Space between each note block */
+}
+
+/*
+ * 3. The image wrapper and the image itself
+ */
+.note-block__image {
+    flex-shrink: 0; /* Prevents the image from shrinking */
+    width: 600px; /* Adjust width as needed */
+    height: 600px; /* Adjust height as needed */
+}
+
+.note-block__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+
+/*
+ * 4. The text content wrapper
+ */
+.note-block__text {
+    padding-left: 5rem;
+    padding-right: 5rem;
+    flex-grow: 1; /* Allows the text block to take the remaining space */
+}
+
+/*
+ * 5. Styling for the title (e.g., "Top Notes")
+ */
+.note-block__title {
+    font-family: 'Georgia', 'Times New Roman', serif; /* A classic serif font */
+    font-size: 3.5rem; /* Large font size */
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+/*
+ * 6. Styling for the description paragraph
+ */
+.note-block__description {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85); /* Slightly off-white for readability */
+}
+
+
+/*
+ * 7. Responsive adjustments for mobile screens
+ */
+@media (max-width: 992px) {
+    .note-block {
+        flex-direction: column; /* Stack image and text vertically */
+        gap: 30px;
+    }
+
+    .note-block__image {
+        width: 100%;
+        height: auto; /* Let height adjust to aspect ratio */
+        max-width: 400px; /* Optional: limit max width on mobile */
+    }
+
+    .note-block__title {
+        font-size: 2.5rem; /* Reduce title size on smaller screens */
+    }
+}
+
+/*
+ * 8. Styling for notes displayed as simple text
+ * (Add these new rules to your existing CSS file)
+ */
+.simple-note {
+    margin-bottom: 60px; /* Same spacing as note-block */
+    padding-left: 5rem;  /* Align with the text of the main note block */
+    padding-right: 5rem;
+}
+
+.simple-note__title {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 2.5rem; /* Slightly smaller than the note-block title */
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+.simple-note__description {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/*
+ * Responsive adjustments for simple notes
+ */
+@media (max-width: 992px) {
+    .simple-note {
+        padding-left: 0;
+        padding-right: 0;
+        text-align: center; /* Center align text on mobile for a clean look */
+    }
+
+    .simple-note__title {
+        font-size: 2rem;
+    }
+}
