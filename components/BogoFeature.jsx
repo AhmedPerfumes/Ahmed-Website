@@ -204,6 +204,7 @@ const BOGOFeature = () => {
                     is_gift: true,
                     discount: null,
                     coupon: [],
+                    type: 'bogo',
                     price: '0',
                     quantity: giftQuantity,
                     campaign,
@@ -233,6 +234,7 @@ const BOGOFeature = () => {
                   is_gift: true,
                   discount: null,
                   coupon: [],
+                  type: 'bogo',
                   price: '0',
                   quantity: giftQuantity,
                   campaign,
@@ -266,6 +268,7 @@ const BOGOFeature = () => {
                   is_gift: true,
                   discount: null,
                   coupon: [],
+                  type: 'bogo',
                   price: '0',
                   quantity: giftQuantity,
                   campaign,
@@ -588,7 +591,7 @@ const BOGOFeature = () => {
         timestamp: new Date().toISOString()
       });
       try {
-        addProductToCart({ ...product, is_gift: true, "discount": null, "coupon": [], price: '0', quantity: parsedQuantity, campaign });
+        addProductToCart({ ...product, is_gift: true, "discount": null, "coupon": [], price: '0', quantity: parsedQuantity, campaign, type: 'bogo', selection_rule });
         console.log('222 addProductToCart succeeded for:', product.product_id, { timestamp: new Date().toISOString() });
         lastAddedGiftRef.current = { product_id: product.product_id, campaign };
       } catch (error) {

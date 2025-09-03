@@ -50,7 +50,7 @@ const FreeGiftFeature = ({ couponData }) => {
   const nonCollectionProducts = cartProducts.filter(
     (item) =>item.category_name?.toLowerCase() !== "collections" &&
     item.category_name?.toLowerCase() !== 'online exclusive' &&
-    item.discount === null &&
+    // item.discount === null &&s
     !item.is_gift &&
     item.coupon.length == 0
   );
