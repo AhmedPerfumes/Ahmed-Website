@@ -117,6 +117,8 @@ export default function EditAddress() {
     setShow(true);
   };
 
+  const [errors, setErrors] = useState({}); // <-- added for inline validation
+
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     if (name === "isDefault") {
@@ -130,9 +132,20 @@ export default function EditAddress() {
 const save = async () => {
   if (!customerId) return;
 
+  // ✅ Validation inside save
+  const newErrors = {};
+  if (!form.area?.trim()) newErrors.area = "Area / Mantaqa is required";
+  if (!form.building?.trim()) newErrors.building = "Building / Villa / Apartment is required";
+  if (!form.emirates?.trim()) newErrors.emirates = "Emirate is required";
+
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors); // show inline errors
+    return; // stop save
+  }
+  setErrors({}); // clear previous errors if valid
+
   const otherIndex = editingIndex === 0 ? 1 : 0;
 
-  // 🔹 Update state immediately
   setAddresses((prev) => {
     const updated = [...prev];
     updated[editingIndex] = { ...form };
@@ -141,7 +154,6 @@ const save = async () => {
       updated[otherIndex] = { ...updated[otherIndex], isDefault: false };
     }
 
-    // ✅ Save ONLY the default address under key "address"
     const defaultAddr = updated.find((addr) => addr.isDefault);
     if (defaultAddr) {
       localStorage.setItem(
@@ -167,7 +179,6 @@ const save = async () => {
 
   setShow(false);
 
-  // 🔹 Sync to API (after UI update)
   try {
     await fetch(`${API_BASE}api/customerAddressUpdate`, {
       method: "POST",
@@ -246,27 +257,32 @@ const save = async () => {
         <Modal.Body className="pt-1">
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
-                Area / Mantaqa
-              </Form.Label>
-              <Form.Control
-                name="area"
-                value={form.area}
-                onChange={handleChange}
-                className="rounded-2 px-2 py-1"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
-                Building / Villa / Apartment
-              </Form.Label>
-              <Form.Control
-                name="building"
-                value={form.building}
-                onChange={handleChange}
-                className="rounded-2 px-2 py-1"
-              />
-            </Form.Group>
+  <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
+    Area / Mantaqa
+  </Form.Label>
+  <Form.Control
+    name="area"
+    value={form.area}
+    onChange={handleChange}
+    className="rounded-2 px-2 py-1"
+    isInvalid={!!errors.area}   // <-- added
+  />
+  <Form.Control.Feedback type="invalid">{errors.area}</Form.Control.Feedback>
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
+    Building / Villa / Apartment
+  </Form.Label>
+  <Form.Control
+    name="building"
+    value={form.building}
+    onChange={handleChange}
+    className="rounded-2 px-2 py-1"
+    isInvalid={!!errors.building}   // <-- added
+  />
+  <Form.Control.Feedback type="invalid">{errors.building}</Form.Control.Feedback>
+</Form.Group>
             <Form.Group className="mb-3">
             <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
               Emirates

@@ -43,6 +43,7 @@ export default function Checkout() {
     setCartProducts,
   } = useContextElement();
   const { isLoggedIn } = useUser();
+  const [fieldErrors, setFieldErrors] = useState({});
   // const [selectedRegion, setSelectedRegion] = useState("");
   const [idDDActive, setIdDDActive] = useState(false);
   // const [shippingAdd, setShippingAdd] = useState(false);
@@ -232,6 +233,30 @@ export default function Checkout() {
     setIsLoading(true);
     setError(null);
     setSuccess(null);
+    
+  const billing = formData.billingAddress;
+  const newErrors = {};
+
+  // Validate billing fields
+  if (!billing.first_name.trim()) newErrors.first_name = "First Name is required";
+  // if (!billing.last_name.trim()) newErrors.last_name = "Last Name is required";
+  if (!billing.country.trim()) newErrors.country = "Country is required";
+  if (!billing.area.trim()) newErrors.area = "Area / Mantaqa is required";
+  if (!billing.building.trim()) newErrors.building = "Building / Villa / Apartment is required";
+  if (!billing.emirates.trim()) newErrors.emirates = "Emirate is required";
+  if (!billing.email.trim()) newErrors.email = "Email is required";
+  if (!billing.mobile.trim()) newErrors.mobile = "Mobile Number is required";
+
+  // OTP validation for guests
+  if (!isLoggedIn && !isOTPVerified) newErrors.otp = "OTP must be verified";
+
+  if (Object.keys(newErrors).length > 0) {
+    setFieldErrors(newErrors);
+    setIsLoading(false);
+    return; // stop submission
+  } else {
+    setFieldErrors({}); // clear errors
+  }
 
     const shippingPrice = freeShippingFlag
       ? 0.0
@@ -344,7 +369,7 @@ export default function Checkout() {
       } else {
         if (data.products) setError(data.products);
         if (data["billingAddress.first_name"]) setError(data["billingAddress.first_name"]);
-        if (data["billingAddress.last_name"]) setError(data["billingAddress.last_name"]);
+        // if (data["billingAddress.last_name"]) setError(data["billingAddress.last_name"]);
         if (data["billingAddress.email"]) setError(data["billingAddress.email"]);
         if (data["billingAddress.mobile"]) setError(data["billingAddress.mobile"]);
         if (data["billingAddress.area"]) setError(data["billingAddress.area"]);
@@ -712,6 +737,9 @@ export default function Checkout() {
                         required
                       />
                       <label htmlFor="checkout_first_name">First Name</label>
+                      {fieldErrors.first_name && (
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.first_name}</div>
+                      )}
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -725,9 +753,11 @@ export default function Checkout() {
                         name="billingAddress.last_name"
                         value={formData.billingAddress.last_name}
                         onChange={handleChange}
-                        required
                       />
                       <label htmlFor="checkout_last_name">Last Name</label>
+                      {/* {fieldErrors.last_name && (
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.last_name}</div>
+                      )} */}
                     </div>
                   </div>
                   <div className="col-md-12">
@@ -770,6 +800,9 @@ export default function Checkout() {
                       <label htmlFor="checkout_company_name">
                         Area / Mantaqa *
                       </label>
+                      {fieldErrors.area && (
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.area}</div>
+                      )}
                     </div>
                     <div className="form-floating mt-3 mb-3">
                       <input
@@ -786,6 +819,9 @@ export default function Checkout() {
                       <label htmlFor="checkout_company_name">
                         Building / Villa / Apartment
                       </label>
+                      {fieldErrors.building && (
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.building}</div>
+                      )}
                     </div>
                   </div>
 
@@ -843,19 +879,18 @@ export default function Checkout() {
                               ))}
                           </ul>
                         </div>
-                        {isLoggedIn && (
+                      </div>
+                    </div>
+                  </div>
+                  {isLoggedIn && (
                           <Link
-                            className="btn-link btn-link_lg default-underline fw-bold pt-4"
+                            className="btn-link btn-link_lg text-center fw-bold text-danger p-2"
                             href={`/${locale}/account_edit_address`}
                             target="_blank"
                           >
                             - Click to Edit Address -
                           </Link>
                         )}
-                      </div>
-                    </div>
-                  </div>
-                  
                   <div className="col-md-12">
                     <div className="form-floating my-3">
                       <input
