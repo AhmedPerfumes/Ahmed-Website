@@ -22,6 +22,7 @@ import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
+import { bogoProducts } from "@/components/BogoFeature";
 
 export default function Checkout() {
   const {
@@ -34,6 +35,11 @@ export default function Checkout() {
   const router = useRouter();
   const locale = useLocale();
 
+  const [coupons, setCoupons] = useState([]);
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [showCouponModal, setShowCouponModal] = useState(false);
+  const [copiedId, setCopiedId] = useState(null);
+
   const {
     cartProducts,
     totalPrice,
@@ -44,9 +50,7 @@ export default function Checkout() {
   } = useContextElement();
   const { isLoggedIn } = useUser();
   const [fieldErrors, setFieldErrors] = useState({});
-  // const [selectedRegion, setSelectedRegion] = useState("");
   const [idDDActive, setIdDDActive] = useState(false);
-  // const [shippingAdd, setShippingAdd] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("cod");
   const [formData, setFormData] = useState({
@@ -77,14 +81,9 @@ export default function Checkout() {
   });
   const [createAccount, setCreateAccount] = useState(false);
 
-  // ⭐ Prefill when logged in
   useEffect(() => {
-    if (!isLoggedIn) return;
-
     try {
-      const userStr = localStorage.getItem("user");
-      const addrStr = localStorage.getItem("address");
-
+      let customer_id = -1;
       let firstName = "";
       let lastName = "";
       let email = "";
@@ -93,55 +92,89 @@ export default function Checkout() {
       let building = "";
       let emirates = "";
 
-      if (userStr) {
-        const user = JSON.parse(atob(userStr));
-        email = user.email || "";
-        mobile = user.phone || user.mobile || "";
+      if (isLoggedIn) {
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+          const user = JSON.parse(atob(userStr));
+          email = user.email || "";
+          mobile = user.phone || user.mobile || "";
+          customer_id = user.id || -1;
 
-        if (user.name) {
-          const [f, ...lArr] = user.name.split(" ");
-          firstName = f || "";
-          lastName = lArr.join(" ") || "";
+          if (user.name) {
+            const [f, ...lArr] = user.name.split(" ");
+            firstName = f || "";
+            lastName = lArr.join(" ") || "";
+          }
+        } else {
+          console.warn("No user data found in localStorage");
         }
+
+        const addrStr = localStorage.getItem("address");
+        if (addrStr) {
+          const addr = JSON.parse(atob(addrStr));
+          area = addr.city || "";
+          building = addr.address || "";
+          emirates = addr.state || "";
+        }
+
+        setFormData((prev) => ({
+          ...prev,
+          billingAddress: {
+            ...prev.billingAddress,
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            mobile,
+            area,
+            building,
+            emirates,
+          },
+          shippingAddress: {
+            ...prev.shippingAddress,
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            mobile,
+            area,
+            building,
+            emirates,
+          },
+        }));
       }
 
-      if (addrStr) {
-        const addr = JSON.parse(atob(addrStr));
-        area = addr.city || "";
-        building = addr.address || "";
-        emirates = addr.state || "";
-      }
-
-      setFormData((prev) => ({
-        ...prev,
-        billingAddress: {
-          ...prev.billingAddress,
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          mobile,
-          area,
-          building,
-          emirates,
-        },
-        shippingAddress: {
-          ...prev.shippingAddress,
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          mobile,
-          area,
-          building,
-          emirates,
-        },
-      }));
+      setCouponLoading(true);
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}api/customerCouponDetails`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customer_id }),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log("Coupon API response:", json);
+          setCoupons(json.coupons || []);
+          setCouponDataContext(json.coupons || []);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch coupons:", err);
+          setCoupons([]);
+          setCouponDataContext([]);
+        })
+        .finally(() => setCouponLoading(false));
     } catch (err) {
-      console.error("Failed to load user/address from localStorage", err);
+      console.error("Error in useEffect:", err);
+      setCoupons([]);
+      setCouponDataContext([]);
+      setCouponLoading(false);
     }
   }, [isLoggedIn]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true); // kept for backwards-compat, but button now uses computed disable
+  const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [OTPError, setOTPError] = useState(null);
@@ -167,7 +200,7 @@ export default function Checkout() {
       const addressField = name.startsWith("shipping")
         ? "shippingAddress"
         : "billingAddress";
-      const fieldName = name.split(".")[1]; // Get the specific field (e.g., street, city)
+      const fieldName = name.split(".")[1];
       setFormData((prevData) => ({
         ...prevData,
         [addressField]: {
@@ -186,7 +219,6 @@ export default function Checkout() {
   const handleCheckboxChange = () => {
     setFormData((prevData) => {
       const newSameAsShipping = !prevData.shippingAdd;
-      // when toggling shipping section off, also reset OTP flow related UI
       if (!newSameAsShipping) {
         setIsOTPButton(true);
         setIsOTPVerified(false);
@@ -233,30 +265,29 @@ export default function Checkout() {
     setIsLoading(true);
     setError(null);
     setSuccess(null);
-    
-  const billing = formData.billingAddress;
-  const newErrors = {};
 
-  // Validate billing fields
-  if (!billing.first_name.trim()) newErrors.first_name = "First Name is required";
-  // if (!billing.last_name.trim()) newErrors.last_name = "Last Name is required";
-  if (!billing.country.trim()) newErrors.country = "Country is required";
-  if (!billing.area.trim()) newErrors.area = "Area / Mantaqa is required";
-  if (!billing.building.trim()) newErrors.building = "Building / Villa / Apartment is required";
-  if (!billing.emirates.trim()) newErrors.emirates = "Emirate is required";
-  if (!billing.email.trim()) newErrors.email = "Email is required";
-  if (!billing.mobile.trim()) newErrors.mobile = "Mobile Number is required";
+    const billing = formData.billingAddress;
+    const newErrors = {};
 
-  // OTP validation for guests
-  if (!isLoggedIn && !isOTPVerified) newErrors.otp = "OTP must be verified";
+    if (!billing.first_name.trim())
+      newErrors.first_name = "First Name is required";
+    if (!billing.country.trim()) newErrors.country = "Country is required";
+    if (!billing.area.trim()) newErrors.area = "Area / Mantaqa is required";
+    if (!billing.building.trim())
+      newErrors.building = "Building / Villa / Apartment is required";
+    if (!billing.emirates.trim()) newErrors.emirates = "Emirate is required";
+    if (!billing.email.trim()) newErrors.email = "Email is required";
+    if (!billing.mobile.trim()) newErrors.mobile = "Mobile Number is required";
 
-  if (Object.keys(newErrors).length > 0) {
-    setFieldErrors(newErrors);
-    setIsLoading(false);
-    return; // stop submission
-  } else {
-    setFieldErrors({}); // clear errors
-  }
+    if (!isLoggedIn && !isOTPVerified) newErrors.otp = "OTP must be verified";
+
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
+      setIsLoading(false);
+      return;
+    } else {
+      setFieldErrors({});
+    }
 
     const shippingPrice = freeShippingFlag
       ? 0.0
@@ -280,7 +311,8 @@ export default function Checkout() {
     const servicePrice = shippingServiceCharges[1].price;
     const servicePriceVat = (servicePrice / 100) * vatTax.percentage;
 
-    const codPrice = selectedOption === "cod" ? shippingServiceCharges[2].price : 0.0;
+    const codPrice =
+      selectedOption === "cod" ? shippingServiceCharges[2].price : 0.0;
     const codPriceVat = (codPrice / 100) * vatTax.percentage;
 
     let userJson = null;
@@ -300,7 +332,7 @@ export default function Checkout() {
       vatTax: vatTax.percentage,
       totalPrice,
       finalPrice,
-      customer_id: userJson ? userJson.id : null,
+      customer_id: isLoggedIn && userJson ? userJson.id : null,
       locale,
       couponCode,
       codPrice,
@@ -368,13 +400,17 @@ export default function Checkout() {
         setError(data.duplicateOrderMessage);
       } else {
         if (data.products) setError(data.products);
-        if (data["billingAddress.first_name"]) setError(data["billingAddress.first_name"]);
-        // if (data["billingAddress.last_name"]) setError(data["billingAddress.last_name"]);
-        if (data["billingAddress.email"]) setError(data["billingAddress.email"]);
-        if (data["billingAddress.mobile"]) setError(data["billingAddress.mobile"]);
+        if (data["billingAddress.first_name"])
+          setError(data["billingAddress.first_name"]);
+        if (data["billingAddress.email"])
+          setError(data["billingAddress.email"]);
+        if (data["billingAddress.mobile"])
+          setError(data["billingAddress.mobile"]);
         if (data["billingAddress.area"]) setError(data["billingAddress.area"]);
-        if (data["billingAddress.building"]) setError(data["billingAddress.building"]);
-        if (data["billingAddress.emirates"]) setError(data["billingAddress.emirates"]);
+        if (data["billingAddress.building"])
+          setError(data["billingAddress.building"]);
+        if (data["billingAddress.emirates"])
+          setError(data["billingAddress.emirates"]);
         setSuccess(null);
       }
     } catch (error) {
@@ -385,12 +421,10 @@ export default function Checkout() {
     }
   }
 
-  // 🔐 OTP helpers choose the correct mobile automatically
   async function sendOTP(e) {
     e.preventDefault();
     setIsSendOTPLoading(true);
 
-    // pick mobile: logged-out -> billing, logged-in -> shipping
     const targetMobile = !isLoggedIn
       ? formData.billingAddress.mobile
       : formData.shippingAddress.mobile;
@@ -411,11 +445,14 @@ export default function Checkout() {
     setOTPError(null);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/sendOTP`, {
-        method: "POST",
-        body: JSON.stringify({ mobile: targetMobile }),
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/sendOTP`,
+        {
+          method: "POST",
+          body: JSON.stringify({ mobile: targetMobile }),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to submit the data. Please try again.");
@@ -444,7 +481,7 @@ export default function Checkout() {
     e.preventDefault();
     setIsSendOTPLoading(true);
 
-    if (formData.otp == "") {
+    if (formData.otp === "") {
       setOTPError("OTP is Required");
       setOTPSuccess(null);
       setIsSendOTPLoading(false);
@@ -464,40 +501,64 @@ export default function Checkout() {
       : formData.shippingAddress.mobile;
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`, {
-        method: "POST",
-        body: JSON.stringify({ mobile: targetMobile, otp: formData.otp, flag: "checkout" }),
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            mobile: targetMobile,
+            otp: formData.otp,
+            flag: "checkout",
+          }),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to submit the data. Please try again.");
       }
 
       const data = await response.json();
-      if (data.message && data.message.split(" ")[0] == "Invalid") {
+      if (data.message && data.message.split(" ")[0] === "Invalid") {
         setOTPSuccess(null);
         setOTPError(data.message);
-      } else if (data.message && data.message.split(" ")[0] == "OTP") {
+      } else if (data.message && data.message.split(" ")[0] === "OTP") {
         setOTPSuccess(data.message);
 
         let product_coupon = false;
-        cartProducts.map((item) => {
+        let customer_coupon = false;
+        let validCoupon = null;
+
+        cartProducts.forEach((item) => {
           if (
-            item.coupon[data.coupon.code.toLowerCase()]?.code ==
-              data.coupon.code.toLowerCase() &&
-            !item.sale_price
+            item.coupon?.[data.coupon?.code?.toLowerCase()]?.code === data.coupon?.code?.toLowerCase() &&
+            !item.sale_price &&
+            !item.discount
           ) {
             product_coupon = true;
+            validCoupon = data.coupon;
           }
         });
 
-        if (data.customer && product_coupon) {
-          setCouponCode(data.coupon.code);
-          setCouponData(data.coupon);
-          setCouponDataContext(data.coupon);
-          setCouponSuccess(`Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`);
+        if (data.coupon?.type === "customer" && isLoggedIn) {
+          const hasNonDiscountedProducts = cartProducts.some(
+            (item) => !item.sale_price && !item.discount && !item.is_gift
+          );
+          if (hasNonDiscountedProducts) {
+            customer_coupon = true;
+            validCoupon = data.coupon;
+          }
         }
+
+        if (product_coupon || customer_coupon) {
+          setCouponCode(data.coupon.code);
+          setCouponData(validCoupon);
+          setCouponDataContext(validCoupon);
+          setCouponSuccess(
+            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
+          );
+        }
+
         setIsOTPVerified(true);
         setIsDisabled(false);
         setOTPError(null);
@@ -530,7 +591,7 @@ export default function Checkout() {
 
   const applyCoupon = async (e) => {
     e.preventDefault();
-    if (couponCode == "") {
+    if (couponCode === "") {
       setCouponError("Coupon Code is Required");
       setCouponSuccess(null);
       setCouponDataContext(null);
@@ -538,9 +599,9 @@ export default function Checkout() {
     }
 
     let product_coupon = false;
-    cartProducts.map((item) => {
+    cartProducts.forEach((item) => {
       if (
-        item.coupon[couponCode.toLowerCase()]?.code == couponCode.toLowerCase() &&
+        item.coupon?.[couponCode.toLowerCase()]?.code === couponCode.toLowerCase() &&
         !item.sale_price &&
         !item.discount
       ) {
@@ -548,40 +609,82 @@ export default function Checkout() {
       }
     });
 
-    if (!product_coupon) {
-      setCouponError("Invalid Coupon Code for this products");
+    let customer_coupon = false;
+    let customerCouponData = null;
+    if (isLoggedIn) {
+      const currentUTC = new Date();
+      const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+      const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+
+      customerCouponData = coupons.find(
+        (coupon) =>
+          coupon.code.toLowerCase() === couponCode.toLowerCase() &&
+          coupon.type === "customer" &&
+          (!coupon.start_date ||
+            !coupon.end_date ||
+            (new Date(current_date_time) >= new Date(coupon.start_date) &&
+              new Date(current_date_time) <= new Date(coupon.end_date)))
+      );
+
+      if (customerCouponData) {
+        const hasNonDiscountedProducts = cartProducts.some(
+          (item) => !item.sale_price && !item.discount && !bogoProducts.some(bogo => bogo.product_id === item.product_id)
+        );
+        if (hasNonDiscountedProducts) {
+          customer_coupon = true;
+        } else {
+          customerCouponData = null;
+        }
+      }
+    }
+
+    if (!product_coupon && !customer_coupon) {
+      setCouponError("Invalid Coupon Code for these products or customer");
       setCouponSuccess(null);
       setCouponDataContext(null);
       setCouponCode("");
       return;
-    } else if (!isOTPVerified) {
+    }
+
+    if (!isOTPVerified && !isLoggedIn) {
       setCouponError("Verify Mobile Number First");
       setCouponSuccess(null);
       return;
     }
 
     try {
-      // choose mobile consistent with OTP flow
       const mobileForCoupon = !isLoggedIn
         ? formData.billingAddress.mobile
         : formData.shippingAddress.mobile;
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          couponCode,
-          mobile_number: mobileForCoupon,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            couponCode,
+            mobile_number: mobileForCoupon,
+          }),
+        }
+      );
 
       const data = await res.json();
 
-      if (data.message && data.message.split(" ")[0] == "Details") {
-        setCouponError(null);
-        setCouponData(data.coupon);
-        setCouponDataContext(data.coupon);
-        setCouponSuccess(`Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`);
+      if (data.message && data.message.split(" ")[0] === "Details") {
+        if (product_coupon || (customer_coupon && customerCouponData)) {
+          setCouponError(null);
+          setCouponData(data.coupon);
+          setCouponDataContext(data.coupon);
+          setCouponSuccess(
+            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
+          );
+        } else {
+          setCouponError("Coupon not applicable to cart products");
+          setCouponSuccess(null);
+          setCouponDataContext(null);
+          setCouponCode("");
+        }
       } else {
         setCouponSuccess(null);
         setCouponData(null);
@@ -618,99 +721,144 @@ export default function Checkout() {
     if (elm.is_gift) {
       return <td>0.00{currency.symbol} (Free Gift)</td>;
     }
+
     const currentUTC = new Date();
     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if (elm?.discount) {
-      if (
-        new Date(current_date_time) >= new Date(elm.discount.start_date) &&
-        new Date(current_date_time) <= new Date(elm.discount.end_date)
-      ) {
-        return (
-          <td>
-            <span className="money price price-sale">
-              {currency.symbol}
-              {((elm.price - (elm.price / 100) * elm.discount.value) * elm.quantity).toFixed(2)}
-            </span>
-            <span className="money price price-old">
-              {currency.symbol}
-              {elm?.price}
-            </span>
-          </td>
-        );
-      } else {
-        return (
-          <td>
-            {(elm.price * elm.quantity).toFixed(2)}
-            {currency.symbol}
-          </td>
-        );
-      }
-    } else if (
-      elm?.coupon &&
-      elm.coupon.length != 0 &&
-      couponData != null &&
-      couponCode != null
+    const current_date_time = currentGST
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    let itemPrice = elm.price;
+
+    if (
+      elm?.discount &&
+      new Date(current_date_time) >= new Date(elm.discount.start_date) &&
+      new Date(current_date_time) <= new Date(elm.discount.end_date)
     ) {
-      if (
-        new Date(current_date_time) >=
-          new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
-        new Date(current_date_time) <=
-          new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) &&
-        elm.coupon[couponCode.toLowerCase()].code == couponData.code.toLowerCase()
-      ) {
-        return (
-          <td>
-            <span className="money price price-old">
-              {currency.symbol}
-              {elm?.price}
-            </span>
-            <span className="money price price-sale">
-              {currency.symbol}
-              {(
-                (elm.price -
-                  (elm.price / 100) * elm.coupon[couponCode.toLowerCase()]?.value) *
-                elm.quantity
-              ).toFixed(2)}
-            </span>
-          </td>
-        );
-      } else {
-        return (
-          <td>
-            {(elm.price * elm.quantity).toFixed(2)}
-            {currency.symbol}
-          </td>
-        );
-      }
-    } else if (elm?.sale_price) {
+      itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
       return (
         <td>
           <span className="money price price-sale">
             {currency.symbol}
-            {(elm.sale_price * elm.quantity).toFixed(2)}
+            {(itemPrice * elm.quantity).toFixed(2)}
           </span>
           <span className="money price price-old">
             {currency.symbol}
-            {elm?.price}
+            {(elm.price * elm.quantity).toFixed(2)}
           </span>
         </td>
       );
-    } else {
+    }
+
+    if (
+      elm?.coupon &&
+      Object.keys(elm.coupon).length !== 0 &&
+      couponData &&
+      couponCode &&
+      elm.coupon[couponCode.toLowerCase()]?.code === couponData.code.toLowerCase() &&
+      new Date(current_date_time) >= new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
+      new Date(current_date_time) <= new Date(elm.coupon[couponCode.toLowerCase()]?.end_date)
+    ) {
+      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
       return (
         <td>
-          {(elm.price * elm.quantity).toFixed(2)}
-          {currency.symbol}
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.quantity).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.quantity).toFixed(2)}
+          </span>
         </td>
       );
     }
+
+    if (elm?.sale_price) {
+      itemPrice = elm.sale_price;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.quantity).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.quantity).toFixed(2)}
+          </span>
+        </td>
+      );
+    }
+
+    if (
+      isLoggedIn &&
+      couponData &&
+      couponCode &&
+      couponData.type === "customer" &&
+      (!couponData.start_date ||
+        !couponData.end_date ||
+        (new Date(current_date_time) >= new Date(couponData.start_date) &&
+          new Date(current_date_time) <= new Date(couponData.end_date))) &&
+      !elm.sale_price &&
+      !elm.discount &&
+      !bogoProducts.some(bogo => bogo.product_id === elm.product_id)
+    ) {
+      itemPrice = elm.price - (elm.price / 100) * couponData.value;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.quantity).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.quantity).toFixed(2)}
+          </span>
+        </td>
+      );
+    }
+
+    return (
+      <td>
+        <span className="money price">
+          {currency.symbol}
+          {(elm.price * elm.quantity).toFixed(2)}
+        </span>
+      </td>
+    );
   };
 
-  // 🔒 Compute whether Place Order should be disabled
   const disablePlaceOrder =
     isLoading ||
-    (!isLoggedIn && !isOTPVerified) || // guest must verify OTP
-    (isLoggedIn && formData.shippingAdd && !isOTPVerified); // logged-in needs OTP only if shipping to different address
+    (!isLoggedIn && !isOTPVerified) ||
+    (isLoggedIn && formData.shippingAdd && !isOTPVerified);
+
+  const getColors = (status, idx) => {
+    const golds = ["#BB8502", "#D44F35", "#726060"];
+    const bgs = ["#FFF7E7", "#FFF3F0", "#F6F6F6"];
+    if (status === "expired") {
+      return { color: "#9A9A9A", bg: "#F6F6F6" };
+    }
+    return { color: golds[idx % golds.length], bg: bgs[idx % bgs.length] };
+  };
+
+  const isExpired = (end_date) => {
+    return new Date(end_date) < new Date();
+  };
+
+  const handleSelectCoupon = async (code, id) => {
+    setCouponCode(code);
+    setCopiedId(id);
+    setShowCouponModal(false);
+    setTimeout(() => setCopiedId(null), 1400);
+  };
+
+  const handleCopy = (code, id) => {
+    navigator.clipboard.writeText(code);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1400);
+  };
 
   return (
     <>
@@ -738,7 +886,9 @@ export default function Checkout() {
                       />
                       <label htmlFor="checkout_first_name">First Name</label>
                       {fieldErrors.first_name && (
-                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.first_name}</div>
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>
+                          {fieldErrors.first_name}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -755,9 +905,6 @@ export default function Checkout() {
                         onChange={handleChange}
                       />
                       <label htmlFor="checkout_last_name">Last Name</label>
-                      {/* {fieldErrors.last_name && (
-                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.last_name}</div>
-                      )} */}
                     </div>
                   </div>
                   <div className="col-md-12">
@@ -801,7 +948,9 @@ export default function Checkout() {
                         Area / Mantaqa *
                       </label>
                       {fieldErrors.area && (
-                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.area}</div>
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>
+                          {fieldErrors.area}
+                        </div>
                       )}
                     </div>
                     <div className="form-floating mt-3 mb-3">
@@ -820,7 +969,9 @@ export default function Checkout() {
                         Building / Villa / Apartment
                       </label>
                       {fieldErrors.building && (
-                        <div style={{ color: "red", fontSize: "0.85rem" }}>{fieldErrors.building}</div>
+                        <div style={{ color: "red", fontSize: "0.85rem" }}>
+                          {fieldErrors.building}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -862,7 +1013,9 @@ export default function Checkout() {
                           <ul className="search-suggestion list-unstyled">
                             {countries
                               .filter((elm) =>
-                                elm.toLowerCase().includes(searchQuery.toLowerCase())
+                                elm
+                                  .toLowerCase()
+                                  .includes(searchQuery.toLowerCase())
                               )
                               .map((elm, i) => (
                                 <li
@@ -883,14 +1036,14 @@ export default function Checkout() {
                     </div>
                   </div>
                   {isLoggedIn && (
-                          <Link
-                            className="btn-link btn-link_lg text-center fw-bold text-danger p-2"
-                            href={`/${locale}/account_edit_address`}
-                            target="_blank"
-                          >
-                            - Click to Edit Address -
-                          </Link>
-                        )}
+                    <Link
+                      className="btn-link btn-link_lg text-center fw-bold text-danger p-2"
+                      href={`/${locale}/account_edit_address`}
+                      target="_blank"
+                    >
+                      - Click to Edit Address -
+                    </Link>
+                  )}
                   <div className="col-md-12">
                     <div className="form-floating my-3">
                       <input
@@ -926,8 +1079,7 @@ export default function Checkout() {
                     </div>
                   </div>
 
-                  {/* OTP for LOGGED OUT users (billing section) */}
-                  {/* {!isLoggedIn && ( */}
+                  {!isLoggedIn && (
                     <div className="col-md-12">
                       {OTPError ? (
                         <div style={{ color: "red" }}>{OTPError}</div>
@@ -957,7 +1109,9 @@ export default function Checkout() {
                                   value={formData.otp}
                                   onChange={handleChange}
                                 />
-                                <label htmlFor="billing_otp">OTP (Eg. 1234)*</label>
+                                <label htmlFor="billing_otp">
+                                  OTP (Eg. 1234)*
+                                </label>
                               </div>
                               <button
                                 className="btn btn-primary w-100 text-uppercase"
@@ -972,7 +1126,7 @@ export default function Checkout() {
                         </>
                       )}
                     </div>
-                  {/* )} */}
+                  )}
 
                   <div className="col-md-12">
                     {!isLoggedIn && (
@@ -985,7 +1139,10 @@ export default function Checkout() {
                           onClick={(prev) => setCreateAccount(!createAccount)}
                           name="create_account"
                         />
-                        <label className="form-check-label" htmlFor="create_account">
+                        <label
+                          className="form-check-label"
+                          htmlFor="create_account"
+                        >
                           CREATE AN ACCOUNT?
                         </label>
                       </div>
@@ -999,29 +1156,34 @@ export default function Checkout() {
                         onClick={handleCheckboxChange}
                         name="shipping"
                       />
-                      <label className="form-check-label" htmlFor="ship_different_address">
+                      <label
+                        className="form-check-label"
+                        htmlFor="ship_different_address"
+                      >
                         SHIP TO A DIFFERENT ADDRESS?
                       </label>
                     </div>
                   </div>
                   {formData.shippingAdd && (
-                    <div className="accordion mt-3" id="shippingAddressAccordion">
-                        <div className="accordion-item">
+                    <div
+                      className="accordion mt-3"
+                      id="shippingAddressAccordion"
+                    >
+                      <div className="accordion-item">
                         <h4 className="accordion-header" id="headingShipping">
-                            Shipping Details
+                          Shipping Details
                         </h4>
                         <div
-                            id="collapseShipping"
-                            className="accordion-collapse collapse show"
-                            aria-labelledby="headingShipping"
-                            data-bs-parent="#shippingAddressAccordion"
+                          id="collapseShipping"
+                          className="accordion-collapse collapse show"
+                          aria-labelledby="headingShipping"
+                          data-bs-parent="#shippingAddressAccordion"
                         >
-                            <div>
+                          <div>
                             <div className="row">
-                                {/* Shipping First Name */}
-                                <div className="col-md-6">
+                              <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                    <input
+                                  <input
                                     type="text"
                                     className="form-control"
                                     id="shipping_first_name"
@@ -1030,15 +1192,15 @@ export default function Checkout() {
                                     value={formData.shippingAddress.first_name}
                                     onChange={handleChange}
                                     required
-                                    />
-                                    <label htmlFor="shipping_first_name">First Name</label>
+                                  />
+                                  <label htmlFor="shipping_first_name">
+                                    First Name
+                                  </label>
                                 </div>
-                                </div>
-
-                                {/* Shipping Last Name */}
-                                <div className="col-md-6">
+                              </div>
+                              <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                    <input
+                                  <input
                                     type="text"
                                     className="form-control"
                                     id="shipping_last_name"
@@ -1047,15 +1209,15 @@ export default function Checkout() {
                                     value={formData.shippingAddress.last_name}
                                     onChange={handleChange}
                                     required
-                                    />
-                                    <label htmlFor="shipping_last_name">Last Name</label>
+                                  />
+                                  <label htmlFor="shipping_last_name">
+                                    Last Name
+                                  </label>
                                 </div>
-                                </div>
-
-                                {/* Shipping Area */}
-                                <div className="col-md-12">
+                              </div>
+                              <div className="col-md-12">
                                 <div className="form-floating my-3">
-                                    <input
+                                  <input
                                     type="text"
                                     className="form-control"
                                     id="shipping_area"
@@ -1064,15 +1226,15 @@ export default function Checkout() {
                                     value={formData.shippingAddress.area}
                                     onChange={handleChange}
                                     required
-                                    />
-                                    <label htmlFor="shipping_area">Area / Mantaqa *</label>
+                                  />
+                                  <label htmlFor="shipping_area">
+                                    Area / Mantaqa *
+                                  </label>
                                 </div>
-                                </div>
-
-                                {/* Shipping Building */}
-                                <div className="col-md-12">
+                              </div>
+                              <div className="col-md-12">
                                 <div className="form-floating my-3">
-                                    <input
+                                  <input
                                     type="text"
                                     className="form-control"
                                     id="shipping_building"
@@ -1081,41 +1243,40 @@ export default function Checkout() {
                                     value={formData.shippingAddress.building}
                                     onChange={handleChange}
                                     required
-                                    />
-                                    <label htmlFor="shipping_building">
+                                  />
+                                  <label htmlFor="shipping_building">
                                     Building / Villa / Apartment
-                                    </label>
+                                  </label>
                                 </div>
-                                </div>
-
-                                {/* Shipping Emirates Dropdown */}
-                                <div className="col-md-12">
+                              </div>
+                              <div className="col-md-12">
                                 <div className="search-field my-3">
-                                    <label htmlFor="shipping_emirates" className="form-label">
+                                  <label
+                                    htmlFor="shipping_emirates"
+                                    className="form-label"
+                                  >
                                     Emirates*
-                                    </label>
-                                    <select
+                                  </label>
+                                  <select
                                     id="shipping_emirates"
                                     className="form-control"
                                     name="shippingAddress.emirates"
                                     value={formData.shippingAddress.emirates}
                                     onChange={handleChange}
                                     required
-                                    >
+                                  >
                                     <option value="">Select Emirate...</option>
                                     {countries.map((em, i) => (
-                                        <option key={i} value={em}>
+                                      <option key={i} value={em}>
                                         {em}
-                                        </option>
+                                      </option>
                                     ))}
-                                    </select>
+                                  </select>
                                 </div>
-                                </div>
-
-                                {/* Shipping Email */}
-                                <div className="col-md-12">
+                              </div>
+                              <div className="col-md-12">
                                 <div className="form-floating my-3">
-                                    <input
+                                  <input
                                     type="email"
                                     className="form-control"
                                     id="shipping_email"
@@ -1124,15 +1285,15 @@ export default function Checkout() {
                                     value={formData.shippingAddress.email}
                                     onChange={handleChange}
                                     required
-                                    />
-                                    <label htmlFor="shipping_email">Email Address *</label>
+                                  />
+                                  <label htmlFor="shipping_email">
+                                    Email Address *
+                                  </label>
                                 </div>
-                                </div>
-
-                                {/* Shipping Phone */}
-                                <div className="col-md-12">
+                              </div>
+                              <div className="col-md-12">
                                 <div className="form-floating my-3">
-                                    <input
+                                  <input
                                     type="tel"
                                     className="form-control"
                                     id="shipping_mobile"
@@ -1141,67 +1302,74 @@ export default function Checkout() {
                                     value={formData.shippingAddress.mobile}
                                     onChange={handleChange}
                                     required
-                                    />
-                                    <label htmlFor="shipping_mobile">
+                                  />
+                                  <label htmlFor="shipping_mobile">
                                     Mobile Number (Eg. 0500000000)*
-                                    </label>
+                                  </label>
                                 </div>
-                                </div>
-
-                                {/* OTP only for logged-in users on shipping */}
-                                {isLoggedIn && (
+                              </div>
+                              {isLoggedIn && (
                                 <div className="col-md-12">
-                                    {OTPError ? (
-                                    <div style={{ color: "red" }}>{OTPError}</div>
-                                    ) : (
-                                    <div style={{ color: "green" }}>{OTPSuccess}</div>
-                                    )}
-                                    {isOTPButton ? (
+                                  {OTPError ? (
+                                    <div style={{ color: "red" }}>
+                                      {OTPError}
+                                    </div>
+                                  ) : (
+                                    <div style={{ color: "green" }}>
+                                      {OTPSuccess}
+                                    </div>
+                                  )}
+                                  {isOTPButton ? (
                                     <button
-                                        className="btn btn-primary w-100 text-uppercase"
-                                        type="button"
-                                        disabled={isSendOTPLoading}
-                                        onClick={sendOTP}
+                                      className="btn btn-primary w-100 text-uppercase"
+                                      type="button"
+                                      disabled={isSendOTPLoading}
+                                      onClick={sendOTP}
                                     >
-                                        {isSendOTPLoading ? "Loading..." : "Send OTP"}
+                                      {isSendOTPLoading
+                                        ? "Loading..."
+                                        : "Send OTP"}
                                     </button>
-                                    ) : (
+                                  ) : (
                                     <>
-                                        {!isOTPVerified && (
+                                      {!isOTPVerified && (
                                         <>
-                                            <div className="form-floating my-3">
+                                          <div className="form-floating my-3">
                                             <input
-                                                type="number"
-                                                className="form-control"
-                                                id="shipping_otp"
-                                                placeholder="Eg. 1234"
-                                                name="otp"
-                                                value={formData.otp}
-                                                onChange={handleChange}
+                                              type="number"
+                                              className="form-control"
+                                              id="shipping_otp"
+                                              placeholder="Eg. 1234"
+                                              name="otp"
+                                              value={formData.otp}
+                                              onChange={handleChange}
                                             />
-                                            <label htmlFor="shipping_otp">OTP (Eg. 1234)*</label>
-                                            </div>
-                                            <button
+                                            <label htmlFor="shipping_otp">
+                                              OTP (Eg. 1234)*
+                                            </label>
+                                          </div>
+                                          <button
                                             className="btn btn-primary w-100 text-uppercase"
                                             type="button"
                                             disabled={isSendOTPLoading}
                                             onClick={verifyOTP}
-                                            >
-                                            {isSendOTPLoading ? "Loading..." : "Verify OTP"}
-                                            </button>
+                                          >
+                                            {isSendOTPLoading
+                                              ? "Loading..."
+                                              : "Verify OTP"}
+                                          </button>
                                         </>
-                                        )}
+                                      )}
                                     </>
-                                    )}
+                                  )}
                                 </div>
-                                )}
+                              )}
                             </div>
-                            </div>
+                          </div>
                         </div>
-                        </div>
+                      </div>
                     </div>
-                    )}
-
+                  )}
                 </div>
 
                 {createAccount && (
@@ -1287,7 +1455,9 @@ export default function Checkout() {
                                   totalPrice +
                                   parseFloat(shippingServiceCharges[1].price) +
                                   (selectedOption === "cod"
-                                    ? parseFloat(shippingServiceCharges[2].price)
+                                    ? parseFloat(
+                                        shippingServiceCharges[2].price
+                                      )
                                     : parseFloat(0.0))
                                 ).toFixed(2)
                               : (
@@ -1295,69 +1465,64 @@ export default function Checkout() {
                                   totalPrice +
                                   parseFloat(shippingServiceCharges[1].price) +
                                   (selectedOption === "cod"
-                                    ? parseFloat(shippingServiceCharges[2].price)
+                                    ? parseFloat(
+                                        shippingServiceCharges[2].price
+                                      )
                                     : parseFloat(0.0))
                                 ).toFixed(2)}
                             {currency.symbol} (includes{" "}
-                            {
-                              !freeShippingFlag
-                                ? (
-                                    parseFloat(shippingServiceCharges[0].price) -
-                                    parseFloat(shippingServiceCharges[0].price) /
-                                      (1 + parseFloat(vatTax.percentage / 100)) +
-                                    (parseFloat(totalPrice) -
-                                      parseFloat(totalPrice) /
-                                        (1 + parseFloat(vatTax.percentage / 100))) +
-                                    (parseFloat(shippingServiceCharges[1].price) -
-                                      parseFloat(shippingServiceCharges[1].price) /
-                                        (1 + parseFloat(vatTax.percentage / 100))) +
-                                    (selectedOption === "cod"
-                                      ? parseFloat(shippingServiceCharges[2].price) -
-                                        parseFloat(shippingServiceCharges[2].price) /
-                                          (1 + parseFloat(vatTax.percentage / 100))
-                                      : parseFloat(0.0))
-                                  ).toFixed(2)
-                                : (
-                                    0 +
-                                    (parseFloat(totalPrice) -
-                                      parseFloat(totalPrice) /
-                                        (1 + parseFloat(vatTax.percentage / 100))) +
-                                    (parseFloat(shippingServiceCharges[1].price) -
-                                      parseFloat(shippingServiceCharges[1].price) /
-                                        (1 + parseFloat(vatTax.percentage / 100))) +
-                                    (selectedOption === "cod"
-                                      ? parseFloat(shippingServiceCharges[2].price) -
-                                        parseFloat(shippingServiceCharges[2].price) /
-                                          (1 + parseFloat(vatTax.percentage / 100))
-                                      : parseFloat(0.0))
-                                  ).toFixed(2)
-                            }
+                            {!freeShippingFlag
+                              ? (
+                                  parseFloat(shippingServiceCharges[0].price) -
+                                  parseFloat(shippingServiceCharges[0].price) /
+                                    (1 + parseFloat(vatTax.percentage / 100)) +
+                                  (parseFloat(totalPrice) -
+                                    parseFloat(totalPrice) /
+                                      (1 +
+                                        parseFloat(vatTax.percentage / 100))) +
+                                  (parseFloat(shippingServiceCharges[1].price) -
+                                    parseFloat(
+                                      shippingServiceCharges[1].price
+                                    ) /
+                                      (1 +
+                                        parseFloat(vatTax.percentage / 100))) +
+                                  (selectedOption === "cod"
+                                    ? parseFloat(
+                                        shippingServiceCharges[2].price
+                                      ) -
+                                      parseFloat(
+                                        shippingServiceCharges[2].price
+                                      ) /
+                                        (1 +
+                                          parseFloat(vatTax.percentage / 100))
+                                    : parseFloat(0.0))
+                                ).toFixed(2)
+                              : (
+                                  0 +
+                                  (parseFloat(totalPrice) -
+                                    parseFloat(totalPrice) /
+                                      (1 +
+                                        parseFloat(vatTax.percentage / 100))) +
+                                  (parseFloat(shippingServiceCharges[1].price) -
+                                    parseFloat(
+                                      shippingServiceCharges[1].price
+                                    ) /
+                                      (1 +
+                                        parseFloat(vatTax.percentage / 100))) +
+                                  (selectedOption === "cod"
+                                    ? parseFloat(
+                                        shippingServiceCharges[2].price
+                                      ) -
+                                      parseFloat(
+                                        shippingServiceCharges[2].price
+                                      ) /
+                                        (1 +
+                                          parseFloat(vatTax.percentage / 100))
+                                    : parseFloat(0.0))
+                                ).toFixed(2)}
                             {currency.symbol} VAT)
                           </td>
                         </tr>
-                        {/* ✅ Added surprise gift notification right AFTER TOTAL row */}
-                          {/* {(
-                            (!freeShippingFlag
-                              ? parseFloat(shippingServiceCharges[0].price) +
-                                totalPrice +
-                                parseFloat(shippingServiceCharges[1].price) +
-                                (selectedOption === "cod"
-                                  ? parseFloat(shippingServiceCharges[2].price)
-                                  : 0)
-                              : 0 +
-                                totalPrice +
-                                parseFloat(shippingServiceCharges[1].price) +
-                                (selectedOption === "cod"
-                                  ? parseFloat(shippingServiceCharges[2].price)
-                                  : 0)) >= 200
-                          ) && (
-                            <tr>
-                              <td colSpan={2} style={{ color: "green", fontWeight: "bold" }}>
-                                🎁 You have received a surprise gift
-                              </td>
-                            </tr>
-                          )} */}
-                          {/* ✅ End of new code */}
                       </tbody>
                     </table>
                   </div>
@@ -1368,22 +1533,321 @@ export default function Checkout() {
                     ) : (
                       <div style={{ color: "green" }}>{couponSuccess}</div>
                     )}
-                    <input
-                      className="form-control mb-1"
-                      type="text"
-                      name="coupon_code"
-                      placeholder="Coupon Code"
-                      value={couponCode}
-                      onChange={handleCouponChange}
-                    />
+
+                    <div style={{ position: "relative" }}>
+                      <input
+                        className="form-control mb-1"
+                        type="text"
+                        name="coupon_code"
+                        placeholder="Coupon Code"
+                        value={couponCode}
+                        onChange={handleCouponChange}
+                        style={{ paddingRight: "100px" }}
+                      />
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          right: "12px",
+                          transform: "translateY(-50%)",
+                          fontSize: 14,
+                          color: "#a67b30",
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                        onClick={() => setShowCouponModal(true)}
+                      >
+                        View Coupons
+                      </span>
+                    </div>
+
                     {!couponData ? (
-                      <input className="" type="button" value="APPLY COUPON" onClick={applyCoupon} />
+                      <input
+                        className=""
+                        type="button"
+                        value="APPLY COUPON"
+                        onClick={applyCoupon}
+                      />
                     ) : (
-                      <input className="" type="button" value="REMOVE COUPON" onClick={removeCoupon} />
+                      <input
+                        className=""
+                        type="button"
+                        value="REMOVE COUPON"
+                        onClick={removeCoupon}
+                      />
                     )}
                     <br />
                     <br />
+
+                    {showCouponModal && (
+                      <div
+                        className="coupon-modal-overlay"
+                        onClick={() => setShowCouponModal(false)}
+                      >
+                        <div
+                          className="coupon-modal"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="coupon-header">
+                            <h3>Available Offers</h3>
+                            <button
+                              className="close-btn"
+                              onClick={() => setShowCouponModal(false)}
+                            >
+                              &times;
+                            </button>
+                          </div>
+                          <div className="coupon-subheader border-bottom">
+                            <h3>Coupon Offers</h3>
+                          </div>
+
+                          {couponLoading ? (
+                            <div className="coupon-loading">Loading…</div>
+                          ) : coupons.length === 0 ? (
+                            <div className="coupon-empty">
+                              You have no coupons yet.
+                            </div>
+                          ) : (
+                            <div className="coupon-body">
+                              {coupons.map((c, idx) => {
+                                const expired = isExpired(c.end_date);
+                                return (
+                                  <div
+                                    key={c.id || `coupon-${idx}`}
+                                    className={`coupon-ticket ${
+                                      expired ? "expired" : ""
+                                    }`}
+                                  >
+                                    <div className="coupon-left">
+                                      <div className="coupon-title">
+                                        {c.title || "Special Offer"}
+                                      </div>
+                                      <div className="coupon-desc">
+                                        <h5>
+                                          {c.description ||
+                                            `Get ${c.value}% off`}
+                                        </h5>
+                                      </div>
+                                      <div className="coupon-validity">
+                                        {expired
+                                          ? `Expired: ${c.end_date?.slice(
+                                              0,
+                                              10
+                                            )}`
+                                          : `Valid until: ${c.end_date?.slice(
+                                              0,
+                                              10
+                                            )}`}
+                                      </div>
+                                    </div>
+
+                                    <div className="coupon-right">
+                                      <div
+                                        className={`coupon-code-box ${
+                                          copiedId === (c.id || `coupon-${idx}`)
+                                            ? "copied"
+                                            : ""
+                                        }`}
+                                        onClick={() =>
+                                          !expired &&
+                                          handleCopy(
+                                            c.code,
+                                            c.id || `coupon-${idx}`
+                                          )
+                                        }
+                                      >
+                                        <span className="coupon-code">
+                                          {c.code}
+                                        </span>
+                                      </div>
+
+                                      {!expired && (
+                                        <button
+                                          className={`apply-btn ${
+                                            copiedId ===
+                                            (c.id || `coupon-${idx}`)
+                                              ? "applied"
+                                              : ""
+                                          }`}
+                                          onClick={() =>
+                                            handleSelectCoupon(
+                                              c.code,
+                                              c.id || `coupon-${idx}`
+                                            )
+                                          }
+                                        >
+                                          {copiedId ===
+                                          (c.id || `coupon-${idx}`)
+                                            ? "Applied!"
+                                            : "Click to Apply"}
+                                        </button>
+                                      )}
+
+                                      {expired && (
+                                        <div className="coupon-expired-badge">
+                                          Expired
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
+
+                  <style jsx>{`
+                    .coupon-modal-overlay {
+                      position: fixed;
+                      inset: 0;
+                      background: rgba(0, 0, 0, 0.5);
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      z-index: 999;
+                    }
+
+                    .coupon-modal {
+                      background: #fff;
+                      border-radius: 12px;
+                      width: 500px;
+                      max-width: 90%;
+                      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                      overflow: hidden;
+                      font-family: 'Inter', sans-serif;
+                    }
+
+                    .coupon-header {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      padding: 14px 18px;
+                      border-bottom: 1px solid #f0f0f0;
+                    }
+                    .coupon-header h3 {
+                      margin: 0;
+                      font-size: 20px;
+                      font-weight: 600;
+                      color: #222;
+                    }
+                    .coupon-subheader {
+                      padding: 10px 18px;
+                      border-bottom: 1px solid #f0f0f0;
+                    }
+                    .coupon-subheader h3 {
+                      margin: 0;
+                      font-size: 16px;
+                      font-weight: 600;
+                      color: #a67b30;
+                      background: #fffaf2ff;
+                    }  
+                    .close-btn {
+                      background: none;
+                      border: none;
+                      font-size: 20px;
+                      color: #666;
+                      cursor: pointer;
+                    }
+
+                    .coupon-body {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 12px;
+                      padding: 16px;
+                    }
+
+                    .coupon-ticket {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      border: 1px solid #e5e5e5;
+                      border-radius: 12px;
+                      background: #fff;
+                      padding: 14px 16px;
+                      position: relative;
+                      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                      overflow: hidden;
+                    }
+
+                    .coupon-ticket::before,
+                    .coupon-ticket::after {
+                      content: "";
+                      position: absolute;
+                      top: 50%;
+                      width: 20px;
+                      height: 20px;
+                      background: #f5f5f5;
+                      border: 1.5px solid #dbdbdb;
+                      border-radius: 50%;
+                      transform: translateY(-50%);
+                      z-index: 2;
+                    }
+                    .coupon-ticket::before {
+                      left: -10px;
+                    }
+                    .coupon-ticket::after {
+                      right: -10px;
+                    }
+
+                    .coupon-left {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 4px;
+                    }
+                    .coupon-title {
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: #222;
+                    }
+                    .coupon-desc {
+                      font-size: 12px;
+                      color: #555;
+                    }
+
+                    .coupon-right {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-end;
+                      gap: 6px;
+                    }
+                    .coupon-code {
+                      background: #f0fdf4;
+                      color: #198754;
+                      font-size: 13px;
+                      font-weight: 600;
+                      padding: 4px 10px;
+                      border-radius: 6px;
+                    }
+
+                    .apply-btn {
+                      background: none;
+                      border: none;
+                      color: #a67b30;
+                      font-size: 12px;
+                      font-weight: 600;
+                      cursor: pointer;
+                      padding: 0;
+                      text-transform: uppercase;
+                    }
+                    .apply-btn:hover {
+                      text-decoration: underline;
+                    }
+
+                    .coupon-ticket.expired {
+                      opacity: 0.6;
+                    }
+
+                    .coupon-loading,
+                    .coupon-empty {
+                      text-align: center;
+                      padding: 30px;
+                      color: #777;
+                      font-size: 13px;
+                    }
+                  `}</style>
 
                   <div className="checkout__payment-methods">
                     <div className="form-check">
@@ -1396,7 +1860,10 @@ export default function Checkout() {
                         checked={selectedOption === "cod"}
                         onChange={handleRadioChange}
                       />
-                      <label className="form-check-label" htmlFor="checkout_payment_method_3">
+                      <label
+                        className="form-check-label"
+                        htmlFor="checkout_payment_method_3"
+                      >
                         Cash on delivery
                       </label>
                     </div>
@@ -1410,11 +1877,25 @@ export default function Checkout() {
                         checked={selectedOption === "paytabs"}
                         onChange={handleRadioChange}
                       />
-                      <label className="form-check-label" htmlFor="checkout_payment_method_4">
+                      <label
+                        className="form-check-label"
+                        htmlFor="checkout_payment_method_4"
+                      >
                         PayTabs - Credit / Debit Card
-                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 77 16">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="60"
+                          height="20"
+                          viewBox="0 0 77 16"
+                        >
                           <g transform="translate(-523 -415)">
-                            <rect style={{ fill: "#fff", opacity: 0 }} className="a" width="77" height="16" transform="translate(523 415)" />
+                            <rect
+                              style={{ fill: "#fff", opacity: 0 }}
+                              className="a"
+                              width="77"
+                              height="16"
+                              transform="translate(523 415)"
+                            />
                             <path
                               style={{ fill: "#2a2a6c" }}
                               className="b"
@@ -1422,7 +1903,13 @@ export default function Checkout() {
                               transform="translate(470.495 -16.119)"
                             />
                             <g transform="translate(1.466 -18.353)">
-                              <rect style={{ fill: "#ff5f00" }} className="c" width="6.84" height="11.172" transform="translate(581.019 435.873)" />
+                              <rect
+                                style={{ fill: "#ff5f00" }}
+                                className="c"
+                                width="6.84"
+                                height="11.172"
+                                transform="translate(581.019 435.873)"
+                              />
                               <path
                                 style={{ fill: "#eb001b" }}
                                 className="d"
@@ -1447,8 +1934,9 @@ export default function Checkout() {
                       </label>
                     </div>
                     <div className="policy-text">
-                      Your personal data will be used to process your order, support your
-                      experience throughout this website, and for other purposes described in our{" "}
+                      Your personal data will be used to process your order,
+                      support your experience throughout this website, and for
+                      other purposes described in our{" "}
                       <Link href={`/${locale}/privacy`} target="_blank">
                         privacy policy
                       </Link>
@@ -1458,10 +1946,7 @@ export default function Checkout() {
                     <input type="checkbox" required /> &nbsp;&nbsp;
                     <span>
                       I have read and agree to the website{" "}
-                      <Link
-                        href={`/${locale}/terms`}
-                        target="_blank"
-                      >
+                      <Link href={`/${locale}/terms`} target="_blank">
                         terms and conditions
                       </Link>{" "}
                     </span>

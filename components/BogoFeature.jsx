@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useContextElement } from "@/context/Context";
 
-const bogoProducts = [
+
+export const bogoProducts = [
   { product_id: 208, product_name: 'Is It Me 90ML', price: "0", image: 'epdnew/is-it-me.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign'},
   { product_id: 240, product_name: 'Red Jewel', price: "0", image: 'epdnew/red-jewel-1.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
   { product_id: 199, product_name: 'Royal Cherry', price: "0", image: 'epdnew/royal-cherry.jpg', is_gift: true, discount: null, coupon: [], campaign: 'bogo_2025_campaign' },
