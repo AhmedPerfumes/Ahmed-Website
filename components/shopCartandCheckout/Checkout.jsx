@@ -603,7 +603,8 @@ export default function Checkout() {
       if (
         item.coupon?.[couponCode.toLowerCase()]?.code === couponCode.toLowerCase() &&
         !item.sale_price &&
-        !item.discount
+        !item.discount && 
+        !bogoProducts.some(bogo => bogo.product_id === item.product_id)
       ) {
         product_coupon = true;
       }
@@ -758,7 +759,10 @@ export default function Checkout() {
       couponCode &&
       elm.coupon[couponCode.toLowerCase()]?.code === couponData.code.toLowerCase() &&
       new Date(current_date_time) >= new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
-      new Date(current_date_time) <= new Date(elm.coupon[couponCode.toLowerCase()]?.end_date)
+      new Date(current_date_time) <= new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) &&
+      !bogoProducts.some(bogo => bogo.product_id === elm.product_id) &&
+      !elm.sale_price &&
+      !elm.discount
     ) {
       itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
       return (

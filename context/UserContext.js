@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Simulate an API call to check user authentication
