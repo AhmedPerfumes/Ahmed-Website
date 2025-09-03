@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-import FreeGiftFeature from "@/components/FreeGiftFeature";
+// import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 
 export default function Checkout() {
@@ -691,7 +691,7 @@ export default function Checkout() {
     <>
       {cartProducts.length ? (
         <>
-          <FreeGiftFeature />
+          {/* <FreeGiftFeature /> */}
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">
