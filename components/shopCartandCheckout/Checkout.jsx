@@ -193,7 +193,7 @@ export default function Checkout() {
   const [OTPSuccess, setOTPSuccess] = useState(null);
 
   const [isSendOTPLoading, setIsSendOTPLoading] = useState(false);
-  const [isOTPButton, setIsOTPButton] = useState(false);
+  const [isOTPButton, setIsOTPButton] = useState(true);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
 
   const [couponCode, setCouponCode] = useState("");
