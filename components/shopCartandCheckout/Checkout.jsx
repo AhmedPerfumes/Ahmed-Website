@@ -81,17 +81,17 @@ export default function Checkout() {
   });
   const [createAccount, setCreateAccount] = useState(false);
 
-  // useEffect(() => {
-  //   // Only clean if no BOGO products are in the cart
-  //   if (!cartProducts.some((item) => bogoProducts.some((bogo) => bogo.product_id === item.product_id))) {
-  //     const cleanedCart = cartProducts.map((item) => {
-  //       const { is_customer_coupon, ...rest } = item;
-  //       return rest;
-  //     });
-  //     setCartProducts(cleanedCart);
-  //     setCouponDataContext(null);
-  //   }
-  // }, [cartProducts, bogoProducts, setCartProducts, setCouponDataContext]);
+  useEffect(() => {
+    // Only clean if no BOGO products are in the cart
+    if (!cartProducts.some((item) => bogoProducts.some((bogo) => bogo.product_id === item.product_id))) {
+      const cleanedCart = cartProducts.map((item) => {
+        const { is_customer_coupon, ...rest } = item;
+        return rest;
+      });
+      setCartProducts(cleanedCart);
+      setCouponDataContext(null);
+    }
+  }, [cartProducts, bogoProducts, setCartProducts, setCouponDataContext]);
 
   useEffect(() => {
     try {
