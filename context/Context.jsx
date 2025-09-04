@@ -4,6 +4,7 @@ import { allProducts } from "@/data/products";
 import React, { useEffect, useContext, useState } from "react";
 import { useMenu } from "./MenuContext";
 import { openCart } from "@/utlis/openCart";
+import { bogoProducts } from "@/components/BogoFeature";
 
 const dataContext = React.createContext();
 export const useContextElement = () => {
@@ -57,6 +58,7 @@ export default function Context({ children }) {
 
     // 1) Product discount (campaign)
     if (product?.discount) {
+      console.log('product', 'discount', product);
       const start = new Date(product.discount.start_date);
       const end = new Date(product.discount.end_date);
       if (new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
@@ -73,6 +75,7 @@ export default function Context({ children }) {
       codeLower &&
       product.coupon[codeLower]?.code?.toLowerCase() === codeLower
     ) {
+      console.log('product', 'coupon', product);
       const c = product.coupon[codeLower];
       const start = new Date(c?.start_date);
       const end = new Date(c?.end_date);
@@ -83,7 +86,8 @@ export default function Context({ children }) {
     }
 
     // 3) Customer/global coupon (apply across all products)
-    if (isCustomerCouponActive) {
+    if (isCustomerCouponActive && !product.sale_price && !product.discount && !bogoProducts.some(bogo => bogo.product_id === product.product_id)) {
+      console.log('product', 'customer coupon', product);
       const value = Number(couponDataContext?.value || 0);
       const discounted = basePrice - (basePrice * value) / 100;
       return sum + qty * Number(discounted.toFixed(2));
@@ -91,6 +95,7 @@ export default function Context({ children }) {
 
     // 4) Sale price fallback
     if (product?.sale_price != null) {
+      console.log('product', 'sale price', product);
       return sum + qty * Number(Number(product.sale_price).toFixed(2));
     }
 

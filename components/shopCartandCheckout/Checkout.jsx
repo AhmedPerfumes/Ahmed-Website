@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-import FreeGiftFeature from "@/components/FreeGiftFeature";
+// import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 import { bogoProducts } from "@/components/BogoFeature";
 
@@ -80,6 +80,18 @@ export default function Checkout() {
     otp: "",
   });
   const [createAccount, setCreateAccount] = useState(false);
+
+  // useEffect(() => {
+  //   // Only clean if no BOGO products are in the cart
+  //   if (!cartProducts.some((item) => bogoProducts.some((bogo) => bogo.product_id === item.product_id))) {
+  //     const cleanedCart = cartProducts.map((item) => {
+  //       const { is_customer_coupon, ...rest } = item;
+  //       return rest;
+  //     });
+  //     setCartProducts(cleanedCart);
+  //     setCouponDataContext(null);
+  //   }
+  // }, [cartProducts, bogoProducts, setCartProducts, setCouponDataContext]);
 
   useEffect(() => {
     try {
@@ -181,7 +193,7 @@ export default function Checkout() {
   const [OTPSuccess, setOTPSuccess] = useState(null);
 
   const [isSendOTPLoading, setIsSendOTPLoading] = useState(false);
-  const [isOTPButton, setIsOTPButton] = useState(true);
+  const [isOTPButton, setIsOTPButton] = useState(false);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
 
   const [couponCode, setCouponCode] = useState("");
@@ -525,39 +537,40 @@ export default function Checkout() {
       } else if (data.message && data.message.split(" ")[0] === "OTP") {
         setOTPSuccess(data.message);
 
-        let product_coupon = false;
-        let customer_coupon = false;
-        let validCoupon = null;
+        // let product_coupon = false;
+        // let customer_coupon = false;
+        // let validCoupon = null;
 
-        cartProducts.forEach((item) => {
-          if (
-            item.coupon?.[data.coupon?.code?.toLowerCase()]?.code === data.coupon?.code?.toLowerCase() &&
-            !item.sale_price &&
-            !item.discount
-          ) {
-            product_coupon = true;
-            validCoupon = data.coupon;
-          }
-        });
+        // cartProducts.forEach((item) => {
+        //   if (
+        //     item.coupon?.[data.coupon?.code?.toLowerCase()]?.code === data.coupon?.code?.toLowerCase() &&
+        //     !item.sale_price &&
+        //     !item.discount
+        //   ) {
+        //     product_coupon = true;
+        //     validCoupon = data.coupon;
+        //   }
+        // });
 
-        if (data.coupon?.type === "customer" && isLoggedIn) {
-          const hasNonDiscountedProducts = cartProducts.some(
-            (item) => !item.sale_price && !item.discount && !item.is_gift
-          );
-          if (hasNonDiscountedProducts) {
-            customer_coupon = true;
-            validCoupon = data.coupon;
-          }
-        }
+        // if (data.coupon?.type === "customer" && isLoggedIn) {
+        //   const hasNonDiscountedProducts = cartProducts.some(
+        //     (item) => !item.sale_price && !item.discount && !item.is_gift
+        //   );
+        //   if (hasNonDiscountedProducts) {
+        //     customer_coupon = true;
+        //     validCoupon = data.coupon;
+        //   }
+        // }
 
-        if (product_coupon || customer_coupon) {
-          setCouponCode(data.coupon.code);
-          setCouponData(validCoupon);
-          setCouponDataContext(validCoupon);
-          setCouponSuccess(
-            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
-          );
-        }
+        // if (product_coupon || customer_coupon) {
+        // if (product_coupon) {
+        //   setCouponCode(data.coupon.code);
+        //   setCouponData(validCoupon);
+        //   setCouponDataContext(validCoupon);
+        //   setCouponSuccess(
+        //     `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
+        //   );
+        // }
 
         setIsOTPVerified(true);
         setIsDisabled(false);
@@ -580,14 +593,31 @@ export default function Checkout() {
     setCouponSuccess(null);
     setCouponData(null);
     setCouponDataContext(null);
-  };
+
+    // ✅ Remove is_customer_coupon flag from each product
+      const cleanedCart = cartProducts.map((item) => {
+        const { is_customer_coupon, ...rest } = item;
+        return rest;
+      });
+
+      setCartProducts(cleanedCart);
+    };
 
   const removeCoupon = (e) => {
     setCouponCode("");
     setCouponSuccess(null);
     setCouponData(null);
     setCouponDataContext(null);
+
+    // ✅ Remove is_customer_coupon flag from each product
+    const cleanedCart = cartProducts.map((item) => {
+      const { is_customer_coupon, ...rest } = item;
+      return rest;
+    });
+
+    setCartProducts(cleanedCart);
   };
+
 
   const applyCoupon = async (e) => {
     e.preventDefault();
@@ -612,6 +642,7 @@ export default function Checkout() {
 
     let customer_coupon = false;
     let customerCouponData = null;
+
     if (isLoggedIn) {
       const currentUTC = new Date();
       const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
@@ -624,15 +655,36 @@ export default function Checkout() {
           (!coupon.start_date ||
             !coupon.end_date ||
             (new Date(current_date_time) >= new Date(coupon.start_date) &&
-              new Date(current_date_time) <= new Date(coupon.end_date)))
+            new Date(current_date_time) <= new Date(coupon.end_date)))
       );
 
       if (customerCouponData) {
         const hasNonDiscountedProducts = cartProducts.some(
-          (item) => !item.sale_price && !item.discount && !bogoProducts.some(bogo => bogo.product_id === item.product_id)
+          (item) =>
+            !item.sale_price &&
+            !item.discount &&
+            !bogoProducts.some((bogo) => bogo.product_id === item.product_id)
         );
+
         if (hasNonDiscountedProducts) {
           customer_coupon = true;
+
+          // ✅ Create a new array with is_customer_coupon added
+          const updatedCartProducts = cartProducts.map((item) => {
+            const isEligible =
+              !item.sale_price &&
+              !item.discount &&
+              !bogoProducts.some((bogo) => bogo.product_id === item.product_id);
+
+            return {
+              ...item,
+              ...(isEligible ? { is_customer_coupon: true } : {})
+            };
+          });
+
+          // ✅ Update the context/state
+          setCartProducts(updatedCartProducts);
+
         } else {
           customerCouponData = null;
         }
@@ -868,7 +920,7 @@ export default function Checkout() {
     <>
       {cartProducts.length ? (
         <>
-          <FreeGiftFeature />
+          {/* <FreeGiftFeature /> */}
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">

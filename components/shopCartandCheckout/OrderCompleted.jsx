@@ -38,7 +38,9 @@ export default function OrderCompleted() {
 
   const subTotalPrice = (elm) => {
   // Check if the product is a BOGO product or marked as a gift
-  if (elm.is_gift || bogoProducts.some(bogo => bogo.product_id === elm.product_id)) {
+  console.log('commonn', elm);
+  if (elm.is_gift) {
+    console.log('common FOC', elm);
     return <td>0.00{currency.symbol} (Free Gift)</td>;
   }
 
@@ -53,6 +55,7 @@ export default function OrderCompleted() {
     new Date(current_date_time) >= new Date(elm.discount.start_date) &&
     new Date(current_date_time) <= new Date(elm.discount.end_date)
   ) {
+    console.log('common discount', elm);
     itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
     return (
       <td>
@@ -77,6 +80,7 @@ export default function OrderCompleted() {
     new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
     new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
   ) {
+    console.log('common copuon', elm);
     itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
     return (
       <td>
@@ -93,6 +97,7 @@ export default function OrderCompleted() {
   }
 
   if (elm?.sale_price) {
+    console.log('common sale price', elm);
     itemPrice = elm.sale_price;
     return (
       <td>
@@ -109,8 +114,9 @@ export default function OrderCompleted() {
   }
 
   if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
+    console.log('common Customer Coupon', elm);
     const validCoupon = orderDetails.products.some(
-      (item) => !item.sale_price && !item.discount && !item.is_gift && !bogoProducts.some(bogo => bogo.product_id === item.product_id)
+      (item) => !item.sale_price && !item.discount && !item.is_gift && !bogoProducts.some(bogo => bogo.product_id === item.id)
     ) && (
       !couponDataContext.start_date ||
       !couponDataContext.end_date ||
@@ -119,10 +125,12 @@ export default function OrderCompleted() {
     );
 
     if (
+      elm.is_customer_coupon &&
       validCoupon &&
       !elm.sale_price &&
       !elm.discount
     ) {
+      console.log('common Customer Coupon If', elm);
       itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
       return (
         <td>
