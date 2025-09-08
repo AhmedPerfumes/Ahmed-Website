@@ -1923,7 +1923,7 @@ export default function Checkout() {
                         Cash on delivery
                       </label>
                     </div>
-                    {/* <div className="form-check">
+                    <div className="form-check">
                       <input
                         className="form-check-input form-check-input_fill"
                         type="radio"
@@ -1988,7 +1988,7 @@ export default function Checkout() {
                           </g>
                         </svg>
                       </label>
-                    </div> */}
+                    </div>
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for
