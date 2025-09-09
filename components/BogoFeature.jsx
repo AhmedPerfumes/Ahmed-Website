@@ -40,7 +40,7 @@ const swiperOptions = {
 };
 
 const BOGOFeature = () => {
-  const { cartProducts, addProductToCart, removeGiftFromCart } = useContextElement();
+  const { cartProducts, setCartProducts, removeGiftFromCart } = useContextElement();
   const [addedGifts, setAddedGifts] = useState([]);
   const [selectedGifts, setSelectedGifts] = useState({});
   const prevCartRef = useRef([]);

@@ -25,7 +25,30 @@ export default function Shop1({ search }) {
   const t = useTranslations();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
 
+  // ✅ View logic
+  const allViews = [2, 3, 4];
+  const smallViews = [1, 2];
+  const [availableViews, setAvailableViews] = useState(allViews);
   const [selectedColView, setSelectedColView] = useState(3);
+
+  // 🔧 Only coerce when crossing breakpoints; preserve user's valid choice
+  useEffect(() => {
+    const updateViews = () => {
+      const isSmall = window.innerWidth < 992;
+
+      if (isSmall) {
+        setAvailableViews(smallViews);
+        setSelectedColView((prev) => (smallViews.includes(prev) ? prev : 1));
+      } else {
+        setAvailableViews(allViews);
+        setSelectedColView((prev) => (allViews.includes(prev) ? prev : 3));
+      }
+    };
+    updateViews();
+    window.addEventListener("resize", updateViews);
+    return () => window.removeEventListener("resize", updateViews);
+  }, []);
+
   const [loading, setLoading] = useState(false);
   const [sortOption, setSortOption] = useState("popularity");
 
@@ -249,7 +272,7 @@ export default function Shop1({ search }) {
             onClick={openModalShopFilter}
             className="aside-header d-flex d-lg-none align-items-center"
           >
-            <h3 className="text-uppercase fs-6 mb-0">Filter</h3>
+            <h3 className="text-uppercase fs-6 mb-0"><span></span>Filter</h3>
             <button className="btn-close-lg js-close-aside btn-close-aside ms-auto" />
           </div>
           <div className="pt-4 pt-lg-0" />
@@ -286,7 +309,7 @@ export default function Shop1({ search }) {
               {/* View */}
               <div className="d-flex align-items-center">
                 <span className="text-uppercase fw-medium me-2">View</span>
-                {itemPerRow.map((c, i) => (
+                {availableViews.map((c, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedColView(c)}
@@ -304,15 +327,12 @@ export default function Shop1({ search }) {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      {Array.from({ length: c }).map((_, idx) => (
-                        <line
-                          key={idx}
-                          x1={4 + idx * (16 / (c - 1))}
-                          y1="5"
-                          x2={4 + idx * (16 / (c - 1))}
-                          y2="19"
-                        />
-                      ))}
+                      {Array.from({ length: c }).map((_, idx) => {
+                        // evenly spread between x=4 and x=20
+                        const spacing = 16 / (c + 1);
+                        const x = 4 + spacing * (idx + 1);
+                        return <line key={idx} x1={x} y1="5" x2={x} y2="19" />;
+                      })}
                     </svg>
                   </button>
                 ))}
@@ -324,8 +344,19 @@ export default function Shop1({ search }) {
                   className="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside"
                   onClick={openModalShopFilter}
                 >
-                  <svg className="d-inline-block align-middle me-2" width="14" height="10">
-                    <use href="#icon_filter" />
+                  {/* 3 Horizontal Lines (Hamburger Icon) */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    className="d-inline-block align-middle me-2"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M1.5 3.5a.5.5 0 0 1 0-1h13a.5.5 0 0 1 0 1h-13zm0 5a.5.5 0 0 1 0-1h13a.5.5 0 0 1 0 1h-13zm0 5a.5.5 0 0 1 0-1h13a.5.5 0 0 1 0 1h-13z"
+                    />
                   </svg>
                   <span className="text-uppercase fw-medium align-middle">
                     {t("Filter")}
@@ -336,7 +367,7 @@ export default function Shop1({ search }) {
           </div>
 
           <div
-            className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-${selectedColView}`}
+            className={`products-grid row row-cols-${Math.min(selectedColView, 2)} row-cols-md-${selectedColView}`}
           >
             {filteredProducts.map((elm, i) => {
               return (
@@ -451,18 +482,29 @@ export default function Shop1({ search }) {
 
                       {elm.product_qty > 0 &&
                         (isAddedToCartProducts(elm.product_id) ? (
-                          <button className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium">
-                            {t("Already Added")}
+                          <button
+                            className="pc__atc btn btn-secondary text-white anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
+                            onClick={() =>
+                              addProductToCart(
+                                {
+                                  ...elm,
+                                  category_name: elm.category_name,
+                                  subcategory_name: elm.subcategory?.subcategory_name,
+                                },
+                                true // Flag to increase quantity
+                              )
+                            }
+                          >
+                            {t("Add More")}
                           </button>
                         ) : (
                           <button
-                            className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
+                            className="pc__atc btn btn-primary anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
                             onClick={() =>
                               addProductToCart({
                                 ...elm,
                                 category_name: elm.category_name,
-                                subcategory_name:
-                                  elm.subcategory?.subcategory_name,
+                                subcategory_name: elm.subcategory?.subcategory_name,
                               })
                             }
                           >

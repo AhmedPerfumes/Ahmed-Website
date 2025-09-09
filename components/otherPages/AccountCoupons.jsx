@@ -31,7 +31,7 @@ export default function MyCoupons() {
     })
       .then(res => res.json())
       .then(json => {
-        setCoupons(json.customer_coupon || []);
+        setCoupons(json.coupons || []);
       })
       .catch(() => setCoupons([]))
       .finally(() => setLoading(false));

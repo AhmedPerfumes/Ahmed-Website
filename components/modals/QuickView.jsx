@@ -73,16 +73,34 @@ export default function QuickView() {
     }
   };
   const addToCart = () => {
-    if (!isIncludeCard()) {
-      const item = {...quickViewItem, category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')), subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))};
-      item.quantity = quantity;
-      setCartProducts((pre) => [...pre, item]);
-      document
-      .getElementById("cartDrawerOverlay")
-      .classList.add("page-overlay_visible");
-      document.getElementById("cartDrawer").classList.add("aside_visible");
-    }
+  const item = {
+    ...quickViewItem,
+    category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')),
+    subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))
   };
+
+  if (!isIncludeCard()) {
+    // First time adding
+    item.quantity = quantity;
+    setCartProducts((prev) => [...prev, item]);
+  } else {
+    // Already in cart → just increase quantity
+    const updatedCart = cartProducts.map((cartItem) => {
+      if (cartItem.product_id === quickViewItem.product_id) {
+        return {
+          ...cartItem,
+          quantity: cartItem.quantity + 1
+        };
+      }
+      return cartItem;
+    });
+    setCartProducts(updatedCart);
+  }
+
+  // Open cart drawer (same as before)
+  document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+  document.getElementById("cartDrawer")?.classList.add("aside_visible");
+};
   function cleanProductName(productName) {
     // Step 1: Remove any non-alphanumeric characters except for spaces
     const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, '') + ' Description';
@@ -322,13 +340,13 @@ export default function QuickView() {
                   </div>
 
                   <button
-                    onClick={() => addToCart()}
-                    className="btn btn-primary btn-addtocart js-open-aside"
-                  >
-                    {isAddedToCartProducts(quickViewItem.product_id)
-                      ? t("Already Added")
-                      : t("Add To Cart")}
-                  </button>
+  onClick={addToCart}
+  className="btn btn-primary btn-addtocart js-open-aside"
+>
+  {isAddedToCartProducts(quickViewItem.product_id)
+    ? t("Add More")
+    : t("Add To Cart")}
+</button>
                 </div>) : (
                   <div className="out-of-stock">
                     <span className="badge fs-5 text-uppercase">Out of Stock</span>

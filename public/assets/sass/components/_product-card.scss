@@ -186,6 +186,7 @@ $card-image-height: 121.212122%;
   padding: 0.1875rem 0.625rem;
   line-height: 1.5rem;
   font-size: $font-size-base;
+  z-index: 1;
 }
 
 // Product card category
@@ -195,6 +196,7 @@ $card-image-height: 121.212122%;
   color: $body-color-secondary;
   font-weight: $font-weight-heading;
   line-height: $line-height-base;
+  text-transform: uppercase;
 }
 
 // Product card title

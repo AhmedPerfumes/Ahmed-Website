@@ -12,11 +12,19 @@ export default function OrderPaymentCompleted({ orderDetails }) {
   const { setCartProducts } = useContextElement();
   const [showDate, setShowDate] = useState(false);
 
+  // useEffect(() => {
+  //   setShowDate(true);
+  //   localStorage.setItem('cartList', []);
+  //   setCartProducts([]);
+  // }, []);
   useEffect(() => {
-    setShowDate(true);
-    localStorage.setItem('cartList', []);
+  if (orderDetails?.payment_status === "success") {
+    // Clear cart only after payment success
+    localStorage.removeItem("cartList");
     setCartProducts([]);
-  }, []);
+  }
+}, [orderDetails, setCartProducts]);
+
 
   const subTotalPrice = (elm) => {
     if (elm.is_gift) {

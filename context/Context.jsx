@@ -1,33 +1,55 @@
 "use client";
+
 import { allProducts } from "@/data/products";
 import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
 import { useMenu } from './MenuContext';
+// import React, { useEffect, useContext, useState } from "react";
+// import { useMenu } from "./MenuContext";
+import { openCart } from "@/utlis/openCart";
+import { bogoProducts } from "@/components/BogoFeature";
 
 const dataContext = createContext();
 export const useContextElement = () => useContext(dataContext);
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_PRODUCT':
+    case 'ADD_PRODUCT': {
       const existingProduct = state.products.find(
-        (p) => p.product_id === action.payload.product_id && p.campaign === action.payload.campaign
+        (p) =>
+          p.product_id === action.payload.product_id &&
+          p.campaign === action.payload.campaign
       );
+
+      let updatedProducts;
+
       if (existingProduct) {
+        updatedProducts = state.products.map((p) =>
+          p.product_id === action.payload.product_id &&
+          p.campaign === action.payload.campaign
+            ? { ...p, quantity: (p.quantity || 0) + (action.payload.quantity || 1) }
+            : p
+        );
+
         return {
           ...state,
-          products: state.products.map((p) =>
-            p.product_id === action.payload.product_id && p.campaign === action.payload.campaign
-              ? { ...p, quantity: (p.quantity || 0) + (action.payload.quantity || 1) }
-              : p
-          ),
+          products: updatedProducts,
           isProcessing: false,
+          toastMeta: action.meta?.toast || null,
         };
       }
+
+      updatedProducts = [
+        ...state.products,
+        { ...action.payload, quantity: action.payload.quantity || 1 },
+      ];
+
       return {
         ...state,
-        products: [...state.products, { ...action.payload, quantity: action.payload.quantity || 1 }],
+        products: updatedProducts,
         isProcessing: false,
+        toastMeta: action.meta?.toast || null,
       };
+    }
     case 'REMOVE_GIFT':
       return {
         ...state,
@@ -67,6 +89,10 @@ export default function Context({ children }) {
   const [freeShippingFlag, setFreeShippingFlag] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
+
+  // Toast state
+  const [toastData, setToastData] = useState(null); // {name, image}
+  const [showToast, setShowToast] = useState(false);
 
   const { shippingServiceCharges } = useMenu();
 
@@ -111,36 +137,101 @@ export default function Context({ children }) {
     const currentUTC = new Date();
     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    const codeLower = couponDataContext?.code?.toLowerCase();
+    const isCustomerCoupon = couponDataContext && couponDataContext.type === "customer";
+    const isCustomerCouponActive = isCustomerCoupon && (!couponDataContext.start_date || !couponDataContext.end_date || (new Date(current_date_time) >= new Date(couponDataContext.start_date) && new Date(current_date_time) <= new Date(couponDataContext.end_date)));
     const subtotal = state.products.reduce((accumulator, product) => {
+      // Ensure numbers
+      const qty = Number(product?.quantity || 0);
+      const basePrice = Number(product?.price || 0);
+
+      // Skip free gifts entirely
+      if (product?.is_gift) return accumulator;
+
       if (product?.discount) {
         if (
           new Date(current_date_time) >= new Date(product.discount.start_date) &&
           new Date(current_date_time) <= new Date(product.discount.end_date)
         ) {
           if (product.discount.discount_type === 'percent') {
-            const discount_price = (product.price - (product.price / 100 * product.discount.value)).toFixed(2);
-            return accumulator + product.quantity * discount_price;
+              const discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
+              // return accumulator + product.quantity * discount_price;
           } else if (product.discount.discount_type === 'amount') {
-            const discount_price = (product.price - product.discount.value).toFixed(2);
-            return accumulator + product.quantity * discount_price;
+              const discounted = (basePrice - Number(product.discount.value || 0));
+              // return accumulator + product.quantity * discount_price;
           }
-        }
-      } else if (product?.coupon && !Array.isArray(product.coupon) && couponDataContext) {
-        if (
-          new Date(current_date_time) >= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.start_date) &&
-          new Date(current_date_time) <= new Date(product.coupon[couponDataContext?.code.toLowerCase()]?.end_date) &&
-          product.coupon[couponDataContext?.code.toLowerCase()]?.code === couponDataContext?.code.toLowerCase()
-        ) {
-          const coupon_price = (product.price - (product.price / 100 * product.coupon[couponDataContext?.code.toLowerCase()]?.value)).toFixed(2);
-          return accumulator + product.quantity * coupon_price;
+          return accumulator + qty * Number(discounted.toFixed(2));
         }
       }
-      return accumulator + product.quantity * product.price;
+
+      if (
+        product?.coupon &&
+        !Array.isArray(product.coupon) &&
+        codeLower &&
+        product.coupon[codeLower]?.code?.toLowerCase() === codeLower
+      ) {
+        console.log('product', 'coupon', product);
+        const c = product.coupon[codeLower];
+        const start = new Date(c?.start_date);
+        const end = new Date(c?.end_date);
+        if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
+          const discounted = basePrice - (basePrice * Number(c.value)) / 100;
+          return sum + qty * Number(discounted.toFixed(2));
+        }
+      }
+
+      // 3) Customer/global coupon (apply across all products)
+      if (isCustomerCouponActive && !product.sale_price && !product.discount && !bogoProducts.some(bogo => bogo.product_id === product.product_id)) {
+        console.log('product', 'customer coupon', product);
+        const value = Number(couponDataContext?.value || 0);
+        const discounted = basePrice - (basePrice * value) / 100;
+        return sum + qty * Number(discounted.toFixed(2));
+      }
+
+      // 4) Sale price fallback
+      if (product?.sale_price != null) {
+        console.log('product', 'sale price', product);
+        return sum + qty * Number(Number(product.sale_price).toFixed(2));
+      }
+
+      // 5) Default
+      return sum + qty * basePrice;
     }, 0);
+
     setTotalPrice(subtotal);
-    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
-    setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
+    
+    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
+    setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
   }, [state.products, couponDataContext, shippingServiceCharges]);
+
+   // helper to build toast image
+  const buildToastImageUrl = (product) => {
+    const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/?$/, "/");
+
+    if (product?.image) {
+      if (/^https?:\/\//i.test(product.image)) return product.image;
+      return `${base}storage/${product.image.replace(/^\/+/, "")}`;
+    }
+
+    if (Array.isArray(product?.images) && product.images.length) {
+      const first = product.images[0];
+      if (/^https?:\/\//i.test(first)) return first;
+      return `${base}storage/${String(first).replace(/^\/+/, "")}`;
+    }
+
+    if (typeof product?.images === "string" && product.images.trim()) {
+      try {
+        const arr = JSON.parse(product.images);
+        if (Array.isArray(arr) && arr.length) {
+          const first = arr[0];
+          if (/^https?:\/\//i.test(first)) return first;
+          return `${base}storage/${String(first).replace(/^\/+/, "")}`;
+        }
+      } catch {}
+    }
+
+    return "/placeholder.png";
+  };
 
   const addProductToCart = (product) => {
     if (state.isProcessing) {
@@ -149,9 +240,19 @@ export default function Context({ children }) {
     }
     console.log('addProductToCart:', product);
     dispatch({ type: 'SET_PROCESSING', payload: true });
-    dispatch({ type: 'ADD_PRODUCT', payload: product });
-    document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
-    document.getElementById("cartDrawer")?.classList.add("aside_visible");
+    dispatch({
+      type: 'ADD_PRODUCT',
+      payload: product,
+      meta: {
+        toast: {
+          name: product?.product_name,
+          image: buildToastImageUrl(product),
+          message: "Added to your cart",
+        },
+      },
+    });
+    // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+    // document.getElementById("cartDrawer")?.classList.add("aside_visible");
   };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
@@ -231,5 +332,92 @@ export default function Context({ children }) {
     removeGiftFromCart,
   };
 
-  return <dataContext.Provider value={contextElement}>{children}</dataContext.Provider>;
+  return (
+    <dataContext.Provider value={contextElement}>
+      {children}
+
+      {toastData && (
+        <div
+          className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
+          onClick={openCart}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={toastData.image} alt={toastData.name} className="toast-img" />
+          <div className="toast-content">
+            <div>
+              <strong>{toastData.name}</strong>
+              <div>Successfully added to your cart</div>
+              <button
+                className="btn btn-sm btn-dark text-white mt-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openCart();
+                }}
+              >
+                View Cart
+              </button>
+            </div>
+          </div>
+          <button
+            className="toast-close"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowToast(false);
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      <style jsx>{`
+        .custom-toast {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background: #fff;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 14px;
+          max-width: 350px;
+          transition: all 0.3s ease;
+          transform: translateY(100px);
+          opacity: 0;
+          z-index: 9999;
+        }
+        .custom-toast.show {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        .toast-img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+        .toast-content {
+          flex: 1;
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+        .toast-close {
+          background: none;
+          border: none;
+          font-size: 16px;
+          cursor: pointer;
+          color: #666;
+        }
+        @media (max-width: 576px) {
+          .custom-toast {
+            right: 10px;
+            left: 10px;
+            max-width: unset;
+          }
+        }
+      `}</style>
+    </dataContext.Provider>
+  );
 }
