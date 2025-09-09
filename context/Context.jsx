@@ -6,7 +6,7 @@ import { useMenu } from './MenuContext';
 // import React, { useEffect, useContext, useState } from "react";
 // import { useMenu } from "./MenuContext";
 import { openCart } from "@/utlis/openCart";
-import { bogoProducts } from "@/components/BogoFeature";
+// import { bogoProducts } from "@/components/BogoFeature";
 
 const dataContext = createContext();
 export const useContextElement = () => useContext(dataContext);
@@ -94,6 +94,8 @@ export default function Context({ children }) {
   const [toastData, setToastData] = useState(null); // {name, image}
   const [showToast, setShowToast] = useState(false);
 
+  const [promotionsContext, setPromotionsContext] = useState([]);
+
   const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
@@ -149,15 +151,16 @@ export default function Context({ children }) {
       if (product?.is_gift) return accumulator;
 
       if (product?.discount) {
+        let discounted = basePrice;
         if (
           new Date(current_date_time) >= new Date(product.discount.start_date) &&
           new Date(current_date_time) <= new Date(product.discount.end_date)
         ) {
           if (product.discount.discount_type === 'percent') {
-              const discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
+              discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
               // return accumulator + product.quantity * discount_price;
           } else if (product.discount.discount_type === 'amount') {
-              const discounted = (basePrice - Number(product.discount.value || 0));
+              discounted = (basePrice - Number(product.discount.value || 0));
               // return accumulator + product.quantity * discount_price;
           }
           return accumulator + qty * Number(discounted.toFixed(2));
@@ -176,26 +179,27 @@ export default function Context({ children }) {
         const end = new Date(c?.end_date);
         if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
           const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-          return sum + qty * Number(discounted.toFixed(2));
+          return accumulator + qty * Number(discounted.toFixed(2));
         }
       }
 
       // 3) Customer/global coupon (apply across all products)
-      if (isCustomerCouponActive && !product.sale_price && !product.discount && !bogoProducts.some(bogo => bogo.product_id === product.product_id)) {
+      if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
+      {
         console.log('product', 'customer coupon', product);
         const value = Number(couponDataContext?.value || 0);
         const discounted = basePrice - (basePrice * value) / 100;
-        return sum + qty * Number(discounted.toFixed(2));
+        return accumulator + qty * Number(discounted.toFixed(2));
       }
 
       // 4) Sale price fallback
       if (product?.sale_price != null) {
         console.log('product', 'sale price', product);
-        return sum + qty * Number(Number(product.sale_price).toFixed(2));
+        return accumulator + qty * Number(Number(product.sale_price).toFixed(2));
       }
 
       // 5) Default
-      return sum + qty * basePrice;
+      return accumulator + qty * basePrice;
     }, 0);
 
     setTotalPrice(subtotal);
@@ -203,6 +207,14 @@ export default function Context({ children }) {
     const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
     setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
   }, [state.products, couponDataContext, shippingServiceCharges]);
+
+  useEffect(() => {
+  if (state.toastMeta) {
+    setToastData(state.toastMeta);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
+  }
+}, [state.toastMeta]);
 
    // helper to build toast image
   const buildToastImageUrl = (product) => {
@@ -330,6 +342,8 @@ export default function Context({ children }) {
     couponDataContext,
     setCouponDataContext,
     removeGiftFromCart,
+    promotionsContext,
+    setPromotionsContext
   };
 
   return (

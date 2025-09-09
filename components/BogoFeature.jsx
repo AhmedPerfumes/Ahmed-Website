@@ -40,7 +40,7 @@ const swiperOptions = {
 };
 
 const BOGOFeature = () => {
-  const { cartProducts, setCartProducts, removeGiftFromCart } = useContextElement();
+  const { cartProducts, setCartProducts, addProductToCart, removeGiftFromCart, setPromotionsContext } = useContextElement();
   const [addedGifts, setAddedGifts] = useState([]);
   const [selectedGifts, setSelectedGifts] = useState({});
   const prevCartRef = useRef([]);
@@ -64,9 +64,11 @@ const BOGOFeature = () => {
             : promo.buy_products
         }));
         setPromotions(validPromotions);
+        setPromotionsContext(validPromotions);
       } catch (error) {
         console.error('Error fetching bogoProducts:', error);
         setPromotions([]);
+        setPromotionsContext([]);
       } finally {
         setLoading(false);
       }
