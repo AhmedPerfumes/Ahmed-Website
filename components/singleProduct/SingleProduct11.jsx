@@ -14,7 +14,8 @@ import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 import Base from "./New/base";
-import ProductDescription from "./New/ProductDescription";
+import ProductDescription from "./New/ProductInfoTabs/ProductDescription";
+import ProductInfoTabs from "./New/ProductInfoTabs/ProductInfoTabs";
 
 export default function SingleProduct11({ category, subcategory, product }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -214,7 +215,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
         </div>
       </section> */}
 
-      <ProductDescription product={{...product, category, subcategory}} />
+      <ProductInfoTabs product={product} category={category} subcategory={subcategory} />
       </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
     </>
   );

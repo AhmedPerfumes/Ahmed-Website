@@ -456,23 +456,23 @@ export default function Checkout() {
       } else if (data.message && data.message.split(" ")[0] == "OTP") {
         setOTPSuccess(data.message);
 
-        let product_coupon = false;
-        cartProducts.map((item) => {
-          if (
-            item.coupon[data.coupon.code.toLowerCase()]?.code ==
-              data.coupon.code.toLowerCase() &&
-            !item.sale_price
-          ) {
-            product_coupon = true;
-          }
-        });
+        // let product_coupon = false;
+        // cartProducts.map((item) => {
+        //   if (
+        //     item.coupon[data.coupon.code.toLowerCase()]?.code ==
+        //       data.coupon.code.toLowerCase() &&
+        //     !item.sale_price
+        //   ) {
+        //     product_coupon = true;
+        //   }
+        // });
 
-        if (data.customer && product_coupon) {
-          setCouponCode(data.coupon.code);
-          setCouponData(data.coupon);
-          setCouponDataContext(data.coupon);
-          setCouponSuccess(`Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`);
-        }
+        // if (data.customer && product_coupon) {
+        //   setCouponCode(data.coupon.code);
+        //   setCouponData(data.coupon);
+        //   setCouponDataContext(data.coupon);
+        //   setCouponSuccess(`Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`);
+        // }
         setIsOTPVerified(true);
         setIsDisabled(false);
         setOTPError(null);
@@ -1317,9 +1317,9 @@ export default function Checkout() {
                                   : 0)) >= 200
                           ) && (
                             <tr>
-                              <td colSpan={2} style={{ color: "green", fontWeight: "bold" }}>
+                              {/* <td colSpan={2} style={{ color: "green", fontWeight: "bold" }}>
                                 🎁 You have received a surprise gift
-                              </td>
+                              </td> */}
                             </tr>
                           )}
                           {/* ✅ End of new code */}
