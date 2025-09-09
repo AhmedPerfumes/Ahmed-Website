@@ -26,7 +26,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
-                        src="/assets/images/campaigns/womendayDesktop.jpg"
+                        src="/assets/images/campaigns/landing-page.jpg"
                         alt="Father's Day Web"
                         width={1500}
                         height={550}
@@ -38,7 +38,7 @@ function CityWalk() {
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/campaigns/womensdaymobile.jpg"
+                        src="/assets/images/campaigns/SummerMobile.jpg"
                         alt="Father's Day Mobile"
                         width={1500}
                         height={550}
@@ -47,11 +47,10 @@ function CityWalk() {
             </div>
         </div>
         <div className="pt-5 mt-5">
-            <DiscountGrid title="Emirati Women’s Day Exclusive Offers" onlyDiscounted={true}/>
 
-        {/* <DiscountedProductsSlider title="Summer Vibes, Cooler Prices!" onlyDiscounted={true}/> */}
+        <DiscountGrid title="Summer Vibes, Cooler Prices!" onlyDiscounted={true}/>
         </div>
-            {/* <section className="d-flex section-3">
+            <section className="d-flex section-3">
                 <div className="">
                     <div className="section-content">
                         <div className="d-flex flex-column justify-content-around ">
@@ -93,7 +92,7 @@ function CityWalk() {
                             Shop Now
                         </a>
 
-            </section> */}
+            </section>
             {/* <DiscountedProductsGrid onlyDiscounted={true} /> */}
 
             {/* <div className="container pt-2 mt-3">
@@ -132,12 +131,9 @@ function CityWalk() {
           </div>
         </div>
       </div> */}
-      
-      {/* <section className="AlternateImage">
-      
             <div className="container pt-5 mt-5">
                 <div className="row align-items-center">
-                 
+                    {/* Image column - shown first on mobile/tablet, second on desktop */}
                     <div className="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
                         <Image
                             width={0}
@@ -152,7 +148,7 @@ function CityWalk() {
                         />
                     </div>
 
-              
+                    {/* Text column - shown second on mobile/tablet, first on desktop */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
                         Oud & Roses
@@ -172,7 +168,7 @@ function CityWalk() {
 
             <div className="container">
                 <div className="row align-items-center">
-                 
+                    {/* Image column - shown first on desktop, second on mobile/tablet */}
                     <div className="col-md-6 order-1 order-md-1 mb-4 mb-md-0">
                         <Image
                             width={0}
@@ -187,7 +183,7 @@ function CityWalk() {
                         />
                     </div>
 
-           
+                    {/* Text column - shown second on desktop, first on mobile/tablet */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-2">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
                         Ignite Rose
@@ -204,12 +200,12 @@ function CityWalk() {
                     </div>
                 </div>
             </div>
-            </section> */}
+            
            
 
-            {/* <section className="d-flex flex-column align-items-center pt-5">
+            <section className="d-flex flex-column align-items-center pt-5">
                             <span className="t-subtitle text-uppercase fs-4 text-center">
-                                {"Scent for Womens: Fresh & Vibrant Perfumes"}
+                                {"Scent of Summer: Fresh & Vibrant Perfumes"}
                             </span>
                             <div className="d-flex flex-row align-items-center ">
                                 <div className="mt-4 mb-5 d-none d-md-block">
@@ -301,7 +297,7 @@ function CityWalk() {
                                     </Link>
                                 </div>
                             </div>
-                        </section> */}
+                        </section>
                         {/* <TopCollections
   categoryId={8}
   category={"perfumes"}
