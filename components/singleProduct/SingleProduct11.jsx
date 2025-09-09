@@ -16,6 +16,7 @@ import { useMenu } from '@/context/MenuContext';
 import Base from "./New/base";
 import ProductDescription from "./New/ProductInfoTabs/ProductDescription";
 import ProductInfoTabs from "./New/ProductInfoTabs/ProductInfoTabs";
+import ItemFamilySlider from "./New/ItemFamilySlider";
 
 export default function SingleProduct11({ category, subcategory, product }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -191,11 +192,11 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
        
-      <Base product={{...product, category, subcategory}} />
+      
 
-      {/* <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
+      <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
         <div className="product-single__details-list">
           <h2 className="product-single__details-list__title text-white">
             Description
@@ -214,8 +215,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
           
         </div>
       </section> */}
-
+      
+      <Base product={{...product, category, subcategory}} />
       <ProductInfoTabs product={product} category={category} subcategory={subcategory} />
+      <ItemFamilySlider itemFamilyProds={product.item_family} />
       </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
     </>
   );
