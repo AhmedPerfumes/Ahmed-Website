@@ -12,7 +12,7 @@ const countries = [
 import { useContextElement } from "@/context/Context";
 import { useUser } from "@/context/UserContext";
 import { useMenu } from "@/context/MenuContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import he from "he";
@@ -81,17 +81,22 @@ export default function Checkout() {
   });
   const [createAccount, setCreateAccount] = useState(false);
 
-  // useEffect(() => {
-  //   // Only clean if no BOGO products are in the cart
-  //   if (!cartProducts.some((item) => bogoProducts.some((bogo) => bogo.product_id === item.product_id))) {
-  //     const cleanedCart = cartProducts.map((item) => {
-  //       const { is_customer_coupon, ...rest } = item;
-  //       return rest;
-  //     });
-  //     setCartProducts(cleanedCart);
-  //     setCouponDataContext(null);
-  //   }
-  // }, [cartProducts, bogoProducts, setCartProducts, setCouponDataContext]);
+  const hasCleaned = useRef(false);
+
+  useEffect(() => {
+    if (hasCleaned.current) return;
+
+    const hasBogo = cartProducts.some((item) =>
+      bogoProducts.some((bogo) => bogo.product_id === item.product_id)
+    );
+
+    if (!hasBogo) {
+      const cleanedCart = cartProducts.map(({ is_customer_coupon, ...rest }) => rest);
+      setCartProducts(cleanedCart);
+      setCouponDataContext(null);
+      hasCleaned.current = true; // prevent future runs
+    }
+  }, [cartProducts, bogoProducts, setCartProducts, setCouponDataContext]);
 
   useEffect(() => {
     try {
