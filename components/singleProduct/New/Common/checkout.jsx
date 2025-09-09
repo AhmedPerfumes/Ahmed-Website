@@ -268,42 +268,46 @@ const Checkout = ({ product }) => {
                     </div>
                 </div>
             </div> */}
-            {product?.size && (
-                <div className="w-100 mt-3">
-                    <div
-                        className="d-flex justify-content-between align-items-center border-bottom pb-1"
-                        style={{ fontFamily: "Georgia, serif" }}
-                    >
-                        <label
-                            htmlFor="size-select"
-                            className="text-muted me-2 mb-0 h6"
-                        >
-                            Size:
-                        </label>
+{/* CHANGED: Condition now checks for a non-empty 'tags' array */}
+{product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
+  <div className="w-100 mt-3">
+    <div
+      className="d-flex justify-content-between align-items-center border-bottom pb-1"
+      style={{ fontFamily: "Georgia, serif" }}
+    >
+      <label
+        htmlFor="size-select"
+        className="text-muted me-2 mb-0 h6"
+      >
+        Size:
+      </label>
 
-                        <div
-                            className="position-relative"
-                            style={{ maxWidth: "100px" }}
-                        >
-                            {/* No need for a dropdown. 
-                      This is just a styled div to display the single size value.
-                    */}
-                            <div
-                                className="btn btn-sm w-100 text-start"
-                                style={{
-                                    backgroundColor: "rgba(250, 249, 247)",
-                                    color: "#000",
-                                    fontSize: "0.875rem",
-                                    padding: "4px 8px",
-                                    cursor: "default", // It looks like a button, but isn't clickable
-                                }}
-                            >
-                                {product.size}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+      {/* CHANGED: This container will now hold one or more tags */}
+      <div
+        className="d-flex flex-wrap justify-content-end gap-2"
+        style={{ maxWidth: "150px" }}
+      >
+        {/* CHANGED: Mapping over the product.tags array */}
+        {product.tags.map((tag, index) => (
+          <div
+            // ADDED: A unique key is required for each item in a loop
+            key={index}
+            className="btn btn-sm"
+            style={{
+              backgroundColor: "rgba(250, 249, 247)",
+              color: "#000",
+              fontSize: "0.875rem",
+              padding: "4px 8px",
+              cursor: "default", // It looks like a button, but isn't clickable
+            }}
+          >
+            {tag}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
             {/* Add to Cart Button */}
             {/* <button
                 type="submit"

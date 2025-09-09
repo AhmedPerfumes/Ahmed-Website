@@ -160,7 +160,7 @@ const ProductAccordion = ({ product }) => {
     const productOverviewData = [
         {
             head: "Size / Volume:",
-            text: product?.size,
+            text: product?.tags?.join(", "),
             icon: "https://www.svgrepo.com/show/217430/measuring-glass.svg",
         },
         {
@@ -258,7 +258,6 @@ const ProductAccordion = ({ product }) => {
 
     return (
         <div className="accordion" id="productAccordion">
-
             {/* --- Fragrance Profile --- */}
             {(notesData?.length > 0 || fragranceSummaryData?.length > 0) && (
                 <AccordionItem
