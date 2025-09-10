@@ -74,7 +74,35 @@ const BOGOFeature = () => {
       }
     };
     fetchBogoRules();
-  }, []);
+  }, [setPromotionsContext]);
+
+  // ✅ Step 2: Clean non-special products ONCE after promotions load
+  useEffect(() => {
+    if (loading || !promotions.length || !cartProducts?.length) return;
+
+    const updated = cartProducts.map((item) => {
+      const isBogo = promotions.some((promo) =>
+        [...promo.buy_products, ...(promo.free_products || [])].some(
+          (b) => b.product_id === item.product_id
+        )
+      );
+      const isDiscount = item.discount > 0;
+      const isSalePrice = item.sale_price > 0;
+
+      if (isBogo || isDiscount || isSalePrice) {
+        return item; // keep coupon
+      }
+
+      // 🚫 Remove coupon only for normal products
+      const { is_customer_coupon, ...rest } = item;
+      return rest;
+    });
+
+    const hasChanged = JSON.stringify(cartProducts) !== JSON.stringify(updated);
+    if (hasChanged) {
+      setCartProducts(updated);
+    }
+  }, [promotions, loading]); // 🔥 no cartProducts here
 
   useEffect(() => {
     if (loading) return;

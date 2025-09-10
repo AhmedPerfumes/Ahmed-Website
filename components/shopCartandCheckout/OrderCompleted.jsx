@@ -8,12 +8,12 @@ import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
 import FeedbackForm from "../common/Feedback";
 
-import { bogoProducts } from "@/components/BogoFeature";
+// import { bogoProducts } from "@/components/BogoFeature";
 import { useUser } from "@/context/UserContext";
 
 
 export default function OrderCompleted() {
-  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, couponDataContext } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, promotionsContext, couponDataContext } = useContextElement();
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { isLoggedIn } = useUser();
   const [showDate, setShowDate] = useState(false);
@@ -102,27 +102,29 @@ export default function OrderCompleted() {
       );
     }
 
-    if (elm?.sale_price) {
-      console.log('common sale price', elm);
-      itemPrice = elm.sale_price;
-      return (
-        <td>
-          <span className="money price price-sale">
-            {currency.symbol}
-            {(itemPrice * elm.qty).toFixed(2)}
-          </span>
-          <span className="money price price-old">
-            {currency.symbol}
-            {(elm.price * elm.qty).toFixed(2)}
-          </span>
-        </td>
-      );
-    }
+    // if (elm?.sale_price) {
+    //   console.log('common sale price', elm);
+    //   itemPrice = elm.sale_price;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.qty).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.qty).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
 
     if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
       console.log('common Customer Coupon', elm);
       const validCoupon = orderDetails.products.some(
-        (item) => !item.sale_price && !item.discount && !item.is_gift && !bogoProducts.some(bogo => bogo.product_id === item.id)
+        (item) => !item.sale_price && !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
+        promo.buy_products.some((item) => item.product_id === elm.product_id)
+        )
       ) && (
         !couponDataContext.start_date ||
         !couponDataContext.end_date ||

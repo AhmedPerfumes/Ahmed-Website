@@ -20,7 +20,7 @@ import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
-// import FreeGiftFeature from "@/components/FreeGiftFeature";
+import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 // import { bogoProducts } from "@/components/BogoFeature";
 
@@ -411,10 +411,10 @@ export default function Checkout() {
         setError(data.qtyMessage);
       } else if (data.discountMessage) {
         setError(data.discountMessage);
-        setTimeout(() => {
-          localStorage.setItem("cartList", JSON.stringify([]));
-          setCartProducts([]);
-        }, 2000);
+        // setTimeout(() => {
+        //   localStorage.setItem("cartList", JSON.stringify([]));
+        //   setCartProducts([]);
+        // }, 2000);
       } else if (data.couponMessage) {
         setError(data.couponMessage);
       } else if (data.duplicateOrderMessage) {
@@ -690,7 +690,7 @@ export default function Checkout() {
               promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
             );
 
-            const isEligible = !item.sale_price && !item.discount && !isBogoProduct;
+            const isEligible = !item.sale_price && !item.discount && !isBogoProduct && !item.is_gift;
 
             return {
               ...item,
@@ -808,7 +808,7 @@ export default function Checkout() {
         if(elm.discount.discount_type == "percent") {
           itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
         } else if(elm.discount.discount_type == "amount") {
-          itemPrice = elm.price - elm.discount.value;
+          itemPrice = elm.discount.final_price;
         }
       return (
         <td>
@@ -944,7 +944,7 @@ export default function Checkout() {
     <>
       {cartProducts.length ? (
         <>
-          {/* <FreeGiftFeature /> */}
+          <FreeGiftFeature couponData={couponData}/>
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">

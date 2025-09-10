@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Campaign, Discount } from '@mui/icons-material';
+import { useUser } from "@/context/UserContext";
 
 const swiperOptions = {
   autoplay: false,
@@ -41,18 +42,24 @@ const swiperOptions = {
 };
 
 const FreeGiftFeature = ({ couponData }) => {
-  const { cartProducts, totalPrice, addProductToCart, setCartProducts, removeGiftFromCart } = useContextElement();
+  const { cartProducts, totalPrice, addProductToCart, setCartProducts, promotionsContext, removeGiftFromCart } = useContextElement();
   const [selectedGift, setSelectedGift] = useState(null);
   const [thresholds, setThresholds] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { isLoggedIn } = useUser();
+
   // Filter out "Collections" products
   const nonCollectionProducts = cartProducts.filter(
-    (item) =>item.category_name?.toLowerCase() !== "collections" &&
-    item.category_name?.toLowerCase() !== 'online exclusive' &&
-    // item.discount === null &&s
+    (item) =>
+    // item.category_name?.toLowerCase() !== "collections" &&
+    // item.category_name?.toLowerCase() !== 'online exclusive' &&
+    item.discount === null &&
     !item.is_gift &&
-    item.coupon.length == 0
+    // && item.coupon.length == 0
+    !promotionsContext.some((promo) =>
+      promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
+    )
   );
 
   const currentUTC = new Date();
@@ -62,9 +69,27 @@ const FreeGiftFeature = ({ couponData }) => {
   // Total price of non-Collections products
   const nonCollectionTotalPrice = nonCollectionProducts.reduce(
     (acc, item) => {
+      console.log('hasCleaned', couponData?.code, new Date(current_date_time), new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date));
       if(couponData?.code && new Date(current_date_time) >= new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon[couponData?.code.toLowerCase()]?.end_date) && item.coupon[couponData?.code.toLowerCase().toLowerCase()].code == couponData?.code.toLowerCase()) {
         return acc + (parseFloat(item.price - (item.price / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
-      } else {
+      } else if (
+      isLoggedIn &&
+      couponData &&
+      couponData.type === "customer" &&
+      (!couponData.start_date ||
+        !couponData.end_date ||
+        (new Date(current_date_time) >= new Date(couponData.start_date) &&
+          new Date(current_date_time) <= new Date(couponData.end_date)))
+      // &&
+      // !elm.sale_price &&
+      // !elm.discount &&
+      // !promotionsContext.some((promo) =>
+      //   promo.buy_products.some((item) => item.product_id === elm.product_id)
+      // )
+    ) {
+      let itemPrice = item.price - (item.price / 100) * couponData.value;
+        return acc + (parseFloat(itemPrice) * item.quantity);
+    } else {
         return acc + (parseFloat(item.price) * item.quantity);
       }
     },

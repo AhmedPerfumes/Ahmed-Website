@@ -22,7 +22,7 @@ export const renderPrice = (product, currency) => {
         </>
       );
     } else if (discount_type === "amount") {
-      const discounted = (product.price - value).toFixed(2);
+      const discounted = product.discount.final_price;
       return (
         <>
           <span className="money price price-old">

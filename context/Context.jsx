@@ -160,7 +160,7 @@ export default function Context({ children }) {
               discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
               // return accumulator + product.quantity * discount_price;
           } else if (product.discount.discount_type === 'amount') {
-              discounted = (basePrice - Number(product.discount.value || 0));
+              discounted = Number(product.discount.final_price || 0);
               // return accumulator + product.quantity * discount_price;
           }
           return accumulator + qty * Number(discounted.toFixed(2));
@@ -193,10 +193,10 @@ export default function Context({ children }) {
       }
 
       // 4) Sale price fallback
-      if (product?.sale_price != null) {
-        console.log('product', 'sale price', product);
-        return accumulator + qty * Number(Number(product.sale_price).toFixed(2));
-      }
+      // if (product?.sale_price != null) {
+      //   console.log('product', 'sale price', product);
+      //   return accumulator + qty * Number(Number(product.sale_price).toFixed(2));
+      // }
 
       // 5) Default
       return accumulator + qty * basePrice;
