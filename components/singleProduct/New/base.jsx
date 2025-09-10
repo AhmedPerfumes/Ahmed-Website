@@ -18,7 +18,6 @@ const Base = ({product}) => {
     const images = product?.images ? JSON.parse(product.images) : [];
     useEffect(() => {
         require("bootstrap");
-        console.log(product, "Product")
     }, [])
 
     return (

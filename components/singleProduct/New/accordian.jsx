@@ -121,7 +121,6 @@ const getUsageInfo = (product) => {
 
 const ProductAccordion = ({ product }) => {
     const { shippingServiceCharges } = useMenu();
-    console.log(shippingServiceCharges, "service");
     // --- Data Preparation ---
 
     const fragranceTypeMap = {

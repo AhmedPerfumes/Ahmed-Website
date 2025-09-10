@@ -17,7 +17,6 @@ const Carousel = ({ images, activeIndex, setActiveIndex }) => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.slideTo(activeIndex);
         }
-        console.log(images, "image");
     }, [activeIndex]);
 
     return (

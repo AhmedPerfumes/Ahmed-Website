@@ -12,7 +12,6 @@ const Top = ({ product }) => {
     }
     return "";
   }, [product?.product_name]);
-  console.log(product)
 
   return (
     <div className="mt-lg-4">

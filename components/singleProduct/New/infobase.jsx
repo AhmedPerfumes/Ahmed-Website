@@ -17,7 +17,6 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 992);
     };
-    // console.log(product?.product_name && t(he.decode(product?.product_name)), "Product Name");
 
     checkMobile(); // initial check
     window.addEventListener("resize", checkMobile);
