@@ -221,7 +221,7 @@ const ProductAccordion = ({ product }) => {
         {
             head: "Longevity:",
             text: product?.longevity,
-            icon: "https://www.svgrepo.com/show/28716/time-passing.svg",
+            icon: "https://www.svgrepo.com/show/415844/time-alarm-timer.svg",
         },
         {
             head: "Occasion:",
