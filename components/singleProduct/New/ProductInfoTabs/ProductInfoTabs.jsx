@@ -43,7 +43,7 @@ const ProductInfoTabs = ({ product, category, subcategory }) => {
     
     return (
         <>
-            <div className="product-tabs-container">
+            <div className="product-tabs-container container">
                 <div className="tab-headers">
                     
                     {/* --- CHANGE: Conditionally render the Fragrance Timeline button --- */}

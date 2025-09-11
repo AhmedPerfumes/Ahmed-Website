@@ -28,13 +28,13 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
 
   return (
     <div
-      className="container"
+      // className="container"
       style={{
         maxWidth: "500px",
-        fontFamily: "serif",
+        fontFamily: "SofiaProRegular",
         display: "flex",
         flexDirection: "column",
-        minHeight: isMobile ? "auto" : "100vh",
+        // minHeight: isMobile ? "auto" : "70vh",
       }}
     >
       <div className="d-none d-lg-block">

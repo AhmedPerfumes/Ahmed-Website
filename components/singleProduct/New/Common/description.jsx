@@ -25,7 +25,7 @@ const Description = ({ description }) => {
       style={{
         overflow: "hidden",
         transition: "max-height 0.5s ease-in-out",
-        fontFamily: `'Merriweather', serif`,
+        // fontFamily: `'Merriweather', serif`,
       }}
     >
       

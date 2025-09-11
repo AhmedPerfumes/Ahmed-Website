@@ -21,11 +21,11 @@ const Base = ({product}) => {
     }, [])
 
     return (
-        <div className="App" style={{ backgroundColor: "#FAF9F7" }}>
-            <div className="head-container container-fluid px-3 px-sm-4 px-lg-5">
+        <div className="App py-5" >
+            <div className="head-container container">
                 <div
-                    className="d-flex flex-column flex-lg-row justify-content-center align-items-start gap-3 gap-lg-4 "
-                    style={{ minHeight: "100vh" }}
+                    className="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 gap-lg-4 "
+                    // style={{ minHeight: "100vh" }}
                 >
                     <div className="info-container order-2 order-lg-1">
                         <InfoBase
@@ -45,7 +45,7 @@ const Base = ({product}) => {
                         />
                     </div>
 
-                    <div className="accordion-container order-3 order-lg-3">
+                    <div className="accordion-container order-3 order-lg-3 accordion-padding">
                         <ProductAccordion product={product}/>
                     </div>
                 </div>

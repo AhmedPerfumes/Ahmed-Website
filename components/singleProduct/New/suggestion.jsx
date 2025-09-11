@@ -52,7 +52,7 @@ const Suggestion = () => {
     <motion.div
       className="container pb-4"
       style={{
-        fontFamily: "'Merriweather', serif",
+        fontFamily: "SofiaProRegular",
         color: "#1C1C1E",
         maxWidth: "1140px",
       }}
@@ -103,7 +103,7 @@ const Suggestion = () => {
               <div className="p-3 d-flex flex-column gap-2">
                 <h3
                   style={{
-                    fontFamily: "'Cinzel', serif",
+                    // fontFamily: "'Cinzel', serif",
                     fontWeight: "600",
                     fontSize: "1.125rem", // ~text-lg
                     margin: 0,
@@ -113,7 +113,7 @@ const Suggestion = () => {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "'Merriweather', serif",
+                    // fontFamily: "'Merriweather', serif",
                     fontSize: "0.875rem", // text-sm
                     margin: 0,
                     color: "#555",
@@ -125,7 +125,7 @@ const Suggestion = () => {
                   whileTap={{ scale: 0.95 }}
                   className="btn btn-dark rounded-pill fw-semibold"
                   style={{
-                    fontFamily: "'Cinzel', serif",
+                    // fontFamily: "'Cinzel', serif",
                     fontSize: "0.875rem",
                     width: "100%",
                     padding: "0.5rem 0",

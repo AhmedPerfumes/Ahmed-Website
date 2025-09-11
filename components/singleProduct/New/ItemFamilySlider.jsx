@@ -8,7 +8,7 @@ import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 
-export default function ItemFamilySlider({ itemFamilyProds }) {
+export default function ItemFamilySlider({ product, itemFamilyProds }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const { toggleWishlist, isAddedtoWishlist } = useContextElement();
@@ -103,7 +103,7 @@ export default function ItemFamilySlider({ itemFamilyProds }) {
   return (
     <section className="products-carousel container my-4">
       <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4 mt-4">
-        Complete The <strong>Set</strong>
+        Discover More from <strong>{product?.product_name && t(he.decode(product?.itemFamily))}</strong>
       </h2>
 
       <div id="item_family_products" className="position-relative">

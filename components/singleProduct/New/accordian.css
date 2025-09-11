@@ -17,8 +17,8 @@
     --color-accent: #c9b49a; /* A muted, elegant gold/tan accent */
 
     /* Typography */
-    --font-heading: "Cinzel", serif;
-    --font-body: "Merriweather", serif;
+    --font-heading: "SofiaProRegular";
+    --font-body: "SofiaProRegular";
 
     /* Spacing Scale */
     --space-xs: 0.25rem; /* 4px */
@@ -51,8 +51,9 @@
 }
 
 .accordion-button {
+    font-size: 0.9rem;
     font-family: var(--font-heading);
-    font-weight: 600;
+    text-transform: uppercase;
     padding: var(--space-lg) var(--space-md);
     width: 100%;
     display: flex;
@@ -114,15 +115,6 @@
     justify-self: end; /* Aligns the value to the right edge */
     font-weight: 600;
 }
-.spec-icon {
-    width: 18px;
-    height: 18px;
-    opacity: 0.6;
-}
-.spec-label {
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-}
 
 /* --- 2. Fragrance Profile (Scent Journey) --- */
 .notes-journey-container {
@@ -159,12 +151,12 @@
 }
 .note-item-title {
     font-family: var(--font-heading);
-    font-weight: 600;
+    font-weight: 400;
     margin-bottom: var(--space-xs);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 }
 .note-item-desc {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--color-text-secondary);
     line-height: 1.6;
 }
@@ -191,13 +183,13 @@
 /* Refined Typography for better hierarchy */
 .highlight-title {
     font-family: var(--font-body);
-    font-weight: 700;
+    font-weight: 400;
     font-size: 0.9rem;
     color: var(--color-text-primary);
     margin: 0;
 }
 .highlight-desc {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.6;
@@ -224,13 +216,9 @@
   padding: var(--space-sm); /* A little breathing room inside the frame */
 }
 
-.usage-text {
-  /* This container for the text needs no special styling */
-}
-
 .usage-guide h4 {
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: var(--space-md);
   font-size: 1.1rem;
   text-align: center; /* Centering the title feels more intentional */

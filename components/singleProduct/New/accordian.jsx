@@ -1,7 +1,13 @@
+"use client";
+
 import React from "react";
 import "./accordian.css";
 import { useMenu } from "@/context/MenuContext";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+
+
+
 // The InfoCard component is no longer used in this design, so you could remove the import.
 
 const howToApplyContent = {
@@ -461,8 +467,10 @@ const ProductAccordion = ({ product }) => {
     );
 };
 
+
 // A helper component to keep the accordion item structure DRY
 const AccordionItem = ({ title, id, defaultOpen = false, children }) => {
+    const t = useTranslations()
     return (
         <div className="accordion-item">
             <h2 className="accordion-header" id={`heading${id}`}>
@@ -476,7 +484,8 @@ const AccordionItem = ({ title, id, defaultOpen = false, children }) => {
                     aria-expanded={defaultOpen}
                     aria-controls={`collapse${id}`}
                 >
-                    {title}
+                    {/* {title} */}
+                    {t(title) }
                 </button>
             </h2>
             <div

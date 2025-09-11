@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap"); */
 
 /* Styles for the Timeline */
 .timeline-wrapper {
@@ -146,7 +146,6 @@
     font-family: 'Montserrat', sans-serif;
     overflow: hidden; /* Prevents horizontal scrollbars */
 }
-
 /* --- Header Section (Titles & Subtitle) --- */
 .pd-header {
     text-align: center;
@@ -303,11 +302,11 @@
     font-size: 2rem;
     text-align: center;
     font-weight: 400;
-    margin: 0 0 25px 0;
 }
 
 .pd-card-content {
     padding: 0 20px;
+    
 }
 
 .pd-card-title {
@@ -323,7 +322,7 @@
     font-size: 0.9rem;
     color: #aaa;
     line-height: 1.7;
-    text-align: justify;
+    text-align: center;
 }
 
 /* --- Responsive Adjustments --- */
@@ -458,7 +457,6 @@
 }
 .review-rating {
     color: #f0e68c;
-    margin-bottom: 15px;
     font-size: 1.1rem;
 }
 .review-text {
@@ -563,5 +561,30 @@
     }
     .review-form-column {
         position: static; /* Unstick the form on mobile */
+    }
+}
+@media (max-width: 576px) {
+    .tab-header {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+    .pd-container {
+        padding: 30px 10px;
+    }
+    .pd-header {
+        margin-bottom: 100px;
+    }
+    .reviews-title {
+        font-size: 2rem;
+    }
+    .reviews-summary .average-rating {
+        font-size: 2rem;
+    }
+    .reviews-summary {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0px;
+        padding: 15px;
     }
 }

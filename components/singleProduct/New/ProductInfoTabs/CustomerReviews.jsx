@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+import he from 'he';
 import React, { useState, useEffect, useMemo } from 'react';
 
 // ====================================================================
@@ -198,6 +200,7 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
                         onChange={(e) => setMessage(e.target.value)}
                         rows="5"
                         required
+                        placeholder='Write your review here(more than 10 characters required)...'
                     />
                     {errors.comment && (
                         <small className="error-message">
@@ -231,6 +234,7 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
 const CustomerReviews = ({ product }) => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
+    const t = useTranslations();
 
     useEffect(() => {
         if (product && product.product_id) {
@@ -273,7 +277,7 @@ const CustomerReviews = ({ product }) => {
     return (
         <div className="reviews-container container">
             <h2 className="reviews-title text-white mb-4">
-                Reviews for {product.product_name || 'this Fragrance'}
+                Reviews for {product?.product_name && t(he.decode(product?.product_name))}
             </h2>
 
             <div className="row">

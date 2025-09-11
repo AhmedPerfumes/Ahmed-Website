@@ -86,7 +86,7 @@ const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
         className="w-100"
         style={{
           height: "auto",
-          objectFit: "contain",
+          objectFit: "cover",
           mixBlendMode: "multiply",
           transition: "filter 0.3s ease",
           // The base image is blurred only when the lens is visible

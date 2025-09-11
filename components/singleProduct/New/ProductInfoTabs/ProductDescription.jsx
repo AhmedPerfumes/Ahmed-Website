@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import "./ProductDescription.css";
+import Image from "next/image";
 
 const ProductDescription = ({ product }) => {
     if (!product) return null;
@@ -104,7 +105,9 @@ const ProductDescription = ({ product }) => {
                         variants={card}
                     >
                         <div className="pd-image-container">
-                            <img 
+                            <Image
+                                width={500}
+                                height={500}
                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${note.image}`} 
                                 alt={note.scriptTitle} 
                                 className="pd-image" 
