@@ -61,7 +61,7 @@ export default function OrderCompleted() {
         itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
       } else if(elm.discount.discount_type == 'amount') {
         console.log('amount...', elm);
-        itemPrice = elm.price - elm.discount.value;
+        itemPrice = elm.discount.final_price;
       }
       return (
         <td>

@@ -136,7 +136,7 @@ const FreeGiftFeature = ({ couponData }) => {
   // Handle gift selection with error handling
   const handleGiftSelect = (product) => {
     try {
-      console.log('Gift selected:', product.product_id, product.product_name);
+      console.log('999 Gift selected:', product.product_id, product.product_name);
       // Remove all existing gifts from cart to ensure only one gift
       cartProducts.forEach((item) => {
         if (item.is_gift) {
@@ -157,7 +157,7 @@ const FreeGiftFeature = ({ couponData }) => {
     if (!activeThreshold) {
       // No active threshold, remove any gift
       if (selectedGift) {
-        console.log('No active threshold, removing gift and clearing selectedGift');
+        console.log('999 No active threshold, removing gift and clearing selectedGift');
         cartProducts.forEach((item) => {
           if (item.is_gift) {
             removeGiftFromCart(null, item.campaign);
@@ -169,7 +169,8 @@ const FreeGiftFeature = ({ couponData }) => {
       // Determine the campaign for the threshold
       const thresholdCampaign = activeThreshold.gifts[0]?.campaign || '';
       // Check if there’s a gift in the cart for this threshold's campaign
-      const giftInCart = cartProducts.find((item) => item.is_gift && item.campaign === thresholdCampaign);
+      const giftInCart = cartProducts.find((item) => {console.log('123456789', item.is_gift, item.campaign, thresholdCampaign); return item.type == 'foc' && item.is_gift});
+      console.log('123456789', giftInCart);
       if (activeThreshold.gifts.length === 1) {
         // Single gift: auto-add if not already in cart
         const singleGift = activeThreshold.gifts[0];
@@ -186,7 +187,7 @@ const FreeGiftFeature = ({ couponData }) => {
           (gift) => gift.product_id === giftInCart.product_id
         );
         if (!isValidGift) {
-          console.log('Invalid gift for current threshold, removing gift');
+          console.log('999 invalid gift for current threshold, removing gift');
           removeGiftFromCart(null, giftInCart.campaign);
           setSelectedGift(null);
         } else if (giftInCart.product_id !== selectedGift) {
