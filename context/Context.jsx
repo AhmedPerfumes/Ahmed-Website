@@ -4,6 +4,7 @@ import { allProducts } from "@/data/products";
 import React, { useEffect, useContext, useState } from "react";
 import { useMenu } from "./MenuContext";
 import { openCart } from "@/utlis/openCart";
+import { bogoProducts } from "@/components/BogoFeature";
 
 const dataContext = React.createContext();
 export const useContextElement = () => {
@@ -26,61 +27,87 @@ export default function Context({ children }) {
   const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
-    const currentUTC = new Date(); 
+  // const currentUTC = new Date();
+  // const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+  // const now = currentGST;
+
+  const currentUTC = new Date(); 
     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); 
     const current_date_time = currentGST
       .toISOString()
       .slice(0, 19)
       .replace("T", " ");
 
-    const subtotal = cartProducts.reduce((accumulator, product) => {
-      if (product?.discount) {
-        if (
-          new Date(current_date_time) >= new Date(product.discount.start_date) &&
-          new Date(current_date_time) <= new Date(product.discount.end_date)
-        ) {
-          const discount_price = (
-            product.price -
-            (product.price / 100) * product.discount.value
-          ).toFixed(2);
-          return accumulator + product.quantity * discount_price;
-        }
-      } else if (
-        product?.coupon &&
-        !Array.isArray(product.coupon) &&
-        couponDataContext != null
-      ) {
-        if (
-          new Date(current_date_time) >=
-            new Date(
-              product.coupon[couponDataContext?.code.toLowerCase()]?.start_date
-            ) &&
-          new Date(current_date_time) <=
-            new Date(
-              product.coupon[couponDataContext?.code.toLowerCase()]?.end_date
-            ) &&
-          product.coupon[couponDataContext?.code.toLowerCase()]?.code ==
-            couponDataContext?.code.toLowerCase()
-        ) {
-          const coupon_price = (
-            product.price -
-            (product.price / 100) *
-              product.coupon[couponDataContext?.code.toLowerCase()]?.value
-          ).toFixed(2);
-          return accumulator + product.quantity * coupon_price;
-        }
-      } else if (product?.sale_price) {
-        const sale_price = product.sale_price.toFixed(2);
-        return accumulator + product.quantity * sale_price;
+  const codeLower = couponDataContext?.code?.toLowerCase();
+  const isCustomerCoupon =
+    couponDataContext && couponDataContext.type === "customer";
+  const isCustomerCouponActive =
+    isCustomerCoupon &&
+    (!couponDataContext.start_date ||
+      !couponDataContext.end_date ||
+      (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
+        new Date(current_date_time) <= new Date(couponDataContext.end_date)));
+
+  const subtotal = cartProducts.reduce((sum, product) => {
+    // Ensure numbers
+    const qty = Number(product?.quantity || 0);
+    const basePrice = Number(product?.price || 0);
+
+    // Skip free gifts entirely
+    if (product?.is_gift) return sum;
+
+    // 1) Product discount (campaign)
+    if (product?.discount) {
+      console.log('product', 'discount', product);
+      const start = new Date(product.discount.start_date);
+      const end = new Date(product.discount.end_date);
+      if (new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
+        const discounted =
+          basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
+        return sum + qty * Number(discounted.toFixed(2));
       }
-      return accumulator + product.quantity * product.price;
-    }, 0);
+    }
 
-    setTotalPrice(subtotal);
+    // 2) Product-level coupon (mapped on product)
+    if (
+      product?.coupon &&
+      !Array.isArray(product.coupon) &&
+      codeLower &&
+      product.coupon[codeLower]?.code?.toLowerCase() === codeLower
+    ) {
+      console.log('product', 'coupon', product);
+      const c = product.coupon[codeLower];
+      const start = new Date(c?.start_date);
+      const end = new Date(c?.end_date);
+      if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
+        const discounted = basePrice - (basePrice * Number(c.value)) / 100;
+        return sum + qty * Number(discounted.toFixed(2));
+      }
+    }
 
-    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 100;
-    setFreeShippingFlag(parseFloat(subtotal.toFixed(2)) >= freeShippingThreshold);
-  }, [cartProducts, couponDataContext, shippingServiceCharges]);
+    // 3) Customer/global coupon (apply across all products)
+    if (isCustomerCouponActive && !product.sale_price && !product.discount && !bogoProducts.some(bogo => bogo.product_id === product.product_id)) {
+      console.log('product', 'customer coupon', product);
+      const value = Number(couponDataContext?.value || 0);
+      const discounted = basePrice - (basePrice * value) / 100;
+      return sum + qty * Number(discounted.toFixed(2));
+    }
+
+    // 4) Sale price fallback
+    if (product?.sale_price != null) {
+      console.log('product', 'sale price', product);
+      return sum + qty * Number(Number(product.sale_price).toFixed(2));
+    }
+
+    // 5) Default
+    return sum + qty * basePrice;
+  }, 0);
+
+  setTotalPrice(subtotal);
+  
+  const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
+  setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
+}, [cartProducts, couponDataContext, shippingServiceCharges]);
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);

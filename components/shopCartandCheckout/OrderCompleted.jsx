@@ -8,11 +8,14 @@ import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
 import FeedbackForm from "../common/Feedback";
 
+import { bogoProducts } from "@/components/BogoFeature";
+import { useUser } from "@/context/UserContext";
+
 
 export default function OrderCompleted() {
   const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, couponDataContext } = useContextElement();
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
-  // console.log('...', freeShippingFlag);
+  const { isLoggedIn } = useUser();
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
   useEffect(() => {
@@ -34,35 +37,125 @@ export default function OrderCompleted() {
   }
 
   const subTotalPrice = (elm) => {
-    if (elm.is_gift) {
-      return <td>0.00{currency.symbol} (Free Gift)</td>;
+  // Check if the product is a BOGO product or marked as a gift
+  console.log('commonn', elm);
+  if (elm.is_gift) {
+    console.log('common FOC', elm);
+    return <td>0.00{currency.symbol} (Free Gift)</td>;
+  }
+
+  const currentUTC = new Date();
+  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
+  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+
+  let itemPrice = elm.price;
+
+  if (
+    elm?.discount &&
+    new Date(current_date_time) >= new Date(elm.discount.start_date) &&
+    new Date(current_date_time) <= new Date(elm.discount.end_date)
+  ) {
+    console.log('common discount', elm);
+    itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
+    return (
+      <td>
+        <span className="money price price-sale">
+          {currency.symbol}
+          {(itemPrice * elm.qty).toFixed(2)}
+        </span>
+        <span className="money price price-old">
+          {currency.symbol}
+          {(elm.price * elm.qty).toFixed(2)}
+        </span>
+      </td>
+    );
+  }
+
+  if (
+    elm?.coupon &&
+    Object.keys(elm.coupon).length !== 0 &&
+    couponDataContext &&
+    couponDataContext.code &&
+    elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+    new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+    new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+  ) {
+    console.log('common copuon', elm);
+    itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+    return (
+      <td>
+        <span className="money price price-sale">
+          {currency.symbol}
+          {(itemPrice * elm.qty).toFixed(2)}
+        </span>
+        <span className="money price price-old">
+          {currency.symbol}
+          {(elm.price * elm.qty).toFixed(2)}
+        </span>
+      </td>
+    );
+  }
+
+  if (elm?.sale_price) {
+    console.log('common sale price', elm);
+    itemPrice = elm.sale_price;
+    return (
+      <td>
+        <span className="money price price-sale">
+          {currency.symbol}
+          {(itemPrice * elm.qty).toFixed(2)}
+        </span>
+        <span className="money price price-old">
+          {currency.symbol}
+          {(elm.price * elm.qty).toFixed(2)}
+        </span>
+      </td>
+    );
+  }
+
+  if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
+    console.log('common Customer Coupon', elm);
+    const validCoupon = orderDetails.products.some(
+      (item) => !item.sale_price && !item.discount && !item.is_gift && !bogoProducts.some(bogo => bogo.product_id === item.id)
+    ) && (
+      !couponDataContext.start_date ||
+      !couponDataContext.end_date ||
+      (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
+        new Date(current_date_time) <= new Date(couponDataContext.end_date))
+    );
+
+    if (
+      elm.is_customer_coupon &&
+      validCoupon &&
+      !elm.sale_price &&
+      !elm.discount
+    ) {
+      console.log('common Customer Coupon If', elm);
+      itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.qty).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.qty).toFixed(2)}
+          </span>
+        </td>
+      );
     }
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      console.log('...', elm.discount);
-      console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        console.log('if...');
-        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      } else {
-        console.log('else...');
-        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      }
-    } else if(elm?.coupon && elm.coupon.length != 0 && elm.coupon[couponDataContext?.code.toLowerCase()]?.code == couponDataContext?.code.toLowerCase()) {
-      console.log('COUPON', elm);
-      if(new Date(current_date_time) >= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.end_date)) {
-        return <td>{((elm.price - (elm.price / 100 * elm.coupon[couponDataContext?.code.toLowerCase()]?.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      } else {
-        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      }
-    } else if(elm?.sale_price) {
-        return <td>{((elm.sale_price) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-    } else {
-        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-    }
-  };
+  }
+
+  return (
+    <td>
+      <span className="money price">
+        {currency.symbol}
+        {(elm.price * elm.qty).toFixed(2)}
+      </span>
+    </td>
+  );
+};
 
   return (
     <>
@@ -150,7 +243,7 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{(orderDetails.sub_total).toFixed(2) >= shippingServiceCharges[3]?.price ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
+                <td>{parseFloat(orderDetails.sub_total) >= parseFloat(shippingServiceCharges[3]?.price ?? 400)? 'You Got Free Shipping': `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>

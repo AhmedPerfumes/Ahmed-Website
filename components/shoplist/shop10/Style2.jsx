@@ -148,7 +148,7 @@ export default function Style2({ category, subcategory, products }) {
                       href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
                         category
                       )}/${subcat}/${removeSpecialCharactersAndAmp(
-                        elm.product_name
+                        elm?.product_name
                       )
                         .split(" ")
                         .join("-")
@@ -162,8 +162,8 @@ export default function Style2({ category, subcategory, products }) {
                               src={`${process.env.NEXT_PUBLIC_API_URL}storage/${
                                 JSON.parse(elm.images)[0]
                               }`}
-                              width="330"
-                              height="400"
+                              width="500"
+                              height="500"
                               alt="img"
                               className="pc__img"
                             />
@@ -174,8 +174,8 @@ export default function Style2({ category, subcategory, products }) {
                               src={`${process.env.NEXT_PUBLIC_API_URL}storage/${
                                 JSON.parse(elm.images)[1]
                               }`}
-                              width="330"
-                              height="400"
+                              width="500"
+                              height="500"
                               alt="img"
                               className="pc__img pc__img-second"
                             />

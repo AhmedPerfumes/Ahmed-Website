@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider4 from "./sliders/Slider4";
 import BreadCumb from "./BreadCumb";
 import Star from "../common/Star";
@@ -13,6 +13,10 @@ import { useContextElement } from "@/context/Context";
 import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
+import Base from "./New/base";
+import ProductDescription from "./New/ProductInfoTabs/ProductDescription";
+import ProductInfoTabs from "./New/ProductInfoTabs/ProductInfoTabs";
+import ItemFamilySlider from "./New/ItemFamilySlider";
 
 export default function SingleProduct11({ category, subcategory, product }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -106,7 +110,10 @@ export default function SingleProduct11({ category, subcategory, product }) {
 
   return (
     <>
-      {Object.keys(product).length > 0 ? <><section className="product-single container product-single__type-9">
+      {Object.keys(product).length > 0 ? <>
+
+
+      {/* <section className="product-single container product-single__type-9">
         <div className="row">
           <div className="col-lg-7">
             <Slider4 product={ product }/>
@@ -116,7 +123,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
               <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
                 <BreadCumb category={ category } subcategory={ subcategory }/>
               </div>
-              {/* <!-- /.breadcrumb --> */}
             </div>
             <h1 className="product-single__name">{product?.product_name && t(he.decode(product?.product_name))}</h1>
             <div className="product-single__price">
@@ -152,7 +158,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
         +
       </div>
     </div>
-    {/* <!-- .qty-control --> */}
     <button
       type="submit"
       className="btn btn-primary btn-addtocart js-open-aside"
@@ -167,9 +172,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
   <p className="text-red mt-2">
     This product is currently unavailable.
   </p>
-  {/* <button className="btn border  mt-2 mb-4 text-uppercase fw-semibold">
-    Notify Me 🔔
-  </button> */}
 </div>
 
 )}
@@ -179,10 +181,6 @@ export default function SingleProduct11({ category, subcategory, product }) {
               <ShareComponent title={product.product_name} />
             </div>
             <div className="product-single__meta-info">
-              {/* <div className="meta-item">
-                <label>SKU:</label>
-                <span> {product.sku && product.sku}</span>
-              </div> */}
               <div className="meta-item">
                 <label>{t("Estimated delivery:")}</label>
                 <span> {t("3 to 5 days")}</span>
@@ -195,6 +193,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
           </div>
         </div>
       </section>
+       
+      
 
       <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
         <div className="product-single__details-list">
@@ -214,7 +214,14 @@ export default function SingleProduct11({ category, subcategory, product }) {
           </div>
           
         </div>
-      </section>
+      </section> */}
+      <div  style={{ backgroundColor: "#FAF9F7" }} >
+        <Base product={{...product, category, subcategory}} />
+      </div>
+      <div style={{ backgroundColor: "#121212" }}>
+        <ProductInfoTabs product={product} category={category} subcategory={subcategory} />
+      </div>
+      <ItemFamilySlider product={product} itemFamilyProds={product.item_family} />
       </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
     </>
   );
