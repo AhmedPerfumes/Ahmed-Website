@@ -50,17 +50,36 @@ const BOGOFeature = () => {
 
     // Sync gifts with eligible products
     setCartProducts((prevCart) => {
-      // Remove outdated BOGO gifts first
-      let updated = prevCart.filter((item) => !(item.is_gift && item.campaign === "bogo_2025_campaign"));
+      // Step 1: Remove outdated BOGO gifts first
+      let updated = prevCart.filter(
+        (item) => !(item.is_gift && item.campaign === "bogo_2025_campaign")
+      );
 
-      // Add/replace gifts based on eligibleProducts
+      // Step 2: Clean non-special products (remove is_customer_coupon)
+      updated = updated.map((item) => {
+        const isBogo = bogoProducts.some((b) => b.product_id === item.product_id);
+        const isDiscount = item.discount > 0;
+        const isSalePrice = item.sale_price > 0;
+
+        if (isBogo || isDiscount || isSalePrice) {
+          return item; // keep coupon
+        }
+
+        const { is_customer_coupon, ...rest } = item;
+        return rest;
+      });
+
+      // Step 3: Add/replace BOGO gifts based on eligibleProducts
       eligibleProducts.forEach((product) => {
-        const bogoGift = bogoProducts.find((b) => b.product_id === product.product_id);
+        const bogoGift = bogoProducts.find(
+          (b) => b.product_id === product.product_id
+        );
         if (bogoGift) {
           updated.push({
             ...bogoGift,
             quantity: product.quantity,
             is_gift: true,
+            campaign: "bogo_2025_campaign",
           });
         }
       });
@@ -68,13 +87,14 @@ const BOGOFeature = () => {
       return updated;
     });
 
+    // Track added gifts
     setAddedGifts(
       eligibleProducts.map((p) => ({
         product_id: p.product_id,
         quantity: p.quantity,
       }))
     );
-  }, [cartProducts, setCartProducts, eligibleProducts]);
+  }, [cartProducts, setCartProducts, eligibleProducts, bogoProducts]);
 
   if (addedGifts.length === 0) return null;
 

@@ -336,7 +336,7 @@ export default function FilterAll({ products = [] }) {
       </div>
 
       {/* Size (Tags) */}
-      <div className="mb-3 border-bottom pb-2">
+      <div className="mb-3 border-bottom pb-2 overflow-scroll "style={{height:"12rem"}}>
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           onClick={() => toggleSection("caps")}

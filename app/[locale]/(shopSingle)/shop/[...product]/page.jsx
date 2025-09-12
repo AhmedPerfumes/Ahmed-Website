@@ -186,7 +186,7 @@ const ProductDetailsPage16 = async ({ params }) => {
     // console.log(categoryName, subCategoryName, product);
     try {
         const data = await getproduct(categoryName, subCategoryName, product);
-        // console.log(data);
+        console.log(data);
         return (
             <>
                 <Head>
@@ -230,7 +230,7 @@ const ProductDetailsPage16 = async ({ params }) => {
                     product={data}
                 />
                 <main className="page-wrapper">
-                    <div className="mb-md-1 pb-md-3"></div>
+                    {/* <div className="mb-md-1 pb-md-3"></div> */}
                     <SingleProduct11
                         category={categoryName}
                         subcategory={subCategoryName}
