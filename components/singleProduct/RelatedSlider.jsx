@@ -114,8 +114,8 @@ export default function RelatedSlider({ relatedProds }) {
   // };
 
   return (
-    <section className="products-carousel container">
-      <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">
+    <section className="products-carousel container my-4">
+      <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4 mt-4">
         Related <strong>Products</strong>
       </h2>
 

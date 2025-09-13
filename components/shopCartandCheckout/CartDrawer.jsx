@@ -151,10 +151,7 @@ export default function CartDrawer() {
 
   return (
     <>
-      <div
-        className="aside aside_right overflow-hidden cart-drawer "
-        id="cartDrawer"
-      >
+      <div className="aside aside_right overflow-hidden cart-drawer " id="cartDrawer">
         <div className="aside-header d-flex align-items-center">
           <h3 className="text-uppercase fs-6 mb-0">
             {t("SHOPPING BAG")} (
@@ -170,7 +167,7 @@ export default function CartDrawer() {
         </div>
         <h6 style={{ color: "red" }}>{error && error}</h6>
         {cartProducts.length ? (
-          <div className="aside-content cart-drawer-items-list">
+          <div className="cart-drawer-items-list">
             {cartProducts.map((elm, i) => (
               <React.Fragment key={i}>
                 <div className="cart-drawer-item d-flex position-relative">
@@ -242,11 +239,11 @@ export default function CartDrawer() {
            
           </div>
         ) : (
-          <div className="fs-18 mt-5 px-5">
+          <div className="fs-18 mt-5 px-5 cart-drawer-items-list">
             {t("Your cart is empty Start shopping")}
           </div>
         )}
-        <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
+        <div className="cart-drawer-actions">
         {/* <Image
           loading="lazy"
           src={"/assets/images/home/demo8/square banner final.jpg"}
