@@ -749,7 +749,7 @@ export default function AccountOrders() {
                             >
                               {Number(item.price * 1.05).toFixed(2)}د.إ
                             </span>
-                            <span>{Number(item.gross_amount).toFixed(2)}د.إ</span>
+                            <span> {Number(item.gross_amount).toFixed(2)}د.إ</span>
                           </>
                         ) : (
                           <span>{Number(item.gross_amount).toFixed(2)}د.إ</span>
@@ -794,11 +794,16 @@ export default function AccountOrders() {
   )}
 
   <div className="pb-1 d-flex justify-content-between">
-    <span style={{ fontWeight: 500 }}>Discounts</span>
-    <span className="fw-semibold text-danger">
-      -{modalDetails.order_products.reduce((sum, it) => sum + Number(it.discount_amount), 0).toFixed(2)}د.إ
+    <span style={{ fontWeight: 500 }}>
+      <p className="text-red">{modalOrderOuter?.coupon_code ? ` (Coupon Applied: ${modalOrderOuter.coupon_code})` : ""}</p>
     </span>
+    {/* <span className="fw-semibold text-danger">
+      -{modalDetails.order_products
+        .reduce((sum, it) => sum + Number(it.discount_amount), 0)
+        .toFixed(2)}د.إ
+    </span> */}
   </div>
+
 
   {/* Total */}
   <div className="border-top pt-3 mt-3 d-flex justify-content-between align-items-center">
