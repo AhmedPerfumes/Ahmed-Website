@@ -1,18 +1,88 @@
 "use client";
 
 import { allProducts } from "@/data/products";
-import React, { useEffect, useContext, useState } from "react";
-import { useMenu } from "./MenuContext";
+import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
+import { useMenu } from './MenuContext';
+// import React, { useEffect, useContext, useState } from "react";
+// import { useMenu } from "./MenuContext";
 import { openCart } from "@/utlis/openCart";
-import { bogoProducts } from "@/components/BogoFeature";
+// import { bogoProducts } from "@/components/BogoFeature";
 
-const dataContext = React.createContext();
-export const useContextElement = () => {
-  return useContext(dataContext);
+const dataContext = createContext();
+export const useContextElement = () => useContext(dataContext);
+
+const cartReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_PRODUCT': {
+      const existingProduct = state.products.find(
+        (p) =>
+          p.product_id === action.payload.product_id &&
+          p.campaign === action.payload.campaign
+      );
+
+      let updatedProducts;
+
+      if (existingProduct) {
+        updatedProducts = state.products.map((p) =>
+          p.product_id === action.payload.product_id &&
+          p.campaign === action.payload.campaign
+            ? { ...p, quantity: (p.quantity || 0) + (action.payload.quantity || 1) }
+            : p
+        );
+
+        return {
+          ...state,
+          products: updatedProducts,
+          isProcessing: false,
+          toastMeta: action.meta?.toast || null,
+        };
+      }
+
+      updatedProducts = [
+        ...state.products,
+        { ...action.payload, quantity: action.payload.quantity || 1 },
+      ];
+
+      return {
+        ...state,
+        products: updatedProducts,
+        isProcessing: false,
+        toastMeta: action.meta?.toast || null,
+      };
+    }
+    case 'REMOVE_GIFT':
+      return {
+        ...state,
+        products: state.products.filter(
+          (p) =>
+            !p.is_gift ||
+            (action.payload.productId && p.product_id !== action.payload.productId) ||
+            (action.payload.campaign && p.campaign !== action.payload.campaign)
+        ),
+        isProcessing: false,
+      };
+    case 'REMOVE_PRODUCT':
+      return {
+        ...state,
+        products: state.products.filter((p) => p.product_id !== action.payload.productId),
+        isProcessing: false,
+      };
+    case 'SET_PRODUCTS':
+      // Ensure payload is an array
+      const newProducts = Array.isArray(action.payload) ? action.payload : [];
+      return { ...state, products: newProducts, isProcessing: false };
+    case 'SET_PROCESSING':
+      return { ...state, isProcessing: action.payload };
+    default:
+      return state;
+  }
 };
 
 export default function Context({ children }) {
-  const [cartProducts, setCartProducts] = useState([]);
+  const [state, dispatch] = useReducer(cartReducer, {
+    products: [], // Ensure initial state is an array
+    isProcessing: false,
+  });
   const [wishList, setWishList] = useState([]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -24,96 +94,129 @@ export default function Context({ children }) {
   const [toastData, setToastData] = useState(null); // {name, image}
   const [showToast, setShowToast] = useState(false);
 
+  const [promotionsContext, setPromotionsContext] = useState([]);
+
   const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
-  // const currentUTC = new Date();
-  // const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
-  // const now = currentGST;
-
-  const currentUTC = new Date(); 
-    const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); 
-    const current_date_time = currentGST
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
-
-  const codeLower = couponDataContext?.code?.toLowerCase();
-  const isCustomerCoupon =
-    couponDataContext && couponDataContext.type === "customer";
-  const isCustomerCouponActive =
-    isCustomerCoupon &&
-    (!couponDataContext.start_date ||
-      !couponDataContext.end_date ||
-      (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
-        new Date(current_date_time) <= new Date(couponDataContext.end_date)));
-
-  const subtotal = cartProducts.reduce((sum, product) => {
-    // Ensure numbers
-    const qty = Number(product?.quantity || 0);
-    const basePrice = Number(product?.price || 0);
-
-    // Skip free gifts entirely
-    if (product?.is_gift) return sum;
-
-    // 1) Product discount (campaign)
-    if (product?.discount) {
-      console.log('product', 'discount', product);
-      const start = new Date(product.discount.start_date);
-      const end = new Date(product.discount.end_date);
-      if (new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
-        const discounted =
-          basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
-        return sum + qty * Number(discounted.toFixed(2));
+    try {
+      const items = JSON.parse(localStorage.getItem("cartList"));
+      if (Array.isArray(items)) {
+        console.log('Loading cart from localStorage:', items);
+        dispatch({ type: 'SET_PRODUCTS', payload: items });
+      } else {
+        console.log('No valid cart in localStorage, setting empty array');
+        dispatch({ type: 'SET_PRODUCTS', payload: [] });
       }
+    } catch (error) {
+      console.error('Error parsing cartList from localStorage:', error);
+      dispatch({ type: 'SET_PRODUCTS', payload: [] });
     }
+  }, []);
 
-    // 2) Product-level coupon (mapped on product)
-    if (
-      product?.coupon &&
-      !Array.isArray(product.coupon) &&
-      codeLower &&
-      product.coupon[codeLower]?.code?.toLowerCase() === codeLower
-    ) {
-      console.log('product', 'coupon', product);
-      const c = product.coupon[codeLower];
-      const start = new Date(c?.start_date);
-      const end = new Date(c?.end_date);
-      if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
-        const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-        return sum + qty * Number(discounted.toFixed(2));
+  useEffect(() => {
+    console.log('Saving cartProducts to localStorage:', state.products);
+    localStorage.setItem("cartList", JSON.stringify(state.products));
+  }, [state.products]);
+
+  useEffect(() => {
+    try {
+      const items = JSON.parse(localStorage.getItem("wishlist")) || [];
+      if (Array.isArray(items)) {
+        setWishList(items);
       }
+    } catch (error) {
+      console.error('Error parsing wishlist from localStorage:', error);
+      setWishList([]);
     }
+  }, []);
 
-    // 3) Customer/global coupon (apply across all products)
-    if (isCustomerCouponActive && !product.sale_price && !product.discount && !bogoProducts.some(bogo => bogo.product_id === product.product_id)) {
-      console.log('product', 'customer coupon', product);
-      const value = Number(couponDataContext?.value || 0);
-      const discounted = basePrice - (basePrice * value) / 100;
-      return sum + qty * Number(discounted.toFixed(2));
-    }
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishList));
+  }, [wishList]);
 
-    // 4) Sale price fallback
-    if (product?.sale_price != null) {
-      console.log('product', 'sale price', product);
-      return sum + qty * Number(Number(product.sale_price).toFixed(2));
-    }
+  useEffect(() => {
+    const currentUTC = new Date();
+    const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    const codeLower = couponDataContext?.code?.toLowerCase();
+    const isCustomerCoupon = couponDataContext && couponDataContext.type === "customer";
+    const isCustomerCouponActive = isCustomerCoupon && (!couponDataContext.start_date || !couponDataContext.end_date || (new Date(current_date_time) >= new Date(couponDataContext.start_date) && new Date(current_date_time) <= new Date(couponDataContext.end_date)));
+    const subtotal = state.products.reduce((accumulator, product) => {
+      // Ensure numbers
+      const qty = Number(product?.quantity || 0);
+      const basePrice = Number(product?.price || 0);
 
-    // 5) Default
-    return sum + qty * basePrice;
-  }, 0);
+      // Skip free gifts entirely
+      if (product?.is_gift) return accumulator;
 
-  setTotalPrice(subtotal);
-  
-  const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
-  setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
-}, [cartProducts, couponDataContext, shippingServiceCharges]);
+      if (product?.discount) {
+        let discounted = basePrice;
+        if (
+          new Date(current_date_time) >= new Date(product.discount.start_date) &&
+          new Date(current_date_time) <= new Date(product.discount.end_date)
+        ) {
+          if (product.discount.discount_type === 'percent') {
+              discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
+              // return accumulator + product.quantity * discount_price;
+          } else if (product.discount.discount_type === 'amount') {
+              discounted = Number(product.discount.final_price || 0);
+              // return accumulator + product.quantity * discount_price;
+          }
+          return accumulator + qty * Number(discounted.toFixed(2));
+        }
+      }
 
-  const addProductToQuickView = (product) => {
-    setQuickViewItem(product);
-  };
+      if (
+        product?.coupon &&
+        !Array.isArray(product.coupon) &&
+        codeLower &&
+        product.coupon[codeLower]?.code?.toLowerCase() === codeLower
+      ) {
+        console.log('product', 'coupon', product);
+        const c = product.coupon[codeLower];
+        const start = new Date(c?.start_date);
+        const end = new Date(c?.end_date);
+        if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
+          const discounted = basePrice - (basePrice * Number(c.value)) / 100;
+          return accumulator + qty * Number(discounted.toFixed(2));
+        }
+      }
 
-  // helper to build toast image
+      // 3) Customer/global coupon (apply across all products)
+      if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
+      {
+        console.log('product', 'customer coupon', product);
+        const value = Number(couponDataContext?.value || 0);
+        const discounted = basePrice - (basePrice * value) / 100;
+        return accumulator + qty * Number(discounted.toFixed(2));
+      }
+
+      // 4) Sale price fallback
+      // if (product?.sale_price != null) {
+      //   console.log('product', 'sale price', product);
+      //   return accumulator + qty * Number(Number(product.sale_price).toFixed(2));
+      // }
+
+      // 5) Default
+      return accumulator + qty * basePrice;
+    }, 0);
+
+    setTotalPrice(subtotal);
+    
+    const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
+    setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
+  }, [state.products, couponDataContext, shippingServiceCharges]);
+
+  useEffect(() => {
+  if (state.toastMeta) {
+    setToastData(state.toastMeta);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
+  }
+}, [state.toastMeta]);
+
+   // helper to build toast image
   const buildToastImageUrl = (product) => {
     const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/?$/, "/");
 
@@ -143,139 +246,89 @@ export default function Context({ children }) {
   };
 
   const addProductToCart = (product) => {
-  setCartProducts((prevCart) => {
-    const existingIndex = prevCart.findIndex(
-      (item) => item.product_id === product.product_id
-    );
-
-    // If already in cart
-    if (existingIndex !== -1) {
-      if (product.campaign === "bogo_2025_campaign") {
-        // BOGO already applied → no new add
-        setToastData({
-          name: product.product_name,
+    if (state.isProcessing) {
+      console.log('Skipping addProductToCart: processing in progress');
+      return;
+    }
+    console.log('addProductToCart:', product);
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({
+      type: 'ADD_PRODUCT',
+      payload: product,
+      meta: {
+        toast: {
+          name: product?.product_name,
           image: buildToastImageUrl(product),
-          message: "This BOGO deal is already in your cart!",
-        });
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
-        return prevCart;
-      }
-
-      // Normal product → increment qty
-      const updatedCart = [...prevCart];
-      updatedCart[existingIndex] = {
-        ...updatedCart[existingIndex],
-        quantity: updatedCart[existingIndex].quantity + 1,
-      };
-
-      setToastData({
-        name: product.product_name,
-        image: buildToastImageUrl(product),
-        message: "Quantity updated in your cart",
-      });
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 4000);
-
-      return updatedCart;
-    }
-
-    // New product
-    const item = {
-      ...product,
-      quantity:
-        product.campaign === "bogo_2025_campaign" ? product.quantity : 1,
-    };
-
-    let newCart = [...prevCart, item];
-
-    // Add free gift(s) if BOGO
-    if (product.campaign === "bogo_2025_campaign" && product.free_gift) {
-      const giftItem = {
-        ...product.free_gift,
-        is_gift: true,
-        campaign: product.campaign,
-        quantity: 1,
-      };
-      newCart.push(giftItem);
-    }
-
-    setToastData({
-      name: product.product_name,
-      image: buildToastImageUrl(product),
-      message:
-        product.campaign === "bogo_2025_campaign"
-          ? "BOGO deal added to your cart!"
-          : "Added to your cart",
+          message: "Added to your cart",
+        },
+      },
     });
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 4000);
+    // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+    // document.getElementById("cartDrawer")?.classList.add("aside_visible");
+  };
 
-    return newCart;
-  });
-};
+  const removeGiftFromCart = (productId = null, campaign = null) => {
+    if (state.isProcessing) {
+      console.log('Skipping removeGiftFromCart: processing in progress', { productId, campaign });
+      return;
+    }
+    console.log('removeGiftFromCart:', { productId, campaign });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
+  };
+
+  const removeProduct = (productId) => {
+    if (state.isProcessing) {
+      console.log('Skipping removeProduct: processing in progress', { productId });
+      return;
+    }
+    console.log('removeProduct:', { productId });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'REMOVE_PRODUCT', payload: { productId } });
+  };
+
+  const setCartProducts = (productsOrFn) => {
+    console.log('setCartProducts called:', productsOrFn);
+    if (typeof productsOrFn === 'function') {
+      // Handle functional update
+      const newProducts = productsOrFn(state.products);
+      if (!Array.isArray(newProducts)) {
+        console.error('setCartProducts: Functional update returned non-array', newProducts);
+        return;
+      }
+      dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+    } else {
+      // Direct array update
+      if (!Array.isArray(productsOrFn)) {
+        console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
+        return;
+      }
+      dispatch({ type: 'SET_PRODUCTS', payload: productsOrFn });
+    }
+  };
+
+  const addProductToQuickView = (product) => {
+    setQuickViewItem(product);
+  };
 
   const isAddedToCartProducts = (id) => {
-    return cartProducts.some((elm) => elm.product_id == id);
+    return state.products.some((elm) => elm.product_id === id);
   };
 
   const toggleWishlist = (id) => {
-    if (wishList.includes(id)) {
-      setWishList((pre) => pre.filter((elm) => elm != id));
-    } else {
-      setWishList((pre) => [...pre, id]);
-    }
+    setWishList((prev) => prev.includes(id) ? prev.filter((elm) => elm !== id) : [...prev, id]);
   };
 
   const isAddedtoWishlist = (id) => {
     return wishList.includes(id);
   };
 
-  useEffect(() => {
-    const items =
-      localStorage.getItem("cartList") &&
-      JSON.parse(localStorage.getItem("cartList"));
-    if (items?.length) {
-      setCartProducts(items);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("cartList", JSON.stringify(cartProducts));
-  }, [cartProducts]);
-
-  useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("wishlist"));
-    if (items?.length) {
-      setWishList(items);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishList));
-  }, [wishList]);
-
-  const removeGiftFromCart = (productIdToRemove = null, campaignKey = null) => {
-    setCartProducts((prev) => {
-      if (!productIdToRemove && campaignKey) {
-        return prev.filter(
-          (item) => !(item.is_gift && item.campaign === campaignKey)
-        );
-      }
-      if (productIdToRemove) {
-        return prev.filter(
-          (item) => !(item.is_gift && item.product_id === productIdToRemove)
-        );
-      }
-      return prev.filter((item) => !item.is_gift);
-    });
-  };
-
   const contextElement = {
-    cartProducts,
+    cartProducts: state.products,
     setCartProducts,
     totalPrice,
     addProductToCart,
+    removeProduct, // New function for removing non-gift products
     isAddedToCartProducts,
     toggleWishlist,
     isAddedtoWishlist,
@@ -289,13 +342,14 @@ export default function Context({ children }) {
     couponDataContext,
     setCouponDataContext,
     removeGiftFromCart,
+    promotionsContext,
+    setPromotionsContext
   };
 
   return (
     <dataContext.Provider value={contextElement}>
       {children}
 
-      {/* Custom Toast */}
       {toastData && (
         <div
           className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
@@ -305,7 +359,7 @@ export default function Context({ children }) {
           <img src={toastData.image} alt={toastData.name} className="toast-img" />
           <div className="toast-content">
             <div>
-              <strong>‘{toastData.name}’</strong>
+              <strong>{toastData.name}</strong>
               <div>Successfully added to your cart</div>
               <button
                 className="btn btn-sm btn-dark text-white mt-1"

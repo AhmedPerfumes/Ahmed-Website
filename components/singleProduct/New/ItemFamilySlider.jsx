@@ -8,6 +8,8 @@ import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 
+import { renderPrice } from "@/utlis/priceRenderer";
+
 export default function ItemFamilySlider({ product, itemFamilyProds }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
@@ -78,22 +80,22 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
     }
   }
 
-  const price = (elm) => {
-    // Current time is Tuesday, September 9, 2025 at 2:59 PM (GST - UAE time)
-    const current_date_time = new Date('2025-09-09T14:59:00+04:00');
+  // const price = (elm) => {
+  //   // Current time is Tuesday, September 9, 2025 at 2:59 PM (GST - UAE time)
+  //   const current_date_time = new Date('2025-09-09T14:59:00+04:00');
 
-    if (elm?.discount) {
-      if (current_date_time >= new Date(elm.discount.start_date) && current_date_time <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">{elm?.price}{currency.symbol}</span> <span className="money price price-sale">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{currency.symbol}</span></>;
-      } else {
-        return <span className="money price">{elm?.price}{currency.symbol}</span>;
-      }
-    } else if (elm?.sale_price) {
-      return <><span className="money price price-old">{elm?.price}{currency.symbol}</span> <span className="money price price-sale">{(elm.sale_price).toFixed(2)}{currency.symbol}</span></>;
-    } else {
-      return <span className="money price">{elm?.price}{currency.symbol}</span>;
-    }
-  };
+  //   if (elm?.discount) {
+  //     if (current_date_time >= new Date(elm.discount.start_date) && current_date_time <= new Date(elm.discount.end_date)) {
+  //       return <><span className="money price price-old">{elm?.price}{currency.symbol}</span> <span className="money price price-sale">{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}{currency.symbol}</span></>;
+  //     } else {
+  //       return <span className="money price">{elm?.price}{currency.symbol}</span>;
+  //     }
+  //   } else if (elm?.sale_price) {
+  //     return <><span className="money price price-old">{elm?.price}{currency.symbol}</span> <span className="money price price-sale">{(elm.sale_price).toFixed(2)}{currency.symbol}</span></>;
+  //   } else {
+  //     return <span className="money price">{elm?.price}{currency.symbol}</span>;
+  //   }
+  // };
 
   // ADDED: Validation to hide the component if there's no data
   if (!itemFamilyProds || itemFamilyProds.length === 0) {
@@ -178,7 +180,7 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
                   <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && t(he.decode(elm?.product_name))}</Link>
                 </h6>
                 <div className="product-card__price d-flex">
-                  {price(elm)}
+                  {renderPrice(elm, currency)}
                 </div>
               </div>
             </SwiperSlide>

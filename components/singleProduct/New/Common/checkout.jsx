@@ -4,6 +4,8 @@ import { useLocale, useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { renderPrice } from "@/utlis/priceRenderer";
+
 const Checkout = ({ product }) => {
     // const sizes = [product.size];
     // const [selectedSize, setSelectedSize] = useState(sizes[0]);
@@ -121,65 +123,65 @@ const Checkout = ({ product }) => {
             .join(" "); // Join the words back into a sentence
     }
 
-    const price = (elm) => {
-        const currentUTC = new Date(); // Current UTC time
-        const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); // Add 4 hours for GST
-        const current_date_time = currentGST
-            .toISOString()
-            .slice(0, 19)
-            .replace("T", " ");
-        if (elm?.discount) {
-            if (
-                new Date(current_date_time) >=
-                    new Date(elm.discount.start_date) &&
-                new Date(current_date_time) <= new Date(elm.discount.end_date)
-            ) {
-                return (
-                    <>
-                        <span className="money price price-old">
-                            {currency.symbol}
-                            {elm?.price}
-                        </span>{" "}
-                        <span className="money price price-sale">
-                            {" "}
-                            {currency.symbol}
-                            {(
-                                elm.price -
-                                (elm.price / 100) * elm.discount.value
-                            ).toFixed(2)}
-                        </span>
-                    </>
-                );
-            } else {
-                return (
-                    <span className="money price">
-                        {elm?.price}
-                        {currency.symbol}
-                    </span>
-                );
-            }
-        } else if (elm?.sale_price) {
-            return (
-                <>
-                    <span className="money price price-sale">
-                        {currency.symbol}
-                        {elm.sale_price.toFixed(2)}
-                    </span>
-                    <span className="money price price-old">
-                        {currency.symbol}
-                        {elm?.price}
-                    </span>{" "}
-                </>
-            );
-        } else {
-            return (
-                <span className="money price">
-                    {elm?.price}
-                    {currency.symbol}
-                </span>
-            );
-        }
-    };
+    // const price = (elm) => {
+    //     const currentUTC = new Date(); // Current UTC time
+    //     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); // Add 4 hours for GST
+    //     const current_date_time = currentGST
+    //         .toISOString()
+    //         .slice(0, 19)
+    //         .replace("T", " ");
+    //     if (elm?.discount) {
+    //         if (
+    //             new Date(current_date_time) >=
+    //                 new Date(elm.discount.start_date) &&
+    //             new Date(current_date_time) <= new Date(elm.discount.end_date)
+    //         ) {
+    //             return (
+    //                 <>
+    //                     <span className="money price price-old">
+    //                         {currency.symbol}
+    //                         {elm?.price}
+    //                     </span>{" "}
+    //                     <span className="money price price-sale">
+    //                         {" "}
+    //                         {currency.symbol}
+    //                         {(
+    //                             elm.price -
+    //                             (elm.price / 100) * elm.discount.value
+    //                         ).toFixed(2)}
+    //                     </span>
+    //                 </>
+    //             );
+    //         } else {
+    //             return (
+    //                 <span className="money price">
+    //                     {elm?.price}
+    //                     {currency.symbol}
+    //                 </span>
+    //             );
+    //         }
+    //     } else if (elm?.sale_price) {
+    //         return (
+    //             <>
+    //                 <span className="money price price-sale">
+    //                     {currency.symbol}
+    //                     {elm.sale_price.toFixed(2)}
+    //                 </span>
+    //                 <span className="money price price-old">
+    //                     {currency.symbol}
+    //                     {elm?.price}
+    //                 </span>{" "}
+    //             </>
+    //         );
+    //     } else {
+    //         return (
+    //             <span className="money price">
+    //                 {elm?.price}
+    //                 {currency.symbol}
+    //             </span>
+    //         );
+    //     }
+    // };
 
     return (
         <div>
@@ -192,7 +194,7 @@ const Checkout = ({ product }) => {
                     {product?.price || "0.00"} د.إ
                 </p>
             </div> */}
-            <div className="product-single__price">{price(product)}</div>
+            <div className="product-single__price">{renderPrice(product, currency)}</div>
             {/* Size Selector */}
             {/* <div className="w-100 mt-3">
                 <div
