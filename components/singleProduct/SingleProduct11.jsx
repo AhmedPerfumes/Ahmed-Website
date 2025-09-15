@@ -18,8 +18,6 @@ import ProductDescription from "./New/ProductInfoTabs/ProductDescription";
 import ProductInfoTabs from "./New/ProductInfoTabs/ProductInfoTabs";
 import ItemFamilySlider from "./New/ItemFamilySlider";
 
-import { renderPrice } from "@/utlis/priceRenderer";
-
 export default function SingleProduct11({ category, subcategory, product }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { cartProducts, setCartProducts } = useContextElement();
@@ -117,7 +115,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
   //   }
   // };
 
-  return (
+ return (
     <>
       {Object.keys(product).length > 0 ? <>
 
@@ -135,8 +133,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
             <h1 className="product-single__name">{product?.product_name && t(he.decode(product?.product_name))}</h1>
             <div className="product-single__price">
-              {/* { price(product) } */}
-              { renderPrice(product, currency) }
+              { price(product) }
             </div>
             <div className="product-single__short-desc">
               <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(product.product_name)) }}></div>
@@ -144,47 +141,47 @@ export default function SingleProduct11({ category, subcategory, product }) {
             <h6 style={{ color: "red" }}>{error && error}</h6>
             <form onSubmit={(e) => e.preventDefault()}>
             {product.product_qty > 0 ? (
-  <div className="product-single__addtocart">
-    <div className="qty-control position-relative">
-      <input
-        type="number"
-        name="quantity"
-        value={isIncludeCard() ? isIncludeCard().quantity : quantity}
-        min="1"
-        onChange={(e) => setQuantityCartItem(product.product_id, e.target.value)}
-        className="qty-control__number text-center"
-        readOnly
-      />
-      <div
-        onClick={() => setQuantityCartItem(product.product_id, isIncludeCard()?.quantity - 1 || quantity - 1)}
-        className="qty-control__reduce"
-      >
-        -
-      </div>
-      <div
-        onClick={() => setQuantityCartItem(product.product_id, isIncludeCard()?.quantity + 1 || quantity + 1)}
-        className="qty-control__increase"
-      >
-        +
-      </div>
-    </div>
-    <button
-      type="submit"
-      className="btn btn-primary btn-addtocart js-open-aside"
-      onClick={() => addToCart()}
-    >
-      {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
-    </button>
-  </div>
-) : (
-  <div className="out-of-stock">
-  <span className="badge fs-5 text-uppercase">Out of Stock</span>
-  <p className="text-red mt-2">
-    This product is currently unavailable.
-  </p>
-</div>
+              <div className="product-single__addtocart">
+                <div className="qty-control position-relative">
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={isIncludeCard() ? isIncludeCard().quantity : quantity}
+                    min="1"
+                    onChange={(e) => setQuantityCartItem(product.product_id, e.target.value)}
+                    className="qty-control__number text-center"
+                    readOnly
+                  />
+                  <div
+                    onClick={() => setQuantityCartItem(product.product_id, isIncludeCard()?.quantity - 1 || quantity - 1)}
+                    className="qty-control__reduce"
+                  >
+                    -
+                  </div>
+                  <div
+                    onClick={() => setQuantityCartItem(product.product_id, isIncludeCard()?.quantity + 1 || quantity + 1)}
+                    className="qty-control__increase"
+                  >
+                    +
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-addtocart js-open-aside"
+                  onClick={() => addToCart()}
+                >
+                  {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
+                </button>
+              </div>
+            ) : (
+              <div className="out-of-stock">
+              <span className="badge fs-5 text-uppercase">Out of Stock</span>
+              <p className="text-red mt-2">
+                This product is currently unavailable.
+              </p>
+            </div>
 
-)}
+            )}
 
             </form>
             <div className="product-single__addtolinks">
