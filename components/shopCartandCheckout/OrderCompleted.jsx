@@ -8,12 +8,12 @@ import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
 import FeedbackForm from "../common/Feedback";
 
-import { bogoProducts } from "@/components/BogoFeature";
+// import { bogoProducts } from "@/components/BogoFeature";
 import { useUser } from "@/context/UserContext";
 
 
 export default function OrderCompleted() {
-  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, couponDataContext } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, promotionsContext, couponDataContext } = useContextElement();
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { isLoggedIn } = useUser();
   const [showDate, setShowDate] = useState(false);
@@ -37,101 +37,32 @@ export default function OrderCompleted() {
   }
 
   const subTotalPrice = (elm) => {
-  // Check if the product is a BOGO product or marked as a gift
-  console.log('commonn', elm);
-  if (elm.is_gift) {
-    console.log('common FOC', elm);
-    return <td>0.00{currency.symbol} (Free Gift)</td>;
-  }
+    // Check if the product is a BOGO product or marked as a gift
+    console.log('commonn', elm);
+    if (elm.is_gift) {
+      console.log('common FOC', elm);
+      return <td>0.00{currency.symbol} (Free Gift)</td>;
+    }
 
-  const currentUTC = new Date();
-  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
-  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    const currentUTC = new Date();
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
 
-  let itemPrice = elm.price;
-
-  if (
-    elm?.discount &&
-    new Date(current_date_time) >= new Date(elm.discount.start_date) &&
-    new Date(current_date_time) <= new Date(elm.discount.end_date)
-  ) {
-    console.log('common discount', elm);
-    itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
-    return (
-      <td>
-        <span className="money price price-sale">
-          {currency.symbol}
-          {(itemPrice * elm.qty).toFixed(2)}
-        </span>
-        <span className="money price price-old">
-          {currency.symbol}
-          {(elm.price * elm.qty).toFixed(2)}
-        </span>
-      </td>
-    );
-  }
-
-  if (
-    elm?.coupon &&
-    Object.keys(elm.coupon).length !== 0 &&
-    couponDataContext &&
-    couponDataContext.code &&
-    elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
-    new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
-    new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
-  ) {
-    console.log('common copuon', elm);
-    itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
-    return (
-      <td>
-        <span className="money price price-sale">
-          {currency.symbol}
-          {(itemPrice * elm.qty).toFixed(2)}
-        </span>
-        <span className="money price price-old">
-          {currency.symbol}
-          {(elm.price * elm.qty).toFixed(2)}
-        </span>
-      </td>
-    );
-  }
-
-  if (elm?.sale_price) {
-    console.log('common sale price', elm);
-    itemPrice = elm.sale_price;
-    return (
-      <td>
-        <span className="money price price-sale">
-          {currency.symbol}
-          {(itemPrice * elm.qty).toFixed(2)}
-        </span>
-        <span className="money price price-old">
-          {currency.symbol}
-          {(elm.price * elm.qty).toFixed(2)}
-        </span>
-      </td>
-    );
-  }
-
-  if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
-    console.log('common Customer Coupon', elm);
-    const validCoupon = orderDetails.products.some(
-      (item) => !item.sale_price && !item.discount && !item.is_gift && !bogoProducts.some(bogo => bogo.product_id === item.id)
-    ) && (
-      !couponDataContext.start_date ||
-      !couponDataContext.end_date ||
-      (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
-        new Date(current_date_time) <= new Date(couponDataContext.end_date))
-    );
+    let itemPrice = elm.price;
 
     if (
-      elm.is_customer_coupon &&
-      validCoupon &&
-      !elm.sale_price &&
-      !elm.discount
+      elm?.discount &&
+      new Date(current_date_time) >= new Date(elm.discount.start_date) &&
+      new Date(current_date_time) <= new Date(elm.discount.end_date)
     ) {
-      console.log('common Customer Coupon If', elm);
-      itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+      console.log('common discount', elm);
+      if(elm.discount.discount_type == 'percent') {
+        console.log('percent...', elm);
+        itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
+      } else if(elm.discount.discount_type == 'amount') {
+        console.log('amount...', elm);
+        itemPrice = elm.discount.final_price;
+      }
       return (
         <td>
           <span className="money price price-sale">
@@ -145,17 +76,94 @@ export default function OrderCompleted() {
         </td>
       );
     }
-  }
 
-  return (
-    <td>
-      <span className="money price">
-        {currency.symbol}
-        {(elm.price * elm.qty).toFixed(2)}
-      </span>
-    </td>
-  );
-};
+    if (
+      elm?.coupon &&
+      Object.keys(elm.coupon).length !== 0 &&
+      couponDataContext &&
+      couponDataContext.code &&
+      elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+      new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+      new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+    ) {
+      console.log('common copuon', elm);
+      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.qty).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.qty).toFixed(2)}
+          </span>
+        </td>
+      );
+    }
+
+    // if (elm?.sale_price) {
+    //   console.log('common sale price', elm);
+    //   itemPrice = elm.sale_price;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.qty).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.qty).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
+
+    if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
+      console.log('common Customer Coupon', elm);
+      const validCoupon = orderDetails.products.some(
+        (item) => !item.sale_price && !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
+        promo.buy_products.some((item) => item.product_id === elm.product_id)
+        )
+      ) && (
+        !couponDataContext.start_date ||
+        !couponDataContext.end_date ||
+        (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
+          new Date(current_date_time) <= new Date(couponDataContext.end_date))
+      );
+
+      if (
+        elm.is_customer_coupon &&
+        validCoupon &&
+        !elm.sale_price &&
+        !elm.discount
+      ) {
+        console.log('common Customer Coupon If', elm);
+        itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        return (
+          <td>
+            <span className="money price price-sale">
+              {currency.symbol}
+              {(itemPrice * elm.qty).toFixed(2)}
+            </span>
+            <span className="money price price-old">
+              {currency.symbol}
+              {(elm.price * elm.qty).toFixed(2)}
+            </span>
+          </td>
+        );
+      }
+    }
+    
+    return (
+      <td>
+        <span className="money price">
+          {currency.symbol}
+          {(elm.price * elm.qty).toFixed(2)}
+        </span>
+      </td>
+    );
+  };
 
   return (
     <>

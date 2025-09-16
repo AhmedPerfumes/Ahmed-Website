@@ -15,6 +15,10 @@ import { openModalShopFilter } from "@/utlis/aside";
 import he from "he";
 import LabelIcon from "@/components/labels/LabelIcon";
 
+import { renderPrice } from "@/utlis/priceRenderer";
+
+const itemPerRow = [2, 3, 4];
+
 export default function Shop1({ search }) {
   const { currency } = useMenu();
   const locale = useLocale();
@@ -199,31 +203,41 @@ export default function Shop1({ search }) {
     return now >= elm.discount.start_date && now <= elm.discount.end_date;
   };
 
-  const discPrice = (elm) => {
-    const base = Number(elm.price);
+  // const discPrice = (elm) => {
+  //   const base = Number(elm.price);
 
-    if (isDiscountActive(elm)) {
-      const sale = base - (base * Number(elm.discount.value || 0)) / 100;
-      return (
-        <>
-          <span className="money price price-old">{fmt(base)}</span>{" "}
-          <span className="money price price-sale">{fmt(sale)}</span>
-        </>
-      );
-    }
+  //   if (isDiscountActive(elm)) {
+  //     if(elm.discount.discount_type == "percent") {
+  //       const sale = base - (base * Number(elm.discount.value || 0)) / 100;
+  //       return (
+  //         <>
+  //           <span className="money price price-old">{fmt(base)}</span>{" "}
+  //           <span className="money price price-sale">{fmt(sale)}</span>
+  //         </>
+  //       );
+  //     } else if(elm.discount.discount_type == "amount") {
+  //       const sale = base - Number(elm.discount.value || 0);
+  //       return (
+  //         <>
+  //           <span className="money price price-old">{fmt(base)}</span>{" "}
+  //           <span className="money price price-sale">{fmt(sale)}</span>
+  //         </>
+  //       );
+  //     }
+  //   }
 
-    if (elm.sale_price) {
-      const sp = Number(elm.sale_price);
-      return (
-        <>
-          <span className="money price price-old">{fmt(base)}</span>{" "}
-          <span className="money price price-sale">{fmt(sp)}</span>
-        </>
-      );
-    }
+  //   // if (elm.sale_price) {
+  //   //   const sp = Number(elm.sale_price);
+  //   //   return (
+  //   //     <>
+  //   //       <span className="money price price-old">{fmt(base)}</span>{" "}
+  //   //       <span className="money price price-sale">{fmt(sp)}</span>
+  //   //     </>
+  //   //   );
+  //   // }
 
-    return <span className="money price">{fmt(base)}</span>;
-  };
+  //   return <span className="money price">{fmt(base)}</span>;
+  // };
 
   return (
     <>
@@ -433,20 +447,29 @@ export default function Shop1({ search }) {
                           Out Of Stock
                         </div>
                       ) : (
-                        (elm.discount || elm.sale_price) && (() => {
+                        (elm.discount) && (() => {
                           let discountPercent = null;
 
                           if (elm?.discount?.value) {
-                            discountPercent = Number(elm.discount.value);
-                          } else if (elm.sale_price) {
-                            const base = Number(elm.price);
-                            const sale = Number(elm.sale_price);
-                            if (base > 0 && sale < base) {
-                              discountPercent = Math.round(((base - sale) / base) * 100);
+                            if(elm.discount.discount_type == "percent") {
+                              discountPercent = Number(elm.discount.value);
+                            } else if(elm.discount.discount_type == "amount") {
+                              const base = Number(elm.price);
+                              const sale = base - Number(elm.discount.value || 0);
+                              if (base > 0 && sale < base) {
+                                discountPercent = sale;
+                              }
                             }
                           }
+                          // else if (elm.sale_price) {
+                          //   const base = Number(elm.price);
+                          //   const sale = Number(elm.sale_price);
+                          //   if (base > 0 && sale < base) {
+                          //     discountPercent = Math.round(((base - sale) / base) * 100);
+                          //   }
+                          // }
 
-                          return discountPercent !== null ? (
+                          return discountPercent !== null && elm.discount.discount_type == "percent" ? (
                             <div
                               className="product-label text-uppercase text-white top-0 start-0 mt-2 mx-2"
                               style={{ backgroundColor: "#198754" }}
@@ -505,7 +528,8 @@ export default function Shop1({ search }) {
                         </Link>
                       </h6>
                       <div className="product-card__price d-flex">
-                        {discPrice(elm)}
+                        {/* {discPrice(elm)} */}
+                        { renderPrice(elm, currency) }
                       </div>
                     </div>
                   </div>
