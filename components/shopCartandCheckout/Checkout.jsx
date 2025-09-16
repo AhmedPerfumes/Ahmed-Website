@@ -744,7 +744,7 @@ export default function Checkout() {
           setCouponData(data.coupon);
           setCouponDataContext(data.coupon);
           setCouponSuccess(
-            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
+            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.coupon_type === 'percent' ? `${data.coupon.value}%` : `AED${data.coupon.value}`}`
           );
         } else {
           setCouponError("Coupon not applicable to cart products");
@@ -884,7 +884,12 @@ export default function Checkout() {
         promo.buy_products.some((item) => item.product_id === elm.product_id)
       )
     ) {
-      itemPrice = elm.price - (elm.price / 100) * couponData.value;
+      if(couponData.coupon_type == "percent") {
+        itemPrice = elm.price - (elm.price / 100) * couponData.value;
+      } else if(couponData.coupon_type == "amount") {
+        // console.log('amount...', elm, couponData);
+        itemPrice = elm.price - couponData.value;
+      }
       return (
         <td>
           <span className="money price price-sale">
@@ -1704,8 +1709,7 @@ export default function Checkout() {
                                       </div>
                                       <div className="coupon-desc">
                                         <h5>
-                                          {c.description ||
-                                            `Get ${c.value}% off`}
+                                          {c.description || (c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`)}
                                         </h5>
                                       </div>
                                       <div className="coupon-validity">

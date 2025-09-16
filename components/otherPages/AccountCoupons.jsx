@@ -103,7 +103,7 @@ export default function MyCoupons() {
                     Special Coupon
                   </div>
                   <div style={{ fontWeight: 600, fontSize: 17, marginTop: 2, color: "#222" }}>
-                    {c.value}% OFF
+                    {c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`}
                   </div>
                   <div style={{ fontSize: 13, color: "#888", marginBottom: 1 }}>
                     {/* Add more logic here if you have a description */}
@@ -156,7 +156,7 @@ export default function MyCoupons() {
                     marginTop: 3,
                     letterSpacing: ".5px"
                   }}>
-                    {c.value}% OFF
+                    {c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`}
                   </span>
                   {/* Hover/copy effect */}
                   {!expired && (

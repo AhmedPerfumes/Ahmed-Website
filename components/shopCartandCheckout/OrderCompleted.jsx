@@ -139,7 +139,13 @@ export default function OrderCompleted() {
         !elm.discount
       ) {
         console.log('common Customer Coupon If', elm);
-        itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        // itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        if(couponDataContext.coupon_type == "percent") {
+          itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        } else if(couponDataContext.coupon_type == "amount") {
+          // console.log('amount...', elm, couponData);
+          itemPrice = elm.price - couponDataContext.value;
+        }
         return (
           <td>
             <span className="money price price-sale">

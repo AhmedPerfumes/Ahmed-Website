@@ -95,7 +95,7 @@ export default function OrderTrack() {
     //     return <td>{(((elm.price * (1 + elm.vat / 100)) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     // }
     else {
-        console.log('else');
+        console.log('else', elm);
         if(elm.discount_amount && elm.discount_amount != '0') {
           return <td>{ elm.gross_amount }{ currency.symbol }</td>;
         }

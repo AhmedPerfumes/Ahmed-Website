@@ -188,7 +188,14 @@ export default function Context({ children }) {
       {
         console.log('product', 'customer coupon', product);
         const value = Number(couponDataContext?.value || 0);
-        const discounted = basePrice - (basePrice * value) / 100;
+        let discounted = basePrice; // fallback if no discount
+
+        if (couponDataContext.coupon_type === "percent") {
+          discounted = basePrice - (basePrice * value) / 100;
+        } else if (couponDataContext.coupon_type === "amount") {
+          discounted = basePrice - value;
+        }
+
         return accumulator + qty * Number(discounted.toFixed(2));
       }
 
