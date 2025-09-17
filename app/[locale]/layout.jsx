@@ -120,14 +120,14 @@ export default async function LocaleLayout({ children, params: { locale } }) {
           `
 }
         </Script> */}
-        <script
+        {/* <script
           id="messenger-widget-b"
           src="https://cdn.botpenguin.com/website-bot.js"
           defer
           dangerouslySetInnerHTML={{
             __html: `68c2c8aba3d4cb6728bcc3cb,68c28d106db0623915d23c5e,agent`,
           }}
-        />
+        /> */}
         
 
         <NextIntlClientProvider messages={messages}>
