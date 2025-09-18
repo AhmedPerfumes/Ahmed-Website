@@ -122,7 +122,8 @@ export default function OrderCompleted() {
     if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
       console.log('common Customer Coupon', elm);
       const validCoupon = orderDetails.products.some(
-        (item) => !item.sale_price && !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
+        // (item) => !item.sale_price && !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
+        (item) => !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)
         )
       ) && (
@@ -135,7 +136,7 @@ export default function OrderCompleted() {
       if (
         elm.is_customer_coupon &&
         validCoupon &&
-        !elm.sale_price &&
+        // !elm.sale_price &&
         !elm.discount
       ) {
         console.log('common Customer Coupon If', elm);

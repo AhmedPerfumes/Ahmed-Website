@@ -647,7 +647,8 @@ export default function Checkout() {
         promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
       );
       const hasMatchingCoupon = item.coupon?.[code]?.code === code;
-      const isEligible = !item.sale_price && !item.discount && !isBogoProduct;
+      // const isEligible = !item.sale_price && !item.discount && !isBogoProduct;
+      const isEligible = !item.discount && !isBogoProduct;
 
       if (hasMatchingCoupon && isEligible) {
         product_coupon = true;
@@ -679,7 +680,8 @@ export default function Checkout() {
           const isBogoProduct = promotionsContext.some((promo) =>
             promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
           );
-          return !item.sale_price && !item.discount && !isBogoProduct;
+          // return !item.sale_price && !item.discount && !isBogoProduct;
+          return !item.discount && !isBogoProduct;
         });
 
         if (eligibleItems.length > 0) {
@@ -690,7 +692,8 @@ export default function Checkout() {
               promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
             );
 
-            const isEligible = !item.sale_price && !item.discount && !isBogoProduct && !item.is_gift;
+            // const isEligible = !item.sale_price && !item.discount && !isBogoProduct && !item.is_gift;
+            const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
 
             return {
               ...item,
@@ -835,7 +838,7 @@ export default function Checkout() {
       !promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)
       ) &&
-      !elm.sale_price &&
+      // !elm.sale_price &&
       !elm.discount
     ) {
       itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
@@ -878,7 +881,7 @@ export default function Checkout() {
         !couponData.end_date ||
         (new Date(current_date_time) >= new Date(couponData.start_date) &&
           new Date(current_date_time) <= new Date(couponData.end_date))) &&
-      !elm.sale_price &&
+      // !elm.sale_price &&
       !elm.discount &&
       !promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)

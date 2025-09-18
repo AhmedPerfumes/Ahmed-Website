@@ -9,6 +9,7 @@ import Pagination1 from "../Pagination1";
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Link from "next/link";
+import { renderPrice } from "@/utlis/priceRenderer";
 
 function DiscountGrid({ title, onlyDiscounted = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -150,7 +151,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                     Out Of Stock
                   </div>
                 ) : (
-                  elm.discount && (
+                  elm.discount  && elm. discount.discount_type == 'percent' && (
                     <div style={{ backgroundColor: "#198754" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                       Sale {elm.discount.value}%
                     </div>
@@ -183,7 +184,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                     {t(he.decode(elm.product_name))}
                   </Link>
                 </h6>
-                <div className="product-card__price d-flex">{discPrice(elm)}</div>
+                <div className="product-card__price d-flex">{renderPrice(elm, currency)}</div>
               </div>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Link from "next/link";
 import LabelIcon from "@/components/labels/LabelIcon";
+import { renderPrice } from "@/utlis/priceRenderer";
 
 function NewLaunchGrid({ title, onlyDiscounted = false, onlyNew = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -226,7 +227,7 @@ const filteredProducts = products
                     {t(he.decode(elm.product_name))}
                   </Link>
                 </h6>
-                <div className="product-card__price d-flex">{discPrice(elm)}</div>
+                <div className="product-card__price d-flex">{renderPrice(elm, currency)}</div>
               </div>
             </div>
           </div>

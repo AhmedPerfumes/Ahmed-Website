@@ -125,7 +125,7 @@ export default function CartDrawer() {
       if (
         elm.is_customer_coupon &&
         !validCoupon &&
-        !elm.sale_price &&
+        // !elm.sale_price &&
         !elm.discount
       ) {
         console.log('common Customer Coupon If', elm);
