@@ -933,6 +933,7 @@ export default function Checkout() {
   };
 
   const handleSelectCoupon = async (code, id) => {
+    setCouponData(null);
     setCouponCode(code);
     setCopiedId(id);
     setShowCouponModal(false);
