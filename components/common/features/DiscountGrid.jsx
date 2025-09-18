@@ -67,40 +67,40 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     return "online-exclusive";
   };
 
-  const discPrice = (elm) => {
-    const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST
-    const start = new Date(elm?.discount?.start_date);
-    const end = new Date(elm?.discount?.end_date);
+  // const discPrice = (elm) => {
+  //   const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST
+  //   const start = new Date(elm?.discount?.start_date);
+  //   const end = new Date(elm?.discount?.end_date);
 
-    if (elm?.discount && now >= start && now <= end) {
-      const discounted = (
-        elm.price -
-        (elm.price * elm.discount.value) / 100
-      ).toFixed(2);
-      return (
-        <>
-          <span className="money price price-old">
-            {elm.price}{currency.symbol}
-          </span>
-          <span className="money price price-sale">
-            {discounted}{currency.symbol}
-          </span>
-        </>
-      );
-    } else if (elm?.sale_price) {
-      return (
-        <>
-          <span className="money price price-old">
-            {elm.price}{currency.symbol}
-          </span>
-          <span className="money price price-sale">
-            {elm.sale_price.toFixed(2)}{currency.symbol}
-          </span>
-        </>
-      );
-    }
-    return <span className="money price">{elm.price}{currency.symbol}</span>;
-  };
+  //   if (elm?.discount && now >= start && now <= end) {
+  //     const discounted = (
+  //       elm.price -
+  //       (elm.price * elm.discount.value) / 100
+  //     ).toFixed(2);
+  //     return (
+  //       <>
+  //         <span className="money price price-old">
+  //           {elm.price}{currency.symbol}
+  //         </span>
+  //         <span className="money price price-sale">
+  //           {discounted}{currency.symbol}
+  //         </span>
+  //       </>
+  //     );
+  //   } else if (elm?.sale_price) {
+  //     return (
+  //       <>
+  //         <span className="money price price-old">
+  //           {elm.price}{currency.symbol}
+  //         </span>
+  //         <span className="money price price-sale">
+  //           {elm.sale_price.toFixed(2)}{currency.symbol}
+  //         </span>
+  //       </>
+  //     );
+  //   }
+  //   return <span className="money price">{elm.price}{currency.symbol}</span>;
+  // };
 
   // ✅ Filter discounted/in-stock products
   const filteredProducts = products
