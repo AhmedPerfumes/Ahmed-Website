@@ -1,9 +1,9 @@
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import he from 'he';
 import React, { useState, useEffect, useMemo } from 'react';
 
 // ====================================================================
-//  HELPER COMPONENT: StarRating (for display)
+//  HELPER COMPONENT: StarRating (No changes needed here)
 // ====================================================================
 const StarRating = ({ rating }) => {
     let stars = '';
@@ -17,8 +17,12 @@ const StarRating = ({ rating }) => {
 //  CHILD COMPONENT #1: ReviewList
 // ====================================================================
 const ReviewList = ({ reviews, loading, averageRating, reviewCount }) => {
+    // 1. Initialize translation hook
+    const t = useTranslations('Reviews');
+
     if (loading) {
-        return <p>Loading reviews...</p>;
+        // 2. Translate loading message
+        return <p>{t('loading')}</p>;
     }
 
     return (
@@ -33,7 +37,8 @@ const ReviewList = ({ reviews, loading, averageRating, reviewCount }) => {
                         <StarRating rating={averageRating} />
                     </div>
                     <div className="total-reviews">
-                        Based on {reviewCount} {reviewCount === 1 ? 'review' : 'reviews'}
+                        {/* 3. Translate text with pluralization */}
+                        {t('basedOn', { count: reviewCount })}
                     </div>
                 </div>
             </div>
@@ -51,7 +56,8 @@ const ReviewList = ({ reviews, loading, averageRating, reviewCount }) => {
                 ) : (
                     <div className="review">
                         <p className="review-text">
-                            Be the first to review this product!
+                            {/* 4. Translate "be first to review" message */}
+                            {t('beFirst')}
                         </p>
                     </div>
                 )}
@@ -64,6 +70,9 @@ const ReviewList = ({ reviews, loading, averageRating, reviewCount }) => {
 //  CHILD COMPONENT #2: ReviewForm
 // ====================================================================
 const ReviewForm = ({ productId, onReviewSubmitted }) => {
+    // 5. Initialize translation hook
+    const t = useTranslations('Reviews');
+
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [message, setMessage] = useState('');
@@ -76,7 +85,8 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (rating === 0) {
-            alert('Please select a star rating.');
+            // 6. Translate alert message
+            alert(t('selectRatingAlert'));
             return;
         }
         setIsSubmitting(true);
@@ -88,10 +98,7 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
                 `${process.env.NEXT_PUBLIC_API_URL}api/reviews`,
                 {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Accept: 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                     body: JSON.stringify({
                         product_id: productId,
                         customer_name: customerName,
@@ -105,9 +112,8 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
             const result = await response.json();
 
             if (response.ok) {
-                setSuccessMessage(
-                    'Thank you! Your review has been submitted for approval.'
-                );
+                // 7. Translate success message
+                setSuccessMessage(t('successMessage'));
                 setRating(0);
                 setMessage('');
                 setCustomerName('');
@@ -118,9 +124,8 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
             }
         } catch (err) {
             console.error(err);
-            setErrors({
-                form: 'A network error occurred. Please try again.',
-            });
+            // 8. Translate network error message
+            setErrors({ form: t('networkError') });
         } finally {
             setIsSubmitting(false);
         }
@@ -128,31 +133,23 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
 
     return (
         <div className="review-form-container">
-            <h3
-                className="review-author text-center mb-4 text-white"
-                style={{ color: '#fff' }}
-            >
-                Write a Review
+            <h3 className="review-author text-center mb-4 text-white" style={{ color: '#fff' }}>
+                {/* 9. Translate form title */}
+                {t('writeReviewTitle')}
             </h3>
             {successMessage && (
                 <div className="success-message">{successMessage}</div>
             )}
 
-            <form
-                onSubmit={handleSubmit}
-                style={{ display: successMessage ? 'none' : 'block' }}
-            >
+            <form onSubmit={handleSubmit} style={{ display: successMessage ? 'none' : 'block' }}>
                 <div className="form-group">
-                    <label>Your Rating</label>
+                    {/* 10. Translate labels, placeholders, and button text */}
+                    <label>{t('yourRatingLabel')}</label>
                     <div className="interactive-stars">
                         {[1, 2, 3, 4, 5].map((star) => (
                             <span
                                 key={star}
-                                className={`star ${
-                                    (hoverRating || rating) >= star
-                                        ? 'highlighted'
-                                        : ''
-                                }`}
+                                className={`star ${(hoverRating || rating) >= star ? 'highlighted' : ''}`}
                                 onMouseEnter={() => setHoverRating(star)}
                                 onMouseLeave={() => setHoverRating(0)}
                                 onClick={() => setRating(star)}
@@ -163,65 +160,27 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="customerName">Your Name</label>
-                    <input
-                        id="customerName"
-                        type="text"
-                        value={customerName}
-                        onChange={(e) => setCustomerName(e.target.value)}
-                        required
-                    />
-                    {errors.customer_name && (
-                        <small className="error-message">
-                            {errors.customer_name[0]}
-                        </small>
-                    )}
+                    <label htmlFor="customerName">{t('yourNameLabel')}</label>
+                    <input id="customerName" type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
+                    {errors.customer_name && (<small className="error-message">{errors.customer_name[0]}</small>)}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="customerEmail">Your Email</label>
-                    <input
-                        id="customerEmail"
-                        type="email"
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                        required
-                    />
-                    {errors.customer_email && (
-                        <small className="error-message">
-                            {errors.customer_email[0]}
-                        </small>
-                    )}
+                    <label htmlFor="customerEmail">{t('yourEmailLabel')}</label>
+                    <input id="customerEmail" type="email" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} required />
+                    {errors.customer_email && (<small className="error-message">{errors.customer_email[0]}</small>)}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="comment">Your Review</label>
-                    <textarea
-                        id="comment"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        rows="5"
-                        required
-                        placeholder='Write your review here(more than 10 characters required)...'
-                    />
-                    {errors.comment && (
-                        <small className="error-message">
-                            {errors.comment[0]}
-                        </small>
-                    )}
+                    <label htmlFor="comment">{t('yourReviewLabel')}</label>
+                    <textarea id="comment" value={message} onChange={(e) => setMessage(e.target.value)} rows="5" required placeholder={t('reviewPlaceholder')} />
+                    {errors.comment && (<small className="error-message">{errors.comment[0]}</small>)}
                 </div>
                 {errors.form && (
-                    <div
-                        className="error-message text-center mb-3"
-                        style={{ textAlign: 'center', marginBottom: '15px' }}
-                    >
+                    <div className="error-message text-center mb-3" style={{ textAlign: 'center', marginBottom: '15px' }}>
                         {errors.form}
                     </div>
                 )}
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="submit-button"
-                >
-                    {isSubmitting ? 'Submitting...' : 'Submit Review'}
+                <button type="submit" disabled={isSubmitting} className="submit-button">
+                    {isSubmitting ? t('submitting') : t('submit')}
                 </button>
             </form>
         </div>
@@ -229,19 +188,28 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
 };
 
 // ====================================================================
-//  PARENT COMPONENT: CustomerReviews (Responsive with Bootstrap)
+//  PARENT COMPONENT: CustomerReviews
 // ====================================================================
 const CustomerReviews = ({ product }) => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
-    const t = useTranslations();
+    // 11. Initialize hooks in parent component
+    const t = useTranslations('Reviews');
+    const locale = useLocale();
+
+    // 12. Create cleaned & translated product name
+    const cleanProductName = useMemo(() => {
+        const nameToClean = locale === 'ar' ? product?.product_name_ar : product?.product_name;
+        if (nameToClean) {
+            return he.decode(nameToClean);
+        }
+        return '';
+    }, [product?.product_name, product?.product_name_ar, locale]);
 
     useEffect(() => {
         if (product && product.product_id) {
             setLoading(true);
-            fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}api/products/${product.product_id}/reviews`
-            )
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products/${product.product_id}/reviews`)
                 .then((res) => res.json())
                 .then((data) => {
                     setReviews(data);
@@ -259,15 +227,8 @@ const CustomerReviews = ({ product }) => {
     const { averageRating, reviewCount } = useMemo(() => {
         const count = reviews.length;
         if (count === 0) return { averageRating: 0, reviewCount: 0 };
-
-        const totalStars = reviews.reduce(
-            (sum, review) => sum + review.star,
-            0
-        );
-        return {
-            averageRating: totalStars / count,
-            reviewCount: count,
-        };
+        const totalStars = reviews.reduce((sum, review) => sum + review.star, 0);
+        return { averageRating: totalStars / count, reviewCount: count };
     }, [reviews]);
 
     const handleReviewSubmitted = (newReview) => {
@@ -277,11 +238,10 @@ const CustomerReviews = ({ product }) => {
     return (
         <div className="reviews-container container">
             <h2 className="reviews-title text-white mb-4">
-                Reviews for {product?.product_name && t(he.decode(product?.product_name))}
+                {/* 13. Use translated title with dynamic name */}
+                {t('reviewsFor', { name: cleanProductName })}
             </h2>
-
             <div className="row">
-                {/* Review List */}
                 <div className="col-12 col-lg-6 mb-4 mb-lg-0">
                     <ReviewList
                         reviews={reviews}
@@ -290,8 +250,6 @@ const CustomerReviews = ({ product }) => {
                         reviewCount={reviewCount}
                     />
                 </div>
-
-                {/* Review Form */}
                 <div className="col-12 col-lg-6">
                     <ReviewForm
                         productId={product.product_id}

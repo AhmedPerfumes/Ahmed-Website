@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 const Description = ({ description }) => {
+  const t = useTranslations('ProductDetails');
   const [expanded, setExpanded] = useState(false);
   const [showToggle, setShowToggle] = useState(false);
   const [height, setHeight] = useState("60px");
   const contentRef = useRef(null);
-  const maxCollapsedHeight = 40; // in pixels; can be made a prop for flexibility
+  const maxCollapsedHeight = 60; // in pixels; can be made a prop for flexibility
 
   useEffect(() => {
     if (contentRef.current) {
@@ -59,7 +61,7 @@ const Description = ({ description }) => {
             onMouseOut={(e) => (e.target.style.color = "#6E6E73")}
             aria-expanded={expanded}
           >
-            {expanded ? "Show less" : "...Read more"}
+            {expanded ? t('showLess') : t('readMore')}
           </button>
         </div>
       )}

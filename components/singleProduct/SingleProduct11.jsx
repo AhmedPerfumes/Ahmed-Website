@@ -229,7 +229,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
         <ProductInfoTabs product={product} category={category} subcategory={subcategory} />
       </div>
       <ItemFamilySlider product={product} itemFamilyProds={product.item_family} />
-      </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Product Found</h2>}
+      </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">{t('noProductFound')}</h2>}
     </>
   );
 }

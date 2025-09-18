@@ -178,12 +178,16 @@
 }
 
 /* --- Timeline Header (TOP, MID, BOTTOM) --- */
+
 .pd-timeline {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    /* CHANGED: This will center the items (1, 2, or 3) perfectly. */
+    justify-content: center;
+    /* ADDED: This creates space between the points when there are multiple. */
+    gap: 80px; 
     max-width: 1200px;
-    margin: 0 auto 120px;
+    margin: 0 auto 65px;
     padding: 0 40px;
     height: 150px;
 }
@@ -191,6 +195,7 @@
 .pd-timeline-line {
     position: absolute;
     top: 50%;
+    /* These values are now relative to the centered group, not the full container */
     left: 80px;
     right: 80px;
     height: 2px;
@@ -240,15 +245,17 @@
 
 .pd-connector {
     width: 2px;
-    height: 60px;
+    height: 75px;
     background: linear-gradient(180deg, #c5a47e 0%, rgba(197, 164, 126, 0.2) 100%);
     margin-top: 5px;
 }
 
 /* --- Notes Grid Section --- */
 .pd-notes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* CHANGED: Switched from Grid to Flexbox for better centering control. */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allows cards to wrap on smaller screens */
     gap: 40px;
     max-width: 1200px;
     margin: -60px auto 0;
@@ -257,9 +264,12 @@
 
 /* --- Individual Note Card Styling (UPDATED) --- */
 .pd-note-card {
-    position: relative; /* Needed for z-index on hover to work correctly */
+    /* ... existing styles ... */
+    width: 340px; /* Give the card a defined width */
+    max-width: 100%; /* Ensures it shrinks on very small screens */
+    position: relative;
     background-color: #1a1a1a;
-    border: 1px solid #333; /* Default dark border for all cards */
+    border: 1px solid #333;
     border-radius: 12px;
     overflow: hidden;
     transform: translateY(0);
@@ -322,13 +332,14 @@
     font-size: 0.9rem;
     color: #aaa;
     line-height: 1.7;
-    text-align: center;
+    text-align: justify;
+    text-align-last: center;
 }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 992px) {
     .pd-notes-grid {
-        grid-template-columns: 1fr;
+        /* grid-template-columns: 1fr; */
         gap: 50px;
     }
 

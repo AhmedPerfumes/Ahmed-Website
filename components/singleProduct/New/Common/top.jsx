@@ -3,16 +3,20 @@ import React, { useMemo } from "react";
 import he from "he";
 import { useTranslations } from "next-intl";
 import BreadCumb from "../../BreadCumb";
+import { useLocale } from "next-intl";
 
 const Top = ({ product }) => {
+    const locale = useLocale();
     const t = useTranslations();
-    // Decode only if product_name exists
+
     const cleanName = useMemo(() => {
-        if (product?.product_name) {
-            return he.decode(product.product_name);
+        const nameToUse = locale === 'ar' ? product?.product_name_ar : product?.product_name;
+
+        if (nameToUse) {
+            return he.decode(nameToUse);
         }
         return "";
-    }, [product?.product_name]);
+    }, [product?.product_name, product?.product_name_ar, locale]);
 
     return (
         <div className="mt-lg-4">
@@ -27,7 +31,7 @@ const Top = ({ product }) => {
       {product?.product_name && t(he.decode(product?.product_name))}
       </h1> */}
             <h1 className="product-single__name hii">
-                {product?.product_name && t(he.decode(product?.product_name))}
+                {cleanName}
             </h1>
 
             {/* Categories */}

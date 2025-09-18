@@ -17,6 +17,7 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
   const { setQuickViewItem } = useContextElement();
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   const t = useTranslations();
+  const tp = useTranslations('ProductDetails');
   const swiperOptions = {
     autoplay: false,
     slidesPerView: 4,
@@ -105,7 +106,7 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
   return (
     <section className="products-carousel container my-4">
       <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4 mt-4">
-        Discover More from <strong>{product?.product_name && t(he.decode(product?.itemFamily))}</strong>
+                {tp('discoverMore', { familyName: he.decode(product?.itemFamily) })}
       </h2>
 
       <div id="item_family_products" className="position-relative">

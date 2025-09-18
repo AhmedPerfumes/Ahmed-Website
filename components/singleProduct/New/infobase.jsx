@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useLocale } from "next-intl";
 import ThumbLarge from "./Common/thumb-large";
 import Top from "./Common/top";
 import Description from "./Common/description";
 import Checkout from "./Common/checkout";
 
 const InfoBase = ({ images, product, onThumbnailClick }) => {
-  const description = product?.description;
+  const locale = useLocale();
+  const description = locale === 'ar' ? product?.description_ar : product?.description;
 
   const [isMobile, setIsMobile] = useState(false);
 
