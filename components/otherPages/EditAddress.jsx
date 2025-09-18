@@ -204,9 +204,9 @@ const save = async () => {
     <>
       <div className="col-lg-9">
         <p className="sub-menu__title border-bottom mb-4">
-          Default address will be used at checkout
+          Your Default address will be used at checkout
         </p>
-        <div className="d-flex gap-3 flex-column">
+        <div className="d-flex gap-3 flex-column " style={{ fontFamily: "SofiaProRegular" }}>
           {["Home Address", "Other Address"].map((label, idx) => (
             <div
               key={label}
@@ -217,17 +217,17 @@ const save = async () => {
               <div>
                 <h6 className="mb-1 fw-medium">{label}</h6>
                 <p className="mb-0 text-dark fw-bold">{addresses[idx].name}</p>
-                <p className="mb-0 text-muted small">
+                <p className="mb-0 text-dark small">
                   {addresses[idx].email} | {addresses[idx].mobile}
                 </p>
-                <p className="mb-0 text-muted small">
+                <p className="mb-0 text-dark small">
                   {addresses[idx].area}, {addresses[idx].building},{" "}
                   {addresses[idx].emirates}
                 </p>
               </div>
               <div className="text-end">
                 {addresses[idx].isDefault && (
-                  <span className="badge bg-primary mb-2">Default</span>
+                  <span className="badge bg-secondary mb-2">Default delivery address</span>
                 )}
                 <br />
                 <Link
@@ -236,7 +236,7 @@ const save = async () => {
                     e.preventDefault();
                     openModal(idx);
                   }}
-                  className="fs-sm"
+                  className="fs-sm border-bottom"
                 >
                   Edit
                 </Link>
@@ -247,7 +247,7 @@ const save = async () => {
       </div>
 
       {/* Edit Modal */}
-      <Modal show={show} onHide={() => setShow(false)} centered>
+      <Modal style={{ fontFamily: "SofiaProRegular" }} show={show} onHide={() => setShow(false)} centered>
         <Modal.Header closeButton className="border-0 pb-0">
           <Modal.Title className="h6 fw-semibold">
             Edit {editingIndex === 0 ? "Home" : "Other"} Address

@@ -176,6 +176,25 @@ export default function LoginRegister() {
         setError(null);
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
+        const defaultAddr = data.data.addresses.find((addr) => addr.is_default);
+        if (defaultAddr) {
+          localStorage.setItem(
+            "address",
+            btoa(
+              JSON.stringify({
+                id: defaultAddr.id,
+                name: defaultAddr.name,
+                email: defaultAddr.email,
+                phone: defaultAddr.phone,
+                state: defaultAddr.state,
+                city: defaultAddr.city,
+                address: defaultAddr.address,
+                customer_id: defaultAddr.customer_id,
+                is_default: 1,
+              })
+            )
+          );
+        }
         setTimeout(() => (window.location.href = "/"), 1000);
       }
     } catch (error) {

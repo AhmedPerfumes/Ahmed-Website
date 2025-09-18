@@ -184,72 +184,61 @@ export default function MyDetails() {
 
       setFieldErrors({ customer_email: "", customer_mobile: "" });
 
-      if (res.status === false || res.error || res.customer_email || res.customer_mobile) {
-        if (res.error?.customer_mobile) {
-          setFieldErrors((f) => ({
-            ...f,
-            customer_mobile: "Mobile already exists",
-          }));
-        }
-        if (res.error?.customer_email) {
-          setFieldErrors((f) => ({
-            ...f,
-            customer_email: "Email already exists",
-          }));
-        }
+      if (res.message !== 'Customer Updated Successfully') {
+  if (res.error?.customer_mobile || (Array.isArray(res.customer_mobile) && res.customer_mobile.length > 0)) {
+    setFieldErrors((f) => ({
+      ...f,
+      customer_mobile: "Mobile already exists",
+    }));
+  }
+  if (res.error?.customer_email || (Array.isArray(res.customer_email) && res.customer_email.length > 0)) {
+    setFieldErrors((f) => ({
+      ...f,
+      customer_email: "Email already exists",
+    }));
+  }
+  setError("Data already exists. Please check inputs.");
+  setSaveLoading(false);
+  return;
+}
 
-        if (Array.isArray(res.customer_email) && res.customer_email.length > 0) {
-          setFieldErrors((f) => ({
-            ...f,
-            customer_email: "Email already exists",
-          }));
-        }
-        if (Array.isArray(res.customer_mobile) && res.customer_mobile.length > 0) {
-          setFieldErrors((f) => ({
-            ...f,
-            customer_mobile: "Mobile already exists",
-          }));
-        }
+setDetails({
+  customer_name: values.customer_name,
+  customer_email: values.customer_email,
+  customer_mobile: values.customer_mobile,
+});
+setInitialDetails({
+  customer_name: values.customer_name,
+  customer_email: values.customer_email,
+  customer_mobile: values.customer_mobile,
+});
+const updatedUser = {
+  id: customerId,
+  name: values.customer_name,
+  email: values.customer_email,
+  phone: values.customer_mobile,
+};
+localStorage.setItem("user", btoa(JSON.stringify(updatedUser)));
 
-        setError(res.message || "Data already exists. Please check inputs.");
-        setSaveLoading(false);
-        return;
-      }
-
-      setDetails({
-        customer_name: values.customer_name,
-        customer_email: values.customer_email,
-        customer_mobile: values.customer_mobile,
-      });
-      setInitialDetails({
-        customer_name: values.customer_name,
-        customer_email: values.customer_email,
-        customer_mobile: values.customer_mobile,
-      });
-
-      const updatedUser = {
-        id: customerId,
-        name: values.customer_name,
-        email: values.customer_email,
-        phone: values.customer_mobile,
-      };
-      localStorage.setItem("user", btoa(JSON.stringify(updatedUser)));
-
-      setEdit({
-        customer_name: false,
-        customer_email: false,
-        customer_mobile: false,
-        password: false,
-      });
-      setValues((v) => ({
-        ...v,
-        password: "",
-        new_password: "",
-        confirm_password: "",
-      }));
-      setSuccess("Details updated successfully!");
-      setTimeout(() => setSaveDialog(false), 1300);
-      setSaveLoading(false);
+setEdit({
+  customer_name: false,
+  customer_email: false,
+  customer_mobile: false,
+  password: false,
+});
+setValues((v) => ({
+  ...v,
+  password: "",
+  new_password: "",
+  confirm_password: "",
+}));
+setError("");
+setSuccess("Details updated successfully!");
+setTimeout(() => {
+  setSaveDialog(false);
+  console.log("Modal closed after 2 seconds");
+}, 2000);
+setSaveLoading(false);
     } catch {
       setError("Network error. Please try again.");
       setSaveLoading(false);
@@ -333,8 +322,8 @@ export default function MyDetails() {
           <Modal.Title>Confirm Save</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {error && <Alert variant="danger">{error}</Alert>}
-          {success && <Alert variant="success">{success}</Alert>}
+          {error && error != '' && <Alert variant="danger">{error}</Alert>}
+          {success && success != '' && <Alert variant="success">{success}</Alert>}
           <Form.Group>
             <Form.Label>Enter your current password to save changes</Form.Label>
             <Form.Control
