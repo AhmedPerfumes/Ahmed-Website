@@ -184,11 +184,19 @@ export default function Context({ children }) {
       }
 
       // 3) Customer/global coupon (apply across all products)
-      if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
+      // if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
+      if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       {
         console.log('product', 'customer coupon', product);
         const value = Number(couponDataContext?.value || 0);
-        const discounted = basePrice - (basePrice * value) / 100;
+        let discounted = basePrice; // fallback if no discount
+
+        if (couponDataContext.coupon_type === "percent") {
+          discounted = basePrice - (basePrice * value) / 100;
+        } else if (couponDataContext.coupon_type === "amount") {
+          discounted = basePrice - value;
+        }
+
         return accumulator + qty * Number(discounted.toFixed(2));
       }
 

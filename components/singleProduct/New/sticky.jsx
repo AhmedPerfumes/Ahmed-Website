@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import "./Sticky.css";
 import { useMenu } from "@/context/MenuContext";
 import Image from "next/image";
+import { renderPrice } from "@/utlis/priceRenderer";
 
 const Sticky = ({ image, name, price, product }) => {
     const [show, setShow] = useState(false);
@@ -95,7 +96,7 @@ const Sticky = ({ image, name, price, product }) => {
                     {name}
                 </p>
                 <p className="mb-0 fw-bold">
-                    {price} {currency.symbol}
+                    {renderPrice(product, currency)}
                 </p>
             </div>
 
