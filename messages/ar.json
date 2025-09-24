@@ -43,12 +43,14 @@
       "signatureScriptTitle": "الرائحة المميزة"
     },
     "accordion": {
+      "whatIsIncluded": "ماذا يتضمن؟",
       "fragranceProfile": "ملف العطر",
       "productOverview": "نظرة عامة على المنتج",
       "keyHighlights": "الميزات الرئيسية",
       "usageApplication": "الاستخدام والتطبيق",
       "craftedWithIntention": "صُنع بعناية",
       "deliveryInformation": "معلومات التوصيل"
+      
     },
     "overview": {
       "sizeVolume": "الحجم",
@@ -71,7 +73,9 @@
       "payment": "حلول دفع آمنة",
       "paymentText": "مدفوعاتك آمنة مع نظامنا الآمن عبر الإنترنت.",
       "track": "تتبع طلبك",
-      "trackText": "تتبع حالة طلبك بسهولة عبر الإنترنت في أي وقت."
+      "trackText": "تتبع حالة طلبك بسهولة عبر الإنترنت في أي وقت.",
+      "expectedDelivery": "التوصيل المتوقع",
+      "expectedDeliveryText": "من المتوقع وصول طلبك خلال 3-5 أيام عمل."
     },
     "usage": {
       "howToApply": "كيفية الاستخدام",

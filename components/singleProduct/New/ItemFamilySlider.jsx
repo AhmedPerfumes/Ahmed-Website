@@ -106,7 +106,7 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
   return (
     <section className="products-carousel container my-4">
       <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4 mt-4">
-                {tp('discoverMore', { familyName: he.decode(product?.itemFamily) })}
+                {tp('discoverMore', { familyName: he.decode(product?.product_family) })}
       </h2>
 
       <div id="item_family_products" className="position-relative">

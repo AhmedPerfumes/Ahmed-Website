@@ -1,10 +1,89 @@
 "use client";
 
-import React from "react";
+import React, { useMemo, useState } from "react";
 import "./accordian.css";
 import { useMenu } from "@/context/MenuContext";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { renderPrice } from "@/utlis/priceRenderer";
+import Link from "next/link";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+
+// In your ProductAccordion.js file
+
+const CollectionSummary = ({ product, currency }) => {
+    const { totalValue, savings, savingsPercent } = useMemo(() => {
+        if (!product.is_collection || !product.collection_items?.length > 0) {
+            return { totalValue: 0, savings: 0, savingsPercent: 0 };
+        }
+
+        // Helper function to get an item's final price (original or discounted)
+        const getFinalPrice = (item) => {
+            const now = new Date();
+            // Check if a valid, active discount exists
+            if (item.discount && new Date(item.discount.start_date) <= now && new Date(item.discount.end_date) >= now) {
+                const { discount_type, value, final_price } = item.discount;
+                if (discount_type === 'percent') {
+                    return parseFloat(item.price) - (parseFloat(item.price) * value / 100);
+                }
+                if (discount_type === 'amount' && final_price) {
+                    return parseFloat(final_price);
+                }
+            }
+            // Fallback to sale_price if it exists
+            if (item.sale_price) {
+                return parseFloat(item.sale_price);
+            }
+            // Otherwise, return the original price
+            return parseFloat(item.price);
+        };
+
+        // Calculate the total value by summing the FINAL price of each individual item
+        const total = product.collection_items.reduce((acc, item) => {
+            if (item.child_product_id) {
+                return acc + getFinalPrice(item);
+            }
+            return acc;
+        }, 0);
+
+        // Get the FINAL price of the bundle itself
+        const bundlePrice = getFinalPrice(product);
+
+        const savedAmount = total - bundlePrice;
+        const percent = total > 0 ? Math.round((savedAmount / total) * 100) : 0;
+
+        return { totalValue: total, savings: savedAmount, savingsPercent: percent };
+    }, [product]);
+
+    // This component will only render something if there are actual savings.
+    if (savings <= 0) {
+        return null;
+    }
+
+    return (
+        <div className="collection-summary">
+            <div className="summary-row">
+                <span>Total Individual Value:</span>
+                <span className="total-value"><s>{currency?.symbol}{totalValue.toFixed(2)}</s></span>
+            </div>
+            <div className="summary-row">
+                <span>Collection Price:</span>
+                <span className="collection-price">{renderPrice(product, currency)}</span>
+            </div>
+            <hr className="summary-divider" />
+            <div className="summary-row savings">
+                <span>You Save:</span>
+                <span className="savings-badge">{renderPrice({ price: savings.toFixed(2) }, currency)} ({savingsPercent}%)</span>
+            </div>
+        </div>
+    );
+};
 
 const AccordionItem = ({ title, id, defaultOpen = false, children }) => {
     return (
@@ -152,8 +231,10 @@ const AccordionItem = ({ title, id, defaultOpen = false, children }) => {
 
 const ProductAccordion = ({ product }) => {
     const locale = useLocale();
+    const { currency } = useMenu();
     const t = useTranslations("ProductDetails");
     const { shippingServiceCharges } = useMenu();
+    const [showLoader, setShowLoader] = useState(false);
 
     const getUsageInfo = (product) => {
         // Use the product's fragrance type as a key, e.g., 'hair_mist', 'bakhoor'
@@ -207,6 +288,25 @@ const ProductAccordion = ({ product }) => {
     //     dropper: "Dropper",
     //     other: "Other",
     // };
+    
+    // Logic to calculate collection savings
+
+    const { totalValue, savings, savingsPercent } = useMemo(() => {
+        if (!product.is_collection || !product.collection_items?.length > 0) {
+            return { totalValue: 0, savings: 0, savingsPercent: 0 };
+        }
+        const total = product.collection_items.reduce((acc, item) => {
+            if (item.child_product_id && item.price) {
+                return acc + parseFloat(item.price);
+            }
+            return acc;
+        }, 0);
+        const bundlePrice = parseFloat(product.price);
+        const savedAmount = total - bundlePrice;
+        const percent = total > 0 ? Math.round((savedAmount / total) * 100) : 0;
+        
+        return { totalValue: total, savings: savedAmount, savingsPercent: percent };
+    }, [product]);
     
     const productOverviewData = [
         {
@@ -313,16 +413,96 @@ const ProductAccordion = ({ product }) => {
             icon: "https://www.svgrepo.com/show/231101/placeholder-pin.svg",
         },
         {
-            head: "Expected Delivery",
-            text: `Your order is Expected to arrive within 3-5 working days.`,
+            head: t("delivery.expectedDelivery"),
+            text: t("delivery.expectedDeliveryText"),
             icon: "https://www.svgrepo.com/show/301771/delivery.svg",
         },
     ].filter((item) => item.text);
 
     const usageInfo = getUsageInfo(product);
+    console.log(usageInfo)
 
     return (
         <div className="accordion" id="productAccordion">
+
+        {product.is_collection == 1 && product.collection_items?.length > 0 && (
+        <AccordionItem title={t('accordion.whatIsIncluded')} id="Zero" defaultOpen={true}>
+            <Swiper
+            modules={[Navigation, Pagination, A11y]}
+            className="collection-swiper"
+            // 2 on one “page”
+            slidesPerView={2}
+            slidesPerGroup={2}
+            spaceBetween={16}
+            pagination={{ clickable: true }}
+            breakpoints={{
+                0: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 12 },
+                640: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 16 },
+            }}
+            // Support RTL for Arabic automatically
+            dir={locale === "ar" ? "rtl" : "ltr"}
+            >
+            {product.collection_items.map((item, idx) => {
+                const isProduct = item.child_product_id;
+                const itemName = isProduct ? (locale === 'ar' ? item.name_ar : item.name) : item.custom_item_name;
+                const itemImage = isProduct && item.images ? JSON.parse(item.images)[0] : null;
+                const itemSlug = (item.slug || (item.name && item.name.toLowerCase().replace(/ /g, '-')));
+
+                const cardContent = (
+                <>
+                    <div className="collection-card-image-wrapper">
+                    {isProduct && itemImage ? (
+                        <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${itemImage}`}
+                        alt={itemName || ""}
+                        className="collection-card-image"
+                        height={150}
+                        width={150}
+                        />
+                    ) : (
+                        <div className="collection-card-image-wrapper">
+                        <Image
+                            src="/assets/images/general_product.png"
+                            alt={itemName || ""}
+                            className="collection-card-image"
+                            height={150}
+                            width={150}
+                        />
+                        </div>
+                    )}
+                    </div>
+                    <div className="collection-card-details">
+                    <div className="collection-card-name">{itemName}</div>
+                    <div className="collection-card-quantity">
+                        {isProduct ? renderPrice(item, currency) : `Quantity: ${item.quantity}`}
+                    </div>
+                    </div>
+                </>
+                );
+
+                return (
+                <SwiperSlide key={idx}>
+                    {isProduct ? (
+                    // <Link
+                    //     href={`/shop/${item.category}/${item.subcategory}/${itemSlug}`}
+                    //     className="collection-card product-link"
+                    //     onClick={() => setShowLoader(true)}
+                    // >
+                    // </Link>
+                    <div className="collection-card product-link"> {cardContent} </div>
+                    ) : (
+                    <div className="collection-card">{cardContent}</div>
+                    )}
+                </SwiperSlide>
+                );
+            })}
+            </Swiper>
+
+            <CollectionSummary product={product} currency={currency} />
+        </AccordionItem>
+        )}
+
+
             {/* --- Fragrance Profile --- */}
             {(notesData?.length > 0 || fragranceSummaryData?.length > 0) && (
                 <AccordionItem
@@ -452,7 +632,7 @@ const ProductAccordion = ({ product }) => {
             )}
 
             {/* --- Usage & Application --- */}
-            {usageInfo && (
+            {usageInfo && usageInfo != 'ProductDetails.howToApply.default' && (
                 <AccordionItem
                     title={t("accordion.usageApplication")}
                     id="Four"
@@ -529,6 +709,11 @@ const ProductAccordion = ({ product }) => {
                     ))}
                 </div>
             </AccordionItem>
+            {showLoader && (
+                <div className="loader-overlay">
+                    <div className="loader-spinner"></div>
+                </div>
+            )}
         </div>
     );
 };

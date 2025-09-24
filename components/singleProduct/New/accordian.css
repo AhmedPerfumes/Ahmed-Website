@@ -1,55 +1,38 @@
 /* ==========================================================================
    A. CORE ACCORDION & DESIGN SYSTEM
    ========================================================================== */
-
-/* Establishing a consistent design language for the entire component. */
 .accordion {
     --bs-accordion-border-width: 0;
     --bs-accordion-btn-focus-box-shadow: none;
     --bs-accordion-active-bg: transparent;
     --bs-accordion-active-color: #1a1a1a;
-
-    /* Color Palette */
     --color-background: #faf9f7;
     --color-text-primary: #1a1a1a;
     --color-text-secondary: #666;
     --color-border-subtle: #e5e5e5;
-    --color-accent: #c9b49a; /* A muted, elegant gold/tan accent */
-
-    /* Typography */
+    --color-accent: #c9b49a;
     --font-heading: "SofiaProRegular";
     --font-body: "SofiaProRegular";
-
-    /* Spacing Scale */
-    --space-xs: 0.25rem; /* 4px */
-    --space-sm: 0.5rem; /* 8px */
-    --space-md: 1rem; /* 16px */
-    --space-lg: 1.5rem; /* 24px */
-    --space-xl: 2rem; /* 32px */
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
 }
-
 .accordion-item {
     background-color: var(--color-background) !important;
     color: var(--color-text-primary);
     border: none !important;
     border-bottom: 1px solid var(--color-border-subtle) !important;
 }
-
-/* The last item should not have a bottom border for a clean finish. */
 .accordion-item:last-child {
     border-bottom: none !important;
 }
-
-.accordion-header,
-.accordion-button,
-.accordion-collapse,
-.accordion-body {
+.accordion-header, .accordion-button, .accordion-collapse, .accordion-body {
     background-color: inherit !important;
     color: inherit;
     border: none !important;
     box-shadow: none !important;
 }
-
 .accordion-button {
     font-size: 0.9rem;
     font-family: var(--font-heading);
@@ -57,10 +40,8 @@
     padding: var(--space-lg) var(--space-md);
     width: 100%;
     display: flex;
-    align-items: center; /* Perfect vertical alignment */
+    align-items: center;
 }
-
-/* Replacing the default Bootstrap arrow with a cleaner, custom one. */
 .accordion-button::after {
     content: "";
     display: block;
@@ -72,51 +53,20 @@
     transition: transform 0.3s ease-in-out;
     margin-left: auto;
 }
-
 .accordion-button:not(.collapsed)::after {
     transform: rotate(-135deg);
-    margin-top: -6px; /* Fine-tune position when open */
+    margin-top: -6px;
 }
-
 .accordion-body {
     padding: var(--space-sm) var(--space-md) var(--space-xl);
     font-family: var(--font-body);
-}
-
-/* NEW: A simple, elegant separator for use within accordion bodies */
-.section-divider {
-    border: none;
-    border-top: 1px solid var(--color-border-subtle);
-    margin: var(--space-xl) 0;
 }
 
 /* ==========================================================================
    B. CONTENT PANEL STYLES
    ========================================================================== */
 
-/* --- 1. Product Overview & Delivery Info --- */
-.product-specs-list {
-    display: grid;
-    /* This two-column grid ensures perfect alignment. */
-    grid-template-columns: max-content 1fr;
-    align-items: center;
-    gap: var(--space-md) var(--space-lg);
-}
-.spec-item {
-    /* This selector targets every odd child in the grid (the labels) */
-    grid-column: 1 / 2;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-.spec-value {
-    /* This selector targets every even child in the grid (the values) */
-    grid-column: 2 / 3;
-    justify-self: end; /* Aligns the value to the right edge */
-    font-weight: 600;
-}
-
-/* --- 2. Fragrance Profile (Scent Journey) --- */
+/* --- 1. Fragrance Profile (Scent Journey) --- */
 .notes-journey-container {
     position: relative;
     border-left: 1px solid var(--color-border-subtle);
@@ -124,7 +74,7 @@
 }
 .note-item {
     display: flex;
-    align-items: flex-start; /* Aligns image with the top of the text */
+    align-items: flex-start;
     gap: var(--space-md);
     position: relative;
 }
@@ -134,9 +84,8 @@
 .note-item::before {
     content: "";
     position: absolute;
-    /* Precise positioning for the timeline marker */
     left: calc(-1 * var(--space-xl) - 6px);
-    top: 1.5rem; /* Align with the first line of text */
+    top: 1.5rem;
     width: 12px;
     height: 12px;
     background-color: var(--color-background);
@@ -144,214 +93,70 @@
     border-radius: 50%;
     z-index: 1;
 }
-.note-item-image {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-}
-.note-item-title {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    margin-bottom: var(--space-xs);
-    font-size: 0.9rem;
-}
-.note-item-desc {
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-}
+.note-item-image { width: 70px; height: 70px; object-fit: cover; }
+.note-item-title { font-family: var(--font-heading); font-weight: 400; margin-bottom: 0.25rem; font-size: 0.9rem; }
+.note-item-desc { font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.6; }
 
-/* --- 3. Key Highlights --- */
-.highlights-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xl);
-}
-.highlight-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-}
-.highlight-icon {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-    margin-bottom: 0.37rem;
-    color: var(--color-accent);
-}
-/* Refined Typography for better hierarchy */
-.highlight-title {
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: var(--color-text-primary);
-    margin: 0;
-}
-.highlight-desc {
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    margin: 0;
-    line-height: 1.6;
-}
+/* --- 2. Highlights, Overview & Delivery Grids --- */
+.highlights-list { display: flex; flex-direction: column; gap: var(--space-xl); }
+.highlight-item { display: flex; align-items: center; gap: var(--space-md); }
+.highlight-icon { width: 40px; height: 40px; flex-shrink: 0; color: var(--color-accent); }
+.highlight-title { font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--color-text-primary); margin: 0; }
+.highlight-desc { font-size: 0.8rem; color: var(--color-text-secondary); margin: 0; line-height: 1.6; }
 
-/* ==========================================================================
-   4. Usage & Application (Redesigned for Line Art)
-   ========================================================================== */
+/* --- 3. Usage & Application --- */
+.usage-guide { display: flex; flex-direction: column; gap: var(--space-lg); }
+.usage-image { width: 100%; height: auto; object-fit: contain; border-radius: 8px; border: 1px solid var(--color-border-subtle); padding: var(--space-sm); }
+.usage-guide h4 { font-family: var(--font-heading); font-weight: 500; margin-bottom: var(--space-md); font-size: 1.1rem; }
+.usage-steps { padding: 0; margin: 0; list-style: none; counter-reset: steps-counter; display: flex; flex-direction: column; gap: var(--space-md); }
+.usage-steps li { counter-increment: steps-counter; display: flex; align-items: flex-start; gap: var(--space-md); font-size: 0.9rem; line-height: 1.6; color: var(--color-text-secondary); }
+.usage-steps li::before { content: '0' counter(steps-counter) '.'; font-family: var(--font-heading); font-weight: 600; font-size: 1rem; color: var(--color-accent); }
+.usage-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--color-border-subtle); }
+.usage-summary h4 { margin-bottom: 8px; font-size: 1rem; font-weight: 600; }
+.usage-summary p { line-height: 1.6; color: var(--color-text-secondary); }
 
-.usage-guide {
-  /* A simple vertical layout is perfect for this content */
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg); /* Consistent spacing between image and text */
-}
+/* --- 4. What's Included (Collection Card Grid) --- */
+.collection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.collection-card { display: flex; flex-direction: column; text-align: center; border: 1px solid var(--color-border-subtle); border-radius: 12px; transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out; }
+.collection-card.product-link { text-decoration: none; color: inherit; }
+.collection-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.collection-card-image-wrapper { width: 100%; height: 140px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; background-color: #faf9f7; }
+.collection-card-image { max-width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.collection-card-icon { width: 60px; height: 60px; color: var(--color-text-secondary); }
+.collection-card-details { display: flex; flex-direction: column; flex-grow: 1; justify-content: center; }
+.collection-card-name {font-family: var(--font-heading); font-weight: 600; font-size: 0.9rem; color: var(--color-text-primary); line-height: 1.3; margin-bottom: 0.25rem;}
+.collection-card-quantity { font-size: 0.85rem; color: var(--color-text-secondary); }
+@media (max-width: 768px) { .collection-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+.collection-swiper { height: 255px;}
 
-.usage-image {
-  width: 100%;
-  height: auto; /* Maintains the image's natural aspect ratio */
-  object-fit: contain; /* Ensures the entire line art is visible without cropping */
-  border-radius: 8px;
-  background-color: #f0f0f0; /* A light background for transparent line art */
-  border: 1px solid var(--color-border-subtle); /* A subtle frame */
-  padding: var(--space-sm); /* A little breathing room inside the frame */
-}
-
-.usage-guide h4 {
-  font-family: var(--font-heading);
-  font-weight: 500;
-  margin-bottom: var(--space-md);
-  font-size: 1.1rem;
-  text-align: center; /* Centering the title feels more intentional */
-}
-
-.usage-steps {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  counter-reset: steps-counter;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.usage-steps li {
-  counter-increment: steps-counter;
-  display: flex;
-  /* Using flex-start ensures alignment even if text wraps to multiple lines */
-  align-items: flex-start;
-  gap: var(--space-md);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-}
-
-.usage-steps li::before {
-  content: '0' counter(steps-counter) '.';
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--color-accent);
-}
-
-
-/* --- 5. Crafted with Intention --- */
-.story-content blockquote {
-    border-left: 3px solid var(--color-accent);
-    padding-left: var(--space-lg);
-    margin: var(--space-sm) 0;
-    font-style: italic;
-    font-size: 1rem;
-    color: #444;
-    line-height: 1.8;
-}
+/* --- 5. Collection Value Summary --- */
+.collection-summary { margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border-subtle); }
+.summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; margin-bottom: 0.75rem; color: var(--color-text-secondary); }
+.summary-row span:last-child { font-family: var(--font-heading); font-weight: 600; color: var(--color-text-primary); }
+.summary-row .total-value s { color: #999; }
+.summary-row .collection-price { font-size: 1.1rem; }
+.summary-divider { border: none; border-top: 1px solid var(--color-border-subtle); margin: 1rem 0; }
+.summary-row.savings span { font-size: 1.1rem; font-weight: 700; color: #008060; }
+.savings-badge { background-color: #e6f2ee; color: #008060; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 1rem !important; }
 
 /* ==========================================================================
    C. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
-
-@media (max-width: 768px) {
-    .accordion-button {
-        padding: var(--space-md);
-    }
-    .accordion-body {
-        padding: var(--space-sm) var(--space-md) var(--space-lg);
-    }
-
-    .product-specs-list {
-        grid-template-columns: 1fr; /* Stack on mobile */
-        gap: var(--space-md);
-    }
-    .spec-value {
-        justify-self: start;
-    } /* Left-align values on mobile */
-}
-
-@media (min-width: 768px) {
-    /* Side-by-side layout for usage guide on desktop */
-    .usage-guide {
-        grid-template-columns: 1fr 200px;
-        align-items: center;
-        gap: var(--space-xl);
-    }
-}
-.usage-summary {
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid #e0e0e0; /* A light separator line */
-}
-
-.usage-summary h4 {
-  margin-bottom: 8px;
-  font-size: 1rem; /* Adjust size as needed */
-  font-weight: 600;
-}
-
-.usage-summary p {
-  line-height: 1.6;
-  color: var(--color-text-secondary);;
-}
+@media (max-width: 768px) { .accordion-button { padding: var(--space-md); } .accordion-body { padding: var(--space-sm) var(--space-md) var(--space-lg); } }
 
 /* ==========================================================================
    D. RTL (ARABIC) STYLES
    ========================================================================== */
+html[dir="rtl"] .accordion-button { justify-content: space-between; }
+html[dir="rtl"] .accordion-button::after { margin-left: 0; transform: rotate(225deg); }
+html[dir="rtl"] .accordion-button:not(.collapsed)::after { transform: rotate(-45deg); margin-top: -6px; }
+html[dir="rtl"] .notes-journey-container { border-left: none; border-right: 1px solid var(--color-border-subtle); padding-left: 0; padding-right: var(--space-xl); }
+html[dir="rtl"] .note-item::before { left: auto; right: calc(-1 * var(--space-xl) - 6px); }
+html[dir="rtl"] .collection-item { flex-direction: row-reverse; }
 
-/* This selector applies styles only when the page is in Right-to-Left mode */
-html[dir="rtl"] .accordion-button {
-    /* This tells the text and arrow to sit on opposite ends of the button */
-    justify-content: space-between;
-}
+/* --- LOADER STYLES --- */
+.loader-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; display: flex; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
 
-html[dir="rtl"] .accordion-button::after {
-    /* Remove the old margin that pushed the arrow right */
-    margin-left: 0;
-    margin-right: 0; /* Ensure no extra right margin is added */
+.loader-spinner { width: 50px; height: 50px; border: 5px solid rgba(0, 0, 0, 0.1); border-top-color: #333; border-radius: 50%; animation: spin 1s linear infinite; }
 
-    /* Optional but recommended: Flip the arrow to point left */
-    transform: rotate(45deg);
-}
-
-/* This handles the arrow direction when the accordion is open in RTL */
-html[dir="rtl"] .accordion-button:not(.collapsed)::after {
-    transform: rotate(-135deg);
-    margin-top: -6px; /* Adjust alignment as before */
-}
-
-/* --- RTL Fix for Fragrance Notes Timeline --- */
-
-html[dir="rtl"] .notes-journey-container {
-    /* Move the main timeline border from the left to the right */
-    border-left: none;
-    border-right: 1px solid var(--color-border-subtle);
-
-    /* Move the padding from the left to the right */
-    padding-left: 0;
-    padding-right: var(--space-xl);
-}
-
-html[dir="rtl"] .note-item::before {
-    /* Unset the original 'left' position */
-    left: auto;
-
-    /* Set the new 'right' position to mirror the original 'left' */
-    right: calc(-1 * var(--space-xl) - 6px);
-}
+@keyframes spin { to { transform: rotate(360deg);}}

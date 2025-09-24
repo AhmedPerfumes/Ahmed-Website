@@ -45,7 +45,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Roboto", sans-serif;
+    font-family: 'SofiaProRegular';
     font-weight: bold;
     font-size: 16px;
     z-index: 1;
@@ -84,13 +84,13 @@
     object-fit: cover;
 }
 .note-content__title {
-    font-family: "Playfair Display", serif;
+    font-family: 'SofiaProRegular';
     font-size: 2.5rem;
     color: #fff;
     margin-bottom: 10px;
 }
 .note-content__text {
-    font-family: "Roboto", sans-serif;
+    font-family: 'SofiaProRegular';
     font-size: 1rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.8);
@@ -102,7 +102,7 @@
     width: 100%;
     background: #111;
     color: #fff;
-    font-family: "Roboto", sans-serif;
+    font-family: 'SofiaProRegular';
 }
 .tab-headers {
     display: flex;
@@ -143,21 +143,13 @@
     background-color: #121212;
     color: #e0e0e0;
     padding: 80px 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'SofiaProRegular';
     overflow: hidden; /* Prevents horizontal scrollbars */
 }
 /* --- Header Section (Titles & Subtitle) --- */
 .pd-header {
     text-align: center;
     margin-bottom: 60px;
-}
-
-.pd-script-title {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.5rem;
-    color: #c5a47e; /* A soft gold color */
-    font-weight: 400;
-    margin: 0;
 }
 
 .pd-main-title {
@@ -307,7 +299,6 @@
 }
 
 .pd-card-script-title {
-    /* font-family: 'Great Vibes', cursive; */
     color: #c5a47e;
     font-size: 2rem;
     text-align: center;
@@ -394,10 +385,10 @@
     margin: 0 auto;
     padding: 80px 40px;
     color: #fff;
-    font-family: sans-serif; /* A more readable font for UI text */
+    font-family: 'SofiaProRegular'; /* A more readable font for UI text */
 }
 .reviews-title {
-    font-family: "Playfair Display", serif;
+    font-family: 'SofiaProRegular';
     font-size: 3rem;
     text-align: center;
     margin-bottom: 60px;
