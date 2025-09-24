@@ -647,7 +647,8 @@ export default function Checkout() {
         promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
       );
       const hasMatchingCoupon = item.coupon?.[code]?.code === code;
-      const isEligible = !item.sale_price && !item.discount && !isBogoProduct;
+      // const isEligible = !item.sale_price && !item.discount && !isBogoProduct;
+      const isEligible = !item.discount && !isBogoProduct;
 
       if (hasMatchingCoupon && isEligible) {
         product_coupon = true;
@@ -679,7 +680,8 @@ export default function Checkout() {
           const isBogoProduct = promotionsContext.some((promo) =>
             promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
           );
-          return !item.sale_price && !item.discount && !isBogoProduct;
+          // return !item.sale_price && !item.discount && !isBogoProduct;
+          return !item.discount && !isBogoProduct;
         });
 
         if (eligibleItems.length > 0) {
@@ -690,7 +692,8 @@ export default function Checkout() {
               promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
             );
 
-            const isEligible = !item.sale_price && !item.discount && !isBogoProduct && !item.is_gift;
+            // const isEligible = !item.sale_price && !item.discount && !isBogoProduct && !item.is_gift;
+            const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
 
             return {
               ...item,
@@ -744,7 +747,7 @@ export default function Checkout() {
           setCouponData(data.coupon);
           setCouponDataContext(data.coupon);
           setCouponSuccess(
-            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
+            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.coupon_type === 'percent' ? `${data.coupon.value}%` : `AED${data.coupon.value}`}`
           );
         } else {
           setCouponError("Coupon not applicable to cart products");
@@ -835,7 +838,7 @@ export default function Checkout() {
       !promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)
       ) &&
-      !elm.sale_price &&
+      // !elm.sale_price &&
       !elm.discount
     ) {
       itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
@@ -878,13 +881,18 @@ export default function Checkout() {
         !couponData.end_date ||
         (new Date(current_date_time) >= new Date(couponData.start_date) &&
           new Date(current_date_time) <= new Date(couponData.end_date))) &&
-      !elm.sale_price &&
+      // !elm.sale_price &&
       !elm.discount &&
       !promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)
       )
     ) {
-      itemPrice = elm.price - (elm.price / 100) * couponData.value;
+      if(couponData.coupon_type == "percent") {
+        itemPrice = elm.price - (elm.price / 100) * couponData.value;
+      } else if(couponData.coupon_type == "amount") {
+        // console.log('amount...', elm, couponData);
+        itemPrice = elm.price - couponData.value;
+      }
       return (
         <td>
           <span className="money price price-sale">
@@ -928,6 +936,7 @@ export default function Checkout() {
   };
 
   const handleSelectCoupon = async (code, id) => {
+    setCouponData(null);
     setCouponCode(code);
     setCopiedId(id);
     setShowCouponModal(false);
@@ -1704,8 +1713,7 @@ export default function Checkout() {
                                       </div>
                                       <div className="coupon-desc">
                                         <h5>
-                                          {c.description ||
-                                            `Get ${c.value}% off`}
+                                          {c.description || (c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`)}
                                         </h5>
                                       </div>
                                       <div className="coupon-validity">

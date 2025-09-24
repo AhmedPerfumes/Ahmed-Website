@@ -312,6 +312,11 @@ const ProductAccordion = ({ product }) => {
             text: t("delivery.trackText"),
             icon: "https://www.svgrepo.com/show/231101/placeholder-pin.svg",
         },
+        {
+            head: "Expected Delivery",
+            text: `Your order is Expected to arrive within 3-5 working days.`,
+            icon: "https://www.svgrepo.com/show/301771/delivery.svg",
+        },
     ].filter((item) => item.text);
 
     const usageInfo = getUsageInfo(product);

@@ -87,9 +87,10 @@ const BOGOFeature = () => {
         )
       );
       const isDiscount = item.discount > 0;
-      const isSalePrice = item.sale_price > 0;
+      // const isSalePrice = item.sale_price > 0;
 
-      if (isBogo || isDiscount || isSalePrice) {
+      // if (isBogo || isDiscount || isSalePrice) {
+      if (isBogo || isDiscount) {
         return item; // keep coupon
       }
 

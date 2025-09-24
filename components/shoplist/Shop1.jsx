@@ -160,7 +160,8 @@ export default function Shop1({ search }) {
           return pr >= low && pr <= high;
         })
         .filter((p) =>
-          promotionalOnly ? p.discount != null || p.sale_price != null : true
+          // promotionalOnly ? p.discount != null || p.sale_price != null : true
+          promotionalOnly ? p.discount != null : true
         )
         .filter(matchesLabels)
         .filter(matchesTags),
