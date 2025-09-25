@@ -11,6 +11,7 @@ import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 // import Link from "next/link";
 import QuickView from "@/components/modals/QuickView";
 import { headers } from 'next/headers';
+import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription";
 
 // export const metadata = {
 //   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -147,9 +148,11 @@ const ShopPage8 = async ({ params }) => {
         <Header14 />
         <Banner5 image={ data.image } mobile_image={data.mobile_image}/>
         <main className="page-wrapper pt-0">
-          <Categories description={ data.description } subCategories={ data.productSubCategories }/>
+          <Categories subCategories={ data.productSubCategories }/>
           <div className="mb-4 pb-lg-3"></div>
           <Shop10 subCategories={ data.productSubCategories } products={ data.products }/>
+          <div className="mb-4 pb-lg-3"></div>
+          <CollapsibleDescription description={data.description} />
         </main>
         <div className="mb-5 pb-xl-5"></div>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
