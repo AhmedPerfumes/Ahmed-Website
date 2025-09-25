@@ -312,26 +312,26 @@ const ProductAccordion = ({ product }) => {
         {
             head: t("overview.sizeVolume"),
             text: product?.tags?.join(", "),
-            icon: "https://www.svgrepo.com/show/217430/measuring-glass.svg",
+            icon: "/assets/svg/measuring-glass.svg",
         },
         {
             head: t("overview.fragranceType"),
             text: product?.fragrance_type
                 ? t(`fragranceTypes.${product.fragrance_type}`)
                 : null,
-            icon: "https://www.svgrepo.com/show/288787/perfume.svg",
+            icon: "/assets/svg/perfume.svg",
         },
         {
             head: t("overview.fragranceCategory"),
             text: product?.fragrance_category,
-            icon: "https://www.svgrepo.com/show/489939/label.svg",
+            icon: "/assets/svg/label.svg",
         },
         {
             head: t("overview.dispenserType"),
             text: product?.dispenser_type
                 ? t(`dispenserTypes.${product.dispenser_type}`)
                 : null,
-            icon: "https://www.svgrepo.com/show/145486/spray.svg",
+            icon: "/assets/svg/spray.svg",
         },
     ].filter((item) => item.text);
 
