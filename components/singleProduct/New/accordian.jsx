@@ -369,12 +369,12 @@ const ProductAccordion = ({ product }) => {
         {
             head: t("summary.olfactoryFamily"),
             text: product?.olfactory_family,
-            icon: "https://www.svgrepo.com/show/317501/perfume-channel-national-culture-paris.svg",
+            icon: "/assets/svg/perfume-channel-national-culture-paris.svg",
         },
         {
             head: t("summary.sillage"),
             text: product?.sillage,
-            icon: "https://www.svgrepo.com/show/252491/snowy-wind.svg",
+            icon: "/assets/svg/snowy-wind.svg",
         },
     ].filter((item) => item.text);
 
@@ -382,17 +382,17 @@ const ProductAccordion = ({ product }) => {
         {
             head: t("highlights.longevity"),
             text: product?.longevity,
-            icon: "https://www.svgrepo.com/show/415844/time-alarm-timer.svg",
+            icon: "/assets/svg/time-alarm-timer.svg",
         },
         {
             head: t("highlights.occasion"),
             text: product?.occasion,
-            icon: "https://www.svgrepo.com/show/190190/moon-full-moon.svg",
+            icon: "/assets/svg/moon-full-moon.svg",
         },
         {
             head: t("highlights.other"),
             text: product?.additional_details,
-            icon: "https://www.svgrepo.com/show/288765/diamond.svg",
+            icon: "/assets/svg/diamond.svg",
         },
     ].filter((item) => item.text);
 
@@ -400,22 +400,22 @@ const ProductAccordion = ({ product }) => {
         {
             head: t("delivery.shipping"),
             text: t("delivery.shippingText", { price: shippingServiceCharges[3]?.price }),
-            icon: "https://www.svgrepo.com/show/402289/package.svg",
+            icon: "/assets/svg/package.svg",
         },
         {
             head: t("delivery.payment"),
             text: t("delivery.paymentText"),
-            icon: "https://www.svgrepo.com/show/396564/globe-showing-europe-africa.svg",
+            icon: "/assets/svg/globe-showing-europe-africa.svg",
         },
         {
             head: t("delivery.track"),
             text: t("delivery.trackText"),
-            icon: "https://www.svgrepo.com/show/231101/placeholder-pin.svg",
+            icon: "/assets/svg/placeholder-pin.svg",
         },
         {
             head: t("delivery.expectedDelivery"),
             text: t("delivery.expectedDeliveryText"),
-            icon: "https://www.svgrepo.com/show/301771/delivery.svg",
+            icon: "/assets/svg/delivery.svg",
         },
     ].filter((item) => item.text);
 
