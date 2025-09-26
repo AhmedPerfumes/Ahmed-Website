@@ -148,8 +148,8 @@
    D. RTL (ARABIC) STYLES
    ========================================================================== */
 html[dir="rtl"] .accordion-button { justify-content: space-between; }
-html[dir="rtl"] .accordion-button::after { margin-left: 0; transform: rotate(225deg); }
-html[dir="rtl"] .accordion-button:not(.collapsed)::after { transform: rotate(-45deg); margin-top: -6px; }
+html[dir="rtl"] .accordion-button::after { margin-left: 0; transform: rotate(45deg); }
+html[dir="rtl"] .accordion-button:not(.collapsed)::after { transform: rotate(225deg); margin-top: -6px; }
 html[dir="rtl"] .notes-journey-container { border-left: none; border-right: 1px solid var(--color-border-subtle); padding-left: 0; padding-right: var(--space-xl); }
 html[dir="rtl"] .note-item::before { left: auto; right: calc(-1 * var(--space-xl) - 6px); }
 html[dir="rtl"] .collection-item { flex-direction: row-reverse; }
