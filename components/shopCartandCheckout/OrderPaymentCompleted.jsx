@@ -22,6 +22,34 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     // Clear cart only after payment success
     localStorage.removeItem("cartList");
     setCartProducts([]);
+    if (orderDetails && orderDetails.id) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+              transaction_id: orderDetails.order_id, // unique order ID
+              affiliation: "Ahmed Al Maghribi Perfumes Online",
+              value: parseFloat(orderDetails.total), // order total (after discounts, including shipping/tax)
+              currency: currency?.code || "AED",
+              items: orderDetails.products.map((item) => ({
+                item_id: item.product_id?.toString(), // or SKU if available
+                item_name: he.decode(item.name),
+                price: parseFloat(item.price),
+                quantity: item.qty,
+              })),
+            },
+          }); 
+          // ---- TikTok Pixel ----
+          window.ttq?.track("CompletePayment", {
+            contents: orderDetails.products.map((item) => ({
+              content_id: item.product_id?.toString(),
+              content_type: "product",
+              content_name: he.decode(item.name),
+                })),
+                value: parseFloat(orderDetails.total),
+                currency: currency?.code || "AED",
+              });
+            }
   }
 }, [orderDetails, setCartProducts]);
 
