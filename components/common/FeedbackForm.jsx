@@ -21,7 +21,7 @@ function FeedbackForm() {
         feedback: formData.get("feedback"),
       };
 
-      console.log("Form submitted:", formValues);
+      // console.log("Form submitted:", formValues);
 
       // Reset the form fields
       formRef.current.reset();
@@ -48,7 +48,7 @@ function FeedbackForm() {
       }
     } catch (error) {
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }

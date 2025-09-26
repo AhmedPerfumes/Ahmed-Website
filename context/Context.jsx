@@ -102,20 +102,20 @@ export default function Context({ children }) {
     try {
       const items = JSON.parse(localStorage.getItem("cartList"));
       if (Array.isArray(items)) {
-        console.log('Loading cart from localStorage:', items);
+        // console.log('Loading cart from localStorage:', items);
         dispatch({ type: 'SET_PRODUCTS', payload: items });
       } else {
-        console.log('No valid cart in localStorage, setting empty array');
+        // console.log('No valid cart in localStorage, setting empty array');
         dispatch({ type: 'SET_PRODUCTS', payload: [] });
       }
     } catch (error) {
-      console.error('Error parsing cartList from localStorage:', error);
+      // console.error('Error parsing cartList from localStorage:', error);
       dispatch({ type: 'SET_PRODUCTS', payload: [] });
     }
   }, []);
 
   useEffect(() => {
-    console.log('Saving cartProducts to localStorage:', state.products);
+    // console.log('Saving cartProducts to localStorage:', state.products);
     localStorage.setItem("cartList", JSON.stringify(state.products));
   }, [state.products]);
 
@@ -126,7 +126,7 @@ export default function Context({ children }) {
         setWishList(items);
       }
     } catch (error) {
-      console.error('Error parsing wishlist from localStorage:', error);
+      // console.error('Error parsing wishlist from localStorage:', error);
       setWishList([]);
     }
   }, []);
@@ -173,7 +173,7 @@ export default function Context({ children }) {
         codeLower &&
         product.coupon[codeLower]?.code?.toLowerCase() === codeLower
       ) {
-        console.log('product', 'coupon', product);
+        // console.log('product', 'coupon', product);
         const c = product.coupon[codeLower];
         const start = new Date(c?.start_date);
         const end = new Date(c?.end_date);
@@ -187,7 +187,7 @@ export default function Context({ children }) {
       // if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       {
-        console.log('product', 'customer coupon', product);
+        // console.log('product', 'customer coupon', product);
         const value = Number(couponDataContext?.value || 0);
         let discounted = basePrice; // fallback if no discount
 
@@ -255,10 +255,10 @@ export default function Context({ children }) {
 
   const addProductToCart = (product) => {
     if (state.isProcessing) {
-      console.log('Skipping addProductToCart: processing in progress');
+      // console.log('Skipping addProductToCart: processing in progress');
       return;
     }
-    console.log('addProductToCart:', product);
+    // console.log('addProductToCart:', product);
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({
       type: 'ADD_PRODUCT',
@@ -277,38 +277,38 @@ export default function Context({ children }) {
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
     if (state.isProcessing) {
-      console.log('Skipping removeGiftFromCart: processing in progress', { productId, campaign });
+      // console.log('Skipping removeGiftFromCart: processing in progress', { productId, campaign });
       return;
     }
-    console.log('removeGiftFromCart:', { productId, campaign });
+    // console.log('removeGiftFromCart:', { productId, campaign });
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
   };
 
   const removeProduct = (productId) => {
     if (state.isProcessing) {
-      console.log('Skipping removeProduct: processing in progress', { productId });
+      // console.log('Skipping removeProduct: processing in progress', { productId });
       return;
     }
-    console.log('removeProduct:', { productId });
+    // console.log('removeProduct:', { productId });
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({ type: 'REMOVE_PRODUCT', payload: { productId } });
   };
 
   const setCartProducts = (productsOrFn) => {
-    console.log('setCartProducts called:', productsOrFn);
+    // console.log('setCartProducts called:', productsOrFn);
     if (typeof productsOrFn === 'function') {
       // Handle functional update
       const newProducts = productsOrFn(state.products);
       if (!Array.isArray(newProducts)) {
-        console.error('setCartProducts: Functional update returned non-array', newProducts);
+        // console.error('setCartProducts: Functional update returned non-array', newProducts);
         return;
       }
       dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
     } else {
       // Direct array update
       if (!Array.isArray(productsOrFn)) {
-        console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
+        // console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
         return;
       }
       dispatch({ type: 'SET_PRODUCTS', payload: productsOrFn });

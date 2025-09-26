@@ -96,7 +96,7 @@ export default function CartDrawer() {
       new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
       new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
     ) {
-      console.log('common copuon', elm);
+      // console.log('common copuon', elm);
       itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
       return (
         <td>
@@ -128,7 +128,7 @@ export default function CartDrawer() {
         // !elm.sale_price &&
         !elm.discount
       ) {
-        console.log('common Customer Coupon If', elm);
+        // console.log('common Customer Coupon If', elm);
         itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
         return (
           <td>

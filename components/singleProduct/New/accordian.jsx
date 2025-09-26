@@ -420,7 +420,7 @@ const ProductAccordion = ({ product }) => {
     ].filter((item) => item.text);
 
     const usageInfo = getUsageInfo(product);
-    console.log(usageInfo)
+    // console.log(usageInfo)
 
     return (
         <div className="accordion" id="productAccordion">
@@ -441,6 +441,7 @@ const ProductAccordion = ({ product }) => {
             }}
             // Support RTL for Arabic automatically
             dir={locale === "ar" ? "rtl" : "ltr"}
+            
             >
             {product.collection_items.map((item, idx) => {
                 const isProduct = item.child_product_id;

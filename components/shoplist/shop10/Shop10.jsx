@@ -68,7 +68,7 @@ export default function Shop10({ subCategories, products }) {
   };
   
    const sortSubCategory = (items, option) => {
-    console.log('SubCat', items, option);
+    // console.log('SubCat', items, option);
     switch (option) {
       case 'popularity':
         return [...items].sort((a, b) => b.sales - a.sales);

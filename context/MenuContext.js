@@ -108,7 +108,7 @@ export function MenuProvider({ children }) {
           // Capture the error message to display to the user
           setError(error.message);
           setIsLoading(false);
-          console.error(error);
+          // console.error(error);
         } finally {
             setError(null);
             setIsLoading(false);

@@ -63,7 +63,7 @@ export default function OrderTrack() {
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +77,7 @@ export default function OrderTrack() {
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount_percent) {
-      console.log('...', elm.discount_percent);
+      // console.log('...', elm.discount_percent);
       // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         // console.log('if...');
@@ -87,7 +87,7 @@ export default function OrderTrack() {
       //   return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // }
     } else if(elm?.coupon) {
-      console.log('else if');
+      // console.log('else if');
         return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     }
     // else if(elm?.sale_price) {
@@ -95,7 +95,7 @@ export default function OrderTrack() {
     //     return <td>{(((elm.price * (1 + elm.vat / 100)) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     // }
     else {
-        console.log('else', elm);
+        // console.log('else', elm);
         if(elm.discount_amount && elm.discount_amount != '0') {
           return <td>{ elm.gross_amount }{ currency.symbol }</td>;
         }

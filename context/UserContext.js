@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
           setIsLoggedIn(true);
         }
       } catch (error) {
-        console.error('Failed to fetch user:', error);
+        // console.error('Failed to fetch user:', error);
         setIsLoggedIn(false);
       }
     }

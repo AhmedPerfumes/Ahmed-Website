@@ -34,7 +34,7 @@ export default function FeedbackForm({ orderId, customerName }) {
         alert("Error submitting feedback: " + (error.message || "Server error."));
       }
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert("Network error. Please try again.");
     } finally {
       setSubmitting(false);

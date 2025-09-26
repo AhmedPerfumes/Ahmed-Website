@@ -59,10 +59,10 @@ async function getCategorySubCategory(categoryName) {
 // export default function ShopPage5() {
   const ShopPage5 = async () => {
     const category = 'gift-sets';
-    console.log(category);
+    // console.log(category);
     try {
       const data = await getCategorySubCategory(category);
-      console.log(data);
+      // console.log(data);
       return data && (
       <>
         <QuickView />
@@ -89,7 +89,7 @@ async function getCategorySubCategory(categoryName) {
       </>
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return <><Header14 />
             <main className="page-wrapper">
               <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Category Found</h2>

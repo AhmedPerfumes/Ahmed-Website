@@ -15,7 +15,7 @@ const Base = ({product}) => {
     const cleanName = he.decode(product?.product_name || "Default");
     const [activeIndex, setActiveIndex] = useState(0);
 
-    console.log(product, "product in base");
+    // console.log(product, "product in base");
 
     const images = product?.images ? JSON.parse(product.images) : [];
     useEffect(() => {

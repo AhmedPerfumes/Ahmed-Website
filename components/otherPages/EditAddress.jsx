@@ -196,7 +196,7 @@ const save = async () => {
       }),
     });
   } catch (e) {
-    console.error("API update failed", e);
+    // console.error("API update failed", e);
   }
 };
 

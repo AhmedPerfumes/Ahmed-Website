@@ -30,7 +30,7 @@ export default function ShareComponent({ title = "title" }) {
           url: fullUrl,
         });
       } catch (error) {
-        console.error("Error sharing:", error);
+        // console.error("Error sharing:", error);
       }
     } else {
       // Fallback for browsers that do not support the Web Share API

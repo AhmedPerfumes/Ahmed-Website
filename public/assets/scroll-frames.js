@@ -100,7 +100,7 @@ const scrollFrames = {
                                         scrollFrames.build(json, el_anim, anim_id, anim_keyframes);
                                     });
                                 } else {
-                                    console.log(anim_json_url+" is not a valid JSON URL!");
+                                    // console.log(anim_json_url+" is not a valid JSON URL!");
                                 }
                             });
                         }
