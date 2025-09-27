@@ -236,7 +236,7 @@ setError("");
 setSuccess("Details updated successfully!");
 setTimeout(() => {
   setSaveDialog(false);
-  console.log("Modal closed after 2 seconds");
+  // console.log("Modal closed after 2 seconds");
 }, 2000);
 setSaveLoading(false);
     } catch {

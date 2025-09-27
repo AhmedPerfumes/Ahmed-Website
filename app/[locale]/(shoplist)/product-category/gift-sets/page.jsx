@@ -14,6 +14,7 @@ import QuickView from "@/components/modals/QuickView";
 import Banner5 from "@/components/shoplist/Banner5";
 import Categories from "@/components/shoplist/Categories";
 import { headers } from 'next/headers';
+import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription";
 
 export const metadata = {
   title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -59,10 +60,10 @@ async function getCategorySubCategory(categoryName) {
 // export default function ShopPage5() {
   const ShopPage5 = async () => {
     const category = 'gift-sets';
-    console.log(category);
+    // console.log(category);
     try {
       const data = await getCategorySubCategory(category);
-      console.log(data);
+      // console.log(data);
       return data && (
       <>
         <QuickView />
@@ -75,6 +76,7 @@ async function getCategorySubCategory(categoryName) {
           
 
           <Shop10 products={ data.products }/>
+          <CollapsibleDescription description={data.description}  />
         </main>
 
         <section className=" d-none d-lg-block" style={{ height: "100%" }}>
@@ -89,7 +91,7 @@ async function getCategorySubCategory(categoryName) {
       </>
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return <><Header14 />
             <main className="page-wrapper">
               <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">No Category Found</h2>

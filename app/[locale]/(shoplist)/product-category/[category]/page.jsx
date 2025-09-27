@@ -59,7 +59,7 @@ async function getCategorySubCategory(categoryName) {
   });
   if (!response.ok) {
     const errorMessage = await response.text(); // Get the error message from the server
-      console.error("API Error:", errorMessage);
+      // console.error("API Error:", errorMessage);
       throw new Error(`API Error: ${errorMessage}`);
   }
   return response.json();
@@ -99,7 +99,7 @@ async function getProductCategorySEO(categoryName) {
   
   if (!response.ok) {
       const errorMessage = await response.text(); // Get the error message from the server
-      console.error("SEO API Error:", errorMessage);
+      // console.error("SEO API Error:", errorMessage);
       throw new Error(`SEO API Error: ${errorMessage}`);
   }
   return response.json();
@@ -110,7 +110,7 @@ export async function generateMetadata({ params }) {
 
     try {
         const data = await getProductCategorySEO(category);
-        console.log(JSON.parse(data.meta_value)[0]);
+        // console.log(JSON.parse(data.meta_value)[0]);
         return {
             title: JSON.parse(data.meta_value)[0]?.seo_title ? `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
             description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes."
@@ -126,7 +126,7 @@ export async function generateMetadata({ params }) {
             // }
         };
     } catch (error) {
-        console.error("Error generating metadata:", error);
+        // console.error("Error generating metadata:", error);
         return {
             title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
             description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes."
@@ -136,11 +136,11 @@ export async function generateMetadata({ params }) {
 
 const ShopPage8 = async ({ params }) => {
   const { category } = params;
-  console.log(category);
+  // console.log(category);
   
   try {
     const data = await getCategorySubCategory(category);
-    console.log(data);
+    // console.log(data);
         
     return data && (
       <>
@@ -166,7 +166,7 @@ const ShopPage8 = async ({ params }) => {
       </>
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return <>
             <Header14 />
             <main className="page-wrapper text-center">

@@ -48,8 +48,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 //     delay: 0, // Remove additional delay
                 //     inertia: false, // Disable inertia for quicker snapping
                 // },
-                onEnter: () => console.log(`Entering section ${i + 1}`),
-                onLeaveBack: () => console.log(`Leaving section ${i + 1}`),
+               
             });
         });
 

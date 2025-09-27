@@ -100,7 +100,7 @@ export default function LoginRegister() {
       }
     } catch (error) {
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -199,7 +199,7 @@ export default function LoginRegister() {
       }
     } catch (error) {
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }

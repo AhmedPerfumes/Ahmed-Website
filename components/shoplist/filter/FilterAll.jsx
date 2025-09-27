@@ -109,7 +109,7 @@ export default function FilterAll({ products = [] }) {
 
         setAvailableLabels(lbls);
         setAvailableTags(Array.from(ts));
-        console.error("Error fetching filters:", err);
+        // console.error("Error fetching filters:", err);
       }
     };
     fetchFilters();

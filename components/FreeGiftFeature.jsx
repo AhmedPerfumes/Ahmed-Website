@@ -69,7 +69,7 @@ const FreeGiftFeature = ({ couponData }) => {
   // Total price of non-Collections products
   const nonCollectionTotalPrice = nonCollectionProducts.reduce(
     (acc, item) => {
-      console.log('hasCleaned', couponData?.code, new Date(current_date_time), new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date));
+      // console.log('hasCleaned', couponData?.code, new Date(current_date_time), new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date));
       if(couponData?.code && new Date(current_date_time) >= new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon[couponData?.code.toLowerCase()]?.end_date) && item.coupon[couponData?.code.toLowerCase().toLowerCase()].code == couponData?.code.toLowerCase()) {
         return acc + (parseFloat(item.price - (item.price / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
       } else if (
@@ -104,12 +104,12 @@ const FreeGiftFeature = ({ couponData }) => {
   );
 
   useEffect(() => {
-    console.log("Mounted with:", {
-      totalPrice,
-      nonCollectionTotalPrice,
-      cartProducts,
-      nonCollectionProducts,
-    });
+    // console.log("Mounted with:", {
+    //   totalPrice,
+    //   nonCollectionTotalPrice,
+    //   cartProducts,
+    //   nonCollectionProducts,
+    // });
 
     const fetchThresholds = async () => {
       try {
@@ -119,7 +119,7 @@ const FreeGiftFeature = ({ couponData }) => {
         const data = await response.json();
         setThresholds(data.thresholds);
       } catch (error) {
-        console.error("Error fetching thresholds:", error);
+        // console.error("Error fetching thresholds:", error);
       } finally {
         setLoading(false);
       }
@@ -130,13 +130,13 @@ const FreeGiftFeature = ({ couponData }) => {
 
   // Log active threshold
   useEffect(() => {
-    console.log('Active threshold:', activeThreshold);
+    // console.log('Active threshold:', activeThreshold);
   }, [activeThreshold]);
 
   // Handle gift selection with error handling
   const handleGiftSelect = (product) => {
     try {
-      console.log('999 Gift selected:', product.product_id, product.product_name);
+      // console.log('999 Gift selected:', product.product_id, product.product_name);
       // Remove all existing gifts from cart to ensure only one gift
       cartProducts.forEach((item) => {
         if (item.is_gift) {
@@ -145,10 +145,10 @@ const FreeGiftFeature = ({ couponData }) => {
       });
       addProductToCart({ ...product, quantity: 1, is_gift: true, campaign: product.campaign });
       setSelectedGift(product.product_id);
-      console.log('Cart updated, selectedGift set to:', product.product_id);
-      console.log('Updated cartProducts:', cartProducts);
+      // console.log('Cart updated, selectedGift set to:', product.product_id);
+      // console.log('Updated cartProducts:', cartProducts);
     } catch (error) {
-      console.error('Error in handleGiftSelect:', error);
+      // console.error('Error in handleGiftSelect:', error);
     }
   };
 
@@ -157,7 +157,7 @@ const FreeGiftFeature = ({ couponData }) => {
     if (!activeThreshold) {
       // No active threshold, remove any gift
       if (selectedGift) {
-        console.log('999 No active threshold, removing gift and clearing selectedGift');
+        // console.log('999 No active threshold, removing gift and clearing selectedGift');
         cartProducts.forEach((item) => {
           if (item.is_gift) {
             removeGiftFromCart(null, item.campaign);
@@ -169,13 +169,13 @@ const FreeGiftFeature = ({ couponData }) => {
       // Determine the campaign for the threshold
       const thresholdCampaign = activeThreshold.gifts[0]?.campaign || '';
       // Check if there’s a gift in the cart for this threshold's campaign
-      const giftInCart = cartProducts.find((item) => {console.log('123456789', item.is_gift, item.campaign, thresholdCampaign); return item.type == 'foc' && item.is_gift});
-      console.log('123456789', giftInCart);
+      const giftInCart = cartProducts.find((item) => { return item.type == 'foc' && item.is_gift});
+      // console.log('123456789', giftInCart);
       if (activeThreshold.gifts.length === 1) {
         // Single gift: auto-add if not already in cart
         const singleGift = activeThreshold.gifts[0];
         if (!giftInCart || giftInCart.product_id !== singleGift.product_id) {
-          console.log('Auto-adding single gift:', singleGift.product_id);
+          // console.log('Auto-adding single gift:', singleGift.product_id);
           handleGiftSelect(singleGift);
         } else if (giftInCart.product_id !== selectedGift) {
           // Update selectedGift to match cart
@@ -187,7 +187,7 @@ const FreeGiftFeature = ({ couponData }) => {
           (gift) => gift.product_id === giftInCart.product_id
         );
         if (!isValidGift) {
-          console.log('999 invalid gift for current threshold, removing gift');
+          // console.log('999 invalid gift for current threshold, removing gift');
           removeGiftFromCart(null, giftInCart.campaign);
           setSelectedGift(null);
         } else if (giftInCart.product_id !== selectedGift) {
@@ -196,7 +196,7 @@ const FreeGiftFeature = ({ couponData }) => {
         }
       } else if (selectedGift) {
         // No gift in cart but selectedGift exists, clear it
-        console.log('No gift in cart, clearing selectedGift');
+        // console.log('No gift in cart, clearing selectedGift');
         setSelectedGift(null);
       }
     }
@@ -257,7 +257,7 @@ const FreeGiftFeature = ({ couponData }) => {
                       />
                       <button
                         onClick={() => {
-                          console.log('Button clicked for:', product.product_id);
+                          // console.log('Button clicked for:', product.product_id);
                           handleGiftSelect(product);
                         }}
                         className={`pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside ${

@@ -127,7 +127,7 @@ export default function Checkout() {
             lastName = lArr.join(" ") || "";
           }
         } else {
-          console.warn("No user data found in localStorage");
+          // console.warn("No user data found in localStorage");
         }
 
         const addrStr = localStorage.getItem("address");
@@ -176,18 +176,18 @@ export default function Checkout() {
           return res.json();
         })
         .then((json) => {
-          console.log("Coupon API response:", json);
+          // console.log("Coupon API response:", json);
           setCoupons(json.coupons || []);
           setCouponDataContext(json.coupons || []);
         })
         .catch((err) => {
-          console.error("Failed to fetch coupons:", err);
+          // console.error("Failed to fetch coupons:", err);
           setCoupons([]);
           setCouponDataContext([]);
         })
         .finally(() => setCouponLoading(false));
     } catch (err) {
-      console.error("Error in useEffect:", err);
+      // console.error("Error in useEffect:", err);
       setCoupons([]);
       setCouponDataContext([]);
       setCouponLoading(false);
@@ -436,7 +436,7 @@ export default function Checkout() {
       }
     } catch (error) {
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -492,7 +492,7 @@ export default function Checkout() {
       }
     } catch (error) {
       setOTPSuccess(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsSendOTPLoading(false);
     }
@@ -591,7 +591,7 @@ export default function Checkout() {
       }
     } catch (error) {
       setOTPError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsSendOTPLoading(false);
     }
@@ -769,7 +769,7 @@ export default function Checkout() {
         }
       }
     } catch (err) {
-      console.error("Coupon validation error:", err);
+      // console.error("Coupon validation error:", err);
       setCouponSuccess(null);
       setCouponData(null);
       setCouponDataContext(null);

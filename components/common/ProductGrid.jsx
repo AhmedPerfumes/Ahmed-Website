@@ -85,7 +85,7 @@ export default function ProductGrid({ category, subcategory }) {
           setHasMore(false);
         }
       } catch (error) {
-        console.error("Error fetching export products:", error);
+        // console.error("Error fetching export products:", error);
       } finally {
         setLoading(false);
       }
