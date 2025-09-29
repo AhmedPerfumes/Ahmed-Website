@@ -7,9 +7,9 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { renderPrice } from "@/utlis/priceRenderer";
 import Link from "next/link";
-
+import he from "he";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y } from "swiper/modules";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -79,7 +79,13 @@ const CollectionSummary = ({ product, currency }) => {
             <hr className="summary-divider" />
             <div className="summary-row savings">
                 <span>You Save:</span>
-                <span className="savings-badge">{renderPrice({ price: savings.toFixed(2) }, currency)} ({savingsPercent}%)</span>
+                <div className="savings-badge">
+                    <span>{renderPrice({ price: savings.toFixed(2) }, currency)}</span>
+                    <span style={{ direction: 'ltr', unicodeBidi: 'bidi-override' }}>
+                        ({savingsPercent}%)
+                    </span>
+                </div>
+
             </div>
         </div>
     );
@@ -428,12 +434,17 @@ const ProductAccordion = ({ product }) => {
         {product.is_collection == 1 && product.collection_items?.length > 0 && (
         <AccordionItem title={t('accordion.whatIsIncluded')} id="Zero" defaultOpen={true}>
             <Swiper
-            modules={[Navigation, Pagination, A11y]}
+            modules={[Navigation, Pagination, A11y, Autoplay]}
             className="collection-swiper"
             // 2 on one “page”
             slidesPerView={2}
             slidesPerGroup={2}
             spaceBetween={16}
+            autoplay={{
+                delay: 2000,
+                disableOnInteraction: true,
+            }}
+            speed={1000}
             pagination={{ clickable: true }}
             breakpoints={{
                 0: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 12 },
@@ -445,7 +456,7 @@ const ProductAccordion = ({ product }) => {
             >
             {product.collection_items.map((item, idx) => {
                 const isProduct = item.child_product_id;
-                const itemName = isProduct ? (locale === 'ar' ? item.name_ar : item.name) : item.custom_item_name;
+                const itemName = isProduct ? (locale === 'ar' ? he.decode(item.name_ar) : he.decode(item.name)) : item.custom_item_name;
                 const itemImage = isProduct && item.images ? JSON.parse(item.images)[0] : null;
                 const itemSlug = (item.slug || (item.name && item.name.toLowerCase().replace(/ /g, '-')));
 
@@ -633,7 +644,7 @@ const ProductAccordion = ({ product }) => {
             )}
 
             {/* --- Usage & Application --- */}
-            {usageInfo && usageInfo != 'ProductDetails.howToApply.default' && (
+            {usageInfo && !['gift-sets', 'collections'].includes(product.category) && (
                 <AccordionItem
                     title={t("accordion.usageApplication")}
                     id="Four"
