@@ -232,7 +232,7 @@ const CustomerReviews = ({ product }) => {
     }, [reviews]);
 
     const handleReviewSubmitted = (newReview) => {
-        console.log('Review submitted!', newReview);
+        // console.log('Review submitted!', newReview);
     };
 
     return (

@@ -57,7 +57,7 @@ export default function Contact() {
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }

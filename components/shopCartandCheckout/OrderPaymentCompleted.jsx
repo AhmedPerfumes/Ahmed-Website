@@ -18,10 +18,9 @@ export default function OrderPaymentCompleted({ orderDetails }) {
   //   setCartProducts([]);
   // }, []);
   useEffect(() => {
-  if (orderDetails?.payment_status === "success") {
-    // Clear cart only after payment success
-    localStorage.removeItem("cartList");
-    setCartProducts([]);
+  if (orderDetails?.payment_status === "completed") {
+    // Clear cart only after payment completed
+    
     if (orderDetails && orderDetails.id) {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
@@ -33,7 +32,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
               currency: currency?.code || "AED",
               items: orderDetails.products.map((item) => ({
                 item_id: item.product_id?.toString(), // or SKU if available
-                item_name: he.decode(item.name),
+                item_name: he.decode(item.product_name),
                 price: parseFloat(item.price),
                 quantity: item.qty,
               })),
@@ -44,14 +43,16 @@ export default function OrderPaymentCompleted({ orderDetails }) {
             contents: orderDetails.products.map((item) => ({
               content_id: item.product_id?.toString(),
               content_type: "product",
-              content_name: he.decode(item.name),
+              content_name: he.decode(item.product_name),
                 })),
                 value: parseFloat(orderDetails.total),
                 currency: currency?.code || "AED",
               });
             }
   }
-}, [orderDetails, setCartProducts]);
+    localStorage.removeItem("cartList");
+    setCartProducts([]);
+  }, [orderDetails]);
 
 
   const subTotalPrice = (elm) => {
@@ -62,7 +63,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount_percent) {
-      console.log('...', elm.discount_percent);
+      // console.log('...', elm.discount_percent);
       // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         // console.log('if...');
@@ -72,7 +73,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
       //   return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // }
     } else if(elm?.coupon) {
-        console.log('else if');
+        // console.log('else if');
         return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
     }
     // else if(elm?.sale_price) {
@@ -80,7 +81,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     //     return <td>{(((elm.price * (1 + elm.vat / 100)) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     // }
     else {
-        console.log('else');
+        // console.log('else');
         if(elm.discount_amount && elm.discount_amount != '0') {
           return <td>{ elm.gross_amount }{ currency.symbol }</td>;
         }

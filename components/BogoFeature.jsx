@@ -54,7 +54,7 @@ const BOGOFeature = () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/bogoProducts`);
         if (!response.ok) throw new Error('Failed to fetch bogoProducts');
         const data = await response.json();
-        console.log('000 API Response:', JSON.stringify(data, null, 2));
+        // console.log('000 API Response:', JSON.stringify(data, null, 2));
         const validPromotions = (data.bogoProducts || []).filter(
           (promo) => promo.campaign && promo.buy_products
         ).map(promo => ({
@@ -66,7 +66,7 @@ const BOGOFeature = () => {
         setPromotions(validPromotions);
         setPromotionsContext(validPromotions);
       } catch (error) {
-        console.error('Error fetching bogoProducts:', error);
+        // console.error('Error fetching bogoProducts:', error);
         setPromotions([]);
         setPromotionsContext([]);
       } finally {
@@ -122,11 +122,11 @@ const BOGOFeature = () => {
     };
 
     if (!hasCartChanged()) {
-      console.log('000 Cart unchanged, skipping gift logic');
+      // console.log('000 Cart unchanged, skipping gift logic');
       return;
     }
 
-    console.log('000 Processing gifts for cart:', JSON.stringify(cartProducts, null, 2));
+    // console.log('000 Processing gifts for cart:', JSON.stringify(cartProducts, null, 2));
 
     const timer = setTimeout(() => {
       const newGiftsToAdd = [];
@@ -135,11 +135,11 @@ const BOGOFeature = () => {
         const { buy_quantity, get_quantity, selection_rule, buy_products, free_products, campaign, name } = promo;
 
         if (!campaign) {
-          console.warn(`000 Skipping promotion with undefined campaign:`, promo);
+          // console.warn(`000 Skipping promotion with undefined campaign:`, promo);
           return;
         }
 
-        console.log(`000 Processing campaign ${campaign}:`);
+        // console.log(`000 Processing campaign ${campaign}:`);
 
         const eligibleProducts = cartProducts.filter(
           (item) =>
@@ -148,23 +148,23 @@ const BOGOFeature = () => {
             buy_products.some((b) => b.product_id === item.product_id)
         );
 
-        console.log(`000 Eligible products:`, JSON.stringify(eligibleProducts, null, 2));
+        // console.log(`000 Eligible products:`, JSON.stringify(eligibleProducts, null, 2));
 
         const totalQuantity = eligibleProducts.reduce((sum, item) => sum + (item.quantity || 0), 0);
         const giftSets = Math.floor(totalQuantity / buy_quantity);
         const giftsAllowed = giftSets * get_quantity;
 
-        console.log(`000 Total quantity: ${totalQuantity}, Gift sets: ${giftSets}, Gifts allowed: ${giftsAllowed}`);
+        // console.log(`000 Total quantity: ${totalQuantity}, Gift sets: ${giftSets}, Gifts allowed: ${giftsAllowed}`);
 
         const currentGifts = cartProducts.filter(
           (p) => p.is_gift && p.campaign === campaign
         );
-        console.log(`111 Current gifts:`, JSON.stringify(currentGifts, null, 2));
+        // console.log(`111 Current gifts:`, JSON.stringify(currentGifts, null, 2));
 
         if (selection_rule === 'least_expensive') {
           if (giftsAllowed === 0) {
             currentGifts.forEach((gift) => {
-              console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
+              // console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
             });
             return;
@@ -174,7 +174,7 @@ const BOGOFeature = () => {
             const isValidGift = free_products.some((fp) => fp.product_id === gift.product_id);
             const currentGiftQuantity = currentGifts.reduce((sum, g) => sum + (g.quantity || 0), 0);
             if (!isValidGift || currentGiftQuantity > giftsAllowed) {
-              console.log(`000 Removing invalid/excess gift for campaign ${campaign}:`, gift.product_id);
+              // console.log(`000 Removing invalid/excess gift for campaign ${campaign}:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
             } else {
               newGiftsToAdd.push({
@@ -189,30 +189,30 @@ const BOGOFeature = () => {
           const candidateGifts = free_products.filter((fp) =>
             purchasedProductIds.includes(fp.product_id)
           );
-          console.log(`000 Candidate gifts:`, JSON.stringify(candidateGifts, null, 2));
+          // console.log(`000 Candidate gifts:`, JSON.stringify(candidateGifts, null, 2));
 
           if (candidateGifts.length === 0) {
-            console.log(`000 No candidate gifts for campaign ${campaign}`);
+            // console.log(`000 No candidate gifts for campaign ${campaign}`);
             return;
           }
 
           let remainingGifts = giftsAllowed - newGiftsToAdd
             .filter((g) => g.campaign === campaign)
             .reduce((sum, g) => sum + (g.quantity || 0), 0);
-          console.log(`000 Remaining gifts: ${remainingGifts}`);
+          // console.log(`000 Remaining gifts: ${remainingGifts}`);
 
           if (remainingGifts <= 0) return;
 
           const prices = candidateGifts.map((gift) => Number(gift.price) || 0);
           const allPricesEqual = candidateGifts.length > 1 && new Set(prices).size === 1;
-          console.log(`111 All prices equal: ${allPricesEqual}, Prices:`, prices);
+          // console.log(`111 All prices equal: ${allPricesEqual}, Prices:`, prices);
 
           if (allPricesEqual && candidateGifts.length > 1) {
             const selected = selectedGifts[campaign] || [];
-            console.log(`111 Selected gifts for ${campaign}:`, JSON.stringify(selected, null, 2));
+            // console.log(`111 Selected gifts for ${campaign}:`, JSON.stringify(selected, null, 2));
             let totalSelected = selected.reduce((sum, gift) => sum + (gift.quantity || 0), 0);
             if (totalSelected > giftsAllowed) {
-              console.log(`000 Warning: Total selected gifts (${totalSelected}) exceeds giftsAllowed (${giftsAllowed})`);
+              // console.log(`000 Warning: Total selected gifts (${totalSelected}) exceeds giftsAllowed (${giftsAllowed})`);
               return;
             }
             selected.forEach((gift) => {
@@ -226,10 +226,10 @@ const BOGOFeature = () => {
                   purchasedProduct?.quantity || 0
                 );
                 if (giftQuantity > 0) {
-                  console.log(`000 Adding selected gift for ${campaign}:`, {
-                    product_id: bogoGift.product_id,
-                    quantity: giftQuantity,
-                  });
+                  // console.log(`000 Adding selected gift for ${campaign}:`, {
+                  //   product_id: bogoGift.product_id,
+                  //   quantity: giftQuantity,
+                  // });
                   addProductToCart({
                     ...bogoGift,
                     is_gift: true,
@@ -256,10 +256,10 @@ const BOGOFeature = () => {
             if (purchasedProduct) {
               const giftQuantity = Math.min(get_quantity, remainingGifts, purchasedProduct.quantity);
               if (giftQuantity > 0 && !currentGifts.some((g) => g.product_id === bogoGift.product_id)) {
-                console.log(`000 Adding gift for ${campaign}:`, {
-                  product_id: bogoGift.product_id,
-                  quantity: giftQuantity,
-                });
+                // console.log(`000 Adding gift for ${campaign}:`, {
+                //   product_id: bogoGift.product_id,
+                //   quantity: giftQuantity,
+                // });
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
@@ -290,10 +290,10 @@ const BOGOFeature = () => {
                 (g) => g.product_id === bogoGift.product_id && g.campaign === campaign
               );
               if (giftQuantity > 0 && !giftExists) {
-                console.log(`000 Adding gift for ${campaign} (cheapest product):`, {
-                  product_id: bogoGift.product_id,
-                  quantity: giftQuantity,
-                });
+                // console.log(`000 Adding gift for ${campaign} (cheapest product):`, {
+                //   product_id: bogoGift.product_id,
+                //   quantity: giftQuantity,
+                // });
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
@@ -317,7 +317,7 @@ const BOGOFeature = () => {
         } else if (selection_rule === 'auto_add') {
           if (giftsAllowed === 0) {
             currentGifts.forEach((gift) => {
-              console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
+              // console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
             });
             return;
@@ -325,7 +325,7 @@ const BOGOFeature = () => {
           currentGifts.forEach((gift) => {
             const isValidGift = free_products.some((fp) => fp.product_id === gift.product_id);
             if (!isValidGift || currentGifts.reduce((sum, g) => sum + (g.quantity || 0), 0) > giftsAllowed) {
-              console.log(`000 Removing gift for campaign ${campaign}:`, gift.product_id);
+              // console.log(`000 Removing gift for campaign ${campaign}:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
             } else {
               newGiftsToAdd.push({
@@ -345,7 +345,7 @@ const BOGOFeature = () => {
           availableGifts.some((bogoGift) => {
             if (remainingGifts <= 0) return true;
             const giftQuantity = Math.min(get_quantity, remainingGifts);
-            console.log(`000 Adding gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
+            // console.log(`000 Adding gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
             addProductToCart({
               ...bogoGift,
               is_gift: true,
@@ -365,7 +365,7 @@ const BOGOFeature = () => {
         } else if (selection_rule === 'same_product') {
           if (giftsAllowed === 0) {
             currentGifts.forEach((gift) => {
-              console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
+              // console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
             });
             return;
@@ -374,7 +374,7 @@ const BOGOFeature = () => {
             const matchingProduct = eligibleProducts.find((p) => p.product_id === gift.product_id);
             const isValidGift = free_products.some((fp) => fp.product_id === gift.product_id);
             if (!isValidGift || (matchingProduct && matchingProduct.quantity < gift.quantity) || currentGifts.reduce((sum, g) => sum + (g.quantity || 0), 0) > giftsAllowed) {
-              console.log(`000 Removing gift for campaign ${campaign}:`, gift.product_id);
+              // console.log(`000 Removing gift for campaign ${campaign}:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
             } else {
               newGiftsToAdd.push({
@@ -394,7 +394,7 @@ const BOGOFeature = () => {
               const bogoGift = free_products.find((fp) => fp.product_id === product.product_id);
               if (bogoGift) {
                 const giftQuantity = Math.min(product.quantity, remainingGifts);
-                console.log(`111 Adding gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
+                // console.log(`111 Adding gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
@@ -421,7 +421,7 @@ const BOGOFeature = () => {
         } else if (selection_rule === 'customer_select') {
           if (giftsAllowed === 0) {
             currentGifts.forEach((gift) => {
-              console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
+              // console.log(`000 Removing gift for campaign ${campaign} due to insufficient quantity:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
               setSelectedGifts((prev) => ({
                 ...prev,
@@ -434,7 +434,7 @@ const BOGOFeature = () => {
             if (lastAddedGiftRef.current && 
                 gift.product_id === lastAddedGiftRef.current.product_id && 
                 gift.campaign === lastAddedGiftRef.current.campaign) {
-              console.log(`Skipping validation for newly added gift:`, gift.product_id);
+              // console.log(`Skipping validation for newly added gift:`, gift.product_id);
               newGiftsToAdd.push({
                 product_id: gift.product_id,
                 quantity: gift.quantity,
@@ -446,17 +446,17 @@ const BOGOFeature = () => {
             const matchingProduct = eligibleProducts.find((p) => p.product_id === gift.product_id);
             const isValidGift = free_products.some((fp) => fp.product_id === gift.product_id);
             const currentGiftQuantity = currentGifts.reduce((sum, g) => sum + (g.quantity || 0), 0);
-            console.log('Validating gift:', {
-              product_id: gift.product_id,
-              isValidGift,
-              matchingProduct: matchingProduct ? matchingProduct.quantity : null,
-              currentGiftQuantity,
-              giftsAllowed,
-              timestamp: new Date().toISOString()
-            });
+            // console.log('Validating gift:', {
+            //   product_id: gift.product_id,
+            //   isValidGift,
+            //   matchingProduct: matchingProduct ? matchingProduct.quantity : null,
+            //   currentGiftQuantity,
+            //   giftsAllowed,
+            //   timestamp: new Date().toISOString()
+            // });
 
             if (!isValidGift || currentGiftQuantity > giftsAllowed || (matchingProduct && matchingProduct.quantity < gift.quantity)) {
-              console.log(`Removing gift for campaign ${campaign}:`, gift.product_id);
+              // console.log(`Removing gift for campaign ${campaign}:`, gift.product_id);
               removeGiftFromCart(gift.product_id, campaign);
               setSelectedGifts((prev) => ({
                 ...prev,
@@ -475,7 +475,7 @@ const BOGOFeature = () => {
             .filter((g) => g.campaign === campaign)
             .reduce((sum, g) => sum + (g.quantity || 0), 0);
 
-          console.log('Remaining gifts after validation:', { remainingGifts, timestamp: new Date().toISOString() });
+          // console.log('Remaining gifts after validation:', { remainingGifts, timestamp: new Date().toISOString() });
 
           if (remainingGifts <= 0) return;
 
@@ -490,13 +490,13 @@ const BOGOFeature = () => {
                 (g) => g.product_id === bogoGift.product_id && g.campaign === campaign
               );
               if (giftExists) {
-                console.log(`Skipping duplicate gift for ${campaign}:`, gift.product_id);
+                // console.log(`Skipping duplicate gift for ${campaign}:`, gift.product_id);
                 return;
               }
               const purchasedProduct = eligibleProducts.find((p) => p.product_id === bogoGift.product_id);
               const giftQuantity = Math.min(gift.quantity || 0, remainingGifts, purchasedProduct?.quantity || Infinity);
               if (giftQuantity > 0) {
-                console.log(`Adding selected gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
+                // console.log(`Adding selected gift for ${campaign}:`, { product_id: bogoGift.product_id, quantity: giftQuantity });
                 addProductToCart({
                   ...bogoGift,
                   is_gift: true,
@@ -519,7 +519,7 @@ const BOGOFeature = () => {
         }
       });
 
-      console.log('000 New gifts to add:', JSON.stringify(newGiftsToAdd, null, 2));
+      // console.log('000 New gifts to add:', JSON.stringify(newGiftsToAdd, null, 2));
 
       if (JSON.stringify(newGiftsToAdd) !== JSON.stringify(addedGifts)) {
         setAddedGifts(newGiftsToAdd);
@@ -536,37 +536,37 @@ const BOGOFeature = () => {
 
   const handleGiftSelection = (campaign, product, quantity, selection_rule, giftsAllowed) => {
     try {
-      console.log('222 handleGiftSelection called:', {
-        campaign,
-        product,
-        quantity,
-        selection_rule,
-        giftsAllowed,
-        selectedGifts,
-        timestamp: new Date().toISOString()
-      });
+      // console.log('222 handleGiftSelection called:', {
+      //   campaign,
+      //   product,
+      //   quantity,
+      //   selection_rule,
+      //   giftsAllowed,
+      //   selectedGifts,
+      //   timestamp: new Date().toISOString()
+      // });
 
       if (!campaign) {
-        console.error('222 Campaign is undefined');
+        // console.error('222 Campaign is undefined');
         return;
       }
       const parsedQuantity = Math.max(0, parseInt(quantity) || 0);
       if (parsedQuantity === 0 || !product.product_id) {
-        console.warn(`222 Invalid gift selection: product_id=${product.product_id}, quantity=${parsedQuantity}`);
+        // console.warn(`222 Invalid gift selection: product_id=${product.product_id}, quantity=${parsedQuantity}`);
         return;
       }
 
       if (selection_rule === 'least_expensive') {
-        console.log('222 Calling removeGiftFromCart for least_expensive:', { campaign, timestamp: new Date().toISOString() });
+        // console.log('222 Calling removeGiftFromCart for least_expensive:', { campaign, timestamp: new Date().toISOString() });
         try {
           removeGiftFromCart(null, campaign);
-          console.log('222 removeGiftFromCart succeeded for least_expensive:', { campaign });
+          // console.log('222 removeGiftFromCart succeeded for least_expensive:', { campaign });
         } catch (error) {
-          console.error('222 removeGiftFromCart failed for least_expensive:', error, { campaign });
+          // console.error('222 removeGiftFromCart failed for least_expensive:', error, { campaign });
         }
       }
 
-      console.log(`222 Handling gift selection for ${campaign}: product_id=${product.product_id}, quantity=${parsedQuantity}`);
+      // console.log(`222 Handling gift selection for ${campaign}: product_id=${product.product_id}, quantity=${parsedQuantity}`);
 
       setSelectedGifts((prev) => {
         let updatedCampaignGifts = prev[campaign] || [];
@@ -579,27 +579,27 @@ const BOGOFeature = () => {
           const currentSelectedCount = updatedCampaignGifts.reduce((sum, g) => sum + (g.quantity || 0), 0);
           const getQuantity = parseInt(giftsAllowed) || 1;
 
-          console.log('222 customer_select:', {
-            currentSelectedCount,
-            getQuantity,
-            isAlreadySelected: updatedCampaignGifts.some((g) => g.product_id === product.product_id),
-            newProductId: product.product_id,
-            timestamp: new Date().toISOString()
-          });
+          // console.log('222 customer_select:', {
+          //   currentSelectedCount,
+          //   getQuantity,
+          //   isAlreadySelected: updatedCampaignGifts.some((g) => g.product_id === product.product_id),
+          //   newProductId: product.product_id,
+          //   timestamp: new Date().toISOString()
+          // });
 
           if (currentSelectedCount >= getQuantity && !updatedCampaignGifts.some((g) => g.product_id === product.product_id)) {
-            console.log('222 Exceeding get_quantity, clearing previous gifts and adding new one:', product.product_id);
+            // console.log('222 Exceeding get_quantity, clearing previous gifts and adding new one:', product.product_id);
             try {
               removeGiftFromCart(null, campaign);
-              console.log('222 removeGiftFromCart succeeded for customer_select:', { campaign });
+              // console.log('222 removeGiftFromCart succeeded for customer_select:', { campaign });
             } catch (error) {
-              console.error('222 removeGiftFromCart failed for customer_select:', error, { campaign });
+              // console.error('222 removeGiftFromCart failed for customer_select:', error, { campaign });
             }
             updatedCampaignGifts = [{ product_id: product.product_id, quantity: parsedQuantity }].filter(
               (g) => g.quantity > 0
             );
           } else {
-            console.log('222 Adding or updating gift:', product.product_id);
+            // console.log('222 Adding or updating gift:', product.product_id);
             updatedCampaignGifts = [
               ...updatedCampaignGifts.filter((g) => g.product_id !== product.product_id),
               { product_id: product.product_id, quantity: parsedQuantity },
@@ -611,43 +611,43 @@ const BOGOFeature = () => {
           ...prev,
           [campaign]: updatedCampaignGifts,
         };
-        console.log('222 Updated selectedGifts:', updatedGifts, { timestamp: new Date().toISOString() });
+        // console.log('222 Updated selectedGifts:', updatedGifts, { timestamp: new Date().toISOString() });
         return updatedGifts;
       });
 
-      console.log('222 Calling addProductToCart:', {
-        product_id: product.product_id,
-        quantity: parsedQuantity,
-        campaign,
-        timestamp: new Date().toISOString()
-      });
+      // console.log('222 Calling addProductToCart:', {
+      //   product_id: product.product_id,
+      //   quantity: parsedQuantity,
+      //   campaign,
+      //   timestamp: new Date().toISOString()
+      // });
       try {
         addProductToCart({ ...product, is_gift: true, "discount": null, "coupon": [], price: '0', quantity: parsedQuantity, campaign, type: 'bogo', selection_rule });
-        console.log('222 addProductToCart succeeded for:', product.product_id, { timestamp: new Date().toISOString() });
+        // console.log('222 addProductToCart succeeded for:', product.product_id, { timestamp: new Date().toISOString() });
         lastAddedGiftRef.current = { product_id: product.product_id, campaign };
       } catch (error) {
-        console.error('222 addProductToCart failed:', error, { product_id: product.product_id, campaign, timestamp: new Date().toISOString() });
+        // console.error('222 addProductToCart failed:', error, { product_id: product.product_id, campaign, timestamp: new Date().toISOString() });
       }
     } catch (error) {
-      console.error('222 handleGiftSelection failed:', error, {
-        campaign,
-        product_id: product.product_id,
-        timestamp: new Date().toISOString()
-      });
+      // console.error('222 handleGiftSelection failed:', error, {
+      //   campaign,
+      //   product_id: product.product_id,
+      //   timestamp: new Date().toISOString()
+      // });
     }
   };
 
   const handleQuantityChange = (campaign, product, newQuantity) => {
     const parsedQuantity = Math.max(0, parseInt(newQuantity) || 0);
-    console.log('handleQuantityChange called:', {
-      campaign,
-      product_id: product.product_id,
-      newQuantity: parsedQuantity,
-      timestamp: new Date().toISOString()
-    });
+    // console.log('handleQuantityChange called:', {
+    //   campaign,
+    //   product_id: product.product_id,
+    //   newQuantity: parsedQuantity,
+    //   timestamp: new Date().toISOString()
+    // });
 
     if (parsedQuantity === 0) {
-      console.log(`Removing gift due to zero quantity for campaign ${campaign}:`, product.product_id);
+      // console.log(`Removing gift due to zero quantity for campaign ${campaign}:`, product.product_id);
       removeGiftFromCart(product.product_id, campaign);
       setSelectedGifts((prev) => ({
         ...prev,
@@ -665,7 +665,7 @@ const BOGOFeature = () => {
     const totalQuantity = eligibleProducts.reduce((sum, item) => sum + (item.quantity || 0), 0);
     const promo = promotions.find((p) => p.campaign === campaign);
     if (!promo) {
-      console.error(`No promotion found for campaign ${campaign}`);
+      // console.error(`No promotion found for campaign ${campaign}`);
       return;
     }
     const giftSets = Math.floor(totalQuantity / promo.buy_quantity);
@@ -676,11 +676,11 @@ const BOGOFeature = () => {
       .reduce((sum, g) => sum + (g.quantity || 0), 0);
     
     if (parsedQuantity + otherGiftsQuantity > giftsAllowed) {
-      console.log(`Quantity ${parsedQuantity} exceeds allowed gifts (${giftsAllowed}) for campaign ${campaign}`);
+      // console.log(`Quantity ${parsedQuantity} exceeds allowed gifts (${giftsAllowed}) for campaign ${campaign}`);
       return;
     }
 
-    console.log(`Updating quantity for ${campaign}:`, { product_id: product.product_id, quantity: parsedQuantity });
+    // console.log(`Updating quantity for ${campaign}:`, { product_id: product.product_id, quantity: parsedQuantity });
     setSelectedGifts((prev) => {
       const updatedCampaignGifts = [
         ...prev[campaign].filter((g) => g.product_id !== product.product_id),
@@ -703,9 +703,9 @@ const BOGOFeature = () => {
         selection_rule: 'customer_select',
       });
       lastAddedGiftRef.current = { product_id: product.product_id, campaign };
-      console.log(`Quantity updated successfully for ${product.product_id}`);
+      // console.log(`Quantity updated successfully for ${product.product_id}`);
     } catch (error) {
-      console.error(`Failed to update quantity for ${product.product_id}:`, error);
+      // console.error(`Failed to update quantity for ${product.product_id}:`, error);
     }
   };
 
@@ -722,14 +722,14 @@ const BOGOFeature = () => {
     }
     return acc;
   }, {});
-  console.log('000 Gifts by campaign:', JSON.stringify(giftsByCampaign, null, 2));
+  // console.log('000 Gifts by campaign:', JSON.stringify(giftsByCampaign, null, 2));
 
   return (
     <div className="my-4 px-4">
       {promotions.map((promo) => {
         const { campaign, name, selection_rule, free_products, buy_quantity, get_quantity } = promo;
         if (!campaign) {
-          console.warn('Skipping rendering for undefined campaign:', promo);
+          // console.warn('Skipping rendering for undefined campaign:', promo);
           return null;
         }
 
@@ -743,7 +743,7 @@ const BOGOFeature = () => {
         const totalQuantity = eligibleProducts.reduce((sum, item) => sum + (item.quantity || 0), 0);
         const giftSets = Math.floor(totalQuantity / buy_quantity);
         const giftsAllowed = giftSets * get_quantity;
-        console.log(`000 Rendering campaign ${campaign}: giftsAllowed=${giftsAllowed}, gifts=`, JSON.stringify(gifts, null, 2));
+        // console.log(`000 Rendering campaign ${campaign}: giftsAllowed=${giftsAllowed}, gifts=`, JSON.stringify(gifts, null, 2));
 
         const purchasedProductIds = eligibleProducts.map((p) => p.product_id);
         let candidateGifts = [];
@@ -756,10 +756,10 @@ const BOGOFeature = () => {
         }
         const prices = candidateGifts.map((gift) => Number(gift.price) || 0);
         const allPricesEqual = candidateGifts.length > 1 && new Set(prices).size === 1;
-        console.log('11111', selection_rule, allPricesEqual, giftsAllowed, candidateGifts);
+        // console.log('11111', selection_rule, allPricesEqual, giftsAllowed, candidateGifts);
 
         if ((selection_rule === 'customer_select' || (selection_rule === 'least_expensive' && allPricesEqual)) && giftsAllowed > 0) {
-          console.log(`000 Rendering selection UI for ${campaign}`);
+          // console.log(`000 Rendering selection UI for ${campaign}`);
           return (
             <div key={campaign} className="mb-6">
               <h4 className="font-bold mb-4">
@@ -796,15 +796,15 @@ const BOGOFeature = () => {
                   );
                   const currentQuantity = selectedGift?.quantity || 1;
 
-                  console.log('Rendering gift:', {
-                    product_id: product.product_id,
-                    campaign,
-                    isSelected,
-                    currentQuantity,
-                    selectedGifts: JSON.stringify(selectedGifts[campaign], null, 2),
-                    cartProducts: JSON.stringify(cartProducts, null, 2),
-                    timestamp: new Date().toISOString()
-                  });
+                  // console.log('Rendering gift:', {
+                  //   product_id: product.product_id,
+                  //   campaign,
+                  //   isSelected,
+                  //   currentQuantity,
+                  //   selectedGifts: JSON.stringify(selectedGifts[campaign], null, 2),
+                  //   cartProducts: JSON.stringify(cartProducts, null, 2),
+                  //   timestamp: new Date().toISOString()
+                  // });
 
                   return (
                     <SwiperSlide key={product.product_id} className="swiper-slide product-card">
@@ -834,14 +834,14 @@ const BOGOFeature = () => {
                         ) : (
                           <button
                             onClick={() => {
-                              console.log('Button clicked for:', {
-                                product,
-                                campaign,
-                                selection_rule,
-                                giftsAllowed,
-                                selectedGifts,
-                                timestamp: new Date().toISOString()
-                              });
+                              // console.log('Button clicked for:', {
+                              //   product,
+                              //   campaign,
+                              //   selection_rule,
+                              //   giftsAllowed,
+                              //   selectedGifts,
+                              //   timestamp: new Date().toISOString()
+                              // });
                               handleGiftSelection(
                                 campaign,
                                 product,
@@ -871,7 +871,7 @@ const BOGOFeature = () => {
             </div>
           );
         } else if (gifts.length > 0) {
-          console.log(`000 Rendering gift display for ${campaign}`);
+          // console.log(`000 Rendering gift display for ${campaign}`);
           return (
             <div key={campaign} className="mb-6">
               <h4 className="font-bold mb-4">

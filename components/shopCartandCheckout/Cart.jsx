@@ -19,7 +19,7 @@ export default function Cart() {
   // const [couponSuccess, setCouponSuccess] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart} = useContextElement();
 
-  console.log('shippingServiceChargesCA', freeShippingFlag);
+  // console.log('shippingServiceChargesCA', freeShippingFlag);
 
   useEffect(() => {
     setCouponDataContext(null);

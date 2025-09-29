@@ -39,7 +39,7 @@ function NewLaunchGrid({ title, onlyDiscounted = false, onlyNew = false }) {
         const result = await response.json();
         setProducts(result.data || []);
       } catch (error) {
-        console.error("Failed to fetch all products", error);
+        // console.error("Failed to fetch all products", error);
       } finally {
         setLoading(false);
       }
