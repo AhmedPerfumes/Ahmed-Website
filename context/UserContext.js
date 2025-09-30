@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Simulate an API call to check user authentication
@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
           setIsLoggedIn(true);
         }
       } catch (error) {
-        console.error('Failed to fetch user:', error);
+        // console.error('Failed to fetch user:', error);
         setIsLoggedIn(false);
       }
     }

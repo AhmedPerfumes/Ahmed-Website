@@ -32,7 +32,7 @@ $info-text: $color-steelblue;
 $warning: $color-yellow;
 $warning-text: $color-olive;
 $danger: $color-red-200;
-$danger-text: $color-red-900;
+$danger-text: $color-gray-100;
 $light: $color-gray-300;
 $lighter: $color-gray-100;
 $dark: $color-gray-900;
@@ -356,9 +356,9 @@ $tooltip-opacity: 1;
 $tooltip-font-size: 0.8125rem;
 
 /*------------------ Accordions -----------------*/
-$accordion-padding-x: 1.875rem;
-$accordion-body-padding-top: 1.5rem;
-$accordion-body-padding-bottom: 1.75rem;
+$accordion-padding-x: 1.5rem;
+$accordion-body-padding-top: 1rem;
+$accordion-body-padding-bottom: 1rem;
 $accordion-button-padding-x: $accordion-padding-x;
 $accordion-button-padding-top: 1.75rem;
 $accordion-button-padding-bottom: 1.125rem;

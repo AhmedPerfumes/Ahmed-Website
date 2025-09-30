@@ -26,7 +26,7 @@ export default function Contact_campaign() {
         message: formData.get("message"),
       };
 
-      console.log("Form submitted:", formValues);
+      // console.log("Form submitted:", formValues);
 
       // Clear the form fields by resetting the form using the ref
       formRef.current.reset(); // This will clear all form fields
@@ -57,7 +57,7 @@ export default function Contact_campaign() {
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }

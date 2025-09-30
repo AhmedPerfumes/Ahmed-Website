@@ -1,57 +1,47 @@
-import { Star } from 'lucide-react'
-import React from 'react'
-import he from 'he';
+import { Star } from "lucide-react";
+import React, { useMemo } from "react";
+import he from "he";
+import { useTranslations } from "next-intl";
+import BreadCumb from "../../BreadCumb";
+import { useLocale } from "next-intl";
 
-const Top = ({product}) => {
+const Top = ({ product }) => {
+    const locale = useLocale();
+    const t = useTranslations();
 
-  const cleanName = he.decode(product?.product_name || "Default");
-  console.log(cleanName); // "Oud & Roses"
-  return (
-    <div className="mt-lg-4">
-        {/* Rating */}
-        <div
-          className="d-flex align-items-center mb-1"
-          style={{ fontSize: "0.875rem", gap: "4px" }}
-        >
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              size={16}
-              // className="text-warning"
-              style={{ width: "1rem", height: "1rem", fill: "#facc15", textOpacity: 1, color: "rgba(255, 193, 7, 1)" }}
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-            />
-          ))}
-          <span
-            className="text-muted"
-            style={{ fontSize: "0.75rem", fontFamily: "Cinzel, serif" }}
-          >
-            (85 reviews)
-          </span>
+    const cleanName = useMemo(() => {
+        const nameToUse = locale === 'ar' ? product?.product_name_ar : product?.product_name;
+
+        if (nameToUse) {
+            return he.decode(nameToUse);
+        }
+        return "";
+    }, [product?.product_name, product?.product_name_ar, locale]);
+
+    return (
+        <div className="mt-lg-4">
+            {/* Product Name */}
+            {/* <h1
+        className="text-dark mb-1"
+        style={{
+          fontFamily: "Lobster, cursive",
+          fontSize: "calc(1.375rem + 1.5vw)",
+        }}
+      >
+      {product?.product_name && t(he.decode(product?.product_name))}
+      </h1> */}
+            <h1 className="product-single__name hii">
+                {cleanName}
+            </h1>
+
+            {/* Categories */}
+            <div className="d-flex justify-content-between">
+                <div className="breadcrumb mb-0 d-none d-md-block flex-grow-1">
+                    <BreadCumb category={product?.category} subcategory={product?.subcategory} />
+                </div>
+            </div>
         </div>
+    );
+};
 
-        {/* Product Name */}
-        <h1
-          className="text-dark mb-1"
-          style={{ fontFamily: "Lobster, cursive", fontSize: "calc(1.375rem + 1.5vw)" }}
-        >
-          {cleanName}
-        </h1>
-
-        {/* Categories */}
-        <p
-          className="text-muted mb-0"
-          style={{
-            fontSize: "0.8rem",
-            fontFamily: "monospace",
-            color: "6a7282",
-          }}
-        >
-          CATEGORIES: {(product?.category)?.toString().toUpperCase()}, {(product?.subcategory)?.toString().toUpperCase()}
-        </p>
-      </div>
-  )
-}
-
-export default Top
+export default Top;

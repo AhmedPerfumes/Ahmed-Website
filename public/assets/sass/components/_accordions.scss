@@ -60,6 +60,14 @@
 .accordion-body {
   padding: $accordion-body-padding-top $accordion-padding-x $accordion-body-padding-bottom;
 }
+@media (max-width: 1190px) {
+  .accordion-body {
+    // Here, we use smaller padding values.
+    // You can use hard-coded values or, even better, define smaller SASS variables.
+    // Example: Let's say the original padding was 1.25rem, we can reduce it to 0.75rem.
+    padding: 0.75rem 0.75rem 1rem;
+  }
+}
 
 .faq-accordion {
   .accordion {

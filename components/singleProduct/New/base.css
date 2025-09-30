@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Great+Vibes&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Limelight&family=Lobster&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Great+Vibes&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Limelight&family=Lobster&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"); */
 
 
 .responsive-swiper {
@@ -41,32 +41,36 @@
 @media (min-width: 992px) {
   .gallery-container {
     max-width: 33.3333%;
-    min-height: 80vh; /* Adjusted for desktop */
+    min-height: auto; /* Adjusted for desktop */
   }
   .info-container,
   .accordion-container {
-    max-width: 25%;
+    max-width: 30%;
     /* padding-top: 7rem; */
   }
+  
 }
 
 @media (max-width: 991.98px) {
   .gallery-container {
-    min-height: 60vh;
+    min-height: auto;
     max-width: 100%;
   }
   .info-container,
   .accordion-container {
     max-width: 100%;
-    /* padding-top: 1.5rem; */
+  }
+  .accordion-padding {
+    padding-top: 1.5rem;
   }
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .head-container {
-    margin-bottom: 5rem; /* Extra space for Sticky on mobile */
+    background-color: #faf9f7;
+    margin-bottom: 5rem;
   }
-}
+} */
 
 
 
@@ -76,7 +80,7 @@
     flex-direction: column;
     align-items: center; /* horizontal centering */
     /* justify-content: center; vertical centering */
-    min-height: 100vh;
+    /* min-height: 100vh; */
     text-align: center;
     max-width: 480px;
 }
@@ -97,35 +101,6 @@
     }
 }
 
-/* Font Imports */
-/* Product Name */
-.font-pacifico {
-    font-family: "Pacifico", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
-/* Product Name */
-.font-lobster {
-    font-family: "Lobster", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
-/* Small Heading */
-.font-cinzel {
-    font-family: "Cinzel", serif;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
-}
-/* Descriptions */
-.font-merriweather {
-    font-family: "Noto Sans", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
 
 /* Zoom Css */
 /* Add to your global stylesheet */

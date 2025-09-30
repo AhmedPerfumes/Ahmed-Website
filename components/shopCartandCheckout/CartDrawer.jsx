@@ -8,12 +8,14 @@ import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
+import { useUser } from "@/context/UserContext";
 
 export default function CartDrawer() {
   const { isLoading: isMenuLoading, error: isMenuError, currency, shippingServiceCharges } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, couponDataContext } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, promotionsContext, couponDataContext } = useContextElement();
+  const { isLoggedIn } = useUser();
   const pathname = usePathname();
   const t= useTranslations();
   const closeCart = () => {
@@ -39,7 +41,7 @@ export default function CartDrawer() {
 
       // Also update the matching gift (if exists)
       const giftItemIndex = items.findIndex(
-        (item) => item.product_id == id && item.is_gift
+        (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
       );
 
       if (giftItemIndex !== -1) {
@@ -71,30 +73,85 @@ export default function CartDrawer() {
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount) {
       if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return  <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
+        if(elm.discount.discount_type == "percent") {
+          return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
+        } else if(elm.discount.discount_type == "amount") {
+          return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{(elm.discount.final_price * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
+        }
+        // return  <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
       } else {
         return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       }
-    } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
-    } else if(elm?.coupon && !Array.isArray(elm.coupon) && couponDataContext?.code && couponDataContext?.code != null) {
-      console.log('0000else if', elm);
-        if(new Date(current_date_time) >= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.end_date) && elm.coupon[couponDataContext?.code.toLowerCase()].code == couponDataContext?.code.toLowerCase()) {
-          return <span className="cart-drawer-item__price money price">{ currency.symbol }{((elm.price - (elm.price / 100 * elm.coupon[couponDataContext?.code.toLowerCase()]?.value)) * elm.quantity).toFixed(2)}</span>;
-        } else {
-          return <span>{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
-        }
-    } else {
-      return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     }
+    // else if(elm?.sale_price) {
+    //   return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
+    // }
+    let itemPrice = elm.price;
+    if (
+      elm?.coupon &&
+      Object.keys(elm.coupon).length !== 0 &&
+      couponDataContext &&
+      couponDataContext.code &&
+      elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+      new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+      new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+    ) {
+      // console.log('common copuon', elm);
+      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.quantity).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.quantity).toFixed(2)}
+          </span>
+        </td>
+      );
+    }
+    if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
+      // console.log('common Customer Coupon', elm);
+      const validCoupon = promotionsContext.some((promo) =>
+        promo.buy_products.some((item) => item.product_id === elm.product_id)
+        ) && (
+        !couponDataContext.start_date ||
+        !couponDataContext.end_date ||
+        (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
+          new Date(current_date_time) <= new Date(couponDataContext.end_date))
+      );
+
+      if (
+        elm.is_customer_coupon &&
+        !validCoupon &&
+        // !elm.sale_price &&
+        !elm.discount
+      ) {
+        // console.log('common Customer Coupon If', elm);
+        itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        return (
+          <td>
+            <span className="money price price-sale">
+              {currency.symbol}
+              {(itemPrice * elm.quantity).toFixed(2)}
+            </span>
+            <span className="money price price-old">
+              {currency.symbol}
+              {(elm.price * elm.quantity).toFixed(2)}
+            </span>
+          </td>
+        );
+      }
+    }
+    // else {
+      return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+    // }
   };
 
   return (
     <>
-      <div
-        className="aside aside_right overflow-hidden cart-drawer "
-        id="cartDrawer"
-      >
+      <div className="aside aside_right overflow-hidden cart-drawer " id="cartDrawer">
         <div className="aside-header d-flex align-items-center">
           <h3 className="text-uppercase fs-6 mb-0">
             {t("SHOPPING BAG")} (
@@ -110,7 +167,7 @@ export default function CartDrawer() {
         </div>
         <h6 style={{ color: "red" }}>{error && error}</h6>
         {cartProducts.length ? (
-          <div className="aside-content cart-drawer-items-list">
+          <div className="cart-drawer-items-list">
             {cartProducts.map((elm, i) => (
               <React.Fragment key={i}>
                 <div className="cart-drawer-item d-flex position-relative">
@@ -182,11 +239,11 @@ export default function CartDrawer() {
            
           </div>
         ) : (
-          <div className="fs-18 mt-5 px-5">
+          <div className="fs-18 mt-5 px-5 cart-drawer-items-list">
             {t("Your cart is empty Start shopping")}
           </div>
         )}
-        <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
+        <div className="cart-drawer-actions">
         {/* <Image
           loading="lazy"
           src={"/assets/images/home/demo8/square banner final.jpg"}

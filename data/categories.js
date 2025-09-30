@@ -374,7 +374,7 @@ export const categoriesInfluencers = [
     altText: "Oud Ma'attar Khususi",
     // subText: "Citrus and oud, pure elegance",
     videoSrc: "/assets/videos/dakhoon/khususi.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
     link: "/product-category/dakhoon",
     btn: "/product-category/dakhoon"
   },
@@ -384,7 +384,7 @@ export const categoriesInfluencers = [
     altText: "Oud Ma'Attar Maliki",
     // subText: "Royal saffron and oud bliss",
     videoSrc: "/assets/videos/dakhoon/maliki.mp4",
-    imgSrc2: "/assets/videos/dakhoon/thumbnails/maliki.jpg",
+    imgSrc2: "/assets/videos/dakhoon/thumbnails/majalis.jpg",
     link: "/product-category/dakhoon",
     btn: "/product-category/dakhoon"
   },

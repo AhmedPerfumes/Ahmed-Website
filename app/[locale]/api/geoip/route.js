@@ -32,7 +32,7 @@ export async function GET(request) {
   try {
     // Ensure the .mmdb file path is correct
     const mmdbPath = './lib/geoip/GeoLite2-Country.mmdb';
-    console.log('Attempting to open MaxMind database at:', mmdbPath);
+    // console.log('Attempting to open MaxMind database at:', mmdbPath);
     const reader = await Reader.open(mmdbPath);
 
     // Get client IP
@@ -43,19 +43,19 @@ export async function GET(request) {
     // const ip = '37.210.202.22'; // QA
     // const ip = '37.41.136.118'; // OM
     // const ip = '88.201.99.52'; // BH
-    console.log(`GeoIP API route: IP=${ip}`);
+    // console.log(`GeoIP API route: IP=${ip}`);
 
     // Perform GeoIP lookup
     const { country } = reader.country(ip);
     const countryCode = country?.isoCode || 'AE'; // Fallback to AE
-    console.log(`GeoIP API route: Country Code=${countryCode}`);
+    // console.log(`GeoIP API route: Country Code=${countryCode}`);
     return NextResponse.json({ countryCode });
   } catch (error) {
     if (error.name === 'AddressNotFoundError') {
-      console.warn(`GeoIP warning: IP ${request.ip} not found in database, defaulting to AE`);
+      // console.warn(`GeoIP warning: IP ${request.ip} not found in database, defaulting to AE`);
       return NextResponse.json({ countryCode: 'AE' });
     }
-    console.error('GeoIP error:', error.message);
+    // console.error('GeoIP error:', error.message);
     return NextResponse.json({ countryCode: 'AE' }, { status: 500 });
   }
 }

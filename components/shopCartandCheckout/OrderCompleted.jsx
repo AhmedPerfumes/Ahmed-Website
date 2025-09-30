@@ -8,11 +8,14 @@ import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
 import FeedbackForm from "../common/Feedback";
 
+// import { bogoProducts } from "@/components/BogoFeature";
+import { useUser } from "@/context/UserContext";
+
 
 export default function OrderCompleted() {
-  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, couponDataContext } = useContextElement();
+  const { cartProducts, totalPrice, freeShippingFlag, orderDetails, setCartProducts, setOrderDetails, promotionsContext, couponDataContext } = useContextElement();
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
-  // console.log('...', freeShippingFlag);
+  const { isLoggedIn } = useUser();
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
   useEffect(() => {
@@ -24,8 +27,38 @@ export default function OrderCompleted() {
     //   // localStorage.setItem('orderData', '');
     // }
     // console.log('...', localStorage.getItem('orderData').length);
-  }, []);
 
+     // ✅ Fire GA4 purchase event only once when orderDetails is available
+    if (orderDetails && orderDetails.id) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: orderDetails.order_id, // unique order ID
+          affiliation: "Ahmed Al Maghribi Perfumes Online",
+          value: parseFloat(orderDetails.total), // order total (after discounts, including shipping/tax)
+          currency: currency?.code || "AED",
+          items: orderDetails.products.map((item) => ({
+            item_id: item.product_id?.toString(), // or SKU if available
+            item_name: he.decode(item.name),
+            price: parseFloat(item.price),
+            quantity: item.qty,
+          })),
+        },
+      }); 
+      // ---- TikTok Pixel ----
+      window.ttq?.track("CompletePayment", {
+        contents: orderDetails.products.map((item) => ({
+          content_id: item.product_id?.toString(),
+          content_type: "product",
+          content_name: he.decode(item.name),
+            })),
+            value: parseFloat(orderDetails.total),
+            currency: currency?.code || "AED",
+          });
+        }
+      }, [orderDetails]);
+  
   if (isMenuLoading) {
     return <div><Pagination1 /></div>;
   }
@@ -34,34 +67,139 @@ export default function OrderCompleted() {
   }
 
   const subTotalPrice = (elm) => {
+    // Check if the product is a BOGO product or marked as a gift
+    // console.log('commonn', elm);
     if (elm.is_gift) {
+      // console.log('common FOC', elm);
       return <td>0.00{currency.symbol} (Free Gift)</td>;
     }
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+
+    const currentUTC = new Date();
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      console.log('...', elm.discount);
-      console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        console.log('if...');
-        return <td>{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      } else {
-        console.log('else...');
-        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+
+    let itemPrice = elm.price;
+
+    if (
+      elm?.discount &&
+      new Date(current_date_time) >= new Date(elm.discount.start_date) &&
+      new Date(current_date_time) <= new Date(elm.discount.end_date)
+    ) {
+      // console.log('common discount', elm);
+      if(elm.discount.discount_type == 'percent') {
+        // console.log('percent...', elm);
+        itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
+      } else if(elm.discount.discount_type == 'amount') {
+        // console.log('amount...', elm);
+        itemPrice = elm.discount.final_price;
       }
-    } else if(elm?.coupon && elm.coupon.length != 0 && elm.coupon[couponDataContext?.code.toLowerCase()]?.code == couponDataContext?.code.toLowerCase()) {
-      console.log('COUPON', elm);
-      if(new Date(current_date_time) >= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(elm.coupon[couponDataContext?.code.toLowerCase()]?.end_date)) {
-        return <td>{((elm.price - (elm.price / 100 * elm.coupon[couponDataContext?.code.toLowerCase()]?.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      } else {
-        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-      }
-    } else if(elm?.sale_price) {
-        return <td>{((elm.sale_price) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-    } else {
-        return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.qty).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.qty).toFixed(2)}
+          </span>
+        </td>
+      );
     }
+
+    if (
+      elm?.coupon &&
+      Object.keys(elm.coupon).length !== 0 &&
+      couponDataContext &&
+      couponDataContext.code &&
+      elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+      new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+      new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+    ) {
+      // console.log('common copuon', elm);
+      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+      return (
+        <td>
+          <span className="money price price-sale">
+            {currency.symbol}
+            {(itemPrice * elm.qty).toFixed(2)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}
+            {(elm.price * elm.qty).toFixed(2)}
+          </span>
+        </td>
+      );
+    }
+
+    // if (elm?.sale_price) {
+    //   console.log('common sale price', elm);
+    //   itemPrice = elm.sale_price;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.qty).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.qty).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
+
+    if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
+      // console.log('common Customer Coupon', elm);
+      const validCoupon = orderDetails.products.some(
+        // (item) => !item.sale_price && !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
+        (item) => !item.discount && !item.is_gift && !promotionsContext.some((promo) =>
+        promo.buy_products.some((item) => item.product_id === elm.product_id)
+        )
+      ) && (
+        !couponDataContext.start_date ||
+        !couponDataContext.end_date ||
+        (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
+          new Date(current_date_time) <= new Date(couponDataContext.end_date))
+      );
+
+      if (
+        elm.is_customer_coupon &&
+        validCoupon &&
+        // !elm.sale_price &&
+        !elm.discount
+      ) {
+        // console.log('common Customer Coupon If', elm);
+        // itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        if(couponDataContext.coupon_type == "percent") {
+          itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
+        } else if(couponDataContext.coupon_type == "amount") {
+          // console.log('amount...', elm, couponData);
+          itemPrice = elm.price - couponDataContext.value;
+        }
+        return (
+          <td>
+            <span className="money price price-sale">
+              {currency.symbol}
+              {(itemPrice * elm.qty).toFixed(2)}
+            </span>
+            <span className="money price price-old">
+              {currency.symbol}
+              {(elm.price * elm.qty).toFixed(2)}
+            </span>
+          </td>
+        );
+      }
+    }
+    
+    return (
+      <td>
+        <span className="money price">
+          {currency.symbol}
+          {(elm.price * elm.qty).toFixed(2)}
+        </span>
+      </td>
+    );
   };
 
   return (
@@ -117,7 +255,7 @@ export default function OrderCompleted() {
           </span>
         </div>
         <div className="order-info__item">
-          <label>Paymetn Method</label>
+          <label>Payment Method</label>
           <span>{ orderDetails.payment_method }</span>
         </div>
       </div>
@@ -150,7 +288,7 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{(orderDetails.sub_total).toFixed(2) >= shippingServiceCharges[3]?.price ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
+                <td>{parseFloat(orderDetails.sub_total) >= parseFloat(shippingServiceCharges[3]?.price ?? 400)? 'You Got Free Shipping': `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
               </tr>
               <tr>
                 <th>SERVICE FEE</th>

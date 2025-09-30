@@ -12,11 +12,48 @@ export default function OrderPaymentCompleted({ orderDetails }) {
   const { setCartProducts } = useContextElement();
   const [showDate, setShowDate] = useState(false);
 
+  // useEffect(() => {
+  //   setShowDate(true);
+  //   localStorage.setItem('cartList', []);
+  //   setCartProducts([]);
+  // }, []);
   useEffect(() => {
-    setShowDate(true);
-    localStorage.setItem('cartList', []);
+  if (orderDetails?.payment_status === "completed") {
+    // Clear cart only after payment completed
+    
+    if (orderDetails && orderDetails.id) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+              transaction_id: orderDetails.order_id, // unique order ID
+              affiliation: "Ahmed Al Maghribi Perfumes Online",
+              value: parseFloat(orderDetails.total), // order total (after discounts, including shipping/tax)
+              currency: currency?.code || "AED",
+              items: orderDetails.products.map((item) => ({
+                item_id: item.product_id?.toString(), // or SKU if available
+                item_name: he.decode(item.product_name),
+                price: parseFloat(item.price),
+                quantity: item.qty,
+              })),
+            },
+          }); 
+          // ---- TikTok Pixel ----
+          window.ttq?.track("CompletePayment", {
+            contents: orderDetails.products.map((item) => ({
+              content_id: item.product_id?.toString(),
+              content_type: "product",
+              content_name: he.decode(item.product_name),
+                })),
+                value: parseFloat(orderDetails.total),
+                currency: currency?.code || "AED",
+              });
+            }
+  }
+    localStorage.removeItem("cartList");
     setCartProducts([]);
-  }, []);
+  }, [orderDetails]);
+
 
   const subTotalPrice = (elm) => {
     if (elm.is_gift) {
@@ -26,27 +63,29 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     if(elm?.discount_percent) {
-      console.log('...', elm.discount_percent);
+      // console.log('...', elm.discount_percent);
       // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
       // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
         // console.log('if...');
-        return <td>{(((elm.price * 1.05) - ((elm.price * 1.05) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{(((elm.price * (1 + elm.vat / 100)) - ((elm.price * (1 + elm.vat / 100)) / 100 * elm.discount_percent)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // } else {
       //   console.log('else...');
       //   return <td>{(elm.price * elm.qty).toFixed(2)}{ currency.symbol }</td>;
       // }
     } else if(elm?.coupon) {
-        console.log('else if');
+        // console.log('else if');
         return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
-    } else if(elm?.sale_price) {
-      console.log('else if 2');
-        return <td>{(((elm.price * 1.05) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
-    } else {
-        console.log('else');
-        if(elm?.product_category && elm.product_category == 'Collections') {
+    }
+    // else if(elm?.sale_price) {
+    //   console.log('else if 2');
+    //     return <td>{(((elm.price * (1 + elm.vat / 100)) - (elm.sale_price)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+    // }
+    else {
+        // console.log('else');
+        if(elm.discount_amount && elm.discount_amount != '0') {
           return <td>{ elm.gross_amount }{ currency.symbol }</td>;
         }
-        return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{((elm.price * (1 + elm.vat / 100)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
 
@@ -128,18 +167,18 @@ export default function OrderPaymentCompleted({ orderDetails }) {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * 1.05).toFixed(2) }${ currency.symbol }`}</td>
+                <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2) }${ currency.symbol }`}</td>
               </tr>
               <tr>
                 
                 <th>SERVICE FEE</th>
-                <td>{ (orderDetails.service_amount * 1.05).toFixed(2) }{ currency.symbol }</td>
+                <td>{ (orderDetails.service_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2) }{ currency.symbol }</td>
               </tr>
 
               { orderDetails.payment_method === "cod" && (
                 <tr>
                     <th>COD CHARGES</th>
-                    <td>{ (orderDetails.cod_charge * 1.05).toFixed(2) }{ currency.symbol }</td> 
+                    <td>{ (orderDetails.cod_charge * (1 + orderDetails.vat_amount / 100)).toFixed(2) }{ currency.symbol }</td> 
                 </tr>
               )}
               

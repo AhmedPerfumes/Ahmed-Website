@@ -75,7 +75,7 @@ export default function CustomerLogin() {
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -127,7 +127,7 @@ export default function CustomerLogin() {
     } catch (error) {
       // Capture the error message to display to the user
       setError(error.message);
-      console.error(error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -171,7 +171,7 @@ export default function CustomerLogin() {
                 required
               />
             </div>
-            {/* <div className="d-flex align-items-center mb-3 pb-2">
+            <div className="d-flex align-items-center mb-3 pb-2">
               <div className="form-check mb-0">
                 <input
                   name="remember"
@@ -186,7 +186,7 @@ export default function CustomerLogin() {
               <Link href="/reset_password" className="btn-text ms-auto">
                 Lost password?
               </Link>
-            </div> */}
+            </div>
             <button
               className="btn btn-primary w-100 text-uppercase"
               disabled={isLoading}

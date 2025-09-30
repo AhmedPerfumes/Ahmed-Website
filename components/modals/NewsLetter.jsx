@@ -1,55 +1,81 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react"; // No longer need useState
 import { useLocale } from "next-intl";
-import VideoPanel from "../VideoPanel";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useMenu } from "@/context/MenuContext";
 
 export default function NewsLetter() {
     const modalElement = useRef(null);
-    const [hasScrolled, setHasScrolled] = useState(false);
     const locale = useLocale();
-    let modalInstance = null;
     const { popUp } = useMenu();
 
+    // --- NEW: Use a ref to track if the modal has been shown in this session ---
+    // This avoids the stale state issue in the event listener.
+    const hasShownThisSession = useRef(false);
+
+    // --- Configuration Constants ---
+    const POPUP_STORAGE_KEY = 'newsletterPopupLastShown';
+    // const POPUP_COOLDOWN_PERIOD = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+    const POPUP_COOLDOWN_PERIOD = 30 * 60 * 1000;
+
     useEffect(() => {
+        // --- 1. Check if the user is still in the cooldown period ---
+        const lastShownTimestamp = localStorage.getItem(POPUP_STORAGE_KEY);
+        const currentTime = new Date().getTime();
+
+        if (lastShownTimestamp) {
+            const timeSinceLastShown = currentTime - parseInt(lastShownTimestamp, 10);
+            if (timeSinceLastShown < POPUP_COOLDOWN_PERIOD) {
+                return; // Cooldown is active, so we do nothing.
+            }
+        }
+
+        // --- 2. If cooldown is over, set up the modal and listener ---
         const bootstrap = require("bootstrap");
+        let modalInstance = null;
 
-        // Initialize Bootstrap Modal
-        modalInstance = new bootstrap.Modal(modalElement.current, {
-            keyboard: false,
-        });
+        if (modalElement.current) {
+            modalInstance = new bootstrap.Modal(modalElement.current, {
+                keyboard: false,
+            });
+        } else {
+            return;
+        }
 
-        // Show modal only once
         const showModal = () => {
-            if (!hasScrolled) {
+            if (modalInstance) {
                 modalInstance.show();
-                setHasScrolled(true);
+                // Save the current time to localStorage to start the new cooldown
+                localStorage.setItem(POPUP_STORAGE_KEY, new Date().getTime().toString());
             }
         };
 
-        // Scroll event
         const handleScroll = () => {
-            if (window.scrollY > 2000 && !hasScrolled) {
+            // Check scroll position AND if it has already been shown in this session
+            if (window.scrollY > 2000 && !hasShownThisSession.current) {
+                // --- CORRECTED LOGIC ---
+                // 1. Immediately set the ref to true. This is critical.
+                //    It ensures this block can never run again in this session.
+                hasShownThisSession.current = true;
+                
+                // 2. Then, show the modal.
                 showModal();
             }
         };
 
-        // Close button handler
         const closeButton = modalElement.current.querySelector(".btn-close");
-        closeButton.addEventListener("click", () => modalInstance.hide());
+        const closeHandler = () => modalInstance.hide();
 
         window.addEventListener("scroll", handleScroll);
+        closeButton.addEventListener("click", closeHandler);
 
-        // Cleanup
+        // Cleanup function
         return () => {
             window.removeEventListener("scroll", handleScroll);
-            closeButton.removeEventListener("click", () => modalInstance.hide());
+            closeButton.removeEventListener("click", closeHandler);
         };
-    }, [hasScrolled]);
+    }, []); // This effect correctly runs only once on mount.
 
     return (
         <div
@@ -140,5 +166,4 @@ export default function NewsLetter() {
             </div>
         </div>
     );
-
 }

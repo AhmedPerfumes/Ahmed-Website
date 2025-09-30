@@ -11,7 +11,7 @@ const steps = [
     id: 1,
     href: "/shop-cart",
     number: "01",
-    title: "Shopping Bag",
+    title: "Shopping Cart",
     description: "Manage Your Items List",
   },
   {

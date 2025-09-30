@@ -15,7 +15,7 @@ const VideoPlayer = ({ src, section }) => {
                     // Play the video when it comes into the viewport
                     setIsInView(true);
                     video.play().catch((error) => {
-                        console.log("Autoplay blocked or failed:", error);
+                        // console.log("Autoplay blocked or failed:", error);
                     });
                 } else {
                     // Optionally pause the video when it's out of view

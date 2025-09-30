@@ -33,6 +33,7 @@ import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
 
+
 export const metadata = {
   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
   description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
@@ -87,6 +88,17 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             })(window,document,'script','dataLayer','${GTM_ID}');
           `}
         </Script>
+
+        <Script id="tiktok-pixel" strategy="afterInteractive">
+          {`
+            !function (w, d, t) {
+              w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+              ttq.load('CA6RMBBC77UC097ILMD0');
+              ttq.page();
+            }(window, document, 'ttq');
+          `}
+        </Script>
+
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
@@ -95,6 +107,39 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        {/* <Script>
+          {`
+          
+  (function (w, d, s, o, f, js, fjs) {
+    w["botsonic_widget"] = o;
+    w[o] =
+      w[o] ||
+      function () {
+        (w[o].q = w[o].q || []).push(arguments);
+      };
+    (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
+    js.id = o;
+    js.src = f;
+    js.async = 1;
+    fjs.parentNode.insertBefore(js, fjs);
+  })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
+  Botsonic("init", {
+    serviceBaseUrl: "https://api-bot.writesonic.com",
+    token: "98265e34-430d-409b-9885-7a602a3d3375",
+  });
+
+          `
+}
+        </Script> */}
+        {/* <script
+          id="messenger-widget-b"
+          src="https://cdn.botpenguin.com/website-bot.js"
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `68c2c8aba3d4cb6728bcc3cb,68c28d106db0623915d23c5e,agent`,
+          }}
+        /> */}
+        
 
         <NextIntlClientProvider messages={messages}>
           <Svgs />

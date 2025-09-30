@@ -10,6 +10,8 @@ import { useLocale } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Link from "next/link";
 
+import { renderPrice } from "@/utlis/priceRenderer";
+
 export default function DiscountedProductsSlider({
   title,
   onlyDiscounted = false,
@@ -76,32 +78,50 @@ export default function DiscountedProductsSlider({
     }
   }
 
-  const price = (elm) => {
-    const currentGST = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
+  // const price = (elm) => {
+  //   const currentGST = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
 
-    if (elm?.discount) {
-      const start = new Date(elm.discount.start_date);
-      const end = new Date(elm.discount.end_date);
-      if (currentGST >= start && currentGST <= end) {
-        const discounted = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
-        return (
-          <>
-            <span className="money price price-old">{elm.price}{currency.symbol}</span>
-            <span className="money price price-sale">{discounted}{currency.symbol}</span>
-          </>
-        );
-      }
-    } else if (elm?.sale_price) {
-      return (
-        <>
-          <span className="money price price-old">{elm.price}{currency.symbol}</span>
-          <span className="money price price-sale">{elm.sale_price.toFixed(2)}{currency.symbol}</span>
-        </>
-      );
-    }
+  //   if (elm?.discount) {
+  //     const start = new Date(elm.discount.start_date);
+  //     const end = new Date(elm.discount.end_date);
+  //     if (currentGST >= start && currentGST <= end) {
+  //       if (elm.discount.discount_type == "percent") {
+  //         const discounted = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
+  //         return (
+  //           <>
+  //             <span className="money price price-old">{elm.price}{currency.symbol}</span>
+  //             <span className="money price price-sale">{discounted}{currency.symbol}</span>
+  //           </>
+  //         );
+  //       } else if (elm.discount.discount_type == "amount") {
+  //         const discounted = (elm.price - elm.discount.value).toFixed(2);
+  //         return (
+  //           <>
+  //             <span className="money price price-old">{elm.price}{currency.symbol}</span>
+  //             <span className="money price price-sale">{discounted}{currency.symbol}</span>
+  //           </>
+  //         );
+  //       }
+  //       // const discounted = (elm.price - (elm.price * elm.discount.value) / 100).toFixed(2);
+  //       // return (
+  //       //   <>
+  //       //     <span className="money price price-old">{elm.price}{currency.symbol}</span>
+  //       //     <span className="money price price-sale">{discounted}{currency.symbol}</span>
+  //       //   </>
+  //       // );
+  //     }
+  //   }
+  //   // else if (elm?.sale_price) {
+  //   //   return (
+  //   //     <>
+  //   //       <span className="money price price-old">{elm.price}{currency.symbol}</span>
+  //   //       <span className="money price price-sale">{elm.sale_price.toFixed(2)}{currency.symbol}</span>
+  //   //     </>
+  //   //   );
+  //   // }
 
-    return <span className="money price">{elm.price}{currency.symbol}</span>;
-  };
+  //   return <span className="money price">{elm.price}{currency.symbol}</span>;
+  // };
 
   const filteredProducts = products
     .filter((p) => p.product_qty > 0)
@@ -174,7 +194,7 @@ export default function DiscountedProductsSlider({
                 <div className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2" style={{ backgroundColor: "#dc3545" }}>
                   Out Of Stock
                 </div>
-              ) : elm.discount && (
+              ) : elm.discount && elm.discount.discount_type == "percent" && (
                 <div className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2" style={{ backgroundColor: "#198754" }}>
                   Sale {elm.discount.value}%
                 </div>
@@ -212,7 +232,8 @@ export default function DiscountedProductsSlider({
                 </Link>
               </h6>
               <div className="product-card__price d-flex">
-                {price(elm)}
+                {/* {price(elm)} */}
+                { renderPrice(elm, currency) }
               </div>
             </div>
           </SwiperSlide>

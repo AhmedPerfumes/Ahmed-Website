@@ -1,6 +1,7 @@
 // components/InfoCard.jsx
 import React from "react";
 import "./InfoCard.css";
+import Image from "next/image";
 
 const InfoCard = ({
   icon,
@@ -13,7 +14,7 @@ const InfoCard = ({
   return (
     <div className={`info-card ${layout} ${clickable ? "clickable" : ""}`} onClick={clickable ? onClick : undefined}>
       {/* Icon */}
-      {icon && ( <img src={icon} alt="icon" className="info-card-icon" />  )}
+      {icon && ( <Image src={icon} alt="icon" className="info-card-icon" height={100} width={100} />  )}
 
       {/* Text */}
       <div className="info-card-text">

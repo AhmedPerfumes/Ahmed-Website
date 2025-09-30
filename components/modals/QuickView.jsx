@@ -13,6 +13,8 @@ import { useMenu } from '@/context/MenuContext';
 import Pagination1 from "../common/Pagination1";
 import { useTranslations } from "next-intl";
 
+import { renderPrice } from "@/utlis/priceRenderer";
+
 export default function QuickView() {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { quickViewItem } = useContextElement();
@@ -71,16 +73,34 @@ export default function QuickView() {
     }
   };
   const addToCart = () => {
-    if (!isIncludeCard()) {
-      const item = {...quickViewItem, category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')), subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))};
-      item.quantity = quantity;
-      setCartProducts((pre) => [...pre, item]);
-      document
-      .getElementById("cartDrawerOverlay")
-      .classList.add("page-overlay_visible");
-      document.getElementById("cartDrawer").classList.add("aside_visible");
-    }
+  const item = {
+    ...quickViewItem,
+    category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')),
+    subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))
   };
+
+  if (!isIncludeCard()) {
+    // First time adding
+    item.quantity = quantity;
+    setCartProducts((prev) => [...prev, item]);
+  } else {
+    // Already in cart → just increase quantity
+    const updatedCart = cartProducts.map((cartItem) => {
+      if (cartItem.product_id === quickViewItem.product_id) {
+        return {
+          ...cartItem,
+          quantity: cartItem.quantity + 1
+        };
+      }
+      return cartItem;
+    });
+    setCartProducts(updatedCart);
+  }
+
+  // Open cart drawer (same as before)
+  document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+  document.getElementById("cartDrawer")?.classList.add("aside_visible");
+};
   function cleanProductName(productName) {
     // Step 1: Remove any non-alphanumeric characters except for spaces
     const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, '') + ' Description';
@@ -118,33 +138,58 @@ export default function QuickView() {
     });
   }, []);
 
-  const price = (elm) => {
-    console.log(elm);
-    const currentUTC = new Date(); // Current UTC time
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
-    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      // console.log(current_date_time, new Date(elm.discount.start_date), new Date(elm.discount.end_date));
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return (
-          <>
-            <span className="price price-sale">
-              {currency.symbol}{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}
-            </span>
-            <span className="money price price-old">
-              {currency.symbol}{elm?.price}
-            </span>
-          </>
-        );
-      } else {
-        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
-      }
-    } else if(elm?.sale_price) {
-      return <><span className="money price price-sale">{ currency.symbol }{(elm.sale_price).toFixed(2)}</span><span className="money price price-old">{ currency.symbol }{elm?.price}</span> </>;
-    } else {
-      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
-    }
-  };
+  // const price = (elm) => {
+  //   console.log(elm);
+  //   const currentUTC = new Date(); // Current UTC time
+  //   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
+  //   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+  //   if(elm?.discount) {
+  //     // console.log(current_date_time, new Date(elm.discount.start_date), new Date(elm.discount.end_date));
+  //     if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+  //       if(elm.discount.discount_type == "percent") {
+  //         return (
+  //           <>
+  //             <span className="price price-sale">
+  //               {currency.symbol}{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}
+  //             </span>
+  //             <span className="money price price-old">
+  //               {currency.symbol}{elm?.price}
+  //             </span>
+  //           </>
+  //         );
+  //       } else if(elm.discount.discount_type == "amount") {
+  //         return (
+  //           <>
+  //             <span className="price price-sale">
+  //               {currency.symbol}{(elm.price - elm.discount.value).toFixed(2)}
+  //             </span>
+  //             <span className="money price price-old">
+  //               {currency.symbol}{elm?.price}
+  //             </span>
+  //           </>
+  //         );
+  //       }
+  //       // return (
+  //       //   <>
+  //       //     <span className="price price-sale">
+  //       //       {currency.symbol}{(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(2)}
+  //       //     </span>
+  //       //     <span className="money price price-old">
+  //       //       {currency.symbol}{elm?.price}
+  //       //     </span>
+  //       //   </>
+  //       // );
+  //     } else {
+  //       return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+  //     }
+  //   }
+  //   // else if(elm?.sale_price) {
+  //   //   return <><span className="money price price-sale">{ currency.symbol }{(elm.sale_price).toFixed(2)}</span><span className="money price price-old">{ currency.symbol }{elm?.price}</span> </>;
+  //   // }
+  //   else {
+  //     return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+  //   }
+  // };
 
   function capitalizeEachWord(str) {
     return str.split(' ') // Split the sentence into words
@@ -222,7 +267,8 @@ export default function QuickView() {
             <div className="product-single__detail">
               <h1 className="product-single__name">{t(he.decode(quickViewItem.product_name))}</h1>
               <div className="product-single__price">
-                { price(quickViewItem) }
+                {/* { price(quickViewItem) } */}
+                { renderPrice(quickViewItem, currency) }
               </div>
               <div className="product-single__short-desc">
               <div dangerouslySetInnerHTML={{ __html: t.raw(cleanProductName(quickViewItem.product_name)) }}></div>
@@ -294,13 +340,13 @@ export default function QuickView() {
                   </div>
 
                   <button
-                    onClick={() => addToCart()}
-                    className="btn btn-primary btn-addtocart js-open-aside"
-                  >
-                    {isAddedToCartProducts(quickViewItem.product_id)
-                      ? t("Already Added")
-                      : t("Add To Cart")}
-                  </button>
+  onClick={addToCart}
+  className="btn btn-primary btn-addtocart js-open-aside"
+>
+  {isAddedToCartProducts(quickViewItem.product_id)
+    ? t("Add More")
+    : t("Add To Cart")}
+</button>
                 </div>) : (
                   <div className="out-of-stock">
                     <span className="badge fs-5 text-uppercase">Out of Stock</span>
