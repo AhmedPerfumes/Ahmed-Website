@@ -150,7 +150,7 @@ function CityWalk() {
                     </div>
                 </div>
             </div>
-        <div className="pt-5 mt-5">
+        <div className="mt-3">
 
         <DiscountGrid title="End of Season, Cooler Prices!" onlyDiscounted={true}/>
         </div>
