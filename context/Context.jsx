@@ -99,20 +99,75 @@ export default function Context({ children }) {
   const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
+  const initCart = async () => {
+    let customerId = null;
+
     try {
-      const items = JSON.parse(localStorage.getItem("cartList"));
-      if (Array.isArray(items)) {
-        // console.log('Loading cart from localStorage:', items);
-        dispatch({ type: 'SET_PRODUCTS', payload: items });
-      } else {
-        // console.log('No valid cart in localStorage, setting empty array');
-        dispatch({ type: 'SET_PRODUCTS', payload: [] });
+      // Get user from localStorage (Base64 encoded)
+      const encodedUser = localStorage.getItem("user");
+      if (encodedUser) {
+        const decoded = JSON.parse(atob(encodedUser)); // decode base64 → JSON
+        customerId = decoded?.id;
       }
-    } catch (error) {
-      // console.error('Error parsing cartList from localStorage:', error);
-      dispatch({ type: 'SET_PRODUCTS', payload: [] });
+    } catch (err) {
+      console.error("Error decoding user from localStorage", err);
     }
-  }, []);
+
+    if (customerId) {
+      // Logged-in user → fetch cart from API
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/getCart`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ customer_id: customerId }),
+          }
+        );
+
+        const data = await res.json();
+        console.log("Fetched cart data:", data); // debug
+
+        if (Array.isArray(data)) {
+          // Normalize values
+          const normalized = data.map((p) => ({
+            ...p,
+            price: Number(p.price),
+            quantity: Number(p.quantity || 1),
+          }));
+
+          // Update context state
+          dispatch({ type: "SET_PRODUCTS", payload: normalized });
+
+          // Persist to localStorage
+          localStorage.setItem("cartList", JSON.stringify(normalized));
+        } else {
+          dispatch({ type: "SET_PRODUCTS", payload: [] });
+        }
+      } catch (error) {
+        console.error("Error fetching cart from API:", error);
+        dispatch({ type: "SET_PRODUCTS", payload: [] });
+      }
+    } else {
+      // Guest user → fallback to localStorage
+      try {
+        const items = JSON.parse(localStorage.getItem("cartList"));
+        if (Array.isArray(items)) {
+          dispatch({ type: "SET_PRODUCTS", payload: items });
+        } else {
+          dispatch({ type: "SET_PRODUCTS", payload: [] });
+        }
+      } catch {
+        dispatch({ type: "SET_PRODUCTS", payload: [] });
+      }
+    }
+  };
+
+  initCart();
+}, []);
+
 
   useEffect(() => {
     // console.log('Saving cartProducts to localStorage:', state.products);
@@ -254,15 +309,21 @@ export default function Context({ children }) {
   };
 
   const addProductToCart = (product) => {
-    if (state.isProcessing) {
-      // console.log('Skipping addProductToCart: processing in progress');
-      return;
-    }
-    // console.log('addProductToCart:', product);
+    if (state.isProcessing) return;
+
     dispatch({ type: 'SET_PROCESSING', payload: true });
+    const updated = [...state.products];
+
+    const existing = updated.find((p) => p.product_id === product.product_id);
+    if (existing) {
+      existing.quantity = (existing.quantity || 0) + (product.quantity || 1);
+    } else {
+      updated.push({ ...product, quantity: product.quantity || 1 });
+    }
+
     dispatch({
-      type: 'ADD_PRODUCT',
-      payload: product,
+      type: 'SET_PRODUCTS',
+      payload: updated,
       meta: {
         toast: {
           name: product?.product_name,
@@ -271,8 +332,9 @@ export default function Context({ children }) {
         },
       },
     });
-    // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
-    // document.getElementById("cartDrawer")?.classList.add("aside_visible");
+
+    // Sync with API if logged in
+    syncCartWithApi(updated);
   };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
@@ -285,35 +347,70 @@ export default function Context({ children }) {
     dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
   };
 
-  const removeProduct = (productId) => {
-    if (state.isProcessing) {
-      // console.log('Skipping removeProduct: processing in progress', { productId });
-      return;
-    }
-    // console.log('removeProduct:', { productId });
-    dispatch({ type: 'SET_PROCESSING', payload: true });
-    dispatch({ type: 'REMOVE_PRODUCT', payload: { productId } });
-  };
+ // REMOVE PRODUCT
+const removeProduct = (productId) => {
+  setCartProducts((prev) => prev.filter((p) => p.product_id !== productId));
+};
 
-  const setCartProducts = (productsOrFn) => {
-    // console.log('setCartProducts called:', productsOrFn);
-    if (typeof productsOrFn === 'function') {
-      // Handle functional update
-      const newProducts = productsOrFn(state.products);
-      if (!Array.isArray(newProducts)) {
-        // console.error('setCartProducts: Functional update returned non-array', newProducts);
-        return;
+
+  // SET CART PRODUCTS (handle both update & remove)
+const setCartProducts = async (productsOrFn) => {
+  let newProducts;
+
+  if (typeof productsOrFn === "function") {
+    newProducts = productsOrFn(state.products);
+  } else {
+    newProducts = productsOrFn;
+  }
+
+  if (!Array.isArray(newProducts)) return;
+
+  dispatch({ type: "SET_PRODUCTS", payload: newProducts });
+
+  const encodedUser = localStorage.getItem("user");
+  if (!encodedUser) return; // guest → skip API sync
+
+  try {
+    const decoded = JSON.parse(atob(encodedUser));
+    const customerId = decoded?.id;
+    if (!customerId) return;
+
+    // Detect removed items
+    const removed = state.products.filter(
+      (p) => !newProducts.find((np) => np.product_id === p.product_id)
+    );
+
+    if (removed.length > 0) {
+      // Call removeFromCart API for each removed item
+      for (const item of removed) {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/removeFromCart`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            customer_id: customerId,
+            product_id: item.product_id,
+          }),
+        });
       }
-      dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
     } else {
-      // Direct array update
-      if (!Array.isArray(productsOrFn)) {
-        // console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
-        return;
-      }
-      dispatch({ type: 'SET_PRODUCTS', payload: productsOrFn });
+      // Normal update → call addUpdateCart
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/addUpdateCart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer_id: customerId,
+          products: newProducts,
+        }),
+      });
     }
-  };
+
+    // Always sync localStorage
+    localStorage.setItem("cartList", JSON.stringify(newProducts));
+  } catch (error) {
+    console.error("Error syncing cart:", error);
+  }
+};
+
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
@@ -330,6 +427,40 @@ export default function Context({ children }) {
   const isAddedtoWishlist = (id) => {
     return wishList.includes(id);
   };
+
+  // Save cart to API when logged in
+  const syncCartWithApi = async (products) => {
+    try {
+      const encodedUser = localStorage.getItem("user");
+      if (!encodedUser) return; // guest user → skip
+
+      const decoded = JSON.parse(atob(encodedUser));
+      const customerId = decoded?.id;
+      if (!customerId) return;
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/addUpdateCart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customer_id: customerId,
+          products: products,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("Cart synced to API:", data);
+
+      if (Array.isArray(data)) {
+        dispatch({ type: "SET_PRODUCTS", payload: data });
+        localStorage.setItem("cartList", JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error("Error syncing cart to API:", error);
+    }
+  };
+
 
   const contextElement = {
     cartProducts: state.products,
