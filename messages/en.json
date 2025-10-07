@@ -107,7 +107,13 @@
       "other": "Other"
     },
     "howToApply": {
-      
+      "default": {
+        "text": [
+          "Apply the perfume directly to your pulse points — wrists, neck, and behind the ears.",
+          "Spray after moisturizing to help lock in the scent. Avoid rubbing after application."
+        ],
+        "imgSrc": "/assets/images/musk-roses-test/perfume-1.png"
+      },
       "hair_mist": {
         "text": [
           "Spray the hair mist lightly onto your hair, holding the bottle 20–25 cm away. Focus on the mid-lengths and ends.",

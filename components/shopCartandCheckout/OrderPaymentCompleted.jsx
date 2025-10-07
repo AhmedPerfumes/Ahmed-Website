@@ -18,10 +18,9 @@ export default function OrderPaymentCompleted({ orderDetails }) {
   //   setCartProducts([]);
   // }, []);
   useEffect(() => {
-  if (orderDetails?.payment_status === "success") {
-    // Clear cart only after payment success
-    localStorage.removeItem("cartList");
-    setCartProducts([]);
+  if (orderDetails?.payment_status === "completed") {
+    // Clear cart only after payment completed
+    
     if (orderDetails && orderDetails.id) {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
@@ -33,7 +32,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
               currency: currency?.code || "AED",
               items: orderDetails.products.map((item) => ({
                 item_id: item.product_id?.toString(), // or SKU if available
-                item_name: he.decode(item.name),
+                item_name: he.decode(item.product_name),
                 price: parseFloat(item.price),
                 quantity: item.qty,
               })),
@@ -44,14 +43,16 @@ export default function OrderPaymentCompleted({ orderDetails }) {
             contents: orderDetails.products.map((item) => ({
               content_id: item.product_id?.toString(),
               content_type: "product",
-              content_name: he.decode(item.name),
+              content_name: he.decode(item.product_name),
                 })),
                 value: parseFloat(orderDetails.total),
                 currency: currency?.code || "AED",
               });
             }
   }
-}, [orderDetails, setCartProducts]);
+    localStorage.removeItem("cartList");
+    setCartProducts([]);
+  }, [orderDetails]);
 
 
   const subTotalPrice = (elm) => {
