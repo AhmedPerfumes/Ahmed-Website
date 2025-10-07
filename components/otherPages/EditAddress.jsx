@@ -9,7 +9,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 export default function EditAddress() {
   const [addresses, setAddresses] = useState([
     {
-      id: 1,
+      id: -1,
       name: "",
       email: "",
       mobile: "",
@@ -35,17 +35,20 @@ export default function EditAddress() {
   const [customerId, setCustomerId] = useState(null);
 
   // Fetch customer_id and addresses from localStorage / API
-  useEffect(() => {
+useEffect(() => {
   if (typeof window === "undefined") return;
 
   const raw = localStorage.getItem("user");
   let customer_id = null;
+  let userData = null;
+
   if (raw) {
     try {
-      const user = JSON.parse(atob(raw));
-      customer_id = user.id;
+      userData = JSON.parse(atob(raw)); // 🔹 parse user object
+      customer_id = userData.id;
     } catch {}
   }
+
   setCustomerId(customer_id);
 
   if (customer_id) {
@@ -60,9 +63,9 @@ export default function EditAddress() {
           // 🔹 Step 1: parse API response
           const parsed = data.addresses.map((addr) => ({
             id: addr.id,
-            name: addr.name || "",
-            email: addr.email || "",
-            mobile: addr.phone || "",
+            name: addr.name || userData?.name || "",
+            email: addr.email || userData?.email || "",
+            mobile: addr.phone || userData?.phone || "",
             area: addr.city || "",
             building: addr.address || "",
             emirates: addr.state || "",
@@ -84,9 +87,9 @@ export default function EditAddress() {
           setAddresses([
             parsed[0] || {
               id: -1,
-              name: "",
-              email: "",
-              mobile: "",
+              name: userData?.name || "",
+              email: userData?.email || "",
+              mobile: userData?.phone || "",
               area: "",
               building: "",
               emirates: "",
@@ -94,9 +97,33 @@ export default function EditAddress() {
             },
             parsed[1] || {
               id: -1,
-              name: "",
-              email: "",
-              mobile: "",
+              name: userData?.name || "",
+              email: userData?.email || "",
+              mobile: userData?.phone || "",
+              area: "",
+              building: "",
+              emirates: "",
+              isDefault: false,
+            },
+          ]);
+        } else {
+          // no API addresses → fallback with user info
+          setAddresses([
+            {
+              id: -1,
+              name: userData?.name || "",
+              email: userData?.email || "",
+              mobile: userData?.phone || "",
+              area: "",
+              building: "",
+              emirates: "",
+              isDefault: false,
+            },
+            {
+              id: -1,
+              name: userData?.name || "",
+              email: userData?.email || "",
+              mobile: userData?.phone || "",
               area: "",
               building: "",
               emirates: "",
@@ -110,6 +137,7 @@ export default function EditAddress() {
       });
   }
 }, []);
+
 
   const openModal = (idx) => {
     setEditingIndex(idx);

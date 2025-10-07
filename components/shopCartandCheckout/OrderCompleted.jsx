@@ -29,7 +29,7 @@ export default function OrderCompleted() {
     // console.log('...', localStorage.getItem('orderData').length);
 
      // ✅ Fire GA4 purchase event only once when orderDetails is available
-    if (orderDetails && orderDetails.id) {
+    if (orderDetails && orderDetails.order_id) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "purchase",
