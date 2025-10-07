@@ -40,7 +40,6 @@ const NewsArticle = () => {
 
         const result = await response.json();
         setArticles(result.data || []);
-        // Assuming the API returns pagination info like 'last_page' or 'total'
         setTotalPages(result.last_page || Math.ceil(result.total / articlesPerPage));
       } catch (err) {
         setError('Failed to fetch articles. Please try again later.');
@@ -51,9 +50,8 @@ const NewsArticle = () => {
     };
 
     fetchArticles();
-  }, [currentPage]); // Re-run the effect when currentPage changes
+  }, [currentPage]);
 
-  // Pagination handlers
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -62,7 +60,6 @@ const NewsArticle = () => {
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
-
     const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i);
@@ -97,10 +94,8 @@ const NewsArticle = () => {
     );
   };
 
-
   return (
     <>
-      {/* You can add a banner image here if you like, similar to the blog example */}
       <section className="page-header container">
         <h1>News & Updates</h1>
         <p>Stay informed with our latest articles and announcements.</p>
@@ -133,7 +128,8 @@ const NewsArticle = () => {
                   <span className="news-card__source">{article.name}</span>
                   <h3 className="news-card__title">{article.description}</h3>
                   <p className="news-card__date">
-                    {new Date(article.created_at).toLocaleDateString('en-US', {
+                    {/* UPDATED LINE: Using post_date instead of created_at */}
+                    {new Date(article.post_date).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -145,7 +141,6 @@ const NewsArticle = () => {
           </div>
         )}
 
-        {/* Pagination Controls */}
         {!loading && articles.length > 0 && renderPagination()}
       </section>
     </>
