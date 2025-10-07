@@ -1,6 +1,7 @@
 export const footerLinks1 = [
   { href: "/about", text: "Company Information" },
   { href: "/blog", text: "Blog" },
+  { href: "/news-article", text: "News Article" },
   { href: "/export", text: "Worldwide Distributions" },
   { href: "/faq", text: "FAQs" },
   { href: "/wedding-promotion", text: "Wedding Promotion" },
