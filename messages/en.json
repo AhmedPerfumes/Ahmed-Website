@@ -29,7 +29,7 @@
     "loadingProductInfo": "Loading product information...",
     "fragranceTimelineTab": "Fragrance Timeline",
     "customerReviewsTab": "Customer Reviews",
-    "discoverMore": "Discover More from {familyName}",
+    "discoverMore": "Discover More from <bold>{familyName}</bold>",
     "notes": {
       "mainTitle": "FRAGRANCE NOTES",
       "subtitle": "Fragrance Notes reveal the essence of a perfume, breaking down its scent journey from the first impression to the lingering aroma, helping you understand its personality and character.",
@@ -201,6 +201,8 @@
   "Spend": "Spend",
   "Luxury Delight": "Luxury Delight",
   "Discover": "Discover",
+  "Sale": "Sale",
+  "Care Essentials": "Care Essentials",
   "A gracious invitation to experience our boutique": "A gracious invitation to experience our boutique",
   "Crafted for those who embrace elegance": "Crafted for those who embrace elegance",
   "fragrance that sets your senses ablaze": "fragrance that sets your senses ablaze",
