@@ -29,7 +29,7 @@
     "loadingProductInfo": "جار تحميل معلومات المنتج...",
     "fragranceTimelineTab": "الخط الزمني للعطر",
     "customerReviewsTab": "مراجعات العملاء",
-    "discoverMore": "اكتشف المزيد من {familyName}",
+    "discoverMore": "اكتشف المزيد من <bold>{familyName}</bold>",
     "notes": {
       "mainTitle": "مكونات العطر",
       "subtitle": "تكشف مكونات العطر عن جوهر العطر، وتقسم رحلة رائحته من الانطباع الأول إلى الرائحة العالقة، مما يساعدك على فهم شخصيته وطابعه.",
@@ -166,6 +166,8 @@
       }
     }
   },
+  "Sale": "تخفيضات",
+  "Care Essentials": "أساسيات العناية",
   "noProductFound": "لم يتم العثور على منتجات",
   "Fragrance Profile": "ملف العطر",
   "--------------Banner Text-----------------": " -----------------------------Banner Text -----------------------------",

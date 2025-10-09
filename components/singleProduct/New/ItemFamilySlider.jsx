@@ -106,8 +106,12 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
   return (
     <section className="products-carousel container my-4">
       <h2 className="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4 mt-4">
-                {tp('discoverMore', { familyName: he.decode(product?.product_family) })}
-      </h2>
+                {tp.rich("discoverMore", {
+                    familyName: he.decode(product?.product_family),
+                    // Tell the component how to render the <bold> tag
+                    bold: (chunks) => <strong>{chunks}</strong>,
+                })}
+            </h2>
 
       <div id="item_family_products" className="position-relative">
         <Swiper
