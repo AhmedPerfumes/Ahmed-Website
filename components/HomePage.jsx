@@ -22,7 +22,6 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
 
-
 gsap.registerPlugin(ScrollTrigger);
 
 const ScrollSnapHorizontalBootstrap = () => {
@@ -148,7 +147,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <Hero />
                 </div>
             </section> */}
-            <Chat/>
+            
 
             <section className="vh-100 hero-banner d-none d-lg-block">
                 <Hero />
