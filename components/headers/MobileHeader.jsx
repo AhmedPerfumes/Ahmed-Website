@@ -20,7 +20,9 @@ import { IoLocationOutline } from "react-icons/io5";
 import { IoReorderTwoSharp } from "react-icons/io5";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
+import { useContextElement } from "@/context/Context";
 export default function MobileHeader() {
+  const { dispatch } = useContextElement();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -43,6 +45,9 @@ export default function MobileHeader() {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("address");
+    localStorage.removeItem("cartList");
+    dispatch({ type: "SET_PRODUCTS", payload: [] });
     window.location.href = "/";
   };
 

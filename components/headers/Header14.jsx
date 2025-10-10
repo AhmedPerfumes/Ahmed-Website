@@ -19,6 +19,7 @@ import { useMenu } from "../../context/MenuContext";
 import { useUser } from "../../context/UserContext";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
+import { useContextElement } from "@/context/Context";
 
 // Add this CSS to your stylesheet (e.g., header.module.css)
 const headerStyles = `
@@ -104,6 +105,7 @@ const headerStyles = `
 }
 `;
 export default function Header14() {
+    const { dispatch } = useContextElement();
     const [scrollDirection, setScrollDirection] = useState("down");
     const [scrollState, setScrollState] = useState("visible");
     const locale = useLocale();
@@ -223,6 +225,9 @@ export default function Header14() {
   if (typeof window !== "undefined") {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("address");
+    localStorage.removeItem("cartList");
+    dispatch({ type: "SET_PRODUCTS", payload: [] });
   }
   router.replace("/login_register");
   setTimeout(() => {

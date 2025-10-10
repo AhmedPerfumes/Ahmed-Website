@@ -67,10 +67,14 @@ const cartReducer = (state, action) => {
         products: state.products.filter((p) => p.product_id !== action.payload.productId),
         isProcessing: false,
       };
-    case 'SET_PRODUCTS':
+    case 'SET_PRODUCTS': {
       // Ensure payload is an array
       const newProducts = Array.isArray(action.payload) ? action.payload : [];
-      return { ...state, products: newProducts, isProcessing: false };
+      const next = { ...state, products: newProducts, isProcessing: false };
+      if (action.meta?.toast) next.toastMeta = action.meta.toast;
+      return next;
+    }
+    
     case 'SET_PROCESSING':
       return { ...state, isProcessing: action.payload };
     default:
@@ -482,7 +486,8 @@ const setCartProducts = async (productsOrFn) => {
     setCouponDataContext,
     removeGiftFromCart,
     promotionsContext,
-    setPromotionsContext
+    setPromotionsContext,
+    dispatch
   };
 
   return (

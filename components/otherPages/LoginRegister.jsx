@@ -170,17 +170,48 @@ export default function LoginRegister() {
       const data = await response.json();
       if (data.message.split(" ")[0] !== "Login") {
         setError(data.message);
-        setSuccess(null);
       } else {
+        const localCartString = localStorage.getItem("cartList");
+        if (localCartString) {
+          try {
+            const localProducts = JSON.parse(localCartString);
+            if (localProducts && localProducts.length > 0) {
+              const mergeResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/addUpdateCart`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  customer_id: data.data.id,
+                  products: localProducts,
+                }),
+              });
+
+              if (!mergeResponse.ok) {
+              console.error("Cart merge failed. The server's cart will be loaded on the next page.");
+              // If merge fails, remove the guest cart to avoid issues.
+              localStorage.removeItem("cartList");
+            } else {
+              // 2. Get the final, merged cart from the API response.
+              const mergedCart = await mergeResponse.json();
+              // 3. Update localStorage with the new, definitive cart.
+              localStorage.setItem("cartList", JSON.stringify(mergedCart));
+            }
+
+            }
+          } catch (e) {
+            console.error("Could not parse local cart for merging:", e);
+            localStorage.removeItem("cartList");
+          }
+        }
         setSuccess(data.message);
         setError(null);
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
         const defaultAddr = data.data.addresses.find((addr) => addr.is_default);
         if (defaultAddr) {
-          localStorage.setItem(
-            "address",
-            btoa(
+          localStorage.setItem( "address", btoa(
               JSON.stringify({
                 id: defaultAddr.id,
                 name: defaultAddr.name,
@@ -195,6 +226,7 @@ export default function LoginRegister() {
             )
           );
         }
+        localStorage.removeItem("cartList");
         setTimeout(() => (window.location.href = "/"), 1000);
       }
     } catch (error) {

@@ -15,10 +15,12 @@ import { IoLocationOutline } from "react-icons/io5";
 // import { useRouter } from 'next/navigation';
 import { useMenu } from "../../context/MenuContext";
 import { useUser } from "../../context/UserContext";
+import { useContextElement } from "@/context/Context";
 // import { useLocale, useTranslations } from "next-intl";
 // import { useRouter, usePathname } from "../../i18n/routing";
 
 export default function Header14() {
+  const { dispatch } = useContextElement();
   // const locale = useLocale();
   // console.log(locale);
   // const t = useTranslations();
@@ -52,6 +54,9 @@ export default function Header14() {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("address");
+    localStorage.removeItem("cartList");
+    dispatch({ type: "SET_PRODUCTS", payload: [] });
     window.location.href = "/";
   };
 

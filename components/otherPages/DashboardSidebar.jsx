@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { dashboardMenuItems } from "@/data/menu";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useContextElement } from "@/context/Context";
 
 // Add/adjust locales here if you support more
 const LOCALES = ["en", "ar"];
@@ -37,6 +38,7 @@ function isActive(currentPathname, itemHref) {
 }
 
 export default function DashboardSidebar() {
+  const { dispatch } = useContextElement();
   const pathname = usePathname() || "/";
   const router = useRouter();
 
@@ -52,6 +54,9 @@ export default function DashboardSidebar() {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("address");
+      localStorage.removeItem("cartList");
+      dispatch({ type: "SET_PRODUCTS", payload: [] });
     }
     router.replace("/login_register");
   };
