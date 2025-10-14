@@ -9,7 +9,7 @@ import { useMenu } from '../../context/MenuContext';
 import Pagination1 from "../common/Pagination1";
 
 import { renderPrice } from "@/utlis/priceRenderer";
-import TamaraWidget from "@/components/TamaraWidget"; // adjust path as needed
+import TamaraWidget from "@/components/TamaraWidget";
 
 export default function Cart() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -436,7 +436,9 @@ export default function Cart() {
               {/* <tamara-widget type="tamara-summary" lang="en" amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
-                <TamaraWidget />
+                <TamaraWidget amount={!freeShippingFlag ?
+                        (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">

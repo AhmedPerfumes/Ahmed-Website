@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { renderPrice } from "@/utlis/priceRenderer";
-import TamaraWidget from "@/components/TamaraWidget"; // adjust path as needed
+import TamaraWidget from "@/components/TamaraWidget";
 
 const Checkout = ({ product }) => {
     // const sizes = [product.size];
@@ -258,46 +258,46 @@ const Checkout = ({ product }) => {
                     </div>
                 </div>
             </div> */}
-{/* CHANGED: Condition now checks for a non-empty 'tags' array */}
-{product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
-  <div className="w-100 mt-3">
-    <div
-      className="d-flex justify-content-between align-items-center border-bottom pb-1"
-      style={{ fontFamily: "Georgia, serif" }}
-    >
-      <label
-        htmlFor="size-select"
-        className="text-muted me-2 mb-0 h6"
-      >
-        Size:
-      </label>
+            {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
+            {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
+            <div className="w-100 mt-3">
+                <div
+                className="d-flex justify-content-between align-items-center border-bottom pb-1"
+                style={{ fontFamily: "Georgia, serif" }}
+                >
+                <label
+                    htmlFor="size-select"
+                    className="text-muted me-2 mb-0 h6"
+                >
+                    Size:
+                </label>
 
-      {/* CHANGED: This container will now hold one or more tags */}
-      <div
-        className="d-flex flex-wrap justify-content-end gap-2"
-        style={{ maxWidth: "150px" }}
-      >
-        {/* CHANGED: Mapping over the product.tags array */}
-        {product.tags.map((tag, index) => (
-          <div
-            // ADDED: A unique key is required for each item in a loop
-            key={index}
-            className="btn btn-sm"
-            style={{
-              backgroundColor: "rgba(250, 249, 247)",
-              color: "#000",
-              fontSize: "0.875rem",
-              padding: "4px 8px",
-              cursor: "default", // It looks like a button, but isn't clickable
-            }}
-          >
-            {tag}
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+                {/* CHANGED: This container will now hold one or more tags */}
+                <div
+                    className="d-flex flex-wrap justify-content-end gap-2"
+                    style={{ maxWidth: "150px" }}
+                >
+                    {/* CHANGED: Mapping over the product.tags array */}
+                    {product.tags.map((tag, index) => (
+                    <div
+                        // ADDED: A unique key is required for each item in a loop
+                        key={index}
+                        className="btn btn-sm"
+                        style={{
+                        backgroundColor: "rgba(250, 249, 247)",
+                        color: "#000",
+                        fontSize: "0.875rem",
+                        padding: "4px 8px",
+                        cursor: "default", // It looks like a button, but isn't clickable
+                        }}
+                    >
+                        {tag}
+                    </div>
+                    ))}
+                </div>
+                </div>
+            </div>
+            )}
             {/* Add to Cart Button */}
             {/* <button
                 type="submit"
@@ -318,7 +318,7 @@ const Checkout = ({ product }) => {
       
                 {/* <tamara-widget type="tamara-summary" lang="en" amount={price(product)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
 
-                <TamaraWidget />
+                <TamaraWidget inlineType="3" inlineVariant='outlined'/>
       
                 {product.product_qty > 0 ? (
                     <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>

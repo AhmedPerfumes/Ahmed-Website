@@ -24,6 +24,8 @@ import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 // import { bogoProducts } from "@/components/BogoFeature";
 
+import TamaraWidget from "@/components/TamaraWidget";
+
 export default function Checkout() {
   const {
     shippingServiceCharges,
@@ -1614,6 +1616,27 @@ export default function Checkout() {
                         </tr>
                       </tbody>
                     </table>
+                    <TamaraWidget amount={!freeShippingFlag
+                    ? (
+                        parseFloat(shippingServiceCharges[0].price) +
+                        totalPrice +
+                        parseFloat(shippingServiceCharges[1].price) +
+                        (selectedOption === "cod"
+                          ? parseFloat(
+                              shippingServiceCharges[2].price
+                            )
+                          : parseFloat(0.0))
+                      ).toFixed(2)
+                    : (
+                        0 +
+                        totalPrice +
+                        parseFloat(shippingServiceCharges[1].price) +
+                        (selectedOption === "cod"
+                          ? parseFloat(
+                              shippingServiceCharges[2].price
+                            )
+                          : parseFloat(0.0))
+                      ).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
                   </div>
 
                   <div>
@@ -2021,6 +2044,25 @@ export default function Checkout() {
                         </svg>
                       </label>
                     </div>
+                    <div className="form-check">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="radio"
+                      name="checkout_payment_method"
+                      id="checkout_payment_method_5"
+                      value={'tamara'}
+                      checked={selectedOption === 'tamara'}
+                      onChange={handleRadioChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="checkout_payment_method_5"
+                      style={{display: "inline-flex"}}
+                    >
+                      Pay in 3. No interes, no fees.
+                      <TamaraWidget inlineType='4' inlineVariant='text'/>
+                    </label>
+                  </div>
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for
