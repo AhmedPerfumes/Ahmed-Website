@@ -151,6 +151,7 @@ export default function Context({ children }) {
       if (product?.is_gift) return accumulator;
 
       if (product?.discount) {
+        console.log('discountC', product?.discount);
         let discounted = basePrice;
         if (
           new Date(current_date_time) >= new Date(product.discount.start_date) &&
@@ -167,27 +168,27 @@ export default function Context({ children }) {
         }
       }
 
-      if (
-        product?.coupon &&
-        !Array.isArray(product.coupon) &&
-        codeLower &&
-        product.coupon[codeLower]?.code?.toLowerCase() === codeLower
-      ) {
-        // console.log('product', 'coupon', product);
-        const c = product.coupon[codeLower];
-        const start = new Date(c?.start_date);
-        const end = new Date(c?.end_date);
-        if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
-          const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-          return accumulator + qty * Number(discounted.toFixed(2));
-        }
-      }
+      // if (
+      //   product?.coupon &&
+      //   !Array.isArray(product.coupon) &&
+      //   codeLower &&
+      //   product.coupon[codeLower]?.code?.toLowerCase() === codeLower
+      // ) {
+      //   console.log('couponC', product);
+      //   const c = product.coupon[codeLower];
+      //   const start = new Date(c?.start_date);
+      //   const end = new Date(c?.end_date);
+      //   if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
+      //     const discounted = basePrice - (basePrice * Number(c.value)) / 100;
+      //     return accumulator + qty * Number(discounted.toFixed(2));
+      //   }
+      // }
 
       // 3) Customer/global coupon (apply across all products)
       // if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       {
-        // console.log('product', 'customer coupon', product);
+        console.log('customer couponC', product, isCustomerCouponActive, couponDataContext);
         const value = Number(couponDataContext?.value || 0);
         let discounted = basePrice; // fallback if no discount
 

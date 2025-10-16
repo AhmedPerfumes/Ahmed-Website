@@ -49,6 +49,7 @@ export default function Checkout() {
     setCartProducts,
     removeGiftFromCart,
     promotionsContext,
+    actualTotalPrice,
   } = useContextElement();
   const { isLoggedIn } = useUser();
   const [fieldErrors, setFieldErrors] = useState({});
@@ -98,7 +99,7 @@ export default function Checkout() {
 
     if (!hasBogo) {
       const cleanedCart = cartProducts.map(
-        ({ is_customer_coupon, ...rest }) => rest
+        ({ is_coupon, value, ...rest }) => rest
       );
       setCartProducts(cleanedCart);
       setCouponDataContext(null);
@@ -193,7 +194,7 @@ export default function Checkout() {
 
   //     setCouponLoading(true);
   //     try {
-  //       const apiUrl = `https://c21341-testservice.cloudiax.com/api/Coupon/ActiveCoupons?salesType=EComm&company=UAE&mobileNo=${mobile}&email=${email}`;
+  //       const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons?salesType=EComm&company=UAE&mobileNo=${mobile}&email=${email}`;
   //       const response = await fetch(apiUrl);
   //       if (!response.ok) {
   //         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -224,24 +225,29 @@ export default function Checkout() {
   useEffect(() => {
     // Helper function to map new API response to the structure your app uses
     const transformCouponData = (apiCoupons) => {
-  if (!Array.isArray(apiCoupons)) {
-    return [];
-  }
-  // ✅ FIX: First, filter for active coupons, then map the results.
-  return apiCoupons
-    .filter(coupon => coupon.active === true) // This line is new
-    .map((coupon) => ({
-      id: coupon.couponCode,
-      code: coupon.couponCode,
-      title: coupon.promotionName,
-      description: `Get ${coupon.value}${coupon.baseOn === "Percent" ? "%" : " AED"} off`,
-      value: coupon.value,
-      coupon_type: coupon.baseOn ? coupon.baseOn.toLowerCase() : 'percent',
-      type: "customer",
-      end_date: coupon.validTo,
-      start_date: coupon.registrationDate,
-    }));
-};
+    if (!Array.isArray(apiCoupons)) {
+      return [];
+    }
+    // ✅ FIX: First, filter for active coupons, then map the results.
+    return apiCoupons
+      .filter(coupon => coupon.active === true) // This line is new
+      .map((coupon) => ({
+        id: coupon.couponCode,
+        code: coupon.couponCode,
+        title: coupon.promotionName,
+        description: `Get ${coupon.value}${coupon.baseOn === "Percent" ? "%" : " AED"} off`,
+        value: coupon.value,
+        coupon_type: coupon.baseOn ? coupon.baseOn.toLowerCase() : 'percent',
+        type: "customer",
+        end_date: coupon.validTo,
+        start_date: coupon.registrationDate,
+        couponRegistrationId: coupon.couponRegistrationId,
+        couponId: coupon.couponId,
+        salesType: coupon.salesType,
+        company: coupon.company,
+        whsCode: coupon.whsCode
+      }));
+    };
 
     const fetchCoupons = async () => {
       const { email, mobile } = formData.billingAddress;
@@ -253,7 +259,7 @@ export default function Checkout() {
 
       setCouponLoading(true);
       try {
-        const apiUrl = `https://c21341-testservice.cloudiax.com/api/Coupon/ActiveCoupons?salesType=EComm&company=UAE&mobileNo=${mobile}&email=${email}`;
+        const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons?salesType=EComm&company=UAE&mobileNo=${mobile}&email=${email}`;
         const response = await fetch(apiUrl);
 
         if (!response.ok) {
@@ -399,20 +405,23 @@ export default function Checkout() {
       ? 0.0
       : parseFloat(shippingServiceCharges[0].price);
     const shippingPriceVat = (shippingPrice / 100) * vatTax.percentage;
-    const finalPrice = !freeShippingFlag
-      ? parseFloat(shippingServiceCharges[0].price) +
-        totalPrice +
-        parseFloat(shippingServiceCharges[1].price) +
-        (selectedOption === "cod"
-          ? parseFloat(shippingServiceCharges[2].price)
-          : parseFloat(0.0))
-      : 0 +
-        totalPrice +
-        parseFloat(shippingServiceCharges[1].price) +
-        (selectedOption === "cod"
-          ? parseFloat(shippingServiceCharges[2].price)
-          : parseFloat(0.0))
-          .toFixed(2);
+    const finalPrice = parseFloat(
+      (!freeShippingFlag
+        ? parseFloat(shippingServiceCharges[0].price) +
+          totalPrice +
+          parseFloat(shippingServiceCharges[1].price) +
+          (selectedOption === "cod"
+            ? parseFloat(shippingServiceCharges[2].price)
+            : 0.0)
+        : 0 +
+          totalPrice +
+          parseFloat(shippingServiceCharges[1].price) +
+          (selectedOption === "cod"
+            ? parseFloat(shippingServiceCharges[2].price)
+            : 0.0)
+      ).toFixed(2)
+    );
+
     const servicePrice = shippingServiceCharges[1].price;
     const servicePriceVat = (servicePrice / 100) * vatTax.percentage;
 
@@ -425,6 +434,8 @@ export default function Checkout() {
       const user = atob(localStorage.getItem("user"));
       userJson = JSON.parse(user);
     }
+
+    // console.log("coupponData", couponData);return;
 
     const additionalFields = {
       ...formData,
@@ -442,7 +453,10 @@ export default function Checkout() {
       couponCode,
       codPrice,
       codPriceVat,
+      couponData,
     };
+
+    // console.log("additionalFields", additionalFields);return;
 
     try {
       const response = await fetch(
@@ -648,7 +662,7 @@ export default function Checkout() {
     setCouponDataContext(null);
 
     const cleanedCart = cartProducts.map((item) => {
-      const { is_customer_coupon, ...rest } = item;
+      const { is_coupon, value, ...rest } = item;
       return rest;
     });
 
@@ -662,7 +676,7 @@ export default function Checkout() {
     setCouponDataContext(null);
 
     const cleanedCart = cartProducts.map((item) => {
-      const { is_customer_coupon, ...rest } = item;
+      const { is_coupon, value, ...rest } = item;
       return rest;
     });
 
@@ -720,13 +734,13 @@ export default function Checkout() {
         )
       );
       const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
-console.log("Couuupons",coupons);
-const appliedCoupon = coupons.filter((c) => c.code.toLowerCase() === code);
-console.log("appliedCoupon", appliedCoupon);
+      console.log("Coupon",coupons);
+      const appliedCoupon = coupons.filter((c) => c.code.toLowerCase() === code);
+      console.log("appliedCoupon", appliedCoupon);
 
       return {
         ...item,
-        ...(isEligible ? { is_coupon: true,value: appliedCoupon[0].value} : {}),
+        ...(isEligible ? { is_coupon: true, value: appliedCoupon[0].value} : {}),
       };
     });
 
@@ -788,42 +802,42 @@ console.log("appliedCoupon", appliedCoupon);
       );
     }
 
-    if (
-      elm?.coupon &&
-      Object.keys(elm.coupon).length !== 0 &&
-      couponData &&
-      couponCode &&
-      elm.coupon[couponCode.toLowerCase()]?.code ===
-        couponData.code.toLowerCase() &&
-      new Date(current_date_time) >=
-        new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
-      new Date(current_date_time) <=
-        new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) &&
-      !promotionsContext.some((promo) =>
-        promo.buy_products.some((item) => item.product_id === elm.product_id)
-      ) &&
-      !elm.discount
-    ) {
-      itemPrice =
-        elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
-      return (
-        <td>
-          <span className="money price price-sale">
-            {currency.symbol}
-            {(itemPrice * elm.quantity).toFixed(2)}
-          </span>
-          <span className="money price price-old">
-            {currency.symbol}
-            {(elm.price * elm.quantity).toFixed(2)}
-          </span>
-        </td>
-      );
-    }
+    // if (
+    //   elm?.coupon &&
+    //   Object.keys(elm.coupon).length !== 0 &&
+    //   couponData &&
+    //   couponCode &&
+    //   elm.coupon[couponCode.toLowerCase()]?.code ===
+    //     couponData.code.toLowerCase() &&
+    //   new Date(current_date_time) >=
+    //     new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
+    //   new Date(current_date_time) <=
+    //     new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) &&
+    //   !promotionsContext.some((promo) =>
+    //     promo.buy_products.some((item) => item.product_id === elm.product_id)
+    //   ) &&
+    //   !elm.discount
+    // ) {
+    //   itemPrice =
+    //     elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.quantity).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.quantity).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
 
     if (
       couponData &&
       couponData.type === "customer" &&
-      elm.is_customer_coupon // Check the flag we set
+      elm.is_coupon // Check the flag we set
     ) {
       if (couponData.coupon_type == "percent") {
         itemPrice = elm.price - (elm.price / 100) * couponData.value;
