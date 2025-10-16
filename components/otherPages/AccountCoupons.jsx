@@ -1,16 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
-
 export default function MyCoupons() {
   const [coupons, setCoupons] = useState([]);
   const [copiedId, setCopiedId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch customer_id from localStorage
-    if (typeof window === "undefined") return;
+    // Commented out old API (customer_id-based)
+    /*
     const raw = localStorage.getItem("user");
     let customer_id = null;
     if (raw) {
@@ -35,6 +33,44 @@ export default function MyCoupons() {
       })
       .catch(() => setCoupons([]))
       .finally(() => setLoading(false));
+
+
+    */
+    // ✅ New API call
+    if (typeof window === "undefined") return;
+
+    // 🧩 Retrieve user info from localStorage
+    const raw = localStorage.getItem("user");
+    let user = null;
+
+    if (raw) {
+      try {
+        user = JSON.parse(atob(raw)); // decode base64 JSON
+      } catch (e) {
+        console.error("Failed to decode user:", e);
+      }
+    }
+
+    // If no user logged in, stop
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    const email = encodeURIComponent(user.email || "");
+    const mobileNo = encodeURIComponent(user.phone || user.mobile || "");
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/AllCoupons?salesType=EComm&company=UAE&mobileNo=${mobileNo}&email=${email}`;
+
+    setLoading(true);
+    fetch(apiUrl)
+      .then((res) => res.json())
+      .then((json) => {
+        // Expecting json.data as array
+        setCoupons(json.data || []);
+      })
+      .catch(() => setCoupons([]))
+      .finally(() => setLoading(false));
   }, []);
 
   // Copy logic
@@ -44,9 +80,8 @@ export default function MyCoupons() {
     setTimeout(() => setCopiedId(null), 1400);
   };
 
-  // Color logic: Gold for active, grey for expired
+  // Color logic
   const getColors = (status, idx) => {
-    // For more variety, alternate colors
     const golds = ["#BB8502", "#D44F35", "#726060"];
     const bgs = ["#FFF7E7", "#FFF3F0", "#F6F6F6"];
     if (status === "expired") {
@@ -56,15 +91,21 @@ export default function MyCoupons() {
   };
 
   // Expiry logic
-  const isExpired = (end_date) => {
-    return new Date(end_date) < new Date();
-  };
+  const isExpired = (validTo) => new Date(validTo) < new Date();
 
   return (
     <div style={{ maxWidth: 520, margin: "40px auto", padding: 12 }}>
-      <h2 style={{ textAlign: "center", fontWeight: 600, marginBottom: 30, fontSize: 23 }}>
+      <h2
+        style={{
+          textAlign: "center",
+          fontWeight: 600,
+          marginBottom: 30,
+          fontSize: 23,
+        }}
+      >
         My Coupons
       </h2>
+
       {loading ? (
         <div style={{ textAlign: "center", padding: 40 }}>Loading…</div>
       ) : coupons.length === 0 ? (
@@ -74,11 +115,12 @@ export default function MyCoupons() {
       ) : (
         <div className="d-flex flex-column gap-3">
           {coupons.map((c, idx) => {
-            const expired = isExpired(c.end_date);
+            const expired = isExpired(c.validTo);
             const { color, bg } = getColors(expired ? "expired" : "active", idx);
+
             return (
               <div
-                key={c.id}
+                key={c.couponCode}
                 className="coupon-card position-relative"
                 style={{
                   background: bg,
@@ -88,33 +130,48 @@ export default function MyCoupons() {
                   display: "flex",
                   alignItems: "stretch",
                   overflow: "hidden",
-                  position: "relative"
+                  position: "relative",
                 }}
               >
                 {/* Main info */}
-                <div style={{
-                  flex: 2.2,
-                  padding: "18px 18px 18px 22px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center"
-                }}>
-                  <div style={{ fontWeight: 700, fontSize: 13, color, letterSpacing: 0.7 }}>
-                    Special Coupon
+                <div
+                  style={{
+                    flex: 2.2,
+                    padding: "18px 18px 18px 22px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: 700,
+                      fontSize: 13,
+                      color,
+                      letterSpacing: 0.7,
+                    }}
+                  >
+                    {c.promotionName || "Special Coupon"}
                   </div>
-                  <div style={{ fontWeight: 600, fontSize: 17, marginTop: 2, color: "#222" }}>
-                    {c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`}
-                  </div>
-                  <div style={{ fontSize: 13, color: "#888", marginBottom: 1 }}>
-                    {/* Add more logic here if you have a description */}
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      fontSize: 17,
+                      marginTop: 2,
+                      color: "#222",
+                    }}
+                  >
+                    {c.baseOn === "Percent"
+                      ? `${c.value}% OFF`
+                      : `AED${c.value} OFF`}
                   </div>
                   <div style={{ fontSize: 13, color: "#aaa" }}>
-                    {expired ? `Expired: ${c.end_date?.slice(0,10)}` : `Valid until: ${c.end_date?.slice(0,10)}`}
-                  </div>
-                  <div style={{ fontSize: 13, color: "#aaa" }}>
-                    {c.total_used > 0 && `Used ${c.total_used} times`}
+                    {expired
+                      ? `Expired: ${c.validTo?.slice(0, 10)}`
+                      : `Valid until: ${c.validTo?.slice(0, 10)}`}
                   </div>
                 </div>
+
                 {/* Coupon Code Box */}
                 <div
                   style={{
@@ -130,62 +187,82 @@ export default function MyCoupons() {
                     minWidth: 120,
                     position: "relative",
                     cursor: !expired ? "pointer" : "not-allowed",
-                    userSelect: "none"
+                    userSelect: "none",
                   }}
-                  className={`coupon-code-area${expired ? " disabled" : ""}${copiedId === c.id ? " copied" : ""}`}
-                  onClick={() => !expired && handleCopy(c.code, c.id)}
+                  className={`coupon-code-area${
+                    expired ? " disabled" : ""
+                  }${copiedId === c.couponCode ? " copied" : ""}`}
+                  onClick={() => !expired && handleCopy(c.couponCode, c.couponCode)}
                   onMouseLeave={() => setCopiedId(null)}
                 >
-                  <span className="coupon-code-text" style={{
-                    fontSize: 15,
-                    letterSpacing: 2,
-                    fontFamily: "monospace",
-                    background: copiedId === c.id ? "#fff" : "rgba(255,255,255,0.10)",
-                    color: copiedId === c.id ? color : "#fff",
-                    padding: "4px 14px",
-                    borderRadius: 18,
-                    border: `2px dashed ${copiedId === c.id ? color : "#fff"}`,
-                    transition: ".13s"
-                  }}>
-                    {c.code}
+                  <span
+                    className="coupon-code-text"
+                    style={{
+                      fontSize: 15,
+                      letterSpacing: 2,
+                      fontFamily: "monospace",
+                      background:
+                        copiedId === c.couponCode
+                          ? "#fff"
+                          : "rgba(255,255,255,0.10)",
+                      color: copiedId === c.couponCode ? color : "#fff",
+                      padding: "4px 14px",
+                      borderRadius: 18,
+                      border: `2px dashed ${
+                        copiedId === c.couponCode ? color : "#fff"
+                      }`,
+                      transition: ".13s",
+                    }}
+                  >
+                    {c.couponCode}
                   </span>
-                  <span className="coupon-value-text" style={{
-                    fontWeight: 400,
-                    fontSize: 14,
-                    color: "#fff",
-                    marginTop: 3,
-                    letterSpacing: ".5px"
-                  }}>
-                    {c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`}
+                  <span
+                    className="coupon-value-text"
+                    style={{
+                      fontWeight: 400,
+                      fontSize: 14,
+                      color: "#fff",
+                      marginTop: 3,
+                      letterSpacing: ".5px",
+                    }}
+                  >
+                    {c.baseOn === "Percent"
+                      ? `${c.value}% OFF`
+                      : `AED${c.value} OFF`}
                   </span>
-                  {/* Hover/copy effect */}
                   {!expired && (
                     <span
-                      className={`copy-hint${copiedId === c.id ? " copied" : ""}`}
+                      className={`copy-hint${
+                        copiedId === c.couponCode ? " copied" : ""
+                      }`}
                     >
-                      {copiedId === c.id ? "Copied!" : "Click to Copy"}
+                      {copiedId === c.couponCode ? "Copied!" : "Click to Copy"}
                     </span>
                   )}
                 </div>
-                {expired && (
-                  <div className="coupon-overlay">Expired Coupon</div>
-                )}
+
+                {expired && <div className="coupon-overlay">Expired Coupon</div>}
               </div>
             );
           })}
         </div>
       )}
+
+      {/* Styles remain same */}
       <style jsx>{`
         .coupon-card {
           transition: box-shadow 0.16s;
         }
         .coupon-card:hover {
-          box-shadow: 0 3px 18px rgba(90,90,80,.10);
+          box-shadow: 0 3px 18px rgba(90, 90, 80, 0.1);
         }
         .coupon-overlay {
           position: absolute;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background: rgba(110,110,110,0.33);
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(110, 110, 110, 0.33);
           color: #fff;
           font-size: 21px;
           font-weight: 600;
@@ -194,7 +271,7 @@ export default function MyCoupons() {
           justify-content: center;
           border-radius: 20px;
           z-index: 2;
-          letter-spacing: .5px;
+          letter-spacing: 0.5px;
         }
         .coupon-code-area {
           position: relative;
@@ -221,22 +298,29 @@ export default function MyCoupons() {
         }
         .coupon-code-area.copied .copy-hint {
           background: #fff;
-          color: #BB8502;
+          color: #bb8502;
           font-weight: 700;
         }
         .coupon-code-area.copied .coupon-code-text {
           background: #fff !important;
-          color: #BB8502 !important;
-          border-color: #BB8502 !important;
+          color: #bb8502 !important;
+          border-color: #bb8502 !important;
         }
         .coupon-code-area.disabled {
           opacity: 0.67;
           pointer-events: none;
         }
         @media (max-width: 600px) {
-          .coupon-card { min-height: 84px; }
-          h2 { font-size: 18px !important; }
-          .coupon-code-area { font-size: 14px; min-width: 84px; }
+          .coupon-card {
+            min-height: 84px;
+          }
+          h2 {
+            font-size: 18px !important;
+          }
+          .coupon-code-area {
+            font-size: 14px;
+            min-width: 84px;
+          }
         }
       `}</style>
     </div>
