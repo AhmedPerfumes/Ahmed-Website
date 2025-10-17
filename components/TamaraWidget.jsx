@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const TamaraWidget = ({ amount, inlineType, inlineVariant }) => {
-    const widgetKey = `tamara-widget-${amount}`; // key to force re-render
+    const [isClient, setIsClient] = useState(false);
     const scriptLoadedRef = useRef(false);
+    const widgetKey = `tamara-widget-${amount}`;
 
     useEffect(() => {
+        setIsClient(true); // Prevent SSR
+
         if (scriptLoadedRef.current) return;
 
-        window.tamaraSettings = {
+        window.tamaraWidgetConfig = {
             lang: "en",
             country: "AE",
             publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
@@ -23,10 +26,12 @@ const TamaraWidget = ({ amount, inlineType, inlineVariant }) => {
 
         return () => {
             document.body.removeChild(script);
-            delete window.tamaraSettings;
+            delete window.tamaraWidgetConfig;
             scriptLoadedRef.current = false;
         };
     }, []);
+
+    if (!isClient) return null; // Prevent rendering on server
 
     return (
         <tamara-widget

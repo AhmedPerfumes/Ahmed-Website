@@ -318,7 +318,7 @@ const Checkout = ({ product }) => {
       
                 {/* <tamara-widget type="tamara-summary" lang="en" amount={price(product)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
 
-                <TamaraWidget inlineType="3" inlineVariant='outlined'/>
+                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
       
                 {product.product_qty > 0 ? (
                     <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>

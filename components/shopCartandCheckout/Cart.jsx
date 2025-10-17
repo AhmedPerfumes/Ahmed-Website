@@ -433,12 +433,13 @@ export default function Cart() {
                   </tr>
                 </tbody>
               </table>
-              {/* <tamara-widget type="tamara-summary" lang="en" amount={!freeShippingFlag ?
+                {/* <tamara-widget type="tamara-summary" lang="en" amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
-                <TamaraWidget amount={!freeShippingFlag ?
+                {/* <TamaraWidget amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
-                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/> */}
+                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
