@@ -362,7 +362,7 @@ export default function Checkout() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}api/storeOrder`,
+        `${process.env.NEXT_PUBLIC_API_URL}api/initiate-payment`,
         {
           method: "POST",
           body: JSON.stringify(additionalFields),
