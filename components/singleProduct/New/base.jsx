@@ -9,6 +9,7 @@ import "./base.css"
 import Sticky from './sticky';
 import { useEffect } from 'react';
 import he from 'he';
+import dynamic from 'next/dynamic'
 
 
 const Base = ({product}) => {
@@ -22,13 +23,19 @@ const Base = ({product}) => {
         require("bootstrap");
     }, [])
 
+    // Dynamically import the 3D viewer, and explicitly disable SSR.
+    const PerfumeViewer = dynamic(
+    () => import('./3D/PerfumeViewer'),
+    { 
+        ssr: false,
+        loading: () => <div style={{height: '600px', background: '#f0f0f0'}} /> 
+    }
+    )
+
     return (
         <div className="App py-5" >
             <div className="head-container container">
-                <div
-                    className="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 gap-lg-4 "
-                    // style={{ minHeight: "100vh" }}
-                >
+                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 gap-lg-4 ">
                     <div className="info-container order-2 order-lg-1">
                         <InfoBase
                             images={images}
@@ -50,6 +57,11 @@ const Base = ({product}) => {
                     <div className="accordion-container order-3 order-lg-3 accordion-padding">
                         <ProductAccordion product={product}/>
                     </div>
+                </div>
+
+                <div className="product-media">
+                    {/* Your 3D viewer goes here! */}
+                    <PerfumeViewer />
                 </div>
 
                 <Sticky image={images[0]} name={cleanName} price={product?.price || "0.00"} product={product} />
