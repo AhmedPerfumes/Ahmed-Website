@@ -259,8 +259,21 @@ export default function Checkout() {
 
       setCouponLoading(true);
       try {
-        const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons?salesType=EComm&company=UAE&mobileNo=${mobile}&email=${email}`;
-        const response = await fetch(apiUrl);
+        const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons`;
+        const response = await fetch(apiUrl,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              salesType: "EComm",
+              company: "UAE",
+              mobileNo: mobile,
+              email: email,
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`API Error! Status: ${response.status}`);

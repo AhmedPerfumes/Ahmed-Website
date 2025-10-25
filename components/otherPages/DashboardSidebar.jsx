@@ -63,7 +63,19 @@ export default function DashboardSidebar() {
     const fetchCouponCount = async () => {
       try {
        const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/Count?salesType=EComm&company=UAE&mobileNo=${user.phone}&email=${user.email}`
+        `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/Count`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            salesType: "EComm",
+            company: "UAE",
+            mobileNo: user.phone,
+            email: user.email,
+          }),
+        }
       );
         const result = await response.json();
         if (result?.data !== undefined) setCouponCount(result.data);

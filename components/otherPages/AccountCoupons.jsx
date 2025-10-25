@@ -60,10 +60,22 @@ export default function MyCoupons() {
     const email = encodeURIComponent(user.email || "");
     const mobileNo = encodeURIComponent(user.phone || user.mobile || "");
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/AllCoupons?salesType=EComm&company=UAE&mobileNo=${mobileNo}&email=${email}`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/AllCoupons`
+
 
     setLoading(true);
-    fetch(apiUrl)
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        salesType: "EComm",
+        company: "UAE",
+        mobileNo,
+        email,
+      }),
+    })
       .then((res) => res.json())
       .then((json) => {
         // Expecting json.data as array
