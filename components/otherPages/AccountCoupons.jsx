@@ -7,39 +7,8 @@ export default function MyCoupons() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Commented out old API (customer_id-based)
-    /*
-    const raw = localStorage.getItem("user");
-    let customer_id = null;
-    if (raw) {
-      try {
-        const user = JSON.parse(atob(raw));
-        customer_id = user.id;
-      } catch {}
-    }
-    if (!customer_id) {
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-    fetch(`${API_BASE}api/customerCouponDetails`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer_id }),
-    })
-      .then(res => res.json())
-      .then(json => {
-        setCoupons(json.coupons || []);
-      })
-      .catch(() => setCoupons([]))
-      .finally(() => setLoading(false));
-
-
-    */
-    // ✅ New API call
     if (typeof window === "undefined") return;
 
-    // 🧩 Retrieve user info from localStorage
     const raw = localStorage.getItem("user");
     let user = null;
 
@@ -51,7 +20,6 @@ export default function MyCoupons() {
       }
     }
 
-    // If no user logged in, stop
     if (!user) {
       setLoading(false);
       return;
@@ -60,8 +28,7 @@ export default function MyCoupons() {
     const email = encodeURIComponent(user.email || "");
     const mobileNo = encodeURIComponent(user.phone || user.mobile || "");
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/AllCoupons`
-
+    const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/AllCoupons`;
 
     setLoading(true);
     fetch(apiUrl, {
@@ -78,7 +45,6 @@ export default function MyCoupons() {
     })
       .then((res) => res.json())
       .then((json) => {
-        // Expecting json.data as array
         setCoupons(json.data || []);
       })
       .catch(() => setCoupons([]))
@@ -92,18 +58,22 @@ export default function MyCoupons() {
     setTimeout(() => setCopiedId(null), 1400);
   };
 
-  // Color logic
+  // Helpers
+  const isExpired = (validTo) => new Date(validTo) < new Date();
+  const isRedeemed = (status) => status?.toLowerCase() === "redeemed";
+
   const getColors = (status, idx) => {
     const golds = ["#BB8502", "#D44F35", "#726060"];
     const bgs = ["#FFF7E7", "#FFF3F0", "#F6F6F6"];
+
     if (status === "expired") {
       return { color: "#9A9A9A", bg: "#F6F6F6" };
     }
+    if (status === "redeemed") {
+      return { color: "#9A9A9A", bg: "#F0F0F3" };
+    }
     return { color: golds[idx % golds.length], bg: bgs[idx % bgs.length] };
   };
-
-  // Expiry logic
-  const isExpired = (validTo) => new Date(validTo) < new Date();
 
   return (
     <div style={{ maxWidth: 520, margin: "40px auto", padding: 12 }}>
@@ -128,7 +98,11 @@ export default function MyCoupons() {
         <div className="d-flex flex-column gap-3">
           {coupons.map((c, idx) => {
             const expired = isExpired(c.validTo);
-            const { color, bg } = getColors(expired ? "expired" : "active", idx);
+            const redeemed = isRedeemed(c.status);
+            const { color, bg } = getColors(
+              expired ? "expired" : redeemed ? "redeemed" : "active",
+              idx
+            );
 
             return (
               <div
@@ -198,13 +172,18 @@ export default function MyCoupons() {
                     justifyContent: "center",
                     minWidth: 120,
                     position: "relative",
-                    cursor: !expired ? "pointer" : "not-allowed",
+                    cursor:
+                      expired || redeemed ? "not-allowed" : "pointer",
                     userSelect: "none",
                   }}
                   className={`coupon-code-area${
-                    expired ? " disabled" : ""
+                    expired || redeemed ? " disabled" : ""
                   }${copiedId === c.couponCode ? " copied" : ""}`}
-                  onClick={() => !expired && handleCopy(c.couponCode, c.couponCode)}
+                  onClick={() =>
+                    !expired &&
+                    !redeemed &&
+                    handleCopy(c.couponCode, c.couponCode)
+                  }
                   onMouseLeave={() => setCopiedId(null)}
                 >
                   <span
@@ -242,25 +221,31 @@ export default function MyCoupons() {
                       ? `${c.value}% OFF`
                       : `AED${c.value} OFF`}
                   </span>
-                  {!expired && (
+                  {!expired && !redeemed && (
                     <span
                       className={`copy-hint${
                         copiedId === c.couponCode ? " copied" : ""
                       }`}
                     >
-                      {copiedId === c.couponCode ? "Copied!" : "Click to Copy"}
+                      {copiedId === c.couponCode
+                        ? "Copied!"
+                        : "Click to Copy"}
                     </span>
                   )}
                 </div>
 
+                {/* Overlays */}
                 {expired && <div className="coupon-overlay">Expired Coupon</div>}
+                {!expired && redeemed && (
+                  <div className="coupon-overlay">Redeemed Coupon</div>
+                )}
               </div>
             );
           })}
         </div>
       )}
 
-      {/* Styles remain same */}
+      {/* Styles */}
       <style jsx>{`
         .coupon-card {
           transition: box-shadow 0.16s;
