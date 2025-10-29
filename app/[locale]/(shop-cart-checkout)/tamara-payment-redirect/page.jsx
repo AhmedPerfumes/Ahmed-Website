@@ -36,4 +36,4 @@ const TamaraPayment = async () => {
     );
 }
 
-export default TamaraPayment;
+export default TamaraPayment; // e.g. http://localhost:3000/en/tamara-payment-redirect#/success?paymentStatus=approved&orderId=19e69f43-8532-4667-826f-2a15054358c3 http://localhost:3000/en/tamara-payment-redirect#/cancel?paymentStatus=canceled?orderId=657fa338-5ceb-48fd-8f6f-b91727d3fb5c
