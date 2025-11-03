@@ -22,6 +22,7 @@ import { useLocale } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
+import { data } from "jquery";
 // import { bogoProducts } from "@/components/BogoFeature";
 
 export default function Checkout() {
@@ -550,6 +551,8 @@ export default function Checkout() {
       setIsLoading(false);
     }
   }
+ 
+  
 
   async function sendOTP(e) {
     e.preventDefault();
@@ -700,12 +703,13 @@ export default function Checkout() {
   const applyCoupon = async (e) => {
     e.preventDefault();
 
+    const user = JSON.parse(atob(localStorage.getItem("user")));
+
     if (!couponCode.trim()) {
       setCouponError("Coupon Code is Required");
       return;
     }
 
-    // For guests, ensure mobile is verified before applying any coupon
     if (!isOTPVerified && !isLoggedIn) {
       setCouponError("Please verify your mobile number first.");
       return;
@@ -713,23 +717,12 @@ export default function Checkout() {
 
     const code = couponCode.toLowerCase();
 
-    // Find the coupon from the state (fetched from the new API)
-    const validCoupon = coupons.find((c) => c.code.toLowerCase() === code);
-
-    if (!validCoupon) {
-      setCouponError("Invalid or expired coupon code.");
-      setCouponCode("");
-      return;
-    }
-
-    // Check if there are any eligible products in the cart for this coupon
     const eligibleItems = cartProducts.filter((item) => {
       const isBogoProduct = promotionsContext.some((promo) =>
         promo.buy_products.some(
           (buyItem) => buyItem.product_id === item.product_id
         )
       );
-      // Coupon applies to items not already on discount or part of a BOGO offer
       return !item.discount && !isBogoProduct && !item.is_gift;
     });
 
@@ -739,7 +732,67 @@ export default function Checkout() {
       return;
     }
 
-    // Logic passed, now apply the coupon
+    // Find the coupon from the state (fetched from the new API)
+    const validCoupon = coupons.find((c) => c.code.toLowerCase() === code);
+
+    let payload = {
+      company: "UAE",
+      salesType: "EComm",
+      couponRegistrationId: validCoupon ? validCoupon.couponRegistrationId : 0,
+      couponCode: validCoupon ? "" : couponCode.trim(),
+      mobileNo: user?.phone,
+      email: user?.email,
+    };
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (!res.ok) {
+      setCouponError("Invalid or expired coupon code.");
+      setCouponCode("");
+      return;
+    }
+
+    const data = await res.json();
+    let apiCoupon = data.data && data.data[0];
+
+    // Normalize API coupon if present
+    if (apiCoupon && !validCoupon) {
+      apiCoupon = {
+        id: apiCoupon.couponCode,
+        code: apiCoupon.couponCode,
+        title: apiCoupon.promotionName,
+        description: apiCoupon.promotionName,
+        value: apiCoupon.value,
+        coupon_type: apiCoupon.baseOn === "P" ? "percent" : "amount",
+        type: "customer",
+        end_date: apiCoupon.validTo,
+        start_date: apiCoupon.registrationDate,
+        couponRegistrationId: apiCoupon.couponRegistrationId,
+        salesType: apiCoupon.salesType,
+        company: apiCoupon.company,
+        whsCode: apiCoupon.whsCode,
+      };
+    }
+
+    // If validCoupon exists, use it. Otherwise, use normalized apiCoupon from response.
+    const couponToApply = validCoupon || apiCoupon;
+
+    if (!couponToApply) {
+      setCouponError("Invalid or expired coupon code.");
+      setCouponCode("");
+      return;
+    }
+
+    // Apply coupon to eligible items
     const updatedCartProducts = cartProducts.map((item) => {
       const isBogoProduct = promotionsContext.some((promo) =>
         promo.buy_products.some(
@@ -747,22 +800,26 @@ export default function Checkout() {
         )
       );
       const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
-      console.log("Coupon",coupons);
-      const appliedCoupon = coupons.filter((c) => c.code.toLowerCase() === code);
-      console.log("appliedCoupon", appliedCoupon);
-
       return {
         ...item,
-        ...(isEligible ? { is_coupon: true, value: appliedCoupon[0].value} : {}),
+        ...(isEligible
+          ? {
+              is_coupon: true,
+              value: couponToApply.value,
+              coupon_type: couponToApply.coupon_type,
+            }
+          : {}),
       };
     });
 
-    setCartProducts(updatedCartProducts);
+    setCartProducts(updatedCartProducts); 
     setCouponError(null);
-    setCouponData(validCoupon); // The full coupon object
-    setCouponDataContext(validCoupon);
+    setCouponData(couponToApply);
+    console.log("Applied coupon:", couponToApply);
+console.log("Cart products after coupon:", updatedCartProducts);
+    setCouponDataContext(couponToApply);
     setCouponSuccess(
-      `Applied Coupon: ${validCoupon.code} - ${validCoupon.description}`
+      `Applied Coupon: ${couponToApply.code} - ${couponToApply.title}`
     );
   };
 
@@ -849,9 +906,14 @@ export default function Checkout() {
 
     if (
       couponData &&
+      
       couponData.type === "customer" &&
       elm.is_coupon // Check the flag we set
-    ) {
+    )
+     {
+      console.log("couponData:", couponData);
+      
+      
       if (couponData.coupon_type == "percent") {
         itemPrice = elm.price - (elm.price / 100) * couponData.value;
       } else if (couponData.coupon_type == "amount") {
