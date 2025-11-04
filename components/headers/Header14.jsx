@@ -255,7 +255,7 @@ export default function Header14() {
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
                                 <div className="d-none d-lg-flex search-minimal me-4">
                                     <form onSubmit={onSearch} className="position-relative">
-                                        <input type="text" name="search-keyword" placeholder="SEARCH" value={searchKeyWord} onChange={handleChange} onClick={() => setIsPopupOpen(true)} className="form-control pe-5" />
+                                        <input type="text" name="search-keyword" placeholder={t('SEARCH')} value={searchKeyWord} onChange={handleChange} onClick={() => setIsPopupOpen(true)} className="form-control pe-5" />
                                         <span className="search-icon">
                                             <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                                                 <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.8"/>
