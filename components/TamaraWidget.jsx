@@ -13,11 +13,12 @@ const TamaraWidget = ({ amount, inlineType, inlineVariant }) => {
         window.tamaraWidgetConfig = {
             lang: "en",
             country: "AE",
-            publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+            publicKey: process.env.NEXT_PUBLIC_TAMARA_PUBLIC_KEY,
         };
 
         const script = document.createElement("script");
         script.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+        // script.src = "https://cdn.tamara.co/widget-v2/tamara-widget.js";
         script.async = true;
         script.onload = () => {
             scriptLoadedRef.current = true;
