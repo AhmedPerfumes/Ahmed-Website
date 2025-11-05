@@ -82,6 +82,7 @@ export default function Checkout() {
     otp: "",
   });
   const [createAccount, setCreateAccount] = useState(false);
+  const [finalPriceState, setFinalPriceState] = useState(null);
 
   const hasCleaned = useRef(false);
 
@@ -261,6 +262,50 @@ export default function Checkout() {
       };
     });
   };
+
+    useEffect(() => {
+      const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
+      setFinalPriceState(finalPrice);
+    }, [selectedOption]);
+
+    useEffect(() => {
+    // Load the TabbyCard script
+    const tabbyCardScript = document.createElement("script");
+    tabbyCardScript.src = "https://checkout.tabby.ai/tabby-card.js";
+    tabbyCardScript.async = true;
+    document.body.appendChild(tabbyCardScript);
+
+    // Load the TabbyPromo script
+    const tabbyPromoScript = document.createElement("script");
+    tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+    tabbyPromoScript.async = true;
+    document.body.appendChild(tabbyPromoScript);
+
+    const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
+
+    tabbyCardScript.onload = () => {
+      new window.TabbyCard({
+        selector: "#tabbyCard", // empty div for TabbyCard.
+        currency: "AED", // required, AED|SAR|KWD only supported.
+        lang: "en", // Optional, language of snippet and popups.
+        price: finalPrice, // required, total cart amount.
+        size: "wide", // required, narrow|wide supported.
+        theme: "black", // required, black|default supported.
+        header: true, // if a Payment method name is present already.
+      });
+    };
+
+    tabbyPromoScript.onload = () => {
+      new window.TabbyPromo({
+        // You can add any necessary configuration for TabbyPromo here if needed
+      });
+    };
+
+    return () => {
+      document.body.removeChild(tabbyCardScript);
+      document.body.removeChild(tabbyPromoScript);
+    };
+  }, [selectedOption]);
 
   const handleEmiratesChange = (event, emirates) => {
     const { id } = event.target;
@@ -2021,6 +2066,32 @@ export default function Checkout() {
                         </svg>
                       </label>
                     </div>
+
+                    <div className="form-check">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="radio"
+                      name="checkout_payment_method"
+                      id="checkout_payment_method_5"
+                      value={'tabby'}
+                      checked={selectedOption === 'tabby'}
+                      onChange={handleRadioChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="checkout_payment_method_5"
+                    >
+                      Pay in 4. No interes, no fees.
+                      <Image
+                        src="/assets/images/paymentGateway/tabby.svg"
+                        width="60"
+                        height="50"
+                        alt="Cropped Faux leather Jacket"
+                      />
+                      <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button>
+                    </label>
+                    {selectedOption == 'tabby' && <><div id="tabbyCard"></div></>}
+                  </div> 
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for

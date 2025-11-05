@@ -10,7 +10,7 @@ export default function Terms() {
       </h6> */}
       
       <p className="mb-4 pb-3 fs-6">
-      Please read these Terms and Conditions (“Terms and Conditions”) carefully before using the https://www.ahmed-perfume.com website operated by Ahmed Al Maghribi Perfumes LLC (“us”, “we”, or “our”). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service. By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. Purchases If you wish to purchase any product or service made available through the Service (“Purchase”), you may be asked to supply certain information relevant to your Purchase including, without limitation, your … The Purchases section is for businesses that sell online (physical or digital).
+      Please read these Terms and Conditions (“Terms and Conditions”) carefully before using the https://ae.ahmedalmaghribi.com/en website operated by Ahmed Al Maghribi Perfumes LLC (“us”, “we”, or “our”). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service. By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. Purchases If you wish to purchase any product or service made available through the Service (“Purchase”), you may be asked to supply certain information relevant to your Purchase including, without limitation, your … The Purchases section is for businesses that sell online (physical or digital).
       </p>
       <h6 className="mb-3"></h6>
       <p className="mb-4 pb-3 fs-6">
@@ -20,12 +20,13 @@ export default function Terms() {
       <p className="mb-4 pb-3 fs-6">
       You further acknowledge and agree that Ahmed Al Maghribi Perfumes shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services. Changes we reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is a material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion. Contact Us If you have any questions about these Terms, please contact us.
       </p>
+      <p className="mb-4 pb-3 fs-6">
+        <span className="fw-bold">Tabby and Tamara orders: It cannot be cancelled or refunded</span><br/>
+      </p>
       <h6 className="mb-3"></h6>
       <p className="mb-4 pb-3 fs-6">
       Disclaimer: Legal information is not legal advice. Read the disclaimer.
       </p>
-  
-      
     </section>
   );
 }
