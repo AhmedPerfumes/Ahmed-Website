@@ -121,10 +121,10 @@ const filteredProducts = products
 
   return (
     <section className="container py-4">
-     <h2 class="section-title fw-bold text-center mb-3 display-6 text-uppercase text-primary">
+     <h2 className="section-title fw-bold text-center mb-3 display-6 text-uppercase text-primary">
   {title}
 </h2>
-<p class="fw-light text-center fs-5 text-muted mx-auto">
+<p className="fw-light text-center fs-5 text-muted mx-auto">
   Each fragrance is a journey, meticulously composed to evoke emotion and memory.
 </p>
 

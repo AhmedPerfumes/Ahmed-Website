@@ -18,6 +18,30 @@ export default function CartDrawer() {
   const { isLoggedIn } = useUser();
   const pathname = usePathname();
   const t= useTranslations();
+
+  // Helpers to build product URLs (consistent with ProductGrid)
+  const removeSpecialCharacters = (str) =>
+    str?.replace(/&amp;/g, "").replace(/[^\w\s-]/g, "").replace(/\s+/g, " ").trim();
+
+  const getSubcategorySlug = (category, subcategory, subcategory_name) => {
+    if (subcategory && subcategory.subcategory_name) {
+      return removeSpecialCharacters(subcategory.subcategory_name)
+        ?.split(" ")
+        .join("-")
+        .toLowerCase();
+    }
+    if (subcategory_name) {
+      return removeSpecialCharacters(subcategory_name)
+        ?.split(" ")
+        .join("-")
+        .toLowerCase();
+    }
+    const cleanedCategory = removeSpecialCharacters(category)?.toLowerCase();
+    if (cleanedCategory === "gift-sets") return "gift-sets";
+    if (cleanedCategory === "hair-mist") return "hair-mist";
+    if (cleanedCategory === "extrait-de-parfum") return "extrait-de-parfum";
+    return "online-exclusive";
+  };
   const closeCart = () => {
     document
       .getElementById("cartDrawerOverlay")
@@ -87,30 +111,30 @@ export default function CartDrawer() {
     //   return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
     // }
     let itemPrice = elm.price;
-    if (
-      elm?.coupon &&
-      Object.keys(elm.coupon).length !== 0 &&
-      couponDataContext &&
-      couponDataContext.code &&
-      elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
-      new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
-      new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
-    ) {
-      // console.log('common copuon', elm);
-      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
-      return (
-        <td>
-          <span className="money price price-sale">
-            {currency.symbol}
-            {(itemPrice * elm.quantity).toFixed(2)}
-          </span>
-          <span className="money price price-old">
-            {currency.symbol}
-            {(elm.price * elm.quantity).toFixed(2)}
-          </span>
-        </td>
-      );
-    }
+    // if (
+    //   elm?.coupon &&
+    //   Object.keys(elm.coupon).length !== 0 &&
+    //   couponDataContext &&
+    //   couponDataContext.code &&
+    //   elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+    //   new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+    //   new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+    // ) {
+    //   // console.log('common copuon', elm);
+    //   itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.quantity).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.quantity).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
     if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
       // console.log('common Customer Coupon', elm);
       const validCoupon = promotionsContext.some((promo) =>
@@ -123,7 +147,7 @@ export default function CartDrawer() {
       );
 
       if (
-        elm.is_customer_coupon &&
+        elm.is_coupon &&
         !validCoupon &&
         // !elm.sale_price &&
         !elm.discount
@@ -171,20 +195,65 @@ export default function CartDrawer() {
             {cartProducts.map((elm, i) => (
               <React.Fragment key={i}>
                 <div className="cart-drawer-item d-flex position-relative">
-                  <div className="position-relative">
-                    <Image
-                      loading="lazy"
-                      className="cart-drawer-item__img"
-                      width={330}
-                      height={400}
-                      style={{ height: "fit-content" }}
-                      src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${elm?.images && JSON.parse(elm.images)[0]}`}
-                      alt="image"
-                    />
-                  </div>
+                  {(() => {
+                    const categorySlug = removeSpecialCharacters(elm.category_name)
+                      ?.split(" ")
+                      .join("-")
+                      .toLowerCase();
+                    const subcategorySlug = getSubcategorySlug(
+                      elm.category_name,
+                      elm.subcategory,
+                      elm.subcategory_name
+                    );
+                    const productSlug = removeSpecialCharacters(elm.product_name)
+                      ?.split(" ")
+                      .join("-")
+                      .toLowerCase();
+                    const href = `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
+                    return (
+                      <Link href={href} className="position-relative">
+                        <Image
+                          loading="lazy"
+                          className="cart-drawer-item__img"
+                          width={330}
+                          height={400}
+                          style={{ height: "fit-content" }}
+                          src={
+                            elm.image
+                              ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`
+                              : `${process.env.NEXT_PUBLIC_API_URL}storage/${
+                                  elm?.images && JSON.parse(elm.images)[0]
+                                }`
+                          }
+                          alt="image"
+                          onClick={closeCart}
+                        />
+                      </Link>
+                    );
+                  })()}
                   <div className="cart-drawer-item__info flex-grow-1">
                     <h6 className="cart-drawer-item__title fw-normal">
-                      {elm?.product_name && he.decode(elm.product_name)}
+                      {(() => {
+                        const categorySlug = removeSpecialCharacters(elm.category_name)
+                          ?.split(" ")
+                          .join("-")
+                          .toLowerCase();
+                        const subcategorySlug = getSubcategorySlug(
+                          elm.category_name,
+                          elm.subcategory,
+                          elm.subcategory_name
+                        );
+                        const productSlug = removeSpecialCharacters(elm.product_name)
+                          ?.split(" ")
+                          .join("-")
+                          .toLowerCase();
+                        const href = `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
+                        return (
+                          <Link href={href} onClick={closeCart}>
+                            {elm?.product_name && he.decode(elm.product_name)}
+                          </Link>
+                        );
+                      })()}
                     </h6>
                     {/* <p className="cart-drawer-item__option text-secondary">
                       Color: Yellow
@@ -252,7 +321,7 @@ export default function CartDrawer() {
           alt="image"
         /> */}
        <p className="text-center fs-6 fw-bold success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
-       <hr class="cart-drawer-divider"></hr>
+       <hr className="cart-drawer-divider"></hr>
         <div className="free-shipping-progress mt-3">
           
               {totalPrice < freeShippingThreshold ? (

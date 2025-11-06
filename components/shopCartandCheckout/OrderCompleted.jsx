@@ -107,30 +107,30 @@ export default function OrderCompleted() {
       );
     }
 
-    if (
-      elm?.coupon &&
-      Object.keys(elm.coupon).length !== 0 &&
-      couponDataContext &&
-      couponDataContext.code &&
-      elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
-      new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
-      new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
-    ) {
-      // console.log('common copuon', elm);
-      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
-      return (
-        <td>
-          <span className="money price price-sale">
-            {currency.symbol}
-            {(itemPrice * elm.qty).toFixed(2)}
-          </span>
-          <span className="money price price-old">
-            {currency.symbol}
-            {(elm.price * elm.qty).toFixed(2)}
-          </span>
-        </td>
-      );
-    }
+    // if (
+    //   elm?.coupon &&
+    //   Object.keys(elm.coupon).length !== 0 &&
+    //   couponDataContext &&
+    //   couponDataContext.code &&
+    //   elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+    //   new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+    //   new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+    // ) {
+    //   // console.log('common copuon', elm);
+    //   itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.qty).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.qty).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
 
     // if (elm?.sale_price) {
     //   console.log('common sale price', elm);
@@ -164,7 +164,7 @@ export default function OrderCompleted() {
       );
 
       if (
-        elm.is_customer_coupon &&
+        elm.is_coupon &&
         validCoupon &&
         // !elm.sale_price &&
         !elm.discount
