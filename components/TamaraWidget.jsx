@@ -17,8 +17,8 @@ const TamaraWidget = ({ amount, inlineType, inlineVariant }) => {
         };
 
         const script = document.createElement("script");
-        // script.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-        script.src = "https://cdn.tamara.co/widget-v2/tamara-widget.js";
+        script.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+        // script.src = "https://cdn.tamara.co/widget-v2/tamara-widget.js";
         script.async = true;
         script.onload = () => {
             scriptLoadedRef.current = true;
@@ -35,14 +35,7 @@ const TamaraWidget = ({ amount, inlineType, inlineVariant }) => {
     if (!isClient) return null; // Prevent rendering on server
 
     return (
-        <tamara-widget
-            key={widgetKey}
-            type="tamara-summary"
-            amount={amount}
-            inline-type={inlineType}
-            inline-variant={inlineVariant}
-            config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'
-        />
+        <></>
     );
 };
 

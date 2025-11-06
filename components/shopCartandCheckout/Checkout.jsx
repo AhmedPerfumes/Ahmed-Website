@@ -2119,7 +2119,7 @@ console.log("Cart products after coupon:", updatedCartProducts);
                         </svg>
                       </label>
                     </div>
-                    <div className="form-check">
+                    {/* <div className="form-check">
                     <input
                       className="form-check-input form-check-input_fill"
                       type="radio"
@@ -2137,7 +2137,7 @@ console.log("Cart products after coupon:", updatedCartProducts);
                       Pay in 3. No interes, no fees.
                       <TamaraWidget inlineType='4' inlineVariant='text'/>
                     </label>
-                  </div>
+                  </div> */}
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for
