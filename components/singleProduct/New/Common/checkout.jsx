@@ -1,10 +1,11 @@
 import { useContextElement } from "@/context/Context";
 import { useMenu } from "@/context/MenuContext";
 import { useLocale, useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { renderPrice } from "@/utlis/priceRenderer";
+import TamaraWidget from "@/components/TamaraWidget";
 
 const Checkout = ({ product }) => {
     // const sizes = [product.size];
@@ -32,7 +33,9 @@ const Checkout = ({ product }) => {
         if (isIncludeCard()) {
             if (quantity >= 1 && quantity <= product.product_qty) {
                 setError(null);
-                const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+                const item = cartProducts.filter(
+                    (elm) => elm.product_id == id
+                )[0];
                 const items = [...cartProducts];
                 const itemIndex = items.indexOf(item);
                 item.quantity = quantity;
@@ -42,7 +45,11 @@ const Checkout = ({ product }) => {
                 setError("Quantity is more than available quantity");
             }
         } else {
-            setQuantity( quantity <= product.product_qty && quantity >= 1 ? quantity : product.product_qty );
+            setQuantity(
+                quantity <= product.product_qty && quantity >= 1
+                    ? quantity
+                    : product.product_qty
+            );
             setError(null);
             if (quantity > product.product_qty) {
                 setError("Quantity is more than available quantity");
@@ -55,13 +62,21 @@ const Checkout = ({ product }) => {
         if (!isIncludeCard()) {
             const item = {
                 ...product,
-                category_name: capitalizeEachWord(category.split("-").join(" ")),
-                subcategory_name: capitalizeEachWord(subcategory.split("-").join(" ")),
+                category_name: capitalizeEachWord(
+                    category.split("-").join(" ")
+                ),
+                subcategory_name: capitalizeEachWord(
+                    subcategory.split("-").join(" ")
+                ),
             };
             item.quantity = quantity;
             setCartProducts((pre) => [...pre, item]);
-            document.getElementById("cartDrawerOverlay").classList.add("page-overlay_visible");
-            document.getElementById("cartDrawer").classList.add("aside_visible");
+            document
+                .getElementById("cartDrawerOverlay")
+                .classList.add("page-overlay_visible");
+            document
+                .getElementById("cartDrawer")
+                .classList.add("aside_visible");
         }
     };
 
@@ -100,8 +115,44 @@ const Checkout = ({ product }) => {
     }
 
     function capitalizeEachWord(str) {
-        return str.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" "); 
+        return str
+            .split(" ")
+            .map(
+                (word) =>
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            )
+            .join(" ");
     }
+
+    useEffect(() => {
+        const tamaraPromoScript = document.createElement("script");
+        tamaraPromoScript.src =
+            "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+        tamaraPromoScript.async = true;
+        document.body.appendChild(tamaraPromoScript);
+
+        return () => {
+            document.body.removeChild(tamaraPromoScript);
+        };
+    }, []);
+
+    useEffect(() => {
+        window.tamaraSettings = {
+            lang: "en",
+            country: "AE",
+            publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+        };
+
+        const tamaraPromoScript = document.createElement("script");
+        tamaraPromoScript.src =
+            "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+        tamaraPromoScript.async = true;
+        document.body.appendChild(tamaraPromoScript);
+
+        return () => {
+            document.body.removeChild(tamaraPromoScript);
+        };
+    }, []);
 
     // const price = (elm) => {
     //     const currentUTC = new Date(); // Current UTC time
@@ -253,18 +304,40 @@ const Checkout = ({ product }) => {
                 </div>
             </div> */}
             {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
-            {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
-                    <div className="w-100 mt-3 mb-3">
-                        <div className="d-flex justify-content-between align-items-center border-bottom pb-1" style={{ fontFamily: "Georgia, serif" }}>
-                            <label htmlFor="size-select" className="text-muted me-2 mb-0 h6">
+            {product?.tags &&
+                Array.isArray(product.tags) &&
+                product.tags.length > 0 && (
+                    <div className="w-100 mb-3">
+                        <div
+                            className="d-flex justify-content-between align-items-center border-bottom pb-1"
+                            style={{ fontFamily: "Georgia, serif" }}
+                        >
+                            <label
+                                htmlFor="size-select"
+                                className="text-muted me-2 mb-0 h6"
+                            >
                                 Size:
                             </label>
 
                             {/* CHANGED: This container will now hold one or more tags */}
-                            <div className="d-flex flex-wrap justify-content-end gap-2" style={{ maxWidth: "150px" }}>
+                            <div
+                                className="d-flex flex-wrap justify-content-end gap-2"
+                                style={{ maxWidth: "150px" }}
+                            >
                                 {/* CHANGED: Mapping over the product.tags array */}
                                 {product.tags.map((tag, index) => (
-                                    <div key={index} className="btn btn-sm" style={{ backgroundColor: "rgba(250, 249, 247)", color: "#000", fontSize: "0.875rem", padding: "4px 8px", cursor: "default", }}>
+                                    <div
+                                        key={index}
+                                        className="btn btn-sm"
+                                        style={{
+                                            backgroundColor:
+                                                "rgba(250, 249, 247)",
+                                            color: "#000",
+                                            fontSize: "0.875rem",
+                                            padding: "4px 8px",
+                                            cursor: "default",
+                                        }}
+                                    >
                                         {tag}
                                     </div>
                                 ))}
@@ -272,7 +345,7 @@ const Checkout = ({ product }) => {
                         </div>
                     </div>
                 )}
-            <div id="TabbyPromo"></div>
+            <div className="mb-3" id="TabbyPromo"></div>
             {/* Add to Cart Button */}
             {/* <button
                 type="submit"
@@ -289,7 +362,8 @@ const Checkout = ({ product }) => {
                     : t("Out of Stock")}
             </button> */}
             {/* Cart Actions (drop-in replacement for your "new" block) */}
-            <div className="mt-4">
+                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
+            <div className="mt-3">
                 {product.product_qty > 0 ? (
                     <div className="d-flex w-100 gap-2" style={{ height: 48 }}>
                         {/* Left Pill (Add to Cart → Already Added) */}
@@ -301,10 +375,14 @@ const Checkout = ({ product }) => {
                             className="btn btn-dark rounded-pill fw-semibold d-flex align-items-center justify-content-center shadow-sm"
                             disabled={!!isIncludeCard()}
                             style={{ height: 48, flexShrink: 0 }}
-                            animate={{ width: !!isIncludeCard() ? "60%" : "100%", }}
-                            transition={{ type: "tween", duration: 0.1,}}
+                            animate={{
+                                width: !!isIncludeCard() ? "60%" : "100%",
+                            }}
+                            transition={{ type: "tween", duration: 0.1 }}
                         >
-                            {!!isIncludeCard() ? t("Already Added") : t("Add to Cart")}
+                            {!!isIncludeCard()
+                                ? t("Already Added")
+                                : t("Add to Cart")}
                         </motion.button>
 
                         {/* Right Pill (Quantity Selector) */}
@@ -316,28 +394,68 @@ const Checkout = ({ product }) => {
                                     initial={{ width: 0, opacity: 0 }}
                                     animate={{ width: "40%", opacity: 1 }}
                                     exit={{ width: 0, opacity: 0 }}
-                                    transition={{ type: "tween", duration: 0.1, }}
+                                    transition={{
+                                        type: "tween",
+                                        duration: 0.1,
+                                    }}
                                     className="btn btn-dark rounded-pill fw-semibold d-flex align-items-center justify-content-between shadow-sm px-2 overflow-hidden"
                                     style={{ height: 48 }}
                                 >
                                     <button
                                         aria-label="Decrease quantity"
-                                        onClick={() => setQuantityCartItem( product.product_id, Math.max(1,(isIncludeCard() ?.quantity ?? 1) - 1))}
+                                        onClick={() =>
+                                            setQuantityCartItem(
+                                                product.product_id,
+                                                Math.max(
+                                                    1,
+                                                    (isIncludeCard()
+                                                        ?.quantity ?? 1) - 1
+                                                )
+                                            )
+                                        }
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"
-                                        style={{ width: 34, height: 34, background: "rgba(255,255,255,0.12)", color: "#fff",}}
+                                        style={{
+                                            width: 34,
+                                            height: 34,
+                                            background:
+                                                "rgba(255,255,255,0.12)",
+                                            color: "#fff",
+                                        }}
                                     >
                                         −
                                     </button>
 
-                                    <span className="px-2 text-white" style={{ minWidth: 36, textAlign: "center", userSelect: "none", }}>
+                                    <span
+                                        className="px-2 text-white"
+                                        style={{
+                                            minWidth: 36,
+                                            textAlign: "center",
+                                            userSelect: "none",
+                                        }}
+                                    >
                                         {isIncludeCard()?.quantity ?? 1}
                                     </span>
 
                                     <button
                                         aria-label="Increase quantity"
-                                        onClick={() => setQuantityCartItem(product.product_id, Math.min(product.product_qty,(isIncludeCard()?.quantity ?? 1) + 1))}
+                                        onClick={() =>
+                                            setQuantityCartItem(
+                                                product.product_id,
+                                                Math.min(
+                                                    product.product_qty,
+                                                    (isIncludeCard()
+                                                        ?.quantity ?? 1) + 1
+                                                )
+                                            )
+                                        }
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"
-                                        style={{ width: 34, height: 34, background: "rgba(255,255,255,0.12)", color: "#fff",}}
+                                        style={{
+                                            width: 34,
+                                            height: 34,
+                                            background:
+                                                "rgba(255,255,255,0.12)",
+                                            color: "#fff",
+                                        }}
                                     >
                                         +
                                     </button>
@@ -346,7 +464,7 @@ const Checkout = ({ product }) => {
                         </AnimatePresence>
                     </div>
                 ) : (
-                    <button 
+                    <button
                         type="button"
                         className="btn btn-dark text-white w-100 rounded-pill fw-semibold shadow-sm"
                         disabled

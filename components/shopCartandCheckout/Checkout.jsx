@@ -23,6 +23,7 @@ import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 // import { bogoProducts } from "@/components/BogoFeature";
+import TamaraWidget from "@/components/TamaraWidget";
 
 export default function Checkout() {
   const {
@@ -297,8 +298,14 @@ export default function Checkout() {
 
     tabbyPromoScript.onload = () => {
       new window.TabbyPromo({
-        // You can add any necessary configuration for TabbyPromo here if needed
-      });
+            selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
+            currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
+            price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
+            lang: 'en', // Optional, en|ar only supported
+            source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+            publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87', // required, Public Key
+            merchantCode: 'APM'  // required
+        });
     };
 
     return () => {
@@ -1659,6 +1666,8 @@ export default function Checkout() {
                         </tr>
                       </tbody>
                     </table>
+                    <div className="my-3" id="TabbyPromo"></div>
+                    <TamaraWidget amount={!freeShippingFlag ? ( parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat( shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2): (0 + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat( shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
                   </div>
 
                   <div>
@@ -2088,10 +2097,19 @@ export default function Checkout() {
                         height="50"
                         alt="Cropped Faux leather Jacket"
                       />
-                      <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button>
+                      {/* <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button> */}
                     </label>
                     {selectedOption == 'tabby' && <><div id="tabbyCard"></div></>}
                   </div> 
+
+                  <div className="form-check">
+                    <input className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_5" value={'tamara'} checked={selectedOption === 'tamara'} onChange={handleRadioChange} />
+                    <label className="form-check-label" htmlFor="checkout_payment_method_5" style={{display: "inline-flex"}} >
+                      Pay in 3. No interes, no fees.
+                      <TamaraWidget inlineType='4' inlineVariant='text'/>
+                    </label>
+                  </div>
+
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for

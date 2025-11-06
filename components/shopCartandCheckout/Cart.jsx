@@ -9,6 +9,7 @@ import { useMenu } from '../../context/MenuContext';
 import Pagination1 from "../common/Pagination1";
 
 import { renderPrice } from "@/utlis/priceRenderer";
+import TamaraWidget from "@/components/TamaraWidget";
 
 export default function Cart() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -156,6 +157,33 @@ export default function Cart() {
     }
   };
 
+  useEffect(() => {
+    const tamaraPromoScript = document.createElement("script");
+    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    tamaraPromoScript.async = true;
+    document.body.appendChild(tamaraPromoScript);
+
+    return () => {
+        document.body.removeChild(tamaraPromoScript);
+    };
+  }, [totalPrice]);
+
+  useEffect(() => {
+    window.tamaraSettings = {
+        lang: "en",
+        country: "AE",
+        publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+    };
+
+    const tamaraPromoScript = document.createElement("script");
+    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    tamaraPromoScript.async = true;
+    document.body.appendChild(tamaraPromoScript);
+
+    return () => {
+        document.body.removeChild(tamaraPromoScript);
+    };
+  }, [totalPrice]);
   // const price = (elm) => {
   //   if(elm?.discount) {
   //     if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
@@ -430,7 +458,8 @@ export default function Cart() {
                   </tr>
                 </tbody>
               </table>
-              <div id="TabbyPromo"></div>
+              <div className="my-3" id="TabbyPromo"></div>
+              <TamaraWidget inlineType="5" inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
