@@ -249,7 +249,7 @@ export default function Header14() {
                             </div>
 
                             <div className="logo">
-                                <Link href="/"><Image loading="lazy" src="/assets/images/about/ahmed-logo.png" width="100" height="100" alt="Ahmed Al Maghribi" /></Link>
+                                <Link href="/"><Image loading="lazy" src="/assets/images/about/AhmedLogo.png" width="100" height="100" alt="Ahmed Al Maghribi" /></Link>
                             </div>
 
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
