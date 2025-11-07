@@ -21,7 +21,6 @@ import Link from "next/link";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
-import Chat from "./chatbot/Pages/Chat";
 
 gsap.registerPlugin(ScrollTrigger);
 
