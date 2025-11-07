@@ -30,7 +30,11 @@
     "jquery": "^3.7.1",
     "jquery-scrollify": "^1.0.21",
     "js-cookie": "^3.0.5",
+<<<<<<< Updated upstream
     "lucide-react": "^0.539.0",
+=======
+    "lucide-react": "^0.542.0",
+>>>>>>> Stashed changes
     "next": "^14.2.3",
     "next-intl": "^3.23.5",
     "photoswipe": "^5.4.4",
