@@ -1,13 +1,16 @@
 "use client";
 import React from "react";
 import HeroSection from "../../../../components/otherPages/KSeries/HeroSection";
-import Timeline from "@/components/otherPages/KSeries/Timeline";
+import KSeriesScrollSection from "@/components/otherPages/KSeries/KSeriesScrollSection";
+
 
 export default function Page() {
   return (
     <>
       <HeroSection />
-     <Timeline/>
+      <KSeriesScrollSection/>
+     {/* <KZoomSection/> */}
+     {/* <Timeline/> */}
       {/* <LuxuryLanding/> */}
       {/* Placeholder next section so the CTA has a destination after the hero */}
       {/* <section className="py-5" style={{ background: "#090b10", color: "#f2f4f8" }}>
