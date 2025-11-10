@@ -9,19 +9,19 @@ import MobileFooter2 from "@/components/footers/MobileFooter2";
 export default function Page() {
     return (
         <>
-            <Header14 />
-            <main className="page-wrapper">
+            {/* <Header14 /> */}
+            <main className="">
                 <HeroSection />
                 <KSeriesScrollSection />
             </main>
-            <section className="d-none d-lg-block" style={{ height: "100%" }}>
+            {/* <section className="d-none d-lg-block" style={{ height: "100%" }}>
                 <Footer14 />
             </section>
             <section className="d-sm-block d-md-none bg-dark pt-5  ">
                 <div className="MobileFooter">
                     <MobileFooter2 />
                 </div>
-            </section>
+            </section> */}
         </>
     );
 }
