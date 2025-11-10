@@ -80,10 +80,10 @@ export default function HeroSection({
         />
       </motion.div>
 
-      {/* Centered content */}
+      {/* Centered Title/Subtitle content (No CTA here anymore) */}
       <motion.div
         style={{ opacity: heroOpacity, zIndex: 10 }}
-        className="position-relative h-100 d-flex flex-column align-items-center mt-5 text-center px-4"
+        className="position-relative h-100 d-flex flex-column align-items-center justify-content-center text-center px-4" // Added justify-content-center for better centering
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -91,7 +91,7 @@ export default function HeroSection({
           transition={{ duration: 1, delay: 0.5 }}
         >
           <h1
-            className={`display-1 fw-bold mb-4 ${styles.serifFont} ${styles.heroTitle}`}
+            className={`display-1 fw-bold ${styles.serifFont} ${styles.heroTitle}`}
           >
             <span className={styles.textGold}>K</span>
             <span className={styles.heroTitleMain}> SERIES</span>
@@ -102,26 +102,31 @@ export default function HeroSection({
           >
             Where Elegance Meets Artistry
           </p>
-
-          <motion.a
-            href={ctaHref}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase ${styles.sansFont}`}
-          >
-            {ctaText}
-          </motion.a>
+          
+          {/* Removed the CTA from here */}
+          
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator & CTA (new container) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
-        className="position-absolute bottom-0 start-50 translate-middle-x mb-4"
+        className="position-absolute bottom-0 start-50 translate-middle-x pb-5 d-flex flex-column align-items-center"
         style={{ zIndex: 10 }}
       >
+        {/* Call to Action - Now positioned at the bottom */}
+        <motion.a
+            href={ctaHref}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase ${styles.sansFont} mb-4`} // Added margin-bottom
+        >
+            {ctaText}
+        </motion.a>
+        
+        {/* Scroll Arrow Indicator */}
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
