@@ -33,14 +33,14 @@ const slidesData = [
   },
 ];
 
-const MOBILE_BREAKPOINT = 768; // px
+const MOBILE_BREAKPOINT = 768;
 
 const KSeriesScrollSection = () => {
   const containerRef = useRef(null);
   const slidesRef = useRef([]);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile once on mount + on resize
+  // Detect mobile
   useEffect(() => {
     const update = () => {
       if (typeof window !== "undefined") {
@@ -52,10 +52,11 @@ const KSeriesScrollSection = () => {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  // Desktop GSAP stacked scroll
   useEffect(() => {
     const container = containerRef.current;
     const slides = slidesRef.current;
-    if (!container || !slides.length) return;
+    if (!container || !slides.length || isMobile) return;
 
     const ctx = gsap.context(() => {
       gsap.set(container, { position: "relative", overflow: "hidden" });
@@ -75,7 +76,7 @@ const KSeriesScrollSection = () => {
         });
       });
 
-      const scrollPerSlideVH = 340; // higher = slower
+      const scrollPerSlideVH = 340; // higher = slower, nice & smooth
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
@@ -92,13 +93,169 @@ const KSeriesScrollSection = () => {
     }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
+  /* =========================
+   * MOBILE: OVERLAPPING STACK
+   * ========================= */
+  if (isMobile) {
+    return (
+      <section ref={containerRef} className="kseries-mobile-wrapper">
+        {slidesData.map((slide, index) => {
+          const bg = slide.mobileImage || slide.image;
+          return (
+            <div
+              key={slide.id}
+              className={`kseries-mobile-slide ${
+                index > 0 ? "kseries-mobile-overlap" : ""
+              }`}
+            >
+              <div
+                className="kseries-mobile-image"
+                style={{ backgroundImage: `url(${bg})` }}
+              />
+              <div className={`kseries-mobile-card theme-${slide.id}`}>
+                <div className="kseries-tag">K-Series • Pre-Registration</div>
+                <h2 className="kseries-title">
+                  {slide.title}
+                  <span>{slide.subtitle}</span>
+                </h2>
+                <p className="kseries-text">{slide.text}</p>
+                <button className="kseries-btn">Secure Your Slot</button>
+              </div>
+            </div>
+          );
+        })}
+
+        <style jsx>{`
+          .kseries-mobile-wrapper {
+            width: 100%;
+            padding: 32px 16px 40px;
+            background: #020308;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+          }
+
+          .kseries-mobile-slide {
+            position: relative;
+          }
+
+          /* Each next block slightly overlaps upwards for that stacked feel */
+          .kseries-mobile-overlap {
+            margin-top: -18px;
+          }
+
+          .kseries-mobile-image {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background-size: cover;
+            background-position: center;
+            border-radius: 18px;
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.7);
+          }
+
+          .kseries-mobile-card {
+            position: relative;
+            margin-top: -26px; /* key: card overlaps image */
+            padding: 18px 18px 20px;
+            border-radius: 18px;
+            background: rgba(3, 4, 10, 0.94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont,
+              "Segoe UI", sans-serif;
+            color: #f7eee1;
+          }
+
+          .kseries-tag {
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #d4af37;
+            opacity: 0.9;
+          }
+
+          .kseries-title {
+            margin: 0;
+            font-family: "Playfair Display", "Georgia", serif;
+            font-size: 1.5rem;
+            line-height: 1.3;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+          }
+
+          .kseries-title span {
+            display: block;
+            margin-top: 2px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #d4af37;
+          }
+
+          .kseries-text {
+            margin-top: 4px;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: #e7ddcc;
+          }
+
+          .kseries-btn {
+            margin-top: 10px;
+            padding: 9px 22px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: #d4af37;
+            color: #111;
+            align-self: flex-start;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            transition: all 0.22s ease;
+          }
+
+          .kseries-btn:hover {
+            background: #f0c95a;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.75);
+          }
+
+          /* Cool-tone themes for present/future */
+          .theme-present,
+          .theme-future {
+            background: rgba(4, 12, 26, 0.96);
+            border-color: rgba(90, 180, 255, 0.3);
+          }
+          .theme-present .kseries-tag,
+          .theme-future .kseries-tag {
+            color: #6ecbff;
+          }
+          .theme-present .kseries-title span,
+          .theme-future .kseries-title span {
+            color: #6ecbff;
+          }
+        `}</style>
+      </section>
+    );
+  }
+
+  /* =========================
+   * DESKTOP: ORIGINAL STACKED
+   * ========================= */
   return (
     <section ref={containerRef} className="kseries-scroll-wrapper">
       {slidesData.map((slide, i) => {
-        const bg =
-          isMobile && slide.mobileImage ? slide.mobileImage : slide.image;
+        const bg = slide.image;
 
         return (
           <div
@@ -144,7 +301,7 @@ const KSeriesScrollSection = () => {
         .kseries-inner {
           width: 100%;
           max-width: 1440px;
-          padding: 0 80px; /* match header container */
+          padding: 0 80px;
           margin: 0 auto;
           height: 100%;
           display: flex;
@@ -315,30 +472,9 @@ const KSeriesScrollSection = () => {
         }
 
         @media (max-width: 991px) {
+          /* desktop JSX isn't used on mobile, just hiding as backup */
           .kseries-scroll-wrapper {
-            height: 100vh;
-          }
-          .kseries-inner {
-            padding: 0 16px;
-          }
-          .kseries-inner-past,
-          .kseries-inner-present,
-          .kseries-inner-future {
-            justify-content: center;
-          }
-          .kseries-content {
-            width: 100%;
-            min-height: auto;
-            padding: 22px 20px;
-          }
-          .kseries-title {
-            font-size: 1.8rem;
-          }
-          .kseries-title span {
-            font-size: 0.9rem;
-          }
-          .kseries-text {
-            font-size: 0.9rem;
+            display: none;
           }
         }
       `}</style>
