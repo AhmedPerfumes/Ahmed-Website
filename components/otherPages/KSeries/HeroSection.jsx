@@ -5,14 +5,14 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
-const DESKTOP_HERO = "/assets/images/kseries/hero-banner.jpg";
+const DESKTOP_HERO = "/assets/images/kseries/hero-banner-copy.jpg";
 const MOBILE_HERO = "/assets/images/kseries/mobile.jpg";
 const MOBILE_BREAKPOINT = 768;
 
 export default function HeroSection({
   title = "Experience The Essence",
   subtitle = "Elevate your presence with our K-Series signature scents.",
-  ctaText = "Shop The Collection",
+  ctaText = "Shop The Series",
   ctaHref = "/product-category/gift-sets",
 }) {
   const heroRef = useRef(null);
@@ -42,19 +42,19 @@ export default function HeroSection({
   const heroSrc = isMobile ? MOBILE_HERO : DESKTOP_HERO;
 
   // Subtle floating specs (optional)
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 10 }).map((_, i) => ({
-        id: i,
-        size: 6 + ((i * 11) % 10),
-        left: `${(i * 91) % 100}%`,
-        delay: (i * 0.41) % 2,
-        duration: 4 + ((i * 1.1) % 4),
-        blur: (i * 0.9) % 3,
-        opacity: 0.12 + ((i * 5) % 20) / 100,
-      })),
-    []
-  );
+  // const particles = useMemo(
+  //   () =>
+  //     Array.from({ length: 10 }).map((_, i) => ({
+  //       id: i,
+  //       size: 6 + ((i * 11) % 10),
+  //       left: `${(i * 91) % 100}%`,
+  //       delay: (i * 0.41) % 2,
+  //       duration: 4 + ((i * 1.1) % 4),
+  //       blur: (i * 0.9) % 3,
+  //       opacity: 0.12 + ((i * 5) % 20) / 100,
+  //     })),
+  //   []
+  // );
 
   return (
     <div
@@ -73,7 +73,7 @@ export default function HeroSection({
           fill
           priority
           className={styles.heroImage}
-          style={{ objectFit: "cover", objectPosition: "center bottom" }}
+          style={{ objectFit: "cover", objectPosition: "center center" }}
         />
         <div
           className={`position-absolute top-0 start-0 w-100 h-100 ${styles.heroOverlay}`}
@@ -93,14 +93,15 @@ export default function HeroSection({
           <h1
             className={`display-1 fw-bold ${styles.serifFont} ${styles.heroTitle}`}
           >
-            <span className={styles.textGold}>K</span>
-            <span className={styles.heroTitleMain}> SERIES</span>
+            {/* <span className={styles.textGold}>K</span>
+            <span className={styles.heroTitleMain}> SERIES</span> */}
+            <Image src="/assets/images/kseries/k-series[1].png" alt="K Series Underline" width={550} height={250} className="d-block mx-auto mt-3" />
           </h1>
 
           <p
             className={`fs-4 mb-4 ${styles.textChampagne} ${styles.sansFont} ${styles.heroSubtitle}`}
           >
-            Where Elegance Meets Artistry
+            The Founder’s Legacy
           </p>
           
           {/* Removed the CTA from here */}
@@ -138,7 +139,7 @@ export default function HeroSection({
       </motion.div>
 
       {/* Optional subtle particles */}
-      {particles.map((p) => (
+      {/* {particles.map((p) => (
         <motion.div
           key={p.id}
           className={styles.heroParticle}
@@ -157,7 +158,7 @@ export default function HeroSection({
             ease: "easeOut",
           }}
         />
-      ))}
+      ))} */}
     </div>
   );
 }
