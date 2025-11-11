@@ -1,10 +1,10 @@
 // components/otherPages/KSeries/KSeriesProductCards.jsx
 
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "./KSeriesProductCards.module.css";
-import KSeriesProductModal from "./KSeriesProductModal";
+import { useRouter } from "next/navigation";
 
 // Re-using the product data from KSeriesScrollSection
 const slidesData = [
@@ -62,11 +62,30 @@ const ProductCard = ({ data, onClick }) => {
 };
 
 export default function KSeriesProductCards() {
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const handleCardClick = (productData) => { setSelectedProduct(productData); };
-    const handleCloseModal = () => { setSelectedProduct(null); };
+    const router = useRouter();
+    const handleCardClick = (productData) => {
+    let routeSegment;
+    switch (productData.id) {
+        case 'past':
+            routeSegment = '2000';
+            break;
+        case 'present':
+            routeSegment = '2025';
+            break;
+        case 'future':
+            routeSegment = '2050';
+            break;
+        default:
+            console.error("Unknown product ID:", productData.id);
+            return; // Exit if ID is unexpected
+    }
+    // Construct the path: /en/K-Series/[routeSegment]
+    const path = `/en/K-Series/${routeSegment}`;
+
+    // Redirect the user
+    router.push(path);
+  };
   return (
-    <>
         <section className={styles.productCardsSection}>
         <div className={styles.header}>
             <h2 className={styles.mainTitle}>
@@ -83,7 +102,5 @@ export default function KSeriesProductCards() {
             ))}
         </div>
         </section>
-        <KSeriesProductModal product={selectedProduct} onClose={handleCloseModal} />
-    </>
   );
 }
