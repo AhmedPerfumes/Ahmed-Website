@@ -145,11 +145,11 @@
   border-color: rgba(140, 90, 255, 0.3); /* Purple border */
 }
 .theme-present .subtitle, .theme-present .ctaButton {
-  color: #8c5aff; /* Vibrant purple accent */
-  border-color: #8c5aff;
+  color: #6d38f2; /* Vibrant purple accent */
+  border-color: #6d38f2;
 }
 .theme-present .ctaButton:hover {
-  background-color: #9d6fff; /* Lighter purple on hover */
+  background-color: #6d38f2; /* Lighter purple on hover */
   color: #111;
 }
 
@@ -158,11 +158,11 @@
   border-color: rgba(110, 203, 255, 0.3);
 }
 .theme-future .subtitle, .theme-future .ctaButton {
-  color: #6ecbff; /* Bright Blue */
-  border-color: #6ecbff;
+  color: #4cb2ff; 
+  border-color: #4cb2ff;
 }
 .theme-future .ctaButton:hover {
-  background-color: #6ecbff;
+  background-color: #4cb2ff;
   color: #111;
 }
 
