@@ -58,7 +58,7 @@ export default function PrebookingWidget() {
     };
 
     // Placeholder function for form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
         // Basic validation: must select at least one series
@@ -66,16 +66,45 @@ export default function PrebookingWidget() {
             alert("Please select at least one interested series.");
             return;
         }
-
-        console.log({
+        const submissionData = {
             name,
             email,
-            interestedSeries: selectedSeries
-        });
+            interestedSeries: selectedSeries, // Matches the expected key in the Laravel controller
+        };
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/prebooking/submit`, { // Adjust the path if your API version/prefix is different
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'origin': origin,
+                    // If Botble requires a CSRF token for API, you'd need to include it here:
+                    // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify(submissionData),
+                cache: 'no-store',
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                console.log(result.message);
+                alert(result.message);
+                handleClose();
+            } else {
+                console.error('Submission Error:', result.message, result.errors);
+                alert(`Error: ${result.message || 'Please check the console for details.'}`);
+            }
+        } catch (error) {
+            console.error('Network Error:', error);
+            alert('A network error occurred. Please try again.');
+        }
+
+        // console.log({ name, email, interestedSeries: selectedSeries });
         
         // Your form submission logic here (API call, validation)
-        console.log("Prebooking form submitted with multiple selections!");
-        handleClose();
+        // console.log("Prebooking form submitted with multiple selections!");
+        // handleClose();
     };
 
     useEffect(() => {
