@@ -1,0 +1,115 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+  padding: 80px 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hero-section .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(20, 20, 20, 0.85), #000);
+  z-index: 0;
+}
+
+/* Colors */
+.text-gold { color: #f9d571; }
+.text-cream { color: #f5f5dc; }
+
+/* Text */
+.hero-section h1 { font-size: 3rem; letter-spacing: 1px; }
+.hero-section .lead { color: #ddd; font-size: 1.2rem; line-height: 1.7; }
+
+/* Center Bottle */
+.center-bottle {
+  position: relative;
+}
+
+.perfume-bottle {
+  width: 300px;
+  max-width: 320px;
+  height: auto;
+  filter: drop-shadow(0px 0px 60px rgba(255, 255, 255, 0.2));
+  animation: floatCenter 6s ease-in-out infinite;
+}
+
+
+
+/* Side Bottles */
+.side-bottle {
+  width: 180px;
+  max-width: 200px;
+  height: auto;
+  filter: drop-shadow(0px 0px 40px rgba(255, 255, 255, 0.15));
+}
+
+.left-bottle .side-bottle {
+  animation: floatLeft 8s ease-in-out infinite;
+}
+
+.right-bottle .side-bottle {
+  animation: floatRight 8s ease-in-out infinite;
+}
+
+
+
+/* Glow */
+.bottle-glow {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 250px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-50%);
+  filter: blur(60px);
+  z-index: 1;
+  opacity: 0.35;
+  border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+.bottle-glow-small {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  width: 150px;
+  height: 70px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-50%);
+  filter: blur(40px);
+  z-index: 0;
+  opacity: 0.25;
+  border-radius: 50%;
+  animation: glowPulse 5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.45; transform: translateX(-50%) scale(1.05); }
+}
+
+/* Fade-in text */
+.fade-in-top { opacity: 0; transform: translateY(20px); animation: fadeInTop 1s forwards; }
+.fade-in-top.delay-1 { animation-delay: 0.4s; }
+.fade-in-top.delay-2 { animation-delay: 0.7s; }
+.fade-in-top.delay-3 { animation-delay: 1s; }
+
+@keyframes fadeInTop { to { opacity: 1; transform: translateY(0); } }
+
+/* Button */
+.btn-light { font-weight: 600; border-radius: 50px; transition: all 0.3s ease; }
+.btn-light:hover { background-color: #e0e0e0; color: #000; }
+
+/* Responsive */
+@media (max-width: 991px) {
+  .left-bottle, .right-bottle { display: none; }
+  .perfume-bottle { width: 260px; }
+  .hero-section h1 { font-size: 2.5rem; }
+  .hero-section .lead { font-size: 1.1rem; }
+}

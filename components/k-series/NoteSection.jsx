@@ -282,7 +282,7 @@ function NoteSection() {
                 {/* Description */}
                 <p
                   style={{
-                    color: "#b8b8b8",
+                    color: "#ffff",
                     lineHeight: 1.8,
                     fontSize: "0.95rem",
                     marginBottom: 0,

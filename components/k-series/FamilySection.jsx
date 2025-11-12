@@ -75,7 +75,7 @@ export default function FamilySection() {
 
             {/* Subheading */}
             <p
-              className="lead text-muted mb-5 px-3"
+              className="lead text-white mb-5 px-3"
               style={{
                 maxWidth: "650px",
                 margin: "0 auto",
@@ -89,7 +89,7 @@ export default function FamilySection() {
 
             {/* Image Row — tighter spacing */}
             <div
-              className="d-flex flex-row justify-content-center align-items-end mt-5"
+              className="d-flex flex-row justify-content-center align-items-end mt-5 pt-5"
               style={{
                 gap: "0", // remove Bootstrap gap
                 marginLeft: "-20px", // bring side bottles inward
