@@ -210,7 +210,7 @@ export default function FamilySection() {
                   animate={isVisible ? { opacity: 1 } : {}}
                   transition={{ delay: 0.5 }}
                 >
-                  K 2000 — The Roots
+                  K 2050 — The Beyond
                 </motion.p>
               </div>
 
@@ -238,7 +238,7 @@ export default function FamilySection() {
                   animate={isVisible ? { opacity: 1 } : {}}
                   transition={{ delay: 0.6 }}
                 >
-                  K 2025 — The Alchemy Lab
+                  K 2000 — The Roots
                 </motion.p>
               </div>
 
@@ -266,13 +266,13 @@ export default function FamilySection() {
                   animate={isVisible ? { opacity: 1 } : {}}
                   transition={{ delay: 0.7 }}
                 >
-                  K 2050 — The Beyond
+                  K 2025 — The Alchemy Lab
                 </motion.p>
               </div>
             </motion.div>
 
             {/* Call to action */}
-            <motion.div 
+            {/* <motion.div 
               className="mt-5 pt-5"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -294,7 +294,7 @@ export default function FamilySection() {
               >
                 Explore All Fragrances
               </button>
-            </motion.div>
+            </motion.div> */}
           </div>
         </section>
       </div>

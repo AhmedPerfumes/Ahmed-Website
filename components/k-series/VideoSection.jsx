@@ -21,8 +21,8 @@ function VideoSection() {
     <section
       style={{
         width: "100%",
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%)",
+        height: "auto",
+        background: "#000",
         color: "#fff",
         padding: "80px 20px",
         textAlign: "center",
@@ -30,35 +30,6 @@ function VideoSection() {
         overflow: "hidden",
       }}
     >
-      {/* Decorative background elements */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-30%",
-          left: "-10%",
-          width: "600px",
-          height: "600px",
-          background: "radial-gradient(circle, rgba(229, 212, 178, 0.12), transparent)",
-          borderRadius: "50%",
-          filter: "blur(100px)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-20%",
-          right: "-5%",
-          width: "500px",
-          height: "500px",
-          background: "radial-gradient(circle, rgba(218, 165, 32, 0.1), transparent)",
-          borderRadius: "50%",
-          filter: "blur(80px)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
 
       {/* CONTENT WRAPPER */}
       <motion.div
@@ -165,16 +136,16 @@ function VideoSection() {
           {/* Video container with glow effect */}
           <div
             style={{
-              position: "relative",
-              boxShadow: isHovered
-                ? "0 30px 100px rgba(229, 212, 178, 0.3), inset 0 0 60px rgba(229, 212, 178, 0.1)"
-                : "0 20px 80px rgba(229, 212, 178, 0.2), inset 0 0 40px rgba(229, 212, 178, 0.05)",
-              transition: "box-shadow 0.4s ease",
-              borderRadius: "24px",
-              border: "1px solid rgba(229, 212, 178, 0.15)",
-              overflow: "hidden",
-              marginTop:"30px"
-            }}
+                position: "relative",
+                /* Remove drop shadow entirely so video blends into black background */
+                boxShadow: "none",
+                transition: "box-shadow 0.2s ease, transform 0.2s ease",
+                borderRadius: "24px",
+                /* remove visible border so edges blend */
+                border: "none",
+                overflow: "hidden",
+                marginTop:"30px"
+              }}
           >
             {/* Video */}
             <video

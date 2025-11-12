@@ -9,6 +9,7 @@ import VideoSection from "@/components/k-series/VideoSection";
 import NoteSection from "@/components/k-series/NoteSection";
 import FamilySection from "@/components/k-series/FamilySection";
 import HeroSection from "@/components/k-series/HeroSection";
+import JourneySection from "@/components/k-series/JourneySection";
 
 // central config: ONLY 3 choices
 const K_CONFIG = {
@@ -81,6 +82,7 @@ export default function Page({ params }) {
 
       <VideoSection data={data} />
       <HeroSection data={data} />
+      <JourneySection/>
       <NoteSection data={data} />
       <FamilySection data={data} />
 
