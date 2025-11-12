@@ -26,21 +26,20 @@ const SERIES_OPTIONS = [
     { value: 'full-set', label: 'Full K-Series Collection' }
 ];
 
-export default function PrebookingWidget() {
-    const [showModal, setShowModal] = useState(false);
+export default function PrebookingWidget({ showModal, setShowModal }) {
     const [showBubble, setShowBubble] = useState(true);
     const [selectedSeries, setSelectedSeries] = useState([]);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
     const handleClose = () => {
-        setShowModal(false);
+        if (setShowModal) setShowModal(false);
         setName('');
         setEmail('');
         setSelectedSeries([]);
     };
     const handleShow = () => {
-        setShowModal(true);
+        if (setShowModal) setShowModal(true);
         setShowBubble(false);
     };
 
@@ -168,7 +167,7 @@ export default function PrebookingWidget() {
             </motion.div>
 
             {/* --- Pre-Booking Modal --- */}
-            <Modal show={showModal} onHide={handleClose} centered dialogClassName={styles.customModal}>
+            <Modal show={!!showModal} onHide={handleClose} centered dialogClassName={styles.customModal}>
                 <Modal.Header closeButton className={styles.modalHeader}>
                     <Modal.Title className={styles.modalTitle}>K-Series Pre-Booking</Modal.Title>
                 </Modal.Header>

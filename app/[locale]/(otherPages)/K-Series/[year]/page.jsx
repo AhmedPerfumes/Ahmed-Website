@@ -1,7 +1,7 @@
 // app/kseries/[year]/page.js
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Header14 from "@/components/headers/Header14";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
@@ -10,6 +10,7 @@ import NoteSection from "@/components/k-series/NoteSection";
 import FamilySection from "@/components/k-series/FamilySection";
 import HeroSection from "@/components/k-series/HeroSection";
 import JourneySection from "@/components/k-series/JourneySection";
+import PrebookingWidget from "@/components/otherPages/KSeries/PrebookingWidget";
 
 // central config: ONLY 3 choices
 const K_CONFIG = {
@@ -119,6 +120,9 @@ function resolveConfig(year) {
 export default function Page({ params }) {
   const rawYear = params?.year?.toString() || "2000";
   const data = resolveConfig(rawYear);
+  const [showPrebooking, setShowPrebooking] = useState(false);
+
+  const handleBookNow = () => setShowPrebooking(true);
 
   return (
     <>
@@ -128,10 +132,11 @@ export default function Page({ params }) {
       {/* <div style={{ width: "100%", height: "1px", background: "linear-gradient(90deg, #b8860b 0%, #d4af37 25%, #f7e9a0 50%, #d4af37 75%, #b8860b 100%)", borderRadius: "2px"}} /> */}
 
       <VideoSection data={data} />
-      <HeroSection data={data} />
+      <HeroSection data={data} onBookNow={handleBookNow} />
       <JourneySection data={data} />
       <NoteSection data={data} />
       <FamilySection data={data} />
+       <PrebookingWidget showModal={showPrebooking} setShowModal={setShowPrebooking} />
 
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />

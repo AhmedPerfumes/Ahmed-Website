@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import "./HeroSection.css";
 
-function HeroSection({ data = {} }) {
+function HeroSection({ data = {}, onBookNow }) {
   return (
     <section className="hero-section d-flex align-items-center justify-content-center text-white">
       <div className="overlay"></div>
@@ -69,12 +69,14 @@ function HeroSection({ data = {} }) {
                   style={{
                     background: data?.buttonColor || '#ffffff',
                     color: data?.buttonTextColor || '#111',
-                    borderRadius: 8,
+                    borderRadius: 50, // pill shape
                     border: 'none'
                   }}
+                  onClick={onBookNow}
                 >
                   Book Now
                 </button>
+
               </motion.div>
             </motion.div>
           </div>
