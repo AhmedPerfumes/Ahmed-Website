@@ -18,48 +18,95 @@ const K_CONFIG = {
     year: "2000",
     title: "K-Series 2000",
     subtitle: "The Roots",
-    themeLabel: "Past",
-    bottleImg: "/assets/images/kseries/past-center.png",
-    videoSrc: "/assets/images/kseries/past.mp4",
+    description:"Discover K Series 2000 the Roots – the foundation of Ahmed Al Maghribi, carrying the richness of tradition into the future.",
+   
+    bottleImg: "/assets/images/kseries/bottle/past_center.png",
+    videoSrc: "/assets/images/kseries/videos/past.mp4",
     notesImages: {
-      top: "/assets/images/kseries/past_top.jpg",
-      mid: "/assets/images/kseries/past_mid.jpg",
-      base: "/assets/images/kseries/past_base.jpg",
+      top: "/assets/images/kseries/notes/past_top.jpg",
+      mid: "/assets/images/kseries/notes/past_mid.jpg",
+      base: "/assets/images/kseries/notes/past_base.jpg",
+    },
+     notesDescription:{
+      top:"A bright, invigorating opening of grapefruit, jasmine, and aldehydes creates a sparkling freshness that instantly captures attention, setting the stage for an elegant, uplifting fragrance experience.",
+      mid:"A rich floral heart unfolds with white flowers, lily, Indian rose, and saffron, blending softness and exotic warmth to create depth, sophistication, and irresistible allure.",
+      base:"The fragrance lingers with a luxurious legacy accord of musks, warm woods, vanilla, ambroxan, incense, aged Shamama signature, and Oud Hindi, leaving a captivating, sensual, and memorable trail."
     },
     heroQuote:
-      `"This perfume is a tribute to the memories that shaped us. Each note captures the essence of timeless elegance and the beauty of the moments we cherish most."`,
+      `"A homage to beginning,where heritage and onnovation intertwined to form our foundation.It carries the fragrance of memory and nostalgia,honouring deep cultural roots.The Roots is not just past It is the legacy that anchors our journey forward"`,
+    // visual theme
+    accentColor: "#e5d4b2",
+    textColor: "#ffffff",
+    buttonColor: "#e5d4b2",
+    familyImages: {
+      left: "/assets/images/kseries/bottle/present_left.png",
+      center: "/assets/images/kseries/bottle/past_center.png",
+      right: "/assets/images/kseries/bottle/future_right.png",
+    },
+    journeyVideoSrc: "/assets/images/kseries/videos/past_journey.mp4",
+    journeyHeading:"Journey Through Time"
   },
   "2025": {
     key: "present",
     year: "2025",
     title: "K-Series 2025",
     subtitle: "The Alchemy Lab",
-    themeLabel: "Present",
-    bottleImg: "/assets/images/kseries/present-center.png",
-    videoSrc: "/assets/images/kseries/present.mp4",
+    bottleImg: "/assets/images/kseries/bottle/present_center.png",
+    videoSrc: "/assets/images/kseries/videos/present.mp4",
     notesImages: {
-      top: "/assets/images/kseries/present_top.jpg",
-      mid: "/assets/images/kseries/present_mid.jpg",
-      base: "/assets/images/kseries/present_base.jpg",
+      top: "/assets/images/kseries/notes/present_top.jpg",
+      mid: "/assets/images/kseries/notes/present_mid.jpg",
+      base: "/assets/images/kseries/notes/present_base.jpg",
     },
+    notesDescription: {
+  top: "A vibrant, invigorating opening of bergamot, grapefruit, orange, mandarin, juniper, pepper, clary sage, saffron, and apple creates a sparkling, energetic freshness that awakens the senses.",
+  mid: "A luxurious heart blends sambac jasmine, neroli, cardamom, black pepper, rose, ambrette, muguet, clary sage, bakhoor notes, and sandalwood, offering depth, warmth, and a sophisticated floral-spicy elegance.",
+  base: "The fragrance settles into a rich, enduring base of musk, ambergris, cedar, patchouli, vetiver, leather accord, cashmeran, signature combodi oud, and guaiac wood, leaving a captivating, sensual, long-lasting trail."
+},
+
     heroQuote:
-      `"Today is where precision meets artistry. Modern craftsmanship distilled into a signature that feels unmistakably now."`,
+      `"The present in motion where craft becomes art and ambition Transforms into achievement. It Celebrates the pride of a homogrown legacy. Expanding with purpose and vision."`,
+    accentColor: "#85785a",
+    textColor: "#ffffff",
+    buttonColor: "#85785a",
+    familyImages: {
+      left: "/assets/images/kseries/bottle/past_left.png",
+      center: "/assets/images/kseries/bottle/present_center.png",
+      right: "/assets/images/kseries/bottle/future_right.png",
+    },
+    journeyVideoSrc: "/assets/images/kseries/videos/present_journey.mp4",
+    journeyHeading:"Essence of Today"
   },
   "2050": {
     key: "future",
     year: "2050",
     title: "K-Series 2050",
     subtitle: "The Beyond",
-    themeLabel: "Future",
-    bottleImg: "/assets/images/kseries/future-center.png",
-    videoSrc: "/assets/images/kseries/future.mp4",
+    bottleImg: "/assets/images/kseries/bottle/future_center.png",
+    videoSrc: "/assets/images/kseries/videos/future.mp4",
     notesImages: {
-      top: "/assets/images/kseries/future_top.jpg",
-      mid: "/assets/images/kseries/future_mid.jpg",
-      base: "/assets/images/kseries/future_base.jpg",
+      top: "/assets/images/kseries/notes/future_top.jpg",
+      mid: "/assets/images/kseries/notes/future_mid.jpg",
+      base: "/assets/images/kseries/notes/future_base.jpg",
     },
+    notesDescription: {
+  top: "A fresh and fruity opening of mandarin, peach, orange, pear, bergamot, and ginger creates an uplifting, vibrant, and energizing introduction that delights the senses.",
+  mid: "A captivating heart of freesia, sambac jasmine, orange blossom, leather, woody notes, and saffron blends floral elegance with warm, spicy, and sophisticated undertones.",
+  base: "The fragrance settles into a rich, lasting base of musk, vanilla, rose, bakhoory accord, ambroxan, cedar, and incense, leaving a sensual, warm, and memorable trail."
+},
+
     heroQuote:
-      `"A visionary composition—radiant, weightless, and forward-looking. It hints at what tomorrow will remember about us."`,
+      `"A gaze into tomorrow, where dreams stretch beyond horizon and hope shape destiny. It reflects vision, light and promise the boundless essence of what is yet to come. The Beyond is more than the Future it is the spirit of endless "`,
+    accentColor: "#40f5f5",
+    textColor: "#f7f2e6",
+    buttonColor: "#40f5f5",
+    familyImages: {
+      left: "/assets/images/kseries/bottle/past_left.png",
+      center: "/assets/images/kseries/bottle/future_center.png",
+      right: "/assets/images/kseries/bottle/present_right.png",
+    },
+    journeyVideoSrc: "/assets/images/kseries/videos/future_journey.mp4",
+    journeyHeading:"Whispers of the Future"
   },
 };
 
@@ -82,7 +129,7 @@ export default function Page({ params }) {
 
       <VideoSection data={data} />
       <HeroSection data={data} />
-      <JourneySection/>
+      <JourneySection data={data} />
       <NoteSection data={data} />
       <FamilySection data={data} />
 

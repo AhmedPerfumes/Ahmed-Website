@@ -172,4 +172,94 @@
   .perfume-bottle { width: 260px; }
   .hero-section h1 { font-size: 2.5rem; }
   .hero-section .lead { font-size: 1.1rem; }
+  .hero-section { padding: 80px 15px; min-height: auto; }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 15px;
+    min-height: auto;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-section .lead {
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .perfume-bottle {
+    width: 220px;
+    max-width: 220px;
+  }
+
+  .bottle-glow {
+    width: 200px;
+    height: 100px;
+  }
+
+  .bottle-glow-small {
+    width: 140px;
+    height: 70px;
+  }
+
+  .btn-light {
+    font-size: 0.85rem;
+    padding: 10px 30px;
+  }
+
+  .hero-message {
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 50px 12px;
+    min-height: auto;
+  }
+
+  .hero-section h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+
+  .hero-section .lead {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .perfume-bottle {
+    width: 180px;
+    max-width: 180px;
+  }
+
+  .bottle-glow {
+    width: 150px;
+    height: 80px;
+    bottom: 5%;
+  }
+
+  .bottle-glow-small {
+    width: 100px;
+    height: 50px;
+  }
+
+  .btn-light {
+    font-size: 0.8rem;
+    padding: 8px 25px;
+  }
+
+  .container {
+    padding: 0 !important;
+  }
+
+  .row {
+    row-gap: 2rem;
+  }
 }

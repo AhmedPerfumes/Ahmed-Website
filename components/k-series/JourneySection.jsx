@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-function JourneySection() {
+function JourneySection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const containerVariants = {
@@ -79,7 +79,7 @@ function JourneySection() {
           }}
         >
           <span style={{ width: "8px", height: "8px", background: "#e5d4b2", borderRadius: "50%" }} />
-          Journey
+          {data?.subtitle}
         </motion.div>
 
         {/* Heading */}
@@ -96,7 +96,8 @@ function JourneySection() {
             lineHeight: "1.2",
           }}
         >
-          Journey Through <span style={{ color: "#e5d4b2" }}>Time</span>
+            {data?.journeyHeading}
+          {/* Journey Through Time */}
         </motion.h2>
 
         {/* Subtitle */}
@@ -104,13 +105,13 @@ function JourneySection() {
           variants={itemVariants}
           style={{
             fontSize: "1rem",
-            color: "rgba(242, 242, 242, 0.7)",
+            color: data?.mutedTextColor || "rgba(242, 242, 242, 0.7)",
             marginBottom: "60px",
             maxWidth: "600px",
             margin: "0 auto 60px",
           }}
         >
-          Experience the essence of K-Series through our cinematic journey
+          Experience the essence of {data?.subtitle} through our cinematic journey
         </motion.p>
 
         {/* Video Container */}
@@ -159,7 +160,7 @@ function JourneySection() {
               objectFit: "cover",
             }}
           >
-            <source src="/assets/images/kseries/joruney.mp4" type="video/mp4" />
+            <source src={data?.journeyVideoSrc || "/assets/images/kseries/joruney.mp4"} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </motion.div>

@@ -41,9 +41,32 @@ const animationStyles = `
     transform: scale(1.05);
     filter: drop-shadow(0 25px 80px rgba(229, 212, 178, 0.3));
   }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .family-section-item.left,
+    .family-section-item.right {
+      transform: translateX(0) scale(0.7) rotateY(0deg);
+    }
+    .family-section-item.center {
+      transform: scale(0.9) translateY(0px);
+    }
+    .family-section-item img {
+      max-width: 180px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .family-section-item img {
+      max-width: 160px !important;
+    }
+    .family-section-item.center {
+      transform: scale(0.8) translateY(0px);
+    }
+  }
 `;
 
-export default function FamilySection() {
+export default function FamilySection({ data = {} }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
@@ -65,56 +88,99 @@ export default function FamilySection() {
     };
   }, []);
 
-  const imgLeft = "/assets/images/kseries/future_left.png";
-  const imgCenter = "/assets/images/kseries/past-center.png";
-  const imgRight = "/assets/images/kseries/present3.png";
+  // make images and colors dynamic via `data` prop when supplied
+  // Keep backward compatibility with a possible global `window.__K_SERIES_DATA__`.
+  const globalData = (typeof window !== 'undefined' && window.__K_SERIES_DATA__) || {};
+  const merged = Object.assign({}, globalData, data || {});
+
+  // compute family images according to the viewing context (past/present/future)
+  // allow full override if merged.familyImages provides left/center/right
+  const accent = merged?.accentColor || "#e5d4b2";
+
+  const defaultSets = {
+    past: {
+      left: "/assets/images/kseries/bottle/present_left.png",
+      center: "/assets/images/kseries/bottle/past_center.png",
+      right: "/assets/images/kseries/bottle/future_right.png",
+      labels: { left: "K 2025", center: "K 2000", right: "K 2050" },
+    },
+    present: {
+      // when present page is open: show future at left, present center, past right
+      left: "/assets/images/kseries/bottle/past_left.png",
+      center: "/assets/images/kseries/bottle/present_center.png",
+      right: "/assets/images/kseries/bottle/future_right.png",
+      labels: { left: "K 2000", center: "K 2025", right: "K 2050" },
+    },
+    future: {
+      // when future page is open: show past at left, future center, present right
+      left: "/assets/images/kseries/bottle/past_left.png",
+      center: "/assets/images/kseries/bottle/future_center.png",
+      right: "/assets/images/kseries/bottle/present_right.png",
+      labels: { left: "K 2000", center: "K 2050", right: "K 2025" },
+    },
+  };
+
+  const viewKey = (merged?.key || merged?.year || "past").toString().toLowerCase();
+  const chosenSet = defaultSets[viewKey] || defaultSets.past;
+
+  const imgLeft = merged?.familyImages?.left || chosenSet.left;
+  const imgCenter = merged?.familyImages?.center || chosenSet.center;
+  const imgRight = merged?.familyImages?.right || chosenSet.right;
+
+  const leftLabel = merged?.familyImages?.labels?.left || chosenSet.labels.left;
+  const centerLabel = merged?.familyImages?.labels?.center || chosenSet.labels.center;
+  const rightLabel = merged?.familyImages?.labels?.right || chosenSet.labels.right;
 
   return (
     <>
-      <style>{animationStyles}</style>
+  <style>{animationStyles.replace(/#e5d4b2/g, accent)}</style>
 
-      <div 
+      <div
         className="bg-dark text-light py-5"
         style={{
           background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0d0d0d 100%)",
           position: "relative",
-          overflow: "hidden"
+          overflow: "hidden",
         }}
       >
         {/* Decorative background elements */}
-        <div style={{
-          position: "absolute",
-          top: "0",
-          left: "-20%",
-          width: "600px",
-          height: "600px",
-          background: "radial-gradient(circle, rgba(229,212,178,0.1), transparent)",
-          borderRadius: "50%",
-          filter: "blur(100px)",
-          pointerEvents: "none"
-        }} />
-        <div style={{
-          position: "absolute",
-          bottom: "-10%",
-          right: "-15%",
-          width: "500px",
-          height: "500px",
-          background: "radial-gradient(circle, rgba(218,165,32,0.08), transparent)",
-          borderRadius: "50%",
-          filter: "blur(80px)",
-          pointerEvents: "none"
-        }} />
+        <div
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "-20%",
+            width: "600px",
+            height: "600px",
+            background: "radial-gradient(circle, rgba(229,212,178,0.1), transparent)",
+            borderRadius: "50%",
+            filter: "blur(100px)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-10%",
+            right: "-15%",
+            width: "500px",
+            height: "500px",
+            background: "radial-gradient(circle, rgba(218,165,32,0.08), transparent)",
+            borderRadius: "50%",
+            filter: "blur(80px)",
+            pointerEvents: "none",
+          }}
+        />
 
         <section ref={sectionRef} style={{ position: "relative", zIndex: 1 }}>
           <div className="container text-center">
             {/* Upper label */}
-            <motion.span 
+            <motion.span
               className="d-inline-block mb-3"
-              style={{ 
+                style={{
                 fontSize: "0.8rem",
                 textTransform: "uppercase",
                 letterSpacing: "2px",
-                color: "#e5d4b2"
+                color: accent,
               }}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -125,9 +191,9 @@ export default function FamilySection() {
             </motion.span>
 
             {/* Heading */}
-            <motion.h2
+              <motion.h2
               className="display-4 display-md-3 fw-bold mb-3"
-              style={{ color: "#e5d4b2", letterSpacing: "1px" }}
+              style={{ color: accent, letterSpacing: "1px" }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -139,12 +205,12 @@ export default function FamilySection() {
             </motion.h2>
 
             {/* Divider */}
-            <motion.div 
+            <motion.div
               style={{
                 width: "80px",
                 height: "2px",
-                background: "linear-gradient(to right, transparent, #e5d4b2, transparent)",
-                margin: "20px auto"
+                background: `linear-gradient(to right, transparent, ${accent}, transparent)`,
+                margin: "20px auto",
               }}
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
@@ -155,13 +221,14 @@ export default function FamilySection() {
             {/* Subheading */}
             <motion.p
               className="lead text-light mb-5 px-3"
-              style={{
-                maxWidth: "720px",
-                margin: "0 auto",
-                lineHeight: "1.8",
-                fontSize: "1.1rem",
-                fontWeight: 300
-              }}
+                style={{
+                  maxWidth: "720px",
+                  margin: "0 auto",
+                  lineHeight: "1.8",
+                  fontSize: "1.1rem",
+                  fontWeight: 300,
+                  color: globalData?.textColor || '#dcdcdc'
+                }}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -172,14 +239,14 @@ export default function FamilySection() {
               craftsmanship, and a fragrance experience unlike anything before.
             </motion.p>
 
-            {/* Image Row — tighter spacing */}
+            {/* Image Row */}
             <motion.div
               className="d-flex flex-row justify-content-center align-items-end mt-5 pt-5"
               style={{
                 gap: "0",
                 marginLeft: "-20px",
                 marginRight: "-20px",
-                perspective: "1000px"
+                perspective: "1000px",
               }}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -188,113 +255,70 @@ export default function FamilySection() {
             >
               {/* Left Image */}
               <div
-                className={`family-section-item left ${
-                  isVisible ? "is-visible" : ""
-                }`}
+                className={`family-section-item left ${isVisible ? "is-visible" : ""}`}
                 style={{ marginRight: "-50px" }}
               >
                 <img
                   src={imgLeft}
-                  alt="K2000 — The Roots"
+                  alt={leftLabel}
                   className="img-fluid"
-                  style={{
-                    transformOrigin: "bottom center",
-                    maxWidth: "240px",
-                    width: "100%"
-                  }}
+                  style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
                 />
-                <motion.p 
+                <motion.p
                   className="mt-3"
-                  style={{ fontSize: "0.95rem", color: "#e5d4b2", fontWeight: 600 }}
+                  style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
                   initial={{ opacity: 0 }}
                   animate={isVisible ? { opacity: 1 } : {}}
                   transition={{ delay: 0.5 }}
                 >
-                  K 2050 — The Beyond
+                  {leftLabel}
                 </motion.p>
               </div>
 
               {/* Center Image */}
               <div
-                className={`family-section-item center ${
-                  isVisible ? "is-visible" : ""
-                }`}
+                className={`family-section-item center ${isVisible ? "is-visible" : ""}`}
                 style={{ zIndex: 2, marginX: "0 -30px" }}
               >
                 <img
                   src={imgCenter}
-                  alt="K2025 — The Alchemy Lab"
+                  alt={centerLabel}
                   className="img-fluid"
-                  style={{
-                    transformOrigin: "bottom center",
-                    maxWidth: "280px",
-                    width: "100%"
-                  }}
+                  style={{ transformOrigin: "bottom center", maxWidth: "280px", width: "100%" }}
                 />
-                <motion.p 
-                  className="mt-3"
-                  style={{ fontSize: "1rem", color: "#e5d4b2", fontWeight: 700 }}
+                <motion.p
+                    className="mt-3"
+                    style={{ fontSize: "1rem", color: accent, fontWeight: 700 }}
                   initial={{ opacity: 0 }}
                   animate={isVisible ? { opacity: 1 } : {}}
                   transition={{ delay: 0.6 }}
                 >
-                  K 2000 — The Roots
+                  {centerLabel}
                 </motion.p>
               </div>
 
               {/* Right Image */}
               <div
-                className={`family-section-item right ${
-                  isVisible ? "is-visible" : ""
-                }`}
+                className={`family-section-item right ${isVisible ? "is-visible" : ""}`}
                 style={{ marginLeft: "-50px" }}
               >
                 <img
                   src={imgRight}
-                  alt="K2050 — The Beyond"
+                  alt={rightLabel}
                   className="img-fluid"
-                  style={{
-                    transformOrigin: "bottom center",
-                    maxWidth: "240px",
-                    width: "100%"
-                  }}
+                  style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
                 />
-                <motion.p 
-                  className="mt-3"
-                  style={{ fontSize: "0.95rem", color: "#e5d4b2", fontWeight: 600 }}
+                <motion.p
+                    className="mt-3"
+                    style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
                   initial={{ opacity: 0 }}
                   animate={isVisible ? { opacity: 1 } : {}}
                   transition={{ delay: 0.7 }}
                 >
-                  K 2025 — The Alchemy Lab
+                  {rightLabel}
                 </motion.p>
               </div>
             </motion.div>
-
-            {/* Call to action */}
-            {/* <motion.div 
-              className="mt-5 pt-5"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              <button 
-                className="btn btn-lg px-5 py-3"
-                style={{
-                  background: "linear-gradient(135deg, #e5d4b2 0%, #f9d571 100%)",
-                  border: "none",
-                  color: "#1a1a1a",
-                  fontWeight: 600,
-                  borderRadius: "50px",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  fontSize: "0.95rem"
-                }}
-              >
-                Explore All Fragrances
-              </button>
-            </motion.div> */}
           </div>
         </section>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-function VideoSection() {
+function VideoSection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const containerVariants = {
@@ -76,13 +76,13 @@ function VideoSection() {
             fontSize: "3.5rem",
             fontWeight: "700",
             marginBottom: "16px",
-            color: "#ffffff",
+            color: data?.textColor || "#ffffff",
             letterSpacing: "-0.5px",
             lineHeight: "1.2",
           }}
           variants={itemVariants}
         >
-          K Series <span style={{ color: "#e5d4b2" }}>in Motion</span>
+          K Series <span style={{ color: data?.accentColor || "#e5d4b2" }}>in Motion</span>
         </motion.h2>
 
         {/* Divider */}
@@ -104,7 +104,7 @@ function VideoSection() {
           style={{
             fontSize: "1.15rem",
             maxWidth: "700px",
-            color: "#d0d0d0",
+            color: data?.mutedTextColor || "#d0d0d0",
             margin: "0 auto 60px",
             lineHeight: 1.9,
             fontWeight: 300,
@@ -112,7 +112,8 @@ function VideoSection() {
           }}
           variants={itemVariants}
         >
-          Discover the essence of past, present, and future with the K Series perfumes — a journey of timeless elegance, modern sophistication, and visionary allure.
+          {data?.description}
+          {/* Discover the essence of past, present, and future with the K Series perfumes — a journey of timeless elegance, modern sophistication, and visionary allure. */}
         </motion.p>
 
         {/* VIDEO WRAPPER */}
@@ -148,7 +149,7 @@ function VideoSection() {
               }}
           >
             {/* Video */}
-            <video
+              <video
               autoPlay
               muted
               loop
@@ -163,7 +164,7 @@ function VideoSection() {
                 transition: "opacity 0.4s ease",
               }}
             >
-              <source src="/assets/images/kseries/past.mp4" type="video/mp4" />
+              <source src={data?.videoSrc || "/assets/images/kseries/past.mp4"} type="video/mp4" />
             </video>
 
             {/* Overlay gradient - enhances video appearance */}

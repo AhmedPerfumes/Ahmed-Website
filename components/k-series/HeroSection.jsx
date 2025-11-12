@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import "./HeroSection.css";
 
-function HeroSection() {
+function HeroSection({ data = {} }) {
   return (
     <section className="hero-section d-flex align-items-center justify-content-center text-white">
       <div className="overlay"></div>
@@ -18,8 +18,8 @@ function HeroSection() {
               transition={{ duration: 1 }}
             >
               <img
-                src="/assets/images/kseries/past-center.png"
-                alt="K Series Perfume Bottle"
+                src={data?.bottleImg || "/assets/images/kseries/past-center.png"}
+                alt={data?.title || "K Series Perfume Bottle"}
                 className="perfume-bottle"
               />
               <div className="bottle-glow"></div>
@@ -29,14 +29,14 @@ function HeroSection() {
 
           {/* Right Column: Owner Message */}
           <div className="col-lg-6 order-1 order-lg-2">
-            <motion.div 
+              <motion.div 
               className="hero-message ps-0 ps-lg-5"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
             >
-              <h1 className="display-4 fw-bold mb-4 text-gold fade-in-top">
-                K Series: <span className="text-cream">Past</span>
+              <h1 className="display-4 fw-bold mb-4 fade-in-top" style={{ color: data?.accentColor || '#e5d4b2' }}>
+                {data?.title || 'K Series'}: <span style={{ color: data?.textColor || '#ffffff' }}>{data?.subtitle || 'Past'}</span>
               </h1>
 
               <motion.div 
@@ -51,22 +51,28 @@ function HeroSection() {
                 transition={{ delay: 0.4, duration: 0.6 }}
               />
               
-              <p className="lead mb-4 text-light fade-in-top delay-1" style={{ fontSize: "1.1rem", lineHeight: "1.9" }}>
-                <em>
-                  "This perfume is a tribute to the memories that shaped us. Each
-                  note captures the essence of timeless elegance and the beauty of
-                  the moments we cherish most."
-                </em>
+              <p className="lead mb-4 fade-in-top delay-1" style={{ fontSize: "1.1rem", lineHeight: "1.9", color: data?.textColor || '#dcdcdc' }}>
+                <em>{data?.heroQuote || '"This perfume is a tribute to the memories that shaped us."'}</em>
               </p>
 
-              <p className="text-white fst-italic mb-5 fade-in-top delay-2">— Dedicated by our founder — Mr. Kafeel Ahmed </p>
+              <p className="fst-italic mb-5 fade-in-top delay-2" style={{ fontSize: "0.95rem", color: data?.textColor || '#ffffff' }}>
+                — Dedicated by our founder — Mr. Kafeel Ahmed 
+              </p>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
-                <button className="btn btn-light btn-lg px-5 py-3 fade-in-top delay-3">
+                <button
+                  className="btn btn-lg px-5 py-3 fade-in-top delay-3"
+                  style={{
+                    background: data?.buttonColor || '#ffffff',
+                    color: data?.buttonTextColor || '#111',
+                    borderRadius: 8,
+                    border: 'none'
+                  }}
+                >
                   Book Now
                 </button>
               </motion.div>
