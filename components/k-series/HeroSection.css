@@ -2,9 +2,9 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: #000;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d0d0d 100%);
   overflow: hidden;
-  padding: 80px 20px;
+  padding: 120px 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -13,29 +13,51 @@
 .hero-section .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(20, 20, 20, 0.85), #000);
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(229, 212, 178, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(218, 165, 32, 0.06) 0%, transparent 50%),
+    linear-gradient(to bottom, rgba(20, 20, 20, 0.7), #000);
   z-index: 0;
 }
 
 /* Colors */
-.text-gold { color: #f9d571; }
+.text-gold { color: #e5d4b2; font-weight: 500; }
 .text-cream { color: #f5f5dc; }
 
 /* Text */
-.hero-section h1 { font-size: 3rem; letter-spacing: 1px; }
-.hero-section .lead { color: #ddd; font-size: 1.2rem; line-height: 1.7; }
+.hero-section h1 { 
+  font-size: 3.5rem; 
+  letter-spacing: 2px; 
+  font-weight: 700;
+  text-shadow: 0 0 30px rgba(229, 212, 178, 0.15);
+  line-height: 1.2;
+}
+
+.hero-section .lead { 
+  color: #e0e0e0; 
+  font-size: 1.2rem; 
+  line-height: 1.9;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
 
 /* Center Bottle */
 .center-bottle {
   position: relative;
+  perspective: 1000px;
 }
 
 .perfume-bottle {
-  width: 300px;
-  max-width: 320px;
+  width: 320px;
+  max-width: 340px;
   height: auto;
-  filter: drop-shadow(0px 0px 60px rgba(255, 255, 255, 0.2));
+  filter: drop-shadow(0px 20px 60px rgba(229, 212, 178, 0.25)) drop-shadow(0px 0px 80px rgba(218, 165, 32, 0.15));
   animation: floatCenter 6s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.perfume-bottle:hover {
+  transform: translateY(-10px);
 }
 
 
@@ -63,13 +85,13 @@
   position: absolute;
   bottom: 10%;
   left: 50%;
-  width: 250px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+  width: 300px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(229, 212, 178, 0.3), rgba(218, 165, 32, 0.1), transparent);
   transform: translateX(-50%);
-  filter: blur(60px);
+  filter: blur(80px);
   z-index: 1;
-  opacity: 0.35;
+  opacity: 0.5;
   border-radius: 50%;
   animation: glowPulse 4s ease-in-out infinite;
 }
@@ -78,20 +100,20 @@
   position: absolute;
   bottom: 5%;
   left: 50%;
-  width: 150px;
-  height: 70px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+  width: 200px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent);
   transform: translateX(-50%);
-  filter: blur(40px);
+  filter: blur(60px);
   z-index: 0;
-  opacity: 0.25;
+  opacity: 0.3;
   border-radius: 50%;
   animation: glowPulse 5s ease-in-out infinite;
 }
 
 @keyframes glowPulse {
-  0%,100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
-  50% { opacity: 0.45; transform: translateX(-50%) scale(1.05); }
+  0%,100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
 }
 
 /* Fade-in text */
@@ -102,9 +124,45 @@
 
 @keyframes fadeInTop { to { opacity: 1; transform: translateY(0); } }
 
+@keyframes floatCenter {
+  0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+  50% { transform: translateY(-15px) rotateZ(0.5deg); }
+}
+
+@keyframes floatLeft {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(-8px) translateY(-12px); }
+}
+
+@keyframes floatRight {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(8px) translateY(-12px); }
+}
+
 /* Button */
-.btn-light { font-weight: 600; border-radius: 50px; transition: all 0.3s ease; }
-.btn-light:hover { background-color: #e0e0e0; color: #000; }
+.btn-light { 
+  font-weight: 600; 
+  border-radius: 50px; 
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #e5d4b2 0%, #f9d571 100%);
+  border: none;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.95rem;
+  padding: 12px 40px;
+}
+
+.btn-light:hover { 
+  background: linear-gradient(135deg, #f9d571 0%, #e5d4b2 100%);
+  color: #000;
+  box-shadow: 0 10px 40px rgba(229, 212, 178, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-light:active {
+  transform: translateY(0);
+}
 
 /* Responsive */
 @media (max-width: 991px) {

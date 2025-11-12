@@ -50,15 +50,32 @@ function NoteSection() {
       className="py-5"
       style={{
         background:
-          "radial-gradient(circle at top, rgba(229,212,178,0.16) 0%, transparent 55%) #000000",
+           "radial-gradient(circle at top, rgba(229,212,178,0.16) 0%, transparent 55%) #000000",
         color: "#f2f2f2",
+        position: "relative",
+        overflow: "hidden"
       }}
     >
+      {/* Decorative background elements */}
+      <div style={{
+        position: "absolute",
+        top: "-50%",
+        right: "-10%",
+        width: "500px",
+        height: "500px",
+        background: "radial-gradient(circle, rgba(229,212,178,0.08), transparent)",
+        borderRadius: "50%",
+        filter: "blur(80px)",
+        pointerEvents: "none"
+      }} />
+
       <div
         className="container"
         style={{
           maxWidth: "1180px",
           textAlign: "center",
+          position: "relative",
+          zIndex: 1
         }}
       >
         {/* Label */}
