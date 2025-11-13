@@ -129,7 +129,7 @@
 
 /* Theme: PAST (Gold/Warm) */
 .theme-past {
-  border-color: rgba(212, 175, 55, 0.3);
+  border-color: rgba(234, 193, 59, 0.568);
 }
 .theme-past .subtitle, .theme-past .ctaButton {
   color: #D4AF37; /* Classic Gold */
@@ -142,14 +142,14 @@
 
 /* Theme: PRESENT (Purplish) - UPDATED */
 .theme-present {
-  border-color: rgba(140, 90, 255, 0.3); /* Purple border */
+  border-color: #85785a; /* Purple border */
 }
 .theme-present .subtitle, .theme-present .ctaButton {
-  color: #6d38f2; /* Vibrant purple accent */
-  border-color: #6d38f2;
+  color: #85785a; /* Vibrant purple accent */
+  border-color: #85785a;
 }
 .theme-present .ctaButton:hover {
-  background-color: #6d38f2; /* Lighter purple on hover */
+  background-color: #85785a; /* Lighter purple on hover */
   color: #111;
 }
 

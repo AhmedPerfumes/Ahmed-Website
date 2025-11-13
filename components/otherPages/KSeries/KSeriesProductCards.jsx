@@ -86,7 +86,7 @@ export default function KSeriesProductCards() {
     router.push(path);
   };
   return (
-        <section className={styles.productCardsSection}>
+        <section id="k-series-product-cards" className={styles.productCardsSection}>
         <div className={styles.header}>
             <h2 className={styles.mainTitle}>
             <span className={styles.goldText}>Three Eras.</span> One Vision.

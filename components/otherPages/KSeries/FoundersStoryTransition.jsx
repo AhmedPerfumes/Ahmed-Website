@@ -58,7 +58,7 @@ export default function FoundersStoryTransition() {
                     className="text-light text-center p-5 p-md-5"
                     style={{
                         maxWidth: '1300px', // Restrict width to keep text focused
-                        width: '95%',
+                        width: '100%',
                         backgroundColor: 'rgba(5, 5, 5, 0.96)', 
                         borderRadius: '4px',
                         border: '1px solid rgba(212, 175, 55, 0.4)', // Faint gold border
@@ -105,11 +105,13 @@ export default function FoundersStoryTransition() {
                         </Col>
 
                         {/* 70% Right: Curated Message */}
-                        <Col xs={12} md={8} lg={9}>
-                            <p className={`fs-5 ${styles.sansFont} ${styles.textChampagne}`} style={{ lineHeight: 1.7, textAlign: 'left', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
+                        <Col xs={12} md={8} lg={20}>
+                            <p className={`fs-5 ${styles.sansFont} ${styles.textChampagne}`} style={{ lineHeight: 1.1, textAlign: 'left', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
                                 <strong>Marking 25 years</strong> of Ahmed Al Maghribi Perfumes, the K-Series stands as the personal signature of Mr. Kafeel Ahmed.
                                 <br/><br/>
-                                This distinguished trilogy—The Roots (<strong>2000</strong>), The Alchemy Lab (<strong>2025</strong>), and The Beyond (<strong>2050</strong>)—meticulously composed from the world’s finest ingredients, immortalizes his lifelong dedication to perfumery: a bridge between heritage, mastery, innovation, and the ultimate vision of scent's future.
+                                This distinguished trilogy - The Roots (<strong>2000</strong>), The Alchemy Lab (<strong>2025</strong>), and The Beyond (<strong>2050</strong>)Meticulously composed from the world’s finest ingredients, immortalizes his lifelong dedication to perfumery: A bridge between heritage, mastery, innovation, and the ultimate vision of scent's future.
+                                <br/><br/>
+                                From The Roots to The Beyond, The K-Series immortalizes the journey of Mr. Kafeel Ahmed, celebrating his mastery across time - Past, Present, and Future. Each fragrance is not just a scent, but a story of evolution, dedication, and passion - A true embodiment of The Founder’s Legacy.
                             </p>
                         </Col>
                     </Row>

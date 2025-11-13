@@ -173,11 +173,11 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
 
             {/* --- Pre-Booking Modal --- */}
             <Modal show={!!showModal} onHide={handleClose} centered dialogClassName={styles.customModal}>
-                <Modal.Header closeButton className={styles.modalHeader}>
+                <Modal.Header closeButton className={styles.modalHeader} closeVariant="white">
                     <Modal.Title className={styles.modalTitle}>K-Series Pre-Booking</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
-                    <p className="text-center text-muted">Register your interest now to be the first to order and receive exclusive offers!</p>
+                    <p className="text-center" style={{color: "#f7e7ce "}}>Register your interest now to be the first to order and receive exclusive offers!</p>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formName">
                             <Form.Label>Your Name</Form.Label>
@@ -238,18 +238,18 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
             </Modal>
             {/* Toast container (dark theme) */}
           <ToastContainer
-position="bottom-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick={false}
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="dark"
-transition={Bounce}
-/>
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={true}
+            newestOnTop={true}
+            closeOnClick={true}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+            />
         </>
     );
 }

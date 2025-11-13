@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
@@ -8,13 +8,18 @@ import styles from "./HeroSection.module.css";
 const DESKTOP_HERO = "/assets/images/kseries/hero-banner-copy.jpg";
 const MOBILE_HERO = "/assets/images/kseries/mobile.jpg";
 const MOBILE_BREAKPOINT = 768;
+const SIGNATURE_GIF = "/assets/images/kseries/sign_animation.gif";
+const SIGNATURE_STILL = "/assets/images/kseries/k-series[1].png";
+const SIGNATURE_GIF_DURATION_MS = 4000; // Total runtime of sign_animation.gif in ms (via metadata)
 
 export default function HeroSection({
   title = "Experience The Essence",
   subtitle = "Elevate your presence with our K-Series signature scents.",
   ctaText = "Shop The Series",
-  ctaHref = "/product-category/gift-sets",
+  ctaHref = "#k-series-product-cards",
 }) {
+  const [showSignatureStill, setShowSignatureStill] = useState(false);
+
   const heroRef = useRef(null);
 
   // Scroll-based parallax & fade
@@ -40,6 +45,15 @@ export default function HeroSection({
   }, []);
 
   const heroSrc = isMobile ? MOBILE_HERO : DESKTOP_HERO;
+
+  useEffect(() => {
+    const timer = setTimeout(
+      () => setShowSignatureStill(true),
+      SIGNATURE_GIF_DURATION_MS
+    );
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Subtle floating specs (optional)
   // const particles = useMemo(
@@ -90,13 +104,51 @@ export default function HeroSection({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1
+          {/* <h1
             className={`display-1 fw-bold ${styles.serifFont} ${styles.heroTitle}`}
           >
-            {/* <span className={styles.textGold}>K</span>
-            <span className={styles.heroTitleMain}> SERIES</span> */}
             <Image src="/assets/images/kseries/k-series[1].png" alt="K Series Underline" width={550} height={250} className="d-block mx-auto mt-3" />
-          </h1>
+            Here I want a video "signature" to play and then the image to fade in 
+          </h1> */}
+
+          <div
+            className="position-relative d-inline-block"
+            style={{ maxWidth: "min(90vw, 550px)" }}
+          >
+            {!showSignatureStill ? (
+              <motion.img
+                key="signature-gif"
+                src={SIGNATURE_GIF}
+                alt="K Series Signature Animation"
+                className="d-block mx-auto mt-3"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  maxHeight: 250,
+                  objectFit: "contain",
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+              />
+            ) : (
+              <motion.div
+                key="signature-image"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                <Image
+                  src={SIGNATURE_STILL}
+                  alt="K Series Underline"
+                  width={550}
+                  height={250}
+                  className="d-block mx-auto mt-3"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </motion.div>
+            )}
+          </div>
 
           <p
             className={`fs-4 mb-4 ${styles.textChampagne} ${styles.sansFont} ${styles.heroSubtitle}`}

@@ -17,6 +17,16 @@ function VideoSection({ data = {} }) {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
+  const {
+    accentColor: accent = "#e5d4b2",
+    textColor = "#dcdcdc",
+    title = "K-Series",
+    subtitle = "Signature Chapter",
+    year = "2000",
+    description = "Discover the artistry behind each era of the K-Series collection.",
+    videoSrc = "/assets/images/kseries/past.mp4",
+  } = data || {};
+
   return (
     <section
       style={{
@@ -44,156 +54,134 @@ function VideoSection({ data = {} }) {
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
       >
-        {/* Label */}
-        <motion.span
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            fontSize: "0.75rem",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            color: "#e5d4b2",
-            marginBottom: "20px",
-          }}
+        {/* VIDEO FIRST */}
+        <motion.div
           variants={itemVariants}
+          style={{
+            width: "100%",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            position: "relative",
+            borderRadius: "20px",
+            overflow: "hidden",
+            aspectRatio: "16/9",
+            backgroundColor: "#000",
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.8 }}
         >
-          <span
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              backgroundColor: "#e5d4b2",
-              display: "inline-block",
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              border: "none",
+              outline: "none",
+              transition: "opacity 0.4s ease",
+              opacity: isHovered ? 0.95 : 1,
+            }}
+          >
+            <source
+              src={videoSrc}
+              type="video/mp4"
+            />
+          </video>
+
+          {/* Gradient overlays for depth and style */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(135deg, rgba(0,0,0,0.15), transparent, rgba(229,212,178,0.05))",
+              pointerEvents: "none",
             }}
           />
-          Visual Experience
-        </motion.span>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "80px",
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)",
+              pointerEvents: "none",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "80px",
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+              pointerEvents: "none",
+            }}
+          />
+        </motion.div>
 
-        {/* Heading */}
-        <motion.h2
-          style={{
-            fontSize: "3.5rem",
-            fontWeight: "700",
-            marginBottom: "16px",
-            color: data?.textColor || "#ffffff",
-            letterSpacing: "-0.5px",
-            lineHeight: "1.2",
-          }}
-          variants={itemVariants}
-        >
-          K Series <span style={{ color: data?.accentColor || "#e5d4b2" }}>in Motion</span>
-        </motion.h2>
-
-        {/* Divider */}
+        {/* CONTENT BELOW VIDEO */}
         <motion.div
-          style={{
-            width: "80px",
-            height: "2px",
-            background: "linear-gradient(to right, transparent, #e5d4b2, transparent)",
-            margin: "20px auto 30px",
-          }}
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-        />
-
-        {/* Description */}
-        <motion.p
-          style={{
-            fontSize: "1.15rem",
-            maxWidth: "700px",
-            color: data?.mutedTextColor || "#d0d0d0",
-            margin: "0 auto 60px",
-            lineHeight: 1.9,
-            fontWeight: 300,
-            letterSpacing: "0.3px",
-          }}
           variants={itemVariants}
+          style={{
+            marginTop: "60px",
+            textAlign: "center",
+            color: textColor,
+          }}
         >
-          {data?.description}
-          {/* Discover the essence of past, present, and future with the K Series perfumes — a journey of timeless elegance, modern sophistication, and visionary allure. */}
-        </motion.p>
-
-        {/* VIDEO WRAPPER */}
-        {/* VIDEO WRAPPER */}
-<motion.div
-  style={{
-    width: "100%",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    position: "relative",
-    borderRadius: "20px",
-    overflow: "hidden",
-    aspectRatio: "16/9", // maintains proper video shape
-    backgroundColor: "#000",
-  }}
-  onMouseEnter={() => setIsHovered(true)}
-  onMouseLeave={() => setIsHovered(false)}
-  initial={{ opacity: 0, scale: 0.95 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  viewport={{ once: true }}
-  transition={{ delay: 0.2, duration: 0.8 }}
->
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "contain", // ensures full video is visible
-      border: "none",
-      outline: "none",
-      transition: "opacity 0.4s ease",
-      opacity: isHovered ? 0.95 : 1,
-    }}
-  >
-    <source
-      src={data?.videoSrc || "/assets/images/kseries/past.mp4"}
-      type="video/mp4"
-    />
-  </video>
-
-  {/* Gradient overlays for depth and style */}
-  <div
-    style={{
-      position: "absolute",
-      inset: 0,
-      background:
-        "linear-gradient(135deg, rgba(0,0,0,0.15), transparent, rgba(229,212,178,0.05))",
-      pointerEvents: "none",
-    }}
-  />
-  <div
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      height: "80px",
-      background: "linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)",
-      pointerEvents: "none",
-    }}
-  />
-  <div
-    style={{
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: "80px",
-      background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
-      pointerEvents: "none",
-    }}
-  />
-</motion.div>
-
-
-        {/* Bottom features */}
-        
+          <p
+            style={{
+              letterSpacing: "0.4em",
+              fontSize: "1rem",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              color: accent,
+              opacity: 0.85,
+              marginBottom: "18px",
+            }}
+          >
+            K-Series {"\u2022"} {year}
+          </p>
+          <h2
+            style={{
+              fontSize: "clamp(2.25rem, 4vw, 3.5rem)",
+              lineHeight: 1.2,
+              color: "#fff",
+              marginTop: "16px",
+              marginBottom: "24px",
+              fontWeight: 600,
+            }}
+          >
+            {/* {title}{" "} */}
+            <span style={{ color: accent, fontWeight: 500 }}>
+              {/* {"\u2014"} */}
+               {subtitle}
+            </span>
+          </h2>
+          <p
+            style={{
+              maxWidth: "760px",
+              margin: "0 auto",
+              lineHeight: 1.9,
+              fontSize: "1.1rem",
+              fontWeight: 300,
+              color: textColor,
+            }}
+          >
+            {description}
+          </p>
+        </motion.div>
       </motion.div>
     </section>
   );

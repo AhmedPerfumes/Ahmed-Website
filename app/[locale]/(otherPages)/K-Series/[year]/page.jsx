@@ -19,7 +19,7 @@ const K_CONFIG = {
     year: "2000",
     title: "K-Series 2000",
     subtitle: "The Roots",
-    description:"Discover K Series 2000 the Roots – the foundation of Ahmed Al Maghribi, carrying the richness of tradition into the future.",
+    description:"A tribute to the origins of Arabian perfumery, 2000 celebrates the timeless artistry that defines the brand’s foundation.",
    
     bottleImg: "/assets/images/kseries/bottle/past_center.png",
     videoSrc: "/assets/images/kseries/videos/past.mp4",
@@ -52,6 +52,7 @@ const K_CONFIG = {
     year: "2025",
     title: "K-Series 2025",
     subtitle: "The Alchemy Lab",
+    description:"2025 embodies the spirit of creation, transformation, and innovation — A reflection of today’s mastery in modern perfumery.",
     bottleImg: "/assets/images/kseries/bottle/present_center.png",
     videoSrc: "/assets/images/kseries/videos/present.mp4",
     notesImages: {
@@ -83,6 +84,7 @@ const K_CONFIG = {
     year: "2050",
     title: "K-Series 2050",
     subtitle: "The Beyond",
+    description:"2050 - The Beyond” is an olfactory glimpse into tomorrow, where scent becomes an emotion — The ultimate expression of imagination and connection.",
     bottleImg: "/assets/images/kseries/bottle/future_center.png",
     videoSrc: "/assets/images/kseries/videos/future.mp4",
     notesImages: {
@@ -126,7 +128,7 @@ export default function Page({ params }) {
 
   return (
     <>
-      {/* <Header14 /> */}
+      <Header14 />
 
       {/* Optional: visual divider */}
       {/* <div style={{ width: "100%", height: "1px", background: "linear-gradient(90deg, #b8860b 0%, #d4af37 25%, #f7e9a0 50%, #d4af37 75%, #b8860b 100%)", borderRadius: "2px"}} /> */}
