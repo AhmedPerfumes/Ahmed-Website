@@ -6,6 +6,8 @@ import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './PrebookingWidget.module.css'; // We will define these custom styles below
 import { CiMail } from "react-icons/ci"; // Using a simple icon for the mail/form
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // --- Framer Motion Variants ---
 const widgetVariants = {
@@ -31,12 +33,14 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
     const [selectedSeries, setSelectedSeries] = useState([]);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const[phone,setPhone]=useState('')
 
     const handleClose = () => {
         if (setShowModal) setShowModal(false);
         setName('');
         setEmail('');
         setSelectedSeries([]);
+        setPhone('')
     };
     const handleShow = () => {
         if (setShowModal) setShowModal(true);
@@ -62,13 +66,14 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
         
         // Basic validation: must select at least one series
         if (selectedSeries.length === 0) {
-            alert("Please select at least one interested series.");
+            toast.warn("Please select at least one interested series.");
             return;
         }
         const submissionData = {
             name,
             email,
             interestedSeries: selectedSeries, // Matches the expected key in the Laravel controller
+            phone
         };
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/prebooking/submit`, { // Adjust the path if your API version/prefix is different
@@ -88,15 +93,15 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
 
             if (response.ok) {
                 console.log(result.message);
-                alert(result.message);
+                toast.success(result.message);
                 handleClose();
             } else {
                 console.error('Submission Error:', result.message, result.errors);
-                alert(`Error: ${result.message || 'Please check the console for details.'}`);
+                toast.error(`Error: ${result.message || 'Please check the console for details.'}`);
             }
         } catch (error) {
             console.error('Network Error:', error);
-            alert('A network error occurred. Please try again.');
+            toast.error('A network error occurred. Please try again.');
         }
 
         // console.log({ name, email, interestedSeries: selectedSeries });
@@ -195,6 +200,16 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                                 required 
                             />
                         </Form.Group>
+                         <Form.Group className="mb-3" controlId="formEmail">
+                            <Form.Label>Phone Number</Form.Label>
+                            <Form.Control 
+                                type="tel" 
+                                placeholder="Enter your Phone Number " 
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                required 
+                            />
+                        </Form.Group>
                         
                         <Form.Group className="mb-4" controlId="formSeriesInterest">
                             <Form.Label>Interested Series (Select all that apply)</Form.Label>
@@ -221,6 +236,20 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                     </Form>
                 </Modal.Body>
             </Modal>
+            {/* Toast container (dark theme) */}
+          <ToastContainer
+position="bottom-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={false}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+transition={Bounce}
+/>
         </>
     );
 }
