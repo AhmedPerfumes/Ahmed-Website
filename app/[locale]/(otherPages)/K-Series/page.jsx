@@ -17,6 +17,7 @@ export default function Page() {
     return (
         <>
             <Header14 />
+            {/* comment */}
             <main className="">
                 <HeroSection />
                 <KSeriesProductCards />
