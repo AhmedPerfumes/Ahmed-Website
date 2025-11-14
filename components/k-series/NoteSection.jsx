@@ -266,7 +266,7 @@ function Card({ note, index, cardVariants }) {
       </motion.div>
 
       {/* Label above title */}
-      <span
+      {/* <span
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -287,7 +287,7 @@ function Card({ note, index, cardVariants }) {
           }}
         />
         {index + 1 < 10 ? `0${index + 1}` : index + 1} • Layer
-      </span>
+      </span> */}
 
       {/* Title */}
       <h4

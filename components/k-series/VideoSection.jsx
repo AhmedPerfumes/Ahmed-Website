@@ -24,7 +24,7 @@ function VideoSection({ data = {} }) {
     subtitle = "Signature Chapter",
     year = "2000",
     description = "Discover the artistry behind each era of the K-Series collection.",
-    videoSrc = "/assets/images/kseries/past.mp4",
+    videoSrc = "/assets/videos/kseries/past.mp4",
   } = data || {};
 
   return (

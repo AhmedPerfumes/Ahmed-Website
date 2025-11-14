@@ -8,7 +8,6 @@ function VideoSectionStatic() {
   const subtitle = "The Chronicles of Ahmed Al Maghribi";
   const description =
     "Discover the artistry behind each era of the K-Series collection.";
-  const videoEmbed = "https://drive.google.com/file/d/1y-lIVrlK0rO9T6ONYyq_AcEchpeCvot2/preview";
 
   return (
     <section
@@ -36,20 +35,6 @@ function VideoSectionStatic() {
       >
         {/* TEXT FIRST */}
         <div style={{ marginBottom: "60px" }}>
-          {/* <p
-            style={{
-              letterSpacing: "0.4em",
-              fontSize: "1rem",
-              fontWeight: 900,
-              textTransform: "uppercase",
-              color: accent,
-              opacity: 0.85,
-              marginBottom: "18px",
-            }}
-          >
-            K-Series {"\u2022"} {year}
-          </p> */}
-
           <h2
             style={{
               fontSize: "clamp(2.25rem, 4vw, 3.5rem)",
@@ -60,7 +45,9 @@ function VideoSectionStatic() {
               fontWeight: 600,
             }}
           >
-            <span style={{ color: accent, fontWeight: 500 }}>{subtitle}</span>
+            <span style={{ color: accent, fontWeight: 500 }}>
+              {subtitle}
+            </span>
           </h2>
 
           <p
@@ -89,19 +76,21 @@ function VideoSectionStatic() {
           }}
         >
           <iframe
-            src={videoEmbed}
-            title="K-Series Video"
-            allow="autoplay"
-            allowFullScreen
+            src="https://www.youtube.com/embed/SYCOHX2Ni_4?rel=0&modestbranding=1&showinfo=0&autoplay=0&mute=1&loop=1"
             style={{
               position: "absolute",
               top: 0,
               left: 0,
               width: "100%",
               height: "100%",
-              border: "none",
+              border: "0",
             }}
-          ></iframe>
+            title="The Chronicles Of Ahmed Al Maghribi"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
         </div>
       </motion.div>
     </section>

@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
-const DESKTOP_HERO = "/assets/images/kseries/hero-banner-copy.jpg";
+const DESKTOP_HERO = "/assets/images/kseries/website_banner.jpg";
 const MOBILE_HERO = "/assets/images/kseries/mobile.jpg";
 const MOBILE_BREAKPOINT = 768;
 
@@ -80,34 +80,37 @@ export default function HeroSection({
         />
       </motion.div>
 
-      {/* Centered Title/Subtitle content (No CTA here anymore) */}
-      <motion.div
+      {/* Centered K-Series logo + tagline, fixed a bit below top */}
+      {/* <motion.div
         style={{ opacity: heroOpacity, zIndex: 10 }}
-        className="position-relative h-100 d-flex flex-column align-items-center justify-content-center text-center px-4" // Added justify-content-center for better centering
+        className={`position-absolute w-100 d-flex flex-column align-items-center text-center px-4 ${styles.heroTitleWrapper}`}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1
-            className={`display-1 fw-bold ${styles.serifFont} ${styles.heroTitle}`}
-          >
-            {/* <span className={styles.textGold}>K</span>
-            <span className={styles.heroTitleMain}> SERIES</span> */}
-            <Image src="/assets/images/kseries/k-series[1].png" alt="K Series Underline" width={350} height={150} className="d-block mx-auto mt-3" />
+          <h1 className={`fw-bold ${styles.heroTitle}`}>
+            <div className={styles.heroLogoWrapper}>
+              <Image
+                src="/assets/images/kseries/k-series[1].png"
+                alt="K Series"
+                width={425}
+                height={189}
+                className={styles.heroLogo}
+                priority
+              />
+            </div>
           </h1>
 
           <p
-            className={`fs-4 mb-4 ${styles.textChampagne} ${styles.sansFont} ${styles.heroSubtitle}`}
+            className={`${styles.textChampagne} ${styles.heroSubtitle} mb-0`}
           >
             The Founder’s Legacy
           </p>
-          
-          {/* Removed the CTA from here */}
-          
         </motion.div>
-      </motion.div>
+      </motion.div> */}
+
 
       {/* Scroll indicator & CTA (new container) */}
       <motion.div
@@ -122,7 +125,7 @@ export default function HeroSection({
             href={ctaHref}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase ${styles.sansFont} mb-4`} // Added margin-bottom
+            className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase mb-4`} // Added margin-bottom
         >
             {ctaText}
         </motion.a>

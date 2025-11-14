@@ -22,7 +22,7 @@ const K_CONFIG = {
     description:"A tribute to the origins of Arabian perfumery, 2000 celebrates the timeless artistry that defines the brand’s foundation.",
    
     bottleImg: "/assets/images/kseries/bottle/past_center.png",
-    videoSrc: "/assets/images/kseries/videos/past.mp4",
+    videoSrc: "/assets/videos/kseries/past.mp4",
     notesImages: {
       top: "/assets/images/kseries/notes/past_top.jpg",
       mid: "/assets/images/kseries/notes/past_mid.jpg",
@@ -44,7 +44,7 @@ const K_CONFIG = {
       center: "/assets/images/kseries/bottle/past_center.png",
       right: "/assets/images/kseries/bottle/future_right.png",
     },
-    journeyVideoSrc: "/assets/images/kseries/videos/past_journey.mp4",
+    journeyVideoSrc: "/assets/videos/kseries/past_journey.mp4",
     journeyHeading:"Journey Through Time"
   },
   "2025": {
@@ -54,7 +54,7 @@ const K_CONFIG = {
     subtitle: "The Alchemy Lab",
     description:"2025 embodies the spirit of creation, transformation, and innovation — A reflection of today’s mastery in modern perfumery.",
     bottleImg: "/assets/images/kseries/bottle/present_center.png",
-    videoSrc: "/assets/images/kseries/videos/present.mp4",
+    videoSrc: "/assets/videos/kseries/present.mp4",
     notesImages: {
       top: "/assets/images/kseries/notes/present_top.jpg",
       mid: "/assets/images/kseries/notes/present_mid.jpg",
@@ -76,7 +76,7 @@ const K_CONFIG = {
       center: "/assets/images/kseries/bottle/present_center.png",
       right: "/assets/images/kseries/bottle/future_right.png",
     },
-    journeyVideoSrc: "/assets/images/kseries/videos/present_journey.mp4",
+    journeyVideoSrc: "/assets/videos/kseries/present_journey.mp4",
     journeyHeading:"Essence of Today"
   },
   "2050": {
@@ -86,7 +86,7 @@ const K_CONFIG = {
     subtitle: "The Beyond",
     description:"2050 - The Beyond” is an olfactory glimpse into tomorrow, where scent becomes an emotion — The ultimate expression of imagination and connection.",
     bottleImg: "/assets/images/kseries/bottle/future_center.png",
-    videoSrc: "/assets/images/kseries/videos/future.mp4",
+    videoSrc: "/assets/videos/kseries/future.mp4",
     notesImages: {
       top: "/assets/images/kseries/notes/future_top.jpg",
       mid: "/assets/images/kseries/notes/future_mid.jpg",
@@ -108,7 +108,7 @@ const K_CONFIG = {
       center: "/assets/images/kseries/bottle/future_center.png",
       right: "/assets/images/kseries/bottle/present_right.png",
     },
-    journeyVideoSrc: "/assets/images/kseries/videos/future_journey.mp4",
+    journeyVideoSrc: "/assets/videos/kseries/future_journey.mp4",
     journeyHeading:"Whispers of the Future"
   },
 };

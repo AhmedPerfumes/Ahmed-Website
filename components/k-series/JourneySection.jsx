@@ -160,7 +160,7 @@ function JourneySection({ data = {} }) {
               objectFit: "cover",
             }}
           >
-            <source src={data?.journeyVideoSrc || "/assets/images/kseries/joruney.mp4"} type="video/mp4" />
+            <source src={data?.journeyVideoSrc || "/assets/videos/kseries/joruney.mp4"} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </motion.div>

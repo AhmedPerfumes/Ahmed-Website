@@ -10,26 +10,26 @@ import { useRouter } from "next/navigation";
 const slidesData = [
   {
     id: "past",
-    image: "/assets/images/kseries/PAST_mobile.jpg",
+    image: "/assets/images/kseries/PAST_Bottle_Final.jpg",
     title: "The Roots",
     subtitle: "2000",
-    description: "Raw, authentic, and timeless—the foundation of our legacy.",
+    description: "“The Roots” captures the essence of Mr. Kafeel Ahmed’s beginnings - A return to authenticity, where every drop is a story of craftsmanship born from nature.",
     themeClass: "theme-past",
   },
   {
     id: "present",
-    image: "/assets/images/kseries/PRESENT_mobile.jpg",
+    image: "/assets/images/kseries/Present_2025.jpg",
     title: "The Alchemy Lab",
     subtitle:"2025",
-    description: "Precision, innovation, and modern artistry in a single scent.",
+    description: "“The Alchemy Lab” symbolizes Mr. Kafeel Ahmed’s creative evolution - Blending science, soul, and scent into a work of living art.",
     themeClass: "theme-present",
   },
   {
     id: "future",
-    image: "/assets/images/kseries/FUTURE_mobile.jpg",
+    image: "/assets/images/kseries/FUTURE_mobile_1.jpg",
     title: "The Beyond",
     subtitle: "2050",
-    description: "A visionary composition, radiant light, and the spirit of tomorrow.",
+    description: "“The Beyond” is an olfactory glimpse into tomorrow, where scent becomes an emotion - The ultimate expression of imagination and connection.",
     themeClass: "theme-future",
   },
 ];
@@ -92,7 +92,7 @@ export default function KSeriesProductCards() {
             Legacy Crafted <span className={styles.goldText}>Through Time.</span>
             </h2>
             <p className={styles.subText}>
-            Explore the iconic scents that define the K-Series: The founders signature collection.
+            Explore the iconic scents that define the K-Series - The founders signature collection.
             </p>
         </div>
 
