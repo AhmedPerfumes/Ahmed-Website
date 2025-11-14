@@ -153,7 +153,7 @@ function JourneySection({ data = {} }) {
             height="100%"
             autoPlay
             muted
-            loop
+            playsInline
             style={{
               display: "block",
               borderRadius: "16px",

@@ -6,8 +6,7 @@ function VideoSectionStatic() {
   const textColor = "#dcdcdc";
   const year = "2000";
   const subtitle = "The Chronicles of Ahmed Al Maghribi";
-  const description =
-    "Discover the artistry behind each era of the K-Series collection.";
+  const description = "Discover the artistry behind each era of the K-Series collection.";
 
   return (
     <section
@@ -87,7 +86,7 @@ function VideoSectionStatic() {
             }}
             title="The Chronicles Of Ahmed Al Maghribi"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="picture-in-picture;"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />

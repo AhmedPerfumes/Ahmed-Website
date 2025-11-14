@@ -34,7 +34,7 @@ const K_CONFIG = {
       base:"The fragrance lingers with a luxurious legacy accord of musks, warm woods, vanilla, ambroxan, incense, aged Shamama signature, and Oud Hindi, leaving a captivating, sensual, and memorable trail."
     },
     heroQuote:
-      `"A homage to beginning,where heritage and onnovation intertwined to form our foundation.It carries the fragrance of memory and nostalgia,honouring deep cultural roots.The Roots is not just past It is the legacy that anchors our journey forward"`,
+      `"A homage to beginning,where heritage and innovation intertwined to form our foundation.It carries the fragrance of memory and nostalgia,honouring deep cultural roots.The Roots is not just past It is the legacy that anchors our journey forward"`,
     // visual theme
     accentColor: "#e5d4b2",
     textColor: "#ffffff",

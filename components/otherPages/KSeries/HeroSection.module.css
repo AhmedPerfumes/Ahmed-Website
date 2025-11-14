@@ -172,20 +172,20 @@
 /* --- Hero Section Overlay --- */
 /* Softer, more elegant: not too dark, light blur */
 .heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.05) 0%,
-    rgba(0, 0, 0, 0.15) 40%,
-    rgba(0, 0, 0, 0.9) 100%
+    rgba(0,0,0,0) 50%,
+    rgba(0,0,0,0.35) 75%,
+    rgba(0,0,0,0.65) 100%
   );
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
+  
+  pointer-events: none;
 }
 
-/* Hero background image */
-.heroImage {
-  transform: translateZ(0); /* prevents subpixel glitches */
-}
 
 /* --- Hero Typography & CTA --- */
 
@@ -379,4 +379,27 @@
     font-size: 0.85rem;
     letter-spacing: 0.14em;
   }
+}
+.heroWrapper {
+  position: relative;
+  width: 100%;         /* instead of 100vw */
+  max-width: 100%;     /* prevents width overflow */
+  min-height: 100vh;
+  overflow: hidden;    /* prevents scrollbars */
+}
+.heroBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;         /* no vw units */
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;        /* safe: does NOT cause scroll */
+  height: 100%;
+  pointer-events: none;
 }
