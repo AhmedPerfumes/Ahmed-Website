@@ -2073,13 +2073,13 @@ console.log("Cart products after coupon:", updatedCartProducts);
                         </div>
                       </label>
                     </div>
-                    {/* <div className="form-check">
+                    <div className="form-check">
                       <input className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_5" value={'tamara'} checked={selectedOption === 'tamara'} onChange={handleRadioChange} />
                       <label className="form-check-label" htmlFor="checkout_payment_method_5" style={{display: "inline-flex"}} >
                         Tamara - No interest, No fees. 
                         <TamaraWidget inlineType='4' inlineVariant='text'/>
                       </label>
-                    </div>  */}
+                    </div> 
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for
