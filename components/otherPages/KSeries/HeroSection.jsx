@@ -12,7 +12,7 @@ const MOBILE_BREAKPOINT = 768;
 export default function HeroSection({
   title = "Experience The Essence",
   subtitle = "Elevate your presence with our K-Series signature scents.",
-  ctaText = "Shop The Series",
+  ctaText = "Pre-Book Now",
   ctaHref = "#k-series-product-cards",
 }) {
   const heroRef = useRef(null);
