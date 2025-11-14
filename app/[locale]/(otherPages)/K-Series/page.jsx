@@ -14,11 +14,9 @@ import VideoSectionStatic from "@/components/otherPages/KSeries/VideoSectionStat
 
 export default function Page() {
       const [showPrebooking, setShowPrebooking] = useState(false);
-    
-      const handleBookNow = () => setShowPrebooking(true);
     return (
         <>
-            {/* <Header14 /> */}
+            <Header14 />
             <main className="">
                 <HeroSection />
                 <KSeriesProductCards />

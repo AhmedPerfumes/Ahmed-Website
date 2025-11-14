@@ -89,10 +89,10 @@ export default function KSeriesProductCards() {
         <section id="k-series-product-cards" className={styles.productCardsSection}>
         <div className={styles.header}>
             <h2 className={styles.mainTitle}>
-            <span className={styles.goldText}>Three Eras.</span> One Vision.
+            Legacy Crafted <span className={styles.goldText}>Through Time.</span>
             </h2>
             <p className={styles.subText}>
-            Explore the iconic scents that define the K-Series: Past, Present, and Future.
+            Explore the iconic scents that define the K-Series: The founders signature collection.
             </p>
         </div>
 

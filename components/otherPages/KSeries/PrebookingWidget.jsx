@@ -159,7 +159,7 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                             animate="visible"
                             exit="exit"
                         >
-                            Pre-Book <strong>Now</strong>.
+                            Pre Order <strong>Now</strong>.
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -167,14 +167,14 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                 {/* --- Pre-Booking Button --- */}
                 <button className={styles.widgetButton}>
                     <CiMail size={24} />
-                    <span className="ms-2 d-none d-sm-inline">Pre-Book</span>
+                    <span className="ms-2 d-none d-sm-inline">Pre-Order</span>
                 </button>
             </motion.div>
 
             {/* --- Pre-Booking Modal --- */}
             <Modal show={!!showModal} onHide={handleClose} centered dialogClassName={styles.customModal}>
                 <Modal.Header closeButton className={styles.modalHeader} closeVariant="white">
-                    <Modal.Title className={styles.modalTitle}>K-Series Pre-Booking</Modal.Title>
+                    <Modal.Title className={styles.modalTitle}>K-Series Pre-Order</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
                     <p className="text-center" style={{color: "#f7e7ce "}}>Register your interest now to be the first to order and receive exclusive offers!</p>
