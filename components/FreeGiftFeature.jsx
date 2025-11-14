@@ -136,14 +136,16 @@ const FreeGiftFeature = ({ couponData }) => {
   // Handle gift selection with error handling
   const handleGiftSelect = (product) => {
     try {
-      // console.log('999 Gift selected:', product.product_id, product.product_name);
+      console.log('999 Gift selected:', product.product_id, product.product_name, product.campaign);
       // Remove all existing gifts from cart to ensure only one gift
-      cartProducts.forEach((item) => {
-        if (item.is_gift) {
-          removeGiftFromCart(null, item.campaign);
-        }
-      });
-      addProductToCart({ ...product, quantity: 1, is_gift: true, campaign: product.campaign });
+      // cartProducts.forEach((item) => {
+      //   if (item.is_gift) {
+      //     console.log('999 if is gift')
+      //     removeGiftFromCart(null, item.campaign);
+      //   }
+      // });
+      removeGiftFromCart(null, product.campaign);
+      addProductToCart({ ...product, quantity: 1, is_gift: true, campaign: product.campaign, type: 'foc', is_foc_replacement: true });
       setSelectedGift(product.product_id);
       // console.log('Cart updated, selectedGift set to:', product.product_id);
       // console.log('Updated cartProducts:', cartProducts);

@@ -313,34 +313,109 @@ export default function Context({ children }) {
     return "/placeholder.png";
   };
 
-  const addProductToCart = (product) => {
-    if (state.isProcessing) return;
+//   const addProductToCart = (product) => {
+//     if (state.isProcessing) return;
 
-    dispatch({ type: 'SET_PROCESSING', payload: true });
-    const updated = [...state.products];
+//     dispatch({ type: 'SET_PROCESSING', payload: true });
+//     dispatch({
+//       type: 'ADD_PRODUCT',
+//       payload: product,
+//       meta: {
+//         toast: {
+//           name: product?.product_name,
+//           image: buildToastImageUrl(product),
+//           message: product.is_gift ? "Free gift added to cart" : "Added to your cart",
+//         },
+//       },
+//     });
+    
 
-    const existing = updated.find((p) => p.product_id === product.product_id);
-    if (existing) {
-      existing.quantity = (existing.quantity || 0) + (product.quantity || 1);
-    } else {
-      updated.push({ ...product, quantity: product.quantity || 1 });
-    }
+//     // const updated = [...state.products];
+//     // const existing = updated.find((p) => p.product_id === product.product_id);
+//     // if (existing) {
+//     //   existing.quantity = (existing.quantity || 0) + (product.quantity || 1);
+//     // } else {
+//     //   updated.push({ ...product, quantity: product.quantity || 1 });
+//     // }
 
-    dispatch({
-      type: 'SET_PRODUCTS',
-      payload: updated,
-      meta: {
-        toast: {
-          name: product?.product_name,
-          image: buildToastImageUrl(product),
-          message: "Added to your cart",
-        },
-      },
-    });
+//     // dispatch({
+//     //   type: 'SET_PRODUCTS',
+//     //   payload: updated,
+//     //   meta: {
+//     //     toast: {
+//     //       name: product?.product_name,
+//     //       image: buildToastImageUrl(product),
+//     //       message: "Added to your cart",
+//     //     },
+//     //   },
+//     // });
 
-    // Sync with API if logged in
-    syncCartWithApi(updated);
-  };
+//     // Sync with API if logged in
+//     // syncCartWithApi(updated);
+//   };
+
+  // [MODIFIED] - addProductToCart (from Context.js)
+  const addProductToCart = (product) => {
+    if (state.isProcessing) return;
+
+  dispatch({ type: 'SET_PROCESSING', payload: true });
+
+    // [NEW] Check if this is a FOC replacement.
+    // If it is, we must first remove any existing gifts from the *same campaign*
+    // to avoid the race condition.
+    let baseProducts = state.products;
+    if (product.is_foc_replacement) {
+      baseProducts = state.products.filter(
+        (p) => !(p.is_gift && p.campaign === product.campaign)
+      );
+    }
+
+    // This logic now runs on the 'baseProducts' array,
+    // which has already been cleaned of old FOC gifts if necessary.
+    const existingProduct = baseProducts.find(
+      (p) =>
+        p.product_id === product.product_id &&
+        p.is_gift === product.is_gift &&
+        p.campaign === product.campaign
+    );
+
+    let updatedProducts;
+    if (existingProduct) {
+      // Update quantity of the specific item
+      updatedProducts = baseProducts.map((p) =>
+        p.product_id === product.product_id &&
+        p.is_gift === product.is_gift &&
+        p.campaign === product.campaign
+          ? { ...p, quantity: (p.quantity || 0) + (product.quantity || 1) }
+          : p
+      );
+    } else {
+      // Add new item
+      updatedProducts = [
+        ...baseProducts,
+        { ...product, quantity: product.quantity || 1 },
+      ];
+    }
+
+    // We use SET_PRODUCTS because we have manually built the
+    // correct new state array in one atomic step.
+    dispatch({
+      type: 'SET_PRODUCTS',
+      payload: updatedProducts,
+      meta: {
+        toast: {
+          name: product?.product_name,
+          image: buildToastImageUrl(product),
+          message: product.is_gift ? "Free gift added to cart" : "Added to your cart",
+        },
+      },
+    });
+    
+    // This logic remains correct.
+    if(!product.is_gift){
+      syncCartWithApi(updatedProducts);
+    }
+  };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
     if (state.isProcessing) {
