@@ -86,7 +86,7 @@ function VideoSection({ data = {} }) {
               border: "none",
               outline: "none",
               transition: "opacity 0.4s ease",
-              opacity: isHovered ? 0.95 : 1,
+              opacity: 0.95,
             }}
           >
             <source

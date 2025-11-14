@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
 const DESKTOP_HERO = "/assets/images/kseries/website_banner.jpg";
-const MOBILE_HERO = "/assets/images/kseries/mobile.jpg";
+const MOBILE_HERO = "/assets/images/kseries/mobile_banner_final.jpg";
 const MOBILE_BREAKPOINT = 768;
 
 export default function HeroSection({
@@ -57,28 +57,20 @@ export default function HeroSection({
   // );
 
   return (
-    <div
-      ref={heroRef}
-      className="position-relative overflow-hidden"
-      style={{ height: "100vh" }}
-    >
+    <div ref={heroRef} className={styles.heroWrapper}>
       {/* Background with parallax */}
-      <motion.div
-        style={{ y: heroImageY }}
-        className="position-absolute top-0 start-0 w-100 h-100"
-      >
+      <motion.div style={{ y: heroImageY }} className={styles.heroBg}>
         <Image
           src={heroSrc}
           alt="K Series Perfume Collection"
           fill
           priority
+          sizes="100vw"
           className={styles.heroImage}
-          style={{ objectFit: "cover", objectPosition: "center center" }}
         />
-        <div
-          className={`position-absolute top-0 start-0 w-100 h-100 ${styles.heroOverlay}`}
-        />
+        <div className={styles.heroOverlay}></div>
       </motion.div>
+
 
       {/* Centered K-Series logo + tagline, fixed a bit below top */}
       {/* <motion.div

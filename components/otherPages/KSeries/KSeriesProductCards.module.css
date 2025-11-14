@@ -128,8 +128,7 @@
 .theme-past {
   border-color: rgba(234, 193, 59, 0.568);
 }
-.theme-past .subtitle,
-.theme-past .ctaButton {
+.theme-past .subtitle, .theme-past .ctaButton {
   color: #ffbf00; /* Classic Gold */
   border-color: #ffbf00;
 }
@@ -142,8 +141,7 @@
 .theme-present {
   border-color: #85785a; /* Purple border */
 }
-.theme-present .subtitle,
-.theme-present .ctaButton {
+.theme-present .subtitle, .theme-present .ctaButton {
   color: #85785a; /* Vibrant purple accent */
   border-color: #85785a;
 }
@@ -156,8 +154,7 @@
 .theme-future {
   border-color: rgba(110, 203, 255, 0.3);
 }
-.theme-future .subtitle,
-.theme-future .ctaButton {
+.theme-future .subtitle, .theme-future .ctaButton {
   color: #4cb2ff; 
   border-color: #4cb2ff;
 }
@@ -173,106 +170,21 @@
   }
 }
 
-/* === COMPACT, SOPHISTICATED MOBILE LAYOUT === */
 @media (max-width: 768px) {
   .productCardsSection {
-    padding: 40px 16px; /* was 60px 20px – tighter, but still breathing */
+    padding: 60px 20px;
   }
-
-  .header {
-    margin-bottom: 32px; /* was 60px */
-  }
-
-  .mainTitle {
-    font-size: 1.7rem;  /* smaller, more refined on mobile */
-    letter-spacing: 0.08em;
-    margin-bottom: 4px;
-  }
-
-  .subText {
-    font-size: 0.9rem;
-    max-width: 85%;
-  }
-
   .cardsContainer {
     flex-direction: column;
     align-items: center;
-    gap: 16px; /* tighter spacing between cards */
   }
-
   .card {
-    max-width: 360px; /* avoids feeling oversized on small screens */
-    border-radius: 10px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+    max-width: 450px;
   }
-
-  .imageWrapper {
-    height: 220px; /* was 300px – more compact visual block */
-  }
-
-  .content {
-    padding: 16px 16px 18px;
-    min-height: auto; /* let content height shrink naturally */
-  }
-
-  .subtitle {
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    margin-bottom: 2px;
-  }
-
-  .title {
-    font-size: 1.4rem;
-    margin-bottom: 6px;
-  }
-
-  .description {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 12px;
-  }
-
-  .ctaButton {
-    align-self: flex-start;
-    padding: 8px 18px;
-    font-size: 0.75rem;
-    letter-spacing: 0.09em;
-    border-width: 1.5px;
-  }
-}
-
-/* Extra-tight for very small devices */
-@media (max-width: 480px) {
-  .productCardsSection {
-    padding: 32px 12px;
-  }
-
   .mainTitle {
-    font-size: 1.7rem;
+    font-size: 2rem;
   }
-
   .subText {
-    font-size: 0.95rem;
-  }
-
-  .imageWrapper {
-    height: 200px;
-  }
-
-  .content {
-    padding: 14px 14px 16px;
-  }
-
-  .title {
-    font-size: 1.3rem;
-  }
-
-  .description {
-    font-size: 0.85rem;
-  }
-
-  .ctaButton {
-    padding: 7px 16px;
-    font-size: 0.7rem;
+    font-size: 1rem;
   }
 }

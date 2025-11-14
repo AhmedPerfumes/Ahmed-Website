@@ -80,7 +80,7 @@ export default function KSeriesProductCards() {
             return; // Exit if ID is unexpected
     }
     // Construct the path: /en/K-Series/[routeSegment]
-    const path = `/en/K-Series/${routeSegment}`;
+    const path = `/en/k-series/${routeSegment}`;
 
     // Redirect the user
     router.push(path);
