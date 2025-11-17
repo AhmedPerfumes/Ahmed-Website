@@ -299,7 +299,7 @@ export default function Checkout() {
     };
 
     fetchCoupons();
-  }, [formData.billingAddress.email, formData.billingAddress.mobile, setCouponDataContext]);
+  }, []);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -705,17 +705,17 @@ export default function Checkout() {
   const applyCoupon = async (e) => {
     e.preventDefault();
 
-    const user = JSON.parse(atob(localStorage.getItem("user")));
+    const user = isLoggedIn ? JSON.parse(atob(localStorage.getItem("user"))) : null;
 
     if (!couponCode.trim()) {
       setCouponError("Coupon Code is Required");
       return;
     }
 
-    if (!isOTPVerified && !isLoggedIn) {
-      setCouponError("Please verify your mobile number first.");
-      return;
-    }
+    // if (!isOTPVerified && !isLoggedIn) {
+    //   setCouponError("Please verify your mobile number first.");
+    //   return;
+    // }
 
     const code = couponCode.toLowerCase();
 
@@ -742,8 +742,8 @@ export default function Checkout() {
       salesType: "EComm",
       couponRegistrationId: validCoupon ? validCoupon.couponRegistrationId : 0,
       couponCode: validCoupon ? "" : couponCode.trim(),
-      mobileNo: user?.phone,
-      email: user?.email,
+      mobileNo: user?.phone || formData.billingAddress.mobile,
+      email: user?.email || formData.billingAddress.email,
     };
 
     const res = await fetch(
@@ -818,7 +818,7 @@ export default function Checkout() {
     setCouponError(null);
     setCouponData(couponToApply);
     console.log("Applied coupon:", couponToApply);
-console.log("Cart products after coupon:", updatedCartProducts);
+    console.log("Cart products after coupon:", updatedCartProducts);
     setCouponDataContext(couponToApply);
     setCouponSuccess(
       `Applied Coupon: ${couponToApply.code} - ${couponToApply.title}`
@@ -1208,7 +1208,7 @@ console.log("Cart products after coupon:", updatedCartProducts);
                       ) : (
                         <div style={{ color: "green" }}>{OTPSuccess}</div>
                       )}
-                      {isOTPButton ? (
+                      {!isOTPButton ? (
                         <button
                           className="btn btn-primary w-100 text-uppercase"
                           type="button"
