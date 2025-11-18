@@ -1208,7 +1208,7 @@ export default function Checkout() {
                       ) : (
                         <div style={{ color: "green" }}>{OTPSuccess}</div>
                       )}
-                      {!isOTPButton ? (
+                      {isOTPButton ? (
                         <button
                           className="btn btn-primary w-100 text-uppercase"
                           type="button"
