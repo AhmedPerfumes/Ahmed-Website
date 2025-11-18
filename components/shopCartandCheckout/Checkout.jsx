@@ -89,6 +89,8 @@ export default function Checkout() {
 
   const hasCleaned = useRef(false);
 
+  const hasFetchedRef = useRef(false);
+
   useEffect(() => {
     if (hasCleaned.current) return;
 
@@ -226,14 +228,26 @@ export default function Checkout() {
   // }, [formData.billingAddress.email, formData.billingAddress.mobile]);
  // ✅ [FINAL VERSION] - Use the new API to fetch active coupons
   useEffect(() => {
-    // Helper function to map new API response to the structure your app uses
-    const transformCouponData = (apiCoupons) => {
-    if (!Array.isArray(apiCoupons)) {
-      return [];
-    }
-    // ✅ FIX: First, filter for active coupons, then map the results.
+  const { mobile, email } = formData.billingAddress;
+
+  // If already fetched once, stop here
+  if (hasFetchedRef.current) return;
+
+  // If mobile is missing or not valid, don't fetch yet
+  if (!/^\d{10}$/.test(mobile)) {
+    return;
+  }
+
+  // Mark as fetched so it won't run again
+  hasFetchedRef.current = true;
+
+  // ---- Your existing code ----
+
+  const transformCouponData = (apiCoupons) => {
+    if (!Array.isArray(apiCoupons)) return [];
+
     return apiCoupons
-      .filter(coupon => coupon.active === true) // This line is new
+      .filter(coupon => coupon.active === true)
       .map((coupon) => ({
         id: coupon.couponCode,
         code: coupon.couponCode,
@@ -250,56 +264,41 @@ export default function Checkout() {
         company: coupon.company,
         whsCode: coupon.whsCode
       }));
-    };
+  };
 
-    const fetchCoupons = async () => {
-      const { email, mobile } = formData.billingAddress;
+  const fetchCoupons = async () => {
+    setCouponLoading(true);
+    try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons`;
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          salesType: "EComm",
+          company: "UAE",
+          mobileNo: mobile,
+          email: email
+        }),
+      });
 
-      if (!email || !/^\d{10}$/.test(mobile)) {
-        setCoupons([]);
-        return;
-      }
+      if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
-      setCouponLoading(true);
-      try {
-        const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons`;
-        const response = await fetch(apiUrl,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              salesType: "EComm",
-              company: "UAE",
-              mobileNo: mobile,
-              email: email,
-            }),
-          }
-        );
+      const data = await response.json();
+      const transformedData = transformCouponData(data.data);
 
-        if (!response.ok) {
-          throw new Error(`API Error! Status: ${response.status}`);
-        }
+      setCoupons(transformedData);
+      setCouponDataContext(transformedData);
 
-        const data = await response.json();
-        
-        // This is the only line that needed to change!
-        const transformedData = transformCouponData(data.data);
-        
-        setCoupons(transformedData);
-        setCouponDataContext(transformedData); 
+    } catch (err) {
+      console.error("Failed to fetch coupons:", err);
+      setCoupons([]);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
 
-      } catch (err) {
-        console.error("Failed to fetch coupons:", err);
-        setCoupons([]);
-      } finally {
-        setCouponLoading(false);
-      }
-    };
-
-    fetchCoupons();
-  }, []);
+  fetchCoupons();
+}, [formData.billingAddress.mobile]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -712,10 +711,10 @@ export default function Checkout() {
       return;
     }
 
-    // if (!isOTPVerified && !isLoggedIn) {
-    //   setCouponError("Please verify your mobile number first.");
-    //   return;
-    // }
+    if (!isOTPVerified && !isLoggedIn) {
+      setCouponError("Please verify your mobile number first.");
+      return;
+    }
 
     const code = couponCode.toLowerCase();
 
