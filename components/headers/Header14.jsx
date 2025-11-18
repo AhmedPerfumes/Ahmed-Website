@@ -59,7 +59,7 @@ const marqueeStyles = `
   display: flex;
   align-items: center;
   width: max-content; /* Vital: allows text to overflow the limited container */
-  animation: marquee 20s linear infinite;
+  animation: marquee 50s linear infinite;
   will-change: transform;
 }
 
