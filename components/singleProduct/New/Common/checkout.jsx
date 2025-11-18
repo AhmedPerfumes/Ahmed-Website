@@ -8,13 +8,7 @@ import { renderPrice } from "@/utlis/priceRenderer";
 import TamaraWidget from "@/components/TamaraWidget";
 
 const Checkout = ({ product }) => {
-    // const sizes = [product.size];
-    // const [selectedSize, setSelectedSize] = useState(sizes[0]);
-    const {
-        isLoading: isMenuLoading,
-        error: isMenuError,
-        currency,
-    } = useMenu();
+    const { isLoading: isMenuLoading, error: isMenuError, currency, } = useMenu();
     const { cartProducts, setCartProducts } = useContextElement();
     const [quantity, setQuantity] = useState(1);
     const [error, setError] = useState(null);
@@ -23,47 +17,45 @@ const Checkout = ({ product }) => {
     let category = product?.category;
     let subcategory = product?.subcategory;
 
-    useEffect(() => {
-    const tamaraPromoScript = document.createElement("script");
-    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-    tamaraPromoScript.async = true;
-    document.body.appendChild(tamaraPromoScript);
-
-    return () => {
-        document.body.removeChild(tamaraPromoScript);
-    };
-    }, []);
-
-    useEffect(() => {
-    window.tamaraSettings = {
-        lang: "en",
-        country: "AE",
-        publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
-    };
-
-    const tamaraPromoScript = document.createElement("script");
-    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-    tamaraPromoScript.async = true;
-    document.body.appendChild(tamaraPromoScript);
-
-    return () => {
-        document.body.removeChild(tamaraPromoScript);
-    };
-    }, []);
-
     const isIncludeCard = () => {
         const item = cartProducts.filter(
             (elm) => elm.product_id == product.product_id
         )[0];
         return item;
     };
+    const currentItem = isIncludeCard();
+    const currentQuantity = currentItem ? currentItem.quantity : quantity;
+
+    useEffect(() => {
+        const tamaraPromoScript = document.createElement("script");
+        tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+        tamaraPromoScript.async = true;
+        document.body.appendChild(tamaraPromoScript);
+
+        return () => {
+            if(document.body.contains(tamaraPromoScript)){
+                document.body.removeChild(tamaraPromoScript);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        window.tamaraSettings = { lang: "en", country: "AE", publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9", };
+        // const tamaraPromoScript = document.createElement("script");
+        // tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+        // tamaraPromoScript.async = true;
+        // document.body.appendChild(tamaraPromoScript);
+
+        // return () => {
+        //     document.body.removeChild(tamaraPromoScript);
+        // };
+    }, []);
+
     const setQuantityCartItem = (id, quantity) => {
         if (isIncludeCard()) {
             if (quantity >= 1 && quantity <= product.product_qty) {
                 setError(null);
-                const item = cartProducts.filter(
-                    (elm) => elm.product_id == id
-                )[0];
+                const item = cartProducts.filter((elm) => elm.product_id == id)[0];
                 const items = [...cartProducts];
                 const itemIndex = items.indexOf(item);
                 item.quantity = quantity;
@@ -73,11 +65,7 @@ const Checkout = ({ product }) => {
                 setError("Quantity is more than available quantity");
             }
         } else {
-            setQuantity(
-                quantity <= product.product_qty && quantity >= 1
-                    ? quantity
-                    : product.product_qty
-            );
+            setQuantity(quantity <= product.product_qty && quantity >= 1 ? quantity : product.product_qty);
             setError(null);
             if (quantity > product.product_qty) {
                 setError("Quantity is more than available quantity");
@@ -86,25 +74,16 @@ const Checkout = ({ product }) => {
             }
         }
     };
+
     const addToCart = () => {
         if (!isIncludeCard()) {
-            const item = {
-                ...product,
-                category_name: capitalizeEachWord(
-                    category.split("-").join(" ")
-                ),
-                subcategory_name: capitalizeEachWord(
-                    subcategory.split("-").join(" ")
-                ),
+            const item = { ...product, category_name: capitalizeEachWord(category.split("-").join(" ")),
+                subcategory_name: capitalizeEachWord(subcategory.split("-").join(" ")),
             };
             item.quantity = quantity;
             setCartProducts((pre) => [...pre, item]);
-            document
-                .getElementById("cartDrawerOverlay")
-                .classList.add("page-overlay_visible");
-            document
-                .getElementById("cartDrawer")
-                .classList.add("aside_visible");
+            document.getElementById("cartDrawerOverlay").classList.add("page-overlay_visible");
+            document.getElementById("cartDrawer").classList.add("aside_visible");
         }
     };
 
@@ -143,44 +122,39 @@ const Checkout = ({ product }) => {
     }
 
     function capitalizeEachWord(str) {
-        return str
-            .split(" ")
-            .map(
-                (word) =>
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            )
-            .join(" ");
+        return str.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
     }
 
-    useEffect(() => {
-        const tamaraPromoScript = document.createElement("script");
-        tamaraPromoScript.src =
-            "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-        tamaraPromoScript.async = true;
-        document.body.appendChild(tamaraPromoScript);
+    // useEffect(() => {
+    //     const tamaraPromoScript = document.createElement("script");
+    //     tamaraPromoScript.src =
+    //         "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    //     tamaraPromoScript.async = true;
+    //     document.body.appendChild(tamaraPromoScript);
 
-        return () => {
-            document.body.removeChild(tamaraPromoScript);
-        };
-    }, []);
+    //     return () => {
+    //         document.body.removeChild(tamaraPromoScript);
+    //     };
+    // }, []);
 
-    useEffect(() => {
-        window.tamaraSettings = {
-            lang: "en",
-            country: "AE",
-            publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
-        };
+    // useEffect(() => {
+    //     window.tamaraSettings = {
+    //         lang: "en",
+    //         country: "AE",
+    //         publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+    //     };
 
-        const tamaraPromoScript = document.createElement("script");
-        tamaraPromoScript.src =
-            "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-        tamaraPromoScript.async = true;
-        document.body.appendChild(tamaraPromoScript);
+    //     const tamaraPromoScript = document.createElement("script");
+    //     tamaraPromoScript.src =
+    //         "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    //     tamaraPromoScript.async = true;
+    //     document.body.appendChild(tamaraPromoScript);
 
-        return () => {
-            document.body.removeChild(tamaraPromoScript);
-        };
-    }, []);
+    //     return () => {
+    //         document.body.removeChild(tamaraPromoScript);
+    //     };
+    // }, []);
+
 
     // const price = (elm) => {
     //     const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST offset
@@ -201,6 +175,108 @@ const Checkout = ({ product }) => {
     //     return parseFloat(elm.price).toFixed(2);
     // };
 
+    // const tabbyPrice = (elm) => {
+    //     const currentUTC = new Date();
+    //     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+    //     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    //     if (elm?.discount) {
+    //         if (new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+    //             return ( elm.price - (elm.price / 100) * elm.discount.value ).toFixed(2);
+    //         } else {
+    //             return elm?.price;
+    //         }
+    //     } else if (elm?.sale_price) {
+    //         return (elm.price - (elm.price / 100) * elm.sale_price).toFixed(2);
+    //     } else {
+    //         return elm?.price;
+    //     }
+    // };
+
+    const tabbyPrice = (elm) => {
+        const currentUTC = new Date();
+        const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+        const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+        
+        let finalPrice = elm?.price;
+
+        if (elm?.discount) {
+            if ( new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+                finalPrice = (elm.price - (elm.price / 100) * elm.discount.value).toFixed(2);
+            }
+        } else if (elm?.sale_price) {
+            finalPrice = (elm.price - (elm.price / 100) * elm.sale_price).toFixed(2);
+        }
+        
+        return finalPrice;
+    };
+
+    // useEffect(() => {
+    //     // Load the TabbyPromo script
+    //     const tabbyPromoScript = document.createElement("script");
+    //     tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+    //     tabbyPromoScript.async = true;
+    //     document.body.appendChild(tabbyPromoScript);
+
+    //     tabbyPromoScript.onload = () => {
+    //         new window.TabbyPromo({
+    //             selector: "#TabbyPromo", // required, content of tabby Promo Snippet will be placed in element with that selector.
+    //             currency: "AED", // required, AED|SAR|KWD only supported, with no spaces or lowercase.
+    //             price: tabbyPrice(product), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
+    //             lang: locale, // Optional, en|ar only supported
+    //             source: "product", // Optional, snippet placement; `product` for product page and `cart` for cart page.
+    //             publicKey: "pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87", // required, Public Key
+    //             merchantCode: "APM", // required
+    //         });
+    //     };
+
+    //     return () => {
+    //         document.body.removeChild(tabbyPromoScript);
+    //     };
+    // }, []);
+
+    useEffect(() => {
+        // 1. Define render function to handle price updates
+        const renderTabbyWidget = () => {
+            if (window.TabbyPromo) {
+                // Clear existing widget to prevent duplicates on re-render
+                const tabbyNode = document.getElementById("TabbyPromo");
+                if (tabbyNode) tabbyNode.innerHTML = "";
+
+                // Calculate Total Price based on Quantity
+                const unitPrice = parseFloat(tabbyPrice(product));
+                const totalPrice = (unitPrice * currentQuantity).toFixed(2);
+
+                new window.TabbyPromo({
+                    selector: "#TabbyPromo",
+                    currency: "AED",
+                    price: totalPrice, // Sends total price
+                    lang: locale,
+                    source: "product",
+                    publicKey: "pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87",
+                    merchantCode: "APM",
+                });
+            }
+        };
+
+        // 2. Load Script if not present
+        const scriptId = "tabby-promo-script";
+        if (!document.getElementById(scriptId)) {
+            const tabbyPromoScript = document.createElement("script");
+            tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+            tabbyPromoScript.id = scriptId;
+            tabbyPromoScript.async = true;
+            document.body.appendChild(tabbyPromoScript);
+
+            tabbyPromoScript.onload = () => {
+                renderTabbyWidget();
+            };
+        } else {
+            // If script exists (e.g. quantity update), render immediately
+            renderTabbyWidget();
+        }
+
+    // Add currentQuantity to dependency array
+    }, [currentQuantity, locale, product, cartProducts]);
     return (
         <div>
             {/* Price */}
@@ -349,10 +425,13 @@ const Checkout = ({ product }) => {
                     : t("Out of Stock")}
             </button> */}
             {/* Cart Actions (drop-in replacement for your "new" block) */}
-                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
+            <TamaraWidget inlineType="5" inlineVariant="outlined" />
             <div className="mt-3">
                 {product.product_qty > 0 ? (
-                    <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>
+                    <div
+                        className="d-flex w-100 gap-2 mt-3"
+                        style={{ height: 48 }}
+                    >
                         {/* Left Pill (Add to Cart → Already Added) */}
                         <motion.button
                             layout

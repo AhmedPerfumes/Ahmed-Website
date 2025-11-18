@@ -137,7 +137,7 @@ export default function Cart() {
             selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
             currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
             price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
-            lang: 'en', // Optional, en|ar only supported
+            lang: locale, // Optional, en|ar only supported
             source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
             publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87', // required, Public Key
             merchantCode: 'APM'  // required
