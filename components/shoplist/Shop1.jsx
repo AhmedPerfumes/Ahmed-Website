@@ -181,6 +181,7 @@ export default function Shop1({ search }) {
     s
       .replace(/&amp;/g, "")
       .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, " ")
       .trim()
       .split(" ")
       .join("-")

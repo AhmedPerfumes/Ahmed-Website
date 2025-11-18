@@ -311,7 +311,7 @@ export default function Style2({ category, subcategory, products }) {
                   
                   >
                     {
-                      locale == 'ar' ? elm?.product_name_ar : elm?.product_name
+                      locale == 'ar' ? elm?.product_name_ar : he.decode(elm?.product_name)
                     }
                     {/* {elm?.product_name && t(he.decode(elm?.product_name))} */}
                   </Link>
