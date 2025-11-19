@@ -20,6 +20,14 @@ export default function Cart() {
   // const [couponSuccess, setCouponSuccess] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart} = useContextElement();
 
+  const [checkboxes, setCheckboxes] = useState({
+    free_shipping: freeShippingFlag,
+    flat_rate: false,
+    local_pickup: false,
+  });
+
+  const finalTotal = !isMenuLoading && shippingServiceCharges ? (!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)) : "0.00";
+
   // console.log('shippingServiceChargesCA', freeShippingFlag);
 
   useEffect(() => {
@@ -28,13 +36,67 @@ export default function Cart() {
   }, []);
 
   useEffect(() => {
+    if (isMenuLoading) return;
+
+    const scriptId = "tabby-promo-script";
+    const scriptSrc = "https://checkout.tabby.ai/tabby-promo.js";
+
+    const cleanContainer = () => {
+      const container = document.getElementById("TabbyPromo");
+      if (container) container.innerHTML = "";
+    };
+
+    const initTabby = () => {
+      cleanContainer();
+      if (document.getElementById("TabbyPromo") && window.TabbyPromo && typeof window.TabbyPromo === 'function') {
+        try {
+           new window.TabbyPromo({
+            selector: '#TabbyPromo',
+            currency: 'AED', 
+            price: finalTotal, // Using the dynamic total calculated above
+            lang: locale, 
+            source: 'cart', // Changed to 'cart' since this is the cart page
+            publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87',
+            merchantCode: 'APM'
+          });
+        } catch (err) {
+          console.error("Tabby Widget Init Error:", err);
+        }
+      }
+    };
+
+    let script = document.getElementById(scriptId);
+    
+    if (!script) {
+      script = document.createElement("script");
+      script.src = scriptSrc;
+      script.id = scriptId;
+      script.async = true;
+      document.body.appendChild(script);
+      script.onload = initTabby;
+    } else {
+      if (typeof window.TabbyPromo === 'function') {
+        initTabby();
+      } else {
+        script.onload = initTabby;
+      }
+    }
+
+    return () => {
+      if (script) script.removeEventListener('load', initTabby);
+    };
+  }, [finalTotal, currency, locale])
+
+  useEffect(() => {
     const tamaraPromoScript = document.createElement("script");
     tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
     tamaraPromoScript.async = true;
     document.body.appendChild(tamaraPromoScript);
 
     return () => {
-        document.body.removeChild(tamaraPromoScript);
+        if(document.body.contains(tamaraPromoScript)){
+            document.body.removeChild(tamaraPromoScript);
+        }
     };
   }, [totalPrice]);
 
@@ -51,7 +113,9 @@ export default function Cart() {
     document.body.appendChild(tamaraPromoScript);
 
     return () => {
-        document.body.removeChild(tamaraPromoScript);
+        if(document.body.contains(tamaraPromoScript)){
+            document.body.removeChild(tamaraPromoScript);
+        }
     };
   }, [totalPrice]);
 
@@ -71,12 +135,6 @@ export default function Cart() {
   const removeItem = async(id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };
-
-  const [checkboxes, setCheckboxes] = useState({
-    free_shipping: freeShippingFlag,
-    flat_rate: false,
-    local_pickup: false,
-  });
 
   // Step 2: Create a handler function
   const handleCheckboxChange = (event) => {
@@ -125,38 +183,33 @@ export default function Cart() {
   //   }
   // };
 
-    useEffect(() => {
-      // Load the TabbyPromo script
-      const tabbyPromoScript = document.createElement("script");
-      tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
-      tabbyPromoScript.async = true;
-      document.body.appendChild(tabbyPromoScript);
-  
-      tabbyPromoScript.onload = () => {
-        new window.TabbyPromo({
-            selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
-            currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
-            price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
-            lang: locale, // Optional, en|ar only supported
-            source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
-            publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87', // required, Public Key
-            merchantCode: 'APM'  // required
-        });
-      };
 
-      setCouponDataContext(null);
-  
-      return () => {
-        document.body.removeChild(tabbyPromoScript);
-      };
-    }, []);
 
-  if (isMenuLoading) {
-    return <div><Pagination1 /></div>;
-  }
-  if (isMenuError) {
-    return <div>{ isMenuError }</div>;
-  }
+    // useEffect(() => {
+    //   // Load the TabbyPromo script
+    //   const tabbyPromoScript = document.createElement("script");
+    //   tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+    //   tabbyPromoScript.async = true;
+    //   document.body.appendChild(tabbyPromoScript);
+  
+    //   tabbyPromoScript.onload = () => {
+    //     new window.TabbyPromo({
+    //         selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
+    //         currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
+    //         price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
+    //         lang: locale, // Optional, en|ar only supported
+    //         source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+    //         publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87', // required, Public Key
+    //         merchantCode: 'APM'  // required
+    //     });
+    //   };
+
+    //   setCouponDataContext(null);
+  
+    //   return () => {
+    //     document.body.removeChild(tabbyPromoScript);
+    //   };
+    // }, []);
 
   const currentUTC = new Date(); // Current UTC time
   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
@@ -265,6 +318,14 @@ export default function Cart() {
   //     return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
   //   }
   // };
+
+
+  if (isMenuLoading) {
+    return <div><Pagination1 /></div>;
+  }
+  if (isMenuError) {
+    return <div>{ isMenuError }</div>;
+  }
 
   return (
     <div className="shopping-cart" style={{ minHeight: "calc(100vh - 300px)" }}>
