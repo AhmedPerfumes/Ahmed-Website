@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const animationStyles = `
   .family-section-item {
@@ -96,6 +97,7 @@ export default function FamilySection({ data = {} }) {
   // compute family images according to the viewing context (past/present/future)
   // allow full override if merged.familyImages provides left/center/right
   const accent = merged?.accentColor || "#e5d4b2";
+  const baseUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/en/k-series/`;
 
   const defaultSets = {
     past: {
@@ -103,6 +105,11 @@ export default function FamilySection({ data = {} }) {
       center: "/assets/images/kseries/bottle/past_center.png",
       right: "/assets/images/kseries/bottle/future_right.png",
       labels: { left: "K 2025", center: "K 2000", right: "K 2050" },
+      links: { 
+        left: `${baseUrl}2025`, 
+        center: `${baseUrl}2000`, 
+        right: `${baseUrl}2050` 
+      },
     },
     present: {
       // when present page is open: show future at left, present center, past right
@@ -110,6 +117,11 @@ export default function FamilySection({ data = {} }) {
       center: "/assets/images/kseries/bottle/present_center.png",
       right: "/assets/images/kseries/bottle/future_right.png",
       labels: { left: "K 2000", center: "K 2025", right: "K 2050" },
+      links: { 
+        left: `${baseUrl}2000`, 
+        center: `${baseUrl}2025`, 
+        right: `${baseUrl}2050` 
+      },
     },
     future: {
       // when future page is open: show past at left, future center, present right
@@ -117,6 +129,11 @@ export default function FamilySection({ data = {} }) {
       center: "/assets/images/kseries/bottle/future_center.png",
       right: "/assets/images/kseries/bottle/present_right.png",
       labels: { left: "K 2000", center: "K 2050", right: "K 2025" },
+      links: { 
+        left: `${baseUrl}2000`, 
+        center: `${baseUrl}2050`, 
+        right: `${baseUrl}2025` 
+      },
     },
   };
 
@@ -130,6 +147,10 @@ export default function FamilySection({ data = {} }) {
   const leftLabel = merged?.familyImages?.labels?.left || chosenSet.labels.left;
   const centerLabel = merged?.familyImages?.labels?.center || chosenSet.labels.center;
   const rightLabel = merged?.familyImages?.labels?.right || chosenSet.labels.right;
+
+  const leftLink = merged?.familyImages?.links?.left || chosenSet.links.left;
+  const centerLink = merged?.familyImages?.links?.center || chosenSet.links.center;
+  const rightLink = merged?.familyImages?.links?.right || chosenSet.links.right;
 
   return (
     <>
@@ -258,21 +279,23 @@ export default function FamilySection({ data = {} }) {
                 className={`family-section-item left ${isVisible ? "is-visible" : ""}`}
                 style={{ marginRight: "-50px" }}
               >
-                <img
-                  src={imgLeft}
-                  alt={leftLabel}
-                  className="img-fluid"
-                  style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
-                />
-                <motion.p
-                  className="mt-3"
-                  style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
-                  initial={{ opacity: 0 }}
-                  animate={isVisible ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.5 }}
-                >
-                  {leftLabel}
-                </motion.p>
+                <Link href={leftLink} style={{ textDecoration: 'none', display: 'block' }}>
+                  <img
+                    src={imgLeft}
+                    alt={leftLabel}
+                    className="img-fluid"
+                    style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
+                  />
+                  <motion.p
+                    className="mt-3"
+                    style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
+                    initial={{ opacity: 0 }}
+                    animate={isVisible ? { opacity: 1 } : {}}
+                    transition={{ delay: 0.5 }}
+                  >
+                    {leftLabel}
+                  </motion.p>
+                </Link>
               </div>
 
               {/* Center Image */}
@@ -280,21 +303,23 @@ export default function FamilySection({ data = {} }) {
                 className={`family-section-item center ${isVisible ? "is-visible" : ""}`}
                 style={{ zIndex: 2, marginX: "0 -30px" }}
               >
-                <img
-                  src={imgCenter}
-                  alt={centerLabel}
-                  className="img-fluid"
-                  style={{ transformOrigin: "bottom center", maxWidth: "280px", width: "100%" }}
-                />
-                <motion.p
-                    className="mt-3"
-                    style={{ fontSize: "1rem", color: accent, fontWeight: 700 }}
-                  initial={{ opacity: 0 }}
-                  animate={isVisible ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.6 }}
-                >
-                  {centerLabel}
-                </motion.p>
+                <Link href={centerLink} style={{ textDecoration: 'none', display: 'block' }}>
+                  <img
+                    src={imgCenter}
+                    alt={centerLabel}
+                    className="img-fluid"
+                    style={{ transformOrigin: "bottom center", maxWidth: "280px", width: "100%" }}
+                  />
+                  <motion.p
+                      className="mt-3"
+                      style={{ fontSize: "1rem", color: accent, fontWeight: 700 }}
+                    initial={{ opacity: 0 }}
+                    animate={isVisible ? { opacity: 1 } : {}}
+                    transition={{ delay: 0.6 }}
+                  >
+                    {centerLabel}
+                  </motion.p>
+                </Link>
               </div>
 
               {/* Right Image */}
@@ -302,21 +327,23 @@ export default function FamilySection({ data = {} }) {
                 className={`family-section-item right ${isVisible ? "is-visible" : ""}`}
                 style={{ marginLeft: "-50px" }}
               >
-                <img
-                  src={imgRight}
-                  alt={rightLabel}
-                  className="img-fluid"
-                  style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
-                />
-                <motion.p
-                    className="mt-3"
-                    style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
-                  initial={{ opacity: 0 }}
-                  animate={isVisible ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.7 }}
-                >
-                  {rightLabel}
-                </motion.p>
+                <Link href={rightLink} style={{ textDecoration: 'none', display: 'block' }}>
+                  <img
+                    src={imgRight}
+                    alt={rightLabel}
+                    className="img-fluid"
+                    style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
+                  />
+                  <motion.p
+                      className="mt-3"
+                      style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
+                    initial={{ opacity: 0 }}
+                    animate={isVisible ? { opacity: 1 } : {}}
+                    transition={{ delay: 0.7 }}
+                  >
+                    {rightLabel}
+                  </motion.p>
+                </Link>
               </div>
             </motion.div>
           </div>
