@@ -23,33 +23,33 @@ const Checkout = ({ product }) => {
     let category = product?.category;
     let subcategory = product?.subcategory;
 
-    useEffect(() => {
-    const tamaraPromoScript = document.createElement("script");
-    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-    tamaraPromoScript.async = true;
-    document.body.appendChild(tamaraPromoScript);
+    // useEffect(() => {
+    // const tamaraPromoScript = document.createElement("script");
+    // tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    // tamaraPromoScript.async = true;
+    // document.body.appendChild(tamaraPromoScript);
 
-    return () => {
-        document.body.removeChild(tamaraPromoScript);
-    };
-    }, []);
+    // return () => {
+    //     document.body.removeChild(tamaraPromoScript);
+    // };
+    // }, []);
 
-    useEffect(() => {
-    window.tamaraSettings = {
-        lang: "en",
-        country: "AE",
-        publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
-    };
+    // useEffect(() => {
+    // window.tamaraSettings = {
+    //     lang: "en",
+    //     country: "AE",
+    //     publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+    // };
 
-    const tamaraPromoScript = document.createElement("script");
-    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-    tamaraPromoScript.async = true;
-    document.body.appendChild(tamaraPromoScript);
+    // const tamaraPromoScript = document.createElement("script");
+    // tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    // tamaraPromoScript.async = true;
+    // document.body.appendChild(tamaraPromoScript);
 
-    return () => {
-        document.body.removeChild(tamaraPromoScript);
-    };
-    }, []);
+    // return () => {
+    //     document.body.removeChild(tamaraPromoScript);
+    // };
+    // }, []);
 
     const isIncludeCard = () => {
         const item = cartProducts.filter(
