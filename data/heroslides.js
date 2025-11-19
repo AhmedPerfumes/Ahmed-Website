@@ -118,25 +118,32 @@ export const slideData1000 = [
     id: 0,
     bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
     title: "",
-    description: "Track Your Order",
-    btnLink: "order-tracking",
+    description: "K-Series: Pre-Book Now!",
+    btnLink: "k-series",
   },
-  {
-    id: 1,
-    bgImage: "/assets/images/home/demo15/slider1_bg.jpg",
-    title: "",
-    description:
-      "Free Shipping on orders AED 400 and above",
-    btnLink: "shop",
-  },
-  {
-    id: 2,
-    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
-    title: "",
-    description:
-      "A huge selection of best fragrance",
-    btnLink: "shop",
-  },
+  // {
+  //   id: 0,
+  //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+  //   title: "",
+  //   description: "Track Your Order",
+  //   btnLink: "order-tracking",
+  // },
+  // {
+  //   id: 1,
+  //   bgImage: "/assets/images/home/demo15/slider1_bg.jpg",
+  //   title: "",
+  //   description:
+  //     "Free Shipping on orders AED 400 and above",
+  //   btnLink: "shop",
+  // },
+  // {
+  //   id: 2,
+  //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+  //   title: "",
+  //   description:
+  //     "A huge selection of best fragrance",
+  //   btnLink: "shop",
+  // },
   // {
   //   id: 3,
   //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
@@ -145,14 +152,14 @@ export const slideData1000 = [
   //     "Purchase above AED 500 & Select a Free Gift",
   //   btnLink: "shop",
   // },
-  {
-    id: 4,
-    bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
-    title: "",
-    description:
-      "EXCLUSIVE OFFER! Get upto 30% OFF : Shop Now",
-    btnLink: "shop",
-  },
+  // {
+  //   id: 4,
+  //   bgImage: "/assets/images/home/demo15/slider2_bg.jpg",
+  //   title: "",
+  //   description:
+  //     "EXCLUSIVE OFFER! Get upto 30% OFF : Shop Now",
+  //   btnLink: "shop",
+  // },
 ];
 
 

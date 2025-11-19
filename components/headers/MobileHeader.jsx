@@ -121,7 +121,7 @@ export default function MobileHeader() {
         scrollDirection == "up" ? "header_sticky-active" : "position-relative"
       } `}
     >
-      <Swiper
+      {/* <Swiper
           className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
           {...swiperOptions}
           style={{ height: "2.5rem" }}
@@ -150,6 +150,51 @@ export default function MobileHeader() {
                   </div>
               </SwiperSlide>
           ))}
+      </Swiper> */}
+
+      <Swiper
+          className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
+          {...swiperOptions}
+          style={{ height: "2.5rem" }}
+      >
+          {slideData1000.map((elm, i) => (
+              <SwiperSlide
+                  key={i}
+                  className="swiper-slide h-100"
+                  style={{
+                      textTransform: "uppercase",
+                      fontSize: "12px",
+                      backgroundColor: "#000" // Ensures slides don't stack transparently
+                  }}
+              >
+                  {/* Marquee Container: Hides overflow and prevents wrapping */}
+                  <div className="d-flex align-items-center h-100 w-100" style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                      
+                      {/* Marquee Track: Moves the text */}
+                      <div className="d-flex align-items-center" style={{ animation: "marquee 20s linear infinite" }}>
+                          
+                          {/* Loop: Repeats text 10 times to fill screen width */}
+                          {[...Array(10)].map((_, idx) => (
+                              <span key={idx} className="d-flex align-items-center">
+                                  <Link
+                                      href={`/${locale}/${elm.btnLink}`}
+                                      className="text-white text-decoration-none mx-3" // mx-3 gives space between text and separators
+                                  >
+                                      {t(
+                                          elm.description
+                                              .split(" ")
+                                              .slice(0, 13)
+                                              .join(" ")
+                                      )}
+                                  </Link>
+                                  {/* Separator */}
+                                  <span className="text-white">-</span>
+                              </span>
+                          ))}
+                      </div>
+                  </div>
+              </SwiperSlide>
+          ))}
       </Swiper>
       
       <div className="container d-flex align-items-center h-100">
@@ -169,7 +214,7 @@ export default function MobileHeader() {
         <div className="logo">
           <a href="/">
             <Image
-              src="/assets/images/about/ahmed-logo.png"
+              src="/assets/images/about/AhmedLogo.png"
               width={70}
               height={70}
               alt="Ahmed"

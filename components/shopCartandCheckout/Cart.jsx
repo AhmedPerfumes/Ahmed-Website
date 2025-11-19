@@ -9,6 +9,7 @@ import { useMenu } from '../../context/MenuContext';
 import Pagination1 from "../common/Pagination1";
 
 import { renderPrice } from "@/utlis/priceRenderer";
+import TamaraWidget from "@/components/TamaraWidget";
 
 export default function Cart() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -25,6 +26,34 @@ export default function Cart() {
     setCouponDataContext(null);
     removeGiftFromCart();
   }, []);
+
+  // useEffect(() => {
+  //   const tamaraPromoScript = document.createElement("script");
+  //   tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+  //   tamaraPromoScript.async = true;
+  //   document.body.appendChild(tamaraPromoScript);
+
+  //   return () => {
+  //       document.body.removeChild(tamaraPromoScript);
+  //   };
+  // }, [totalPrice]);
+
+  // useEffect(() => {
+  //   window.tamaraSettings = {
+  //       lang: "en",
+  //       country: "AE",
+  //       publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+  //   };
+
+  //   const tamaraPromoScript = document.createElement("script");
+  //   tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+  //   tamaraPromoScript.async = true;
+  //   document.body.appendChild(tamaraPromoScript);
+
+  //   return () => {
+  //       document.body.removeChild(tamaraPromoScript);
+  //   };
+  // }, [totalPrice]);
 
   const setQuantity = async (id, quantity, productQty) => {
     if (quantity >= 1 && quantity <= productQty) {
@@ -404,6 +433,13 @@ export default function Cart() {
                   </tr>
                 </tbody>
               </table>
+                {/* <tamara-widget type="tamara-summary" lang="en" amount={!freeShippingFlag ?
+                        (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
+                {/* <TamaraWidget amount={!freeShippingFlag ?
+                        (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/> */}
+                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">

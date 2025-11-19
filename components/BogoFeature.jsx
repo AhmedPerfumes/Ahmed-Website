@@ -95,7 +95,7 @@ const BOGOFeature = () => {
       }
 
       // 🚫 Remove coupon only for normal products
-      const { is_customer_coupon, ...rest } = item;
+      const { is_coupon, ...rest } = item;
       return rest;
     });
 
