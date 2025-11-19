@@ -370,12 +370,12 @@ export default function Checkout() {
     });
   };
 
-    useEffect(() => {
+  useEffect(() => {
       const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
       setFinalPriceState(finalPrice);
-    }, [selectedOption]);
+  }, [selectedOption]);
 
-    useEffect(() => {
+  useEffect(() => {
     // Load the TabbyCard script
     const tabbyCardScript = document.createElement("script");
     tabbyCardScript.src = "https://checkout.tabby.ai/tabby-card.js";
@@ -383,10 +383,10 @@ export default function Checkout() {
     document.body.appendChild(tabbyCardScript);
 
     // Load the TabbyPromo script
-    const tabbyPromoScript = document.createElement("script");
-    tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
-    tabbyPromoScript.async = true;
-    document.body.appendChild(tabbyPromoScript);
+    // const tabbyPromoScript = document.createElement("script");
+    // tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+    // tabbyPromoScript.async = true;
+    // document.body.appendChild(tabbyPromoScript);
 
     const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
 
@@ -402,21 +402,21 @@ export default function Checkout() {
       });
     };
 
-    tabbyPromoScript.onload = () => {
-      new window.TabbyPromo({
-            selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
-            currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
-            price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
-            lang: locale, // Optional, en|ar only supported
-            source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
-            publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87', // required, Public Key
-            merchantCode: 'APM'  // required
-        });
-    };
+    // tabbyPromoScript.onload = () => {
+    //   new window.TabbyPromo({
+    //         selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
+    //         currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
+    //         price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
+    //         lang: locale, // Optional, en|ar only supported
+    //         source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+    //         publicKey: 'pk_test_01922e31-5409-6f52-2f38-6e3f06d37d87', // required, Public Key
+    //         merchantCode: 'APM'  // required
+    //     });
+    // };
 
     return () => {
       document.body.removeChild(tabbyCardScript);
-      document.body.removeChild(tabbyPromoScript);
+      // document.body.removeChild(tabbyPromoScript);
     };
   }, [selectedOption]);
 
@@ -537,11 +537,13 @@ export default function Checkout() {
         }
       );
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to submit the data. Please try again.");
+        const errorMessage = data.message || data.error || "Failed to submit the data. Please try again.";
+        throw new Error(errorMessage);
       }
 
-      const data = await response.json();
       if (data.message && data.message.split(" ")[0] == "Order") {
         setSuccess(data.message);
         setError(null);
@@ -1797,14 +1799,14 @@ console.log("Cart products after coupon:", updatedCartProducts);
 
                     {!couponData ? (
                       <input
-                        className=""
+                        className="coupon-action-btn"
                         type="button"
                         value="APPLY COUPON"
                         onClick={applyCoupon}
                       />
                     ) : (
                       <input
-                        className=""
+                        className="coupon-action-btn remove"
                         type="button"
                         value="REMOVE COUPON"
                         onClick={removeCoupon}
@@ -2084,6 +2086,39 @@ console.log("Cart products after coupon:", updatedCartProducts);
                       color: #777;
                       font-size: 13px;
                     }
+
+                    .coupon-action-btn {
+                      width: 100%;
+                      padding: 12px;
+                      background-color: #222; /* Dark background for contrast */
+                      color: #fff;
+                      border: 1px solid #222;
+                      border-radius: 4px;
+                      font-size: 13px;
+                      font-weight: 600;
+                      letter-spacing: 0.5px;
+                      text-transform: uppercase;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                      margin-top: 8px;
+                    }
+
+                    .coupon-action-btn:hover {
+                      background-color: #000;
+                      border-color: #000;
+                    }
+
+                    /* Specific style for the Remove button */
+                    .coupon-action-btn.remove {
+                      background-color: transparent;
+                      color: #dc3545; /* Red color */
+                      border: 1px solid #dc3545;
+                    }
+
+                    .coupon-action-btn.remove:hover {
+                      background-color: #dc3545;
+                      color: #fff;
+                    }
                   `}</style>
 
                   <div className="checkout__payment-methods">
@@ -2137,22 +2172,23 @@ console.log("Cart products after coupon:", updatedCartProducts);
                       className="form-check-input form-check-input_fill"
                       type="radio"
                       name="checkout_payment_method"
-                      id="checkout_payment_method_5"
+                      id="checkout_payment_method_6"
                       value={'tabby'}
                       checked={selectedOption === 'tabby'}
                       onChange={handleRadioChange}
                     />
                     <label
                       className="form-check-label"
-                      htmlFor="checkout_payment_method_5"
+                      htmlFor="checkout_payment_method_6"
                     >
-                      Pay in 4. No interes, no fees.
                       <Image
-                        src="/assets/images/paymentGateway/tabby.svg"
+                        src="/assets/images/paymentGateway/Tabby.png"
                         width="60"
-                        height="50"
+                        height="25"
                         alt="Cropped Faux leather Jacket"
+
                       />
+                      <span style={{marginLeft: "0.5rem"}}>Pay later with Tabby. <sup><strong>ⓘ</strong></sup></span><br/>Use any card.
                       {/* <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button> */}
                     </label>
                     {selectedOption == 'tabby' && <><div id="tabbyCard"></div></>}
@@ -2179,10 +2215,36 @@ console.log("Cart products after coupon:", updatedCartProducts);
                   </div>
 
                   {error ? (
-                    <div style={{ color: "red" }}>{error}</div>
-                  ) : (
-                    <div style={{ color: "green" }}>{success}</div>
-                  )}
+                    <div
+                      style={{
+                        backgroundColor: "#ffebe9", // Light red background
+                        color: "#cf1e1e",           // Dark red text
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",        // Slight corner rounding
+                      }}
+                    >
+                      {error}
+                    </div>
+                  ) : success ? (
+                    <div
+                      style={{
+                        backgroundColor: "#e8f5e9", // Light green background
+                        color: "#2e7d32",           // Dark green text
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                      }}
+                    >
+                      {success}
+                    </div>
+                  ) : null}
                   <button
                     className="btn btn-primary w-100 text-uppercase"
                     type="submit"
