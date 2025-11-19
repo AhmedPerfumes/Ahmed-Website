@@ -36,6 +36,38 @@ const headerStyles = `
 .search-popup__close:hover { color: #000; }
 `;
 
+const marqueeStyles = `
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-container {
+  overflow: hidden; 
+  white-space: nowrap;
+  
+  /* --- ADJUST WIDTH HERE --- */
+  width: 40%;  /* Change this to 800px, 50%, 90vw, etc. */
+  /* ------------------------- */
+  
+  height: 100%;
+  margin: 0 auto; /* This centers the limited container */
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content; /* Vital: allows text to overflow the limited container */
+  animation: marquee 50s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+`;
+
 export default function Header14() {
     const locale = useLocale();
     const t = useTranslations();
@@ -185,19 +217,46 @@ export default function Header14() {
 
     return (
         <>
-            <style>{headerStyles}</style>
+            <style>{headerStyles} {marqueeStyles}</style>
             <header
                 id="header"
                 className={`header header_sticky bg-white ${scrollState === "visible" ? "header-visible" : "header-hidden"} ${pathname !== "/" ? "position-sticky w-100" : ""}`}
             >
-                {/* Top Swiper */}
-                <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
+                {/* <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
                     {topHeader.map((elm, i) => (
                         <SwiperSlide key={i} style={{ textTransform: "uppercase", fontSize: "12px" }} className="swiper-slide text-center">
                             <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
                                 <Link href={`/${locale}/${elm.color}`} className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
                                     {t(elm.title.split(" ").slice(0, 13).join(" "))}
                                 </Link>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper> */}
+                {/* Top Swiper */}
+                <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
+                    {topHeader.map((elm, i) => (
+                        <SwiperSlide key={i} className="swiper-slide h-100" style={{backgroundColor: '#000 !important'}}>
+                            {/* Marquee Container - Overflow Hidden */}
+                            <div className="marquee-container d-flex align-items-center">
+                                {/* Animated Track */}
+                                <div className="marquee-track">
+                                    {/* We repeat the Link multiple times (e.g., 10) to fill the screen and create the loop */}
+                                    {[...Array(15)].map((_, idx) => (
+                                        <span key={idx} className="d-flex align-items-center">
+                                            <Link 
+                                                href={`/${locale}/${elm.color}`} 
+                                                className="text-white text-decoration-none text-uppercase fw-bold mx-5"
+                                                style={{ fontSize: "12px" }}
+                                            >
+                                                {t(elm.title.split(" ").slice(0, 13).join(" "))}
+                                            </Link>
+                                            {/* Optional Separator */}
+                                            <span className="text-white">-</span>
+                                        </span>
+                                    ))}
+                                    
+                                </div>
                             </div>
                         </SwiperSlide>
                     ))}
