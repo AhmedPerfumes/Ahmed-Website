@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const animationStyles = `
   .family-section-item {
@@ -105,10 +106,10 @@ export default function FamilySection({ data = {} }) {
       center: "/assets/images/kseries/bottle/past_center.png",
       right: "/assets/images/kseries/bottle/future_right.png",
       labels: { left: "K 2025", center: "K 2000", right: "K 2050" },
-      links: { 
-        left: `${baseUrl}2025`, 
-        center: `${baseUrl}2000`, 
-        right: `${baseUrl}2050` 
+      links: {
+        left: `${baseUrl}2025`,
+        center: `${baseUrl}2000`,
+        right: `${baseUrl}2050`
       },
     },
     present: {
@@ -117,10 +118,10 @@ export default function FamilySection({ data = {} }) {
       center: "/assets/images/kseries/bottle/present_center.png",
       right: "/assets/images/kseries/bottle/future_right.png",
       labels: { left: "K 2000", center: "K 2025", right: "K 2050" },
-      links: { 
-        left: `${baseUrl}2000`, 
-        center: `${baseUrl}2025`, 
-        right: `${baseUrl}2050` 
+      links: {
+        left: `${baseUrl}2000`,
+        center: `${baseUrl}2025`,
+        right: `${baseUrl}2050`
       },
     },
     future: {
@@ -129,10 +130,10 @@ export default function FamilySection({ data = {} }) {
       center: "/assets/images/kseries/bottle/future_center.png",
       right: "/assets/images/kseries/bottle/present_right.png",
       labels: { left: "K 2000", center: "K 2050", right: "K 2025" },
-      links: { 
-        left: `${baseUrl}2000`, 
-        center: `${baseUrl}2050`, 
-        right: `${baseUrl}2025` 
+      links: {
+        left: `${baseUrl}2000`,
+        center: `${baseUrl}2050`,
+        right: `${baseUrl}2025`
       },
     },
   };
@@ -154,7 +155,7 @@ export default function FamilySection({ data = {} }) {
 
   return (
     <>
-  <style>{animationStyles.replace(/#e5d4b2/g, accent)}</style>
+      <style>{animationStyles.replace(/#e5d4b2/g, accent)}</style>
 
       <div
         className="bg-dark text-light py-5"
@@ -197,7 +198,7 @@ export default function FamilySection({ data = {} }) {
             {/* Upper label */}
             <motion.span
               className="d-inline-block mb-3"
-                style={{
+              style={{
                 fontSize: "0.8rem",
                 textTransform: "uppercase",
                 letterSpacing: "2px",
@@ -212,7 +213,7 @@ export default function FamilySection({ data = {} }) {
             </motion.span>
 
             {/* Heading */}
-              <motion.h2
+            <motion.h2
               className="display-4 display-md-3 fw-bold mb-3"
               style={{ color: accent, letterSpacing: "1px" }}
               initial={{ opacity: 0, y: 20 }}
@@ -242,14 +243,14 @@ export default function FamilySection({ data = {} }) {
             {/* Subheading */}
             <motion.p
               className="lead text-light mb-5 px-3"
-                style={{
-                  maxWidth: "720px",
-                  margin: "0 auto",
-                  lineHeight: "1.8",
-                  fontSize: "1.1rem",
-                  fontWeight: 300,
-                  color: globalData?.textColor || '#dcdcdc'
-                }}
+              style={{
+                maxWidth: "720px",
+                margin: "0 auto",
+                lineHeight: "1.8",
+                fontSize: "1.1rem",
+                fontWeight: 300,
+                color: globalData?.textColor || '#dcdcdc'
+              }}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -280,11 +281,13 @@ export default function FamilySection({ data = {} }) {
                 style={{ marginRight: "-50px" }}
               >
                 <Link href={leftLink} style={{ textDecoration: 'none', display: 'block' }}>
-                  <img
+                  <Image
                     src={imgLeft}
                     alt={leftLabel}
+                    width={240}
+                    height={360}
                     className="img-fluid"
-                    style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
+                    style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%", height: "auto" }}
                   />
                   <motion.p
                     className="mt-3"
@@ -304,15 +307,17 @@ export default function FamilySection({ data = {} }) {
                 style={{ zIndex: 2, marginX: "0 -30px" }}
               >
                 <Link href={centerLink} style={{ textDecoration: 'none', display: 'block' }}>
-                  <img
+                  <Image
                     src={imgCenter}
                     alt={centerLabel}
+                    width={280}
+                    height={420}
                     className="img-fluid"
-                    style={{ transformOrigin: "bottom center", maxWidth: "280px", width: "100%" }}
+                    style={{ transformOrigin: "bottom center", maxWidth: "280px", width: "100%", height: "auto" }}
                   />
                   <motion.p
-                      className="mt-3"
-                      style={{ fontSize: "1rem", color: accent, fontWeight: 700 }}
+                    className="mt-3"
+                    style={{ fontSize: "1rem", color: accent, fontWeight: 700 }}
                     initial={{ opacity: 0 }}
                     animate={isVisible ? { opacity: 1 } : {}}
                     transition={{ delay: 0.6 }}
@@ -328,15 +333,17 @@ export default function FamilySection({ data = {} }) {
                 style={{ marginLeft: "-50px" }}
               >
                 <Link href={rightLink} style={{ textDecoration: 'none', display: 'block' }}>
-                  <img
+                  <Image
                     src={imgRight}
                     alt={rightLabel}
+                    width={240}
+                    height={360}
                     className="img-fluid"
-                    style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%" }}
+                    style={{ transformOrigin: "bottom center", maxWidth: "240px", width: "100%", height: "auto" }}
                   />
                   <motion.p
-                      className="mt-3"
-                      style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
+                    className="mt-3"
+                    style={{ fontSize: "0.95rem", color: accent, fontWeight: 600 }}
                     initial={{ opacity: 0 }}
                     animate={isVisible ? { opacity: 1 } : {}}
                     transition={{ delay: 0.7 }}

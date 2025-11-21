@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 function NoteSection({ data = {} }) {
   // allow overriding specific note images via data.notesImages
@@ -22,13 +23,13 @@ function NoteSection({ data = {} }) {
     {
       title: "Heart Notes",
       description:
-         notesDescription.mid,
+        notesDescription.mid,
       img: noteImgs.mid,
     },
     {
       title: "Base Notes",
       description:
-          notesDescription.base,
+        notesDescription.base,
       img: noteImgs.base,
     },
   ];
@@ -246,9 +247,11 @@ function Card({ note, index, cardVariants }) {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
       >
-        <img
+        <Image
           src={note.img}
           alt={note.title}
+          width={400}
+          height={220}
           className="img-fluid"
           style={{ display: "block", width: "100%", height: "220px", objectFit: "cover" }}
         />
