@@ -23,6 +23,8 @@ import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 import { data } from "jquery";
+import { useSearchParams } from "next/navigation";
+import { toast } from 'react-toastify';
 // import { bogoProducts } from "@/components/BogoFeature";
 
 import TamaraWidget from "@/components/TamaraWidget";
@@ -419,6 +421,27 @@ export default function Checkout() {
       // document.body.removeChild(tabbyPromoScript);
     };
   }, [selectedOption]);
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const errorMsg = searchParams.get("error");
+    
+    if (errorMsg) {
+      setError(errorMsg);
+
+      // 2. Show the Toast notification
+      toast.error(errorMsg, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [searchParams]);
 
   const handleEmiratesChange = (event, emirates) => {
     const { id } = event.target;
@@ -1029,6 +1052,8 @@ console.log("Cart products after coupon:", updatedCartProducts);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 1400);
   };
+
+
 
   return (
     <>

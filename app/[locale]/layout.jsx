@@ -32,6 +32,8 @@ import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const metadata = {
@@ -252,6 +254,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                   <ProductDescription />
                   <ProductAdditionalInformation />
                   <ProductReviews />
+                  <ToastContainer />
                 </ShopFilterProvider>
               </UserProvider>
             </Context>
