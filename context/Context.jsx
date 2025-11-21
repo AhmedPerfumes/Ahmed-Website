@@ -260,6 +260,31 @@ export default function Context({ children }) {
       return;
     }
     // console.log('addProductToCart:', product);
+    const newProductCollection = product?.collection_name?.toLowerCase();
+    const cartProducts = state.products;
+
+    // Detect if cart already has a pre-book item
+    const hasPreBook = cartProducts.some(
+      (p) => p.collection_name?.toLowerCase() === 'pre book'
+    );
+
+    // Detect if cart already has ANY non–pre-book item
+    const hasRegular = cartProducts.some(
+      (p) => p.collection_name?.toLowerCase() !== 'pre book'
+    );
+
+    // --- RESTRICTION LOGIC ---
+    if (newProductCollection === 'pre book' && hasRegular) {
+      // Trying to add 'pre book' but cart has normal items
+      alert("You cannot mix Pre Book items with other products.");
+      return;
+    }
+
+    if (newProductCollection !== 'pre book' && hasPreBook) {
+      // Trying to add regular product but cart has pre-book items
+      alert("You cannot add other items with a Pre Book product.");
+      return;
+    }
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({
       type: 'ADD_PRODUCT',
@@ -297,24 +322,39 @@ export default function Context({ children }) {
   };
 
   const setCartProducts = (productsOrFn) => {
-    // console.log('setCartProducts called:', productsOrFn);
+    let newProducts = [];
+
     if (typeof productsOrFn === 'function') {
-      // Handle functional update
-      const newProducts = productsOrFn(state.products);
-      if (!Array.isArray(newProducts)) {
-        // console.error('setCartProducts: Functional update returned non-array', newProducts);
-        return;
-      }
-      dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+      // Functional update
+      newProducts = productsOrFn(state.products);
     } else {
       // Direct array update
-      if (!Array.isArray(productsOrFn)) {
-        // console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
-        return;
-      }
-      dispatch({ type: 'SET_PRODUCTS', payload: productsOrFn });
+      newProducts = productsOrFn;
     }
-  };
+
+    // Validate
+    if (!Array.isArray(newProducts)) return;
+
+    // --- RESTRICTION LOGIC ---
+    const hasPreBook = newProducts.some(
+      (p) => p?.collection_name?.toLowerCase() === 'pre book'
+    );
+
+    const hasRegular = newProducts.some(
+      (p) => p?.collection_name?.toLowerCase() !== 'pre book'
+    );
+
+    // ❌ If mixing pre book + regular → reject update
+    if (hasPreBook && hasRegular) {
+      alert(
+        "You cannot mix Pre Book products with other items in the cart."
+      );
+      return; // Don't update cart
+    }
+
+    // --- IF VALID, UPDATE ---
+    dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+};
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
