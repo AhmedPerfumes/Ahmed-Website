@@ -9,6 +9,7 @@ export default function NewsLetter() {
     const modalElement = useRef(null);
     const locale = useLocale();
     const { popUp } = useMenu();
+    console.log(popUp, "popUpppp")
 
     // --- NEW: Use a ref to track if the modal has been shown in this session ---
     // This avoids the stale state issue in the event listener.
@@ -119,7 +120,7 @@ export default function NewsLetter() {
                                             height={650}
                                             style={{ height: "fit-content" }}
                                             loading="lazy"
-                                            src="/assets/images/new-user-signup.jpg"
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
                                             className="h-100 w-100 object-fit-cover d-block hover-effect"
                                             alt="image"
                                         />
