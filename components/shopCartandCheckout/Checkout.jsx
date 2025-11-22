@@ -53,12 +53,20 @@ export default function Checkout() {
     removeGiftFromCart,
     promotionsContext,
     actualTotalPrice,
+    hasPreBookItem
   } = useContextElement();
   const { isLoggedIn } = useUser();
   const [fieldErrors, setFieldErrors] = useState({});
   const [idDDActive, setIdDDActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("cod");
+
+  useEffect(() => {
+    if (hasPreBookItem) {
+      setSelectedOption("paytabs");
+    }
+  }, [hasPreBookItem]);
+
   const [formData, setFormData] = useState({
     shippingAddress: {
       first_name: "",
@@ -531,6 +539,10 @@ export default function Checkout() {
         setError(data.couponMessage);
       } else if (data.duplicateOrderMessage) {
         setError(data.duplicateOrderMessage);
+      } else if (data.priceMessage) {
+        setError(data.priceMessage);
+      } else if (data.collectionMessage) {
+        setError(data.collectionMessage);
       } else {
         if (data.products) setError(data.products);
         if (data["billingAddress.first_name"])
@@ -724,7 +736,7 @@ export default function Checkout() {
           (buyItem) => buyItem.product_id === item.product_id
         )
       );
-      return !item.discount && !isBogoProduct && !item.is_gift;
+      return !item.discount && !isBogoProduct && !item.is_gift && !item.collection_name;
     });
 
     if (eligibleItems.length === 0) {
@@ -1686,7 +1698,7 @@ export default function Checkout() {
                         </tr>
                       </tbody>
                     </table>
-                    <TamaraWidget amount={!freeShippingFlag
+                    {!hasPreBookItem && <TamaraWidget amount={!freeShippingFlag
                     ? (
                         parseFloat(shippingServiceCharges[0].price) +
                         totalPrice +
@@ -1706,7 +1718,7 @@ export default function Checkout() {
                               shippingServiceCharges[2].price
                             )
                           : parseFloat(0.0))
-                      ).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
+                      ).toFixed(2)} inlineType='2' inlineVariant='outlined'/>}
                   </div>
 
                   <div>
@@ -2035,7 +2047,7 @@ export default function Checkout() {
                   `}</style>
 
                   <div className="checkout__payment-methods">
-                    <div className="form-check">
+                    {!hasPreBookItem && <div className="form-check">
                       <input
                         className="form-check-input form-check-input_fill"
                         type="radio"
@@ -2048,7 +2060,7 @@ export default function Checkout() {
                       <label className="form-check-label" htmlFor="checkout_payment_method_3" >
                         Cash on delivery
                       </label>
-                    </div>
+                    </div>}
                     <div className="form-check">
                       <input className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_4" value={"paytabs"} checked={selectedOption === "paytabs"} onChange={handleRadioChange} />
                       <label className="form-check-label" htmlFor="checkout_payment_method_4" style={{ display: "flex", flexDirection: "column" }} >
@@ -2072,13 +2084,13 @@ export default function Checkout() {
                         </div>
                       </label>
                     </div>
-                    <div className="form-check">
+                    {!hasPreBookItem && <div className="form-check">
                       <input className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_5" value={'tamara'} checked={selectedOption === 'tamara'} onChange={handleRadioChange} />
                       <label className="form-check-label" htmlFor="checkout_payment_method_5" style={{display: "inline-flex"}} >
                         Tamara - No interest, No fees. 
                         <TamaraWidget inlineType='4' inlineVariant='text'/>
                       </label>
-                    </div> 
+                    </div>}
                     <div className="policy-text">
                       Your personal data will be used to process your order,
                       support your experience throughout this website, and for
