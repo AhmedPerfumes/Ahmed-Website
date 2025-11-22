@@ -1,4 +1,8 @@
 {
+  "Tabby": {
+    "CheckoutTitle": "ادفع لاحقًا عبر تابي",
+    "CheckoutDescription": "استخدم أي بطاقة"
+  },
   "Reviews": {
     "loading": "جار تحميل المراجعات...",
     "basedOn": "{count, plural, =0 {لا توجد مراجعات بعد} =1 {بناءً على مراجعة واحدة} other {بناءً على # مراجعات}}",

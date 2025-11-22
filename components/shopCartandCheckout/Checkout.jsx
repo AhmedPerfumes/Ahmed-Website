@@ -18,7 +18,7 @@ import Image from "next/image";
 import he from "he";
 import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
@@ -30,6 +30,7 @@ import { toast } from 'react-toastify';
 import TamaraWidget from "@/components/TamaraWidget";
 
 export default function Checkout() {
+  const t = useTranslations("Tabby")
   const {
     shippingServiceCharges,
     vatTax,
@@ -1286,7 +1287,7 @@ console.log("Cart products after coupon:", updatedCartProducts);
                       ) : (
                         <div style={{ color: "green" }}>{OTPSuccess}</div>
                       )}
-                      {isOTPButton ? (
+                      {!isOTPButton ? (
                         <button
                           className="btn btn-primary w-100 text-uppercase"
                           type="button"
@@ -2213,7 +2214,7 @@ console.log("Cart products after coupon:", updatedCartProducts);
                         alt="Cropped Faux leather Jacket"
 
                       />
-                      <span style={{marginLeft: "0.5rem"}}>Pay later with Tabby. <sup><strong>ⓘ</strong></sup></span><br/>Use any card.
+                      <span style={{marginLeft: "0.5rem"}}>{t("CheckoutTitle")} <sup><strong>ⓘ</strong></sup></span><br/>{t("CheckoutDescription")}
                       {/* <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button> */}
                     </label>
                     {selectedOption == 'tabby' && <><div id="tabbyCard"></div></>}
