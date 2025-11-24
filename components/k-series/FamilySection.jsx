@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 
 const animationStyles = `
   .family-section-item {
@@ -71,6 +72,7 @@ const animationStyles = `
 export default function FamilySection({ data = {} }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const locale = useLocale()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -98,7 +100,7 @@ export default function FamilySection({ data = {} }) {
   // compute family images according to the viewing context (past/present/future)
   // allow full override if merged.familyImages provides left/center/right
   const accent = merged?.accentColor || "#e5d4b2";
-  const baseUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/en/k-series/`;
+  const baseUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/k-series/`;
 
   const defaultSets = {
     past: {
