@@ -37,35 +37,31 @@ const headerStyles = `
 `;
 
 const marqueeStyles = `
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.marquee-container {
-  overflow: hidden; 
-  white-space: nowrap;
-  
-  /* --- ADJUST WIDTH HERE --- */
-  width: 40%;  /* Change this to 800px, 50%, 90vw, etc. */
-  /* ------------------------- */
-  
-  height: 100%;
-  margin: 0 auto; /* This centers the limited container */
-  position: relative;
-}
-
-.marquee-track {
-  display: flex;
-  align-items: center;
-  width: max-content; /* Vital: allows text to overflow the limited container */
-  animation: marquee 50s linear infinite;
-  will-change: transform;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
-}
+    @keyframes marquee-ltr {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+    }
+    @keyframes marquee-rtl {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+    }
+    .marquee-container {
+    overflow: hidden; 
+    white-space: nowrap;
+    width: 40%; /* Suggestion: Use 100% or your specific width (e.g. 40%) */
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    }
+    .marquee-track {
+    display: flex;
+    align-items: center;
+    width: fit-content; /* Crucial: Calculates exact width of all items */
+    will-change: transform;
+    }
+    .marquee-track:hover {
+    animation-play-state: paused;
+    }
 `;
 
 export default function Header14() {
@@ -87,11 +83,11 @@ export default function Header14() {
     const lastScrollY = useRef(0);
 
     const items = [
-        { href: "/account_dashboard", label: "My Profile" },
-        { href: "/account_orders", label: "My Purchases" },
-        { href: "/account_edit_address", label: "Addresses" },
-        { href: "/account_coupons", label: "My Coupons" },
-        { href: "/account_loyalty", label: "Loyalty Points" },
+        { href: "/account_dashboard", label: locale === 'ar' ? "ملفي الشخصي" : "My Profile" },
+        { href: "/account_orders", label: locale === 'ar' ? "مشترياتي" : "My Purchases" },
+        { href: "/account_edit_address", label: locale === 'ar' ? "العناوين" : "Addresses" },
+        { href: "/account_coupons", label: locale === 'ar' ? "كوبوناتي" : "My Coupons" },
+        { href: "/account_loyalty", label: locale === 'ar' ? "نقاط الولاء" : "Loyalty Points" },
     ];
 
     const isActive = (href) => pathname === href || pathname.startsWith(href);
@@ -206,7 +202,24 @@ export default function Header14() {
     };
 
     // --- Language change ---
-    const handleLangChange = (e) => router.push(pathname, { locale: e.target.value });
+    const handleLangChange = (e) => {
+        const newLocale = e.target.value;
+        const currentPath = window.location.pathname;
+        const localeRegex = new RegExp(`^/${locale}`);
+        let newPath;
+        if (localeRegex.test(currentPath)) {
+            // If path has the locale (e.g. /en/about), swap it -> /ar/about
+            newPath = currentPath.replace(localeRegex, `/${newLocale}`);
+        } else {
+            // If path has no locale (e.g. default /about), prepend it -> /ar/about
+            // Handle root "/" gracefully
+            const cleanPath = currentPath === '/' ? '' : currentPath;
+            newPath = `/${newLocale}${cleanPath}`;
+        }
+        window.location.href = newPath;
+
+        // router.push(pathname, { locale: e.target.value })
+    };
 
     // --- Menu context ---
     const { categoriesSubCategories, topHeader, isLoading: isMenuLoading, error } = useMenu();
@@ -238,21 +251,21 @@ export default function Header14() {
                     {topHeader.map((elm, i) => (
                         <SwiperSlide key={i} className="swiper-slide h-100" style={{backgroundColor: '#000 !important'}}>
                             {/* Marquee Container - Overflow Hidden */}
-                            <div className="marquee-container d-flex align-items-center">
+                            <div className="marquee-container d-flex align-items-center" dir="ltr">
                                 {/* Animated Track */}
-                                <div className="marquee-track">
+                                <div className="marquee-track" style={{ animation: locale === 'ar' ? "marquee-rtl 60s linear infinite" : "marquee-ltr 60s linear infinite"}}>
                                     {/* We repeat the Link multiple times (e.g., 10) to fill the screen and create the loop */}
-                                    {[...Array(15)].map((_, idx) => (
+                                    {[...Array(20)].map((_, idx) => (
                                         <span key={idx} className="d-flex align-items-center">
                                             <Link 
                                                 href={`/${locale}/${elm.color}`} 
                                                 className="text-white text-decoration-none text-uppercase fw-bold mx-5"
-                                                style={{ fontSize: "12px" }}
+                                                style={{ fontSize: "12px", whiteSpace: "nowrap" }}
                                             >
                                                 {t(elm.title.split(" ").slice(0, 13).join(" "))}
                                             </Link>
                                             {/* Optional Separator */}
-                                            <span className="text-white">-</span>
+                                            <span className="text-white opacity-50">-</span>
                                         </span>
                                     ))}
                                     
@@ -269,8 +282,8 @@ export default function Header14() {
                         <form onSubmit={onSearch} className="search-field container">
                             <p className="text-uppercase text-secondary fw-medium mb-4">{t("title")}</p>
                             <div className="position-relative">
-                                <input ref={inputRef} className="search-field__input search-popup__input w-100 fw-medium" type="text" name="search-keyword" placeholder={t("Search Products")} value={searchKeyWord} onChange={handleChange} />
-                                <button className="btn-icon search-popup__submit" type="submit">
+                                <input ref={inputRef} className="search-field__input search-popup__input w-100 fw-medium" type="text" name="search-keyword" placeholder={t("Search Products")} value={searchKeyWord} onChange={handleChange} style={{ paddingLeft: locale === 'ar' ? '3rem' : '1rem', paddingRight: locale === 'ar' ? '1rem' : '3rem', textAlign: locale === 'ar' ? 'right' : 'left' }}/>
+                                <button className="btn-icon search-popup__submit" type="submit" style={{ right: locale === 'ar' ? 'auto' : '0', left: locale === 'ar' ? '0' : 'auto', position: 'absolute', top: '0', height: '100%' }}>
                                     <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                         <use href="#icon_search" />
                                     </svg>
@@ -301,7 +314,7 @@ export default function Header14() {
                                     <select className="form-select form-select-sm bg-transparent color-black" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
                                         {currencyOptions.map((option, index) => <option key={index} value={option.link}>{option.text}</option>)}
                                     </select>
-                                    <select className="form-select form-select-sm bg-transparent color-black" name="store-language" value={locale} onChange={handleLangChange}>
+                                    <select className="form-select form-select-sm bg-transparent text-dark border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: 'pointer', outline: 'none' }}>
                                         {languageOptions2.map((option, index) => <option key={index} value={option.value}>{option.text}</option>)}
                                     </select>
                                 </div>
@@ -325,33 +338,39 @@ export default function Header14() {
                                 </div>
 
                                 {/* Account */}
-                                <div className="header-tools__item hover-account">
+                                <div className="header-tools__item hover-account position-relative">
                                     {!isLoggedIn ? (
                                         <Link href="/login_register" className="account-icon-link"><User /></Link>
                                     ) : (
                                         <Link href="/account_dashboard" className="account-icon-link" aria-haspopup="true"><UserLoggedIn /></Link>
                                     )}
-                                    <div className="account-hover-menu" role="menu">
+                                    <div className="account-hover-menu" role="menu" style={{left: locale === 'ar' ? '0' : 'auto', right: locale === 'ar' ? 'auto' : '0', minWidth: '200px' }}>
                                         {isLoggedIn ? (
                                             <>
-                                                <div className="menu-title">Manage Account</div>
-                                                <ul>
+                                                <div className="menu-title text-uppercase fw-medium text-start px-3 py-2 border-bottom">{locale === 'ar' ? "إدارة الحساب" : "Manage Account"}</div>
+                                                <ul className="list-unstyled mb-0 text-start">
                                                     {items.map((it) => (
                                                         <li key={it.href} className={isActive(it.href) ? "active" : ""}>
-                                                            <Link href={it.href}>
-                                                                {it.label}
+                                                            <Link href={it.href} className="d-flex align-items-center justify-content-between px-3 py-2">
+                                                                <span>{it.label}</span>
                                                                 {it.label.toLowerCase().includes("coupon") && couponCount > 0 && (
-                                                                    <span className="badge rounded-pill bg-danger ms-2" style={{ fontSize: "0.75rem", minWidth: "1.5rem", textAlign: "center" }}>{couponCount}</span>
+                                                                    <span className="badge rounded-pill bg-danger ms-2" style={{ fontSize: "0.75rem", minWidth: "1.5rem", textAlign: "center", marginRight: locale === 'ar' ? '0.5rem' : '0', marginLeft: locale === 'ar' ? '0' : '0.5rem' }}>{couponCount}</span>
                                                                 )}
                                                             </Link>
                                                         </li>
                                                     ))}
-                                                    <li className="divider" aria-hidden="true" />
-                                                    <li className="logout"><a href="#" onClick={handleLogout}>Logout</a></li>
+                                                    <li className="divider border-top" aria-hidden="true" />
+                                                    <li className="logout"><a href="#" onClick={handleLogout} className="text-danger fw-medium"> {locale === 'ar' ? "تسجيل خروج" : "Logout"} </a></li>
                                                 </ul>
                                             </>
                                         ) : (
-                                            <ul><li><Link href="/login_register">Login / Register</Link></li></ul>
+                                            <ul className="list-unstyled mb-0 text-start">
+                                                <li>
+                                                    <Link href="/login_register">
+                                                    {locale === 'ar' ? "تسجيل الدخول / التسجيل" : "Login / Register"}
+                                                    </Link>
+                                                </li>
+                                            </ul>
                                         )}
                                     </div>
                                 </div>

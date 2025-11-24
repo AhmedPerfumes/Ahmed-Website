@@ -3,7 +3,7 @@ import { currencyOptions, languageOptions } from "@/data/footer";
 
 import { socialLinks } from "@/data/socials";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import CartLength from "./components/CartLength";
 import UserLoggedIn from "./components/UserLoggedIn";
@@ -157,6 +157,16 @@ export default function MobileHeader() {
           {...swiperOptions}
           style={{ height: "2.5rem" }}
       >
+        <style jsx global>{`
+          @keyframes marquee-ltr {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          @keyframes marquee-rtl {
+            0% { transform: translateX(-50%); } 
+            100% { transform: translateX(0); }
+          }
+        `}</style>
           {slideData1000.map((elm, i) => (
               <SwiperSlide
                   key={i}
@@ -164,21 +174,23 @@ export default function MobileHeader() {
                   style={{
                       textTransform: "uppercase",
                       fontSize: "12px",
-                      backgroundColor: "#000" // Ensures slides don't stack transparently
+                      backgroundColor: "#000", // Ensures slides don't stack transparently
+                      direction: "ltr"
                   }}
               >
                   {/* Marquee Container: Hides overflow and prevents wrapping */}
-                  <div className="d-flex align-items-center h-100 w-100" style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                  <div className="d-flex align-items-center h-100 w-100" style={{ overflow: "hidden"}}>
                       
                       {/* Marquee Track: Moves the text */}
-                      <div className="d-flex align-items-center" style={{ animation: "marquee 20s linear infinite" }}>
+                      <div className="d-flex align-items-center" style={{ whiteSpace: "nowrap", width: "fit-content", willChange: "transform", animation: locale === 'ar' ? "marquee-rtl 60s linear infinite" : "marquee-ltr 60s linear infinite" }}>
                           
                           {/* Loop: Repeats text 10 times to fill screen width */}
-                          {[...Array(10)].map((_, idx) => (
-                              <span key={idx} className="d-flex align-items-center">
+                          {[...Array(20)].map((_, idx) => (
+                              <span key={idx} className="d-flex align-items-center flex-nowrap">
                                   <Link
                                       href={`/${locale}/${elm.btnLink}`}
-                                      className="text-white text-decoration-none mx-3" // mx-3 gives space between text and separators
+                                      className="text-white text-decoration-none mx-4" // mx-3 gives space between text and separators
+                                      style={{ display: "inline-block" }}
                                   >
                                       {t(
                                           elm.description
@@ -251,18 +263,20 @@ export default function MobileHeader() {
             onSubmit={onSearch}
             className="search-field position-relative mt-4 mb-3"
           >
-            <div className="position-relative">
+            <div className="position-relative d-flex align-items-center">
               <input
-                className="search-field__input w-100 border rounded-1"
+                className="search-field__input w-100 border rounded-1 form-control shadow-sm"
                 type="text"
                 name="search-keyword"
-                placeholder="Search products"
+                placeholder={locale === 'ar' ? "ابحث عن المنتجات" : "Search products"}
                 value={searchKeyWord}
                 onChange={handleChange}
+                style={{ height: '45px', paddingLeft: locale === 'ar' ? '3rem' : '1rem', paddingRight: locale === 'ar' ? '1rem' : '3rem', textAlign: locale === 'ar' ? 'right' : 'left'}}
               />
               <button
-                className="btn-icon search-popup__submit pb-0 me-2"
+                className="btn-icon search-popup__submit border-0 bg-transparent p-0 d-flex align-items-center justify-content-center"
                 type="submit"
+                style={{ position: 'absolute', top: '0', bottom: '0', left: locale === 'ar' ? '0' : 'auto', right: locale === 'ar' ? 'auto' : '0', width: '3rem', zIndex: 5 }}
               >
                 <svg
                   className="d-block"
@@ -271,17 +285,33 @@ export default function MobileHeader() {
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  style={{ transform: locale === 'ar' ? 'scaleX(-1)' : 'none' }} // Optional: Flip icon if needed
                 >
                   <use href="#icon_search" />
                 </svg>
               </button>
-              <button
+              {searchKeyWord && (
+                <button
+                    className="btn-icon btn-close-lg search-popup__reset border-0 bg-transparent"
+                    type="reset"
+                    onClick={() => {/* Add your clear logic here, e.g. setSearchKeyWord('') */}}
+                    style={{
+                        position: 'absolute',
+                        left: locale === 'ar' ? 'auto' : '0.5rem',
+                        right: locale === 'ar' ? '0.5rem' : 'auto',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        zIndex: 6
+                    }}
+                ></button>
+              )}
+              {/* <button
                 className="btn-icon btn-close-lg search-popup__reset pb-0 me-2"
                 type="reset"
-              ></button>
+              ></button> */}
             </div>
 
-            <div className="position-absolute start-0 top-100 m-0 w-100">
+            <div className="position-absolute start-0 top-100 m-0 w-100" style={{ zIndex: 100 }}>
               <div className="search-result"></div>
             </div>
           </form>
@@ -319,24 +349,24 @@ export default function MobileHeader() {
             )}
           </div> */}
           <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
-          <Link href={`/${locale}/order-tracking`}>
-              <IoReorderTwoSharp size={20} />
-              <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-              Track Order
-            </span>
-          </Link>
+            <Link href={`/${locale}/order-tracking`}>
+                <IoReorderTwoSharp size={20} />
+                <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
+                {t("Track Your Order")}
+              </span>
+            </Link>
           </div>
           <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
           <Link href={`/${locale}/store-locator`}>
               <IoLocationOutline size={20} />
               <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-              Find a store
+              {t("Find a store")}
             </span>
           </Link>
           </div>
       <div className="d-flex">
           <div className="container d-flex align-items-center">
-            <label className="me-2 text-secondary">Language</label>
+            <label className="me-2 text-secondary">{t("Language")}</label>
             <select
               className="form-select form-select-sm bg-transparent border-0"
               aria-label="Default select example"
@@ -357,7 +387,7 @@ export default function MobileHeader() {
           </div>
 
           <div className="container d-flex align-items-center">
-            <label className="me-2 text-secondary">Country</label>
+            <label className="me-2 text-secondary">{t("Country")}</label>
             <select
               className="form-select form-select-sm bg-transparent border-0"
               aria-label="Default select example"
