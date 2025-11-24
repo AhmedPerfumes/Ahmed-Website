@@ -18,7 +18,7 @@ export default function Cart() {
   // const [couponCode, setCouponCode] = useState("");
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart, hasPreBookItem } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart } = useContextElement();
 
   // console.log('shippingServiceChargesCA', freeShippingFlag);
 
@@ -439,7 +439,7 @@ export default function Cart() {
                 {/* <TamaraWidget amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/> */}
-                {!hasPreBookItem && <TamaraWidget inlineType="5" inlineVariant='outlined'/>}
+                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">
