@@ -157,9 +157,9 @@ const ScrollSnapHorizontalBootstrap = () => {
             </div>
             
 
-            <section className="scroll-section d-flex flex-direction-column bg-white">
-                <div className="panel2 mb-4">
-                    <div className="inner2 mt-5 d-flex align-items-center">
+            <section className="scroll-section d-flex flex-column justify-content-center align-items-center bg-white" style={{ minHeight: '100vh' }}>
+                <div className="panel2 mb-4 d-flex justify-content-center mb-4">
+                    <div className="inner2 mt-5 d-flex align-items-center justify-content-center">
                         {/* Limited Quantity */}
                         <Categories section="sectionTop" />
                     </div>
