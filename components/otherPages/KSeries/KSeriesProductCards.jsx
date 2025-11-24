@@ -5,6 +5,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "./KSeriesProductCards.module.css";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 // Re-using the product data from KSeriesScrollSection
 const slidesData = [
@@ -62,6 +63,7 @@ const ProductCard = ({ data, onClick }) => {
 };
 
 export default function KSeriesProductCards() {
+    const locale = useLocale();
     const router = useRouter();
     const handleCardClick = (productData) => {
     let routeSegment;
@@ -80,7 +82,7 @@ export default function KSeriesProductCards() {
             return; // Exit if ID is unexpected
     }
     // Construct the path: /en/K-Series/[routeSegment]
-    const path = `/en/k-series/${routeSegment}`;
+    const path = `/${locale}/k-series/${routeSegment}`;
 
     // Redirect the user
     router.push(path);
