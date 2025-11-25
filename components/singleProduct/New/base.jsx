@@ -59,10 +59,9 @@ const Base = ({product}) => {
                     </div>
                 </div>
 
-                <div className="product-media">
-                    {/* Your 3D viewer goes here! */}
+                {/* <div className="product-media">
                     <PerfumeViewer />
-                </div>
+                </div> */}
 
                 <Sticky image={images[0]} name={cleanName} price={product?.price || "0.00"} product={product} />
             </div>
