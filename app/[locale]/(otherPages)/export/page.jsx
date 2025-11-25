@@ -24,8 +24,8 @@ const ExportPage = () => {
     <>
       {/* <Loader/> */}
       <Header14 />
-      {/* <Export /> */}
-      <AMGExport/>
+      <Export />
+      {/* <AMGExport/> */}
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
       </section>
