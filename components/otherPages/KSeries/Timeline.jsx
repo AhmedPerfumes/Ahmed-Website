@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -92,11 +93,13 @@ const Timeline = () => {
               className={`row align-items-center mb-5 flex-column flex-md-row timeline-item-${index} ${perfume.isReverse ? 'flex-md-row-reverse' : ''}`}
             >
               <div className="col-md-6 text-center mb-4 mb-md-0 timeline-image">
-                <img
+                <Image
                   src={perfume.image}
                   alt={perfume.title}
+                  width={600}
+                  height={400}
                   className="img-fluid rounded-4 shadow-lg"
-                  style={{ maxHeight: '400px', objectFit: 'cover', filter: 'brightness(0.9)' }}
+                  style={{ maxHeight: '400px', objectFit: 'cover', filter: 'brightness(0.9)', width: '100%', height: 'auto' }}
                 />
               </div>
               <div className="col-md-6 text-center text-md-start timeline-text">
