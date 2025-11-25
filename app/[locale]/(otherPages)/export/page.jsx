@@ -8,7 +8,6 @@ import Contact from "@/components/otherPages/Contact/Contact";
 import LocationMap from "@/components/otherPages/Contact/LocationMap";
 
 import React from "react";
-import AMGExport from "@/components/otherPages/Contact/New/components/AMGExport";
 // import Loader from "@/components/loader/Loader";
 
 export const metadata = {

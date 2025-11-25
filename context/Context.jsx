@@ -146,7 +146,7 @@ export default function Context({ children }) {
       // Ensure numbers
       const qty = Number(product?.quantity || 0);
       const basePrice = Number(product?.price || 0);
-      console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
+      // console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
       // Skip free gifts entirely
       if (product?.is_gift) return accumulator;
 
