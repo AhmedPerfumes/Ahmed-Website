@@ -21,14 +21,14 @@ export default function BotPenguinWidget() {
         return () => {
             // Cleanup BotPenguin elements on unmount
             const selectors = [
-                'botpenguin-root', // Critical: Script throws error if this exists
+                'botpenguin-root',
                 '#botpenguin-web-widget',
                 '#BotPenguin-messenger',
                 '#botpenguin-launcher-12',
                 'iframe[src*="botpenguin"]',
                 'div[id^="botpenguin"]',
                 `#${scriptId}`,
-                'script[src*="botpenguin"]' // Remove dynamically injected scripts
+                'script[src*="botpenguin"]' 
             ];
 
             selectors.forEach(selector => {

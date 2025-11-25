@@ -400,7 +400,7 @@ export default function MobileHeader() {
                   className="footer-select__option"
                   value={option.link}
                 >
-                  {option.text}
+                  {t(option.text)}
                 </option>
               ))}
             </select>

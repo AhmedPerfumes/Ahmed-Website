@@ -312,7 +312,7 @@ export default function Header14() {
                             <div className="flex-1 d-flex align-items-center gap-3">
                                 <div className="heeader-top__right flex-1 d-flex gap-1">
                                     <select className="form-select form-select-sm bg-transparent color-black" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
-                                        {currencyOptions.map((option, index) => <option key={index} value={option.link}>{option.text}</option>)}
+                                        {currencyOptions.map((option, index) => <option key={index} value={option.link}>{t(option.text)}</option>)}
                                     </select>
                                     <select className="form-select form-select-sm bg-transparent text-dark border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: 'pointer', outline: 'none' }}>
                                         {languageOptions2.map((option, index) => <option key={index} value={option.value}>{option.text}</option>)}

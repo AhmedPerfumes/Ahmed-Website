@@ -155,7 +155,7 @@ export default function MobileFooter2() {
             <strong className="fw-medium">info@ahmedalmaghribi.com</strong>
           </p>
           <p className="m-0 text-center">
-            <strong dir="ltr" className="fw-medium text-white text-center">+971 67420602 / 67422496 / 67446076</strong>
+            <strong dir="ltr" className="fw-medium text-white text-center">{t("+971 67420602 / 67422496 / 67446076")}</strong>
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export default function MobileFooter2() {
 
           {/* Copyright Section */}
           <span className="footer-copyright small text-white-50 mb-2 mb-md-0">
-            {locale === 'ar' ? `© ${new Date().getFullYear()} عطور أحمد المغربي. جميع الحقوق محفوظة` : `© ${new Date().getFullYear()} AHMED AL MAGHRIBI PERFUMES. All rights reserved`}
+            {locale === 'ar' ? `© ${new Date().getFullYear().toLocaleString('ar-EG', { useGrouping: false })} عطور أحمد المغربي. جميع الحقوق محفوظة` : `© ${new Date().getFullYear()} AHMED AL MAGHRIBI PERFUMES. All rights reserved` }
           </span>
 
         </div>

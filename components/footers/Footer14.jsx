@@ -147,9 +147,8 @@ export default function Footer14() {
                 <strong className="fw-medium">info@ahmedalmaghribi.com</strong>
               </p>
               <p className="m-0">
-                {/* dir="ltr" ensures the phone number format (+971...) stays correct even in RTL mode */}
                 <strong className="fw-medium" dir="ltr" style={{ display: 'inline-block' }}>
-                  +971 67420602 / 67422496 / 67446076
+                  {t("+971 67420602 / 67422496 / 67446076")}
                 </strong>
               </p>
             </div>
@@ -281,7 +280,7 @@ export default function Footer14() {
           {/* Copyright Section */}
           <span className="footer-copyright text-white-50 small text-center text-md-start">
             {/* © {new Date().getFullYear()} AHMED AL MAGHRIBI PERFUMES. All rights reserved */}
-            {locale === 'ar' ? `© ${new Date().getFullYear()} عطور أحمد المغربي. جميع الحقوق محفوظة` : `© ${new Date().getFullYear()} AHMED AL MAGHRIBI PERFUMES. All rights reserved`}
+            {locale === 'ar' ? `© ${new Date().getFullYear().toLocaleString('ar-EG', { useGrouping: false })} عطور أحمد المغربي. جميع الحقوق محفوظة` : `© ${new Date().getFullYear()} AHMED AL MAGHRIBI PERFUMES. All rights reserved`}
           </span>
 
           {/* Settings Section */}
@@ -333,7 +332,7 @@ export default function Footer14() {
                     className="footer-select__option"
                     value={option.link}
                   >
-                    {option.text}
+                    {t(option.text)}
                   </option>
                 ))}
               </select>
