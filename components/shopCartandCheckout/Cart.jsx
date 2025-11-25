@@ -18,7 +18,7 @@ export default function Cart() {
   // const [couponCode, setCouponCode] = useState("");
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart} = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart } = useContextElement();
 
   // console.log('shippingServiceChargesCA', freeShippingFlag);
 

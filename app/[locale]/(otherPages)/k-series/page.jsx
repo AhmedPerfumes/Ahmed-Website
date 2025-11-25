@@ -34,7 +34,7 @@ export default function Page() {
                     <MobileFooter2 />
                 </div>
             </section>
-            <PrebookingWidget showModal={showPrebooking} setShowModal={setShowPrebooking}/>
+            {/* <PrebookingWidget showModal={showPrebooking} setShowModal={setShowPrebooking}/> */}
         </>
     );
 }

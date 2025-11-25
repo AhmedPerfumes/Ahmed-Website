@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import VideoPanel from "../VideoPanel";
 
 function VideoSection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -74,11 +75,8 @@ function VideoSection({ data = {} }) {
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.8 }}
         >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
+          <VideoPanel
+            src={videoSrc}
             style={{
               width: "100%",
               height: "100%",
@@ -88,12 +86,8 @@ function VideoSection({ data = {} }) {
               transition: "opacity 0.4s ease",
               opacity: 0.95,
             }}
-          >
-            <source
-              src={videoSrc}
-              type="video/mp4"
-            />
-          </video>
+          />
+
 
           {/* Gradient overlays for depth and style */}
           <div
@@ -166,7 +160,7 @@ function VideoSection({ data = {} }) {
             {/* {title}{" "} */}
             <span style={{ color: accent, fontWeight: 500 }}>
               {/* {"\u2014"} */}
-               {subtitle}
+              {subtitle}
             </span>
           </h2>
           <p

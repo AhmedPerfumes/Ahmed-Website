@@ -68,18 +68,24 @@ export default function MobileNav() {
         .sub-menu {
           max-height: 0;
           overflow: hidden;
-          transition: max-height 1.3s ease;
+          transition: max-height 0.4s ease-in-out;
         }
         .sub-menu.open {
-          max-height: 500px;
+          max-height: 1000px;
         }
         .toggle-button {
           background: none;
           border: none;
-          padding: 0;
-          margin-left: auto;
-          font-size: 1.25rem;
+          padding: 0 10px;
+          margin-left: ${locale === 'ar' ? '0' : 'auto'};
+          margin-right: ${locale === 'ar' ? 'auto' : '0'};
+          font-size: 1.5rem;
           line-height: 1;
+          cursor: pointer;
+        }
+        .sub-menu__item {
+          padding-left: ${locale === 'ar' ? '0' : '1.5rem'};
+          padding-right: ${locale === 'ar' ? '1.5rem' : '0'};
         }
       `}</style>
 
@@ -91,21 +97,25 @@ export default function MobileNav() {
           : `/${locale}/product-category/gift-sets`;
 
         return (
-          <li key={i} className="navigation__item d-flex flex-column">
-            <div className="d-flex align-items-center w-100">
+          <li key={i} className="navigation__item d-flex flex-column border-bottom">
+            <div className="d-flex align-items-center w-100 py-2">
               <Link
                 href={categorySlug}
                 className={`navigation__link text-start flex-grow-1 ${
-                  isActiveParentMenu(categorySlug) ? "menu-active" : ""
+                  isActiveParentMenu(categorySlug) ? "menu-active fw-bold" : ""
                 }`}
+                style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
               >
                 {t(item.name)}
               </Link>
               {hasSubCategories && (
                 <button
                   type="button"
-                  onClick={() => setOpenCategoryIndex(isOpen ? null : i)}
-                  className="toggle-button fw-bold"
+                  onClick={(e) => {
+                      e.preventDefault(); // Prevent link click if nested
+                      setOpenCategoryIndex(isOpen ? null : i);
+                  }}
+                  className="toggle-button"
                   aria-label="Toggle sub-menu"
                 >
                   {isOpen ? "-" : "+"}
@@ -115,8 +125,8 @@ export default function MobileNav() {
 
             <div className={`sub-menu ${isOpen && hasSubCategories ? "open" : ""}`}>
               {isOpen && hasSubCategories && (
-                <ul className="list-unstyled">
-                  {item.productSubCategories.map((elm, j) => (
+                <ul className="list-unstyled mb-0 pb-2">
+                  {hasSubCategories && item.productSubCategories.map((elm, j) => (
                     <li key={j} className="sub-menu__item">
                       <Link
                         href={
@@ -124,11 +134,15 @@ export default function MobileNav() {
                             ? `/${locale}/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`
                             : `/${locale}/product-category/gift-sets`
                         }
-                        className={`menu-link menu-link_us-s ${
+                        className={`menu-link d-block py-1 text-secondary ${
                           isMenuActive(`/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`)
-                            ? "menu-active"
+                            ? "menu-active text-dark fw-medium"
                             : ""
                         }`}
+                        style={{
+                            textAlign: locale === 'ar' ? 'right' : 'left',
+                            fontSize: '0.95rem'
+                        }}
                       >
                         {t(elm.name)}
                       </Link>
@@ -141,10 +155,11 @@ export default function MobileNav() {
         );
       })}
 
-      <li key="export" className="navigation__item">
+      <li key="export" className="navigation__item border-bottom py-2">
         <Link
           href={`/${locale}/export`}
-          className={`navigation__link ${isActiveExportMenu(`/export`) ? "menu-active" : ""}`}
+          className={`navigation__link d-block text-start ${isActiveExportMenu(`/export`) ? "menu-active fw-bold" : ""}`}
+          style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
         >
           {t("Worldwide Distribution")}
         </Link>

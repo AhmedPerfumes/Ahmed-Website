@@ -113,14 +113,14 @@ export default function HeroSection({
         style={{ zIndex: 10 }}
       >
         {/* Call to Action - Now positioned at the bottom */}
-        <motion.a
+        {/* <motion.a
             href={ctaHref}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase mb-4`} // Added margin-bottom
         >
             {ctaText}
-        </motion.a>
+        </motion.a> */}
         
         {/* Scroll Arrow Indicator */}
         <motion.div

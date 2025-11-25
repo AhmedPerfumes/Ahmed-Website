@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ src, section }) => {
+const VideoPlayer = ({ src, section, style, className }) => {
     const videoRef = useRef(null);
 
     const [isInView, setIsInView] = useState(false);
@@ -42,6 +42,13 @@ const VideoPlayer = ({ src, section }) => {
         };
     }, []);
 
+    const getDefaultClass = () => {
+        if (section === 'hundred') return "w-100";
+        if (section === 'popup') return "w-75";
+        if (section === 'sm_popup') return "w-50";
+        return "w-75";
+    };
+
     return (
         <video
             ref={videoRef}
@@ -49,12 +56,8 @@ const VideoPlayer = ({ src, section }) => {
             muted
             playsInline
             loop
-            className={
-                section === 'hundred' ? "w-100" :
-                section === 'popup' ? "w-75" :
-                section === 'sm_popup' ? "w-50" :
-                "w-75" // Default class
-            }
+            className={`${getDefaultClass()} ${className || ''}`}
+            style={style}
         >
             <source src={src} type="video/mp4" />
             Your browser does not support the video tag.

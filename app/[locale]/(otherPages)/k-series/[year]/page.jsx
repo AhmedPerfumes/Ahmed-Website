@@ -11,6 +11,7 @@ import FamilySection from "@/components/k-series/FamilySection";
 import HeroSection from "@/components/k-series/HeroSection";
 import JourneySection from "@/components/k-series/JourneySection";
 import PrebookingWidget from "@/components/otherPages/KSeries/PrebookingWidget";
+import { useRouter } from "next/navigation";
 
 // central config: ONLY 3 choices
 const K_CONFIG = {
@@ -19,7 +20,7 @@ const K_CONFIG = {
     year: "2000",
     title: "K-Series 2000",
     subtitle: "The Roots",
-    description:"A tribute to the origins of Arabian perfumery, 2000 celebrates the timeless artistry that defines the brand’s foundation.",
+    description:"A tribute to the origins of Arabian perfumery, 2000 - \“The Roots\” celebrates the timeless artistry that defines the brand’s foundation.",
    
     bottleImg: "/assets/images/kseries/bottle/past_center.png",
     videoSrc: "/assets/videos/kseries/past.mp4",
@@ -52,7 +53,7 @@ const K_CONFIG = {
     year: "2025",
     title: "K-Series 2025",
     subtitle: "The Alchemy Lab",
-    description:"2025 embodies the spirit of creation, transformation, and innovation — A reflection of today’s mastery in modern perfumery.",
+    description:"2025 - \“The Alchemy Lab\” embodies the spirit of creation, transformation, and innovation — A reflection of today’s mastery in modern perfumery.",
     bottleImg: "/assets/images/kseries/bottle/present_center.png",
     videoSrc: "/assets/videos/kseries/present.mp4",
     notesImages: {
@@ -84,7 +85,7 @@ const K_CONFIG = {
     year: "2050",
     title: "K-Series 2050",
     subtitle: "The Beyond",
-    description:"2050 - The Beyond” is an olfactory glimpse into tomorrow, where scent becomes an emotion — The ultimate expression of imagination and connection.",
+    description:"2050 - \“The Beyond\” is an olfactory glimpse into tomorrow, where scent becomes an emotion — The ultimate expression of imagination and connection.",
     bottleImg: "/assets/images/kseries/bottle/future_center.png",
     videoSrc: "/assets/videos/kseries/future.mp4",
     notesImages: {
@@ -120,11 +121,17 @@ function resolveConfig(year) {
 }
 
 export default function Page({ params }) {
+  const router = useRouter();
   const rawYear = params?.year?.toString() || "2000";
   const data = resolveConfig(rawYear);
   const [showPrebooking, setShowPrebooking] = useState(false);
 
-  const handleBookNow = () => setShowPrebooking(true);
+  // const handleBookNow = () => setShowPrebooking(true);
+
+  const handleBookNow = () => {
+    const rawYear = params?.year?.toString() || "2000";
+    router.push(`/en/shop/perfumes/oriental-fragrance/${K_CONFIG[rawYear].subtitle.toLowerCase().replace(/\s+/g, "-")}-${rawYear}`);
+  };
 
   return (
     <>
@@ -138,7 +145,7 @@ export default function Page({ params }) {
       <JourneySection data={data} />
       <NoteSection data={data} />
       <FamilySection data={data} />
-       <PrebookingWidget showModal={showPrebooking} setShowModal={setShowPrebooking} />
+       {/* <PrebookingWidget showModal={showPrebooking} setShowModal={setShowPrebooking} /> */}
 
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />

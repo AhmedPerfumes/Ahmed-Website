@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import VideoPanel from "../VideoPanel";
 
 function JourneySection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -96,7 +97,7 @@ function JourneySection({ data = {} }) {
             lineHeight: "1.2",
           }}
         >
-            {data?.journeyHeading}
+          {data?.journeyHeading}
           {/* Journey Through Time */}
         </motion.h2>
 
@@ -148,21 +149,17 @@ function JourneySection({ data = {} }) {
             }}
           />
 
-          <video
-            width="100%"
-            height="100%"
-            autoPlay
-            muted
-            playsInline
+          <VideoPanel
+            src={data?.journeyVideoSrc || "/assets/videos/kseries/joruney.mp4"}
+            section="hundred"
             style={{
+              width: "100%",
+              height: "100%",
               display: "block",
               borderRadius: "16px",
               objectFit: "cover",
             }}
-          >
-            <source src={data?.journeyVideoSrc || "/assets/videos/kseries/joruney.mp4"} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          />
         </motion.div>
       </motion.div>
     </section>

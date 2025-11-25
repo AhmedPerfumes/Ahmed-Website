@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import "./HeroSection.css";
 
 function HeroSection({ data = {}, onBookNow }) {
@@ -11,16 +12,19 @@ function HeroSection({ data = {}, onBookNow }) {
         <div className="row align-items-center">
           {/* Left Column: Perfume Bottle */}
           <div className="col-lg-6 text-center mb-5 mb-lg-0 order-2 order-lg-1">
-            <motion.div 
+            <motion.div
               className="hero-image position-relative"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
             >
-              <img
+              <Image
                 src={data?.bottleImg || "/assets/images/kseries/past-center.png"}
                 alt={data?.title || "K Series Perfume Bottle"}
+                width={600}
+                height={800}
                 className="perfume-bottle"
+                style={{ width: '100%', height: 'auto' }}
               />
               <div className="bottle-glow"></div>
               <div className="bottle-glow-small"></div>
@@ -29,7 +33,7 @@ function HeroSection({ data = {}, onBookNow }) {
 
           {/* Right Column: Owner Message */}
           <div className="col-lg-6 order-1 order-lg-2">
-              <motion.div 
+            <motion.div
               className="hero-message ps-0 ps-lg-5"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -39,7 +43,7 @@ function HeroSection({ data = {}, onBookNow }) {
                 {data?.title || 'K Series'}: <span style={{ color: data?.textColor || '#ffffff' }}>{data?.subtitle || 'Past'}</span>
               </h1>
 
-              <motion.div 
+              <motion.div
                 className="mb-4"
                 style={{
                   width: "60px",
@@ -50,13 +54,13 @@ function HeroSection({ data = {}, onBookNow }) {
                 animate={{ width: 60 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
               />
-              
+
               <p className="lead mb-4 fade-in-top delay-1" style={{ fontSize: "1.1rem", lineHeight: "1.9", color: data?.textColor || '#dcdcdc' }}>
                 <em>{data?.heroQuote || '"This perfume is a tribute to the memories that shaped us."'}</em>
               </p>
 
               <p className="fst-italic mb-5 fade-in-top delay-2" style={{ fontSize: "0.95rem", color: data?.textColor || '#ffffff' }}>
-                — Crafted by our founder — Mr. Kafeel Ahmed 
+                — Crafted by our founder — Mr. Kafeel Ahmed
               </p>
 
               <motion.div
