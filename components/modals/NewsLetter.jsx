@@ -99,10 +99,7 @@ export default function NewsLetter() {
                             <div className="col-md-8 p-0">
                                 <div className="newsletter-popup__bg w-100">
                                     <div className="d-none d-lg-block">
-                                        <a
-                                            href={`/${locale}/shop`}
-                                            className="hover-effect"
-                                        >
+                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
