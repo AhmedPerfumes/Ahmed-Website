@@ -2,13 +2,22 @@
    ROOT LAYOUT
 ----------------------------------------------------------- */
 .showcase-container {
+    background-image: url(https://admin.ahmedalmaghribi.com/public/storage/promotion-bg.png);
+    background-color: #fff;
     --text: #1a1a1a;
     --muted: #6c757d;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    position: relative;
     font-family: var(--font-body);
+    background-position: top;
+    background-size: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    
 }
 
 /* Shared section formatting */
@@ -182,8 +191,8 @@
         display: block;
         position: relative;
         width: 100vw !important;
-        height: 55vh !important;
-        background-size: contain;
+        height: 70vh !important;
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
     }

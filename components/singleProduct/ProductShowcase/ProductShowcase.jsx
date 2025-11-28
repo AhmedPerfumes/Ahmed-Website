@@ -30,7 +30,8 @@ async function fetchCollectionsProducts() {
 
         // Clean function
         const clean = (str) =>
-            str?.replace(/&amp;/g, "")
+            str
+                ?.replace(/&amp;/g, "")
                 ?.replace(/[^\w\s-]/g, "")
                 ?.trim()
                 ?.toLowerCase();
@@ -51,13 +52,11 @@ async function fetchCollectionsProducts() {
         }
 
         return collections.slice(0, 8);
-
     } catch (error) {
         console.log("❌ Failed to load collection products:", error);
         return [];
     }
 }
-
 
 const ProductShowcase = () => {
     const [isExplored, setIsExplored] = useState(false);
@@ -77,35 +76,35 @@ const ProductShowcase = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-useEffect(() => {
-    async function load() {
-        const products = await fetchCollectionsProducts();
-        setDisplayedProducts(products);
-    }
-    load();
-}, []);
+    useEffect(() => {
+        async function load() {
+            const products = await fetchCollectionsProducts();
+            setDisplayedProducts(products);
+        }
+        load();
+    }, []);
 
     const isMobile = windowWidth > 0 && windowWidth < 768;
 
     const getSlidesPerView = () => {
-    if (isMobile) return 1.5;
+        if (isMobile) return 1.5;
 
-    // DESKTOP LOGIC
-    if (!isExplored) return 2;   // Before trigger → always 2 large cards
-    return 5;                    // After trigger → 3 big gallery cards (Dior style)
-};
+        // DESKTOP LOGIC
+        if (!isExplored) return 2; // Before trigger → always 2 large cards
+        return 5; // After trigger → 3 big gallery cards (Dior style)
+    };
 
     // --- RESPONSIVE LOGIC END ---
 
     const handleExploreClick = () => {
-    if (windowWidth >= 768) {
-        // Desktop → open slider
-        setIsExplored(true);
-    } else {
-        // Mobile → act as normal link
-        window.location.href = `/${locale}/sale`;
-    }
-};
+        if (windowWidth >= 768) {
+            // Desktop → open slider
+            setIsExplored(true);
+        } else {
+            // Mobile → act as normal link
+            window.location.href = `/${locale}/sale`;
+        }
+    };
 
     const handleGoBackClick = () => {
         setIsExplored(false);
@@ -133,34 +132,53 @@ useEffect(() => {
 
     // --- NEW: MOBILE ANIMATION VARIANTS ---
     const mobileTextSectionVariants = {
-        initial: { x: '0%' },
-        explored: { x: '-100%' },
+        initial: { x: "0%" },
+        explored: { x: "-100%" },
     };
     const mobileProductsSectionVariants = {
-        initial: { x: '100%' },
-        explored: { x: '0%' },
+        initial: { x: "100%" },
+        explored: { x: "0%" },
     };
     const swiperVariants = {
         initial: { opacity: 0, y: 20 },
         // Animate swiper in after the panel transition is complete
-        explored: { opacity: 1, y: 0, transition: { delay: 0.6, duration: 0.5 } },
-    }
+        explored: {
+            opacity: 1,
+            y: 0,
+            transition: { delay: 0.6, duration: 0.5 },
+        },
+    };
 
     return (
-        <div className={`${styles["showcase-container"]} ${ isExplored ? styles.explored : "" }`}>
+        <div
+            className={`${styles["showcase-container"]} ${
+                isExplored ? styles.explored : ""
+            }`}
+        >
             {/* Section 1: Banner */}
-            <motion.section className={`${styles["showcase-section"]} ${styles["banner-section"]} pt-5 pb-5`} transition={layoutTransition} />
+            <motion.section
+                className={`${styles["showcase-section"]} ${styles["banner-section"]} pt-5 pb-5`}
+                transition={layoutTransition}
+            />
 
             {/* Section 2: Text (slides over the banner) */}
             <motion.section
-                className={`${styles['showcase-section']} ${styles['text-section']}`}
-                layout={!isMobile}             // mobile => no layout shift
+                className={`${styles["showcase-section"]} ${styles["text-section"]}`}
+                layout={!isMobile} // mobile => no layout shift
                 variants={!isMobile ? textSectionVariants : undefined}
-                animate={!isMobile ? (isExplored ? "explored" : "initial") : undefined}
+                animate={
+                    !isMobile
+                        ? isExplored
+                            ? "explored"
+                            : "initial"
+                        : undefined
+                }
                 transition={!isMobile ? layoutTransition : undefined}
             >
                 <div className={styles[""]}>
-                    <p className="fs-15 px-0  text-secondary section-paragraph">Upto 30% off</p>
+                    <p className="fs-15 px-0  text-secondary section-paragraph">
+                        Upto 30% off
+                    </p>
                     <h2 className="section-head section-title fs-25 fw-medium mb-4">
                         Winter Luxury, Elevated Offers
                     </h2>
@@ -185,15 +203,26 @@ useEffect(() => {
 
             {/* Section 3: Product Cards */}
             <motion.section
-                className={`${styles['showcase-section']} ${styles['products-section']}`}
+                className={`${styles["showcase-section"]} ${styles["products-section"]}`}
                 variants={!isMobile ? productsSectionVariants : undefined}
-                animate={!isMobile ? (isExplored ? "explored" : "initial") : undefined}
+                animate={
+                    !isMobile
+                        ? isExplored
+                            ? "explored"
+                            : "initial"
+                        : undefined
+                }
                 transition={!isMobile ? layoutTransition : undefined}
             >
-                <div className={styles["swiper-container"]} variants={swiperVariants}>
-                   <Swiper
+                <div
+                    className={styles["swiper-container"]}
+                    variants={swiperVariants}
+                >
+                    <Swiper
                         onSwiper={setSwiperRef}
-                        onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex + 1)}
+                        onSlideChange={(swiper) =>
+                            setCurrentIndex(swiper.realIndex + 1)
+                        }
                         key={isExplored ? "explored" : "initial"}
                         modules={[Pagination, Navigation, Autoplay]}
                         spaceBetween={10}
@@ -211,120 +240,143 @@ useEffect(() => {
                             if (!isExplored && diff < -15) setIsExplored(true);
                             if (isExplored && diff > 15) setIsExplored(false);
                         }}
-
                         className={styles["product-swiper"]}
                     >
-                <div className={styles.customNav}>
-                    {isExplored && (
-                        <div className={styles["button-container"]}>
-                            <Link
-                                className="btn-rounded btn-link_lg  text-uppercase fw-medium"
-                                href={`/${locale}/sale`}
+                        <div className={styles.customNav}>
+                            {isExplored && (
+                                <div className={styles["button-container"]}>
+                                    <Link
+                                        className="btn-rounded btn-link_lg  text-uppercase fw-medium"
+                                        href={`/${locale}/sale`}
+                                    >
+                                        View More
+                                    </Link>
+                                </div>
+                            )}
+                            <button
+                                className={styles.prevBtn}
+                                onClick={() => {
+                                    if (!swiperRef) return;
+
+                                    if (
+                                        !isMobile &&
+                                        swiperRef.realIndex === 0
+                                    ) {
+                                        setIsExplored(false);
+                                    }
+
+                                    swiperRef.slidePrev();
+                                }}
                             >
-                                View More
-                            </Link>
+                                &lt;
+                            </button>
+
+                            <span className={styles.pageIndicator}>
+                                {currentIndex} / {displayedProducts.length}
+                            </span>
+
+                            <button
+                                className={styles.nextBtn}
+                                onClick={() => {
+                                    if (!swiperRef) return;
+
+                                    if (!isMobile) setIsExplored(true);
+
+                                    swiperRef.slideNext();
+                                }}
+                            >
+                                &gt;
+                            </button>
                         </div>
-                    )}
-                    <button 
-                        className={styles.prevBtn}
-                        onClick={() => {
-                            if (!swiperRef) return;
-
-                            if (!isMobile && swiperRef.realIndex === 0) {
-                                setIsExplored(false);
-                            }
-
-                            swiperRef.slidePrev();
-                        }}
-                    >
-                        &lt;
-                    </button>
-
-                    <span className={styles.pageIndicator}>
-                        {currentIndex} / {displayedProducts.length}
-                    </span>
-                        
-                    <button 
-                        className={styles.nextBtn}
-                        onClick={() => {
-                            if (!swiperRef) return;
-
-                            if (!isMobile) setIsExplored(true);
-
-                            swiperRef.slideNext();
-                        }}
-                    >
-                        &gt;
-                    </button>
-                </div>
                         {displayedProducts.map((p, i) => {
-    const images = JSON.parse(p.images || "[]");
-    const firstImg = images[0] ? `${process.env.NEXT_PUBLIC_API_URL}storage/${images[0]}` : "/no-img.jpg";
+                            const images = JSON.parse(p.images || "[]");
+                            const firstImg = images[0]
+                                ? `${process.env.NEXT_PUBLIC_API_URL}storage/${images[0]}`
+                                : "/no-img.jpg";
 
-    // Build clean URL slugs (same method DiscountGrid uses)
-    const clean = (str) =>
-        str
-            ?.replace(/&amp;/g, "")
-            ?.replace(/[^\w\s-]/g, "")
-            ?.replace(/\s+/g, "-")
-            ?.trim()
-            ?.toLowerCase();
+                            // Build clean URL slugs (same method DiscountGrid uses)
+                            const clean = (str) =>
+                                str
+                                    ?.replace(/&amp;/g, "")
+                                    ?.replace(/[^\w\s-]/g, "")
+                                    ?.replace(/\s+/g, "-")
+                                    ?.trim()
+                                    ?.toLowerCase();
 
-    const categorySlug = clean(p.category_name);
-    const subSlug = p.subcategory?.subcategory_name
-        ? clean(p.subcategory.subcategory_name)
-        : "online-exclusive";
-    const productSlug = clean(p.product_name);
+                            const categorySlug = clean(p.category_name);
+                            const subSlug = p.subcategory?.subcategory_name
+                                ? clean(p.subcategory.subcategory_name)
+                                : "online-exclusive";
+                            const productSlug = clean(p.product_name);
 
-    const link = `/${locale}/shop/${categorySlug}/${subSlug}/${productSlug}`;
+                            const link = `/${locale}/shop/${categorySlug}/${subSlug}/${productSlug}`;
 
-    return (
-        <SwiperSlide key={i}>
-            <Link href={link} className={styles["product-card"]} onClick={() => setShowLoader(true)}>
-                <img
-                    src={firstImg}
-                    alt={p.product_name}
-                    className={styles["product-image"]}
-                />
+                            return (
+                                <SwiperSlide key={i}>
+                                    <Link
+                                        href={link}
+                                        className={styles["product-card"]}
+                                        onClick={() => setShowLoader(true)}
+                                    >
+                                        <img
+                                            src={firstImg}
+                                            alt={p.product_name}
+                                            className={styles["product-image"]}
+                                        />
 
-                <div className={styles["product-info"]}>
-                    <h3 className={styles["product-name"]}>
-                        {he.decode(p.product_name)}
-                    </h3>
+                                        <div className={styles["product-info"]}>
+                                            <h3
+                                                className={
+                                                    styles["product-name"]
+                                                }
+                                            >
+                                                {he.decode(p.product_name)}
+                                            </h3>
 
-                    <div className={styles["shop-now-container"]}>
-                        <span className={styles["shop-now-link"]}>Shop Now</span>
-                    </div>
-                </div>
-            </Link>
-        </SwiperSlide>
-    );
-})}
-
+                                            <div
+                                                className={
+                                                    styles["shop-now-container"]
+                                                }
+                                            >
+                                                <span
+                                                    className={
+                                                        styles["shop-now-link"]
+                                                    }
+                                                >
+                                                    Shop Now
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            );
+                        })}
                     </Swiper>
                     {isMobile && (
-    <div className={styles.mobileNav}>
-        <button 
-            onClick={() => swiperRef && swiperRef.slidePrev()}
-            className={styles.mobileArrow}
-        >
-            &lt;
-        </button>
+                        <div className={styles.mobileNav}>
+                            <button
+                                onClick={() =>
+                                    swiperRef && swiperRef.slidePrev()
+                                }
+                                className={styles.mobileArrow}
+                            >
+                                &lt;
+                            </button>
 
-        <span className={styles.mobileIndicator}>
-            {currentIndex} / {displayedProducts.length}
-        </span>
+                            <span className={styles.mobileIndicator}>
+                                {currentIndex} / {displayedProducts.length}
+                            </span>
 
-        <button 
-            onClick={() => swiperRef && swiperRef.slideNext()}
-            className={styles.mobileArrow}
-        >
-            &gt;
-        </button>
-    </div>
-)}
-
-                    
+                            <button
+                                onClick={() =>
+                                    swiperRef && swiperRef.slideNext()
+                                }
+                                className={styles.mobileArrow}
+                            >
+                                &gt;
+                            </button>
+                        </div>
+                    )}
                 </div>
                 {/* <div className={styles["button-container"]}>
                     {isExplored && (

@@ -24,13 +24,13 @@ const Base = ({product}) => {
     }, [])
 
     // Dynamically import the 3D viewer, and explicitly disable SSR.
-    const PerfumeViewer = dynamic(
-    () => import('./3D/PerfumeViewer'),
-    { 
-        ssr: false,
-        loading: () => <div style={{height: '600px', background: '#f0f0f0'}} /> 
-    }
-    )
+    // const PerfumeViewer = dynamic(
+    // () => import('./3D/PerfumeViewer'),
+    // { 
+    //     ssr: false,
+    //     loading: () => <div style={{height: '600px', background: '#f0f0f0'}} /> 
+    // }
+    // )
 
     return (
         <div className="App py-5" >
