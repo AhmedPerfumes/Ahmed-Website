@@ -6,6 +6,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import he from "he";
+import { useMenu } from "@/context/MenuContext";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -65,6 +66,23 @@ const ProductShowcase = () => {
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [swiperRef, setSwiperRef] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(1);
+    const { saleSection } = useMenu();
+    // console.log(saleSection, "sale sale sale");
+    const formattedSaleSection = saleSection?.length ? (() => {
+        const item = saleSection[0];
+
+        const stripHtml = (html) =>
+            html ? html.replace(/<[^>]+>/g, '').trim() : '';
+
+        return {
+            heading: item.name || '',
+            heading_ar: item.description || '',
+            small_text: item.link || '',
+            small_text_ar: stripHtml(item.content),
+            banner: item.image || '',
+        };
+    })() : null;
+    // console.log(formattedSaleSection, "sale sale sale" )
 
     // --- RESPONSIVE LOGIC START ---
     const [windowWidth, setWindowWidth] = useState(0);
@@ -151,14 +169,18 @@ const ProductShowcase = () => {
 
     return (
         <div
-            className={`${styles["showcase-container"]} ${
-                isExplored ? styles.explored : ""
-            }`}
+            className={`${styles["showcase-container"]} ${isExplored ? styles.explored : ""
+                }`}
         >
             {/* Section 1: Banner */}
             <motion.section
                 className={`${styles["showcase-section"]} ${styles["banner-section"]} pt-5 pb-5`}
                 transition={layoutTransition}
+                style={{
+                    backgroundImage: formattedSaleSection?.banner
+                        ? `url(${process.env.NEXT_PUBLIC_API_URL}storage/${formattedSaleSection.banner})`
+                        : undefined
+                }}
             />
 
             {/* Section 2: Text (slides over the banner) */}
@@ -177,10 +199,10 @@ const ProductShowcase = () => {
             >
                 <div className={styles[""]}>
                     <p className="fs-15 px-0  text-secondary section-paragraph">
-                        Upto 30% off
+                        {locale == "ar" ? formattedSaleSection?.small_text_ar : formattedSaleSection?.small_text}
                     </p>
                     <h2 className="section-head section-title fs-25 fw-medium mb-4">
-                        Winter Luxury, Elevated Offers
+                        {locale == "ar" ? formattedSaleSection?.heading_ar : formattedSaleSection?.heading}
                     </h2>
                     {!isExplored && (
                         <div className={styles["button-container"]}>

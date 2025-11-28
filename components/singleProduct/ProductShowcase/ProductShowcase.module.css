@@ -38,7 +38,7 @@
     left: 0;
     top: 0;
     width: 33vw;
-    background-image: url('https://admin.ahmedalmaghribi.com/public/storage/banners/mobile-size-uae-winter-sale-upto-30-discount.jpg');
+    /* background-image: url('https://admin.ahmedalmaghribi.com/public/storage/banners/mobile-size-uae-winter-sale-upto-30-discount.jpg'); */
     background-size: cover;
     background-position: center;
     transition: opacity .5s ease;
