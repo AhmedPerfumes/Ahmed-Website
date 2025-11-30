@@ -270,41 +270,42 @@ export default function Context({ children }) {
     const cartProducts = state.products;
 
     // Detect if cart already has a pre-book item
-    const hasPreBook = cartProducts.some(
-      (p) => p.collection_name?.toLowerCase() === 'pre book'
-    );
+    // const hasPreBook = cartProducts.some(
+    //   (p) => p.collection_name?.toLowerCase() === 'pre book'
+    // );
 
     // Detect if cart already has ANY non–pre-book item
-    const hasRegular = cartProducts.some(
-      (p) => p.collection_name?.toLowerCase() !== 'pre book'
-    );
+    // const hasRegular = cartProducts.some(
+    //   (p) => p.collection_name?.toLowerCase() !== 'pre book'
+    // );
 
     // --- RESTRICTION LOGIC ---
-    if (newProductCollection === 'pre book' && hasRegular) {
-      // Trying to add 'pre book' but cart has normal items
-      // alert("You cannot mix Pre Book items with other products.");
-      triggerToast({
-        name: "Cart Restriction",
-        message: "You cannot mix Pre Book items with other products.",
-        image: "/assets/images/danger.png",
-        type: "error",
-        showButton: false
-      });
-      return;
-    }
+    // if (newProductCollection === 'pre book' && hasRegular) {
+    //   // Trying to add 'pre book' but cart has normal items
+    //   // alert("You cannot mix Pre Book items with other products.");
+    //   triggerToast({
+    //     name: "Cart Restriction",
+    //     message: "You cannot mix Pre Book items with other products.",
+    //     image: "/assets/images/danger.png",
+    //     type: "error",
+    //     showButton: false
+    //   });
+    //   return;
+    // }
 
-    if (newProductCollection !== 'pre book' && hasPreBook) {
-      // Trying to add regular product but cart has pre-book items
-      // alert("You cannot add other items with a Pre Book product.");
-      triggerToast({
-        name: "Cart Restriction",
-        message: "You cannot add other items with a Pre Book product.",
-        image: "/assets/images/danger.png",
-        type: "error",
-        showButton: false
-      });
-      return;
-    }
+    // if (newProductCollection !== 'pre book' && hasPreBook) {
+    //   // Trying to add regular product but cart has pre-book items
+    //   // alert("You cannot add other items with a Pre Book product.");
+    //   triggerToast({
+    //     name: "Cart Restriction",
+    //     message: "You cannot add other items with a Pre Book product.",
+    //     image: "/assets/images/danger.png",
+    //     type: "error",
+    //     showButton: false
+    //   });
+    //   return;
+    // }
+
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({
       type: 'ADD_PRODUCT',

@@ -102,7 +102,6 @@ export default function Style2({ category, subcategory, products }) {
       id="products-grid-2"
     >
       {products.map((elm, i) => (
-        elm.collection_name !== "Pre Book" &&
         <div key={i} className="product-card-wrapper">
           <div className="product-card mb-3 mb-md-4 mb-xxl-5">
             <div className={i != 1 ? "pc__img-wrapper" : ""}>

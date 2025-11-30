@@ -78,7 +78,7 @@ function HeroSection({ data = {}, onBookNow }) {
                   }}
                   onClick={onBookNow}
                 >
-                  Book Now
+                  Buy Now
                 </button>
 
               </motion.div>
