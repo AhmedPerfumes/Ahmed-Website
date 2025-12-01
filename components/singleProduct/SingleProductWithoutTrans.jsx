@@ -28,29 +28,75 @@ export default function SingleProduct11({ category, subcategory, product }) {
     const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
     return item;
   };
+  // const setQuantityCartItem = (id, quantity) => {
+  //   if (isIncludeCard()) {
+  //     if (quantity >= 1 && quantity <= product.product_qty) {
+  //       setError(null);
+  //       const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //       const items = [...cartProducts];
+  //       const itemIndex = items.indexOf(item);
+  //       item.quantity = quantity;
+  //       items[itemIndex] = item;
+  //       setCartProducts(items);
+  //     } else {
+  //       setError("Quantity is more than available quantity");
+  //     }
+  //   } else {
+  //     setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
+  //     setError(null);
+  //     if(quantity > product.product_qty) {
+  //       setError("Quantity is more than available quantity");
+  //     } else {
+  //       setError(null);
+  //     }
+  //   }
+  // };
+
   const setQuantityCartItem = (id, quantity) => {
+    // First check: quantity within stock
+    const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+    // Second check: max 6 per product
+    const withinLimit = quantity <= 6;
+
     if (isIncludeCard()) {
-      if (quantity >= 1 && quantity <= product.product_qty) {
+      if (withinStock && withinLimit) {
         setError(null);
-        const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
         const items = [...cartProducts];
-        const itemIndex = items.indexOf(item);
-        item.quantity = quantity;
-        items[itemIndex] = item;
+        const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+        if (itemIndex !== -1) {
+          items[itemIndex] = {
+            ...items[itemIndex],
+            quantity
+          };
+        }
+
         setCartProducts(items);
       } else {
-        setError("Quantity is more than available quantity");
+        setError(
+          !withinStock
+            ? "Quantity is more than available quantity"
+            : "Maximum allowed quantity is 6"
+        );
       }
     } else {
-      setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
-      setError(null);
-      if(quantity > product.product_qty) {
-        setError("Quantity is more than available quantity");
-      } else {
-        setError(null);
-      }
+      const validQty =
+        withinStock && withinLimit
+          ? quantity
+          : Math.min(product.product_qty, 6);
+
+      setQuantity(validQty);
+
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : "Maximum allowed quantity is 6"
+      );
     }
   };
+
   const addToCart = () => {
     if (!isIncludeCard()) {
       const item = {...product, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcategory.split('-').join(' '))};

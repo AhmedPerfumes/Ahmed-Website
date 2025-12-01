@@ -57,35 +57,78 @@ const Checkout = ({ product }) => {
         )[0];
         return item;
     };
+    // const setQuantityCartItem = (id, quantity) => {
+    //     if (isIncludeCard()) {
+    //         if (quantity >= 1 && quantity <= product.product_qty) {
+    //             setError(null);
+    //             const item = cartProducts.filter(
+    //                 (elm) => elm.product_id == id
+    //             )[0];
+    //             const items = [...cartProducts];
+    //             const itemIndex = items.indexOf(item);
+    //             item.quantity = quantity;
+    //             items[itemIndex] = item;
+    //             setCartProducts(items);
+    //         } else {
+    //             setError("Quantity is more than available quantity");
+    //         }
+    //     } else {
+    //         setQuantity(
+    //             quantity <= product.product_qty && quantity >= 1
+    //                 ? quantity
+    //                 : product.product_qty
+    //         );
+    //         setError(null);
+    //         if (quantity > product.product_qty) {
+    //             setError("Quantity is more than available quantity");
+    //         } else {
+    //             setError(null);
+    //         }
+    //     }
+    // };
+
     const setQuantityCartItem = (id, quantity) => {
+        // First check: within product stock
+        const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+        // Second check: max 6 per product
+        const withinLimit = quantity <= 6;
+
         if (isIncludeCard()) {
-            if (quantity >= 1 && quantity <= product.product_qty) {
-                setError(null);
-                const item = cartProducts.filter(
-                    (elm) => elm.product_id == id
-                )[0];
-                const items = [...cartProducts];
-                const itemIndex = items.indexOf(item);
-                item.quantity = quantity;
-                items[itemIndex] = item;
-                setCartProducts(items);
+            if (withinStock && withinLimit) {
+            setError(null);
+
+            const items = [...cartProducts];
+            const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+            if (itemIndex !== -1) {
+                items[itemIndex] = {
+                ...items[itemIndex],
+                quantity
+                };
+            }
+
+            setCartProducts(items);
             } else {
-                setError("Quantity is more than available quantity");
+            setError(
+                !withinStock
+                ? "Quantity is more than available quantity"
+                : "Maximum allowed quantity is 6"
+            );
             }
         } else {
-            setQuantity(
-                quantity <= product.product_qty && quantity >= 1
-                    ? quantity
-                    : product.product_qty
+            const validQty = withinStock && withinLimit ? quantity : Math.min(product.product_qty, 6);
+
+            setQuantity(validQty);
+
+            setError(
+            !withinStock
+                ? "Quantity is more than available quantity"
+                : "Maximum allowed quantity is 6"
             );
-            setError(null);
-            if (quantity > product.product_qty) {
-                setError("Quantity is more than available quantity");
-            } else {
-                setError(null);
-            }
         }
     };
+
     const addToCart = () => {
         if (!isIncludeCard()) {
             const item = {
@@ -319,7 +362,7 @@ const Checkout = ({ product }) => {
                 {/* <tamara-widget type="tamara-summary" lang="en" amount={price(product)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
 
                 <TamaraWidget inlineType="5" inlineVariant='outlined'/>
-      
+                { error && <div className="text-danger">{error}</div>}
                 {product.product_qty > 0 ? (
                     <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>
                         {/* Left Pill (Add to Cart → Already Added) */}

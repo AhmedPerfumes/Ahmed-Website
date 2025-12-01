@@ -49,58 +49,157 @@ export default function QuickView() {
     return item;
   };
   
+  // const setQuantityCartItem = (id, quantity) => {
+  //   if (isIncludeCard()) {
+  //     if (quantity >= 1 && quantity <= quickViewItem.product_qty) {
+  //       setError(null);
+  //       const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //       const items = [...cartProducts];
+  //       const itemIndex = items.indexOf(item);
+  //       item.quantity = quantity;
+  //       items[itemIndex] = item;
+  //       setCartProducts(items);
+  //     } else {
+  //       setError("Quantity is more than available quantity");
+  //     }
+  //   } else {
+  //     setQuantity((quantity <= quickViewItem.product_qty && quantity >= 1) ? quantity : quickViewItem.product_qty);
+  //     setError(null);
+  //     if(quantity > quickViewItem.product_qty) {
+  //       setError("Quantity is more than available quantity");
+  //     } else {
+  //       setError(null);
+  //     }
+  //   }
+  // };
+
   const setQuantityCartItem = (id, quantity) => {
+
+    // First rule: must be within stock
+    const withinStock = quantity >= 1 && quantity <= quickViewItem.product_qty;
+    
+    // Second rule: max 6 per item
+    const withinLimit = quantity <= 6;
+
     if (isIncludeCard()) {
-      if (quantity >= 1 && quantity <= quickViewItem.product_qty) {
+
+      if (withinStock && withinLimit) {
         setError(null);
-        const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
         const items = [...cartProducts];
-        const itemIndex = items.indexOf(item);
-        item.quantity = quantity;
-        items[itemIndex] = item;
+        const itemIndex = items.findIndex(elm => elm.product_id == id);
+
+        if (itemIndex !== -1) {
+          items[itemIndex] = {
+            ...items[itemIndex],
+            quantity
+          };
+        }
+
         setCartProducts(items);
       } else {
-        setError("Quantity is more than available quantity");
+        setError(
+          !withinStock
+            ? "Quantity is more than available quantity"
+            : "Maximum allowed quantity is 6"
+        );
       }
+
     } else {
-      setQuantity((quantity <= quickViewItem.product_qty && quantity >= 1) ? quantity : quickViewItem.product_qty);
-      setError(null);
-      if(quantity > quickViewItem.product_qty) {
-        setError("Quantity is more than available quantity");
-      } else {
+
+      if (withinStock && withinLimit) {
+        setQuantity(quantity);
         setError(null);
+      } else {
+        const maxAllowed = Math.min(quickViewItem.product_qty, 6);
+        setQuantity(maxAllowed);
+
+        setError(
+          !withinStock
+            ? "Quantity is more than available quantity"
+            : "Maximum allowed quantity is 6"
+        );
       }
     }
   };
+
+//   const addToCart = () => {
+//   const item = {
+//     ...quickViewItem,
+//     category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')),
+//     subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))
+//   };
+
+//   if (!isIncludeCard()) {
+//     // First time adding
+//     item.quantity = quantity;
+//     setCartProducts((prev) => [...prev, item]);
+//   } else {
+//     // Already in cart → just increase quantity
+//     const updatedCart = cartProducts.map((cartItem) => {
+//       if (cartItem.product_id === quickViewItem.product_id) {
+//         return {
+//           ...cartItem,
+//           quantity: cartItem.quantity + 1
+//         };
+//       }
+//       return cartItem;
+//     });
+//     setCartProducts(updatedCart);
+//   }
+
+//   // Open cart drawer (same as before)
+//   document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+//   document.getElementById("cartDrawer")?.classList.add("aside_visible");
+// };
+
   const addToCart = () => {
-  const item = {
-    ...quickViewItem,
-    category_name: capitalizeEachWord(quickViewItem.category_name.split('-').join(' ')),
-    subcategory_name: capitalizeEachWord(quickViewItem.subcategory_name.split('-').join(' '))
+    const item = {
+      ...quickViewItem,
+      category_name: capitalizeEachWord(
+        quickViewItem.category_name.split('-').join(' ')
+      ),
+      subcategory_name: capitalizeEachWord(
+        quickViewItem.subcategory_name.split('-').join(' ')
+      ),
+    };
+
+    if (!isIncludeCard()) {
+      // First time adding
+      item.quantity = Math.min(quantity, 6); // ensure quantity does not exceed 6
+      setCartProducts((prev) => [...prev, item]);
+    } else {
+      // Already in cart → increase quantity but respect max 6
+      let maxReached = false;
+
+      const updatedCart = cartProducts.map((cartItem) => {
+        if (cartItem.product_id === quickViewItem.product_id) {
+          const newQty = Math.min(cartItem.quantity + 1, 6);
+          if (cartItem.quantity >= 6) maxReached = true;
+          return {
+            ...cartItem,
+            quantity: newQty,
+          };
+        }
+        return cartItem;
+      });
+
+      if (maxReached) {
+        setError("Maximum allowed quantity is 6");
+      } else {
+        setError(null);
+      }
+
+      setCartProducts(updatedCart);
+    }
+
+    // Open cart drawer
+    document.getElementById("cartDrawerOverlay")?.classList.add(
+      "page-overlay_visible"
+    );
+    document.getElementById("cartDrawer")?.classList.add("aside_visible");
   };
 
-  if (!isIncludeCard()) {
-    // First time adding
-    item.quantity = quantity;
-    setCartProducts((prev) => [...prev, item]);
-  } else {
-    // Already in cart → just increase quantity
-    const updatedCart = cartProducts.map((cartItem) => {
-      if (cartItem.product_id === quickViewItem.product_id) {
-        return {
-          ...cartItem,
-          quantity: cartItem.quantity + 1
-        };
-      }
-      return cartItem;
-    });
-    setCartProducts(updatedCart);
-  }
-
-  // Open cart drawer (same as before)
-  document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
-  document.getElementById("cartDrawer")?.classList.add("aside_visible");
-};
   function cleanProductName(productName) {
     // Step 1: Remove any non-alphanumeric characters except for spaces
     const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, '') + ' Description';

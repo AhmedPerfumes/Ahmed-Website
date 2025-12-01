@@ -55,19 +55,54 @@ export default function Cart() {
   //   };
   // }, [totalPrice]);
 
+  // const setQuantity = async (id, quantity, productQty) => {
+  //   if (quantity >= 1 && quantity <= productQty) {
+  //     setError(null);
+  //     const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //     const items = [...cartProducts];
+  //     const itemIndex = items.indexOf(item);
+  //     item.quantity = quantity;
+  //     items[itemIndex] = item;
+  //     setCartProducts(items);
+  //   } else {
+  //     setError("Quantity is more than available quantity");
+  //   }
+  // };
+
   const setQuantity = async (id, quantity, productQty) => {
-    if (quantity >= 1 && quantity <= productQty) {
+    // First check: quantity within stock
+    const withinStock = quantity >= 1 && quantity <= productQty;
+
+    // Second check: max 6 per product
+    const withinLimit = quantity <= 6;
+
+    // console.log("withinStock", withinStock);
+    // console.log("withinLimit", withinLimit);
+
+    if (withinStock && withinLimit) {
       setError(null);
-      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
       const items = [...cartProducts];
-      const itemIndex = items.indexOf(item);
-      item.quantity = quantity;
-      items[itemIndex] = item;
+      const itemIndex = items.findIndex(elm => elm.product_id == id);
+
+      if (itemIndex !== -1) {
+        items[itemIndex] = {
+          ...items[itemIndex],
+          quantity
+        };
+      }
+
       setCartProducts(items);
     } else {
-      setError("Quantity is more than available quantity");
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : "Maximum allowed quantity is 6"
+      );
     }
   };
+
+
   const removeItem = async(id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };

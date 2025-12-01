@@ -48,8 +48,44 @@ export default function CartDrawer() {
       .classList.remove("page-overlay_visible");
     document.getElementById("cartDrawer").classList.remove("aside_visible");
   };
+  // const setQuantity = (id, quantity, productQty) => {
+  //   if (quantity >= 1 && quantity <= productQty) {
+  //     setError(null);
+
+  //     const items = [...cartProducts];
+
+  //     // Update the paid product
+  //     const paidItemIndex = items.findIndex(
+  //       (item) => item.product_id == id && !item.is_gift
+  //     );
+
+  //     if (paidItemIndex !== -1) {
+  //       items[paidItemIndex].quantity = quantity;
+  //     }
+
+  //     // Also update the matching gift (if exists)
+  //     const giftItemIndex = items.findIndex(
+  //       (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
+  //     );
+
+  //     if (giftItemIndex !== -1) {
+  //       items[giftItemIndex].quantity = quantity;
+  //     }
+
+  //     setCartProducts(items);
+  //   } else {
+  //     setError("Quantity is more than available quantity");
+  //   }
+  // };
+
   const setQuantity = (id, quantity, productQty) => {
-    if (quantity >= 1 && quantity <= productQty) {
+    // First check: quantity within stock
+    const withinStock = quantity >= 1 && quantity <= productQty;
+
+    // Second check: max 6 per product
+    const withinLimit = quantity <= 6;
+
+    if (withinStock && withinLimit) {
       setError(null);
 
       const items = [...cartProducts];
@@ -65,7 +101,10 @@ export default function CartDrawer() {
 
       // Also update the matching gift (if exists)
       const giftItemIndex = items.findIndex(
-        (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
+        (item) =>
+          item.product_id == id &&
+          item.is_gift &&
+          item.selection_rule != "least_expensive"
       );
 
       if (giftItemIndex !== -1) {
@@ -74,9 +113,14 @@ export default function CartDrawer() {
 
       setCartProducts(items);
     } else {
-      setError("Quantity is more than available quantity");
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : "Maximum allowed quantity is 6"
+      );
     }
   };
+
   const removeItem = (id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };

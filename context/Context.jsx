@@ -260,14 +260,72 @@ export default function Context({ children }) {
     setTimeout(() => setShowToast(false), 4000);
   };
 
+  // const addProductToCart = (product) => {
+  //   if (state.isProcessing) {
+  //     // console.log('Skipping addProductToCart: processing in progress');
+  //     return;
+  //   }
+  //   // console.log('addProductToCart:', product);
+  //   const newProductCollection = product?.collection_name?.toLowerCase();
+  //   const cartProducts = state.products;
+
+  //   // Detect if cart already has a pre-book item
+  //   const hasPreBook = cartProducts.some(
+  //     (p) => p.collection_name?.toLowerCase() === 'pre book'
+  //   );
+
+  //   // Detect if cart already has ANY non–pre-book item
+  //   const hasRegular = cartProducts.some(
+  //     (p) => p.collection_name?.toLowerCase() !== 'pre book'
+  //   );
+
+  //   // --- RESTRICTION LOGIC ---
+  //   if (newProductCollection === 'pre book' && hasRegular) {
+  //     // Trying to add 'pre book' but cart has normal items
+  //     // alert("You cannot mix Pre Book items with other products.");
+  //     triggerToast({
+  //       name: "Cart Restriction",
+  //       message: "You cannot mix Pre Book items with other products.",
+  //       image: "/assets/images/danger.png",
+  //       type: "error",
+  //       showButton: false
+  //     });
+  //     return;
+  //   }
+
+  //   if (newProductCollection !== 'pre book' && hasPreBook) {
+  //     // Trying to add regular product but cart has pre-book items
+  //     // alert("You cannot add other items with a Pre Book product.");
+  //     triggerToast({
+  //       name: "Cart Restriction",
+  //       message: "You cannot add other items with a Pre Book product.",
+  //       image: "/assets/images/danger.png",
+  //       type: "error",
+  //       showButton: false
+  //     });
+  //     return;
+  //   }
+  //   dispatch({ type: 'SET_PROCESSING', payload: true });
+  //   dispatch({
+  //     type: 'ADD_PRODUCT',
+  //     payload: product,
+  //     meta: {
+  //       toast: {
+  //         name: product?.product_name,
+  //         image: buildToastImageUrl(product),
+  //         message: "Added to your cart",
+  //       },
+  //     },
+  //   });
+  //   // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+  //   // document.getElementById("cartDrawer")?.classList.add("aside_visible");
+  // };
+
   const addProductToCart = (product) => {
-    if (state.isProcessing) {
-      // console.log('Skipping addProductToCart: processing in progress');
-      return;
-    }
-    // console.log('addProductToCart:', product);
+    if (state.isProcessing) return;
+
     const newProductCollection = product?.collection_name?.toLowerCase();
-    const cartProducts = state.products;
+    const cartProducts = [...state.products];
 
     // Detect if cart already has a pre-book item
     const hasPreBook = cartProducts.some(
@@ -281,8 +339,6 @@ export default function Context({ children }) {
 
     // --- RESTRICTION LOGIC ---
     if (newProductCollection === 'pre book' && hasRegular) {
-      // Trying to add 'pre book' but cart has normal items
-      // alert("You cannot mix Pre Book items with other products.");
       triggerToast({
         name: "Cart Restriction",
         message: "You cannot mix Pre Book items with other products.",
@@ -294,8 +350,6 @@ export default function Context({ children }) {
     }
 
     if (newProductCollection !== 'pre book' && hasPreBook) {
-      // Trying to add regular product but cart has pre-book items
-      // alert("You cannot add other items with a Pre Book product.");
       triggerToast({
         name: "Cart Restriction",
         message: "You cannot add other items with a Pre Book product.",
@@ -305,6 +359,35 @@ export default function Context({ children }) {
       });
       return;
     }
+
+    // --- MAX 6 QUANTITY LOGIC ---
+    const existingItemIndex = cartProducts.findIndex(
+      (p) => p.product_id === product.product_id
+    );
+
+    if (existingItemIndex !== -1) {
+      const currentQty = cartProducts[existingItemIndex].quantity || 1;
+
+      if (currentQty >= 6) {
+        triggerToast({
+          name: "Maximum Quantity Reached",
+          message: "You cannot add more than 6 of this product.",
+          image: "/assets/images/danger.png",
+          type: "error",
+          showButton: false
+        });
+        return;
+      }
+
+      // Increase quantity but do not exceed 6
+      cartProducts[existingItemIndex].quantity = Math.min(currentQty + 1, 6);
+      dispatch({ type: 'UPDATE_CART', payload: cartProducts });
+      return;
+    }
+
+    // New product, set initial quantity = 1
+    product.quantity = 1;
+
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({
       type: 'ADD_PRODUCT',
@@ -317,8 +400,6 @@ export default function Context({ children }) {
         },
       },
     });
-    // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
-    // document.getElementById("cartDrawer")?.classList.add("aside_visible");
   };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
