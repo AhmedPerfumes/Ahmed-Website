@@ -78,12 +78,61 @@ export default function CartDrawer() {
   //   }
   // };
 
-  const setQuantity = (id, quantity, productQty) => {
-    // First check: quantity within stock
+  // const setQuantity = (id, quantity, productQty) => {
+  //   // First check: quantity within stock
+  //   const withinStock = quantity >= 1 && quantity <= productQty;
+
+  //   // Second check: max 6 per product
+  //   const withinLimit = quantity <= 6;
+
+  //   if (withinStock && withinLimit) {
+  //     setError(null);
+
+  //     const items = [...cartProducts];
+
+  //     // Update the paid product
+  //     const paidItemIndex = items.findIndex(
+  //       (item) => item.product_id == id && !item.is_gift
+  //     );
+
+  //     if (paidItemIndex !== -1) {
+  //       items[paidItemIndex].quantity = quantity;
+  //     }
+
+  //     // Also update the matching gift (if exists)
+  //     const giftItemIndex = items.findIndex(
+  //       (item) =>
+  //         item.product_id == id &&
+  //         item.is_gift &&
+  //         item.selection_rule != "least_expensive"
+  //     );
+
+  //     if (giftItemIndex !== -1) {
+  //       items[giftItemIndex].quantity = quantity;
+  //     }
+
+  //     setCartProducts(items);
+  //   } else {
+  //     setError(
+  //       !withinStock
+  //         ? "Quantity is more than available quantity"
+  //         : "Maximum allowed quantity is 6"
+  //     );
+  //   }
+  // };
+
+  const setQuantity = (id, quantity, productQty, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : productQty; // fallback to available stock
+
+    // Check stock limit
     const withinStock = quantity >= 1 && quantity <= productQty;
 
-    // Second check: max 6 per product
-    const withinLimit = quantity <= 6;
+    // Check max purchase limit
+    const withinLimit = quantity <= MAX_LIMIT;
 
     if (withinStock && withinLimit) {
       setError(null);
@@ -99,7 +148,7 @@ export default function CartDrawer() {
         items[paidItemIndex].quantity = quantity;
       }
 
-      // Also update the matching gift (if exists)
+      // Update the related gift item
       const giftItemIndex = items.findIndex(
         (item) =>
           item.product_id == id &&
@@ -116,10 +165,11 @@ export default function CartDrawer() {
       setError(
         !withinStock
           ? "Quantity is more than available quantity"
-          : "Maximum allowed quantity is 6"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
       );
     }
   };
+
 
   const removeItem = (id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
@@ -311,7 +361,7 @@ export default function CartDrawer() {
                           type="number"
                           name="quantity"
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty, elm?.maximum_order_quantity)
                           }
                           value={elm.quantity}
                           min="1"
@@ -320,14 +370,14 @@ export default function CartDrawer() {
                         />
                         <div
                           onClick={() => {
-                            setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty);
+                            setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty, elm?.maximum_order_quantity);
                           }}
                           className="qty-control__reduce text-start"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__increase text-end"
                         >
                           +

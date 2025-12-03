@@ -153,7 +153,60 @@ export default function QuickView() {
 //   document.getElementById("cartDrawer")?.classList.add("aside_visible");
 // };
 
+  // const addToCart = () => {
+  //   const item = {
+  //     ...quickViewItem,
+  //     category_name: capitalizeEachWord(
+  //       quickViewItem.category_name.split('-').join(' ')
+  //     ),
+  //     subcategory_name: capitalizeEachWord(
+  //       quickViewItem.subcategory_name.split('-').join(' ')
+  //     ),
+  //   };
+
+  //   if (!isIncludeCard()) {
+  //     // First time adding
+  //     item.quantity = Math.min(quantity, 6); // ensure quantity does not exceed 6
+  //     setCartProducts((prev) => [...prev, item]);
+  //   } else {
+  //     // Already in cart → increase quantity but respect max 6
+  //     let maxReached = false;
+
+  //     const updatedCart = cartProducts.map((cartItem) => {
+  //       if (cartItem.product_id === quickViewItem.product_id) {
+  //         const newQty = Math.min(cartItem.quantity + 1, 6);
+  //         if (cartItem.quantity >= 6) maxReached = true;
+  //         return {
+  //           ...cartItem,
+  //           quantity: newQty,
+  //         };
+  //       }
+  //       return cartItem;
+  //     });
+
+  //     if (maxReached) {
+  //       setError("Maximum allowed quantity is 6");
+  //     } else {
+  //       setError(null);
+  //     }
+
+  //     setCartProducts(updatedCart);
+  //   }
+
+  //   // Open cart drawer
+  //   document.getElementById("cartDrawerOverlay")?.classList.add(
+  //     "page-overlay_visible"
+  //   );
+  //   document.getElementById("cartDrawer")?.classList.add("aside_visible");
+  // };
+
   const addToCart = () => {
+    // Determine max quantity allowed
+    const MAX_LIMIT =
+      quickViewItem?.maximum_order_quantity && quickViewItem.maximum_order_quantity > 0
+        ? quickViewItem.maximum_order_quantity
+        : quickViewItem.quantity; // fallback to stock qty
+
     const item = {
       ...quickViewItem,
       category_name: capitalizeEachWord(
@@ -164,18 +217,23 @@ export default function QuickView() {
       ),
     };
 
+    // --- FIRST TIME ADDING ---
     if (!isIncludeCard()) {
-      // First time adding
-      item.quantity = Math.min(quantity, 6); // ensure quantity does not exceed 6
+      item.quantity = Math.min(quantity, MAX_LIMIT);
       setCartProducts((prev) => [...prev, item]);
+
+    // --- ALREADY IN CART ---
     } else {
-      // Already in cart → increase quantity but respect max 6
       let maxReached = false;
 
       const updatedCart = cartProducts.map((cartItem) => {
         if (cartItem.product_id === quickViewItem.product_id) {
-          const newQty = Math.min(cartItem.quantity + 1, 6);
-          if (cartItem.quantity >= 6) maxReached = true;
+          const newQty = Math.min(cartItem.quantity + 1, MAX_LIMIT);
+
+          if (cartItem.quantity >= MAX_LIMIT) {
+            maxReached = true;
+          }
+
           return {
             ...cartItem,
             quantity: newQty,
@@ -185,7 +243,7 @@ export default function QuickView() {
       });
 
       if (maxReached) {
-        setError("Maximum allowed quantity is 6");
+        setError(`Maximum allowed quantity is ${MAX_LIMIT}`);
       } else {
         setError(null);
       }
@@ -193,10 +251,8 @@ export default function QuickView() {
       setCartProducts(updatedCart);
     }
 
-    // Open cart drawer
-    document.getElementById("cartDrawerOverlay")?.classList.add(
-      "page-overlay_visible"
-    );
+    // Open cart drawer UI
+    document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
     document.getElementById("cartDrawer")?.classList.add("aside_visible");
   };
 

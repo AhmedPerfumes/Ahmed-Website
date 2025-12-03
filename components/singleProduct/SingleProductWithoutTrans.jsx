@@ -52,12 +52,63 @@ export default function SingleProduct11({ category, subcategory, product }) {
   //   }
   // };
 
-  const setQuantityCartItem = (id, quantity) => {
-    // First check: quantity within stock
+  // const setQuantityCartItem = (id, quantity) => {
+  //   // First check: quantity within stock
+  //   const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+  //   // Second check: max 6 per product
+  //   const withinLimit = quantity <= 6;
+
+  //   if (isIncludeCard()) {
+  //     if (withinStock && withinLimit) {
+  //       setError(null);
+
+  //       const items = [...cartProducts];
+  //       const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+  //       if (itemIndex !== -1) {
+  //         items[itemIndex] = {
+  //           ...items[itemIndex],
+  //           quantity
+  //         };
+  //       }
+
+  //       setCartProducts(items);
+  //     } else {
+  //       setError(
+  //         !withinStock
+  //           ? "Quantity is more than available quantity"
+  //           : "Maximum allowed quantity is 6"
+  //       );
+  //     }
+  //   } else {
+  //     const validQty =
+  //       withinStock && withinLimit
+  //         ? quantity
+  //         : Math.min(product.product_qty, 6);
+
+  //     setQuantity(validQty);
+
+  //     setError(
+  //       !withinStock
+  //         ? "Quantity is more than available quantity"
+  //         : "Maximum allowed quantity is 6"
+  //     );
+  //   }
+  // };
+
+  const setQuantityCartItem = (id, quantity, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : product.product_qty; // fallback to stock
+
+    // Check stock limit
     const withinStock = quantity >= 1 && quantity <= product.product_qty;
 
-    // Second check: max 6 per product
-    const withinLimit = quantity <= 6;
+    // Check max limit
+    const withinLimit = quantity <= MAX_LIMIT;
 
     if (isIncludeCard()) {
       if (withinStock && withinLimit) {
@@ -78,24 +129,27 @@ export default function SingleProduct11({ category, subcategory, product }) {
         setError(
           !withinStock
             ? "Quantity is more than available quantity"
-            : "Maximum allowed quantity is 6"
+            : `Maximum allowed quantity is ${MAX_LIMIT}`
         );
       }
+
     } else {
+      // For items not yet included in cart
       const validQty =
         withinStock && withinLimit
           ? quantity
-          : Math.min(product.product_qty, 6);
+          : Math.min(product.product_qty, MAX_LIMIT);
 
       setQuantity(validQty);
 
       setError(
         !withinStock
           ? "Quantity is more than available quantity"
-          : "Maximum allowed quantity is 6"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
       );
     }
   };
+
 
   const addToCart = () => {
     if (!isIncludeCard()) {
@@ -193,7 +247,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                     }
                     min="1"
                     onChange={(e) =>
-                      setQuantityCartItem(product.product_id, e.target.value)
+                      setQuantityCartItem(product.product_id, e.target.value, product?.maximum_order_quantity)
                     }
                     className="qty-control__number text-center"
                     readOnly
@@ -202,7 +256,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
                     onClick={() =>
                       setQuantityCartItem(
                         product.product_id,
-                        isIncludeCard()?.quantity - 1 || quantity - 1
+                        isIncludeCard()?.quantity - 1 || quantity - 1,
+                        product?.maximum_order_quantity
                       )
                     }
                     className="qty-control__reduce"
@@ -213,7 +268,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
                     onClick={() =>
                       setQuantityCartItem(
                         product.product_id,
-                        isIncludeCard()?.quantity + 1 || quantity + 1
+                        isIncludeCard()?.quantity + 1 || quantity + 1,
+                        product?.maximum_order_quantity
                       )
                     }
                     className="qty-control__increase"

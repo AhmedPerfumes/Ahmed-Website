@@ -360,18 +360,24 @@ export default function Context({ children }) {
       return;
     }
 
-    // --- MAX 6 QUANTITY LOGIC ---
+    // --- DYNAMIC MAX QUANTITY LOGIC ---
+    const MAX_LIMIT =
+      product.maximum_order_quantity && product.maximum_order_quantity > 0
+        ? product.maximum_order_quantity
+        : product.product_qty; // fallback to stock
+
     const existingItemIndex = cartProducts.findIndex(
       (p) => p.product_id === product.product_id
     );
 
+
     if (existingItemIndex !== -1) {
       const currentQty = cartProducts[existingItemIndex].quantity || 1;
 
-      if (currentQty >= 6) {
+      if (currentQty >= MAX_LIMIT) {
         triggerToast({
           name: "Maximum Quantity Reached",
-          message: "You cannot add more than 6 of this product.",
+          message: `You cannot add more than ${MAX_LIMIT} of this product.`,
           image: "/assets/images/danger.png",
           type: "error",
           showButton: false
@@ -380,13 +386,25 @@ export default function Context({ children }) {
       }
 
       // Increase quantity but do not exceed 6
-      cartProducts[existingItemIndex].quantity = Math.min(currentQty + 1, 6);
+      cartProducts[existingItemIndex].quantity = Math.min(currentQty + 1, MAX_LIMIT);
       dispatch({ type: 'UPDATE_CART', payload: cartProducts });
       return;
     }
 
     // New product, set initial quantity = 1
     product.quantity = 1;
+
+    // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
+    if (product.quantity > MAX_LIMIT) {
+      triggerToast({
+        name: "Maximum Quantity Reached",
+        message: `You cannot add more than ${MAX_LIMIT} of this product.`,
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return;
+    }
 
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({

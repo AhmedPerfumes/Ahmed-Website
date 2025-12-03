@@ -69,26 +69,62 @@ export default function Cart() {
   //   }
   // };
 
-  const setQuantity = async (id, quantity, productQty) => {
-    // First check: quantity within stock
+  // const setQuantity = async (id, quantity, productQty) => {
+  //   // First check: quantity within stock
+  //   const withinStock = quantity >= 1 && quantity <= productQty;
+
+  //   // Second check: max 6 per product
+  //   const withinLimit = quantity <= 6;
+
+  //   // console.log("withinStock", withinStock);
+  //   // console.log("withinLimit", withinLimit);
+
+  //   if (withinStock && withinLimit) {
+  //     setError(null);
+
+  //     const items = [...cartProducts];
+  //     const itemIndex = items.findIndex(elm => elm.product_id == id);
+
+  //     if (itemIndex !== -1) {
+  //       items[itemIndex] = {
+  //         ...items[itemIndex],
+  //         quantity
+  //       };
+  //     }
+
+  //     setCartProducts(items);
+  //   } else {
+  //     setError(
+  //       !withinStock
+  //         ? "Quantity is more than available quantity"
+  //         : "Maximum allowed quantity is 6"
+  //     );
+  //   }
+  // };
+
+  const setQuantity = async (id, quantity, productQty, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : productQty; // fallback to stock quantity
+
+    // Check stock limit
     const withinStock = quantity >= 1 && quantity <= productQty;
 
-    // Second check: max 6 per product
-    const withinLimit = quantity <= 6;
-
-    // console.log("withinStock", withinStock);
-    // console.log("withinLimit", withinLimit);
+    // Check max purchase limit
+    const withinLimit = quantity <= MAX_LIMIT;
 
     if (withinStock && withinLimit) {
       setError(null);
 
       const items = [...cartProducts];
-      const itemIndex = items.findIndex(elm => elm.product_id == id);
+      const itemIndex = items.findIndex((elm) => elm.product_id == id);
 
       if (itemIndex !== -1) {
         items[itemIndex] = {
           ...items[itemIndex],
-          quantity
+          quantity,
         };
       }
 
@@ -97,7 +133,7 @@ export default function Cart() {
       setError(
         !withinStock
           ? "Quantity is more than available quantity"
-          : "Maximum allowed quantity is 6"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
       );
     }
   };
@@ -300,19 +336,19 @@ export default function Cart() {
                           value={elm.quantity}
                           min={1}
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty, elm?.maximum_order_quantity)
                           }
                           className="qty-control__number text-center"
                           readOnly
                         />
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__reduce"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__increase"
                         >
                           +

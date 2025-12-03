@@ -87,12 +87,60 @@ const Checkout = ({ product }) => {
     //     }
     // };
 
-    const setQuantityCartItem = (id, quantity) => {
-        // First check: within product stock
+    // const setQuantityCartItem = (id, quantity) => {
+    //     // First check: within product stock
+    //     const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+    //     // Second check: max 6 per product
+    //     const withinLimit = quantity <= 6;
+
+    //     if (isIncludeCard()) {
+    //         if (withinStock && withinLimit) {
+    //         setError(null);
+
+    //         const items = [...cartProducts];
+    //         const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+    //         if (itemIndex !== -1) {
+    //             items[itemIndex] = {
+    //             ...items[itemIndex],
+    //             quantity
+    //             };
+    //         }
+
+    //         setCartProducts(items);
+    //         } else {
+    //         setError(
+    //             !withinStock
+    //             ? "Quantity is more than available quantity"
+    //             : "Maximum allowed quantity is 6"
+    //         );
+    //         }
+    //     } else {
+    //         const validQty = withinStock && withinLimit ? quantity : Math.min(product.product_qty, 6);
+
+    //         setQuantity(validQty);
+
+    //         setError(
+    //         !withinStock
+    //             ? "Quantity is more than available quantity"
+    //             : "Maximum allowed quantity is 6"
+    //         );
+    //     }
+    // };
+
+    const setQuantityCartItem = (id, quantity, maxOrderQty) => {
+        // Determine dynamic max allowed per product
+        const MAX_LIMIT =
+            maxOrderQty && maxOrderQty > 0
+            ? maxOrderQty
+            : product.product_qty; // fallback to stock
+
+        // Check stock limit
         const withinStock = quantity >= 1 && quantity <= product.product_qty;
 
-        // Second check: max 6 per product
-        const withinLimit = quantity <= 6;
+        // Check max limit
+        const withinLimit = quantity <= MAX_LIMIT;
 
         if (isIncludeCard()) {
             if (withinStock && withinLimit) {
@@ -104,7 +152,7 @@ const Checkout = ({ product }) => {
             if (itemIndex !== -1) {
                 items[itemIndex] = {
                 ...items[itemIndex],
-                quantity
+                quantity,
                 };
             }
 
@@ -113,21 +161,26 @@ const Checkout = ({ product }) => {
             setError(
                 !withinStock
                 ? "Quantity is more than available quantity"
-                : "Maximum allowed quantity is 6"
+                : `Maximum allowed quantity is ${MAX_LIMIT}`
             );
             }
         } else {
-            const validQty = withinStock && withinLimit ? quantity : Math.min(product.product_qty, 6);
+            // When item is not yet in cart
+            const validQty =
+            withinStock && withinLimit
+                ? quantity
+                : Math.min(product.product_qty, MAX_LIMIT);
 
             setQuantity(validQty);
 
             setError(
             !withinStock
                 ? "Quantity is more than available quantity"
-                : "Maximum allowed quantity is 6"
+                : `Maximum allowed quantity is ${MAX_LIMIT}`
             );
         }
     };
+
 
     const addToCart = () => {
         if (!isIncludeCard()) {
@@ -412,7 +465,8 @@ const Checkout = ({ product }) => {
                                                     1,
                                                     (isIncludeCard()
                                                         ?.quantity ?? 1) - 1
-                                                )
+                                                ),
+                                                product?.maximum_order_quantity
                                             )
                                         }
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"
@@ -447,7 +501,8 @@ const Checkout = ({ product }) => {
                                                     product.product_qty,
                                                     (isIncludeCard()
                                                         ?.quantity ?? 1) + 1
-                                                )
+                                                ),
+                                                product?.maximum_order_quantity
                                             )
                                         }
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"
