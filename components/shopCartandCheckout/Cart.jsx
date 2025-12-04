@@ -19,6 +19,12 @@ export default function Cart() {
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart } = useContextElement();
+  const [checkboxes, setCheckboxes] = useState({
+    free_shipping: freeShippingFlag,
+    flat_rate: false,
+    local_pickup: false,
+  });
+  const finalTotal = !isMenuLoading && shippingServiceCharges ? (!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)) : "0.00";
 
   // console.log('shippingServiceChargesCA', freeShippingFlag);
 
@@ -26,6 +32,60 @@ export default function Cart() {
     setCouponDataContext(null);
     removeGiftFromCart();
   }, []);
+
+  useEffect(() => {
+    if (isMenuLoading) return;
+
+    const scriptId = "tabby-promo-script";
+    const scriptSrc = "https://checkout.tabby.ai/tabby-promo.js";
+
+    const cleanContainer = () => {
+      const container = document.getElementById("TabbyPromo");
+      if (container) container.innerHTML = "";
+    };
+
+    const initTabby = () => {
+      cleanContainer();
+      if (document.getElementById("TabbyPromo") && window.TabbyPromo && typeof window.TabbyPromo === 'function') {
+        try {
+           new window.TabbyPromo({
+            selector: '#TabbyPromo',
+            currency: 'AED', 
+            price: finalTotal, // Using the dynamic total calculated above
+            lang: locale, 
+            source: 'cart', // Changed to 'cart' since this is the cart page
+            publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
+            merchantCode: 'APM'
+          });
+        } catch (err) {
+          console.error("Tabby Widget Init Error:", err);
+        }
+      }
+    };
+
+    let script = document.getElementById(scriptId);
+    
+    if (!script) {
+      script = document.createElement("script");
+      script.src = scriptSrc;
+      script.id = scriptId;
+      script.async = true;
+      document.body.appendChild(script);
+      script.onload = initTabby;
+    } else {
+      if (typeof window.TabbyPromo === 'function') {
+        initTabby();
+      } else {
+        script.onload = initTabby;
+      }
+    }
+
+    return () => {
+      if (script) script.removeEventListener('load', initTabby);
+    };
+  }, [finalTotal, currency, locale])
+
+
 
   // useEffect(() => {
   //   const tamaraPromoScript = document.createElement("script");
@@ -142,12 +202,6 @@ export default function Cart() {
   const removeItem = async(id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };
-
-  const [checkboxes, setCheckboxes] = useState({
-    free_shipping: freeShippingFlag,
-    flat_rate: false,
-    local_pickup: false,
-  });
 
   // Step 2: Create a handler function
   const handleCheckboxChange = (event) => {
@@ -510,6 +564,7 @@ export default function Cart() {
                 {/* <TamaraWidget amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/> */}
+                <div className="my-3" id="TabbyPromo"></div>
                 <TamaraWidget inlineType="5" inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">

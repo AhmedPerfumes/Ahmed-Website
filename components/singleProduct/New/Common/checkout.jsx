@@ -23,6 +23,16 @@ const Checkout = ({ product }) => {
     let category = product?.category;
     let subcategory = product?.subcategory;
 
+    const isIncludeCard = () => {
+        const item = cartProducts.filter(
+            (elm) => elm.product_id == product.product_id
+        )[0];
+        return item;
+    };
+    const currentItem = isIncludeCard();
+    const currentQuantity = currentItem ? currentItem.quantity : quantity;
+
+
     // useEffect(() => {
     // const tamaraPromoScript = document.createElement("script");
     // tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
@@ -51,12 +61,6 @@ const Checkout = ({ product }) => {
     // };
     // }, []);
 
-    const isIncludeCard = () => {
-        const item = cartProducts.filter(
-            (elm) => elm.product_id == product.product_id
-        )[0];
-        return item;
-    };
     // const setQuantityCartItem = (id, quantity) => {
     //     if (isIncludeCard()) {
     //         if (quantity >= 1 && quantity <= product.product_qty) {
@@ -267,6 +271,68 @@ const Checkout = ({ product }) => {
     //     return parseFloat(elm.price).toFixed(2);
     // };
 
+    const tabbyPrice = (elm) => {
+        const currentUTC = new Date();
+        const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+        const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+        
+        let finalPrice = elm?.price;
+
+        if (elm?.discount) {
+            if ( new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+                finalPrice = (elm.price - (elm.price / 100) * elm.discount.value).toFixed(2);
+            }
+        } else if (elm?.sale_price) {
+            finalPrice = (elm.price - (elm.price / 100) * elm.sale_price).toFixed(2);
+        }
+        
+        return finalPrice;
+    };
+
+    useEffect(() => {
+        // 1. Define render function to handle price updates
+        const renderTabbyWidget = () => {
+            if (window.TabbyPromo) {
+                // Clear existing widget to prevent duplicates on re-render
+                const tabbyNode = document.getElementById("TabbyPromo");
+                if (tabbyNode) tabbyNode.innerHTML = "";
+
+                // Calculate Total Price based on Quantity
+                const unitPrice = parseFloat(tabbyPrice(product));
+                const totalPrice = (unitPrice * currentQuantity).toFixed(2);
+
+                new window.TabbyPromo({
+                    selector: "#TabbyPromo",
+                    currency: "AED",
+                    price: totalPrice, // Sends total price
+                    lang: locale,
+                    source: "product",
+                    publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
+                    merchantCode: "APM",
+                });
+            }
+        };
+
+        // 2. Load Script if not present
+        const scriptId = "tabby-promo-script";
+        if (!document.getElementById(scriptId)) {
+            const tabbyPromoScript = document.createElement("script");
+            tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+            tabbyPromoScript.id = scriptId;
+            tabbyPromoScript.async = true;
+            document.body.appendChild(tabbyPromoScript);
+
+            tabbyPromoScript.onload = () => {
+                renderTabbyWidget();
+            };
+        } else {
+            // If script exists (e.g. quantity update), render immediately
+            renderTabbyWidget();
+        }
+
+    // Add currentQuantity to dependency array
+    }, [currentQuantity, locale, product, cartProducts]);
+
     return (
         <div>
             {/* Price */}
@@ -356,7 +422,7 @@ const Checkout = ({ product }) => {
             </div> */}
             {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
             {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
-            <div className="w-100 mt-3">
+            <div className="w-100 mb-3">
                 <div
                 className="d-flex justify-content-between align-items-center border-bottom pb-1"
                 style={{ fontFamily: "Georgia, serif" }}
@@ -380,11 +446,11 @@ const Checkout = ({ product }) => {
                         key={index}
                         className="btn btn-sm"
                         style={{
-                        backgroundColor: "rgba(250, 249, 247)",
-                        color: "#000",
-                        fontSize: "0.875rem",
-                        padding: "4px 8px",
-                        cursor: "default", // It looks like a button, but isn't clickable
+                            backgroundColor: "rgba(250, 249, 247)",
+                            color: "#000",
+                            fontSize: "0.875rem",
+                            padding: "4px 8px",
+                            cursor: "default", // It looks like a button, but isn't clickable
                         }}
                     >
                         {tag}
@@ -414,6 +480,7 @@ const Checkout = ({ product }) => {
       
                 {/* <tamara-widget type="tamara-summary" lang="en" amount={price(product)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
 
+                <div className="mb-3" id="TabbyPromo"></div>
                 <TamaraWidget inlineType="5" inlineVariant='outlined'/>
                 { error && <div className="text-danger">{error}</div>}
                 {product.product_qty > 0 ? (

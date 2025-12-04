@@ -18,16 +18,19 @@ import Image from "next/image";
 import he from "he";
 import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
 import { data } from "jquery";
+import { useSearchParams } from "next/navigation";
+import { toast } from 'react-toastify';
 // import { bogoProducts } from "@/components/BogoFeature";
 
 import TamaraWidget from "@/components/TamaraWidget";
 
 export default function Checkout() {
+  const t = useTranslations("Tabby")
   const {
     shippingServiceCharges,
     vatTax,
@@ -94,6 +97,7 @@ export default function Checkout() {
     otp: "",
   });
   const [createAccount, setCreateAccount] = useState(false);
+  const [finalPriceState, setFinalPriceState] = useState(null);
 
   const hasCleaned = useRef(false);
 
@@ -272,7 +276,7 @@ export default function Checkout() {
         company: coupon.company,
         whsCode: coupon.whsCode
       }));
-  };
+    };
 
   const fetchCoupons = async () => {
     setCouponLoading(true);
@@ -375,6 +379,77 @@ export default function Checkout() {
       };
     });
   };
+
+  useEffect(() => {
+      const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
+      setFinalPriceState(finalPrice);
+  }, [selectedOption]);
+
+  useEffect(() => {
+    // Load the TabbyCard script
+    const tabbyCardScript = document.createElement("script");
+    tabbyCardScript.src = "https://checkout.tabby.ai/tabby-card.js";
+    tabbyCardScript.async = true;
+    document.body.appendChild(tabbyCardScript);
+
+    // Load the TabbyPromo script
+    // const tabbyPromoScript = document.createElement("script");
+    // tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+    // tabbyPromoScript.async = true;
+    // document.body.appendChild(tabbyPromoScript);
+
+    const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
+
+    tabbyCardScript.onload = () => {
+      new window.TabbyCard({
+        selector: "#tabbyCard", // empty div for TabbyCard.
+        currency: "AED", // required, AED|SAR|KWD only supported.
+        lang: locale, // Optional, language of snippet and popups.
+        price: finalPrice, // required, total cart amount.
+        size: "wide", // required, narrow|wide supported.
+        theme: "black", // required, black|default supported.
+        header: true, // if a Payment method name is present already.
+      });
+    };
+
+    // tabbyPromoScript.onload = () => {
+    //   new window.TabbyPromo({
+    //         selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
+    //         currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
+    //         price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
+    //         lang: locale, // Optional, en|ar only supported
+    //         source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+    //         publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY, // required, Public Key
+    //         merchantCode: 'APM'  // required
+    //     });
+    // };
+
+    return () => {
+      document.body.removeChild(tabbyCardScript);
+      // document.body.removeChild(tabbyPromoScript);
+    };
+  }, [selectedOption]);
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const errorMsg = searchParams.get("error");
+    
+    if (errorMsg) {
+      setError(errorMsg);
+
+      // 2. Show the Toast notification
+      toast.error(errorMsg, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [searchParams]);
 
   const handleEmiratesChange = (event, emirates) => {
     const { id } = event.target;
@@ -493,11 +568,13 @@ export default function Checkout() {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to submit the data. Please try again.");
-      }
-
       const data = await response.json();
+
+      if (!response.ok) {
+        const errorMessage = data.message || data.error || "Failed to submit the data. Please try again.";
+        throw new Error(errorMessage);
+      }
+      
       if (data.message && data.message.split(" ")[0] == "Order") {
         setSuccess(data.message);
         setError(null);
@@ -1757,14 +1834,14 @@ export default function Checkout() {
 
                     {!couponData ? (
                       <input
-                        className=""
+                        className="coupon-action-btn"
                         type="button"
                         value="APPLY COUPON"
                         onClick={applyCoupon}
                       />
                     ) : (
                       <input
-                        className=""
+                        className="coupon-action-btn remove"
                         type="button"
                         value="REMOVE COUPON"
                         onClick={removeCoupon}
@@ -2044,6 +2121,39 @@ export default function Checkout() {
                       color: #777;
                       font-size: 13px;
                     }
+
+                    .coupon-action-btn {
+                      width: 100%;
+                      padding: 12px;
+                      background-color: #222; /* Dark background for contrast */
+                      color: #fff;
+                      border: 1px solid #222;
+                      border-radius: 4px;
+                      font-size: 13px;
+                      font-weight: 600;
+                      letter-spacing: 0.5px;
+                      text-transform: uppercase;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                      margin-top: 8px;
+                    }
+
+                    .coupon-action-btn:hover {
+                      background-color: #000;
+                      border-color: #000;
+                    }
+
+                    /* Specific style for the Remove button */
+                    .coupon-action-btn.remove {
+                      background-color: transparent;
+                      color: #dc3545; /* Red color */
+                      border: 1px solid #dc3545;
+                    }
+
+                    .coupon-action-btn.remove:hover {
+                      background-color: #dc3545;
+                      color: #fff;
+                    }
                   `}</style>
 
                   <div className="checkout__payment-methods">
@@ -2091,31 +2201,117 @@ export default function Checkout() {
                         <TamaraWidget inlineType='4' inlineVariant='text'/>
                       </label>
                     </div>
-                    <div className="policy-text">
-                      Your personal data will be used to process your order,
-                      support your experience throughout this website, and for
-                      other purposes described in our{" "}
-                      <Link href={`/${locale}/privacy`} target="_blank">
-                        privacy policy
-                      </Link>
-                      .
+
+                    <div className="form-check">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="radio"
+                      name="checkout_payment_method"
+                      id="checkout_payment_method_6"
+                      value={'tabby'}
+                      checked={selectedOption === 'tabby'}
+                      onChange={handleRadioChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="checkout_payment_method_6"
+                    >
+                      <Image
+                        src="/assets/images/paymentGateway/Tabby.png"
+                        width="60"
+                        height="25"
+                        alt="Cropped Faux leather Jacket"
+
+                      />
+                      <span style={{marginLeft: "0.5rem"}}>{t("CheckoutTitle")} <sup><strong>ⓘ</strong></sup></span><br/>{t("CheckoutDescription")}
+                      {/* <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button> */}
+                    </label>
+                    {selectedOption == 'tabby' && <><div id="tabbyCard"></div></>}
+                  </div> 
+
+                    <div className="policy-wrapper mt-3">
+                      {/* Privacy Notice Text */}
+                      <p className="small text-muted mb-3" style={{ lineHeight: '1.5' }}>
+                        {locale === 'ar'
+                          ? "سيتم استخدام بياناتك الشخصية لمعالجة طلبك، ودعم تجربتك في هذا الموقع، ولأغراض أخرى موصوفة في "
+                          : "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our "
+                        }
+                        <Link 
+                          href={`/${locale}/privacy`} 
+                          className="text-dark text-decoration-underline fw-medium" 
+                          target="_blank"
+                        >
+                          {locale === 'ar' ? "سياسة الخصوصية." : "privacy policy."}
+                        </Link>
+                      </p>
+
+                      {/* Interactive Checkbox */}
+                      <div className="form-check d-flex align-items-start p-0">
+                        <input
+                          className="form-check-input border-secondary"
+                          type="checkbox"
+                          id="terms-agreement"
+                          required
+                          style={{ 
+                            marginTop: '0.25rem', 
+                            width: '1.1em', 
+                            height: '1.1em', 
+                            cursor: 'pointer',
+                            // Logic: Add margin to the correct side based on direction
+                            marginLeft: locale === 'ar' ? '0.5rem' : '0',
+                            marginRight: locale === 'ar' ? '0' : '0.5rem'
+                          }}
+                        />
+                        <label 
+                          htmlFor="terms-agreement" 
+                          className="form-check-label small" 
+                          style={{ cursor: 'pointer', userSelect: 'none' }}
+                        >
+                          {locale === 'ar' ? "لقد قرأت ووافقت على " : "I have read and agree to the website "}
+                          <Link 
+                            href={`/${locale}/terms`} 
+                            className="text-primary text-decoration-underline" 
+                            target="_blank"
+                          >
+                            {locale === 'ar' ? "شروط وأحكام الموقع" : "terms and conditions"}
+                          </Link>
+                          <span className="text-danger fw-bold mx-1">*</span>
+                        </label>
+                      </div>
                     </div>
-                    <br />
-                    <input type="checkbox" required /> &nbsp;&nbsp;
-                    <span>
-                      I have read and agree to the website{" "}
-                      <Link href={`/${locale}/terms`} target="_blank">
-                        terms and conditions
-                      </Link>{" "}
-                    </span>
-                    *
                   </div>
 
                   {error ? (
-                    <div style={{ color: "red" }}>{error}</div>
-                  ) : (
-                    <div style={{ color: "green" }}>{success}</div>
-                  )}
+                    <div
+                      style={{
+                        backgroundColor: "#ffebe9", // Light red background
+                        color: "#cf1e1e",           // Dark red text
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",        // Slight corner rounding
+                      }}
+                    >
+                      {error}
+                    </div>
+                  ) : success ? (
+                    <div
+                      style={{
+                        backgroundColor: "#e8f5e9", // Light green background
+                        color: "#2e7d32",           // Dark green text
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                      }}
+                    >
+                      {success}
+                    </div>
+                  ) : null}
                   <button
                     className="btn btn-primary w-100 text-uppercase"
                     type="submit"
