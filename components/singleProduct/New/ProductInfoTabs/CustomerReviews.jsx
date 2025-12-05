@@ -146,14 +146,15 @@ const ReviewSummary = ({ averageRating, reviewCount, distribution, onWriteClick,
             <div className="col-md-3 text-center text-md-left mb-4 mb-md-0">
                 {loading ? (
                     <>
-                        <Skeleton variant="text" width={80} height={60} className="mx-auto mx-md-0 bg-secondary" />
-                        <Skeleton variant="text" width={120} height={30} className="mx-auto mx-md-0 bg-secondary" />
+                        <Skeleton variant="text" width={80} height={60} className="mx-auto mx-md-0 bg-white" />
+                        <Skeleton variant="text" width={120} height={30} className="mx-auto mx-md-0 bg-white" />
+                        <Skeleton variant="text" width={140} height={20} className="mx-auto mx-md-0 bg-white" />
                     </>
                 ) : (
                     <>
                         <div className="display-4 font-weight-bold">{reviewCount > 0 ? averageRating.toFixed(1) : '0.0'}</div>
                         <div className="mb-2"><StarRating rating={Math.round(averageRating)} size="1.2rem" /></div>
-                        <div className="text-muted small">{t('basedOn', { count: reviewCount })}</div>
+                        <div className="text-white">{t('basedOn', { count: reviewCount })}</div>
                     </>
                 )}
             </div>
@@ -161,19 +162,19 @@ const ReviewSummary = ({ averageRating, reviewCount, distribution, onWriteClick,
             {/* Middle: Bars */}
             <div className="col-md-6 mb-4 mb-md-0 px-md-5">
                 {loading ? (
-                    [1, 2, 3].map((i) => <Skeleton key={i} height={20} className="bg-secondary mb-2" />)
+                    [1, 2, 3].map((i) => <Skeleton key={i} height={20} className="bg-white mb-2" />)
                 ) : (
                     [5, 4, 3, 2, 1].map((star) => {
                         const count = distribution[star] || 0;
                         const percent = reviewCount > 0 ? (count / reviewCount) * 100 : 0;
                         return (
                             <div key={star} className="d-flex align-items-center mb-2">
-                                <span className="text-muted small mr-3" style={{ width: '10px' }}>{star}</span>
-                                <span className="text-muted small mr-3">★</span>
+                                <span className="small mr-3" style={{ width: '10px' }}>{star}</span>
+                                <span className="small mr-3">★</span>
                                 <div className="flex-grow-1 progress-thin">
                                     <div className="h-100 progress-bar-gold" style={{ width: `${percent}%`, borderRadius: '3px' }}></div>
                                 </div>
-                                <span className="text-muted small ml-3" style={{ width: '20px', textAlign: 'right' }}>{count}</span>
+                                <span className="small ml-3" style={{ width: '20px', textAlign: 'right' }}>{count}</span>
                             </div>
                         );
                     })
@@ -182,13 +183,22 @@ const ReviewSummary = ({ averageRating, reviewCount, distribution, onWriteClick,
 
             {/* Right: Button */}
             <div className="col-md-3 text-center text-md-right">
-                <button
-                    className="btn btn-outline-light px-4 py-3 text-uppercase font-weight-bold"
-                    style={{ letterSpacing: '1px', borderRadius: '0' }}
-                    onClick={onWriteClick}
-                >
-                    {t('writeReviewTitle')}
-                </button>
+                {loading ? (
+                    <>
+                        <Skeleton variant="text" width={180} height={100} className="mx-auto mx-md-0 bg-white" />
+                    </>
+                ) : (
+                    <>
+                        <button
+                            className="btn btn-outline-light px-4 py-3 text-uppercase font-weight-bold"
+                            style={{ letterSpacing: '1px', borderRadius: '0' }}
+                            onClick={onWriteClick}
+                        >
+                            {t('writeReviewTitle')}
+                        </button>
+                    </>
+                )}
+                
             </div>
         </div>
     );
@@ -199,10 +209,33 @@ const ReviewSummary = ({ averageRating, reviewCount, distribution, onWriteClick,
 // ====================================================================
 const ReviewList = ({ reviews, loading, t }) => {
     if (loading) return (
-        <div className="review-list px-responsive-list mt-4" style={{ height: '50vh' }}>
+        <div className="review-list px-responsive-list mt-4" style={{ height: '50vh', overflow: 'hidden' }}>
             {[1, 2, 3].map((i) => (
                 <div key={i} className="row py-4 border-top border-dark-subtle">
-                    <div className="col-12"><Skeleton height={100} className="bg-secondary" /></div>
+                    {/* Left Column: Name & Verified Badge */}
+                    <div className="col-md-3 mb-3 mb-md-0">
+                        {/* Name Skeleton */}
+                        <Skeleton variant="text" width="70%" height={24} className="mb-1 bg-white" />
+                        {/* Verified Badge Skeleton */}
+                        <Skeleton variant="text" width="40%" height={20} className='bg-white'/>
+                    </div>
+
+                    {/* Right Column: Stars, Date, & Comment */}
+                    <div className="col-md-9">
+                        <div className="d-flex justify-content-between align-items-start mb-2">
+                            {/* Stars & Label Skeleton */}
+                            <Skeleton variant="text" width={140} height={24} className='bg-white' />
+                            {/* Date Skeleton */}
+                            <Skeleton variant="text" width={80} height={20} className='bg-white' />
+                        </div>
+                        
+                        {/* Comment Body Skeleton (Simulating 3 lines) */}
+                        <div className="mt-2">
+                            <Skeleton variant="text" width="100%" height={20} className="mb-1 bg-whitev" />
+                            <Skeleton variant="text" width="90%" height={20} className="mb-1 bg-white" />
+                            <Skeleton variant="text" width="60%" height={20} className='bg-white' />
+                        </div>
+                    </div>
                 </div>
             ))}
         </div>
@@ -227,13 +260,13 @@ const ReviewList = ({ reviews, loading, t }) => {
                         <div className="d-flex justify-content-between align-items-start mb-2">
                             <div className="d-flex align-items-center">
                                 <StarRating rating={review.star} size="0.9rem" />
-                                <span className="ml-3 font-weight-bold small text-uppercase text-white-50">
+                                <span className="ml-3 font-weight-bold small text-uppercase text-white">
                                     {review.star === 5 ? 'Excellent' : 'Review'}
                                 </span>
                             </div>
-                            <small className="text-muted">{new Date(review.created_at).toLocaleDateString()}</small>
+                            <small>{new Date(review.created_at).toLocaleDateString()}</small>
                         </div>
-                        <p className="text-light" style={{ lineHeight: '1.7', opacity: 0.9 }}>{review.comment}</p>
+                        <p style={{ lineHeight: '1.7', opacity: 0.9 }}>{review.comment}</p>
                     </div>
                 </div>
             ))}
@@ -379,7 +412,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                                         <li className="mb-1">Reviews must be <strong>relevant</strong> to this product. Focus on the scent, longevity, projection and <strong>your experience.</strong></li>
                                         <li className="mb-1"><strong>Log in</strong> to your account to autofill your details and ensure they match your profile.</li>
                                         <li className="mb-1">Upon admin approval, you will unlock a <strong>special surprise</strong> sent to your email.</li>
-                                        <li><span className="text-gold">Important:</span> The coupon is strictly linked to your <strong>Mobile Number</strong>. Please enter it carefully.</li>
+                                        <li><span className="text-gold">Important:</span> The surprise is strictly linked to your <strong>Mobile Number</strong> and sent to you via <strong>Email</strong>. Please enter it carefully.</li>
                                     </ul>
                                 </div>
 
@@ -423,14 +456,17 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                                             <span>Mobile Number</span>
                                             <span className="text-gold" style={{fontSize: '0.7rem'}}>Required for Coupon</span>
                                         </label>
-                                        <input type="tel" className={`form-control form-control-dark ${errors.customer_phone ? 'is-invalid' : ''}`} placeholder="+971..."
+                                        <input type="tel" className={`form-control form-control-dark ${errors.customer_phone ? 'is-invalid' : ''}`} placeholder="050 123 4567"
                                             value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
                                         {errors.customer_phone && <div className="text-error">{errors.customer_phone[0]}</div>}
                                     </div>
                                 </div>
 
                                 <div className="form-group mb-3">
-                                    <label className="small text-muted text-uppercase">{t('yourEmailLabel')}</label>
+                                    <label className="small text-muted text-uppercase d-flex justify-content-between">
+                                        <span>{t('yourEmailLabel')}</span>
+                                        <span className="text-gold" style={{fontSize: '0.7rem'}}>Required for Coupon</span>
+                                        </label>
                                     <input type="text" className={`form-control form-control-dark ${errors.customer_email ? 'is-invalid' : ''}`}
                                         value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
                                     {errors.customer_email && <div className="text-error">{errors.customer_email[0]}</div>}
