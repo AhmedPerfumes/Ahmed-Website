@@ -1,10 +1,11 @@
 import { useContextElement } from "@/context/Context";
 import { useMenu } from "@/context/MenuContext";
 import { useLocale, useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { renderPrice } from "@/utlis/priceRenderer";
+import TamaraWidget from "@/components/TamaraWidget";
 
 const Checkout = ({ product }) => {
     // const sizes = [product.size];
@@ -28,35 +29,163 @@ const Checkout = ({ product }) => {
         )[0];
         return item;
     };
-    const setQuantityCartItem = (id, quantity) => {
+    const currentItem = isIncludeCard();
+    const currentQuantity = currentItem ? currentItem.quantity : quantity;
+
+
+    // useEffect(() => {
+    // const tamaraPromoScript = document.createElement("script");
+    // tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    // tamaraPromoScript.async = true;
+    // document.body.appendChild(tamaraPromoScript);
+
+    // return () => {
+    //     document.body.removeChild(tamaraPromoScript);
+    // };
+    // }, []);
+
+    // useEffect(() => {
+    // window.tamaraSettings = {
+    //     lang: "en",
+    //     country: "AE",
+    //     publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+    // };
+
+    // const tamaraPromoScript = document.createElement("script");
+    // tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+    // tamaraPromoScript.async = true;
+    // document.body.appendChild(tamaraPromoScript);
+
+    // return () => {
+    //     document.body.removeChild(tamaraPromoScript);
+    // };
+    // }, []);
+
+    // const setQuantityCartItem = (id, quantity) => {
+    //     if (isIncludeCard()) {
+    //         if (quantity >= 1 && quantity <= product.product_qty) {
+    //             setError(null);
+    //             const item = cartProducts.filter(
+    //                 (elm) => elm.product_id == id
+    //             )[0];
+    //             const items = [...cartProducts];
+    //             const itemIndex = items.indexOf(item);
+    //             item.quantity = quantity;
+    //             items[itemIndex] = item;
+    //             setCartProducts(items);
+    //         } else {
+    //             setError("Quantity is more than available quantity");
+    //         }
+    //     } else {
+    //         setQuantity(
+    //             quantity <= product.product_qty && quantity >= 1
+    //                 ? quantity
+    //                 : product.product_qty
+    //         );
+    //         setError(null);
+    //         if (quantity > product.product_qty) {
+    //             setError("Quantity is more than available quantity");
+    //         } else {
+    //             setError(null);
+    //         }
+    //     }
+    // };
+
+    // const setQuantityCartItem = (id, quantity) => {
+    //     // First check: within product stock
+    //     const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+    //     // Second check: max 6 per product
+    //     const withinLimit = quantity <= 6;
+
+    //     if (isIncludeCard()) {
+    //         if (withinStock && withinLimit) {
+    //         setError(null);
+
+    //         const items = [...cartProducts];
+    //         const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+    //         if (itemIndex !== -1) {
+    //             items[itemIndex] = {
+    //             ...items[itemIndex],
+    //             quantity
+    //             };
+    //         }
+
+    //         setCartProducts(items);
+    //         } else {
+    //         setError(
+    //             !withinStock
+    //             ? "Quantity is more than available quantity"
+    //             : "Maximum allowed quantity is 6"
+    //         );
+    //         }
+    //     } else {
+    //         const validQty = withinStock && withinLimit ? quantity : Math.min(product.product_qty, 6);
+
+    //         setQuantity(validQty);
+
+    //         setError(
+    //         !withinStock
+    //             ? "Quantity is more than available quantity"
+    //             : "Maximum allowed quantity is 6"
+    //         );
+    //     }
+    // };
+
+    const setQuantityCartItem = (id, quantity, maxOrderQty) => {
+        // Determine dynamic max allowed per product
+        const MAX_LIMIT =
+            maxOrderQty && maxOrderQty > 0
+            ? maxOrderQty
+            : product.product_qty; // fallback to stock
+
+        // Check stock limit
+        const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+        // Check max limit
+        const withinLimit = quantity <= MAX_LIMIT;
+
         if (isIncludeCard()) {
-            if (quantity >= 1 && quantity <= product.product_qty) {
-                setError(null);
-                const item = cartProducts.filter(
-                    (elm) => elm.product_id == id
-                )[0];
-                const items = [...cartProducts];
-                const itemIndex = items.indexOf(item);
-                item.quantity = quantity;
-                items[itemIndex] = item;
-                setCartProducts(items);
+            if (withinStock && withinLimit) {
+            setError(null);
+
+            const items = [...cartProducts];
+            const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+            if (itemIndex !== -1) {
+                items[itemIndex] = {
+                ...items[itemIndex],
+                quantity,
+                };
+            }
+
+            setCartProducts(items);
             } else {
-                setError("Quantity is more than available quantity");
+            setError(
+                !withinStock
+                ? "Quantity is more than available quantity"
+                : `Maximum allowed quantity is ${MAX_LIMIT}`
+            );
             }
         } else {
-            setQuantity(
-                quantity <= product.product_qty && quantity >= 1
-                    ? quantity
-                    : product.product_qty
+            // When item is not yet in cart
+            const validQty =
+            withinStock && withinLimit
+                ? quantity
+                : Math.min(product.product_qty, MAX_LIMIT);
+
+            setQuantity(validQty);
+
+            setError(
+            !withinStock
+                ? "Quantity is more than available quantity"
+                : `Maximum allowed quantity is ${MAX_LIMIT}`
             );
-            setError(null);
-            if (quantity > product.product_qty) {
-                setError("Quantity is more than available quantity");
-            } else {
-                setError(null);
-            }
         }
     };
+
+
     const addToCart = () => {
         if (!isIncludeCard()) {
             const item = {
@@ -124,64 +253,85 @@ const Checkout = ({ product }) => {
     }
 
     // const price = (elm) => {
-    //     const currentUTC = new Date(); // Current UTC time
-    //     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000); // Add 4 hours for GST
-    //     const current_date_time = currentGST
-    //         .toISOString()
-    //         .slice(0, 19)
-    //         .replace("T", " ");
-    //     if (elm?.discount) {
-    //         if (
-    //             new Date(current_date_time) >=
-    //                 new Date(elm.discount.start_date) &&
-    //             new Date(current_date_time) <= new Date(elm.discount.end_date)
-    //         ) {
-    //             return (
-    //                 <>
-    //                     <span className="money price price-old">
-    //                         {currency.symbol}
-    //                         {elm?.price}
-    //                     </span>{" "}
-    //                     <span className="money price price-sale">
-    //                         {" "}
-    //                         {currency.symbol}
-    //                         {(
-    //                             elm.price -
-    //                             (elm.price / 100) * elm.discount.value
-    //                         ).toFixed(2)}
-    //                     </span>
-    //                 </>
-    //             );
-    //         } else {
-    //             return (
-    //                 <span className="money price">
-    //                     {elm?.price}
-    //                     {currency.symbol}
-    //                 </span>
-    //             );
+    //     const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST offset
+    //     const start = new Date(elm?.discount?.start_date);
+    //     const end = new Date(elm?.discount?.end_date);
+
+    //     if (elm?.discount && now >= start && now <= end) {
+    //         const { discount_type, value } = elm.discount;
+
+    //         if (discount_type === "percent") {
+    //             return ((elm.price - (elm.price * value) / 100).toFixed(2));
+    //         } else if (discount_type === "amount") {
+    //             return parseFloat(elm.discount.final_price).toFixed(2);
     //         }
-    //     } else if (elm?.sale_price) {
-    //         return (
-    //             <>
-    //                 <span className="money price price-sale">
-    //                     {currency.symbol}
-    //                     {elm.sale_price.toFixed(2)}
-    //                 </span>
-    //                 <span className="money price price-old">
-    //                     {currency.symbol}
-    //                     {elm?.price}
-    //                 </span>{" "}
-    //             </>
-    //         );
-    //     } else {
-    //         return (
-    //             <span className="money price">
-    //                 {elm?.price}
-    //                 {currency.symbol}
-    //             </span>
-    //         );
     //     }
+
+    //     // Default fallback
+    //     return parseFloat(elm.price).toFixed(2);
     // };
+
+    const tabbyPrice = (elm) => {
+        const currentUTC = new Date();
+        const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
+        const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+        
+        let finalPrice = elm?.price;
+
+        if (elm?.discount) {
+            if ( new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+                finalPrice = (elm.price - (elm.price / 100) * elm.discount.value).toFixed(2);
+            }
+        } else if (elm?.sale_price) {
+            finalPrice = (elm.price - (elm.price / 100) * elm.sale_price).toFixed(2);
+        }
+        
+        return finalPrice;
+    };
+
+    useEffect(() => {
+        // 1. Define render function to handle price updates
+        const renderTabbyWidget = () => {
+            if (window.TabbyPromo) {
+                // Clear existing widget to prevent duplicates on re-render
+                const tabbyNode = document.getElementById("TabbyPromo");
+                if (tabbyNode) tabbyNode.innerHTML = "";
+
+                // Calculate Total Price based on Quantity
+                const unitPrice = parseFloat(tabbyPrice(product));
+                const totalPrice = (unitPrice * currentQuantity).toFixed(2);
+
+                new window.TabbyPromo({
+                    selector: "#TabbyPromo",
+                    currency: "AED",
+                    price: totalPrice, // Sends total price
+                    lang: locale,
+                    source: "product",
+                    publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
+                    merchantCode: "APM",
+                });
+            }
+        };
+
+        // 2. Load Script if not present
+        const scriptId = "tabby-promo-script";
+        if (!document.getElementById(scriptId)) {
+            const tabbyPromoScript = document.createElement("script");
+            tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+            tabbyPromoScript.id = scriptId;
+            tabbyPromoScript.async = true;
+            document.body.appendChild(tabbyPromoScript);
+
+            tabbyPromoScript.onload = () => {
+                renderTabbyWidget();
+            };
+        } else {
+            // If script exists (e.g. quantity update), render immediately
+            renderTabbyWidget();
+        }
+
+    // Add currentQuantity to dependency array
+    }, [currentQuantity, locale, product, cartProducts]);
 
     return (
         <div>
@@ -270,46 +420,46 @@ const Checkout = ({ product }) => {
                     </div>
                 </div>
             </div> */}
-{/* CHANGED: Condition now checks for a non-empty 'tags' array */}
-{product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
-  <div className="w-100 mt-3">
-    <div
-      className="d-flex justify-content-between align-items-center border-bottom pb-1"
-      style={{ fontFamily: "Georgia, serif" }}
-    >
-      <label
-        htmlFor="size-select"
-        className="text-muted me-2 mb-0 h6"
-      >
-        Size:
-      </label>
+            {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
+            {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
+            <div className="w-100 mb-3">
+                <div
+                className="d-flex justify-content-between align-items-center border-bottom pb-1"
+                style={{ fontFamily: "Georgia, serif" }}
+                >
+                <label
+                    htmlFor="size-select"
+                    className="text-muted me-2 mb-0 h6"
+                >
+                    Size:
+                </label>
 
-      {/* CHANGED: This container will now hold one or more tags */}
-      <div
-        className="d-flex flex-wrap justify-content-end gap-2"
-        style={{ maxWidth: "150px" }}
-      >
-        {/* CHANGED: Mapping over the product.tags array */}
-        {product.tags.map((tag, index) => (
-          <div
-            // ADDED: A unique key is required for each item in a loop
-            key={index}
-            className="btn btn-sm"
-            style={{
-              backgroundColor: "rgba(250, 249, 247)",
-              color: "#000",
-              fontSize: "0.875rem",
-              padding: "4px 8px",
-              cursor: "default", // It looks like a button, but isn't clickable
-            }}
-          >
-            {tag}
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+                {/* CHANGED: This container will now hold one or more tags */}
+                <div
+                    className="d-flex flex-wrap justify-content-end gap-2"
+                    style={{ maxWidth: "150px" }}
+                >
+                    {/* CHANGED: Mapping over the product.tags array */}
+                    {product.tags.map((tag, index) => (
+                    <div
+                        // ADDED: A unique key is required for each item in a loop
+                        key={index}
+                        className="btn btn-sm"
+                        style={{
+                            backgroundColor: "rgba(250, 249, 247)",
+                            color: "#000",
+                            fontSize: "0.875rem",
+                            padding: "4px 8px",
+                            cursor: "default", // It looks like a button, but isn't clickable
+                        }}
+                    >
+                        {tag}
+                    </div>
+                    ))}
+                </div>
+                </div>
+            </div>
+            )}
             {/* Add to Cart Button */}
             {/* <button
                 type="submit"
@@ -327,8 +477,14 @@ const Checkout = ({ product }) => {
             </button> */}
             {/* Cart Actions (drop-in replacement for your "new" block) */}
             <div className="mt-4">
+      
+                {/* <tamara-widget type="tamara-summary" lang="en" amount={price(product)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
+
+                <div className="mb-3" id="TabbyPromo"></div>
+                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
+                { error && <div className="text-danger">{error}</div>}
                 {product.product_qty > 0 ? (
-                    <div className="d-flex w-100 gap-2" style={{ height: 48 }}>
+                    <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>
                         {/* Left Pill (Add to Cart → Already Added) */}
                         <motion.button
                             layout
@@ -376,7 +532,8 @@ const Checkout = ({ product }) => {
                                                     1,
                                                     (isIncludeCard()
                                                         ?.quantity ?? 1) - 1
-                                                )
+                                                ),
+                                                product?.maximum_order_quantity
                                             )
                                         }
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"
@@ -411,7 +568,8 @@ const Checkout = ({ product }) => {
                                                     product.product_qty,
                                                     (isIncludeCard()
                                                         ?.quantity ?? 1) + 1
-                                                )
+                                                ),
+                                                product?.maximum_order_quantity
                                             )
                                         }
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"

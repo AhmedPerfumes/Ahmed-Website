@@ -11,6 +11,7 @@ export function MenuProvider({ children }) {
   const [homeSliders, setHomeSliders] = useState([]);
   const [homeMobileSliders, setHomeMobileSliders] = useState([]);
   const [popUp, setPopUp] = useState([]);
+  const [saleSection, setSaleSection] = useState([]);
   // const [dynamic_sections, setDynamicSections] = useState([]);
   const [topHeader,setTopHeader] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,6 +96,13 @@ export function MenuProvider({ children }) {
             setPopUp(null);
             setError(data);
           }
+          if(data && data.sale_section) {
+            setError(null);
+            setSaleSection(data.sale_section);
+          } else {
+            setSaleSection(null);
+            setError(data);
+          }
           if(data && data.top_header) {
            setError(null);
            setTopHeader(data.top_header); 
@@ -119,7 +127,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders,popUp, topHeader }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders,popUp, topHeader, saleSection }}>
       {children}
     </MenuContext.Provider>
   );

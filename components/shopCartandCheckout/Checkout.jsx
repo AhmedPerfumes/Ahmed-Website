@@ -18,13 +18,19 @@ import Image from "next/image";
 import he from "he";
 import { products1 } from "@/data/products/fashion";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
+import { data } from "jquery";
+import { useSearchParams } from "next/navigation";
+import { toast } from 'react-toastify';
 // import { bogoProducts } from "@/components/BogoFeature";
 
+import TamaraWidget from "@/components/TamaraWidget";
+
 export default function Checkout() {
+  const t = useTranslations("Tabby")
   const {
     shippingServiceCharges,
     vatTax,
@@ -49,12 +55,21 @@ export default function Checkout() {
     setCartProducts,
     removeGiftFromCart,
     promotionsContext,
+    actualTotalPrice,
+    hasPreBookItem
   } = useContextElement();
   const { isLoggedIn } = useUser();
   const [fieldErrors, setFieldErrors] = useState({});
   const [idDDActive, setIdDDActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("cod");
+
+  useEffect(() => {
+    if (hasPreBookItem) {
+      setSelectedOption("paytabs");
+    }
+  }, [hasPreBookItem]);
+
   const [formData, setFormData] = useState({
     shippingAddress: {
       first_name: "",
@@ -82,29 +97,36 @@ export default function Checkout() {
     otp: "",
   });
   const [createAccount, setCreateAccount] = useState(false);
+  const [finalPriceState, setFinalPriceState] = useState(null);
 
   const hasCleaned = useRef(false);
 
+  const hasFetchedRef = useRef(false);
+
   useEffect(() => {
     if (hasCleaned.current) return;
-    
+
     const hasBogo = cartProducts.some((item) =>
       promotionsContext.some((promo) =>
-        promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
+        promo.buy_products.some(
+          (buyItem) => buyItem.product_id === item.product_id
+        )
       )
     );
 
     if (!hasBogo) {
-      const cleanedCart = cartProducts.map(({ is_customer_coupon, ...rest }) => rest);
+      const cleanedCart = cartProducts.map(
+        ({ is_coupon, value, ...rest }) => rest
+      );
       setCartProducts(cleanedCart);
       setCouponDataContext(null);
       hasCleaned.current = true; // prevent future runs
     }
   }, [cartProducts, promotionsContext, setCartProducts, setCouponDataContext]);
 
+  // Pre-fill form for logged-in users
   useEffect(() => {
-    try {
-      let customer_id = -1;
+    if (isLoggedIn) {
       let firstName = "";
       let lastName = "";
       let email = "";
@@ -113,86 +135,182 @@ export default function Checkout() {
       let building = "";
       let emirates = "";
 
-      if (isLoggedIn) {
-        const userStr = localStorage.getItem("user");
-        if (userStr) {
-          const user = JSON.parse(atob(userStr));
-          email = user.email || "";
-          mobile = user.phone || user.mobile || "";
-          customer_id = user.id || -1;
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        const user = JSON.parse(atob(userStr));
+        email = user.email || "";
+        mobile = user.phone || user.mobile || "";
 
-          if (user.name) {
-            const [f, ...lArr] = user.name.split(" ");
-            firstName = f || "";
-            lastName = lArr.join(" ") || "";
-          }
-        } else {
-          // console.warn("No user data found in localStorage");
+        if (user.name) {
+          const [f, ...lArr] = user.name.split(" ");
+          firstName = f || "";
+          lastName = lArr.join(" ") || "";
         }
-
-        const addrStr = localStorage.getItem("address");
-        if (addrStr) {
-          const addr = JSON.parse(atob(addrStr));
-          area = addr.city || "";
-          building = addr.address || "";
-          emirates = addr.state || "";
-        }
-
-        setFormData((prev) => ({
-          ...prev,
-          billingAddress: {
-            ...prev.billingAddress,
-            first_name: firstName,
-            last_name: lastName,
-            email,
-            mobile,
-            area,
-            building,
-            emirates,
-          },
-          shippingAddress: {
-            ...prev.shippingAddress,
-            first_name: firstName,
-            last_name: lastName,
-            email,
-            mobile,
-            area,
-            building,
-            emirates,
-          },
-        }));
       }
 
-      setCouponLoading(true);
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}api/customerCouponDetails`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customer_id }),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then((json) => {
-          // console.log("Coupon API response:", json);
-          setCoupons(json.coupons || []);
-          setCouponDataContext(json.coupons || []);
-        })
-        .catch((err) => {
-          // console.error("Failed to fetch coupons:", err);
-          setCoupons([]);
-          setCouponDataContext([]);
-        })
-        .finally(() => setCouponLoading(false));
-    } catch (err) {
-      // console.error("Error in useEffect:", err);
-      setCoupons([]);
-      setCouponDataContext([]);
-      setCouponLoading(false);
+      const addrStr = localStorage.getItem("address");
+      if (addrStr) {
+        const addr = JSON.parse(atob(addrStr));
+        area = addr.city || "";
+        building = addr.address || "";
+        emirates = addr.state || "";
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        billingAddress: {
+          ...prev.billingAddress,
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          mobile,
+          area,
+          building,
+          emirates,
+        },
+        shippingAddress: {
+          ...prev.shippingAddress,
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          mobile,
+          area,
+          building,
+          emirates,
+        },
+      }));
     }
   }, [isLoggedIn]);
+
+  // ✅ [CHANGED] - Use the new API to fetch active coupons
+  // useEffect(() => {
+  //   // Helper function to map new API response to the structure your app uses
+  //   const transformCouponData = (apiCoupons) => {
+  //     if (!Array.isArray(apiCoupons)) return [];
+  //     return apiCoupons.map((coupon) => ({
+  //       id: coupon.couponCode, // Assuming couponCode is unique
+  //       code: coupon.couponCode,
+  //       title: coupon.promotionName,
+  //       description: `Get ${coupon.value}${coupon.baseOn === "Percent" ? "%" : " AED"} off`,
+  //       value: coupon.value,
+  //       coupon_type: coupon.baseOn.toLowerCase(), // 'percent' or 'amount'
+  //       type: "customer", // Assuming all coupons from this API are customer-level
+  //       end_date: coupon.validTo,
+  //       start_date: coupon.registrationDate,
+  //     }));
+  //   };
+
+  //   const fetchCoupons = async () => {
+  //     const { email, mobile } = formData.billingAddress;
+
+  //     // Only fetch if email and a valid mobile number are available
+  //     if (!email || !/^\d{10}$/.test(mobile)) {
+  //       setCoupons([]);
+  //       return;
+  //     }
+
+  //     setCouponLoading(true);
+  //     try {
+  //       const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons?salesType=EComm&company=UAE&mobileNo=${mobile}&email=${email}`;
+  //       const response = await fetch(apiUrl);
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       console.log(data, "data")
+  //       console.log(response, "response")
+
+  //       const transformedData = transformCouponData(data);
+  //       console.log(transformedData, "transformCouponData")
+  //       setCoupons(transformedData);
+  //       // This context might not be needed anymore, but keeping for compatibility
+  //       setCouponDataContext(transformedData);
+  //       console.log("Setttttt Coupons",coupons);
+        
+  //     } catch (err) {
+  //       console.error("Failed to fetch coupons:", err);
+  //       setCoupons([]);
+  //     } finally {
+  //       setCouponLoading(false);
+  //     }
+  //   };
+
+  //   fetchCoupons();
+  //   // This effect runs when user details change in the form
+  // }, [formData.billingAddress.email, formData.billingAddress.mobile]);
+ // ✅ [FINAL VERSION] - Use the new API to fetch active coupons
+  useEffect(() => {
+  const { mobile, email } = formData.billingAddress;
+
+  // If already fetched once, stop here
+  if (hasFetchedRef.current) return;
+
+  // If mobile is missing or not valid, don't fetch yet
+  if (!/^\d{10}$/.test(mobile)) {
+    return;
+  }
+
+  // Mark as fetched so it won't run again
+  hasFetchedRef.current = true;
+
+  // ---- Your existing code ----
+
+  const transformCouponData = (apiCoupons) => {
+    if (!Array.isArray(apiCoupons)) return [];
+
+    return apiCoupons
+      .filter(coupon => coupon.active === true)
+      .map((coupon) => ({
+        id: coupon.couponCode,
+        code: coupon.couponCode,
+        title: coupon.promotionName,
+        description: `Get ${coupon.value}${coupon.baseOn === "Percent" ? "%" : " AED"} off`,
+        value: coupon.value,
+        coupon_type: coupon.baseOn ? coupon.baseOn.toLowerCase() : 'percent',
+        type: "customer",
+        end_date: coupon.validTo,
+        start_date: coupon.registrationDate,
+        couponRegistrationId: coupon.couponRegistrationId,
+        couponId: coupon.couponId,
+        salesType: coupon.salesType,
+        company: coupon.company,
+        whsCode: coupon.whsCode
+      }));
+    };
+
+  const fetchCoupons = async () => {
+    setCouponLoading(true);
+    try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons`;
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          salesType: "EComm",
+          company: "UAE",
+          mobileNo: mobile,
+          email: email
+        }),
+      });
+
+      if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+      const data = await response.json();
+      const transformedData = transformCouponData(data.data);
+
+      setCoupons(transformedData);
+      setCouponDataContext(transformedData);
+
+    } catch (err) {
+      console.error("Failed to fetch coupons:", err);
+      setCoupons([]);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  fetchCoupons();
+}, [formData.billingAddress.mobile]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -262,6 +380,77 @@ export default function Checkout() {
     });
   };
 
+  useEffect(() => {
+      const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
+      setFinalPriceState(finalPrice);
+  }, [selectedOption]);
+
+  useEffect(() => {
+    // Load the TabbyCard script
+    const tabbyCardScript = document.createElement("script");
+    tabbyCardScript.src = "https://checkout.tabby.ai/tabby-card.js";
+    tabbyCardScript.async = true;
+    document.body.appendChild(tabbyCardScript);
+
+    // Load the TabbyPromo script
+    // const tabbyPromoScript = document.createElement("script");
+    // tabbyPromoScript.src = "https://checkout.tabby.ai/tabby-promo.js";
+    // tabbyPromoScript.async = true;
+    // document.body.appendChild(tabbyPromoScript);
+
+    const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
+
+    tabbyCardScript.onload = () => {
+      new window.TabbyCard({
+        selector: "#tabbyCard", // empty div for TabbyCard.
+        currency: "AED", // required, AED|SAR|KWD only supported.
+        lang: locale, // Optional, language of snippet and popups.
+        price: finalPrice, // required, total cart amount.
+        size: "wide", // required, narrow|wide supported.
+        theme: "black", // required, black|default supported.
+        header: true, // if a Payment method name is present already.
+      });
+    };
+
+    // tabbyPromoScript.onload = () => {
+    //   new window.TabbyPromo({
+    //         selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
+    //         currency: 'AED', // required, AED|SAR|KWD only supported, with no spaces or lowercase.
+    //         price: !freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2), // required, price of the product. 2 decimals max for AED|SAR and 3 decimals max for KWD.
+    //         lang: locale, // Optional, en|ar only supported
+    //         source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+    //         publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY, // required, Public Key
+    //         merchantCode: 'APM'  // required
+    //     });
+    // };
+
+    return () => {
+      document.body.removeChild(tabbyCardScript);
+      // document.body.removeChild(tabbyPromoScript);
+    };
+  }, [selectedOption]);
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const errorMsg = searchParams.get("error");
+    
+    if (errorMsg) {
+      setError(errorMsg);
+
+      // 2. Show the Toast notification
+      toast.error(errorMsg, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [searchParams]);
+
   const handleEmiratesChange = (event, emirates) => {
     const { id } = event.target;
     if (id.startsWith("shipping") || id.startsWith("billing")) {
@@ -314,21 +503,23 @@ export default function Checkout() {
       ? 0.0
       : parseFloat(shippingServiceCharges[0].price);
     const shippingPriceVat = (shippingPrice / 100) * vatTax.percentage;
-    const finalPrice = !freeShippingFlag
-      ? parseFloat(shippingServiceCharges[0].price) +
-        totalPrice +
-        parseFloat(shippingServiceCharges[1].price) +
-        (selectedOption === "cod"
-          ? parseFloat(shippingServiceCharges[2].price)
-          : parseFloat(0.0))
-      : (
-          0 +
+    const finalPrice = parseFloat(
+      (!freeShippingFlag
+        ? parseFloat(shippingServiceCharges[0].price) +
           totalPrice +
           parseFloat(shippingServiceCharges[1].price) +
           (selectedOption === "cod"
             ? parseFloat(shippingServiceCharges[2].price)
-            : parseFloat(0.0))
-        ).toFixed(2);
+            : 0.0)
+        : 0 +
+          totalPrice +
+          parseFloat(shippingServiceCharges[1].price) +
+          (selectedOption === "cod"
+            ? parseFloat(shippingServiceCharges[2].price)
+            : 0.0)
+      ).toFixed(2)
+    );
+
     const servicePrice = shippingServiceCharges[1].price;
     const servicePriceVat = (servicePrice / 100) * vatTax.percentage;
 
@@ -341,6 +532,8 @@ export default function Checkout() {
       const user = atob(localStorage.getItem("user"));
       userJson = JSON.parse(user);
     }
+
+    // console.log("coupponData", couponData);return;
 
     const additionalFields = {
       ...formData,
@@ -358,7 +551,10 @@ export default function Checkout() {
       couponCode,
       codPrice,
       codPriceVat,
+      couponData,
     };
+
+    // console.log("additionalFields", additionalFields);return;
 
     try {
       const response = await fetch(
@@ -372,11 +568,13 @@ export default function Checkout() {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to submit the data. Please try again.");
-      }
-
       const data = await response.json();
+
+      if (!response.ok) {
+        const errorMessage = data.message || data.error || "Failed to submit the data. Please try again.";
+        throw new Error(errorMessage);
+      }
+      
       if (data.message && data.message.split(" ")[0] == "Order") {
         setSuccess(data.message);
         setError(null);
@@ -403,7 +601,10 @@ export default function Checkout() {
           shippingAdd: false,
         });
         setTimeout(() => router.push(`/${locale}/shop-order-complete`), 1000);
-      } else if (data.message && data.message.split(" ")[0] == "Redirecting") {
+      } else if (
+        data.message &&
+        data.message.split(" ")[0] == "Redirecting"
+      ) {
         setSuccess(data.message);
         setError(null);
         router.push(data.redirect_url);
@@ -411,14 +612,14 @@ export default function Checkout() {
         setError(data.qtyMessage);
       } else if (data.discountMessage) {
         setError(data.discountMessage);
-        // setTimeout(() => {
-        //   localStorage.setItem("cartList", JSON.stringify([]));
-        //   setCartProducts([]);
-        // }, 2000);
       } else if (data.couponMessage) {
         setError(data.couponMessage);
       } else if (data.duplicateOrderMessage) {
         setError(data.duplicateOrderMessage);
+      } else if (data.priceMessage) {
+        setError(data.priceMessage);
+      } else if (data.collectionMessage) {
+        setError(data.collectionMessage);
       } else {
         if (data.products) setError(data.products);
         if (data["billingAddress.first_name"])
@@ -436,11 +637,12 @@ export default function Checkout() {
       }
     } catch (error) {
       setError(error.message);
-      // console.error(error);
     } finally {
       setIsLoading(false);
     }
   }
+ 
+  
 
   async function sendOTP(e) {
     e.preventDefault();
@@ -492,7 +694,6 @@ export default function Checkout() {
       }
     } catch (error) {
       setOTPSuccess(error.message);
-      // console.error(error);
     } finally {
       setIsSendOTPLoading(false);
     }
@@ -545,42 +746,6 @@ export default function Checkout() {
         setOTPError(data.message);
       } else if (data.message && data.message.split(" ")[0] === "OTP") {
         setOTPSuccess(data.message);
-
-        // let product_coupon = false;
-        // let customer_coupon = false;
-        // let validCoupon = null;
-
-        // cartProducts.forEach((item) => {
-        //   if (
-        //     item.coupon?.[data.coupon?.code?.toLowerCase()]?.code === data.coupon?.code?.toLowerCase() &&
-        //     !item.sale_price &&
-        //     !item.discount
-        //   ) {
-        //     product_coupon = true;
-        //     validCoupon = data.coupon;
-        //   }
-        // });
-
-        // if (data.coupon?.type === "customer" && isLoggedIn) {
-        //   const hasNonDiscountedProducts = cartProducts.some(
-        //     (item) => !item.sale_price && !item.discount && !item.is_gift
-        //   );
-        //   if (hasNonDiscountedProducts) {
-        //     customer_coupon = true;
-        //     validCoupon = data.coupon;
-        //   }
-        // }
-
-        // if (product_coupon || customer_coupon) {
-        // if (product_coupon) {
-        //   setCouponCode(data.coupon.code);
-        //   setCouponData(validCoupon);
-        //   setCouponDataContext(validCoupon);
-        //   setCouponSuccess(
-        //     `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.value}%`
-        //   );
-        // }
-
         setIsOTPVerified(true);
         setIsDisabled(false);
         setOTPError(null);
@@ -591,7 +756,6 @@ export default function Checkout() {
       }
     } catch (error) {
       setOTPError(error.message);
-      // console.error(error);
     } finally {
       setIsSendOTPLoading(false);
     }
@@ -603,14 +767,13 @@ export default function Checkout() {
     setCouponData(null);
     setCouponDataContext(null);
 
-    // ✅ Remove is_customer_coupon flag from each product
-      const cleanedCart = cartProducts.map((item) => {
-        const { is_customer_coupon, ...rest } = item;
-        return rest;
-      });
+    const cleanedCart = cartProducts.map((item) => {
+      const { is_coupon, value, ...rest } = item;
+      return rest;
+    });
 
-      setCartProducts(cleanedCart);
-    };
+    setCartProducts(cleanedCart);
+  };
 
   const removeCoupon = (e) => {
     setCouponCode("");
@@ -618,165 +781,137 @@ export default function Checkout() {
     setCouponData(null);
     setCouponDataContext(null);
 
-    // ✅ Remove is_customer_coupon flag from each product
     const cleanedCart = cartProducts.map((item) => {
-      const { is_customer_coupon, ...rest } = item;
+      const { is_coupon, value, ...rest } = item;
       return rest;
     });
 
     setCartProducts(cleanedCart);
   };
 
-
+  // ✅ [REWRITTEN] - Apply coupon using client-side validation
   const applyCoupon = async (e) => {
     e.preventDefault();
 
+    const user = isLoggedIn ? JSON.parse(atob(localStorage.getItem("user"))) : null;
+
     if (!couponCode.trim()) {
       setCouponError("Coupon Code is Required");
-      setCouponSuccess(null);
-      setCouponDataContext(null);
+      return;
+    }
+
+    if (!isOTPVerified && !isLoggedIn) {
+      setCouponError("Please verify your mobile number first.");
       return;
     }
 
     const code = couponCode.toLowerCase();
-    let product_coupon = false;
 
-    // Check product-level coupon
-    cartProducts.forEach((item) => {
+    const eligibleItems = cartProducts.filter((item) => {
       const isBogoProduct = promotionsContext.some((promo) =>
-        promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
+        promo.buy_products.some(
+          (buyItem) => buyItem.product_id === item.product_id
+        )
       );
-      const hasMatchingCoupon = item.coupon?.[code]?.code === code;
-      // const isEligible = !item.sale_price && !item.discount && !isBogoProduct;
-      const isEligible = !item.discount && !isBogoProduct;
-
-      if (hasMatchingCoupon && isEligible) {
-        product_coupon = true;
-      }
+      return !item.discount && !isBogoProduct && !item.is_gift && !item.collection_name;
     });
 
-    // Check customer-level coupon
-    let customer_coupon = false;
-    let customerCouponData = null;
-
-    if (isLoggedIn) {
-      const currentUTC = new Date();
-      const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
-      const currentDateTime = currentGST.toISOString().slice(0, 19).replace("T", " ");
-
-      customerCouponData = coupons.find(
-        (coupon) =>
-          coupon.code.toLowerCase() === code &&
-          coupon.type === "customer" &&
-          (!coupon.start_date ||
-            !coupon.end_date ||
-            (new Date(currentDateTime) >= new Date(coupon.start_date) &&
-              new Date(currentDateTime) <= new Date(coupon.end_date)))
-      );
-
-      if (customerCouponData) {
-        // Only apply to products not on sale, not discounted, not in BOGO
-        const eligibleItems = cartProducts.filter((item) => {
-          const isBogoProduct = promotionsContext.some((promo) =>
-            promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
-          );
-          // return !item.sale_price && !item.discount && !isBogoProduct;
-          return !item.discount && !isBogoProduct;
-        });
-
-        if (eligibleItems.length > 0) {
-          customer_coupon = true;
-
-          const updatedCartProducts = cartProducts.map((item) => {
-            const isBogoProduct = promotionsContext.some((promo) =>
-              promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
-            );
-
-            // const isEligible = !item.sale_price && !item.discount && !isBogoProduct && !item.is_gift;
-            const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
-
-            return {
-              ...item,
-              ...(isEligible ? { is_customer_coupon: true } : {}),
-            };
-          });
-
-          setCartProducts(updatedCartProducts);
-        } else {
-          customerCouponData = null;
-        }
-      }
-    }
-
-    // No valid coupons found
-    if (!product_coupon && !customer_coupon) {
-      setCouponError("Invalid Coupon Code for these products or customer");
-      setCouponSuccess(null);
-      setCouponDataContext(null);
+    if (eligibleItems.length === 0) {
+      setCouponError("This coupon is not applicable to the items in your cart.");
       setCouponCode("");
       return;
     }
 
-    // If guest, require mobile verification
-    if (!isOTPVerified && !isLoggedIn) {
-      setCouponError("Verify Mobile Number First");
-      setCouponSuccess(null);
+    // Find the coupon from the state (fetched from the new API)
+    const validCoupon = coupons.find((c) => c.code.toLowerCase() === code);
+
+    let payload = {
+      company: "UAE",
+      salesType: "EComm",
+      couponRegistrationId: validCoupon ? validCoupon.couponRegistrationId : 0,
+      couponCode: validCoupon ? "" : couponCode.trim(),
+      mobileNo: user?.phone || formData.billingAddress.mobile,
+      email: user?.email || formData.billingAddress.email,
+    };
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/ActiveCoupons`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (!res.ok) {
+      setCouponError("Invalid or expired coupon code.");
+      setCouponCode("");
       return;
     }
 
-    try {
-      const mobile = !isLoggedIn
-        ? formData.billingAddress.mobile
-        : formData.shippingAddress.mobile;
+    const data = await res.json();
+    let apiCoupon = data.data && data.data[0];
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/validateCoupon`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          couponCode,
-          mobile_number: mobile,
-        }),
-      });
-
-      const data = await res.json();
-
-      // Check for valid response
-      if (data.message && data.message.split(" ")[0] === "Details") {
-        if (product_coupon || (customer_coupon && customerCouponData)) {
-          setCouponError(null);
-          setCouponData(data.coupon);
-          setCouponDataContext(data.coupon);
-          setCouponSuccess(
-            `Applied Coupon: ${data.coupon.code} - Discount: ${data.coupon.coupon_type === 'percent' ? `${data.coupon.value}%` : `AED${data.coupon.value}`}`
-          );
-        } else {
-          setCouponError("Coupon not applicable to cart products");
-          setCouponSuccess(null);
-          setCouponDataContext(null);
-          setCouponCode("");
-        }
-      } else {
-        setCouponSuccess(null);
-        setCouponData(null);
-        setCouponDataContext(null);
-        if (data["couponCode"]) {
-          setCouponError(data["couponCode"]);
-        } else if (data["mobile_number"]) {
-          setCouponError(data["mobile_number"]);
-        } else {
-          setCouponError(data.message);
-          setCouponCode("");
-        }
-      }
-    } catch (err) {
-      // console.error("Coupon validation error:", err);
-      setCouponSuccess(null);
-      setCouponData(null);
-      setCouponDataContext(null);
-      setCouponError("An error occurred. Please try again.");
+    // Normalize API coupon if present
+    if (apiCoupon && !validCoupon) {
+      apiCoupon = {
+        id: apiCoupon.couponCode,
+        code: apiCoupon.couponCode,
+        title: apiCoupon.promotionName,
+        description: apiCoupon.promotionName,
+        value: apiCoupon.value,
+        coupon_type: apiCoupon.baseOn === "P" ? "percent" : "amount",
+        type: "customer",
+        end_date: apiCoupon.validTo,
+        start_date: apiCoupon.registrationDate,
+        couponRegistrationId: apiCoupon.couponRegistrationId,
+        salesType: apiCoupon.salesType,
+        company: apiCoupon.company,
+        whsCode: apiCoupon.whsCode,
+      };
     }
-  };
 
+    // If validCoupon exists, use it. Otherwise, use normalized apiCoupon from response.
+    const couponToApply = validCoupon || apiCoupon;
+
+    if (!couponToApply) {
+      setCouponError("Invalid or expired coupon code.");
+      setCouponCode("");
+      return;
+    }
+
+    // Apply coupon to eligible items
+    const updatedCartProducts = cartProducts.map((item) => {
+      const isBogoProduct = promotionsContext.some((promo) =>
+        promo.buy_products.some(
+          (buyItem) => buyItem.product_id === item.product_id
+        )
+      );
+      const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
+      return {
+        ...item,
+        ...(isEligible
+          ? {
+              is_coupon: true,
+              value: couponToApply.value,
+              coupon_type: couponToApply.coupon_type,
+            }
+          : {}),
+      };
+    });
+
+    setCartProducts(updatedCartProducts); 
+    setCouponError(null);
+    setCouponData(couponToApply);
+    console.log("Applied coupon:", couponToApply);
+    console.log("Cart products after coupon:", updatedCartProducts);
+    setCouponDataContext(couponToApply);
+    setCouponSuccess(
+      `Applied Coupon: ${couponToApply.code} - ${couponToApply.title}`
+    );
+  };
 
   if (isMenuLoading) {
     return (
@@ -808,11 +943,11 @@ export default function Checkout() {
       new Date(current_date_time) >= new Date(elm.discount.start_date) &&
       new Date(current_date_time) <= new Date(elm.discount.end_date)
     ) {
-        if(elm.discount.discount_type == "percent") {
-          itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
-        } else if(elm.discount.discount_type == "amount") {
-          itemPrice = elm.discount.final_price;
-        }
+      if (elm.discount.discount_type == "percent") {
+        itemPrice = elm.price - (elm.price / 100) * elm.discount.value;
+      } else if (elm.discount.discount_type == "amount") {
+        itemPrice = elm.discount.final_price;
+      }
       return (
         <td>
           <span className="money price price-sale">
@@ -827,37 +962,24 @@ export default function Checkout() {
       );
     }
 
-    if (
-      elm?.coupon &&
-      Object.keys(elm.coupon).length !== 0 &&
-      couponData &&
-      couponCode &&
-      elm.coupon[couponCode.toLowerCase()]?.code === couponData.code.toLowerCase() &&
-      new Date(current_date_time) >= new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
-      new Date(current_date_time) <= new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) &&
-      !promotionsContext.some((promo) =>
-        promo.buy_products.some((item) => item.product_id === elm.product_id)
-      ) &&
-      // !elm.sale_price &&
-      !elm.discount
-    ) {
-      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
-      return (
-        <td>
-          <span className="money price price-sale">
-            {currency.symbol}
-            {(itemPrice * elm.quantity).toFixed(2)}
-          </span>
-          <span className="money price price-old">
-            {currency.symbol}
-            {(elm.price * elm.quantity).toFixed(2)}
-          </span>
-        </td>
-      );
-    }
-
-    // if (elm?.sale_price) {
-    //   itemPrice = elm.sale_price;
+    // if (
+    //   elm?.coupon &&
+    //   Object.keys(elm.coupon).length !== 0 &&
+    //   couponData &&
+    //   couponCode &&
+    //   elm.coupon[couponCode.toLowerCase()]?.code ===
+    //     couponData.code.toLowerCase() &&
+    //   new Date(current_date_time) >=
+    //     new Date(elm.coupon[couponCode.toLowerCase()]?.start_date) &&
+    //   new Date(current_date_time) <=
+    //     new Date(elm.coupon[couponCode.toLowerCase()]?.end_date) &&
+    //   !promotionsContext.some((promo) =>
+    //     promo.buy_products.some((item) => item.product_id === elm.product_id)
+    //   ) &&
+    //   !elm.discount
+    // ) {
+    //   itemPrice =
+    //     elm.price - (elm.price / 100) * elm.coupon[couponCode.toLowerCase()].value;
     //   return (
     //     <td>
     //       <span className="money price price-sale">
@@ -873,24 +995,18 @@ export default function Checkout() {
     // }
 
     if (
-      isLoggedIn &&
       couponData &&
-      couponCode &&
+      
       couponData.type === "customer" &&
-      (!couponData.start_date ||
-        !couponData.end_date ||
-        (new Date(current_date_time) >= new Date(couponData.start_date) &&
-          new Date(current_date_time) <= new Date(couponData.end_date))) &&
-      // !elm.sale_price &&
-      !elm.discount &&
-      !promotionsContext.some((promo) =>
-        promo.buy_products.some((item) => item.product_id === elm.product_id)
-      )
-    ) {
-      if(couponData.coupon_type == "percent") {
+      elm.is_coupon // Check the flag we set
+    )
+     {
+      console.log("couponData:", couponData);
+      
+      
+      if (couponData.coupon_type == "percent") {
         itemPrice = elm.price - (elm.price / 100) * couponData.value;
-      } else if(couponData.coupon_type == "amount") {
-        // console.log('amount...', elm, couponData);
+      } else if (couponData.coupon_type == "amount") {
         itemPrice = elm.price - couponData.value;
       }
       return (
@@ -953,9 +1069,11 @@ export default function Checkout() {
     <>
       {cartProducts.length ? (
         <>
-          <FreeGiftFeature couponData={couponData}/>
+          <FreeGiftFeature couponData={couponData} />
           <BogoFeature />
           <form onSubmit={onOrder}>
+            {/* ... your entire JSX form remains unchanged here ... */}
+            {/* I am omitting the large JSX part for brevity, but you should keep your existing return() statement's content from <div className="checkout-form"> onwards */}
             <div className="checkout-form">
               <div className="billing-info__wrapper text-uppercase">
                 <h4>Billing Details</h4>
@@ -1072,7 +1190,10 @@ export default function Checkout() {
                           idDDActive ? "js-content_visible" : ""
                         }`}
                       >
-                        <label htmlFor="search-dropdown" className="form-label">
+                        <label
+                          htmlFor="search-dropdown"
+                          className="form-label"
+                        >
                           Emirates*
                         </label>
                         <div className="js-hover__open">
@@ -1208,7 +1329,9 @@ export default function Checkout() {
                                 disabled={isSendOTPLoading}
                                 onClick={verifyOTP}
                               >
-                                {isSendOTPLoading ? "Loading..." : "Verify OTP"}
+                                {isSendOTPLoading
+                                  ? "Loading..."
+                                  : "Verify OTP"}
                               </button>
                             </>
                           )}
@@ -1259,7 +1382,10 @@ export default function Checkout() {
                       id="shippingAddressAccordion"
                     >
                       <div className="accordion-item">
-                        <h4 className="accordion-header" id="headingShipping">
+                        <h4
+                          className="accordion-header"
+                          id="headingShipping"
+                        >
                           Shipping Details
                         </h4>
                         <div
@@ -1278,7 +1404,9 @@ export default function Checkout() {
                                     id="shipping_first_name"
                                     placeholder="First Name"
                                     name="shippingAddress.first_name"
-                                    value={formData.shippingAddress.first_name}
+                                    value={
+                                      formData.shippingAddress.first_name
+                                    }
                                     onChange={handleChange}
                                     required
                                   />
@@ -1329,7 +1457,9 @@ export default function Checkout() {
                                     id="shipping_building"
                                     placeholder="Building / Villa / Apartment"
                                     name="shippingAddress.building"
-                                    value={formData.shippingAddress.building}
+                                    value={
+                                      formData.shippingAddress.building
+                                    }
                                     onChange={handleChange}
                                     required
                                   />
@@ -1350,11 +1480,15 @@ export default function Checkout() {
                                     id="shipping_emirates"
                                     className="form-control"
                                     name="shippingAddress.emirates"
-                                    value={formData.shippingAddress.emirates}
+                                    value={
+                                      formData.shippingAddress.emirates
+                                    }
                                     onChange={handleChange}
                                     required
                                   >
-                                    <option value="">Select Emirate...</option>
+                                    <option value="">
+                                      Select Emirate...
+                                    </option>
                                     {countries.map((em, i) => (
                                       <option key={i} value={em}>
                                         {em}
@@ -1540,9 +1674,13 @@ export default function Checkout() {
                           <td>
                             {!freeShippingFlag
                               ? (
-                                  parseFloat(shippingServiceCharges[0].price) +
+                                  parseFloat(
+                                    shippingServiceCharges[0].price
+                                  ) +
                                   totalPrice +
-                                  parseFloat(shippingServiceCharges[1].price) +
+                                  parseFloat(
+                                    shippingServiceCharges[1].price
+                                  ) +
                                   (selectedOption === "cod"
                                     ? parseFloat(
                                         shippingServiceCharges[2].price
@@ -1552,7 +1690,9 @@ export default function Checkout() {
                               : (
                                   0 +
                                   totalPrice +
-                                  parseFloat(shippingServiceCharges[1].price) +
+                                  parseFloat(
+                                    shippingServiceCharges[1].price
+                                  ) +
                                   (selectedOption === "cod"
                                     ? parseFloat(
                                         shippingServiceCharges[2].price
@@ -1562,19 +1702,30 @@ export default function Checkout() {
                             {currency.symbol} (includes{" "}
                             {!freeShippingFlag
                               ? (
-                                  parseFloat(shippingServiceCharges[0].price) -
-                                  parseFloat(shippingServiceCharges[0].price) /
-                                    (1 + parseFloat(vatTax.percentage / 100)) +
+                                  parseFloat(
+                                    shippingServiceCharges[0].price
+                                  ) -
+                                  parseFloat(
+                                    shippingServiceCharges[0].price
+                                  ) /
+                                    (1 +
+                                      parseFloat(vatTax.percentage / 100)) +
                                   (parseFloat(totalPrice) -
                                     parseFloat(totalPrice) /
                                       (1 +
-                                        parseFloat(vatTax.percentage / 100))) +
-                                  (parseFloat(shippingServiceCharges[1].price) -
+                                        parseFloat(
+                                          vatTax.percentage / 100
+                                        ))) +
+                                  (parseFloat(
+                                    shippingServiceCharges[1].price
+                                  ) -
                                     parseFloat(
                                       shippingServiceCharges[1].price
                                     ) /
                                       (1 +
-                                        parseFloat(vatTax.percentage / 100))) +
+                                        parseFloat(
+                                          vatTax.percentage / 100
+                                        ))) +
                                   (selectedOption === "cod"
                                     ? parseFloat(
                                         shippingServiceCharges[2].price
@@ -1583,7 +1734,9 @@ export default function Checkout() {
                                         shippingServiceCharges[2].price
                                       ) /
                                         (1 +
-                                          parseFloat(vatTax.percentage / 100))
+                                          parseFloat(
+                                            vatTax.percentage / 100
+                                          ))
                                     : parseFloat(0.0))
                                 ).toFixed(2)
                               : (
@@ -1591,13 +1744,19 @@ export default function Checkout() {
                                   (parseFloat(totalPrice) -
                                     parseFloat(totalPrice) /
                                       (1 +
-                                        parseFloat(vatTax.percentage / 100))) +
-                                  (parseFloat(shippingServiceCharges[1].price) -
+                                        parseFloat(
+                                          vatTax.percentage / 100
+                                        ))) +
+                                  (parseFloat(
+                                    shippingServiceCharges[1].price
+                                  ) -
                                     parseFloat(
                                       shippingServiceCharges[1].price
                                     ) /
                                       (1 +
-                                        parseFloat(vatTax.percentage / 100))) +
+                                        parseFloat(
+                                          vatTax.percentage / 100
+                                        ))) +
                                   (selectedOption === "cod"
                                     ? parseFloat(
                                         shippingServiceCharges[2].price
@@ -1606,7 +1765,9 @@ export default function Checkout() {
                                         shippingServiceCharges[2].price
                                       ) /
                                         (1 +
-                                          parseFloat(vatTax.percentage / 100))
+                                          parseFloat(
+                                            vatTax.percentage / 100
+                                          ))
                                     : parseFloat(0.0))
                                 ).toFixed(2)}
                             {currency.symbol} VAT)
@@ -1614,6 +1775,27 @@ export default function Checkout() {
                         </tr>
                       </tbody>
                     </table>
+                    <TamaraWidget amount={!freeShippingFlag
+                    ? (
+                        parseFloat(shippingServiceCharges[0].price) +
+                        totalPrice +
+                        parseFloat(shippingServiceCharges[1].price) +
+                        (selectedOption === "cod"
+                          ? parseFloat(
+                              shippingServiceCharges[2].price
+                            )
+                          : parseFloat(0.0))
+                      ).toFixed(2)
+                    : (
+                        0 +
+                        totalPrice +
+                        parseFloat(shippingServiceCharges[1].price) +
+                        (selectedOption === "cod"
+                          ? parseFloat(
+                              shippingServiceCharges[2].price
+                            )
+                          : parseFloat(0.0))
+                      ).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
                   </div>
 
                   <div>
@@ -1652,14 +1834,14 @@ export default function Checkout() {
 
                     {!couponData ? (
                       <input
-                        className=""
+                        className="coupon-action-btn"
                         type="button"
                         value="APPLY COUPON"
                         onClick={applyCoupon}
                       />
                     ) : (
                       <input
-                        className=""
+                        className="coupon-action-btn remove"
                         type="button"
                         value="REMOVE COUPON"
                         onClick={removeCoupon}
@@ -1713,7 +1895,10 @@ export default function Checkout() {
                                       </div>
                                       <div className="coupon-desc">
                                         <h5>
-                                          {c.description || (c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`)}
+                                          {c.description ||
+                                            (c.coupon_type === "percent"
+                                              ? `${c.value}% OFF`
+                                              : `AED${c.value} OFF`)}
                                         </h5>
                                       </div>
                                       <div className="coupon-validity">
@@ -1732,7 +1917,8 @@ export default function Checkout() {
                                     <div className="coupon-right">
                                       <div
                                         className={`coupon-code-box ${
-                                          copiedId === (c.id || `coupon-${idx}`)
+                                          copiedId ===
+                                          (c.id || `coupon-${idx}`)
                                             ? "copied"
                                             : ""
                                         }`}
@@ -1803,9 +1989,9 @@ export default function Checkout() {
                       border-radius: 12px;
                       width: 500px;
                       max-width: 90%;
-                      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
                       overflow: hidden;
-                      font-family: 'Inter', sans-serif;
+                      font-family: "Inter", sans-serif;
                     }
 
                     .coupon-header {
@@ -1831,7 +2017,7 @@ export default function Checkout() {
                       font-weight: 600;
                       color: #a67b30;
                       background: #fffaf2ff;
-                    }  
+                    }
                     .close-btn {
                       background: none;
                       border: none;
@@ -1856,7 +2042,7 @@ export default function Checkout() {
                       background: #fff;
                       padding: 14px 16px;
                       position: relative;
-                      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
                       overflow: hidden;
                     }
 
@@ -1935,10 +2121,43 @@ export default function Checkout() {
                       color: #777;
                       font-size: 13px;
                     }
+
+                    .coupon-action-btn {
+                      width: 100%;
+                      padding: 12px;
+                      background-color: #222; /* Dark background for contrast */
+                      color: #fff;
+                      border: 1px solid #222;
+                      border-radius: 4px;
+                      font-size: 13px;
+                      font-weight: 600;
+                      letter-spacing: 0.5px;
+                      text-transform: uppercase;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                      margin-top: 8px;
+                    }
+
+                    .coupon-action-btn:hover {
+                      background-color: #000;
+                      border-color: #000;
+                    }
+
+                    /* Specific style for the Remove button */
+                    .coupon-action-btn.remove {
+                      background-color: transparent;
+                      color: #dc3545; /* Red color */
+                      border: 1px solid #dc3545;
+                    }
+
+                    .coupon-action-btn.remove:hover {
+                      background-color: #dc3545;
+                      color: #fff;
+                    }
                   `}</style>
 
                   <div className="checkout__payment-methods">
-                    <div className="form-check">
+                    {!hasPreBookItem && <div className="form-check">
                       <input
                         className="form-check-input form-check-input_fill"
                         type="radio"
@@ -1948,104 +2167,151 @@ export default function Checkout() {
                         checked={selectedOption === "cod"}
                         onChange={handleRadioChange}
                       />
-                      <label
-                        className="form-check-label"
-                        htmlFor="checkout_payment_method_3"
-                      >
+                      <label className="form-check-label" htmlFor="checkout_payment_method_3" >
                         Cash on delivery
+                      </label>
+                    </div>}
+                    <div className="form-check">
+                      <input className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_4" value={"paytabs"} checked={selectedOption === "paytabs"} onChange={handleRadioChange} />
+                      <label className="form-check-label" htmlFor="checkout_payment_method_4" style={{ display: "flex", flexDirection: "column" }} >
+                        PayTabs - Credit / Debit Card
+                        <div style={{ display: "flex", gap: "6px" }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 77 16" >
+                            <g transform="translate(-523 -415)">
+                              <rect style={{ fill: "#fff", opacity: 0 }} className="a" width="77" height="16" transform="translate(523 415)"/>
+                              <path style={{ fill: "#2a2a6c" }} className="b" d="M70.75,432.369l-5.76,13.746H61.23L58.4,435.145a1.522,1.522,0,0,0-.847-1.21,15.018,15.018,0,0,0-3.509-1.167l.087-.4h6.049a1.657,1.657,0,0,1,1.64,1.4l1.5,7.955,3.7-9.357H70.75m14.727,9.256c.017-3.625-5.017-3.823-4.98-5.446.009-.494.479-1.019,1.507-1.151a6.719,6.719,0,0,1,3.507.612l.624-2.912a9.55,9.55,0,0,0-3.325-.609c-3.515,0-5.989,1.869-6.009,4.543-.023,1.978,1.765,3.082,3.113,3.741,1.385.674,1.847,1.1,1.842,1.708-.008.923-1.1,1.325-2.126,1.344a7.433,7.433,0,0,1-3.654-.869l-.644,3.014a10.87,10.87,0,0,0,3.956.731c3.735,0,6.178-1.849,6.19-4.707m9.28,4.49h3.29l-2.87-13.746H92.14a1.624,1.624,0,0,0-1.514,1.007l-5.332,12.739h3.732l.741-2.053H94.33Zm-3.967-4.87,1.872-5.161,1.077,5.161Zm-14.959-8.875L72.89,446.114H69.334l2.942-13.746Z" transform="translate(470.495 -16.119)" />
+                              <g transform="translate(1.466 -18.353)">
+                                <rect style={{ fill: "#ff5f00" }} className="c" width="6.84" height="11.172" transform="translate(581.019 435.873)" />
+                                <path style={{ fill: "#eb001b" }} className="d" d="M16.226,14.558A7.093,7.093,0,0,1,18.94,8.973a7.1,7.1,0,1,0,0,11.172,7.093,7.093,0,0,1-2.714-5.587Z" transform="translate(565.497 426.902)" />
+                                <path style={{ fill: "#f79e1b" }} className="e" d="M119.946,64.636v-.229h.1V64.36h-.235v.047h.093v.229Zm.456,0V64.36h-.071l-.083.2-.083-.2h-.071v.276h.051v-.209l.077.18h.053l.077-.18v. 209Z" transform="translate(475.307 381.226)" />
+                                <path style={{ fill: "#f79e1b" }} className="e" d="M77.186,14.547a7.1,7.1,0,0,1-11.5,5.585,7.1,7.1,0,0,0,0-11.172,7.1,7.1,0,0,1,11.5,5.585Z" transform="translate(518.747 426.913)"/>
+                              </g>
+                            </g>
+                          </svg> <hr></hr>
+                          <Image src="/assets/images/paytabs-svg/UnionPay_logo.png" alt="Union Pay" width={50} height={20} />
+                          <Image src="/assets/images/paytabs-svg/Apple_Pay_logo.png" alt="Apple Pay" width={50} height={20} />
+                          <Image src="/assets/images/paytabs-svg/Samsung_Pay_Logo.png" alt="Samsung Pay" width={50} height={20} />
+                        </div>
                       </label>
                     </div>
                     <div className="form-check">
-                      <input
-                        className="form-check-input form-check-input_fill"
-                        type="radio"
-                        name="checkout_payment_method"
-                        id="checkout_payment_method_4"
-                        value={"paytabs"}
-                        checked={selectedOption === "paytabs"}
-                        onChange={handleRadioChange}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="checkout_payment_method_4"
-                      >
-                        PayTabs - Credit / Debit Card
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="60"
-                          height="20"
-                          viewBox="0 0 77 16"
-                        >
-                          <g transform="translate(-523 -415)">
-                            <rect
-                              style={{ fill: "#fff", opacity: 0 }}
-                              className="a"
-                              width="77"
-                              height="16"
-                              transform="translate(523 415)"
-                            />
-                            <path
-                              style={{ fill: "#2a2a6c" }}
-                              className="b"
-                              d="M70.75,432.369l-5.76,13.746H61.23L58.4,435.145a1.522,1.522,0,0,0-.847-1.21,15.018,15.018,0,0,0-3.509-1.167l.087-.4h6.049a1.657,1.657,0,0,1,1.64,1.4l1.5,7.955,3.7-9.357H70.75m14.727,9.256c.017-3.625-5.017-3.823-4.98-5.446.009-.494.479-1.019,1.507-1.151a6.719,6.719,0,0,1,3.507.612l.624-2.912a9.55,9.55,0,0,0-3.325-.609c-3.515,0-5.989,1.869-6.009,4.543-.023,1.978,1.765,3.082,3.113,3.741,1.385.674,1.847,1.1,1.842,1.708-.008.923-1.1,1.325-2.126,1.344a7.433,7.433,0,0,1-3.654-.869l-.644,3.014a10.87,10.87,0,0,0,3.956.731c3.735,0,6.178-1.849,6.19-4.707m9.28,4.49h3.29l-2.87-13.746H92.14a1.624,1.624,0,0,0-1.514,1.007l-5.332,12.739h3.732l.741-2.053H94.33Zm-3.967-4.87,1.872-5.161,1.077,5.161Zm-14.959-8.875L72.89,446.114H69.334l2.942-13.746Z"
-                              transform="translate(470.495 -16.119)"
-                            />
-                            <g transform="translate(1.466 -18.353)">
-                              <rect
-                                style={{ fill: "#ff5f00" }}
-                                className="c"
-                                width="6.84"
-                                height="11.172"
-                                transform="translate(581.019 435.873)"
-                              />
-                              <path
-                                style={{ fill: "#eb001b" }}
-                                className="d"
-                                d="M16.226,14.558A7.093,7.093,0,0,1,18.94,8.973a7.1,7.1,0,1,0,0,11.172,7.093,7.093,0,0,1-2.714-5.587Z"
-                                transform="translate(565.497 426.902)"
-                              />
-                              <path
-                                style={{ fill: "#f79e1b" }}
-                                className="e"
-                                d="M119.946,64.636v-.229h.1V64.36h-.235v.047h.093v.229Zm.456,0V64.36h-.071l-.083.2-.083-.2h-.071v.276h.051v-.209l.077.18h.053l.077-.18v.209Z"
-                                transform="translate(475.307 381.226)"
-                              />
-                              <path
-                                style={{ fill: "#f79e1b" }}
-                                className="e"
-                                d="M77.186,14.547a7.1,7.1,0,0,1-11.5,5.585,7.1,7.1,0,0,0,0-11.172,7.1,7.1,0,0,1,11.5,5.585Z"
-                                transform="translate(518.747 426.913)"
-                              />
-                            </g>
-                          </g>
-                        </svg>
+                      <input className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_5" value={'tamara'} checked={selectedOption === 'tamara'} onChange={handleRadioChange} />
+                      <label className="form-check-label" htmlFor="checkout_payment_method_5" style={{display: "inline-flex"}} >
+                        Tamara - No interest, No fees. 
+                        <TamaraWidget inlineType='4' inlineVariant='text'/>
                       </label>
                     </div>
-                    <div className="policy-text">
-                      Your personal data will be used to process your order,
-                      support your experience throughout this website, and for
-                      other purposes described in our{" "}
-                      <Link href={`/${locale}/privacy`} target="_blank">
-                        privacy policy
-                      </Link>
-                      .
+
+                    <div className="form-check">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="radio"
+                      name="checkout_payment_method"
+                      id="checkout_payment_method_6"
+                      value={'tabby'}
+                      checked={selectedOption === 'tabby'}
+                      onChange={handleRadioChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="checkout_payment_method_6"
+                    >
+                      <Image
+                        src="/assets/images/paymentGateway/Tabby.png"
+                        width="60"
+                        height="25"
+                        alt="Cropped Faux leather Jacket"
+
+                      />
+                      <span style={{marginLeft: "0.5rem"}}>{t("CheckoutTitle")} <sup><strong>ⓘ</strong></sup></span><br/>{t("CheckoutDescription")}
+                      {/* <button style={{ 'border-radius': '50px', 'border': 'none' }} type="button" data-tabby-info="installments" data-tabby-price={finalPriceState && finalPriceState} data-tabby-currency="AED">?</button> */}
+                    </label>
+                    {selectedOption == 'tabby' && <><div id="tabbyCard"></div></>}
+                  </div> 
+
+                    <div className="policy-wrapper mt-3">
+                      {/* Privacy Notice Text */}
+                      <p className="small text-muted mb-3" style={{ lineHeight: '1.5' }}>
+                        {locale === 'ar'
+                          ? "سيتم استخدام بياناتك الشخصية لمعالجة طلبك، ودعم تجربتك في هذا الموقع، ولأغراض أخرى موصوفة في "
+                          : "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our "
+                        }
+                        <Link 
+                          href={`/${locale}/privacy`} 
+                          className="text-dark text-decoration-underline fw-medium" 
+                          target="_blank"
+                        >
+                          {locale === 'ar' ? "سياسة الخصوصية." : "privacy policy."}
+                        </Link>
+                      </p>
+
+                      {/* Interactive Checkbox */}
+                      <div className="form-check d-flex align-items-start p-0">
+                        <input
+                          className="form-check-input border-secondary"
+                          type="checkbox"
+                          id="terms-agreement"
+                          required
+                          style={{ 
+                            marginTop: '0.25rem', 
+                            width: '1.1em', 
+                            height: '1.1em', 
+                            cursor: 'pointer',
+                            // Logic: Add margin to the correct side based on direction
+                            marginLeft: locale === 'ar' ? '0.5rem' : '0',
+                            marginRight: locale === 'ar' ? '0' : '0.5rem'
+                          }}
+                        />
+                        <label 
+                          htmlFor="terms-agreement" 
+                          className="form-check-label small" 
+                          style={{ cursor: 'pointer', userSelect: 'none' }}
+                        >
+                          {locale === 'ar' ? "لقد قرأت ووافقت على " : "I have read and agree to the website "}
+                          <Link 
+                            href={`/${locale}/terms`} 
+                            className="text-primary text-decoration-underline" 
+                            target="_blank"
+                          >
+                            {locale === 'ar' ? "شروط وأحكام الموقع" : "terms and conditions"}
+                          </Link>
+                          <span className="text-danger fw-bold mx-1">*</span>
+                        </label>
+                      </div>
                     </div>
-                    <br />
-                    <input type="checkbox" required /> &nbsp;&nbsp;
-                    <span>
-                      I have read and agree to the website{" "}
-                      <Link href={`/${locale}/terms`} target="_blank">
-                        terms and conditions
-                      </Link>{" "}
-                    </span>
-                    *
                   </div>
 
                   {error ? (
-                    <div style={{ color: "red" }}>{error}</div>
-                  ) : (
-                    <div style={{ color: "green" }}>{success}</div>
-                  )}
+                    <div
+                      style={{
+                        backgroundColor: "#ffebe9", // Light red background
+                        color: "#cf1e1e",           // Dark red text
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",        // Slight corner rounding
+                      }}
+                    >
+                      {error}
+                    </div>
+                  ) : success ? (
+                    <div
+                      style={{
+                        backgroundColor: "#e8f5e9", // Light green background
+                        color: "#2e7d32",           // Dark green text
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                      }}
+                    >
+                      {success}
+                    </div>
+                  ) : null}
                   <button
                     className="btn btn-primary w-100 text-uppercase"
                     type="submit"

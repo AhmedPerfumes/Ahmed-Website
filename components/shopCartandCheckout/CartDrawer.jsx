@@ -18,14 +18,123 @@ export default function CartDrawer() {
   const { isLoggedIn } = useUser();
   const pathname = usePathname();
   const t= useTranslations();
+
+  // Helpers to build product URLs (consistent with ProductGrid)
+  const removeSpecialCharacters = (str) =>
+    str?.replace(/&amp;/g, "").replace(/[^\w\s-]/g, "").replace(/\s+/g, " ").trim();
+
+  const getSubcategorySlug = (category, subcategory, subcategory_name) => {
+    if (subcategory && subcategory.subcategory_name) {
+      return removeSpecialCharacters(subcategory.subcategory_name)
+        ?.split(" ")
+        .join("-")
+        .toLowerCase();
+    }
+    if (subcategory_name) {
+      return removeSpecialCharacters(subcategory_name)
+        ?.split(" ")
+        .join("-")
+        .toLowerCase();
+    }
+    const cleanedCategory = removeSpecialCharacters(category)?.toLowerCase();
+    if (cleanedCategory === "gift-sets") return "gift-sets";
+    if (cleanedCategory === "hair-mist") return "hair-mist";
+    if (cleanedCategory === "extrait-de-parfum") return "extrait-de-parfum";
+    return "online-exclusive";
+  };
   const closeCart = () => {
     document
       .getElementById("cartDrawerOverlay")
       .classList.remove("page-overlay_visible");
     document.getElementById("cartDrawer").classList.remove("aside_visible");
   };
-  const setQuantity = (id, quantity, productQty) => {
-    if (quantity >= 1 && quantity <= productQty) {
+  // const setQuantity = (id, quantity, productQty) => {
+  //   if (quantity >= 1 && quantity <= productQty) {
+  //     setError(null);
+
+  //     const items = [...cartProducts];
+
+  //     // Update the paid product
+  //     const paidItemIndex = items.findIndex(
+  //       (item) => item.product_id == id && !item.is_gift
+  //     );
+
+  //     if (paidItemIndex !== -1) {
+  //       items[paidItemIndex].quantity = quantity;
+  //     }
+
+  //     // Also update the matching gift (if exists)
+  //     const giftItemIndex = items.findIndex(
+  //       (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
+  //     );
+
+  //     if (giftItemIndex !== -1) {
+  //       items[giftItemIndex].quantity = quantity;
+  //     }
+
+  //     setCartProducts(items);
+  //   } else {
+  //     setError("Quantity is more than available quantity");
+  //   }
+  // };
+
+  // const setQuantity = (id, quantity, productQty) => {
+  //   // First check: quantity within stock
+  //   const withinStock = quantity >= 1 && quantity <= productQty;
+
+  //   // Second check: max 6 per product
+  //   const withinLimit = quantity <= 6;
+
+  //   if (withinStock && withinLimit) {
+  //     setError(null);
+
+  //     const items = [...cartProducts];
+
+  //     // Update the paid product
+  //     const paidItemIndex = items.findIndex(
+  //       (item) => item.product_id == id && !item.is_gift
+  //     );
+
+  //     if (paidItemIndex !== -1) {
+  //       items[paidItemIndex].quantity = quantity;
+  //     }
+
+  //     // Also update the matching gift (if exists)
+  //     const giftItemIndex = items.findIndex(
+  //       (item) =>
+  //         item.product_id == id &&
+  //         item.is_gift &&
+  //         item.selection_rule != "least_expensive"
+  //     );
+
+  //     if (giftItemIndex !== -1) {
+  //       items[giftItemIndex].quantity = quantity;
+  //     }
+
+  //     setCartProducts(items);
+  //   } else {
+  //     setError(
+  //       !withinStock
+  //         ? "Quantity is more than available quantity"
+  //         : "Maximum allowed quantity is 6"
+  //     );
+  //   }
+  // };
+
+  const setQuantity = (id, quantity, productQty, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : productQty; // fallback to available stock
+
+    // Check stock limit
+    const withinStock = quantity >= 1 && quantity <= productQty;
+
+    // Check max purchase limit
+    const withinLimit = quantity <= MAX_LIMIT;
+
+    if (withinStock && withinLimit) {
       setError(null);
 
       const items = [...cartProducts];
@@ -39,9 +148,12 @@ export default function CartDrawer() {
         items[paidItemIndex].quantity = quantity;
       }
 
-      // Also update the matching gift (if exists)
+      // Update the related gift item
       const giftItemIndex = items.findIndex(
-        (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
+        (item) =>
+          item.product_id == id &&
+          item.is_gift &&
+          item.selection_rule != "least_expensive"
       );
 
       if (giftItemIndex !== -1) {
@@ -50,9 +162,15 @@ export default function CartDrawer() {
 
       setCartProducts(items);
     } else {
-      setError("Quantity is more than available quantity");
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
+      );
     }
   };
+
+
   const removeItem = (id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };
@@ -87,30 +205,30 @@ export default function CartDrawer() {
     //   return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
     // }
     let itemPrice = elm.price;
-    if (
-      elm?.coupon &&
-      Object.keys(elm.coupon).length !== 0 &&
-      couponDataContext &&
-      couponDataContext.code &&
-      elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
-      new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
-      new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
-    ) {
-      // console.log('common copuon', elm);
-      itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
-      return (
-        <td>
-          <span className="money price price-sale">
-            {currency.symbol}
-            {(itemPrice * elm.quantity).toFixed(2)}
-          </span>
-          <span className="money price price-old">
-            {currency.symbol}
-            {(elm.price * elm.quantity).toFixed(2)}
-          </span>
-        </td>
-      );
-    }
+    // if (
+    //   elm?.coupon &&
+    //   Object.keys(elm.coupon).length !== 0 &&
+    //   couponDataContext &&
+    //   couponDataContext.code &&
+    //   elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
+    //   new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
+    //   new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
+    // ) {
+    //   // console.log('common copuon', elm);
+    //   itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
+    //   return (
+    //     <td>
+    //       <span className="money price price-sale">
+    //         {currency.symbol}
+    //         {(itemPrice * elm.quantity).toFixed(2)}
+    //       </span>
+    //       <span className="money price price-old">
+    //         {currency.symbol}
+    //         {(elm.price * elm.quantity).toFixed(2)}
+    //       </span>
+    //     </td>
+    //   );
+    // }
     if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
       // console.log('common Customer Coupon', elm);
       const validCoupon = promotionsContext.some((promo) =>
@@ -123,7 +241,7 @@ export default function CartDrawer() {
       );
 
       if (
-        elm.is_customer_coupon &&
+        elm.is_coupon &&
         !validCoupon &&
         // !elm.sale_price &&
         !elm.discount
@@ -171,20 +289,65 @@ export default function CartDrawer() {
             {cartProducts.map((elm, i) => (
               <React.Fragment key={i}>
                 <div className="cart-drawer-item d-flex position-relative">
-                  <div className="position-relative">
-                    <Image
-                      loading="lazy"
-                      className="cart-drawer-item__img"
-                      width={330}
-                      height={400}
-                      style={{ height: "fit-content" }}
-                      src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${elm?.images && JSON.parse(elm.images)[0]}`}
-                      alt="image"
-                    />
-                  </div>
+                  {(() => {
+                    const categorySlug = removeSpecialCharacters(elm.category_name)
+                      ?.split(" ")
+                      .join("-")
+                      .toLowerCase();
+                    const subcategorySlug = getSubcategorySlug(
+                      elm.category_name,
+                      elm.subcategory,
+                      elm.subcategory_name
+                    );
+                    const productSlug = removeSpecialCharacters(elm.product_name)
+                      ?.split(" ")
+                      .join("-")
+                      .toLowerCase();
+                    const href = `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
+                    return (
+                      <Link href={href} className="position-relative">
+                        <Image
+                          loading="lazy"
+                          className="cart-drawer-item__img"
+                          width={330}
+                          height={400}
+                          style={{ height: "fit-content" }}
+                          src={
+                            elm.image
+                              ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`
+                              : `${process.env.NEXT_PUBLIC_API_URL}storage/${
+                                  elm?.images && JSON.parse(elm.images)[0]
+                                }`
+                          }
+                          alt="image"
+                          onClick={closeCart}
+                        />
+                      </Link>
+                    );
+                  })()}
                   <div className="cart-drawer-item__info flex-grow-1">
                     <h6 className="cart-drawer-item__title fw-normal">
-                      {elm?.product_name && he.decode(elm.product_name)}
+                      {(() => {
+                        const categorySlug = removeSpecialCharacters(elm.category_name)
+                          ?.split(" ")
+                          .join("-")
+                          .toLowerCase();
+                        const subcategorySlug = getSubcategorySlug(
+                          elm.category_name,
+                          elm.subcategory,
+                          elm.subcategory_name
+                        );
+                        const productSlug = removeSpecialCharacters(elm.product_name)
+                          ?.split(" ")
+                          .join("-")
+                          .toLowerCase();
+                        const href = `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
+                        return (
+                          <Link href={href} onClick={closeCart}>
+                            {elm?.product_name && he.decode(elm.product_name)}
+                          </Link>
+                        );
+                      })()}
                     </h6>
                     {/* <p className="cart-drawer-item__option text-secondary">
                       Color: Yellow
@@ -198,7 +361,7 @@ export default function CartDrawer() {
                           type="number"
                           name="quantity"
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty, elm?.maximum_order_quantity)
                           }
                           value={elm.quantity}
                           min="1"
@@ -207,14 +370,14 @@ export default function CartDrawer() {
                         />
                         <div
                           onClick={() => {
-                            setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty);
+                            setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty, elm?.maximum_order_quantity);
                           }}
                           className="qty-control__reduce text-start"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__increase text-end"
                         >
                           +
@@ -252,7 +415,7 @@ export default function CartDrawer() {
           alt="image"
         /> */}
        <p className="text-center fs-6 fw-bold success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
-       <hr class="cart-drawer-divider"></hr>
+       <hr className="cart-drawer-divider"></hr>
         <div className="free-shipping-progress mt-3">
           
               {totalPrice < freeShippingThreshold ? (

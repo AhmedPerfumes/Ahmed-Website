@@ -43,8 +43,6 @@ export const categories3 = [
 
 ];
 
-
-
 export const categories8 = [
   {
     id: 1,
@@ -212,6 +210,50 @@ export const categoriesTop = [
     btn: "/shop/perfumes/oriental-fragrance/bin-shaikh"
   },
 ];
+
+export const saleSection = [
+  {
+    id: 1,
+    imgSrc: "http://localhost:3000/assets/images/best-sellers/marj@2x.jpg",
+    altText: "Marj",
+    imgSrc2: "http://localhost:3000/assets/images/best-sellers/marj@2x.jpg",
+    link: "/shop/perfumes/oriental-fragrance/marj",
+    btn: "/shop/perfumes/oriental-fragrance/marj"
+  },
+  {
+    id: 3,
+    imgSrc: "http://localhost:3000/assets/images/best-sellers/kaaf@2x.jpg",
+    altText: "Kaaf",
+    imgSrc2: "http://localhost:3000/assets/images/best-sellers/kaaf@2x.jpg",
+    link: "/shop/perfumes/oriental-fragrance/kaaf",
+    btn: "/shop/perfumes/oriental-fragrance/kaaf"
+  },
+  {
+    id: 6,
+    imgSrc: "http://localhost:3000/assets/images/best-sellers/oud-and-roses@2x.jpg",
+    altText: "Oud & Roses",
+    imgSrc2: "http://localhost:3000/assets/images/best-sellers/oud-and-roses@2x.jpg",
+    link: "/shop/perfumes/occidental-fragrance/oud-roses",
+    btn: "/shop/perfumes/occidental-fragrance/oud-roses"
+  },
+  {
+    id: 9,
+    imgSrc: "http://localhost:3000/assets/images/best-sellers/zumar@2x.jpg",
+    altText: "Zumar",
+    imgSrc2: "http://localhost:3000/assets/images/best-sellers/zumar@2x.jpg",
+    link: "/shop/perfumes/oriental-fragrance/zumar",
+    btn: "/shop/perfumes/oriental-fragrance/zumar"
+  },
+  {
+    id: 12,
+    imgSrc: "http://localhost:3000/assets/images/best-sellers/bin-shaikh@2x.jpg",
+    altText: "Bin Shaikh",
+    imgSrc2: "http://localhost:3000/assets/images/best-sellers/bin-shaikh@2x.jpg",
+    link: "/shop/perfumes/oriental-fragrance/bin-shaikh",
+    btn: "/shop/perfumes/oriental-fragrance/bin-shaikh"
+  },
+];
+
 export const fatherDay = [
   {
     id: 1,
@@ -221,7 +263,7 @@ export const fatherDay = [
     link: "/shop/dakhoon/bakhoor/bakhoor-bushra-box",
     btn: "/shop/dakhoon/bakhoor/bakhoor-bushra-box"
   },
-  
+
   {
     id: 2,
     imgSrc: "https://admin.ahmedalmaghribi.com/public/storage/newbakhoor/oud-al-amber-3tl-1.jpg",
@@ -238,7 +280,7 @@ export const fatherDay = [
     link: "/shop/dakhoon/oud-maattar/oud-kiflain",
     btn: "/shop/dakhoon/oud-maattar/oud-kiflain"
   },
-  
+
   {
     id: 4,
     imgSrc: "https://admin.ahmedalmaghribi.com/public/storage/bakhoor/bakhoor-marj-1.jpg",
@@ -271,7 +313,7 @@ export const fatherDay = [
   //   link: "/shop/perfumes/oriental-fragrance/kawkab",
   //   btn: "/shop/perfumes/oriental-fragrance/kawkab"
   // },
-  
+
   // {
   //   id: 8,
   //   imgSrc: "https://admin.ahmedalmaghribi.com/public/storage/epdnew/bin-shaikh.jpg",

@@ -32,6 +32,8 @@ import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const metadata = {
@@ -218,39 +220,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        {/* <Script>
-          {`
-          
-  (function (w, d, s, o, f, js, fjs) {
-    w["botsonic_widget"] = o;
-    w[o] =
-      w[o] ||
-      function () {
-        (w[o].q = w[o].q || []).push(arguments);
-      };
-    (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
-    js.id = o;
-    js.src = f;
-    js.async = 1;
-    fjs.parentNode.insertBefore(js, fjs);
-  })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
-  Botsonic("init", {
-    serviceBaseUrl: "https://api-bot.writesonic.com",
-    token: "98265e34-430d-409b-9885-7a602a3d3375",
-  });
 
-          `
-}
-        </Script> */}
-        {/* <script
-          id="messenger-widget-b"
-          src="https://cdn.botpenguin.com/website-bot.js"
-          defer
-          dangerouslySetInnerHTML={{
-            __html: `68c2c8aba3d4cb6728bcc3cb,68c28d106db0623915d23c5e,agent`,
-          }}
-        /> */}
-        
 
         <NextIntlClientProvider messages={messages}>
           <Svgs />
@@ -274,6 +244,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                   <ProductDescription />
                   <ProductAdditionalInformation />
                   <ProductReviews />
+                  <ToastContainer />
                 </ShopFilterProvider>
               </UserProvider>
             </Context>

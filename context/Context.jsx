@@ -201,11 +201,12 @@ export default function Context({ children }) {
       // Ensure numbers
       const qty = Number(product?.quantity || 0);
       const basePrice = Number(product?.price || 0);
-
+      // console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
       // Skip free gifts entirely
       if (product?.is_gift) return accumulator;
 
       if (product?.discount) {
+        console.log('discountC', product?.discount);
         let discounted = basePrice;
         if (
           new Date(current_date_time) >= new Date(product.discount.start_date) &&
@@ -222,27 +223,27 @@ export default function Context({ children }) {
         }
       }
 
-      if (
-        product?.coupon &&
-        !Array.isArray(product.coupon) &&
-        codeLower &&
-        product.coupon[codeLower]?.code?.toLowerCase() === codeLower
-      ) {
-        // console.log('product', 'coupon', product);
-        const c = product.coupon[codeLower];
-        const start = new Date(c?.start_date);
-        const end = new Date(c?.end_date);
-        if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
-          const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-          return accumulator + qty * Number(discounted.toFixed(2));
-        }
-      }
+      // if (
+      //   product?.coupon &&
+      //   !Array.isArray(product.coupon) &&
+      //   codeLower &&
+      //   product.coupon[codeLower]?.code?.toLowerCase() === codeLower
+      // ) {
+      //   console.log('couponC', product);
+      //   const c = product.coupon[codeLower];
+      //   const start = new Date(c?.start_date);
+      //   const end = new Date(c?.end_date);
+      //   if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
+      //     const discounted = basePrice - (basePrice * Number(c.value)) / 100;
+      //     return accumulator + qty * Number(discounted.toFixed(2));
+      //   }
+      // }
 
       // 3) Customer/global coupon (apply across all products)
       // if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
       {
-        // console.log('product', 'customer coupon', product);
+        console.log('customer couponC', product, isCustomerCouponActive, couponDataContext);
         const value = Number(couponDataContext?.value || 0);
         let discounted = basePrice; // fallback if no discount
 
@@ -308,8 +309,157 @@ export default function Context({ children }) {
     return "/placeholder.png";
   };
 
+  const triggerToast = ({ name = "", image = "/placeholder.png", message = "", type = "success" }) => {
+    setToastData({ name, image, message, type });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
+  };
+
+  // const addProductToCart = (product) => {
+  //   if (state.isProcessing) {
+  //     // console.log('Skipping addProductToCart: processing in progress');
+  //     return;
+  //   }
+  //   // console.log('addProductToCart:', product);
+  //   const newProductCollection = product?.collection_name?.toLowerCase();
+  //   const cartProducts = state.products;
+
+  //   // Detect if cart already has a pre-book item
+  //   const hasPreBook = cartProducts.some(
+  //     (p) => p.collection_name?.toLowerCase() === 'pre book'
+  //   );
+
+  //   // Detect if cart already has ANY non–pre-book item
+  //   const hasRegular = cartProducts.some(
+  //     (p) => p.collection_name?.toLowerCase() !== 'pre book'
+  //   );
+
+  //   // --- RESTRICTION LOGIC ---
+  //   if (newProductCollection === 'pre book' && hasRegular) {
+  //     // Trying to add 'pre book' but cart has normal items
+  //     // alert("You cannot mix Pre Book items with other products.");
+  //     triggerToast({
+  //       name: "Cart Restriction",
+  //       message: "You cannot mix Pre Book items with other products.",
+  //       image: "/assets/images/danger.png",
+  //       type: "error",
+  //       showButton: false
+  //     });
+  //     return;
+  //   }
+
+  //   if (newProductCollection !== 'pre book' && hasPreBook) {
+  //     // Trying to add regular product but cart has pre-book items
+  //     // alert("You cannot add other items with a Pre Book product.");
+  //     triggerToast({
+  //       name: "Cart Restriction",
+  //       message: "You cannot add other items with a Pre Book product.",
+  //       image: "/assets/images/danger.png",
+  //       type: "error",
+  //       showButton: false
+  //     });
+  //     return;
+  //   }
+  //   dispatch({ type: 'SET_PROCESSING', payload: true });
+  //   dispatch({
+  //     type: 'ADD_PRODUCT',
+  //     payload: product,
+  //     meta: {
+  //       toast: {
+  //         name: product?.product_name,
+  //         image: buildToastImageUrl(product),
+  //         message: "Added to your cart",
+  //       },
+  //     },
+  //   });
+  //   // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+  //   // document.getElementById("cartDrawer")?.classList.add("aside_visible");
+  // };
+
   const addProductToCart = (product) => {
     if (state.isProcessing) return;
+
+    const newProductCollection = product?.collection_name?.toLowerCase();
+    const cartProducts = [...state.products];
+
+    // Detect if cart already has a pre-book item
+    const hasPreBook = cartProducts.some(
+      (p) => p.collection_name?.toLowerCase() === 'pre book'
+    );
+
+    // Detect if cart already has ANY non–pre-book item
+    const hasRegular = cartProducts.some(
+      (p) => p.collection_name?.toLowerCase() !== 'pre book'
+    );
+
+    // --- RESTRICTION LOGIC ---
+    if (newProductCollection === 'pre book' && hasRegular) {
+      triggerToast({
+        name: "Cart Restriction",
+        message: "You cannot mix Pre Book items with other products.",
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return;
+    }
+
+    if (newProductCollection !== 'pre book' && hasPreBook) {
+      triggerToast({
+        name: "Cart Restriction",
+        message: "You cannot add other items with a Pre Book product.",
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return;
+    }
+
+    // --- DYNAMIC MAX QUANTITY LOGIC ---
+    const MAX_LIMIT =
+      product.maximum_order_quantity && product.maximum_order_quantity > 0
+        ? product.maximum_order_quantity
+        : product.product_qty; // fallback to stock
+
+    const existingItemIndex = cartProducts.findIndex(
+      (p) => p.product_id === product.product_id
+    );
+
+
+    if (existingItemIndex !== -1) {
+      const currentQty = cartProducts[existingItemIndex].quantity || 1;
+
+      if (currentQty >= MAX_LIMIT) {
+        triggerToast({
+          name: "Maximum Quantity Reached",
+          message: `You cannot add more than ${MAX_LIMIT} of this product.`,
+          image: "/assets/images/danger.png",
+          type: "error",
+          showButton: false
+        });
+        return;
+      }
+
+      // Increase quantity but do not exceed 6
+      cartProducts[existingItemIndex].quantity = Math.min(currentQty + 1, MAX_LIMIT);
+      dispatch({ type: 'UPDATE_CART', payload: cartProducts });
+      return;
+    }
+
+    // New product, set initial quantity = 1
+    product.quantity = 1;
+
+    // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
+    if (product.quantity > MAX_LIMIT) {
+      triggerToast({
+        name: "Maximum Quantity Reached",
+        message: `You cannot add more than ${MAX_LIMIT} of this product.`,
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return;
+    }
 
     dispatch({ type: 'SET_PROCESSING', payload: true });
     const updated = [...state.products];
@@ -332,9 +482,6 @@ export default function Context({ children }) {
         },
       },
     });
-
-    // Sync with API if logged in
-    syncCartWithApi(updated);
   };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
@@ -352,65 +499,47 @@ const removeProduct = (productId) => {
   setCartProducts((prev) => prev.filter((p) => p.product_id !== productId));
 };
 
+  const setCartProducts = (productsOrFn) => {
+    let newProducts = [];
 
-  // SET CART PRODUCTS (handle both update & remove)
-const setCartProducts = async (productsOrFn) => {
-  let newProducts;
-
-  if (typeof productsOrFn === "function") {
-    newProducts = productsOrFn(state.products);
-  } else {
-    newProducts = productsOrFn;
-  }
-
-  if (!Array.isArray(newProducts)) return;
-
-  dispatch({ type: "SET_PRODUCTS", payload: newProducts });
-
-  const encodedUser = localStorage.getItem("user");
-  if (!encodedUser) return; // guest → skip API sync
-
-  try {
-    const decoded = JSON.parse(atob(encodedUser));
-    const customerId = decoded?.id;
-    if (!customerId) return;
-
-    // Detect removed items
-    const removed = state.products.filter(
-      (p) => !newProducts.find((np) => np.product_id === p.product_id)
-    );
-
-    if (removed.length > 0) {
-      // Call removeFromCart API for each removed item
-      for (const item of removed) {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/removeFromCart`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customer_id: customerId,
-            product_id: item.product_id,
-          }),
-        });
-      }
+    if (typeof productsOrFn === 'function') {
+      // Functional update
+      newProducts = productsOrFn(state.products);
     } else {
-      // Normal update → call addUpdateCart
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/addUpdateCart`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer_id: customerId,
-          products: newProducts,
-        }),
-      });
+      // Direct array update
+      newProducts = productsOrFn;
     }
 
-    // Always sync localStorage
-    localStorage.setItem("cartList", JSON.stringify(newProducts));
-  } catch (error) {
-    console.error("Error syncing cart:", error);
-  }
-};
+    // Validate
+    if (!Array.isArray(newProducts)) return;
 
+    // --- RESTRICTION LOGIC ---
+    const hasPreBook = newProducts.some(
+      (p) => p?.collection_name?.toLowerCase() === 'pre book'
+    );
+
+    const hasRegular = newProducts.some(
+      (p) => p?.collection_name?.toLowerCase() !== 'pre book'
+    );
+
+    // ❌ If mixing pre book + regular → reject update
+    if (hasPreBook && hasRegular) {
+      // alert(
+      //   "You cannot mix Pre Book products with other items in the cart."
+      // );
+      triggerToast({
+        name: "Cart Restriction",
+        message: "You cannot mix Pre Book products with other items in the cart.",
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return; // Don't update cart
+    }
+
+    // --- IF VALID, UPDATE ---
+    dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+};
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
@@ -428,39 +557,9 @@ const setCartProducts = async (productsOrFn) => {
     return wishList.includes(id);
   };
 
-  // Save cart to API when logged in
-  const syncCartWithApi = async (products) => {
-    try {
-      const encodedUser = localStorage.getItem("user");
-      if (!encodedUser) return; // guest user → skip
-
-      const decoded = JSON.parse(atob(encodedUser));
-      const customerId = decoded?.id;
-      if (!customerId) return;
-
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/addUpdateCart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer_id: customerId,
-          products: products,
-        }),
-      });
-
-      const data = await res.json();
-      console.log("Cart synced to API:", data);
-
-      if (Array.isArray(data)) {
-        dispatch({ type: "SET_PRODUCTS", payload: data });
-        localStorage.setItem("cartList", JSON.stringify(data));
-      }
-    } catch (error) {
-      console.error("Error syncing cart to API:", error);
-    }
-  };
-
+  const hasPreBookItem = state.products.some(
+    (p) => p.collection_name?.toLowerCase() === "pre book"
+  );
 
   const contextElement = {
     cartProducts: state.products,
@@ -482,7 +581,8 @@ const setCartProducts = async (productsOrFn) => {
     setCouponDataContext,
     removeGiftFromCart,
     promotionsContext,
-    setPromotionsContext
+    setPromotionsContext,
+    hasPreBookItem
   };
 
   return (
@@ -491,7 +591,7 @@ const setCartProducts = async (productsOrFn) => {
 
       {toastData && (
         <div
-          className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
+          className={`custom-toast shadow-lg ${toastData.type} ${showToast ? "show" : "hide"}`}
           onClick={openCart}
           style={{ cursor: "pointer" }}
         >
@@ -499,8 +599,8 @@ const setCartProducts = async (productsOrFn) => {
           <div className="toast-content">
             <div>
               <strong>{toastData.name}</strong>
-              <div>Successfully added to your cart</div>
-              <button
+              <div>{toastData.message}</div>
+              {!toastData.type && <button
                 className="btn btn-sm btn-dark text-white mt-1"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -508,7 +608,7 @@ const setCartProducts = async (productsOrFn) => {
                 }}
               >
                 View Cart
-              </button>
+              </button>}
             </div>
           </div>
           <button
@@ -562,6 +662,25 @@ const setCartProducts = async (productsOrFn) => {
           font-size: 16px;
           cursor: pointer;
           color: #666;
+        }
+        .custom-toast.success {
+          border-left: 6px solid #28a745;
+        }
+        .custom-toast.warning {
+          border-left: 6px solid #ffc107;
+          background: #fff8e5;
+        }
+        .custom-toast.error {
+          border-left: 6px solid #dc3545;
+          background: #ffe8e8;
+        }
+        .custom-toast.warning strong,
+        .custom-toast.warning div {
+          color: #b68400;
+        }
+        .custom-toast.error strong,
+        .custom-toast.error div {
+          color: #b30000;
         }
         @media (max-width: 576px) {
           .custom-toast {

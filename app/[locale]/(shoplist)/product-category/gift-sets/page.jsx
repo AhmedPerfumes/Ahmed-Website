@@ -76,6 +76,8 @@ async function getCategorySubCategory(categoryName) {
           
 
           <Shop10 products={ data.products }/>
+          
+          
           <CollapsibleDescription description={data.description}  />
         </main>
 

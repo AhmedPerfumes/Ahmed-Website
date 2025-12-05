@@ -118,9 +118,30 @@ export async function middleware(request) {
   }
 }
 
+// export const config = {
+//   matcher: [
+//     '/((?!api/|_next/static|_next/image|favicon.ico|assets|en\/api|ar\/api).*)',
+//     '/',
+//     '/(ar|en)/:path*',
+//   ],
+// };
+
+// In middleware.js
+
 export const config = {
   matcher: [
-    '/((?!api/|_next/static|_next/image|favicon.ico|assets|en\/api|ar\/api).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api/ (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - assets
+     * - en/api
+     * - ar/api
+     * - ANY file with an extension (e.g., .glb, .png, .svg)
+     */
+    '/((?!api/|_next/static|_next/image|favicon.ico|assets|en\/api|ar\/api|.*\\..*).*)',
     '/',
     '/(ar|en)/:path*',
   ],

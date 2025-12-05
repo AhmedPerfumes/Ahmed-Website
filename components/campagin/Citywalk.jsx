@@ -152,7 +152,7 @@ function CityWalk() {
             </div>
         <div className="mt-3">
 
-        <DiscountGrid title="End of Season, Cooler Prices!" onlyDiscounted={true}/>
+        <DiscountGrid title="Enjoy our biggest Sale of the year" onlyDiscounted={true}/>
         </div>
             {/* <section className="d-flex section-3">
                 <div className="">

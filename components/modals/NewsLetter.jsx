@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react"; // No longer need useState
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 
 export default function NewsLetter() {
     const modalElement = useRef(null);
     const locale = useLocale();
     const { popUp } = useMenu();
+    const t = useTranslations();
 
     // --- NEW: Use a ref to track if the modal has been shown in this session ---
     // This avoids the stale state issue in the event listener.
@@ -98,10 +99,7 @@ export default function NewsLetter() {
                             <div className="col-md-8 p-0">
                                 <div className="newsletter-popup__bg w-100">
                                     <div className="d-none d-lg-block">
-                                        <a
-                                            href={`/${locale}/shop`}
-                                            className="hover-effect"
-                                        >
+                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
@@ -119,7 +117,7 @@ export default function NewsLetter() {
                                             height={650}
                                             style={{ height: "fit-content" }}
                                             loading="lazy"
-                                            src="/assets/images/new-user-signup.jpg"
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
                                             className="h-100 w-100 object-fit-cover d-block hover-effect"
                                             alt="image"
                                         />
@@ -132,30 +130,30 @@ export default function NewsLetter() {
                                         className="section-title fw-normal mb-3"
                                         style={{ color: "#5c6137" }}
                                     >
-                                        {elm.name}
+                                        {locale === 'ar' ? "سجّل ووفّر ۱۰٪" : elm.name}
                                     </h3>
 
                                     <p
                                         className="mb-3"
                                         style={{ fontSize: "1rem", color: "#333" }}
                                     >
-                                        {elm.description}
+                                        {locale === 'ar' ? "سجّل الآن واستمتع بخصم ۱۰٪ على طلبك الأول!" : elm.description}
                                     </p>
 
                                     <div
                                         className="mb-4"
                                         style={{ fontSize: "0.95rem", color: "#555" }}
                                         dangerouslySetInnerHTML={{
-                                            __html: elm.content?.replace(/<\/?p>/g, ""),
+                                            __html: locale === 'ar' ? '<span style="color:hsl(0,75%,60%);"><strong>ملاحظة: سيتم تطبيق جميع العروض والخصومات عند الدفع</strong></span>' : elm.content?.replace(/<\/?p>/g, ""),
                                         }}
                                     />
 
                                     <div className="d-flex justify-content-center">
                                         <a
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium hover-effect"
-                                            href={`/${locale}/shop`}
+                                            href={`/${locale}/${elm.link}`}
                                         >
-                                            Shop Now
+                                            {t("Shop Now")}
                                         </a>
                                     </div>
                                 </div>

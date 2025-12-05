@@ -21,6 +21,7 @@ import Link from "next/link";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
+import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,7 +49,6 @@ const ScrollSnapHorizontalBootstrap = () => {
                 //     delay: 0, // Remove additional delay
                 //     inertia: false, // Disable inertia for quicker snapping
                 // },
-               
             });
         });
 
@@ -147,7 +147,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     <Hero />
                 </div>
             </section> */}
-            
+            {/* <Chat/> */}
 
             <section className="vh-100 hero-banner d-none d-lg-block">
                 <Hero />
@@ -157,14 +157,7 @@ const ScrollSnapHorizontalBootstrap = () => {
             </div>
             
 
-            <section className="scroll-section d-flex flex-direction-column bg-white">
-                <div className="panel2 mb-4">
-                    <div className="inner2 mt-5 d-flex align-items-center">
-                        {/* Limited Quantity */}
-                        <Categories section="sectionTop" />
-                    </div>
-                </div>
-            </section>
+            {/* <ProductShowcase /> */}
 
             <section className="scroll-section d-flex flex-direction-column section-1">
                 <div className="panel section-slider w-100 vh-100">
@@ -187,7 +180,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         <div className="d-flex justify-content-center pt-5">
                             <Link
                                 href={`/${locale}/product-category/perfumes`}
-                                className="btn-rounded btn-link_lg  text-uppercase fw-medium text-white"
+                                className="btn-rounded btn-link_lg text-uppercase fw-medium text-white"
                             >
                                 {t("Shop Now")}
                             </Link>
@@ -209,8 +202,6 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            
-
             <section
                 id="second-chapter-slider"
                 className="container flex__column__center justify-content-center"
@@ -225,7 +216,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {t("Discover Best Selling")}
                     </p>
                 </div>
-
+                {/* <ProductShowcase />             */}
                 <ProductSlider prodSlide="bestSellers" />
             </section>
 
@@ -270,57 +261,62 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
 
-            <section className="d-flex section-3">
-                <div className="">
-                    <div className="section-content">
-                        <div className="d-flex flex-column justify-content-around ">
-                            <div className="section-head pt-5 pb-5">
-                                <h2 className="text-center">
-                                    {t("Crafted for The")}
-                                    <br />
-                                    <span className="text-italic">
-                                        {t("discerning")}
-                                    </span>
-                                </h2>
-                                {/* <p className="text-center section-paragraph">
-                                    {t(
-                                        "Explore our exclusive collection of refined scents"
-                                    )}
-                                    <br />{" "}
-                                </p> */}
-                            </div>
-                            <div className="d-none d-md-block pb-3">
-                                <div className="videoarea d-flex align-items-center">
-                                    <VideoPanel
-                                        src="/assets/videos/multi-product.mp4"
-                                        section="hundred"
-                                    />
-                                </div>
-                            </div>
-                            <div className="d-block d-sm-none pb-3">
-                                <div className="videoarea d-flex align-items-center">
-                                    <VideoPanel
-                                        src="/assets/videos/multi-product-mobile.mp4"
-                                        section="hundred"
-                                    />
-                                </div>
-                            </div>
-                            <p className="text-center section-paragraph">
-                                {t(
-                                    "Explore our exclusive collection of refined scents"
-                                )}
-                                <br />{" "}
-                            </p>
-                            <div className="d-flex justify-content-center ">
-                                <Link
-                                    href={`/${locale}/shop`}
-                                    className="btn-rounded btn-link_lg  text-uppercase fw-medium "
-                                >
-                                    {t("Shop Now")}
-                                </Link>
-                            </div>
-                        </div>
+            <section className="video-section-container">
+                {/* Video will be positioned as the background */}
+                <div className="video-background d-none d-md-block">
+                    <VideoPanel
+                        src="/assets/videos/multi-product.mp4"
+                        section="hundred"
+                    />
+                </div>
+                <div className="video-background d-block d-sm-none">
+                    <VideoPanel
+                        src="/assets/videos/multi-product-mobile.mp4"
+                        section="hundred"
+                    />
+                </div>
+
+                {/* Content Overlay */}
+                <div className="content-overlay text-white">
+                    {" "}
+                    {/* Add text-white here */}
+                    <div className="section-head pt-5 pb-5">
+                        <h2 className="text-center text-white">
+                            {t("Crafted for The")}
+                            <br />
+                            <span className="text-italic">
+                                {t("discerning")}
+                            </span>
+                        </h2>
                     </div>
+                    <p className="text-center section-paragraph">
+                        {t(
+                            "Explore our exclusive collection of refined scents"
+                        )}
+                        <br />
+                    </p>
+                    <div className="d-flex justify-content-center">
+                        <Link
+                            href={`/${locale}/shop`}
+                            /* Add text-white to the link as well */
+                            className="btn-rounded btn-link_lg text-uppercase fw-medium text-white"
+                        >
+                            {t("Shop Now")}
+                        </Link>
+                    </div>
+                </div>
+                <div className="bottom-scroll">
+                    <Image
+                        width={40}
+                        height={40}
+                        className="bottom-0 scroll-icon"
+                        src="/assets/images/ahmed-icon.png"
+                        alt="logo Ahmed"
+                        loading="lazy"
+                    />
+                    <span className="text-white text-uppercase mt-2">
+                        {t("Scroll to discover")}
+                    </span>
                 </div>
             </section>
 
@@ -712,15 +708,15 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                     <div className="order-0 order-md-1 mb-5">
                         <Image
-                                width={0}
-                                height={0}
-                                sizes="100%"
-                                className="h-auto w-100"
-                                src="/assets/images/home/demo8/Shop.jpg"
-                                alt="Ahmed Al Maghribi Perfumes"
-                                loading="lazy"
-                                style={{ width: "100%", height: "auto" }}
-                            />
+                            width={0}
+                            height={0}
+                            sizes="100%"
+                            className="h-auto w-100"
+                            src="/assets/images/home/demo8/Shop.jpg"
+                            alt="Ahmed Al Maghribi Perfumes"
+                            loading="lazy"
+                            style={{ width: "100%", height: "auto" }}
+                        />
                     </div>
                 </div>
             </section>

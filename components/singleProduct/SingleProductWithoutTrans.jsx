@@ -28,29 +28,129 @@ export default function SingleProduct11({ category, subcategory, product }) {
     const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
     return item;
   };
-  const setQuantityCartItem = (id, quantity) => {
+  // const setQuantityCartItem = (id, quantity) => {
+  //   if (isIncludeCard()) {
+  //     if (quantity >= 1 && quantity <= product.product_qty) {
+  //       setError(null);
+  //       const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //       const items = [...cartProducts];
+  //       const itemIndex = items.indexOf(item);
+  //       item.quantity = quantity;
+  //       items[itemIndex] = item;
+  //       setCartProducts(items);
+  //     } else {
+  //       setError("Quantity is more than available quantity");
+  //     }
+  //   } else {
+  //     setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
+  //     setError(null);
+  //     if(quantity > product.product_qty) {
+  //       setError("Quantity is more than available quantity");
+  //     } else {
+  //       setError(null);
+  //     }
+  //   }
+  // };
+
+  // const setQuantityCartItem = (id, quantity) => {
+  //   // First check: quantity within stock
+  //   const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+  //   // Second check: max 6 per product
+  //   const withinLimit = quantity <= 6;
+
+  //   if (isIncludeCard()) {
+  //     if (withinStock && withinLimit) {
+  //       setError(null);
+
+  //       const items = [...cartProducts];
+  //       const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+  //       if (itemIndex !== -1) {
+  //         items[itemIndex] = {
+  //           ...items[itemIndex],
+  //           quantity
+  //         };
+  //       }
+
+  //       setCartProducts(items);
+  //     } else {
+  //       setError(
+  //         !withinStock
+  //           ? "Quantity is more than available quantity"
+  //           : "Maximum allowed quantity is 6"
+  //       );
+  //     }
+  //   } else {
+  //     const validQty =
+  //       withinStock && withinLimit
+  //         ? quantity
+  //         : Math.min(product.product_qty, 6);
+
+  //     setQuantity(validQty);
+
+  //     setError(
+  //       !withinStock
+  //         ? "Quantity is more than available quantity"
+  //         : "Maximum allowed quantity is 6"
+  //     );
+  //   }
+  // };
+
+  const setQuantityCartItem = (id, quantity, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : product.product_qty; // fallback to stock
+
+    // Check stock limit
+    const withinStock = quantity >= 1 && quantity <= product.product_qty;
+
+    // Check max limit
+    const withinLimit = quantity <= MAX_LIMIT;
+
     if (isIncludeCard()) {
-      if (quantity >= 1 && quantity <= product.product_qty) {
+      if (withinStock && withinLimit) {
         setError(null);
-        const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
         const items = [...cartProducts];
-        const itemIndex = items.indexOf(item);
-        item.quantity = quantity;
-        items[itemIndex] = item;
+        const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+        if (itemIndex !== -1) {
+          items[itemIndex] = {
+            ...items[itemIndex],
+            quantity
+          };
+        }
+
         setCartProducts(items);
       } else {
-        setError("Quantity is more than available quantity");
+        setError(
+          !withinStock
+            ? "Quantity is more than available quantity"
+            : `Maximum allowed quantity is ${MAX_LIMIT}`
+        );
       }
+
     } else {
-      setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
-      setError(null);
-      if(quantity > product.product_qty) {
-        setError("Quantity is more than available quantity");
-      } else {
-        setError(null);
-      }
+      // For items not yet included in cart
+      const validQty =
+        withinStock && withinLimit
+          ? quantity
+          : Math.min(product.product_qty, MAX_LIMIT);
+
+      setQuantity(validQty);
+
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
+      );
     }
   };
+
+
   const addToCart = () => {
     if (!isIncludeCard()) {
       const item = {...product, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcategory.split('-').join(' '))};
@@ -147,7 +247,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
                     }
                     min="1"
                     onChange={(e) =>
-                      setQuantityCartItem(product.product_id, e.target.value)
+                      setQuantityCartItem(product.product_id, e.target.value, product?.maximum_order_quantity)
                     }
                     className="qty-control__number text-center"
                     readOnly
@@ -156,7 +256,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
                     onClick={() =>
                       setQuantityCartItem(
                         product.product_id,
-                        isIncludeCard()?.quantity - 1 || quantity - 1
+                        isIncludeCard()?.quantity - 1 || quantity - 1,
+                        product?.maximum_order_quantity
                       )
                     }
                     className="qty-control__reduce"
@@ -167,7 +268,8 @@ export default function SingleProduct11({ category, subcategory, product }) {
                     onClick={() =>
                       setQuantityCartItem(
                         product.product_id,
-                        isIncludeCard()?.quantity + 1 || quantity + 1
+                        isIncludeCard()?.quantity + 1 || quantity + 1,
+                        product?.maximum_order_quantity
                       )
                     }
                     className="qty-control__increase"
