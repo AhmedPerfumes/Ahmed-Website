@@ -290,26 +290,38 @@ const Checkout = ({ product }) => {
     };
 
     useEffect(() => {
-        // 1. Define render function to handle price updates
+        let retryCount = 0;
+        const maxRetries = 10;
+
+        // 1. Define render function with safety checks
         const renderTabbyWidget = () => {
-            if (window.TabbyPromo) {
-                // Clear existing widget to prevent duplicates on re-render
-                const tabbyNode = document.getElementById("TabbyPromo");
-                if (tabbyNode) tabbyNode.innerHTML = "";
+            // Check if element exists AND if TabbyPromo is a valid constructor
+            if (window.TabbyPromo && typeof window.TabbyPromo === 'function') {
+                try {
+                    const tabbyNode = document.getElementById("TabbyPromo");
+                    if (tabbyNode) tabbyNode.innerHTML = "";
 
-                // Calculate Total Price based on Quantity
-                const unitPrice = parseFloat(tabbyPrice(product));
-                const totalPrice = (unitPrice * currentQuantity).toFixed(2);
+                    const unitPrice = parseFloat(tabbyPrice(product));
+                    const totalPrice = (unitPrice * currentQuantity).toFixed(2);
 
-                new window.TabbyPromo({
-                    selector: "#TabbyPromo",
-                    currency: "AED",
-                    price: totalPrice, // Sends total price
-                    lang: locale,
-                    source: "product",
-                    publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
-                    merchantCode: "APM",
-                });
+                    new window.TabbyPromo({
+                        selector: "#TabbyPromo",
+                        currency: "AED",
+                        price: totalPrice,
+                        lang: locale,
+                        source: "product",
+                        publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
+                        merchantCode: "APM",
+                    });
+                } catch (err) {
+                    console.error("Tabby Widget Error:", err);
+                }
+            } else {
+                // If script exists but global isn't ready, retry briefly
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    setTimeout(renderTabbyWidget, 500);
+                }
             }
         };
 
@@ -326,11 +338,11 @@ const Checkout = ({ product }) => {
                 renderTabbyWidget();
             };
         } else {
-            // If script exists (e.g. quantity update), render immediately
+            // Script tag exists, attempt render immediately (will retry if not ready)
             renderTabbyWidget();
         }
 
-    // Add currentQuantity to dependency array
+    // Dependency array
     }, [currentQuantity, locale, product, cartProducts]);
 
     return (
