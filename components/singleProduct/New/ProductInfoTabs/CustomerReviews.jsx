@@ -241,7 +241,7 @@ const ReviewList = ({ reviews, loading, t }) => {
         </div>
     );
 
-    if (!reviews || reviews.length === 0) return <div className="text-center py-5 text-muted">{t('beFirst')}</div>;
+    if (!reviews || reviews.length === 0) return <div className="text-center py-5">{t('beFirst')}</div>;
 
     return (
         <div
@@ -401,7 +401,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                             <div className="text-center py-5">
                                 <h2 className="text-gold mb-3">✓</h2>
                                 <p>{t('successMessage')}</p>
-                                <p className="small text-muted">Your <strong>exclusive reward</strong> will be sent to your email upon approval.</p>
+                                <p className="small">Your <strong>exclusive reward</strong> will be sent to your email upon approval.</p>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit}>
@@ -432,7 +432,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                                             >★</span>
                                         ))}
                                     </div>
-                                    <p className="small text-muted">{t('yourRatingLabel')}</p>
+                                    <p className="small">{t('yourRatingLabel')}</p>
                                     
                                     {/* Rating Error Message */}
                                     {errors.rating && <div className="text-error font-weight-bold">{errors.rating}</div>}
@@ -440,7 +440,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
 
                                 <div className="form-row">
                                     <div className="mb-3">
-                                        <label className="small text-muted text-uppercase">{t('yourNameLabel')}</label>
+                                        <label className="small text-uppercase">{t('yourNameLabel')}</label>
                                         <input type="text" className={`form-control form-control-dark ${errors.customer_name ? 'is-invalid' : ''}`} disabled={isAnonymous}
                                             value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                                         
@@ -452,7 +452,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                                     </div>
 
                                     <div className="mb-3">
-                                        <label className="small text-muted text-uppercase d-flex justify-content-between">
+                                        <label className="small text-uppercase d-flex justify-content-between">
                                             <span>Mobile Number</span>
                                             <span className="text-gold" style={{fontSize: '0.7rem'}}>Required for Coupon</span>
                                         </label>
@@ -463,7 +463,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                                 </div>
 
                                 <div className="form-group mb-3">
-                                    <label className="small text-muted text-uppercase d-flex justify-content-between">
+                                    <label className="small text-uppercase d-flex justify-content-between">
                                         <span>{t('yourEmailLabel')}</span>
                                         <span className="text-gold" style={{fontSize: '0.7rem'}}>Required for Coupon</span>
                                         </label>
@@ -473,7 +473,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                                 </div>
 
                                 <div className="form-group mb-4">
-                                    <label className="small text-muted text-uppercase">{t('yourReviewLabel')}</label>
+                                    <label className="small text-uppercase">{t('yourReviewLabel')}</label>
                                     <textarea className={`form-control form-control-dark ${errors.comment ? 'is-invalid' : ''}`} rows="4"
                                         value={formData.comment} onChange={e => setFormData({ ...formData, comment: e.target.value })}></textarea>
                                     {errors.comment && <div className="text-error">{errors.comment[0]}</div>}
