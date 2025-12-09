@@ -62,6 +62,7 @@ async function fetchCollectionsProducts() {
 const ProductShowcase = () => {
     const [isExplored, setIsExplored] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(true);
     const locale = useLocale();
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [swiperRef, setSwiperRef] = useState(null);
@@ -96,8 +97,10 @@ const ProductShowcase = () => {
 
     useEffect(() => {
         async function load() {
+            setIsLoadingProducts(true);
             const products = await fetchCollectionsProducts();
             setDisplayedProducts(products);
+            setIsLoadingProducts(false);
         }
         load();
     }, []);
@@ -109,8 +112,21 @@ const ProductShowcase = () => {
 
         // DESKTOP LOGIC
         if (!isExplored) return 2; // Before trigger → always 2 large cards
-        return 5; // After trigger → 3 big gallery cards (Dior style)
+        return 5; // After trigger → 3 big gallery cards 
     };
+
+    if (isLoadingProducts) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
+                <div className="spinner-border text-dark" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+    }
+    if (!formattedSaleSection?.banner || !displayedProducts || displayedProducts.length === 0) {
+        return null;
+    }
 
     // --- RESPONSIVE LOGIC END ---
 
@@ -177,9 +193,7 @@ const ProductShowcase = () => {
                 className={`${styles["showcase-section"]} ${styles["banner-section"]} pt-5 pb-5`}
                 transition={layoutTransition}
                 style={{
-                    backgroundImage: formattedSaleSection?.banner
-                        ? `url(${process.env.NEXT_PUBLIC_API_URL}storage/${formattedSaleSection.banner})`
-                        : undefined
+                    backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}storage/${formattedSaleSection.banner})`
                 }}
             />
 
