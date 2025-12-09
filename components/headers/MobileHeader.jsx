@@ -20,7 +20,9 @@ import { IoLocationOutline } from "react-icons/io5";
 import { IoReorderTwoSharp } from "react-icons/io5";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
+import { useMenu } from "@/context/MenuContext";
 export default function MobileHeader() {
+  const { topHeader } = useMenu();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -152,62 +154,69 @@ export default function MobileHeader() {
           ))}
       </Swiper> */}
 
-      <Swiper
-          className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
-          {...swiperOptions}
-          style={{ height: "2.5rem" }}
+      <style jsx global>{`
+        @keyframes marquee-ltr {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-rtl {
+          0% { transform: translateX(-50%); } 
+          100% { transform: translateX(0); }
+        }
+      `}</style>
+      <div 
+          className="bg-black d-flex align-items-center" 
+          style={{ height: "2.5rem", overflow: "hidden" }}
       >
-        <style jsx global>{`
-          @keyframes marquee-ltr {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          @keyframes marquee-rtl {
-            0% { transform: translateX(-50%); } 
-            100% { transform: translateX(0); }
-          }
-        `}</style>
-          {slideData1000.map((elm, i) => (
-              <SwiperSlide
-                  key={i}
-                  className="swiper-slide h-100"
-                  style={{
-                      textTransform: "uppercase",
-                      fontSize: "12px",
-                      backgroundColor: "#000", // Ensures slides don't stack transparently
-                      direction: "ltr"
-                  }}
-              >
-                  {/* Marquee Container: Hides overflow and prevents wrapping */}
-                  <div className="d-flex align-items-center h-100 w-100" style={{ overflow: "hidden"}}>
-                      
-                      {/* Marquee Track: Moves the text */}
-                      <div className="d-flex align-items-center" style={{ whiteSpace: "nowrap", width: "fit-content", willChange: "transform", animation: locale === 'ar' ? "marquee-rtl 60s linear infinite" : "marquee-ltr 60s linear infinite" }}>
-                          
-                          {/* Loop: Repeats text 10 times to fill screen width */}
-                          {[...Array(20)].map((_, idx) => (
-                              <span key={idx} className="d-flex align-items-center flex-nowrap">
-                                  <Link
-                                      href={`/${locale}/${elm.btnLink}`}
-                                      className="text-white text-decoration-none mx-4" // mx-3 gives space between text and separators
-                                      style={{ display: "inline-block" }}
-                                  >
-                                      {t(
-                                          elm.description
-                                              .split(" ")
-                                              .slice(0, 13)
-                                              .join(" ")
-                                      )}
-                                  </Link>
-                                  {/* Separator */}
-                                  <span className="text-white">-</span>
-                              </span>
-                          ))}
-                      </div>
-                  </div>
-              </SwiperSlide>
-          ))}
-      </Swiper>
+          
+          {/* Marquee Track: The element that gets the animation. Must contain two copies of the content. */}
+          <div 
+              className="d-flex align-items-center" 
+              style={{ 
+                  whiteSpace: "nowrap", 
+                  width: "fit-content", // Crucial for marquee effect
+                  willChange: "transform", 
+                  // Apply animation based on locale
+                  animation: locale === 'ar' ? "marquee-rtl 90s linear infinite" : "marquee-ltr 90s linear infinite",
+                  height: "100%"
+              }}
+          >
+              
+              {/*
+                Loop over the topHeader items multiple times (e.g., 20)
+                to create a continuous stream of repeated announcements.
+              */}
+              {[...Array(20)].map((_, idx) => (
+                  topHeader.map((elm, i) => (
+                      <span 
+                          key={`${idx}-${i}`} 
+                          className="d-flex align-items-center flex-nowrap" 
+                          style={{ 
+                              textTransform: "uppercase", 
+                              fontSize: "12px" 
+                          }}
+                      >
+                          <Link
+                              href={`/${locale}/${elm.color}`}
+                              className="text-white text-decoration-none mx-4"
+                              style={{ display: "inline-block" }}
+                          >
+                              {/* Translate and display the truncated title */}
+                              {t(
+                                  elm.title
+                                      .split(" ")
+                                      .slice(0, 13)
+                                      .join(" ")
+                              )}
+                          </Link>
+                          {/* Separator */}
+                          <span className="text-white">-</span>
+                      </span>
+                  ))
+              ))}
+              
+          </div>
+      </div>
       
       <div className="container d-flex align-items-center h-100">
         <Link className="mobile-nav-activator d-block position-relative" href="#">
