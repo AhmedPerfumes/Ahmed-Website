@@ -99,75 +99,20 @@ export default function Context({ children }) {
   const { shippingServiceCharges } = useMenu();
 
   useEffect(() => {
-  const initCart = async () => {
-    let customerId = null;
-
     try {
-      // Get user from localStorage (Base64 encoded)
-      const encodedUser = localStorage.getItem("user");
-      if (encodedUser) {
-        const decoded = JSON.parse(atob(encodedUser)); // decode base64 → JSON
-        customerId = decoded?.id;
+      const items = JSON.parse(localStorage.getItem("cartList"));
+      if (Array.isArray(items)) {
+        // console.log('Loading cart from localStorage:', items);
+        dispatch({ type: 'SET_PRODUCTS', payload: items });
+      } else {
+        // console.log('No valid cart in localStorage, setting empty array');
+        dispatch({ type: 'SET_PRODUCTS', payload: [] });
       }
-    } catch (err) {
-      console.error("Error decoding user from localStorage", err);
+    } catch (error) {
+      // console.error('Error parsing cartList from localStorage:', error);
+      dispatch({ type: 'SET_PRODUCTS', payload: [] });
     }
-
-    if (customerId) {
-      // Logged-in user → fetch cart from API
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}api/getCart`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ customer_id: customerId }),
-          }
-        );
-
-        const data = await res.json();
-        console.log("Fetched cart data:", data); // debug
-
-        if (Array.isArray(data)) {
-          // Normalize values
-          const normalized = data.map((p) => ({
-            ...p,
-            price: Number(p.price),
-            quantity: Number(p.quantity || 1),
-          }));
-
-          // Update context state
-          dispatch({ type: "SET_PRODUCTS", payload: normalized });
-
-          // Persist to localStorage
-          localStorage.setItem("cartList", JSON.stringify(normalized));
-        } else {
-          dispatch({ type: "SET_PRODUCTS", payload: [] });
-        }
-      } catch (error) {
-        console.error("Error fetching cart from API:", error);
-        dispatch({ type: "SET_PRODUCTS", payload: [] });
-      }
-    } else {
-      // Guest user → fallback to localStorage
-      try {
-        const items = JSON.parse(localStorage.getItem("cartList"));
-        if (Array.isArray(items)) {
-          dispatch({ type: "SET_PRODUCTS", payload: items });
-        } else {
-          dispatch({ type: "SET_PRODUCTS", payload: [] });
-        }
-      } catch {
-        dispatch({ type: "SET_PRODUCTS", payload: [] });
-      }
-    }
-  };
-
-  initCart();
-}, []);
-
+  }, []);
 
   useEffect(() => {
     // console.log('Saving cartProducts to localStorage:', state.products);
@@ -462,18 +407,9 @@ export default function Context({ children }) {
     }
 
     dispatch({ type: 'SET_PROCESSING', payload: true });
-    const updated = [...state.products];
-
-    const existing = updated.find((p) => p.product_id === product.product_id);
-    if (existing) {
-      existing.quantity = (existing.quantity || 0) + (product.quantity || 1);
-    } else {
-      updated.push({ ...product, quantity: product.quantity || 1 });
-    }
-
     dispatch({
-      type: 'SET_PRODUCTS',
-      payload: updated,
+      type: 'ADD_PRODUCT',
+      payload: product,
       meta: {
         toast: {
           name: product?.product_name,
@@ -494,10 +430,15 @@ export default function Context({ children }) {
     dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
   };
 
- // REMOVE PRODUCT
-const removeProduct = (productId) => {
-  setCartProducts((prev) => prev.filter((p) => p.product_id !== productId));
-};
+  const removeProduct = (productId) => {
+    if (state.isProcessing) {
+      // console.log('Skipping removeProduct: processing in progress', { productId });
+      return;
+    }
+    // console.log('removeProduct:', { productId });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'REMOVE_PRODUCT', payload: { productId } });
+  };
 
   const setCartProducts = (productsOrFn) => {
     let newProducts = [];

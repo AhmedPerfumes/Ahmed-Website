@@ -5,60 +5,51 @@ export default function TermsRaffle() {
     const t = useTranslations();
     return (
         <>
-            <section className="container mw-930 lh-30 p-4" style={{fontFamily: "SofiaProRegular"}}>
+            <section
+                className="container mw-930 lh-30 p-4"
+                style={{ fontFamily: "SofiaProRegular" }}
+            >
 
-                <h2 style={{fontSize: "36px"}}>
+                <h2 style={{ fontSize: "36px" }}>
                     Celebrate 25 years of Passion – Ahmed Al Maghribi Perfumes
                 </h2>
-                <h3 className="p-4" style={{fontSize: "26px"}}>Terms &amp; Conditions – Shop &amp; Win</h3>
+
+                <h3 className="p-4" style={{ fontSize: "26px" }}>
+                    Terms &amp; Conditions – Shop &amp; Win
+                </h3>
 
                 <h4>1. Eligibility and Purchase Requirements</h4>
                 <p>These rules determine who can enter and what purchases qualify.</p>
 
+                {/* =========================
+                    TABLE WITH INLINE STYLES
+                ============================= */}
                 <table
                     style={{
                         width: "100%",
                         borderCollapse: "collapse",
                         marginTop: "20px",
                         marginBottom: "20px",
-                        fontSize: "20px"
+                        fontSize: "20px",
+                        scrollBehavior: "smooth"
                     }}
                 >
                     <thead>
                         <tr>
-                            <th
-                                style={{
-                                    border: "1px solid #ddd",
-                                    padding: "10px",
-                                    background: "#f7f7f7",
-                                    fontWeight: "600",
-                                    textAlign: "left"
-                                }}
-                            >
-                                Category
-                            </th>
-                            <th
-                                style={{
-                                    border: "1px solid #ddd",
-                                    padding: "10px",
-                                    background: "#f7f7f7",
-                                    fontWeight: "600",
-                                    textAlign: "left"
-                                }}
-                            >
-                                Detailed Condition
-                            </th>
-                            <th
-                                style={{
-                                    border: "1px solid #ddd",
-                                    padding: "10px",
-                                    background: "#f7f7f7",
-                                    fontWeight: "600",
-                                    textAlign: "left"
-                                }}
-                            >
-                                Typical Exclusion
-                            </th>
+                            {["Category", "Detailed Condition", "Typical Exclusion"].map((title, i) => (
+                                <th
+                                    key={i}
+                                    style={{
+                                        border: "1px solid #ddd",
+                                        padding: "10px",
+                                        background: "#f7f7f7",
+                                        fontWeight: "600",
+                                        textAlign: "left"
+                                    }}
+                                >
+                                    {title}
+                                </th>
+                            ))}
                         </tr>
                     </thead>
 
@@ -89,10 +80,13 @@ export default function TermsRaffle() {
 
                         <tr>
                             <td style={{ border: "1px solid #ddd", padding: "10px" }}>
-                                Eligible GWP
+                                Eligible Gift With Purchase
                             </td>
                             <td style={{ border: "1px solid #ddd", padding: "10px" }}>
-                                Air Freshener – GWP Product List
+                                {/* ANCHOR LINK — SCROLLS TO PRODUCT LIST */}
+                                <a href="#gwp-list" style={{ color: "#0070f3", textDecoration: "underline" }}>
+                                    GWP Product List
+                                </a>
                             </td>
                             <td style={{ border: "1px solid #ddd", padding: "10px" }}>
                                 Choice of selection
@@ -127,8 +121,6 @@ export default function TermsRaffle() {
 
                 <h4>2. Raffle/Draw Entry Process (Shop &amp; Win)</h4>
 
-                <p>This covers how the AED 250 purchase grants an entry into the raffle for the grand prize.</p>
-
                 <ul>
                     <li><strong>Redemption Location:</strong> Present original receipts at the Customer Service Desk or Promotion Kiosk.</li>
                     <li><strong>Registration Process:</strong> Provide Full Name, Mobile Number, and Invoice Number as per DED regulations.</li>
@@ -140,20 +132,144 @@ export default function TermsRaffle() {
 
                 <ul>
                     <li><strong>Availability:</strong> First-come, first-served while stock lasts.</li>
-                    <li><strong>Limit:</strong> One GWP per customer per day (even for AED 1,000 spend).</li>
+                    <li><strong>Limit:</strong> One GWP per customer per day.</li>
                     <li><strong>Value:</strong> No cash value. Non-transferable and non-exchangeable.</li>
-                    <li><strong>Return Policy Clause:</strong> If the qualifying purchase is refunded, the GWP must be returned unused or its value will be deducted.</li>
+                    <li><strong>Return Policy Clause:</strong> If the qualifying purchase is refunded, the GWP must be returned unused.</li>
                     <li><strong>Condition of GWP:</strong> Provided “as is.” No liability for defects after redemption.</li>
                 </ul>
 
                 <h4>4. Prize Claim and General Conditions</h4>
 
                 <ul>
-                    <li><strong>Winner Notification:</strong> Notified via phone or email provided during registration.</li>
-                    <li><strong>Claim Period:</strong> Must claim within 15 days of draw with valid ID and winning confirmation.</li>
-                    <li><strong>Forfeiture:</strong> Late claims are forfeited. Prize may be redrawn or surrendered to DED.</li>
-                    <li><strong>Publicity Consent:</strong> Winner agrees name and image may be used in promotions without compensation.</li>
+                    <li><strong>Winner Notification:</strong> Via phone or email.</li>
+                    <li><strong>Claim Period:</strong> Must claim within 15 days.</li>
+                    <li><strong>Forfeiture:</strong> Unclaimed prizes are forfeited.</li>
+                    <li><strong>Publicity Consent:</strong> Winner agrees name & photo may be used in promotions.</li>
                 </ul>
+
+                {/* ================================
+    ANCHORED GWP PRODUCT LIST SECTION
+================================= */}
+<h3 id="gwp-list" style={{ marginTop: "60px", fontSize: "28px" }}>
+    GWP Product List
+</h3>
+
+<div
+    style={{
+        display: "flex",
+        gap: "40px",
+        marginTop: "20px",
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+        flexWrap: "wrap"
+    }}
+>
+
+    {/* LEFT COLUMN — BODY GEL */}
+    <div style={{ flex: "1", minWidth: "300px" }}>
+        <h4 style={{ marginBottom: "10px" }}>Body Gel</h4>
+
+        <table
+            style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                marginBottom: "40px"
+            }}
+        >
+            <thead>
+                <tr>
+                    <th
+                        style={{
+                            border: "1px solid #ddd",
+                            padding: "10px",
+                            background: "#f7f7f7",
+                            textAlign: "left"
+                        }}
+                    >
+                        Product
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {[
+                    "BIDUN ESAM BODY GEL 30ML",
+                    "OUD & ROSES GEL 30MLE",
+                    "HIRFAH GEL 30ML",
+                    "SUPREME GEL 20ML",
+                    "OUD & ROSES GEL 20MLE",
+                    "MUZN GEL 30ML",
+                    "LITTLE HEARTS GEL 30ML (New)",
+                    "MARJ GEL 30ML",
+                    "SUPREME GEL 30ML (New)",
+                    "OUD & ROSES GEL 30ML (New)",
+                    "HIRFAH GEL 30ML (New)",
+                    "BIDUN ESAM GEL 30ML (New)"
+                ].map((name, index) => (
+                    <tr key={index}>
+                        <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+                            {name}
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+
+    {/* RIGHT COLUMN — AIR FRESHENER */}
+    <div style={{ flex: "1", minWidth: "300px" }}>
+        <h4 style={{ marginBottom: "10px" }}>Air Freshener</h4>
+
+        <table
+            style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                marginBottom: "40px"
+            }}
+        >
+            <thead>
+                <tr>
+                    <th
+                        style={{
+                            border: "1px solid #ddd",
+                            padding: "10px",
+                            background: "#f7f7f7",
+                            textAlign: "left"
+                        }}
+                    >
+                        Product
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {[
+                    "LILFRASH BIDUN ESAM 300ML",
+                    "LILFRASH SUPREME 300ML",
+                    "LILFRASH LITTLE HEARTS 300ML",
+                    "LILFRASH DARI 300ML",
+                    "LILFRASH TAMAM 300ML",
+                    "LILFRASH JAW 300ML",
+                    "LILFRASH OUD LAVENDER 300ML",
+                    "LILFRASH OUD & ROSES 300ML",
+                    "LILFRASH RASHHAT 300ML",
+                    "LILFRASH KENAYAH 300ML",
+                    "LILFRASH GHURFAT 300ML",
+                    "LILFRASH GHAMIR 300ML",
+                    "LILFRASH OUD & ROSES 300ML W/BOX"
+                ].map((name, index) => (
+                    <tr key={index}>
+                        <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+                            {name}
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
 
             </section>
         </>
