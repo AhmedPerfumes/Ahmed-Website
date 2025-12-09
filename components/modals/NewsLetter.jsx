@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react"; // No longer need useState
 import { useLocale, useTranslations } from "next-intl";
-import { useMenu } from "@/context/MenuContext";
 
-export default function NewsLetter() {
+
+export default function NewsLetter({popUp}) {
     const modalElement = useRef(null);
     const locale = useLocale();
-    const { popUp } = useMenu();
+    
     const t = useTranslations();
 
     // --- NEW: Use a ref to track if the modal has been shown in this session ---
@@ -25,12 +25,12 @@ export default function NewsLetter() {
         const lastShownTimestamp = localStorage.getItem(POPUP_STORAGE_KEY);
         const currentTime = new Date().getTime();
 
-        if (lastShownTimestamp) {
-            const timeSinceLastShown = currentTime - parseInt(lastShownTimestamp, 10);
-            if (timeSinceLastShown < POPUP_COOLDOWN_PERIOD) {
-                return; // Cooldown is active, so we do nothing.
-            }
-        }
+        // if (lastShownTimestamp) {
+        //     const timeSinceLastShown = currentTime - parseInt(lastShownTimestamp, 10);
+        //     if (timeSinceLastShown < POPUP_COOLDOWN_PERIOD) {
+        //         return; // Cooldown is active, so we do nothing.
+        //     }
+        // }
 
         // --- 2. If cooldown is over, set up the modal and listener ---
         const bootstrap = require("bootstrap");

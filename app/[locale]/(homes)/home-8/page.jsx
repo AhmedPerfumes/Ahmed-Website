@@ -44,7 +44,7 @@ export default function HomePage8() {
       </div>
 
       {/* Your actual page content */}
-      <NewsLetter />
+      
       <BotPenguinWidget />
       {/* <PopUp/> */}
       <Header14 />

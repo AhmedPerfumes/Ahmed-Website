@@ -22,6 +22,8 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
 import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
+import { useMenu } from "@/context/MenuContext";
+import NewsLetter from '@/components/modals/NewsLetter';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,7 +32,7 @@ const ScrollSnapHorizontalBootstrap = () => {
     const t = useTranslations();
 
     const [isMobile, setIsMobile] = useState(null);
-
+    const { popUp } = useMenu();
     useEffect(() => {
         const sections = gsap.utils.toArray(".scroll-section");
         // const panels = gsap.utils.toArray(".horizontal-scroll .panel");
@@ -140,6 +142,7 @@ const ScrollSnapHorizontalBootstrap = () => {
     }, []);
 
     return (
+        <><NewsLetter popUp={popUp} />
         <div id="main" className="">
             {/* Vertical Section 1 */}
             {/* <section className="scroll-section d-flex flex-direction-column">
@@ -721,6 +724,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </div>
             </section>
         </div>
+        </>
     );
 };
 
