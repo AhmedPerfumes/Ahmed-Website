@@ -15,7 +15,12 @@ import styles from "./ProductShowcase.module.css";
 
 // --- HELPERS ---
 const clean = (str) =>
-    str?.replace(/&amp;/g, "")?.replace(/[^\w\s-]/g, "")?.trim()?.toLowerCase();
+    str
+        ?.replace(/&amp;/g, "")        // Remove HTML ampersands
+        ?.replace(/[^\w\s-]/g, "")     // Remove non-word chars (keep letters, numbers, spaces, dashes)
+        ?.trim()                       // Remove leading/trailing space
+        ?.replace(/\s+/g, "-")         // <--- FIX: Replace one or more spaces with a single dash
+        ?.toLowerCase();
 
 const buildLink = (locale, p) => {
     const categorySlug = clean(p.category_name);
@@ -67,10 +72,13 @@ const fallbackProducts = Array(SKELETON_COUNT).fill({ isSkeleton: true });
 
 const ProductShowcase = () => {
     const [isExplored, setIsExplored] = useState(false);
+    // const [showLoader, setShowLoader] = useState(false); // Removed per instruction (using Skeletons instead)
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
     const [products, setProducts] = useState(fallbackProducts); // Start with skeletons
     const [swiperRef, setSwiperRef] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(1);
+    
+    // --- RESPONSIVE LOGIC ---
     const [windowWidth, setWindowWidth] = useState(0);
 
     const locale = useLocale();
@@ -89,7 +97,6 @@ const ProductShowcase = () => {
         };
     })() : null;
 
-    // 2. Responsive Listener
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
         handleResize();
@@ -97,20 +104,17 @@ const ProductShowcase = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // 3. Data Loading Logic
+    const isMobile = windowWidth > 0 && windowWidth < 768;
+
+    // 2. Data Loading Logic
     useEffect(() => {
-        // Guard: If no banner is available via context, we don't even fetch products.
+        // Guard: If no banner, don't fetch
         if (!formattedSaleSection?.banner) return;
 
         let isMounted = true;
-        
         async function load() {
-            // Keep skeletons visible while fetching
             const fetched = await fetchCollectionsProducts();
-            
             if (isMounted) {
-                // If fetch returns empty, we might want to hide section or keep skeletons? 
-                // Assuming we default to empty array if failed.
                 if (fetched.length > 0) {
                     setProducts(fetched);
                 }
@@ -118,29 +122,32 @@ const ProductShowcase = () => {
             }
         }
         load();
-
         return () => { isMounted = false; };
     }, [formattedSaleSection?.banner]);
 
-    const isMobile = windowWidth > 0 && windowWidth < 768;
-
-    // 4. Optimization: Early Exit if no Banner
-    // If context hasn't loaded or no banner exists, return null immediately.
+    // 3. Early Exit if no Banner
     if (!formattedSaleSection?.banner) return null;
 
-    // --- VIEW LOGIC ---
+
+    // --- ORIGINAL VIEW & NAVIGATION LOGIC ---
     const getSlidesPerView = () => {
         if (isMobile) return 1.5;
-        if (!isExplored) return 2;
-        return 5;
+        // DESKTOP LOGIC
+        if (!isExplored) return 2; 
+        return 5; 
     };
 
+    // Reverted to original logic
     const handleExploreClick = () => {
-        if (!isMobile) setIsExplored(true);
-        else window.location.href = `/${locale}/sale`;
+        if (windowWidth >= 768) {
+            // Desktop → open slider
+            setIsExplored(true);
+        } else {
+            // Mobile → act as normal link
+            window.location.href = `/${locale}/sale`;
+        }
     };
 
-    // --- ANIMATION VARIANTS ---
     const layoutTransition = { duration: 1.0, ease: [0.43, 0.13, 0.23, 0.96] };
     const textSectionVariants = {
         initial: { position: "relative", left: "35vw", zIndex: 2 },
@@ -194,7 +201,7 @@ const ProductShowcase = () => {
                 </div>
             </motion.section>
 
-            {/* Section 3: Product Cards (Real or Skeleton) */}
+            {/* Section 3: Product Cards */}
             <motion.section
                 className={`${styles["showcase-section"]} ${styles["products-section"]}`}
                 variants={!isMobile ? productsSectionVariants : undefined}
@@ -205,16 +212,18 @@ const ProductShowcase = () => {
                     <Swiper
                         onSwiper={setSwiperRef}
                         onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex + 1)}
-                        key={isExplored ? "explored" : "initial"} // Force re-render on state change for clean transition
+                        key={isExplored ? "explored" : "initial"}
                         modules={[Pagination, Navigation, Autoplay]}
                         spaceBetween={10}
                         slidesPerView={getSlidesPerView()}
                         centeredSlides={isMobile}
-                        autoplay={!isLoadingProducts} // Disable autoplay while skeleton loading
+                        autoplay={!isLoadingProducts}
                         className={styles["product-swiper"]}
+                        // Reverted to original logic
                         onSliderMove={(swiper) => {
-                            if (isMobile) return;
                             const diff = swiper.touches.diff;
+                            if (isMobile) return;
+
                             if (!isExplored && diff < -15) setIsExplored(true);
                             if (isExplored && diff > 15) setIsExplored(false);
                         }}
@@ -228,25 +237,35 @@ const ProductShowcase = () => {
                                     </Link>
                                 </div>
                             )}
+                            
+                            {/* Reverted to original Prev Button Logic */}
                             <button className={styles.prevBtn} onClick={() => {
                                 if (!swiperRef) return;
-                                if (!isMobile && swiperRef.realIndex === 0) setIsExplored(false);
+                                if (!isMobile && swiperRef.realIndex === 0) {
+                                    setIsExplored(false);
+                                }
                                 swiperRef.slidePrev();
-                            }}>&lt;</button>
+                            }}>
+                                &lt;
+                            </button>
                             
                             <span className={styles.pageIndicator}>
                                 {isLoadingProducts ? "-" : currentIndex} / {isLoadingProducts ? "-" : products.length}
                             </span>
 
+                            {/* Reverted to original Next Button Logic */}
                             <button className={styles.nextBtn} onClick={() => {
                                 if (!swiperRef) return;
                                 if (!isMobile) setIsExplored(true);
                                 swiperRef.slideNext();
-                            }}>&gt;</button>
+                            }}>
+                                &gt;
+                            </button>
                         </div>
 
                         {/* RENDER PRODUCTS OR SKELETONS */}
                         {products.map((p, i) => {
+                            // Skeleton Card
                             if (p.isSkeleton) {
                                 return (
                                     <SwiperSlide key={`skel-${i}`}>
@@ -261,6 +280,7 @@ const ProductShowcase = () => {
                                 );
                             }
 
+                            // Real Card
                             const images = JSON.parse(p.images || "[]");
                             const firstImg = images[0] ? `${process.env.NEXT_PUBLIC_API_URL}storage/${images[0]}` : "/no-img.jpg";
                             const link = buildLink(locale, p);
