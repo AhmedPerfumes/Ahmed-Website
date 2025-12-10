@@ -51,7 +51,7 @@
 
 
 .text-section {
-    width: 33vw;
+    width: 28vw;
     position: relative;
     z-index: 5;
     transition: opacity .5s ease;
@@ -331,4 +331,18 @@
         font-weight: 500;
     }
 
+}
+/* Add this to your CSS module */
+.text-wrapper {
+    max-width: 100%;
+    /* Ensures text breaks to the next line if it hits the edge */
+    overflow-wrap: break-word; 
+    word-wrap: break-word;
+    /* Prevents text from forcing the container wider */
+    white-space: normal; 
+}
+
+/* Optional: Ensure the heading specifically doesn't overflow */
+.text-wrapper h2 {
+    max-width: 100%;
 }

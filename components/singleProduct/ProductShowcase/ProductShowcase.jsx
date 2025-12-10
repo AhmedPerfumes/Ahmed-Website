@@ -181,7 +181,8 @@ const ProductShowcase = () => {
                 animate={!isMobile ? (isExplored ? "explored" : "initial") : undefined}
                 transition={!isMobile ? layoutTransition : undefined}
             >
-                <div>
+                {/* ADD THE CLASS HERE 👇 */}
+                <div className={styles["text-wrapper"]}>
                     <p className="fs-15 px-0 text-secondary section-paragraph">
                         {locale === "ar" ? formattedSaleSection?.small_text_ar : formattedSaleSection?.small_text}
                     </p>
