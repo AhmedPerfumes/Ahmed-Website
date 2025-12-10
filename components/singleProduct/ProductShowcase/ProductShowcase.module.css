@@ -17,10 +17,8 @@
     justify-content: center;
     min-height: 100vh;
     position: relative;
-
 }
 
-/* Shared section formatting */
 .showcase-section {
     height: 100%;
     display: flex;
@@ -38,7 +36,6 @@
     left: 0;
     top: 0;
     width: 33vw;
-    /* background-image: url('https://admin.ahmedalmaghribi.com/public/storage/banners/mobile-size-uae-winter-sale-upto-30-discount.jpg'); */
     background-size: cover;
     background-position: center;
     transition: opacity .5s ease;
@@ -49,7 +46,6 @@
     display: inline-block !important;
 }
 
-
 .text-section {
     width: 33vw;
     position: relative;
@@ -57,7 +53,6 @@
     transition: opacity .5s ease;
 }
 
-/* Fade-out on explore */
 .showcase-container.explored .banner-section,
 .showcase-container.explored .text-section {
     opacity: 0;
@@ -65,7 +60,7 @@
 }
 
 /* -----------------------------------------------------------
-   PRODUCTS SECTION – DIOR STYLE
+   PRODUCTS SECTION
 ----------------------------------------------------------- */
 .products-section {
     position: absolute;
@@ -73,25 +68,21 @@
     top: 0;
     width: 44vw;
     transform-origin: right center;
-    transition:
-        transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
-        opacity 0.3s ease;
+    transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.3s ease;
     display: flex;
     justify-content: center;
 }
 
-/* Full expansion */
 .showcase-container.explored .products-section {
     width: 100vw;
 }
 
 /* -----------------------------------------------------------
-   SWIPER
+   SWIPER & CARDS
 ----------------------------------------------------------- */
 .swiper-container {
     width: 100%;
     height: auto;
-    /* Dior height */
     max-width: 1800px;
     margin: 0 auto;
 }
@@ -101,37 +92,32 @@
     height: 100%;
 }
 
-/* -----------------------------------------------------------
-   PRODUCT CARD – PREMIUM, BALANCED
------------------------------------------------------------ */
 .product-card {
     width: 100%;
     max-width: 360px;
-    /* untriggered */
     margin: 0 auto;
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #eee;
-    transition:
-        transform .35s ease,
-        max-width .35s ease;
+    background: #fff; /* Ensure white background */
+    transition: transform .35s ease, max-width .35s ease;
+    display: block; /* Important for links */
 }
 
-/* EXPANDED MODE → bigger, Dior-like */
 .showcase-container.explored .product-card {
     max-width: 480px;
 }
 
-/* Hover elevation */
 .product-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* Maintain perfect proportions */
 .product-image {
     width: 100%;
+    aspect-ratio: 1/1; /* Enforce square images */
     object-fit: contain;
+    background: #f9f9f9;
 }
 
 .product-info {
@@ -146,7 +132,34 @@
 }
 
 /* -----------------------------------------------------------
-   CUSTOM NAV (Dior bottom right)
+   SKELETON LOADER STYLES
+----------------------------------------------------------- */
+@keyframes pulse {
+    0% { background-color: #f0f0f0; }
+    50% { background-color: #e0e0e0; }
+    100% { background-color: #f0f0f0; }
+}
+
+.skeleton-card {
+    border-color: #f0f0f0;
+    pointer-events: none;
+}
+
+.skeleton-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-text {
+    height: 16px;
+    border-radius: 4px;
+    margin: 0 auto;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* -----------------------------------------------------------
+   NAVIGATION
 ----------------------------------------------------------- */
 .customNav {
     position: absolute;
@@ -177,24 +190,28 @@
 }
 
 /* -----------------------------------------------------------
-   MOBILE LUXURY LAYOUT (RECOMMENDED)
+   MOBILE OPTIMIZATION
 ----------------------------------------------------------- */
 @media (max-width: 767px) {
-
     .showcase-container {
         height: auto !important;
         overflow: visible !important;
-        padding-top: 2rem;
+        padding-top: 0; /* Remove top padding to let banner sit flush */
+        display: block; /* Remove flex centering */
     }
 
+    /* FIX: Image Cut Off */
     .banner-section {
         display: block;
         position: relative;
         width: 100vw !important;
-        height: 70vh !important;
+        /* Replaced fixed 70vh with aspect-ratio logic */
+        height: auto !important;
+        aspect-ratio: 3/5; /* Standard portrait ratio. Adjust to 3/4 if needed */
+        min-height: 400px; /* Fallback */
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: top center;
     }
 
     .text-section {
@@ -204,6 +221,8 @@
         width: 100% !important;
         padding: 2rem 1.5rem;
         text-align: center;
+        background: #fff; /* Ensure text is readable below image */
+        left: 0 !important;
     }
 
     .text-section h2 {
@@ -227,7 +246,8 @@
         position: relative !important;
         width: 100% !important;
         padding: 0 1rem 3rem;
-        margin-top: 1.5rem;
+        margin-top: 0;
+        background: #fff;
     }
 
     .swiper-container {
@@ -241,24 +261,6 @@
 
     .customNav {
         display: none !important;
-        /* Mobile → hide arrows */
-    }
-
-
-    .banner-section,
-    .text-section,
-    .products-section {
-        position: relative !important;
-        width: 100% !important;
-        left: 0 !important;
-        top: auto !important;
-        transform: none !important;
-        opacity: 1 !important;
-    }
-
-    .products-section {
-        margin-top: 1rem;
-        padding-bottom: 2.5rem !important;
     }
 
     .mobileNav {
@@ -281,15 +283,9 @@
         transition: opacity .2s;
     }
 
-    .mobileArrow:active,
-    .mobileArrow:hover {
-        opacity: 1;
-    }
-
     .mobileIndicator {
         font-size: 14px;
         opacity: .75;
         font-weight: 500;
     }
-
 }
