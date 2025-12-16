@@ -54,7 +54,10 @@ async function getproduct(categoryName, subCategoryName, product) {
       subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
       product: product.split("-").join(" ").toUpperCase(),
     }),
-    cache: 'no-store',
+    next: {
+      tags: ["products"],
+      revalidate: 86400 // 48 hours
+    },
   });
   if (!response.ok) {
     throw new Error('Network response was not ok');
