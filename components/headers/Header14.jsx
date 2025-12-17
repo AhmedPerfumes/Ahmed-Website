@@ -247,33 +247,47 @@ export default function Header14() {
                     ))}
                 </Swiper> */}
                 {/* Top Swiper */}
-                <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
-                    {topHeader.map((elm, i) => (
-                        <SwiperSlide key={i} className="swiper-slide h-100" style={{backgroundColor: '#000 !important'}}>
-                            {/* Marquee Container - Overflow Hidden */}
-                            <div className="marquee-container d-flex align-items-center" dir="ltr">
-                                {/* Animated Track */}
-                                <div className="marquee-track" style={{ animation: locale === 'ar' ? "marquee-rtl 60s linear infinite" : "marquee-ltr 60s linear infinite"}}>
-                                    {/* We repeat the Link multiple times (e.g., 10) to fill the screen and create the loop */}
-                                    {[...Array(20)].map((_, idx) => (
-                                        <span key={idx} className="d-flex align-items-center">
-                                            <Link 
-                                                href={`/${locale}/${elm.color}`} 
-                                                className="text-white text-decoration-none text-uppercase fw-bold mx-5"
-                                                style={{ fontSize: "12px", whiteSpace: "nowrap" }}
-                                            >
-                                                {t(elm.title.split(" ").slice(0, 13).join(" "))}
-                                            </Link>
-                                            {/* Optional Separator */}
-                                            <span className="text-white opacity-50">-</span>
-                                        </span>
-                                    ))}
-                                    
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                <div className="bg-black" style={{ height: "2.5rem", overflow: "hidden" }}>
+                    {/* Marquee Container - Overflow Hidden */}
+                    {/* d-flex align-items-center ensures vertical alignment within the 2.5rem height */}
+                    <div className="marquee-container d-flex align-items-center" dir="ltr">
+                        
+                        {/* Animated Track - Animation applied here based on locale */}
+                        <div 
+                            className="marquee-track" 
+                            style={{ 
+                                animation: locale === 'ar' 
+                                    ? "marquee-rtl 90s linear infinite" 
+                                    : "marquee-ltr 90s linear infinite",
+                                height: "100%" 
+                            }}
+                        >
+                            {/* 1. Create an array of items to animate.
+                                2. Repeat the entire 'topHeader' list 10-20 times (or a number large enough)
+                                to fill the screen and create a seamless loop effect.
+                            */}
+                            {[...Array(20)].map((_, idx) => (
+                                // Map over the original topHeader data inside the repetition loop
+                                topHeader.map((elm, i) => (
+                                    // Each full marquee item (Link + Separator)
+                                    <span key={`${idx}-${i}`} className="d-flex align-items-center">
+                                        <Link 
+                                            href={`/${locale}/${elm.color}`} 
+                                            className="text-white text-decoration-none text-uppercase fw-bold mx-5"
+                                            style={{ fontSize: "12px", whiteSpace: "nowrap" }}
+                                        >
+                                            {/* Truncated text using slice(0, 13) */}
+                                            {t(elm.title.split(" ").slice(0, 13).join(" "))}
+                                        </Link>
+                                        {/* Separator - Keep it outside the Link but inside the span */}
+                                        <span className="text-white opacity-50">-</span>
+                                    </span>
+                                ))
+                            ))}
+                            
+                        </div>
+                    </div>
+                </div>
 
                 {/* Search Popup */}
                 <div ref={containerRef} className={`header-tools__item hover-container ${isPopupOpen ? "js-content_visible" : "js-content_hidden"}`}>

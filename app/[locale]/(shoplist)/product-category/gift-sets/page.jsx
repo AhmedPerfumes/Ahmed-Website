@@ -49,7 +49,10 @@ async function getCategorySubCategory(categoryName) {
     body: JSON.stringify({
       category: categoryName.split("-").join(" ").toUpperCase(),
     }),
-    cache: 'no-store',
+    next: {
+      tags: ["giftSets"],
+      revalidate: 86400 // 48 hours
+    },
   });
   if (!response.ok) {
     throw new Error('Network response was not ok');

@@ -51,7 +51,7 @@
 
 
 .text-section {
-    width: 33vw;
+    width: 28vw;
     position: relative;
     z-index: 5;
     transition: opacity .5s ease;
@@ -146,6 +146,34 @@
 }
 
 /* -----------------------------------------------------------
+   SKELETON LOADER STYLES (NEW)
+----------------------------------------------------------- */
+@keyframes pulse {
+    0% { background-color: #f0f0f0; }
+    50% { background-color: #e0e0e0; }
+    100% { background-color: #f0f0f0; }
+}
+
+.skeleton-card {
+    border-color: #f0f0f0;
+    pointer-events: none;
+    background: #fff;
+}
+
+.skeleton-image {
+    width: 100%;
+    aspect-ratio: 1/1; /* Skeletons stay square for tidiness */
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-text {
+    height: 16px;
+    border-radius: 4px;
+    margin: 0 auto;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* -----------------------------------------------------------
    CUSTOM NAV (Dior bottom right)
 ----------------------------------------------------------- */
 .customNav {
@@ -181,20 +209,28 @@
 ----------------------------------------------------------- */
 @media (max-width: 767px) {
 
-    .showcase-container {
+    /* .showcase-container {
         height: auto !important;
         overflow: visible !important;
         padding-top: 2rem;
+    } */
+    .showcase-container {
+        height: auto !important;
+        overflow: visible !important;
+        padding-top: 0; /* Remove padding for flush look */
+        display: block;
     }
 
     .banner-section {
         display: block;
         position: relative;
         width: 100vw !important;
-        height: 70vh !important;
+        height: auto !important;
+        aspect-ratio: 3/5;
+        min-height: 400px;
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: top center;
     }
 
     .text-section {
@@ -204,6 +240,8 @@
         width: 100% !important;
         padding: 2rem 1.5rem;
         text-align: center;
+        background: #fff;
+        left: 0 !important;
     }
 
     .text-section h2 {
@@ -227,7 +265,8 @@
         position: relative !important;
         width: 100% !important;
         padding: 0 1rem 3rem;
-        margin-top: 1.5rem;
+        margin-top: 0;
+        background: #fff;
     }
 
     .swiper-container {
@@ -292,4 +331,18 @@
         font-weight: 500;
     }
 
+}
+/* Add this to your CSS module */
+.text-wrapper {
+    max-width: 100%;
+    /* Ensures text breaks to the next line if it hits the edge */
+    overflow-wrap: break-word; 
+    word-wrap: break-word;
+    /* Prevents text from forcing the container wider */
+    white-space: normal; 
+}
+
+/* Optional: Ensure the heading specifically doesn't overflow */
+.text-wrapper h2 {
+    max-width: 100%;
 }
