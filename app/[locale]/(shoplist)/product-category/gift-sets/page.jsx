@@ -51,7 +51,7 @@ async function getCategorySubCategory(categoryName) {
     }),
     next: {
       tags: ["giftSets"],
-      revalidate: 86400 // 48 hours
+      revalidate: 604800 // 7 days
     },
   });
   if (!response.ok) {

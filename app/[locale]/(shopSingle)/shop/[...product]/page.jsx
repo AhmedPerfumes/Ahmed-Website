@@ -58,8 +58,8 @@ async function getproduct(categoryName, subCategoryName, product) {
                 product: product.split("-").join(" ").toUpperCase(),
             }),
             next: {
-            tags: ["products"],
-            revalidate: 86400 // 48 hours
+                tags: ["products"],
+                revalidate: 604800 // 7 days
             },
         }
     );
@@ -101,7 +101,7 @@ async function getProductSEO(categoryName, subCategoryName, product) {
             }),
             next: {
                 tags: ["productSEO"],
-                revalidate: 86400 // 48 hours
+                revalidate: 604800 // 7 days
             },
         }
     );

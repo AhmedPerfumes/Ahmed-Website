@@ -50,7 +50,7 @@ async function getCategorySubCategory(categoryName, subCategoryName) {
     }),
     next: {
       tags: ["subCategories"],
-      revalidate: 86400 // 48 hours
+      revalidate: 604800 // 7 days
     },
   });
   if (!response.ok) {
@@ -89,7 +89,7 @@ async function getProductCategorySEO(categoryName, subCategoryName) {
           }),
           next: {
             tags: ["subcategorySEO"],
-            revalidate: 86400 // 48 hours
+            revalidate: 604800 // 7 days
           },
       }
   );
