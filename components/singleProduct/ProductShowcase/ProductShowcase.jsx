@@ -1,319 +1,239 @@
-"use client";
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale } from "next-intl";
-import he from "he";
-import { useMenu } from "@/context/MenuContext";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import styles from "./ProductShowcase.module.css";
-
-// --- HELPERS ---
-const clean = (str) =>
-    str
-        ?.replace(/&amp;/g, "")        // Remove HTML ampersands
-        ?.replace(/[^\w\s-]/g, "")     // Remove non-word chars (keep letters, numbers, spaces, dashes)
-        ?.trim()                       // Remove leading/trailing space
-        ?.replace(/\s+/g, "-")         // <--- FIX: Replace one or more spaces with a single dash
-        ?.toLowerCase();
-
-const buildLink = (locale, p) => {
-    const categorySlug = clean(p.category_name);
-    const subSlug = p.subcategory?.subcategory_name
-        ? clean(p.subcategory.subcategory_name)
-        : "online-exclusive";
-    const productSlug = clean(p.product_name);
-    return `/${locale}/shop/${categorySlug}/${subSlug}/${productSlug}`;
+const backgroundVariants = {
+  initial: { opacity: 0.2 },
+  animate: { opacity: 1, transition: { duration: 1.2 } },
+  exit: { opacity: 0.2, transition: { duration: 0.6 } }
 };
 
-// --- DATA FETCHING ---
-async function fetchCollectionsProducts() {
-    try {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}api/allProducts`,
-            {
-                method: "POST",
-                cache: "no-store",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ page: 1, limit: 1000 }),
-            }
-        );
-        const result = await response.json();
-        const all = result.data || [];
+const GRADIENT_OVERLAY = "linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, rgba(26, 26, 26, 0.9) 100%)";
+const HIGHLIGHT_COLOR = "#e5d4b2";
+const GLOW_COLOR = HIGHLIGHT_COLOR;
 
-        let collections = all.filter((p) => {
-            const cat = clean(p.category_name);
-            return cat === "collections" || cat === "collection";
-        });
+export default function FamilySection({ data = {} }) {
+  const locale = useLocale();
+  const baseUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/k-series/`;
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-        collections = collections.filter((p) => p.images);
+  useEffect(() => {
+    setMounted(true);
 
-        // Fisher-Yates Shuffle
-        for (let i = collections.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [collections[i], collections[j]] = [collections[j], collections[i]];
-        }
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
 
-        return collections.slice(0, 8);
-    } catch (error) {
-        console.error("❌ Failed to load collection products:", error);
-        return [];
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const items = [
+    { 
+      label: "K 2000",
+      imgCenter: "/assets/images/kseries/bottle/past_center.png",
+      imgLeft: "/assets/images/kseries/bottle/past_left.png",
+      imgRight: "/assets/images/kseries/bottle/past_right.png",
+      nameImg: "/assets/images/2000.svg",
+      link: `${baseUrl}2000`,
+      bgImg: "https://admin.ahmedalmaghribi.com/public/storage/banners/the-roots-background.jpg"
+    },
+    { 
+      label: "K 2025",
+      imgCenter: "/assets/images/kseries/bottle/present_center.png",
+      imgLeft: "/assets/images/kseries/bottle/present_left.png",
+      imgRight: "/assets/images/kseries/bottle/present_right.png",
+      nameImg: "/assets/images/2025.svg",
+      link: `${baseUrl}2025`,
+      bgImg: "https://admin.ahmedalmaghribi.com/public/storage/banners/the-alchemy-lab-background.jpg"
+    },
+    { 
+      label: "K 2050",
+      imgCenter: "/assets/images/kseries/bottle/future_center.png",
+      imgLeft: "/assets/images/kseries/bottle/future_left.png",
+      imgRight: "/assets/images/kseries/bottle/future_right.png",
+      nameImg: "/assets/images/2050.svg",
+      link: `${baseUrl}2050`,
+      bgImg: "https://admin.ahmedalmaghribi.com/public/storage/banners/the-beyond-background.jpg"
     }
-}
+  ];
 
-// --- FALLBACK DATA ---
-const SKELETON_COUNT = 4;
-const fallbackProducts = Array(SKELETON_COUNT).fill({ isSkeleton: true });
+  const [active, setActive] = useState(1);
+  const rotateRight = () => setActive((prev) => (prev + 1) % 3);
+  const rotateLeft = () => setActive((prev) => (prev + 2) % 3);
 
-const ProductShowcase = () => {
-    const [isExplored, setIsExplored] = useState(false);
-    // const [showLoader, setShowLoader] = useState(false); // Removed per instruction (using Skeletons instead)
-    const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-    const [products, setProducts] = useState(fallbackProducts); // Start with skeletons
-    const [swiperRef, setSwiperRef] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(1);
-    
-    // --- RESPONSIVE LOGIC ---
-    const [windowWidth, setWindowWidth] = useState(0);
+  const handleDragEnd = (_, info) => {
+    if (info.offset.x < -60) rotateRight(); 
+    if (info.offset.x > 60) rotateLeft();   
+  };
 
-    const locale = useLocale();
-    const { saleSection } = useMenu();
+  const getPosition = (index) => {
+    if (index === active) return "center";
+    if ((active + 1) % 3 === index) return "right"; 
+    return "left";
+  };
 
-    // 1. Prepare Banner Data
-    const formattedSaleSection = saleSection?.length ? (() => {
-        const item = saleSection[0];
-        const stripHtml = (html) => (html ? html.replace(/<[^>]+>/g, '').trim() : '');
-        return {
-            heading: item.name || '',
-            heading_ar: item.description || '',
-            small_text: item.link || '',
-            small_text_ar: stripHtml(item.content),
-            banner: item.image || '',
-        };
-    })() : null;
+  const xOffset = isMobile ? 120 : 300;
 
-    useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+  // Reduced rotateY because your images are already angled
+  const positions = {
+    center: { x: 0, z: 0, rotateY: 0, scale: isMobile ? 1.1 : 1.3, opacity: 1, zIndex: 10 },
+    left: { x: -xOffset, z: -300, rotateY: 15, scale: 0.8, opacity: 0.4, zIndex: 5 },
+    right: { x: xOffset, z: -300, rotateY: -15, scale: 0.8, opacity: 0.4, zIndex: 5 }
+  };
 
-    const isMobile = windowWidth > 0 && windowWidth < 768;
-
-    // 2. Data Loading Logic
-    useEffect(() => {
-        // Guard: If no banner, don't fetch
-        if (!formattedSaleSection?.banner) return;
-
-        let isMounted = true;
-        async function load() {
-            const fetched = await fetchCollectionsProducts();
-            if (isMounted) {
-                if (fetched.length > 0) {
-                    setProducts(fetched);
-                }
-                setIsLoadingProducts(false);
-            }
+  const currentBgImg = items[active].bgImg;
+  const currentLabel = items[active].label;
+  if (!mounted) return null;
+  return (
+    <>
+      <style>{`
+        .carousel-container-3d { perspective: 1500px; width: 100%; display: flex; justify-content: center; align-items: center; }
+        .carousel-wrapper { position: relative; width: 100%; height: 50vh; display: flex; justify-content: center; align-items: center; transform-style: preserve-3d; }
+        .carousel-item-container { position: absolute; width: 280px; height: 450px; transform-style: preserve-3d; }
+        @media (max-width: 768px) { .carousel-item-container { width: 160px; height: 280px; } .carousel-wrapper { height: 35vh; } }
+        .carousel-item-container:not(.active) { pointer-events: none; }
+        .swiper-like-button {
+          position: absolute;
+          top: 50%;
+          width: 44px;
+          height: 44px;
+          margin-top: -22px;
+          z-index: 50;
+          cursor: pointer;
+          background: none;
+          border: none;
         }
-        load();
-        return () => { isMounted = false; };
-    }, [formattedSaleSection?.banner]);
 
-    // 3. Early Exit if no Banner
-    if (!formattedSaleSection?.banner) return null;
-
-
-    // --- ORIGINAL VIEW & NAVIGATION LOGIC ---
-    const getSlidesPerView = () => {
-        if (isMobile) return 1.5;
-        // DESKTOP LOGIC
-        if (!isExplored) return 2; 
-        return 5; 
-    };
-
-    // Reverted to original logic
-    const handleExploreClick = () => {
-        if (windowWidth >= 768) {
-            // Desktop → open slider
-            setIsExplored(true);
-        } else {
-            // Mobile → act as normal link
-            window.location.href = `/${locale}/sale`;
+        .swiper-like-button::after {
+          font-size: 38px;
+          color: #e5d4b2;
+          font-weight: bold;
         }
-    };
 
-    const layoutTransition = { duration: 1.0, ease: [0.43, 0.13, 0.23, 0.96] };
-    const textSectionVariants = {
-        initial: { position: "relative", left: "35vw", zIndex: 2 },
-        explored: { position: "absolute", left: "0vw", backgroundColor: "rgba(29, 29, 29, 0.7)", zIndex: 10 },
-    };
-    const productsSectionVariants = {
-        initial: { width: "44.33vw", zIndex: 15 },
-        explored: { width: "100vw", zIndex: 15 },
-    };
-    const swiperVariants = {
-        initial: { opacity: 0, y: 20 },
-        explored: { opacity: 1, y: 0, transition: { delay: 0.6, duration: 0.5 } },
-    };
+        .swiper-like-prev {
+          left: 2%;
+        }
+        .swiper-like-prev::after {
+          content: "‹";
+        }
 
-    return (
-        <div className={`${styles["showcase-container"]} ${isExplored ? styles.explored : ""}`}>
-            {/* Section 1: Banner */}
-            <motion.section
-                className={`${styles["showcase-section"]} ${styles["banner-section"]} pt-5 pb-5`}
-                transition={layoutTransition}
-                style={{
-                    backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}storage/${formattedSaleSection.banner})`
-                }}
-            />
+        .swiper-like-next {
+          right: 2%;
+        }
+        .swiper-like-next::after {
+          content: "›";
+        }
+      `}</style>
 
-            {/* Section 2: Text */}
-            <motion.section
-                className={`${styles["showcase-section"]} ${styles["text-section"]}`}
-                layout={!isMobile}
-                variants={!isMobile ? textSectionVariants : undefined}
-                animate={!isMobile ? (isExplored ? "explored" : "initial") : undefined}
-                transition={!isMobile ? layoutTransition : undefined}
-            >
-                {/* ADD THE CLASS HERE 👇 */}
-                <div className={styles["text-wrapper"]}>
-                    <p className="fs-15 px-0 text-secondary section-paragraph">
-                        {locale === "ar" ? formattedSaleSection?.small_text_ar : formattedSaleSection?.small_text}
-                    </p>
-                    <h2 className="section-head section-title fs-25 fw-medium mb-4">
-                        {locale === "ar" ? formattedSaleSection?.heading_ar : formattedSaleSection?.heading}
-                    </h2>
-                    {!isExplored && (
-                        <div className={styles["button-container"]}>
-                            <button
-                                className="btn-rounded btn-link_lg text-uppercase fw-medium text-black"
-                                onClick={handleExploreClick}
-                            >
-                                Explore
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </motion.section>
+      <div style={{ position: "relative", color: "white", height: "100vh", width: "100%", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        
+        {/* Background Layer */}
+        <AnimatePresence initial={false}>
+          <motion.div key={currentBgImg} variants={backgroundVariants} initial="initial" animate="animate" exit="exit" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }}>
+              <Image src={currentBgImg} alt="bg" fill priority style={{ objectFit: "cover" }} />
+          </motion.div>
+        </AnimatePresence>
+        
+        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 2, background: GRADIENT_OVERLAY }} />
 
-            {/* Section 3: Product Cards */}
-            <motion.section
-                className={`${styles["showcase-section"]} ${styles["products-section"]}`}
-                variants={!isMobile ? productsSectionVariants : undefined}
-                animate={!isMobile ? (isExplored ? "explored" : "initial") : undefined}
-                transition={!isMobile ? layoutTransition : undefined}
-            >
-                <div className={styles["swiper-container"]} variants={swiperVariants}>
-                    <Swiper
-                        onSwiper={setSwiperRef}
-                        onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex + 1)}
-                        key={isExplored ? "explored" : "initial"}
-                        modules={[Pagination, Navigation, Autoplay]}
-                        spaceBetween={10}
-                        slidesPerView={getSlidesPerView()}
-                        centeredSlides={isMobile}
-                        autoplay={!isLoadingProducts}
-                        className={styles["product-swiper"]}
-                        // Reverted to original logic
-                        onSliderMove={(swiper) => {
-                            const diff = swiper.touches.diff;
-                            if (isMobile) return;
-
-                            if (!isExplored && diff < -15) setIsExplored(true);
-                            if (isExplored && diff > 15) setIsExplored(false);
+        <div className="container text-center" style={{ position: "relative", zIndex: 10, width: "100%", paddingTop: "5em" }}>
+          <div className="carousel-container-3d">
+            <div className="carousel-wrapper">
+              {items.map((item, index) => {
+                const pos = getPosition(index);
+                const isCenter = index === active;
+                
+                return (
+                  <motion.div
+                    key={index}
+                    className={`carousel-item-container ${isCenter ? 'active' : ''}`}
+                    drag={isCenter ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    onDragEnd={handleDragEnd}
+                    animate={positions[pos]}
+                    transition={{ type: "spring", stiffness: 90, damping: 20 }}
+                    style={{ cursor: isCenter ? "grab" : "default", userSelect: 'none' }}
+                  >
+                    {/* Glow Component */}
+                    {isCenter && (
+                      <motion.div 
+                        animate={{ opacity: 1 }} initial={{ opacity: 0 }}
+                        style={{
+                          position: 'absolute', top: '10%', left: '10%', width: '80%', height: '80%',
+                          borderRadius: '50%', backgroundColor: GLOW_COLOR,
+                          filter: `blur(60px) opacity(0.25)`, zIndex: -1,
+                          transform: "translateZ(-50px)"
                         }}
-                    >
-                        {/* Custom Navigation */}
-                        <div className={styles.customNav}>
-                            {isExplored && (
-                                <div className={styles["button-container"]}>
-                                    <Link className="btn-rounded btn-link_lg text-uppercase fw-medium" href={`/${locale}/sale`}>
-                                        View More
-                                    </Link>
-                                </div>
-                            )}
-                            
-                            {/* Reverted to original Prev Button Logic */}
-                            <button className={styles.prevBtn} onClick={() => {
-                                if (!swiperRef) return;
-                                if (!isMobile && swiperRef.realIndex === 0) {
-                                    setIsExplored(false);
-                                }
-                                swiperRef.slidePrev();
-                            }}>
-                                &lt;
-                            </button>
-                            
-                            <span className={styles.pageIndicator}>
-                                {isLoadingProducts ? "-" : currentIndex} / {isLoadingProducts ? "-" : products.length}
-                            </span>
-
-                            {/* Reverted to original Next Button Logic */}
-                            <button className={styles.nextBtn} onClick={() => {
-                                if (!swiperRef) return;
-                                if (!isMobile) setIsExplored(true);
-                                swiperRef.slideNext();
-                            }}>
-                                &gt;
-                            </button>
-                        </div>
-
-                        {/* RENDER PRODUCTS OR SKELETONS */}
-                        {products.map((p, i) => {
-                            // Skeleton Card
-                            if (p.isSkeleton) {
-                                return (
-                                    <SwiperSlide key={`skel-${i}`}>
-                                        <div className={`${styles["product-card"]} ${styles["skeleton-card"]}`}>
-                                            <div className={styles["skeleton-image"]} />
-                                            <div className={styles["product-info"]}>
-                                                <div className={styles["skeleton-text"]} style={{ width: "80%" }} />
-                                                <div className={styles["skeleton-text"]} style={{ width: "50%", marginTop: "10px" }} />
-                                            </div>
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            }
-
-                            // Real Card
-                            const images = JSON.parse(p.images || "[]");
-                            const firstImg = images[0] ? `${process.env.NEXT_PUBLIC_API_URL}storage/${images[0]}` : "/no-img.jpg";
-                            const link = buildLink(locale, p);
-
-                            return (
-                                <SwiperSlide key={i}>
-                                    <Link href={link} className={styles["product-card"]}>
-                                        <img src={firstImg} alt={p.product_name} className={styles["product-image"]} />
-                                        <div className={styles["product-info"]}>
-                                            <h3 className={styles["product-name"]}>{he.decode(p.product_name)}</h3>
-                                            <div className={styles["shop-now-container"]}>
-                                                <span className={styles["shop-now-link"]}>Shop Now</span>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </SwiperSlide>
-                            );
-                        })}
-                    </Swiper>
-
-                    {/* Mobile Navigation */}
-                    {isMobile && !isLoadingProducts && (
-                        <div className={styles.mobileNav}>
-                            <button onClick={() => swiperRef && swiperRef.slidePrev()} className={styles.mobileArrow}>&lt;</button>
-                            <span className={styles.mobileIndicator}>{currentIndex} / {products.length}</span>
-                            <button onClick={() => swiperRef && swiperRef.slideNext()} className={styles.mobileArrow}>&gt;</button>
-                        </div>
+                      />
                     )}
-                </div>
-            </motion.section>
-        </div>
-    );
-};
 
-export default ProductShowcase;
+                    <Link href={item.link} style={{ display: 'block', height: '100%', position: 'relative', transformStyle: "preserve-3d" }}>
+                      
+                      {/* CENTER IMAGE LAYER */}
+                      <motion.div
+                        initial={false}
+                        animate={{ opacity: pos === "center" ? 1 : 0 }}
+                        transition={{ duration: 0.6 }}
+                        style={{ position: "absolute", inset: 0 }}
+                      >
+                        <Image src={item.imgCenter} fill style={{ objectFit: "contain" }} alt="center" priority />
+                      </motion.div>
+
+                      {/* LEFT IMAGE LAYER */}
+                      <motion.div
+                        initial={false}
+                        animate={{ opacity: pos === "left" ? 1 : 0 }}
+                        transition={{ duration: 0.6 }}
+                        style={{ position: "absolute", inset: 0 }}
+                      >
+                        <Image src={item.imgLeft} fill style={{ objectFit: "contain" }} alt="left" />
+                      </motion.div>
+
+                      {/* RIGHT IMAGE LAYER */}
+                      <motion.div
+                        initial={false}
+                        animate={{ opacity: pos === "right" ? 1 : 0 }}
+                        transition={{ duration: 0.6 }}
+                        style={{ position: "absolute", inset: 0 }}
+                      >
+                        <Image src={item.imgRight} fill style={{ objectFit: "contain" }} alt="right" />
+                      </motion.div>
+
+                    </Link>
+                  </motion.div>
+                );
+              })}
+
+              {/* <button onClick={rotateLeft} style={{ position: "absolute", left: "2%", top: "50%", zIndex: 50, background: "none", border: "none", color: HIGHLIGHT_COLOR, fontSize: "30px", cursor: "pointer", opacity: 0.5 }}>{"<"}</button>
+              <button onClick={rotateRight} style={{ position: "absolute", right: "2%", top: "50%", zIndex: 50, background: "none", border: "none", color: HIGHLIGHT_COLOR, fontSize: "30px", cursor: "pointer", opacity: 0.5 }}>{">"}</button> */}
+              <button
+                className="swiper-like-button swiper-like-prev"
+                onClick={rotateLeft}
+                aria-label="Previous"
+              >
+              </button>
+
+              <button
+                className="swiper-like-button swiper-like-next"
+                onClick={rotateRight}
+                aria-label="Next"
+              >
+              </button>
+            </div>
+          </div>
+
+          <motion.div style={{ width: "60px", height: "1px", background: `linear-gradient(to right, transparent, ${HIGHLIGHT_COLOR}, transparent)`, margin: "40px auto" }} />      
+
+          <motion.div initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={currentLabel} transition={{ delay: 0.1 }} className="d-flex flex-column align-items-center">
+            <div style={{ position: "relative", width: isMobile ? "150px" : "220px", height: "80px" }}>
+              <Image src={items[active].nameImg} alt={currentLabel} fill unoptimized style={{ objectFit: "contain" }} />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </>
+  );
+}
