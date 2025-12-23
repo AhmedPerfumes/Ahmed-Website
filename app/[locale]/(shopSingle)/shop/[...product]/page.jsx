@@ -192,7 +192,7 @@ const ProductDetailsPage16 = async ({ params }) => {
     // console.log(categoryName, subCategoryName, product);
     try {
         const data = await getproduct(categoryName, subCategoryName, product);
-        console.log(product, "product data");
+        // console.log(product, "product data");
         return (
             <>
                 <Head>
