@@ -45,6 +45,7 @@ async function getCategorySubCategory(categoryName) {
   //   })
   // });
   const origin = getRequestOrigin();
+  const slug = categoryName.toLowerCase();
   // console.log('Origin:----------------------------------------------------------------------------------------------------------------------------------------------------------', origin);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
@@ -56,7 +57,7 @@ async function getCategorySubCategory(categoryName) {
       category: categoryName.split("-").join(" ").toUpperCase(),
     }),
     next: {
-      tags: ["categories"],
+      tags: ["categories", `category-${slug}`],
       revalidate: 604800 // 7 days
     },
   });
