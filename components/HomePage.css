@@ -1002,11 +1002,11 @@ button[data-v-7aa9e1a2] {
 	top: -6px;
 	right: 18px;
 	width: 12px;
-    height: 12px;
+	height: 12px;
 	background: #fff;
 	border-left: 1px solid #eee;
-    border-top: 1px solid #eee;
-    transform: rotate(45deg);
+	border-top: 1px solid #eee;
+	transform: rotate(45deg);
 	/* keeps arrow aligned with icon */
 	/* border-width: 8px 8px 0 8px;
 	border-style: solid;
@@ -1037,47 +1037,50 @@ button[data-v-7aa9e1a2] {
 
 .account-hover-menu li {
 	margin: 2px 6px;
-    border-radius: 6px;
-    overflow: hidden;
+	border-radius: 6px;
+	overflow: hidden;
 }
 
 .account-hover-menu li a {
 	display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    font-size: 14px;
-    color: #444;
-    text-decoration: none;
-    transition: all 0.2s ease;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 14px;
+	font-size: 14px;
+	color: #444;
+	text-decoration: none;
+	transition: all 0.2s ease;
 }
 
 .account-hover-menu li:hover a {
 	background: #f8f9fa;
-    color: #000;
+	color: #000;
 }
 
 /* active state (based on current route) */
 .account-hover-menu li.active a {
-	background: #fffbf2; /* Very light gold tint */
-    color: #a87a35;
-    font-weight: 600;
-    border-left: 3px solid #a87a35;
-    padding-left: 11px; /* Compensate for border */
+	background: #fffbf2;
+	/* Very light gold tint */
+	color: #a87a35;
+	font-weight: 600;
+	border-left: 3px solid #a87a35;
+	padding-left: 11px;
+	/* Compensate for border */
 }
 
 /* divider + logout */
 .account-hover-menu .divider {
 	height: 1px;
-    background: #eeeeee;
-    margin: 8px 0;
+	background: #eeeeee;
+	margin: 8px 0;
 }
 
 .account-hover-menu .logout a {
 	color: #dc3545;
 }
+
 .account-hover-menu .logout a:hover {
-    background: #fff5f5;
+	background: #fff5f5;
 }
 
 /* Sorting UI — matches the screenshot look */
@@ -1170,56 +1173,65 @@ button[data-v-7aa9e1a2] {
 
 /* 1. The main container that establishes the positioning context */
 .video-section-container {
-    position: relative; /* Crucial for positioning children absolutely within it */
-    width: 100%;
-    height: 100vh; /* Make it full-screen like your image section */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Prevents video from spilling out */
-    color: #000; /* Set a default text color for this section */
+	position: relative;
+	/* Crucial for positioning children absolutely within it */
+	width: 100%;
+	height: 100vh;
+	/* Make it full-screen like your image section */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	/* Prevents video from spilling out */
+	color: #000;
+	/* Set a default text color for this section */
 }
 
 /* 2. The div containing the video component */
 .video-section-container .video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Pushes the video behind the content */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	/* Pushes the video behind the content */
 }
 
 /* 3. Ensure the video itself fills the container */
 .video-section-container .video-background video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures video covers the area without distortion */
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* Ensures video covers the area without distortion */
 }
 
 /* 4. The content wrapper */
 .video-section-container .content-overlay {
-    /* This div holds your text and button */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 20px;
-    z-index: 1; /* Ensures content is on top */
+	/* This div holds your text and button */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	padding: 20px;
+	z-index: 1;
+	/* Ensures content is on top */
 }
+
 .video-section-container::before {
-    content: ''; /* Required for pseudo-elements */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    /* The black overlay with 30% opacity */
-    background-color: rgba(0, 0, 0, 0.3); 
-    
-    /* Place it above the video (z-index: -1) but below the content (z-index: 1) */
-    z-index: 0; 
+	content: '';
+	/* Required for pseudo-elements */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	/* The black overlay with 30% opacity */
+	background-color: rgba(0, 0, 0, 0.3);
+
+	/* Place it above the video (z-index: -1) but below the content (z-index: 1) */
+	z-index: 0;
 }

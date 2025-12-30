@@ -21,6 +21,7 @@ import Link from "next/link";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
+import TabSlider from "./TabSlider";
 import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 import { useMenu } from "@/context/MenuContext";
 import NewsLetter from '@/components/modals/NewsLetter';
@@ -158,14 +159,14 @@ const ScrollSnapHorizontalBootstrap = () => {
             <div className="d-block d-lg-none">
                 <Hero2 />
             </div>
-            
 
             <ProductShowcase />
 
+            {/* <Tab Category Slider />             */}
+            <TabSlider />
+
             <section className="scroll-section d-flex flex-direction-column section-1">
                 <div className="panel section-slider w-100 vh-100">
-                    {/* Background Overlay */}
-                    {/* <div className="background-overlay"></div> */}
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
                             <span className="t-subtitle">
@@ -222,6 +223,8 @@ const ScrollSnapHorizontalBootstrap = () => {
                 {/* <ProductShowcase />             */}
                 <ProductSlider prodSlide="bestSellers" />
             </section>
+
+                
 
             <section className="scroll-section d-flex flex-direction-column section-2">
                 <div className="panel sub-section w-100 vh-100">
