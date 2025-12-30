@@ -45,7 +45,7 @@ async function getBlog(blogName) {
     }),
     next: {
       tags: ["blogs"],
-      revalidate: 86400 // 48 hours
+      revalidate: 604800 // 7 days
     },
   });
   if (!response.ok) {
@@ -81,7 +81,7 @@ async function getBlogSEO(blogName) {
           }),
           next: {
             tags: ["blogSEO"],
-            revalidate: 86400 // 48 hours
+            revalidate: 604800 // 7 days
           },
       }
   );

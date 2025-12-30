@@ -58,8 +58,8 @@ async function getproduct(categoryName, subCategoryName, product) {
                 product: product.split("-").join(" ").toUpperCase(),
             }),
             next: {
-            tags: ["products"],
-            revalidate: 86400 // 48 hours
+                tags: ["products", `product-${product}`],
+                revalidate: 604800 // 7 days
             },
         }
     );
@@ -101,7 +101,7 @@ async function getProductSEO(categoryName, subCategoryName, product) {
             }),
             next: {
                 tags: ["productSEO"],
-                revalidate: 86400 // 48 hours
+                revalidate: 604800 // 7 days
             },
         }
     );
@@ -192,7 +192,7 @@ const ProductDetailsPage16 = async ({ params }) => {
     // console.log(categoryName, subCategoryName, product);
     try {
         const data = await getproduct(categoryName, subCategoryName, product);
-        // console.log(data);
+        // console.log(product, "product data");
         return (
             <>
                 <Head>

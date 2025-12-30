@@ -56,7 +56,7 @@ async function getproduct(categoryName, subCategoryName, product) {
     }),
     next: {
       tags: ["products"],
-      revalidate: 86400 // 48 hours
+      revalidate: 604800 // 7 days
     },
   });
   if (!response.ok) {
