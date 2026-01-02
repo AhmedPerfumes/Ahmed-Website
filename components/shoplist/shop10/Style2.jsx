@@ -18,22 +18,17 @@ export default function Style2({ category, subcategory, products }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const t = useTranslations();
-  const indexToSwap = 1;
 
-  console.log("products",products);
-  
+  const indexToPin = 1;
 
-  for (let index = 0; index < products.length; index++) {
-    if (products[index] && products[index].collection_name === "New Launch") {
-      if (index !== indexToSwap) {
-        const temp = products[indexToSwap];
-        products[indexToSwap] = products[index];
-        products[index] = temp;
-      }
-      break;
-    }
+  const newLaunchIndex = products.findIndex(
+    p => p.collection_name === 'New Launch'
+  );
+
+  if (newLaunchIndex > -1) {
+    const [pinned] = products.splice(newLaunchIndex, 1);
+    products.splice(indexToPin, 0, pinned);
   }
-
   function capitalizeEachWord(str) {
     return str
       .split(" ")

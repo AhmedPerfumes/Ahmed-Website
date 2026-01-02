@@ -31,14 +31,6 @@ export default function Checkout() {
   const [idDDActive, setIdDDActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("cod");
-  const [formData, setFormData] = useState({
-    shippingAddress: { first_name: "", last_name: "", mobile: "", email: "", country: "AE", area: "", building: "", emirates: "", },
-    billingAddress: { first_name: "", last_name: "", mobile: "", email: "", country: "AE", area: "", building: "", emirates: "", },
-    shippingAdd: false,
-    note: "",
-    password: "",
-    otp: "",
-  });
   const [createAccount, setCreateAccount] = useState(false);
   const [finalPriceState, setFinalPriceState] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,13 +46,21 @@ export default function Checkout() {
   const [couponError, setCouponError] = useState(null);
   const [couponSuccess, setCouponSuccess] = useState(null);
   const [couponData, setCouponData] = useState(null);
+  const [formData, setFormData] = useState({
+    shippingAddress: { first_name: "", last_name: "", mobile: "", email: "", country: "AE", area: "", building: "", emirates: "", },
+    billingAddress: { first_name: "", last_name: "", mobile: "", email: "", country: "AE", area: "", building: "", emirates: "", },
+    shippingAdd: false,
+    note: "",
+    password: "",
+    otp: "",
+  });
 
   // CONTEXT & HOOKS
   const t = useTranslations("Tabby")
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency, } = useMenu();
+  const {cartProducts, totalPrice, freeShippingFlag, setOrderDetails, setCouponDataContext, setCartProducts, removeGiftFromCart, promotionsContext, actualTotalPrice, hasPreBookItem } = useContextElement();
   const router = useRouter();
   const locale = useLocale();
-  const {cartProducts, totalPrice, freeShippingFlag, setOrderDetails, setCouponDataContext, setCartProducts, removeGiftFromCart, promotionsContext, actualTotalPrice, hasPreBookItem } = useContextElement();
   const { isLoggedIn } = useUser();
   const hasCleaned = useRef(false);
   const hasFetchedRef = useRef(false);
@@ -147,7 +147,7 @@ export default function Checkout() {
         const data = await response.json();
         const transformedData = transformCouponData(data.data);
         setCoupons(transformedData);
-        setCouponDataContext(transformedData);
+        setCouponDataContext(transformedData); // This context is used by FreeGiftFeature
       } catch (err) {
         console.error("Failed to fetch coupons:", err);
         setCoupons([]);
@@ -201,7 +201,10 @@ export default function Checkout() {
     setFormData((prevData) => {
       const newSameAsShipping = !prevData.shippingAdd;
       if (!newSameAsShipping) { setIsOTPButton(true); setIsOTPVerified(false); setOTPSuccess(null); setOTPError(null); }
-      return { ...prevData, shippingAdd: newSameAsShipping, shippingAddress: { first_name: "", last_name: "", mobile: "", email: "", area: "", building: "", emirates: "", }, };
+      return { 
+        ...prevData, 
+        shippingAdd: newSameAsShipping, 
+        shippingAddress: { first_name: "", last_name: "", mobile: "", email: "", area: "", building: "", emirates: "", }, };
     });
   };
 
@@ -275,11 +278,7 @@ export default function Checkout() {
     }
 
     const eligibleItems = cartProducts.filter((item) => {
-      const isBogoProduct = promotionsContext.some((promo) =>
-        promo.buy_products.some(
-          (buyItem) => buyItem.product_id === item.product_id
-        )
-      );
+      const isBogoProduct = promotionsContext.some((promo) => promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id));
       return !item.discount && !isBogoProduct && !item.is_gift && !item.collection_name;
     });
 
