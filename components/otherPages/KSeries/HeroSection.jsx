@@ -5,15 +5,15 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
-const DESKTOP_HERO = "/assets/images/kseries/hero-banner.jpg";
-const MOBILE_HERO = "/assets/images/kseries/mobile.jpg";
+const DESKTOP_HERO = "/assets/images/kseries/website_banner.jpg";
+const MOBILE_HERO = "/assets/images/kseries/mobile_banner_final.jpg";
 const MOBILE_BREAKPOINT = 768;
 
 export default function HeroSection({
   title = "Experience The Essence",
   subtitle = "Elevate your presence with our K-Series signature scents.",
-  ctaText = "Shop The Collection",
-  ctaHref = "/product-category/gift-sets",
+  ctaText = "Pre-Book Now",
+  ctaHref = "#k-series-product-cards",
 }) {
   const heroRef = useRef(null);
 
@@ -42,86 +42,87 @@ export default function HeroSection({
   const heroSrc = isMobile ? MOBILE_HERO : DESKTOP_HERO;
 
   // Subtle floating specs (optional)
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 10 }).map((_, i) => ({
-        id: i,
-        size: 6 + ((i * 11) % 10),
-        left: `${(i * 91) % 100}%`,
-        delay: (i * 0.41) % 2,
-        duration: 4 + ((i * 1.1) % 4),
-        blur: (i * 0.9) % 3,
-        opacity: 0.12 + ((i * 5) % 20) / 100,
-      })),
-    []
-  );
+  // const particles = useMemo(
+  //   () =>
+  //     Array.from({ length: 10 }).map((_, i) => ({
+  //       id: i,
+  //       size: 6 + ((i * 11) % 10),
+  //       left: `${(i * 91) % 100}%`,
+  //       delay: (i * 0.41) % 2,
+  //       duration: 4 + ((i * 1.1) % 4),
+  //       blur: (i * 0.9) % 3,
+  //       opacity: 0.12 + ((i * 5) % 20) / 100,
+  //     })),
+  //   []
+  // );
 
   return (
-    <div
-      ref={heroRef}
-      className="position-relative overflow-hidden"
-      style={{ height: "100vh" }}
-    >
+    <div ref={heroRef} className={styles.heroWrapper}>
       {/* Background with parallax */}
-      <motion.div
-        style={{ y: heroImageY }}
-        className="position-absolute top-0 start-0 w-100 h-100"
-      >
+      <motion.div style={{ y: heroImageY }} className={styles.heroBg}>
         <Image
           src={heroSrc}
           alt="K Series Perfume Collection"
           fill
           priority
+          sizes="100vw"
           className={styles.heroImage}
-          style={{ objectFit: "cover", objectPosition: "center bottom" }}
         />
-        <div
-          className={`position-absolute top-0 start-0 w-100 h-100 ${styles.heroOverlay}`}
-        />
+        <div className={styles.heroOverlay}></div>
       </motion.div>
 
-      {/* Centered content */}
-      <motion.div
+
+      {/* Centered K-Series logo + tagline, fixed a bit below top */}
+      {/* <motion.div
         style={{ opacity: heroOpacity, zIndex: 10 }}
-        className="position-relative h-100 d-flex flex-column align-items-center mt-5 text-center px-4"
+        className={`position-absolute w-100 d-flex flex-column align-items-center text-center px-4 ${styles.heroTitleWrapper}`}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1
-            className={`display-1 fw-bold mb-4 ${styles.serifFont} ${styles.heroTitle}`}
-          >
-            <span className={styles.textGold}>K</span>
-            <span className={styles.heroTitleMain}> SERIES</span>
+          <h1 className={`fw-bold ${styles.heroTitle}`}>
+            <div className={styles.heroLogoWrapper}>
+              <Image
+                src="/assets/images/kseries/k-series[1].png"
+                alt="K Series"
+                width={425}
+                height={189}
+                className={styles.heroLogo}
+                priority
+              />
+            </div>
           </h1>
 
           <p
-            className={`fs-4 mb-4 ${styles.textChampagne} ${styles.sansFont} ${styles.heroSubtitle}`}
+            className={`${styles.textChampagne} ${styles.heroSubtitle} mb-0`}
           >
-            Where Elegance Meets Artistry
+            The Founder’s Legacy
           </p>
-
-          <motion.a
-            href={ctaHref}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase ${styles.sansFont}`}
-          >
-            {ctaText}
-          </motion.a>
         </motion.div>
-      </motion.div>
+      </motion.div> */}
 
-      {/* Scroll indicator */}
+
+      {/* Scroll indicator & CTA (new container) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
-        className="position-absolute bottom-0 start-50 translate-middle-x mb-4"
+        className="position-absolute bottom-0 start-50 translate-middle-x pb-5 d-flex flex-column align-items-center"
         style={{ zIndex: 10 }}
       >
+        {/* Call to Action - Now positioned at the bottom */}
+        {/* <motion.a
+            href={ctaHref}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`btn ${styles.btnGold} ${styles.heroCta} text-uppercase mb-4`} // Added margin-bottom
+        >
+            {ctaText}
+        </motion.a> */}
+        
+        {/* Scroll Arrow Indicator */}
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -133,7 +134,7 @@ export default function HeroSection({
       </motion.div>
 
       {/* Optional subtle particles */}
-      {particles.map((p) => (
+      {/* {particles.map((p) => (
         <motion.div
           key={p.id}
           className={styles.heroParticle}
@@ -152,7 +153,7 @@ export default function HeroSection({
             ease: "easeOut",
           }}
         />
-      ))}
+      ))} */}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import Export from "@/components/otherPages/Contact/Export"
@@ -23,6 +24,7 @@ const ExportPage = () => {
       {/* <Loader/> */}
       <Header14 />
       <Export />
+      {/* <AMGExport/> */}
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
       </section>

@@ -32,6 +32,8 @@ import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const metadata = {
@@ -99,6 +101,117 @@ export default async function LocaleLayout({ children, params: { locale } }) {
           `}
         </Script>
 
+        <Script id="tiktok-listener" strategy="afterInteractive">
+          {`
+            (function(){
+              // Ensure dataLayer exists
+              window.dataLayer = window.dataLayer || [];
+
+              // Save original push method
+              const originalPush = window.dataLayer.push;
+
+              // Override push to also send TikTok events
+              window.dataLayer.push = function(){
+                const args = Array.from(arguments);
+                originalPush.apply(window.dataLayer, args);
+
+                const eventObj = args[0];
+                if(eventObj && eventObj.event){
+                  const ecommerce = eventObj.ecommerce || {};
+                  const items = ecommerce.items || [];
+
+                  switch(eventObj.event){
+                    case "view_item":
+                      window.ttq?.track("ViewContent", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id,
+                          content_type: "product",
+                          content_name: i.item_name
+                        })),
+                        value: ecommerce.value,
+                        currency: ecommerce.currency
+                      });
+                      break;
+
+                    case "add_to_cart":
+                      window.ttq?.track("AddToCart", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id,
+                          content_type: "product",
+                          content_name: i.item_name
+                        })),
+                        value: ecommerce.value,
+                        currency: ecommerce.currency
+                      });
+                      break;
+
+                    case "begin_checkout":
+                      window.ttq?.track("InitiateCheckout", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id,
+                          content_type: "product",
+                          content_name: i.item_name
+                        })),
+                        value: ecommerce.value,
+                        currency: ecommerce.currency
+                      });
+                      break;
+
+                    case "add_payment_info":
+                      window.ttq?.track("AddPaymentInfo", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id,
+                          content_type: "product",
+                          content_name: i.item_name
+                        })),
+                        value: ecommerce.value,
+                        currency: ecommerce.currency
+                      });
+                      break;
+
+                    case "purchase":
+                      window.ttq?.track("Purchase", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id,
+                          content_type: "product",
+                          content_name: i.item_name
+                        })),
+                        value: ecommerce.value,
+                        currency: ecommerce.currency
+                      });
+                      break;
+
+                    case "place_order": // custom GA4 event name if used
+                      window.ttq?.track("PlaceAnOrder", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id,
+                          content_type: "product",
+                          content_name: i.item_name
+                        })),
+                        value: ecommerce.value,
+                        currency: ecommerce.currency
+                      });
+                      break;
+
+                    case "search":
+                      window.ttq?.track("Search", {
+                        contents: items.map(i => ({
+                          content_id: i.item_id || "search", // fallback if no product_id
+                          content_type: "product",
+                          content_name: i.item_name || (eventObj.search_term || "search")
+                        })),
+                        value: ecommerce.value || 0,
+                        currency: ecommerce.currency || "AED",
+                        search_string: eventObj.search_term || ""
+                      });
+                      break;
+                  }
+                }
+              };
+            })();
+          `}
+          </Script>
+
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
@@ -107,17 +220,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-       
-     
-        {/* <script
-          id="messenger-widget-b"
-          src="https://cdn.botpenguin.com/website-bot.js"
-          defer
-          dangerouslySetInnerHTML={{
-            __html: `68db6a190f482854b719e190,68da29387c3c0348c646bc29`,
-          }}
-        /> */}
-        
+
 
         <NextIntlClientProvider messages={messages}>
           <Svgs />
@@ -141,6 +244,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                   <ProductDescription />
                   <ProductAdditionalInformation />
                   <ProductReviews />
+                  <ToastContainer />
                 </ShopFilterProvider>
               </UserProvider>
             </Context>

@@ -39,6 +39,7 @@ function getRequestOrigin() {
 
 async function getCategorySubCategory(categoryName) {
   const origin = getRequestOrigin();
+  const slug = categoryName.toLowerCase();
   // console.log('Origin:----------------------------------------------------------------------------------------------------------------------------------------------------------', origin);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
@@ -49,7 +50,10 @@ async function getCategorySubCategory(categoryName) {
     body: JSON.stringify({
       category: categoryName.split("-").join(" ").toUpperCase(),
     }),
-    cache: 'no-store',
+    next: {
+      tags: ["categories", `category-${slug}`],
+      revalidate: 604800 // 7 days
+    },
   });
   if (!response.ok) {
     throw new Error('Network response was not ok');

@@ -174,7 +174,7 @@ export default function Categories({ section }) {
       {renderSection()}
       <div className="slider-shadow-right"></div>
 
-      <style jsx global>{`
+      {/* <style jsx global>{`
         .swiper-container {
           position: relative;
         }
@@ -195,8 +195,6 @@ export default function Categories({ section }) {
           align-items: center;
           justify-content: center;
         } 
-
-        /* Prevent arrow clicks from triggering links */
         .swiper-button-next *,
         .swiper-button-prev * {
           pointer-events: none !important;
@@ -214,7 +212,7 @@ export default function Categories({ section }) {
             right: -10px;
           }
         }
-      `}</style>
+      `}</style> */}
     </section>
   );
 }

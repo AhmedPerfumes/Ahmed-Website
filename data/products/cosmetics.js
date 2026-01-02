@@ -6,16 +6,16 @@ export const products33 = [
     title: "Rise & Shine",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 409,
     imgSrc: "/assets/images/home/demo15/product-2.jpg",
     category: "Makeup",
-    title: "Laura Face Wash Lotion",
+    title: "Face Wash Lotion",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 410,
@@ -24,7 +24,7 @@ export const products33 = [
     title: "Facefinity All Day Flawless",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 411,
@@ -33,7 +33,7 @@ export const products33 = [
     title: "Radiant Lift Foundation",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 412,
@@ -42,7 +42,7 @@ export const products33 = [
     title: "Radiant Lift Foundation",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 413,
@@ -51,7 +51,7 @@ export const products33 = [
     title: "Laura Face Wash Lotion",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 414,
@@ -60,7 +60,7 @@ export const products33 = [
     title: "Facefinity All Day Flawless",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 415,
@@ -69,7 +69,7 @@ export const products33 = [
     title: "Rise & Shine",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 416,
@@ -114,7 +114,7 @@ export const products33 = [
     title: "Rise & Shine",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 421,
@@ -123,7 +123,7 @@ export const products33 = [
     title: "Laura Face Wash Lotion",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 422,
@@ -132,7 +132,7 @@ export const products33 = [
     title: "Facefinity All Day Flawless",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 423,
@@ -141,7 +141,7 @@ export const products33 = [
     title: "Radiant Lift Foundation",
     price: 29,
     rating: 5,
-    filterCategory: "Face",
+    filterCategory: "Perfumes",
   },
   {
     id: 424,
@@ -150,7 +150,7 @@ export const products33 = [
     title: "Radiant Lift Foundation",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 425,
@@ -159,7 +159,7 @@ export const products33 = [
     title: "Laura Face Wash Lotion",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 426,
@@ -168,7 +168,7 @@ export const products33 = [
     title: "Facefinity All Day Flawless",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 427,
@@ -177,7 +177,7 @@ export const products33 = [
     title: "Rise & Shine",
     price: 29,
     rating: 5,
-    filterCategory: "Eyes",
+    filterCategory: "Dakhoon",
   },
   {
     id: 428,

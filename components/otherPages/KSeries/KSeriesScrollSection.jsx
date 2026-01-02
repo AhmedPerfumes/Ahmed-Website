@@ -13,7 +13,7 @@ const slidesData = [
     mobileImage: "/assets/images/kseries/PAST_mobile.jpg",
     title: "K-Series 2000",
     subtitle: "The Roots",
-    text: "Where the Ahmed Al Maghribi journey began — raw, authentic, timeless craftsmanship.",
+    text: "A tribute to the origins of Arabian perfumery, 2000 celebrates the timeless artistry that defines the brand’s foundation. “The Roots” captures the essence of Mr. Kafeel Ahmed’s beginnings — a return to authenticity, where every drop is a story of craftsmanship born from nature.",
   },
   {
     id: "present",
@@ -21,7 +21,7 @@ const slidesData = [
     mobileImage: "/assets/images/kseries/PRESENT_mobile.jpg",
     title: "K-Series 2025",
     subtitle: "The Alchemy Lab",
-    text: "Precision, innovation, and modern artistry — celebrating today’s golden era of perfumery.",
+    text: "2025 embodies the spirit of creation, transformation, and innovation — a reflection of today’s mastery in modern perfumery. “The Alchemy Lab” symbolizes Mr. Kafeel Ahmed’s creative evolution — blending science, soul, and scent into a work of living art.",
   },
   {
     id: "future",
@@ -29,7 +29,7 @@ const slidesData = [
     mobileImage: "/assets/images/kseries/FUTURE_mobile.jpg",
     title: "K-Series 2050",
     subtitle: "The Beyond",
-    text: "A visionary future — futuristic composition, radiant light, and the spirit of tomorrow.",
+    text: "2050 is a vision of perfumery’s future — intelligent, emotive, and weightlessly elegant. “The Beyond” is an olfactory glimpse into tomorrow, where scent becomes an emotion — the ultimate expression of imagination and connection.",
   },
 ];
 

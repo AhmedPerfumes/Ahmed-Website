@@ -1,0 +1,16 @@
+:root {
+    --brand-gold: #b8860b;
+    --brand-gold-dark: #a0740a;
+    --background-cream: #f8f6f1;
+    --text-dark: #1f2937;
+    --text-light: #4b5563;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--background-cream);
+    color: var(--text-dark);
+    margin: 0;
+}

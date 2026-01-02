@@ -146,7 +146,7 @@ export default function Context({ children }) {
       // Ensure numbers
       const qty = Number(product?.quantity || 0);
       const basePrice = Number(product?.price || 0);
-
+      // console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
       // Skip free gifts entirely
       if (product?.is_gift) return accumulator;
 
@@ -254,12 +254,158 @@ export default function Context({ children }) {
     return "/placeholder.png";
   };
 
+  const triggerToast = ({ name = "", image = "/placeholder.png", message = "", type = "success" }) => {
+    setToastData({ name, image, message, type });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
+  };
+
+  // const addProductToCart = (product) => {
+  //   if (state.isProcessing) {
+  //     // console.log('Skipping addProductToCart: processing in progress');
+  //     return;
+  //   }
+  //   // console.log('addProductToCart:', product);
+  //   const newProductCollection = product?.collection_name?.toLowerCase();
+  //   const cartProducts = state.products;
+
+  //   // Detect if cart already has a pre-book item
+  //   const hasPreBook = cartProducts.some(
+  //     (p) => p.collection_name?.toLowerCase() === 'pre book'
+  //   );
+
+  //   // Detect if cart already has ANY non–pre-book item
+  //   const hasRegular = cartProducts.some(
+  //     (p) => p.collection_name?.toLowerCase() !== 'pre book'
+  //   );
+
+  //   // --- RESTRICTION LOGIC ---
+  //   if (newProductCollection === 'pre book' && hasRegular) {
+  //     // Trying to add 'pre book' but cart has normal items
+  //     // alert("You cannot mix Pre Book items with other products.");
+  //     triggerToast({
+  //       name: "Cart Restriction",
+  //       message: "You cannot mix Pre Book items with other products.",
+  //       image: "/assets/images/danger.png",
+  //       type: "error",
+  //       showButton: false
+  //     });
+  //     return;
+  //   }
+
+  //   if (newProductCollection !== 'pre book' && hasPreBook) {
+  //     // Trying to add regular product but cart has pre-book items
+  //     // alert("You cannot add other items with a Pre Book product.");
+  //     triggerToast({
+  //       name: "Cart Restriction",
+  //       message: "You cannot add other items with a Pre Book product.",
+  //       image: "/assets/images/danger.png",
+  //       type: "error",
+  //       showButton: false
+  //     });
+  //     return;
+  //   }
+  //   dispatch({ type: 'SET_PROCESSING', payload: true });
+  //   dispatch({
+  //     type: 'ADD_PRODUCT',
+  //     payload: product,
+  //     meta: {
+  //       toast: {
+  //         name: product?.product_name,
+  //         image: buildToastImageUrl(product),
+  //         message: "Added to your cart",
+  //       },
+  //     },
+  //   });
+  //   // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+  //   // document.getElementById("cartDrawer")?.classList.add("aside_visible");
+  // };
+
   const addProductToCart = (product) => {
-    if (state.isProcessing) {
-      // console.log('Skipping addProductToCart: processing in progress');
+    if (state.isProcessing) return;
+
+    const newProductCollection = product?.collection_name?.toLowerCase();
+    const cartProducts = [...state.products];
+
+    // Detect if cart already has a pre-book item
+    const hasPreBook = cartProducts.some(
+      (p) => p.collection_name?.toLowerCase() === 'pre book'
+    );
+
+    // Detect if cart already has ANY non–pre-book item
+    const hasRegular = cartProducts.some(
+      (p) => p.collection_name?.toLowerCase() !== 'pre book'
+    );
+
+    // --- RESTRICTION LOGIC ---
+    if (newProductCollection === 'pre book' && hasRegular) {
+      triggerToast({
+        name: "Cart Restriction",
+        message: "You cannot mix Pre Book items with other products.",
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
       return;
     }
-    // console.log('addProductToCart:', product);
+
+    if (newProductCollection !== 'pre book' && hasPreBook) {
+      triggerToast({
+        name: "Cart Restriction",
+        message: "You cannot add other items with a Pre Book product.",
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return;
+    }
+
+    // --- DYNAMIC MAX QUANTITY LOGIC ---
+    const MAX_LIMIT =
+      product.maximum_order_quantity && product.maximum_order_quantity > 0
+        ? product.maximum_order_quantity
+        : product.product_qty; // fallback to stock
+
+    const existingItemIndex = cartProducts.findIndex(
+      (p) => p.product_id === product.product_id
+    );
+
+
+    if (existingItemIndex !== -1) {
+      const currentQty = cartProducts[existingItemIndex].quantity || 1;
+
+      if (currentQty >= MAX_LIMIT) {
+        triggerToast({
+          name: "Maximum Quantity Reached",
+          message: `You cannot add more than ${MAX_LIMIT} of this product.`,
+          image: "/assets/images/danger.png",
+          type: "error",
+          showButton: false
+        });
+        return;
+      }
+
+      // Increase quantity but do not exceed 6
+      cartProducts[existingItemIndex].quantity = Math.min(currentQty + 1, MAX_LIMIT);
+      dispatch({ type: 'UPDATE_CART', payload: cartProducts });
+      return;
+    }
+
+    // New product, set initial quantity = 1
+    product.quantity = 1;
+
+    // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
+    if (product.quantity > MAX_LIMIT) {
+      triggerToast({
+        name: "Maximum Quantity Reached",
+        message: `You cannot add more than ${MAX_LIMIT} of this product.`,
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return;
+    }
+
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({
       type: 'ADD_PRODUCT',
@@ -272,8 +418,6 @@ export default function Context({ children }) {
         },
       },
     });
-    // document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
-    // document.getElementById("cartDrawer")?.classList.add("aside_visible");
   };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
@@ -297,24 +441,46 @@ export default function Context({ children }) {
   };
 
   const setCartProducts = (productsOrFn) => {
-    // console.log('setCartProducts called:', productsOrFn);
+    let newProducts = [];
+
     if (typeof productsOrFn === 'function') {
-      // Handle functional update
-      const newProducts = productsOrFn(state.products);
-      if (!Array.isArray(newProducts)) {
-        // console.error('setCartProducts: Functional update returned non-array', newProducts);
-        return;
-      }
-      dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+      // Functional update
+      newProducts = productsOrFn(state.products);
     } else {
       // Direct array update
-      if (!Array.isArray(productsOrFn)) {
-        // console.error('setCartProducts: Invalid payload, must be an array', productsOrFn);
-        return;
-      }
-      dispatch({ type: 'SET_PRODUCTS', payload: productsOrFn });
+      newProducts = productsOrFn;
     }
-  };
+
+    // Validate
+    if (!Array.isArray(newProducts)) return;
+
+    // --- RESTRICTION LOGIC ---
+    const hasPreBook = newProducts.some(
+      (p) => p?.collection_name?.toLowerCase() === 'pre book'
+    );
+
+    const hasRegular = newProducts.some(
+      (p) => p?.collection_name?.toLowerCase() !== 'pre book'
+    );
+
+    // ❌ If mixing pre book + regular → reject update
+    if (hasPreBook && hasRegular) {
+      // alert(
+      //   "You cannot mix Pre Book products with other items in the cart."
+      // );
+      triggerToast({
+        name: "Cart Restriction",
+        message: "You cannot mix Pre Book products with other items in the cart.",
+        image: "/assets/images/danger.png",
+        type: "error",
+        showButton: false
+      });
+      return; // Don't update cart
+    }
+
+    // --- IF VALID, UPDATE ---
+    dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
+};
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
@@ -331,6 +497,10 @@ export default function Context({ children }) {
   const isAddedtoWishlist = (id) => {
     return wishList.includes(id);
   };
+
+  const hasPreBookItem = state.products.some(
+    (p) => p.collection_name?.toLowerCase() === "pre book"
+  );
 
   const contextElement = {
     cartProducts: state.products,
@@ -352,7 +522,8 @@ export default function Context({ children }) {
     setCouponDataContext,
     removeGiftFromCart,
     promotionsContext,
-    setPromotionsContext
+    setPromotionsContext,
+    hasPreBookItem
   };
 
   return (
@@ -361,7 +532,7 @@ export default function Context({ children }) {
 
       {toastData && (
         <div
-          className={`custom-toast shadow-lg ${showToast ? "show" : "hide"}`}
+          className={`custom-toast shadow-lg ${toastData.type} ${showToast ? "show" : "hide"}`}
           onClick={openCart}
           style={{ cursor: "pointer" }}
         >
@@ -369,8 +540,8 @@ export default function Context({ children }) {
           <div className="toast-content">
             <div>
               <strong>{toastData.name}</strong>
-              <div>Successfully added to your cart</div>
-              <button
+              <div>{toastData.message}</div>
+              {!toastData.type && <button
                 className="btn btn-sm btn-dark text-white mt-1"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -378,7 +549,7 @@ export default function Context({ children }) {
                 }}
               >
                 View Cart
-              </button>
+              </button>}
             </div>
           </div>
           <button
@@ -432,6 +603,25 @@ export default function Context({ children }) {
           font-size: 16px;
           cursor: pointer;
           color: #666;
+        }
+        .custom-toast.success {
+          border-left: 6px solid #28a745;
+        }
+        .custom-toast.warning {
+          border-left: 6px solid #ffc107;
+          background: #fff8e5;
+        }
+        .custom-toast.error {
+          border-left: 6px solid #dc3545;
+          background: #ffe8e8;
+        }
+        .custom-toast.warning strong,
+        .custom-toast.warning div {
+          color: #b68400;
+        }
+        .custom-toast.error strong,
+        .custom-toast.error div {
+          color: #b30000;
         }
         @media (max-width: 576px) {
           .custom-toast {

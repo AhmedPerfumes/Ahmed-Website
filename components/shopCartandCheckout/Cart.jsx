@@ -18,7 +18,13 @@ export default function Cart() {
   // const [couponCode, setCouponCode] = useState("");
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart} = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag, setCouponDataContext, removeGiftFromCart } = useContextElement();
+  const [checkboxes, setCheckboxes] = useState({
+    free_shipping: freeShippingFlag,
+    flat_rate: false,
+    local_pickup: false,
+  });
+  const finalTotal = !isMenuLoading && shippingServiceCharges ? (!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)) : "0.00";
 
   // console.log('shippingServiceChargesCA', freeShippingFlag);
 
@@ -28,55 +34,174 @@ export default function Cart() {
   }, []);
 
   useEffect(() => {
-    const tamaraPromoScript = document.createElement("script");
-    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-    tamaraPromoScript.async = true;
-    document.body.appendChild(tamaraPromoScript);
+    if (isMenuLoading) return;
+
+    const scriptId = "tabby-promo-script";
+    const scriptSrc = "https://checkout.tabby.ai/tabby-promo.js";
+
+    const cleanContainer = () => {
+      const container = document.getElementById("TabbyPromo");
+      if (container) container.innerHTML = "";
+    };
+
+    const initTabby = () => {
+      cleanContainer();
+      if (document.getElementById("TabbyPromo") && window.TabbyPromo && typeof window.TabbyPromo === 'function') {
+        try {
+           new window.TabbyPromo({
+            selector: '#TabbyPromo',
+            currency: 'AED', 
+            price: finalTotal, // Using the dynamic total calculated above
+            lang: locale, 
+            source: 'cart', // Changed to 'cart' since this is the cart page
+            publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
+            merchantCode: 'APM'
+          });
+        } catch (err) {
+          console.error("Tabby Widget Init Error:", err);
+        }
+      }
+    };
+
+    let script = document.getElementById(scriptId);
+    
+    if (!script) {
+      script = document.createElement("script");
+      script.src = scriptSrc;
+      script.id = scriptId;
+      script.async = true;
+      document.body.appendChild(script);
+      script.onload = initTabby;
+    } else {
+      if (typeof window.TabbyPromo === 'function') {
+        initTabby();
+      } else {
+        script.onload = initTabby;
+      }
+    }
 
     return () => {
-        document.body.removeChild(tamaraPromoScript);
+      if (script) script.removeEventListener('load', initTabby);
     };
-  }, [totalPrice]);
+  }, [finalTotal, currency, locale])
 
-  useEffect(() => {
-    window.tamaraSettings = {
-        lang: "en",
-        country: "AE",
-        publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
-    };
 
-    const tamaraPromoScript = document.createElement("script");
-    tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
-    tamaraPromoScript.async = true;
-    document.body.appendChild(tamaraPromoScript);
 
-    return () => {
-        document.body.removeChild(tamaraPromoScript);
-    };
-  }, [totalPrice]);
+  // useEffect(() => {
+  //   const tamaraPromoScript = document.createElement("script");
+  //   tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+  //   tamaraPromoScript.async = true;
+  //   document.body.appendChild(tamaraPromoScript);
 
-  const setQuantity = async (id, quantity, productQty) => {
-    if (quantity >= 1 && quantity <= productQty) {
+  //   return () => {
+  //       document.body.removeChild(tamaraPromoScript);
+  //   };
+  // }, [totalPrice]);
+
+  // useEffect(() => {
+  //   window.tamaraSettings = {
+  //       lang: "en",
+  //       country: "AE",
+  //       publicKey: "258c1cec-32f2-4290-9fde-83b3018848e9",
+  //   };
+
+  //   const tamaraPromoScript = document.createElement("script");
+  //   tamaraPromoScript.src = "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.js";
+  //   tamaraPromoScript.async = true;
+  //   document.body.appendChild(tamaraPromoScript);
+
+  //   return () => {
+  //       document.body.removeChild(tamaraPromoScript);
+  //   };
+  // }, [totalPrice]);
+
+  // const setQuantity = async (id, quantity, productQty) => {
+  //   if (quantity >= 1 && quantity <= productQty) {
+  //     setError(null);
+  //     const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //     const items = [...cartProducts];
+  //     const itemIndex = items.indexOf(item);
+  //     item.quantity = quantity;
+  //     items[itemIndex] = item;
+  //     setCartProducts(items);
+  //   } else {
+  //     setError("Quantity is more than available quantity");
+  //   }
+  // };
+
+  // const setQuantity = async (id, quantity, productQty) => {
+  //   // First check: quantity within stock
+  //   const withinStock = quantity >= 1 && quantity <= productQty;
+
+  //   // Second check: max 6 per product
+  //   const withinLimit = quantity <= 6;
+
+  //   // console.log("withinStock", withinStock);
+  //   // console.log("withinLimit", withinLimit);
+
+  //   if (withinStock && withinLimit) {
+  //     setError(null);
+
+  //     const items = [...cartProducts];
+  //     const itemIndex = items.findIndex(elm => elm.product_id == id);
+
+  //     if (itemIndex !== -1) {
+  //       items[itemIndex] = {
+  //         ...items[itemIndex],
+  //         quantity
+  //       };
+  //     }
+
+  //     setCartProducts(items);
+  //   } else {
+  //     setError(
+  //       !withinStock
+  //         ? "Quantity is more than available quantity"
+  //         : "Maximum allowed quantity is 6"
+  //     );
+  //   }
+  // };
+
+  const setQuantity = async (id, quantity, productQty, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : productQty; // fallback to stock quantity
+
+    // Check stock limit
+    const withinStock = quantity >= 1 && quantity <= productQty;
+
+    // Check max purchase limit
+    const withinLimit = quantity <= MAX_LIMIT;
+
+    if (withinStock && withinLimit) {
       setError(null);
-      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
       const items = [...cartProducts];
-      const itemIndex = items.indexOf(item);
-      item.quantity = quantity;
-      items[itemIndex] = item;
+      const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+      if (itemIndex !== -1) {
+        items[itemIndex] = {
+          ...items[itemIndex],
+          quantity,
+        };
+      }
+
       setCartProducts(items);
     } else {
-      setError("Quantity is more than available quantity");
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
+      );
     }
   };
+
+
   const removeItem = async(id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
   };
-
-  const [checkboxes, setCheckboxes] = useState({
-    free_shipping: freeShippingFlag,
-    flat_rate: false,
-    local_pickup: false,
-  });
 
   // Step 2: Create a handler function
   const handleCheckboxChange = (event) => {
@@ -265,19 +390,19 @@ export default function Cart() {
                           value={elm.quantity}
                           min={1}
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty, elm?.maximum_order_quantity)
                           }
                           className="qty-control__number text-center"
                           readOnly
                         />
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__reduce"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__increase"
                         >
                           +
@@ -439,6 +564,7 @@ export default function Cart() {
                 {/* <TamaraWidget amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/> */}
+                <div className="my-3" id="TabbyPromo"></div>
                 <TamaraWidget inlineType="5" inlineVariant='outlined'/>
             </div>
             <div className="mobile_fixed-btn_wrapper">

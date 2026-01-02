@@ -149,7 +149,7 @@ export default function OrderCompleted() {
     //   );
     // }
 
-    if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
+    if (couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
       // console.log('common Customer Coupon', elm);
       const validCoupon = orderDetails.products.some(
         // (item) => !item.sale_price && !item.discount && !item.is_gift && !promotionsContext.some((promo) =>

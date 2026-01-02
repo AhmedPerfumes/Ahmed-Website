@@ -44,6 +44,7 @@ export default function Style2({ category, subcategory, products }) {
       .join(" ");
   }
 
+  // "WARNING: If you change this logic, update the corresponding PHP/JS file."
   function removeSpecialCharactersAndAmp(str) {
     let cleanedStr = str?.replace(/&amp;/g, "");
     cleanedStr = cleanedStr?.replace(/[^\w\s-]/g, "");
@@ -102,6 +103,7 @@ export default function Style2({ category, subcategory, products }) {
       id="products-grid-2"
     >
       {products.map((elm, i) => (
+        elm.collection_name !== "Pre Book" &&
         <div key={i} className="product-card-wrapper">
           <div className="product-card mb-3 mb-md-4 mb-xxl-5">
             <div className={i != 1 ? "pc__img-wrapper" : ""}>
@@ -311,7 +313,7 @@ export default function Style2({ category, subcategory, products }) {
                   
                   >
                     {
-                      locale == 'ar' ? elm?.product_name_ar : elm?.product_name
+                      locale == 'ar' ? elm?.product_name_ar : he.decode(elm?.product_name)
                     }
                     {/* {elm?.product_name && t(he.decode(elm?.product_name))} */}
                   </Link>

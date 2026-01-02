@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import BotPenguinWidget from '@/components/common/BotPenguinWidget';
 import Footer14 from '@/components/footers/Footer14';
 import Header14 from '@/components/headers/Header14';
 import HomePage from '@/components/HomePage';
@@ -43,7 +44,8 @@ export default function HomePage8() {
       </div>
 
       {/* Your actual page content */}
-      <NewsLetter />
+      
+      <BotPenguinWidget />
       {/* <PopUp/> */}
       <Header14 />
 
