@@ -41,7 +41,7 @@ export default function Checkout() {
   const [OTPSuccess, setOTPSuccess] = useState(null);
   const [isSendOTPLoading, setIsSendOTPLoading] = useState(false);
   const [isOTPButton, setIsOTPButton] = useState(true);
-  const [isOTPVerified, setIsOTPVerified] = useState(true);
+  const [isOTPVerified, setIsOTPVerified] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [couponError, setCouponError] = useState(null);
   const [couponSuccess, setCouponSuccess] = useState(null);
@@ -394,7 +394,7 @@ export default function Checkout() {
     if (!billing.emirates.trim()) newErrors.emirates = "Emirate is required";
     if (!billing.email.trim()) newErrors.email = "Email is required";
     if (!billing.mobile.trim()) newErrors.mobile = "Mobile Number is required";
-    // if (!isLoggedIn && !isOTPVerified) newErrors.otp = "OTP must be verified";
+    if (!isLoggedIn && !isOTPVerified) newErrors.otp = "OTP must be verified";
 
     if (Object.keys(newErrors).length > 0) {
       setFieldErrors(newErrors);
@@ -661,7 +661,7 @@ export default function Checkout() {
                     </div>
                   </div>
 
-                  {/* {!isLoggedIn && (
+                  {!isLoggedIn && (
                     <div className="col-md-12">
                       {OTPError ? ( <div style={{ color: "red" }}>{OTPError}</div> ) : ( <div style={{ color: "green" }}>{OTPSuccess}</div> )}
                       {isOTPButton ? ( <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={sendOTP} > {isSendOTPLoading ? "Loading..." : "Send OTP"} </button> ) : ( 
@@ -680,7 +680,7 @@ export default function Checkout() {
                         </>
                       )}
                     </div>
-                  )} */}
+                  )}
 
                   <div className="col-md-12">
                     {!isLoggedIn && (
