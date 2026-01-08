@@ -36,6 +36,37 @@ export default function MobileHeader() {
 
   const [searchKeyWord, setSearchKeyWord] = useState("");
 
+  // Inside MobileHeader function
+const [searchSuggestions, setSearchSuggestions] = useState([]);
+const [isSearching, setIsSearching] = useState(false);
+
+useEffect(() => {
+    const fetchSuggestions = async () => {
+        if (searchKeyWord.trim().length < 2) {
+            setSearchSuggestions([]);
+            return;
+        }
+
+        setIsSearching(true);
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}api/search-suggestions?keyword=${searchKeyWord}`
+            );
+            const result = await response.json();
+            if (result.success) {
+                setSearchSuggestions(result.data);
+            }
+        } catch (err) {
+            console.error("Mobile search error:", err);
+        } finally {
+            setIsSearching(false);
+        }
+    };
+
+    const timeoutId = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(timeoutId);
+}, [searchKeyWord]);
+
 
   const handleChange = (event) => {
     setSearchKeyWord(event.target.value);
@@ -163,6 +194,54 @@ export default function MobileHeader() {
           0% { transform: translateX(-50%); } 
           100% { transform: translateX(0); }
         }
+          .mobile-search-results {
+    background: white;
+    width: 100%;
+    max-height: 70vh; /* Don't cover the whole screen, let them see the context */
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #f5f5f5;
+    text-decoration: none !important;
+}
+
+.mobile-suggestion-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.mobile-suggestion-info {
+    flex-grow: 1;
+    margin: 0 12px;
+    overflow: hidden;
+}
+
+.mobile-suggestion-name {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.mobile-suggestion-price {
+    font-size: 13px;
+    color: #a67b30;
+    font-weight: 600;
+}
       `}</style>
       <div 
           className="bg-black d-flex align-items-center" 
@@ -268,62 +347,76 @@ export default function MobileHeader() {
 
       <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
         <div className="container">
-          <form
-            onSubmit={onSearch}
-            className="search-field position-relative mt-4 mb-3"
-          >
-            <div className="position-relative d-flex align-items-center">
-              <input
-                className="search-field__input w-100 border rounded-1 form-control shadow-sm"
-                type="text"
-                name="search-keyword"
-                placeholder={locale === 'ar' ? "ابحث عن المنتجات" : "Search products"}
-                value={searchKeyWord}
-                onChange={handleChange}
-                style={{ height: '45px', paddingLeft: locale === 'ar' ? '3rem' : '1rem', paddingRight: locale === 'ar' ? '1rem' : '3rem', textAlign: locale === 'ar' ? 'right' : 'left'}}
-              />
-              <button
-                className="btn-icon search-popup__submit border-0 bg-transparent p-0 d-flex align-items-center justify-content-center"
-                type="submit"
-                style={{ position: 'absolute', top: '0', bottom: '0', left: locale === 'ar' ? '0' : 'auto', right: locale === 'ar' ? 'auto' : '0', width: '3rem', zIndex: 5 }}
-              >
-                <svg
-                  className="d-block"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{ transform: locale === 'ar' ? 'scaleX(-1)' : 'none' }} // Optional: Flip icon if needed
-                >
-                  <use href="#icon_search" />
-                </svg>
-              </button>
-              {searchKeyWord && (
-                <button
-                    className="btn-icon btn-close-lg search-popup__reset border-0 bg-transparent"
-                    type="reset"
-                    onClick={() => {/* Add your clear logic here, e.g. setSearchKeyWord('') */}}
-                    style={{
-                        position: 'absolute',
-                        left: locale === 'ar' ? 'auto' : '0.5rem',
-                        right: locale === 'ar' ? '0.5rem' : 'auto',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        zIndex: 6
-                    }}
-                ></button>
-              )}
-              {/* <button
-                className="btn-icon btn-close-lg search-popup__reset pb-0 me-2"
-                type="reset"
-              ></button> */}
-            </div>
+         <form onSubmit={onSearch} className="search-field position-relative mt-4 mb-3">
+    <div className="position-relative d-flex align-items-center">
+        <input
+            className="search-field__input w-100 border rounded-1 form-control shadow-sm"
+            type="text"
+            name="search-keyword"
+            placeholder={locale === 'ar' ? "ابحث عن المنتجات" : "Search products"}
+            value={searchKeyWord}
+            onChange={handleChange}
+            style={{ 
+                height: '45px', 
+                paddingLeft: locale === 'ar' ? '3rem' : '1rem', 
+                paddingRight: locale === 'ar' ? '1rem' : '3rem', 
+                textAlign: locale === 'ar' ? 'right' : 'left'
+            }}
+        />
+        {/* ... existing search buttons ... */}
+    </div>
 
-            <div className="position-absolute start-0 top-100 m-0 w-100" style={{ zIndex: 100 }}>
-              <div className="search-result"></div>
-            </div>
-          </form>
+    {/* MOBILE SUGGESTIONS DROPDOWN */}
+    {(isSearching || searchSuggestions.length > 0) && (
+        <div className="mobile-search-results position-absolute start-0 top-100 w-100" style={{ zIndex: 999 }}>
+            {isSearching && (
+                <div className="p-3 text-center fs-13 text-muted">
+                    <div className="spinner-border spinner-border-sm me-2" role="status"></div>
+                    {t("Searching...")}
+                </div>
+            )}
+
+            {!isSearching && searchSuggestions.map((item, index) => (
+                <Link 
+                    key={index}
+                    href={`/${locale}${item.url_path}`}
+                    className="mobile-suggestion-item"
+                    onClick={() => {
+                        setSearchKeyWord("");
+                        setSearchSuggestions([]);
+                    }}
+                >
+                    <img 
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`} 
+                        alt={item.name}
+                        className="mobile-suggestion-img"
+                    />
+                    <div className="mobile-suggestion-info">
+                        <span className="mobile-suggestion-name">{item.name}</span>
+                        <span className="mobile-suggestion-price">{item.price} {t("AED")}</span>
+                    </div>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2">
+                        <path d="M9 18l6-6-6-6" />
+                    </svg>
+                </Link>
+            ))}
+
+            {/* "View All" Link for Mobile */}
+            {!isSearching && searchSuggestions.length > 0 && (
+                <Link 
+                    href={`/${locale}/shop?q=${searchKeyWord}`}
+                    className="d-block text-center p-3 fs-13 fw-bold text-uppercase border-top bg-light text-dark"
+                    onClick={() => {
+                        setSearchKeyWord("");
+                        setSearchSuggestions([]);
+                    }}
+                >
+                    {t("View All Results")}
+                </Link>
+            )}
+        </div>
+    )}
+</form>
           {/* <!-- /.header-search --> */}
         </div>
         {/* <!-- /.container --> */}
