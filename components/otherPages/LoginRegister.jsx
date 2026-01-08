@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
+import { useUser } from "@/context/UserContext";
 
 export default function LoginRegister() {
   const locale = useLocale();
@@ -27,6 +28,8 @@ export default function LoginRegister() {
   const [decodedCoupon, setDecodedCoupon] = useState(null);
   const [mobile, setMobile] = useState("");
   const [hasMounted, setHasMounted] = useState(false);
+
+  const { setIsLoggedIn } = useUser();
 
   useEffect(() => {
     setHasMounted(true);
@@ -233,6 +236,7 @@ export default function LoginRegister() {
 
         // Apply coupon
         await applyCoupon(data.access_token);
+        setIsLoggedIn(true);
 
         router.push("/");
       }
