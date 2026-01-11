@@ -175,6 +175,7 @@ export default function LoginRegister() {
         setSuccess("Account verified successfully.");
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
+        setIsLoggedIn(true);
 
         // Apply coupon
         await applyCoupon(data.access_token);
@@ -233,10 +234,10 @@ export default function LoginRegister() {
             btoa(JSON.stringify({ ...defaultAddr, is_default: 1 }))
           );
         }
+        setIsLoggedIn(true);
 
         // Apply coupon
         await applyCoupon(data.access_token);
-        setIsLoggedIn(true);
 
         router.push("/");
       }
