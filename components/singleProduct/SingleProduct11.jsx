@@ -1,24 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Slider4 from "./sliders/Slider4";
-import BreadCumb from "./BreadCumb";
-import Star from "../common/Star";
-import Size from "./Size";
-import Description from "./Description";
-import AdditionalInfo from "./AdditionalInfo";
-import Reviews from "./Reviews";
-import Clolor2 from "./Clolor2";
-import ShareComponent from "../common/ShareComponent";
+// import Slider4 from "./sliders/Slider4";
+// import BreadCumb from "./BreadCumb";
+// import Star from "../common/Star";
+// import Size from "./Size";
+// import Description from "./Description";
+// import AdditionalInfo from "./AdditionalInfo";
+// import Reviews from "./Reviews";
+// import Clolor2 from "./Clolor2";
+// import ShareComponent from "../common/ShareComponent";
+// import he from 'he';
+// import ProductDescription from "./New/ProductInfoTabs/ProductDescription";
 import { useContextElement } from "@/context/Context";
-import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 import Base from "./New/base";
-import ProductDescription from "./New/ProductInfoTabs/ProductDescription";
 import ProductInfoTabs from "./New/ProductInfoTabs/ProductInfoTabs";
 import ItemFamilySlider from "./New/ItemFamilySlider";
 
-export default function SingleProduct11({ category, subcategory, product }) {
+export default function SingleProduct11({ category, subcategory, product: initialProduct }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { cartProducts, setCartProducts } = useContextElement();
   const [quantity, setQuantity] = useState(1);
@@ -26,70 +26,117 @@ export default function SingleProduct11({ category, subcategory, product }) {
   const locale = useLocale();
   const t = useTranslations();
 
+  const [displayProduct, setDisplayProduct] = useState(initialProduct);
+
+  useEffect(() => {
+    // Reset state if the user navigates to a different product
+    if (initialProduct?.product_id !== displayProduct?.product_id) {
+        setDisplayProduct(initialProduct);
+    }
+
+    const fetchLiveStatus = async () => {
+      if (!initialProduct?.product_id) return;
+
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products/live-status`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ 
+            product_ids: [initialProduct.product_id] 
+          })
+        });
+
+        if (!response.ok) return;
+
+        const liveData = await response.json();
+
+        if (Array.isArray(liveData) && liveData.length > 0) {
+          const liveItem = liveData[0];
+          
+          // Merge Live Data into Display Product
+          setDisplayProduct(prev => ({
+            ...prev,
+            product_qty: liveItem.product_qty,        // Live Stock
+            price: liveItem.price,                    // Live Price
+            sale_price: liveItem.sale_price,          // Live Sale Price
+            discount: liveItem.discount,              // Live Discount
+            maximum_order_quantity: liveItem.maximum_order_quantity
+          }));
+        }
+      } catch (err) {
+        console.error("Live product hydration failed", err);
+      }
+    };
+
+    fetchLiveStatus();
+  }, [initialProduct?.product_id]);
+
   const isIncludeCard = () => {
-    const item = cartProducts.filter((elm) => elm.product_id == product.product_id)[0];
+    const item = cartProducts.filter((elm) => elm.product_id == displayProduct.product_id)[0];
     return item;
   };
-  const setQuantityCartItem = (id, quantity) => {
-    if (isIncludeCard()) {
-      if (quantity >= 1 && quantity <= product.product_qty) {
-        setError(null);
-        const item = cartProducts.filter((elm) => elm.product_id == id)[0];
-        const items = [...cartProducts];
-        const itemIndex = items.indexOf(item);
-        item.quantity = quantity;
-        items[itemIndex] = item;
-        setCartProducts(items);
-      } else {
-        setError("Quantity is more than available quantity");
-      }
-    } else {
-      setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
-      setError(null);
-      if(quantity > product.product_qty) {
-        setError("Quantity is more than available quantity");
-      } else {
-        setError(null);
-      }
-    }
-  };
-  const addToCart = () => {
-    if (!isIncludeCard()) {
-      const item = {...product, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcategory.split('-').join(' '))};
-      item.quantity = quantity;
-      setCartProducts((pre) => [...pre, item]);
-      document
-      .getElementById("cartDrawerOverlay")
-      .classList.add("page-overlay_visible");
-      document.getElementById("cartDrawer").classList.add("aside_visible");
-    }
-  };
 
-  function cleanProductName(productName) {
-    // Step 1: Remove any non-alphanumeric characters except for spaces
-    const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, '') + ' Description';
+  // const setQuantityCartItem = (id, quantity) => {
+  //   if (isIncludeCard()) {
+  //     if (quantity >= 1 && quantity <= product.product_qty) {
+  //       setError(null);
+  //       const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //       const items = [...cartProducts];
+  //       const itemIndex = items.indexOf(item);
+  //       item.quantity = quantity;
+  //       items[itemIndex] = item;
+  //       setCartProducts(items);
+  //     } else {
+  //       setError("Quantity is more than available quantity");
+  //     }
+  //   } else {
+  //     setQuantity((quantity <= product.product_qty && quantity >= 1) ? quantity : product.product_qty);
+  //     setError(null);
+  //     if(quantity > product.product_qty) {
+  //       setError("Quantity is more than available quantity");
+  //     } else {
+  //       setError(null);
+  //     }
+  //   }
+  // };
+  // const addToCart = () => {
+  //   if (!isIncludeCard()) {
+  //     const item = {...product, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcategory.split('-').join(' '))};
+  //     item.quantity = quantity;
+  //     setCartProducts((pre) => [...pre, item]);
+  //     document
+  //     .getElementById("cartDrawerOverlay")
+  //     .classList.add("page-overlay_visible");
+  //     document.getElementById("cartDrawer").classList.add("aside_visible");
+  //   }
+  // };
+  // function cleanProductName(productName) {
+  //   // Step 1: Remove any non-alphanumeric characters except for spaces
+  //   const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, '') + ' Description';
   
-    // Step 2: Words to remove
-    const wordsToRemove = ['&', ' &', '& ', ' & ', 'amp', ' amp', 'amp ', ' amp ', ';', ' ;', '; ', ' ; '];
+  //   // Step 2: Words to remove
+  //   const wordsToRemove = ['&', ' &', '& ', ' & ', 'amp', ' amp', 'amp ', ' amp ', ';', ' ;', '; ', ' ; '];
   
-    // Step 3: Remove the words from the dynamic key (case insensitive)
-    let cleanString = dynamicKey;
-    wordsToRemove.forEach(word => {
-      const regex = new RegExp(word, 'gi'); // 'gi' for global and case-insensitive replacement
-      cleanString = cleanString.replace(regex, '');
-    });
+  //   // Step 3: Remove the words from the dynamic key (case insensitive)
+  //   let cleanString = dynamicKey;
+  //   wordsToRemove.forEach(word => {
+  //     const regex = new RegExp(word, 'gi'); // 'gi' for global and case-insensitive replacement
+  //     cleanString = cleanString.replace(regex, '');
+  //   });
   
-    // Step 4: Replace multiple spaces with a single space
-    cleanString = cleanString.replace(/\s+/g, ' ').trim(); // Trim to remove leading/trailing spaces
+  //   // Step 4: Replace multiple spaces with a single space
+  //   cleanString = cleanString.replace(/\s+/g, ' ').trim(); // Trim to remove leading/trailing spaces
   
-    return cleanString;
-  }
-
-  function capitalizeEachWord(str) {
-    return str.split(' ') // Split the sentence into words
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
-              .join(' '); // Join the words back into a sentence
-  }
+  //   return cleanString;
+  // }
+  // function capitalizeEachWord(str) {
+  //   return str.split(' ') // Split the sentence into words
+  //             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+  //             .join(' '); // Join the words back into a sentence
+  // }
 
   // const price = (elm) => {
   //   const currentUTC = new Date(); // Current UTC time
@@ -117,7 +164,7 @@ export default function SingleProduct11({ category, subcategory, product }) {
 
  return (
     <>
-      {Object.keys(product).length > 0 ? <>
+      {Object.keys(displayProduct).length > 0 ? <>
 
 
       {/* <section className="product-single container product-single__type-9">
@@ -199,36 +246,37 @@ export default function SingleProduct11({ category, subcategory, product }) {
             </div>
           </div>
         </div>
-      </section>
+        </section>
        
       
 
-      <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
-        <div className="product-single__details-list">
-          <h2 className="product-single__details-list__title text-white">
-            Description
-          </h2>
-          <div className="product-single__details-list__content text-white">
-            <Description product_name={ product.product_name }/>
-          </div>
-          
+        <section className="product-single product-single__type-9 bg-dark text-white d-flex align-items-center justify-content-center p-5">
+          <div className="product-single__details-list">
+            <h2 className="product-single__details-list__title text-white">
+              Description
+            </h2>
+            <div className="product-single__details-list__content text-white">
+              <Description product_name={ product.product_name }/>
+            </div>
+            
 
-          <h2 className="product-single__details-list__title text-white">
-           {category === "gift-sets" ? "Gift Set Contains" : "Fragrance Notes"}
-          </h2>
-          <div className="product-single__details-list__content text-white">
-            <AdditionalInfo product_name={ product.product_name } video={ product.video && JSON.parse(product.video)[0][0].value } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
+            <h2 className="product-single__details-list__title text-white">
+            {category === "gift-sets" ? "Gift Set Contains" : "Fragrance Notes"}
+            </h2>
+            <div className="product-single__details-list__content text-white">
+              <AdditionalInfo product_name={ product.product_name } video={ product.video && JSON.parse(product.video)[0][0].value } title={ product.video[0][1] && JSON.parse(product.video)[0][1].value }/>
+            </div>
+            
           </div>
-          
-        </div>
-      </section> */}
+        </section> 
+      */}
       <div  style={{ backgroundColor: "#FAF9F7" }} >
-        <Base product={{...product, category, subcategory}} />
+        <Base product={{...displayProduct, category, subcategory}} />
       </div>
       <div style={{ backgroundColor: "#121212" }}>
-        <ProductInfoTabs product={product} category={category} subcategory={subcategory} />
+        <ProductInfoTabs product={displayProduct} category={category} subcategory={subcategory} />
       </div>
-      <ItemFamilySlider product={product} itemFamilyProds={product.item_family} />
+      <ItemFamilySlider product={displayProduct} itemFamilyProds={displayProduct.item_family} />
       </> : <h2 className="h4 text-center text-uppercase mb-4 pb-xl-2 mb-xl-4">{t('noProductFound')}</h2>}
     </>
   );

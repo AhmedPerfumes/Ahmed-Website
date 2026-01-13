@@ -7,7 +7,7 @@ import { renderPrice } from "@/utlis/priceRenderer";
 import TamaraWidget from "@/components/TamaraWidget";
 import { toast } from 'react-toastify';
 
-const Checkout = ({ product: initialProduct, }) => {
+const Checkout = ({ product }) => {
     // const sizes = [product.size];
     // const [selectedSize, setSelectedSize] = useState(sizes[0]);
     const { currency, } = useMenu();
@@ -16,52 +16,6 @@ const Checkout = ({ product: initialProduct, }) => {
     const [error, setError] = useState(null);
     const locale = useLocale();
     const t = useTranslations();
-    const [product, setProduct] = useState(initialProduct);
-
-    useEffect(() => {
-        if (initialProduct?.product_id !== product?.product_id) {
-            setProduct(initialProduct);
-        }
-
-        const fetchLiveStatus = async () => {
-            if (!initialProduct?.product_id) return;
-
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products/live-status`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ product_ids: [initialProduct.product_id] }),
-                });
-
-                if (!response.ok) return;
-
-                const liveData = await response.json();
-                
-                // If we got data back for this ID
-                if (Array.isArray(liveData) && liveData.length > 0) {
-                    const liveItem = liveData[0];
-                    setProduct(prev => ({
-                        ...prev,
-                        product_qty: liveItem.product_qty,
-                        price: liveItem.price,
-                        sale_price: liveItem.sale_price,
-                        discount: liveItem.discount,
-                        maximum_order_quantity: liveItem.maximum_order_quantity
-                    }));
-                }
-            } catch (err) {
-                console.error("Live product hydration failed", err);
-            }
-        };
-
-        fetchLiveStatus();
-    }, [initialProduct?.product_id]);
-    useEffect(() => {
-        const stock = Number(product.product_qty);
-        console.log(stock, "stock updates")
-    }, [product])
 
     let category = product?.category;
     let subcategory = product?.subcategory;
@@ -228,25 +182,25 @@ const Checkout = ({ product: initialProduct, }) => {
         }
     };
 
-    function cleanProductName(productName) {
-        // Step 1: Remove any non-alphanumeric characters except for spaces
-        const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, "") + " Description";
+    // function cleanProductName(productName) {
+    //     // Step 1: Remove any non-alphanumeric characters except for spaces
+    //     const dynamicKey = productName.replace(/[^a-zA-Z0-9\s]/g, "") + " Description";
 
-        // Step 2: Words to remove
-        const wordsToRemove = [ "&", " &", "& ", " & ", "amp", " amp", "amp ", " amp ", ";", " ;", "; ", " ; ",];
+    //     // Step 2: Words to remove
+    //     const wordsToRemove = [ "&", " &", "& ", " & ", "amp", " amp", "amp ", " amp ", ";", " ;", "; ", " ; ",];
 
-        // Step 3: Remove the words from the dynamic key (case insensitive)
-        let cleanString = dynamicKey;
-        wordsToRemove.forEach((word) => {
-            const regex = new RegExp(word, "gi"); // 'gi' for global and case-insensitive replacement
-            cleanString = cleanString.replace(regex, "");
-        });
+    //     // Step 3: Remove the words from the dynamic key (case insensitive)
+    //     let cleanString = dynamicKey;
+    //     wordsToRemove.forEach((word) => {
+    //         const regex = new RegExp(word, "gi"); // 'gi' for global and case-insensitive replacement
+    //         cleanString = cleanString.replace(regex, "");
+    //     });
 
-        // Step 4: Replace multiple spaces with a single space
-        cleanString = cleanString.replace(/\s+/g, " ").trim(); // Trim to remove leading/trailing spaces
+    //     // Step 4: Replace multiple spaces with a single space
+    //     cleanString = cleanString.replace(/\s+/g, " ").trim(); // Trim to remove leading/trailing spaces
 
-        return cleanString;
-    }
+    //     return cleanString;
+    // }
 
     function capitalizeEachWord(str) {
         return str.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
@@ -566,7 +520,8 @@ const Checkout = ({ product: initialProduct, }) => {
                 ) : (
                     <button
                         type="button"
-                        className="btn btn-dark text-white w-100 rounded-pill fw-semibold shadow-sm mx-3"
+                        id="product-detail-top"
+                        className="btn btn-dark text-white w-100 rounded-pill fw-semibold shadow-sm"
                         disabled
                         style={{ height: 48 }}
                     >
@@ -574,7 +529,7 @@ const Checkout = ({ product: initialProduct, }) => {
                     </button>
                 )}
 
-                <div className="mt-3" id="TabbyPromo"></div>
+                <div className="my-3" id="TabbyPromo"></div>
                 <TamaraWidget className="mt-3" inlineType="5" inlineVariant='outlined'/>
             </div>
         </div>

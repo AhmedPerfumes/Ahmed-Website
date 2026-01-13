@@ -33,7 +33,7 @@ const Base = ({product}) => {
     // )
 
     return (
-        <div className="App py-5" >
+        <div className="App lg:py-5" >
             <div className="head-container container">
                 <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 gap-lg-4 ">
                     <div className="info-container order-2 order-lg-1">
