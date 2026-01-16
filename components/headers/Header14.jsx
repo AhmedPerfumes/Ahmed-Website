@@ -17,6 +17,7 @@ import { useMenu } from "../../context/MenuContext";
 import { useUser } from "../../context/UserContext";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
+import { renderPrice } from "@/utlis/priceRenderer";
 
 const headerStyles = `
 .header { transition: transform 0.3s ease-in-out; }
@@ -143,6 +144,23 @@ const marqueeStyles = `
     .marquee-track:hover {
     animation-play-state: paused;
     }
+    .suggestion-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+}
+
+.price-new {
+    color: #a67b30; /* Your gold theme color */
+    font-weight: 700;
+}
 `;
 
 export default function Header14() {
@@ -359,6 +377,7 @@ export default function Header14() {
         topHeader,
         isLoading: isMenuLoading,
         error,
+        currency,
     } = useMenu();
     if (isMenuLoading) return <div></div>;
     if (error) return <div>{error}</div>;
@@ -575,20 +594,12 @@ export default function Header14() {
                                                                     }}
                                                                 />
                                                                 <div className="flex-grow-1">
-                                                                    <span className="suggestion-name">
-                                                                        {
-                                                                            item.name
-                                                                        }
-                                                                    </span>
-                                                                    <span className="suggestion-price">
-                                                                        {
-                                                                            item.price
-                                                                        }{" "}
-                                                                        {t(
-                                                                            "AED"
-                                                                        )}
-                                                                    </span>
-                                                                </div>
+    <span className="suggestion-name">{item.name}</span>
+    <div className="suggestion-price-wrapper">
+    {/* Pass the item (product) and the global currency context */}
+    {renderPrice(item, currency)}
+</div>
+</div>
                                                                 <div className="text-secondary">
                                                                     <svg
                                                                         width="12"
