@@ -457,6 +457,8 @@ export default function Checkout() {
         setError(data.priceMessage);
       } else if (data.collectionMessage) {
         setError(data.collectionMessage);
+      } else if (data.focMessage) {
+        setError(data.focMessage);
       } else {
         if (data.products) setError(data.products);
         if (data["billingAddress.first_name"]) setError(data["billingAddress.first_name"]);

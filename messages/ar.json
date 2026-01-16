@@ -49,6 +49,7 @@
     "fragranceTimelineTab": "الخط الزمني للعطر",
     "customerReviewsTab": "مراجعات العملاء",
     "discoverMore": "اكتشف المزيد من <bold>{familyName}</bold>",
+    "outOfStock": "غير متوفر",
     "notes": {
       "mainTitle": "مكونات العطر",
       "subtitle": "تكشف مكونات العطر عن جوهر العطر، وتقسم رحلة رائحته من الانطباع الأول إلى الرائحة العالقة، مما يساعدك على فهم شخصيته وطابعه.",
