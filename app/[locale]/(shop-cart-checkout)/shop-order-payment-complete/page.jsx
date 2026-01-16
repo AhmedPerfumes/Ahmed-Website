@@ -67,8 +67,8 @@ const ShopOrderPaymentComplete = async ({ searchParams  }) => {
           <main className="page-wrapper">
             <div className="mb-4 pb-4"></div>
             <section className="shop-checkout container">
-              <h2 className="page-title">{data.payment_status != 'failed' ? 'ORDER RECEIVED' : 'ORDER FAILED'}</h2>
-              <OrderPaymentCompleted orderDetails={ data }/>
+              {/* <h2 className="page-title">{data.payment_status != 'failed' ? 'ORDER RECEIVED' : 'ORDER FAILED'}</h2> */}
+              <OrderPaymentCompleted orderDetails={ data } initialOrderCode={q && atob(q)}/>
             </section>
           </main>
           <section className="d-none d-lg-block" style={{ height: "100%" }}>
