@@ -12,6 +12,7 @@ export default function OrderTrack() {
   const [success, setSuccess] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
+  const [showAllScans, setShowAllScans] = useState(false);
 
   const [orderNumber, setOrderNumber] = useState("#");
 
@@ -27,6 +28,7 @@ export default function OrderTrack() {
     setIsLoading(true);
     setError(null);
     setSuccess(null);
+    setShowAllScans(false);
  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/trackOrder`, {
@@ -101,6 +103,19 @@ export default function OrderTrack() {
         }
         return <td>{((elm.price * (1 + elm.vat / 100)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
+  };
+
+  const formatDate = (dateString) => {
+    if(!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  };
+  const getVisibleScans = (scans) => {
+      if (!scans || scans.length <= 2 || showAllScans) {
+          return scans;
+      }
+      // Return first (latest) and last (earliest)
+      return [scans[0], scans[scans.length - 1]];
   };
 
   return (
@@ -197,6 +212,98 @@ export default function OrderTrack() {
             <span>{ orderDetails.payment_method }</span>
           </div>
         </div>
+
+        {/* --- SHIPMENT TRACKING SECTION --- */}
+        {orderDetails.shipping_details && orderDetails.shipping_details.Scans && (
+            <div className="checkout__totals-wrapper mb-4">
+                <div className="checkout__totals" style={{padding: '2rem'}}>
+                    <h3 style={{marginBottom: '1rem'}}>Shipment Tracking</h3>
+                    <div style={{marginBottom: '1.5rem'}}>
+                         <strong>AWB Number: </strong> <span style={{color: '#B9A16B'}}>{orderDetails.shipping_details.AWB}</span>
+                    </div>
+
+                    <div className="tracking-timeline">
+                        {getVisibleScans(orderDetails.shipping_details.Scans).map((scan, index, arr) => {
+                            // Determine if this is the very first scan in the full list (Latest)
+                            const isLatest = scan === orderDetails.shipping_details.Scans[0];
+                            
+                            return (
+                                <React.Fragment key={index}>
+                                    
+                                    {/* If we are in collapsed mode, we are at the 2nd item (index 1), and there are hidden items, show a dashed line or a spacer */}
+                                    {!showAllScans && index === 1 && orderDetails.shipping_details.Scans.length > 2 && (
+                                        <div style={{
+                                            paddingLeft: '23px', 
+                                            paddingBottom: '20px', 
+                                            color: '#999', 
+                                            fontStyle: 'italic',
+                                            borderLeft: '2px dashed #e5e5e5'
+                                        }}>
+                                            ... {orderDetails.shipping_details.Scans.length - 2} intermediate scans hidden ...
+                                        </div>
+                                    )}
+
+                                    <div style={{
+                                        display: 'flex', 
+                                        gap: '15px', 
+                                        // Don't show line for the last item displayed
+                                        borderLeft: index === arr.length - 1 ? '2px solid transparent' : '2px solid #e5e5e5',
+                                        paddingLeft: '20px',
+                                        paddingBottom: '20px',
+                                        position: 'relative'
+                                    }}>
+                                        {/* Dot Indicator */}
+                                        <div style={{
+                                            position: 'absolute',
+                                            left: '-6px',
+                                            top: '0',
+                                            width: '10px',
+                                            height: '10px',
+                                            borderRadius: '50%',
+                                            backgroundColor: isLatest ? '#B9A16B' : '#ccc', 
+                                            zIndex: 1
+                                        }}></div>
+
+                                        <div style={{width: '100%'}}>
+                                            <h5 style={{margin: 0, fontSize: '1rem', fontWeight: 'bold'}}>
+                                                {scan.ScanDescription} 
+                                                {scan.ScanType === 'DL' && <span style={{color: 'green', marginLeft: '10px'}}>✓</span>}
+                                            </h5>
+                                            <div style={{fontSize: '0.875rem', color: '#666', marginTop: '5px'}}>
+                                                {scan.City}
+                                            </div>
+                                            <div style={{fontSize: '0.8rem', color: '#999', marginTop: '2px'}}>
+                                                {formatDate(scan.ScanDateTime)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                            );
+                        })}
+                    </div>
+
+                    {/* Toggle Button */}
+                    {orderDetails.shipping_details.Scans.length > 2 && (
+                        <div style={{marginTop: '10px', textAlign: 'center'}}>
+                            <button 
+                                onClick={() => setShowAllScans(!showAllScans)}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: '#B9A16B',
+                                    textDecoration: 'underline',
+                                    cursor: 'pointer',
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                {showAllScans ? 'Show Less' : 'Show Full History'}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        )}
+        {/* --- END SHIPMENT TRACKING SECTION --- */}
         <div className="checkout__totals-wrapper">
           <div className="checkout__totals">
             <h3>Order Details</h3>
