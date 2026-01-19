@@ -126,7 +126,8 @@
       "tube": "Tube (for Gels)",
       "reed_diffuser": "Reed Diffuser (for Air Fresheners)",
       "dropper": "Dropper",
-      "other": "Other"
+      "other": "Other",
+      "serum": "Serum Press (for Gels, Lotions)"
     },
     "howToApply": {
       "default": {
