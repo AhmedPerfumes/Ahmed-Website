@@ -139,7 +139,7 @@ export default function FamilySection({ data = {} }) {
         
         <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 2, background: GRADIENT_OVERLAY }} />
 
-        <div className="container text-center" style={{ position: "relative", zIndex: 10, width: "100%", paddingTop: "5em" }}>
+        <div className="container text-center" style={{ position: "relative", zIndex: 10, width: "100%", paddingTop: "10em" }}>
           <div className="carousel-container-3d">
             <div className="carousel-wrapper">
               {items.map((item, index) => {
@@ -232,6 +232,31 @@ export default function FamilySection({ data = {} }) {
               <Image src={items[active].nameImg} alt={currentLabel} fill unoptimized style={{ objectFit: "contain" }} />
             </div>
           </motion.div>
+          <motion.div initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }} className="d-flex flex-column align-items-center p-4">
+                <Link
+                 href="en/k-series">
+                  <button
+                    data-v-7aa9e1a2
+                    data-v-8967c2b9
+                    style={{
+                      background: "linear-gradient(90deg, #a8a8a8 0%, #ffe6b0 50%, #4cb2ff 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      border: "1px solid rgb(255, 255, 255)",
+                      padding: "12px 36px",
+                      borderRadius: "999px",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      backdropFilter: "blur(6px)",
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                    <span>Discover</span>
+                  </button>
+                 </Link>
+          </motion.div>
+          
         </div>
       </div>
     </>
