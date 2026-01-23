@@ -48,6 +48,13 @@
 #ele-24{
   display: none;
 }
+/* Mobile only: make modal close button white */
+@media (max-width: 767.98px) {
+  .newsletter-popup .btn-close {
+    filter: invert(1);
+    opacity: 1;
+  }
+}
 
 
 .item-zoom {
