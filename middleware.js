@@ -24,7 +24,16 @@ export async function middleware(request) {
     // console.log('Skipping middleware for API route:', pathname);
     return NextResponse.next();
   }
+ // Inside your middleware function
+if (pathname.includes('/couponRegister')) {
+    const adminToken = request.cookies.get('admin-token')?.value;
 
+    if (!adminToken || adminToken !== process.env.ADMIN_PASSWORD) {
+        // Redirect to the login page instead of the homepage
+        const locale = pathname.split('/')[1] || 'en';
+        return NextResponse.redirect(new URL(`/${locale}/couponLogin`, request.url));
+    }
+}
   // Get the actual domain from headers (handle proxy pass)
   // let host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'http://localhost:3000';
   // let hostHeader = 'https://ae.ahmedalmaghribi.com, ae.ahmedalmaghribi.com';

@@ -41,33 +41,44 @@ export default function CouponManager() {
             setLoading(false);
         }
     };
+     const handleLogout = () => {
+    // Expire the cookie immediately
+    document.cookie = "admin-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    window.location.href = "/couponLogin";
+};
 
-    return (
+   return (
         <div className="container py-5">
             <div className="row justify-content-center">
-                <div className="col-md-8"> {/* Made slightly wider for the table */}
+                <div className="col-md-8">
                     <div className="card shadow-sm border-0">
-                        <div className="card-header bg-dark text-white py-3">
-                            <h5 className="mb-0">Batch Coupon Registration</h5>
+                        {/* Header with White Text and Logout Button */}
+                        <div className="card-header bg-dark d-flex justify-content-between align-items-center py-3">
+                            <h5 className="mb-0 text-white fw-bold">Batch Coupon Registration</h5>
+                            <button 
+                                className="btn btn-sm btn-outline-light px-3" 
+                                onClick={handleLogout}
+                            >
+                                <i className="bi bi-box-arrow-right me-1"></i> Logout
+                            </button>
                         </div>
+
                         <div className="card-body p-4">
-                            
                             {/* Coupon ID Input */}
                             <div className="mb-3">
-                                <label className="form-label fw-bold">Coupon ID</label>
+                                <label className="form-label fw-bold text-dark">Coupon ID</label>
                                 <input 
                                     type="text" 
                                     className="form-control" 
-                                    placeholder="e.g. 663854d3-1abe-460c-a10d-f81c706d5433"
                                     value={couponId}
                                     onChange={(e) => setCouponId(e.target.value)}
                                 />
                                 <div className="form-text">Paste the UUID or ID provided for the coupon.</div>
                             </div>
 
-                            {/* File Input - Now accepts Excel and CSV */}
+                            {/* File Input */}
                             <div className="mb-4">
-                                <label className="form-label fw-bold">Select File (Excel or CSV)</label>
+                                <label className="form-label fw-bold text-dark">Select File (Excel or CSV)</label>
                                 <input 
                                     type="file" 
                                     className="form-control" 
@@ -89,15 +100,17 @@ export default function CouponManager() {
 
                             {/* Result Summary & Failure Table */}
                             {result && (
-                                <div className="mt-4">
+                                <div className="mt-4 animate__animated animate__fadeIn">
                                     <div className="p-3 border rounded bg-light mb-3">
-                                        <h6 className="fw-bold border-bottom pb-2">Batch Summary</h6>
-                                        <div className="row">
-                                            <div className="col-sm-6">
-                                                <p className="text-black mb-1">✅ Success: <strong>{result.summary?.total_success || 0}</strong></p>
+                                        <h6 className="fw-bold border-bottom pb-2 text-dark">Batch Summary</h6>
+                                        <div className="row text-center">
+                                            <div className="col-6 border-end">
+                                                <p className="mb-0 text-muted small">SUCCESS</p>
+                                                <h4 className="fw-bold text-dark mb-0">{result.summary?.total_success || 0}</h4>
                                             </div>
-                                            <div className="col-sm-6">
-                                                <p className="text-danger mb-1">❌ Failed: <strong>{result.summary?.total_failed || 0}</strong></p>
+                                            <div className="col-6">
+                                                <p className="mb-0 text-muted small">FAILED</p>
+                                                <h4 className="fw-bold text-danger mb-0">{result.summary?.total_failed || 0}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -105,22 +118,27 @@ export default function CouponManager() {
                                     {/* Detailed Failure Table */}
                                     {result.failures?.length > 0 && (
                                         <div className="mt-4">
-                                            <h6 className="text-danger fw-bold">Failure Details</h6>
+                                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 className="text-danger fw-bold mb-0">Failure Details</h6>
+                                                <span className="badge bg-danger-subtle text-danger border border-danger-subtle">
+                                                    {result.failures.length} Issues Found
+                                                </span>
+                                            </div>
                                             <div className="table-responsive border rounded" style={{maxHeight: '300px'}}>
                                                 <table className="table table-sm table-hover mb-0">
                                                     <thead className="table-light sticky-top">
                                                         <tr>
-                                                            <th>Phone</th>
-                                                            <th>Email</th>
-                                                            <th>Reason</th>
+                                                            <th className="py-2">Phone</th>
+                                                            <th className="py-2">Email</th>
+                                                            <th className="py-2">Reason</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         {result.failures.map((fail, index) => (
                                                             <tr key={index}>
-                                                                <td>{fail.phone}</td>
-                                                                <td>{fail.email}</td>
-                                                                <td className="text-danger small">{fail.error}</td>
+                                                                <td className="text-dark font-monospace">{fail.phone}</td>
+                                                                <td className="text-muted">{fail.email || 'N/A'}</td>
+                                                                <td className="text-danger small align-middle">{fail.error}</td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
