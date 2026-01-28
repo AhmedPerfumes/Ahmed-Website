@@ -8,6 +8,7 @@ import "swiper/css";
 
 import { useContextElement } from "@/context/Context";
 import { useLocale } from "next-intl";
+import { Weight } from "lucide-react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -205,7 +206,7 @@ export default function PopularProducts() {
 
       {/* ===== HEADER & TABS ===== */}
       <div style={{ textAlign: "center", marginBottom: 40 }}>
-        <h2
+        {/* <h2
           style={{
             fontSize: "38px",
             textTransform: "uppercase",
@@ -214,7 +215,9 @@ export default function PopularProducts() {
           }}
         >
           Explore by Category
-        </h2>
+        </h2> */}
+
+        <h2 className="section-head text-center p-3 text-uppercase">Explore by Category</h2>
 
         <div className="scroll-tabs" style={{ gap: "35px" }}>
           {filterCategories.map((cat) => (
@@ -230,7 +233,9 @@ export default function PopularProducts() {
                 textTransform: "uppercase",
                 letterSpacing: "1.5px",
                 padding: "8px 0",
+                fontFamily: "SofiaProRegular",
                 flexShrink: 0,
+                fontWeight: 500,
                 color: currentCategory === cat ? "#000" : "#a67b30",
                 borderBottom: `1.5px solid ${
                   currentCategory === cat ? "#000" : "transparent"
@@ -426,11 +431,12 @@ export default function PopularProducts() {
                 href="/shop"
                 style={{
                   fontSize: 16,
+                  fontWeight: 600,
                   textTransform: "uppercase",
                   color: "#000",
                   textDecoration: "none",
                   letterSpacing: 1.5,
-                  borderBottom: "1px solid #ddd",
+                  borderBottom: "1px solid rgb(166, 123, 48)",
                   paddingBottom: 4,
                 }}
               >

@@ -54,6 +54,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 // },
             });
         });
+        
 
         const swiper = new Swiper(".mySwiper", {
             autoplay: {
@@ -112,6 +113,41 @@ const ScrollSnapHorizontalBootstrap = () => {
             });
         }
 
+       const isDesktop = window.matchMedia("(min-width: 992px)").matches;
+
+        const heroEl = document.getElementById(
+        isDesktop ? "hero-underlay-desktop" : "hero-underlay-mobile"
+        );
+
+        const spacerEl = document.getElementById(
+        isDesktop ? "hero-spacer-desktop" : "hero-spacer-mobile"
+        );
+
+        const getCutoff = () => {
+        // prefer actual spacer height (best), fallback to visualViewport
+        if (spacerEl) return spacerEl.getBoundingClientRect().height;
+        if (window.visualViewport?.height) return window.visualViewport.height;
+        return window.innerHeight;
+        };
+
+        const onScroll = () => {
+        if (!heroEl) return;
+        const cutoff = getCutoff() - 5; // small buffer
+        heroEl.classList.toggle("is-hidden", window.scrollY > cutoff);
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        onScroll();
+
+        return () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+        ScrollTrigger.getAll().forEach((t) => t.kill());
+        };
+
+
+
         // const mobilepanel = gsap.utils.toArray(".mobilecontainer .mobilepanel");
         //     if (mobilepanel.length > 0) {
         //     const mobilepanelTween = gsap.to(mobilepanel, {
@@ -144,6 +180,22 @@ const ScrollSnapHorizontalBootstrap = () => {
 
     return (
         <><NewsLetter popUp={popUp} />
+        {/* Desktop */}
+        <div className="hero-underlay-wrap d-none d-lg-block">
+        <div id="hero-underlay-desktop" className="hero-underlay">
+            <Hero />
+        </div>
+        <div id="hero-spacer-desktop" className="hero-spacer" />
+        </div>
+
+        {/* Mobile */}
+        <div className="hero-underlay-wrap d-block d-lg-none">
+        <div id="hero-underlay-mobile" className="hero-underlay">
+            <Hero2 />
+        </div>
+        <div id="hero-spacer-mobile" className="hero-spacer hero-spacer--mobile" />
+        </div>
+
         <div id="main" className="">
             {/* Vertical Section 1 */}
             {/* <section className="scroll-section d-flex flex-direction-column">
@@ -153,12 +205,12 @@ const ScrollSnapHorizontalBootstrap = () => {
             </section> */}
             {/* <Chat/> */}
 
-            <section className="vh-100 hero-banner d-none d-lg-block">
+            {/* <section className="vh-100 hero-banner d-none d-lg-block">
                 <Hero />
             </section>
             <div className="d-block d-lg-none">
                 <Hero2 />
-            </div>
+            </div> */}
 
             <ProductShowcase />
 
@@ -173,7 +225,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 {t("Signature Selections")}
                             </span>
                         </div>
-                        <h2 className="h1 text-center text-white pt-3">
+                        <h2 className="section-head text-center text-white pt-3">
                             {t("Fragrances Adored by All")}
                         </h2>
                         <p className="text-center text-white section-paragraph">
@@ -215,7 +267,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     className="container-description flex__column__center__bottom flex__g-xxs"
                     data-v-ea8e1c8e=""
                 >
-                    <h2 className="h1 text-center pt-3">{t("Best Sellers")}</h2>
+                    <h2 className="section-head text-center text-uppercase pt-3">{t("Best Sellers")}</h2>
                     <p className="text-center section-paragraph">
                         {t("Discover Best Selling")}
                     </p>
@@ -226,7 +278,7 @@ const ScrollSnapHorizontalBootstrap = () => {
 
                 
 
-            <section className="scroll-section d-flex flex-direction-column section-2">
+            {/* <section className="scroll-section d-flex flex-direction-column section-2">
                 <div className="panel sub-section w-100 vh-100">
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
@@ -265,7 +317,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {t("Scroll to discover")}
                     </span>
                 </div>
-            </section>
+            </section> */}
 
             <section className="video-section-container">
                 {/* Video will be positioned as the background */}
@@ -334,7 +386,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 {t("Elegant Treasures for Every Occasion")}
                             </span>
                         </div>
-                        <h2 className="h1 text-center text-white pt-3">
+                        <h2 className="section-head text-center text-white pt-3">
                             {t("The Art of Gifting")}
                         </h2>
                         <p className="text-center text-white section-paragraph">
@@ -370,8 +422,8 @@ const ScrollSnapHorizontalBootstrap = () => {
             <section className="d-flex">
                 <div className="w-100 d-flex flex-column">
                     <div className="d-flex flex-column justify-content-around gap-5">
-                        <div className="section-head">
-                            <h2 className=" text-center pt-5">
+                        <div className="">
+                            <h2 className="section-head text-uppercase text-center pt-5">
                                 {t("Gifts for Every")}
                                 <br />
                                 <span className="text-italic">
@@ -490,7 +542,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 {t("Ancient Aromas")}
                             </span>
                         </div>
-                        <h2 className="h1 text-center text-white pt-3">
+                        <h2 className="section-head text-center text-white pt-3">
                             {t("The Essence of Arabic Dakhoon")}
                         </h2>
                         <p className="text-center text-white section-paragraph">
@@ -533,12 +585,26 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                 </div>
 
-                <div className="panel2 mt-5">
+                {/* <div className="panel2 mt-5">
                     <div className="inner2">
                         <VideoPanel
-                            src="/assets/videos/Kawkab.mp4"
+                            src="https://youtu.be/gf0kYWgy-58?si=oC082F-p5XUgnaFu"
                             section="hundred"
                         />
+                    </div>
+                </div> */}
+
+                <div className="panel2 mt-5">
+                    <div className="inner2">
+                        <div className="youtube-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0"
+                            title="K - Series"
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -641,7 +707,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 {t("WHERE LUXURY MEETS YOUR SENSES")}
                             </span>
                         </div>
-                        <h2 className="h1 text-center text-white pt-3">
+                        <h2 className="section-head text-center text-white pt-3">
                             {t("Your Journey Begins with a Scent")}
                         </h2>
                         <p className="text-center text-white section-paragraph">
