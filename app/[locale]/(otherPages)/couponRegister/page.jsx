@@ -19,75 +19,111 @@ export default function CouponManager() {
         router.push(`/${locale}/admin/login`);
     };
 
-    const handleUpload = async () => {
-        if (!file || !couponId) return alert("Please select a file and enter a Coupon ID");
+    const sleep = (ms) => new Promise(res => setTimeout(res, ms));
+   const handleUpload = async () => {
+    if (!file || !couponId) return alert("Please fill all fields");
 
-        setLoading(true);
-        setResult(null);
-        setProgress({ current: 0, total: 0 });
+    setLoading(true);
+    setResult(null);
+    setProgress({ current: 0, total: 0 });
 
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-            try {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-                
-                const dataRows = rows.slice(1); // Skip Header
-                setProgress({ current: 0, total: dataRows.length });
+    const reader = new FileReader();
+    
+    reader.onload = async (e) => {
+        try {
+            // 1. Check if XLSX is actually available
+            if (typeof XLSX === 'undefined') {
+                throw new Error("XLSX library is not loaded. Run 'npm install xlsx'");
+            }
 
-                let successCount = 0;
-                let failureList = [];
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            
+            // Ensure workbook has sheets
+            if (!workbook.SheetNames.length) {
+                throw new Error("The Excel file appears to be empty.");
+            }
 
-                // CLIENT-SIDE LOOP: Send one by one
-                for (let i = 0; i < dataRows.length; i++) {
-                    const row = dataRows[i];
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            
+            if (rows.length <= 1) {
+                throw new Error("No data found in the file (only header or empty).");
+            }
+
+            const dataRows = rows.slice(1);
+            const total = dataRows.length;
+            setProgress({ current: 0, total });
+
+            let successCount = 0;
+            let failureList = [];
+            const BATCH_SIZE = 5; 
+
+            for (let i = 0; i < total; i += BATCH_SIZE) {
+                const currentBatch = dataRows.slice(i, i + BATCH_SIZE);
+
+                // Use Promise.all to handle the batch
+                await Promise.all(currentBatch.map(async (row) => {
+                    // Safety check for empty rows
+                    if (!row || row.length === 0) return;
+
                     const name = String(row[0] || "Customer").trim();
                     const email = String(row[1] || "").trim();
                     let phone = String(row[2] || "").replace(/[^0-9]/g, '');
 
-                    if (!phone) continue;
+                    if (!phone) return;
                     if (phone.length === 9 || (phone.length === 10 && !phone.startsWith('0'))) {
                         phone = '0' + phone;
                     }
 
                     try {
-                        const response = await fetch(`/${locale}/api/bulk-register`, {
+                        const apiResponse = await fetch(`/${locale}/api/bulk-register`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ couponId, name, email, phone }),
                         });
 
-                        const resData = await response.json();
-
-                        if (response.ok) {
+                        const resData = await apiResponse.json();
+                        if (apiResponse.ok) {
                             successCount++;
                         } else {
                             failureList.push({ phone, email, error: resData.error || "Rejected" });
                         }
-                    } catch (err) {
-                        failureList.push({ phone, email, error: "Network Error" });
+                    } catch (apiErr) {
+                        failureList.push({ phone, email, error: "Network/Timeout Error" });
                     }
+                }));
 
-                    // Update Progress Bar
-                    setProgress(prev => ({ ...prev, current: i + 1 }));
-                }
+                // Update Progress UI
+                const processedSoFar = Math.min(i + BATCH_SIZE, total);
+                setProgress({ current: processedSoFar, total });
 
-                setResult({
-                    summary: { total_success: successCount, total_failed: failureList.length },
-                    failures: failureList
-                });
-
-            } catch (err) {
-                console.error("File Read Error:", err);
-                alert("Error reading file. Please ensure it's a valid Excel or CSV.");
-            } finally {
-                setLoading(false);
+                // Small pause to keep Cloudways happy
+                await new Promise(resolve => setTimeout(resolve, 500));
             }
-        };
-        reader.readAsArrayBuffer(file);
+
+            setResult({
+                summary: { total_success: successCount, total_failed: failureList.length },
+                failures: failureList
+            });
+
+        } catch (fileErr) {
+            console.error("Detailed Error:", fileErr);
+            // This will now tell you exactly what went wrong (e.g., "XLSX is not defined")
+            alert(`Error: ${fileErr.message}`); 
+        } finally {
+            setLoading(false);
+        }
     };
+
+    reader.onerror = () => {
+        alert("Failed to read the file from your computer.");
+        setLoading(false);
+    };
+
+    reader.readAsArrayBuffer(file);
+};
 
     return (
         <div className="container py-5">
