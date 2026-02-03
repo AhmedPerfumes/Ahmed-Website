@@ -371,7 +371,7 @@ export default function Context({ children }) {
     );
 
 
-    if (existingItemIndex !== -1) {
+    if (existingItemIndex !== -1 && !product.is_gift) {
       const currentQty = cartProducts[existingItemIndex].quantity || 1;
 
       if (currentQty >= MAX_LIMIT) {
@@ -392,7 +392,7 @@ export default function Context({ children }) {
     }
 
     // New product, set initial quantity = 1
-    product.quantity = 1;
+    product.quantity =  product.quantity || 1;
 
     // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
     if (product.quantity > MAX_LIMIT) {
