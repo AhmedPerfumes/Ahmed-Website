@@ -19,77 +19,72 @@ import "swiper/css/pagination";
 
 const CollectionSummary = ({ product, currency }) => {
     const { totalValue, savings, savingsPercent } = useMemo(() => {
-        if (!product.is_collection || !product.collection_items?.length > 0) {
+        if (!product?.is_collection || !product?.collection_items?.length) {
             return { totalValue: 0, savings: 0, savingsPercent: 0 };
         }
 
-        // Helper function to get an item's final price (original or discounted)
-        const getFinalPrice = (item) => {
-            const now = new Date();
-            // Check if a valid, active discount exists
-            if (item.discount && new Date(item.discount.start_date) <= now && new Date(item.discount.end_date) >= now) {
-                const { discount_type, value, final_price } = item.discount;
-                if (discount_type === 'percent') {
-                    return parseFloat(item.price) - (parseFloat(item.price) * value / 100);
-                }
-                if (discount_type === 'amount' && final_price) {
-                    return parseFloat(final_price);
-                }
-            }
-            // Fallback to sale_price if it exists
-            if (item.sale_price) {
-                return parseFloat(item.sale_price);
-            }
-            // Otherwise, return the original price
-            return parseFloat(item.price);
-        };
-
-        // Calculate the total value by summing the FINAL price of each individual item
+        // Sum original prices of collection items
         const total = product.collection_items.reduce((acc, item) => {
-            if (item.child_product_id) {
-                return acc + getFinalPrice(item);
+            if (item.child_product_id && item.price) {
+                return acc + parseFloat(item.price);
             }
             return acc;
         }, 0);
 
-        // Get the FINAL price of the bundle itself
-        const bundlePrice = getFinalPrice(product);
+        const originalPrice = parseFloat(product.price);
+        const salePrice = parseFloat(product.sale_price || product.price);
 
-        const savedAmount = total - bundlePrice;
-        const percent = total > 0 ? Math.round((savedAmount / total) * 100) : 0;
+        const savedAmount = originalPrice - salePrice;
+        const percent =
+            originalPrice > 0
+                ? Math.round((savedAmount / originalPrice) * 100)
+                : 0;
 
-        return { totalValue: total, savings: savedAmount, savingsPercent: percent };
+        return {
+            totalValue: total,
+            savings: savedAmount,
+            savingsPercent: percent,
+        };
     }, [product]);
 
-    // This component will only render something if there are actual savings.
-    if (savings <= 0) {
-        return null;
-    }
+    // Hide if no savings
+    if (savings <= 0) return null;
 
     return (
         <div className="collection-summary">
             <div className="summary-row">
-                <span>Total Individual Value:</span>
-                <span className="total-value"><s>{currency?.symbol}{totalValue.toFixed(2)}</s></span>
+                <span>Original Price</span>
+                <span className="total-value">
+                    {currency?.symbol}
+                    {product.price}
+                </span>
             </div>
+
             <div className="summary-row">
-                <span>Collection Price:</span>
-                <span className="collection-price">{renderPrice(product, currency)}</span>
+                <span>Collection Price</span>
+                <span className="collection-price">
+                    {currency?.symbol}
+                    {product.sale_price}
+                </span>
             </div>
+
             <hr className="summary-divider" />
-            <div className="summary-row savings">
-                <span>You Save:</span>
+
+            <div className="summary-row savings" style={{ direction: "ltr" }}>
+                <span>You Save</span>
                 <div className="savings-badge">
-                    <span>{renderPrice({ price: savings.toFixed(2) }, currency)}</span>
-                    <span style={{ direction: 'ltr', unicodeBidi: 'bidi-override' }}>
-                        ({savingsPercent}%)
+                    <span>
+                        {renderPrice({ price: savings.toFixed(2) }, currency)}
+                    </span>
+                    <span className="m-1">
+                        (%{savingsPercent})
                     </span>
                 </div>
-
             </div>
         </div>
     );
 };
+
 
 const AccordionItem = ({ title, id, defaultOpen = false, children }) => {
     return (
@@ -296,23 +291,6 @@ const ProductAccordion = ({ product }) => {
     // };
     
     // Logic to calculate collection savings
-
-    const { totalValue, savings, savingsPercent } = useMemo(() => {
-        if (!product.is_collection || !product.collection_items?.length > 0) {
-            return { totalValue: 0, savings: 0, savingsPercent: 0 };
-        }
-        const total = product.collection_items.reduce((acc, item) => {
-            if (item.child_product_id && item.price) {
-                return acc + parseFloat(item.price);
-            }
-            return acc;
-        }, 0);
-        const bundlePrice = parseFloat(product.price);
-        const savedAmount = total - bundlePrice;
-        const percent = total > 0 ? Math.round((savedAmount / total) * 100) : 0;
-        
-        return { totalValue: total, savings: savedAmount, savingsPercent: percent };
-    }, [product]);
     
     const productOverviewData = [
         {
