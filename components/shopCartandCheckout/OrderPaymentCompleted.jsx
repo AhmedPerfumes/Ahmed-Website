@@ -11,10 +11,8 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const { setCartProducts } = useContextElement();
 
-
   const [orderData, setOrderData] = useState(initialOrderDetails);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [showDate, setShowDate] = useState(false);
 
   const isPollingRef = useRef(false);
 
@@ -205,7 +203,7 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
         </div>
         <div className="order-info__item">
           <label>Date</label>
-          {showDate && <span>{new Date().toLocaleDateString()}</span>} 
+          <span>{new Date().toLocaleDateString()}</span>
         </div>
         <div className="order-info__item">
           <label>Total</label>

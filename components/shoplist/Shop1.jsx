@@ -14,7 +14,6 @@ import { sortingOptions } from "@/data/products/productCategories";
 import { openModalShopFilter } from "@/utlis/aside";
 import he from "he";
 import LabelIcon from "@/components/labels/LabelIcon";
-import NewsLetter from '@/components/modals/NewsLetter';
 import { renderPrice } from "@/utlis/priceRenderer";
 
 const itemPerRow = [2, 3, 4];
@@ -243,7 +242,6 @@ export default function Shop1({ search }) {
 
   return (
     <>
-    <NewsLetter popUp={shop_pop_up}/>
       <section className="full-width_padding">
         <div
           className="full-width_border border-2"
