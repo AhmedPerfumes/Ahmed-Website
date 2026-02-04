@@ -1,419 +1,89 @@
 "use client";
-import React from "react";
-import Hero from "../homes/home-2/Hero";
-import Image from "next/image";
-import Link from "next/link";
-import ContactForm from "../otherPages/Contact/ContactForm";
-import { useLocale, useTranslations } from "use-intl";
-import Categories from "@/components/homes/home-15/Categories";
-import VideoPanel from "../VideoPanel";
-import Contact_campaign from "../otherPages/Contact/Contact_campaign";
-import Products from "../homes/home-2/Products";
-import TopCollections from "../homes/home-5/TopCollections";
-import DiscountedProductsSlider from "../common/features/DiscountedProductsSlider";
-import DiscountedProductsGrid from "../common/features/DiscountedProductsGrid";
-import DiscountGrid from "../common/features/DiscountGrid";
+import React, { useMemo } from "react";
+import Link from "next/image";
+import NextLink from "next/link";
+import { useLocale } from "use-intl";
 import { useMenu } from "../../context/MenuContext";
+import DiscountGrid from "../common/features/DiscountGrid";
+
+/**
+ * Shared Banner Component
+ * Handles the responsive display of campaign banners with optimized Next.js Images
+ */
+const Banner = ({ data, locale, isMobile }) => {
+  if (!data) return null;
+
+  const aspectRatio = isMobile ? "6 / 10.5" : "21 / 11";
+  const displayClass = isMobile ? "d-block d-lg-none" : "d-none d-lg-block";
+  const maxWidth = isMobile ? 980 : 1680;
+
+  return (
+    <div className={`container-fluid ${isMobile ? "pt-3" : "pt-4"} ${displayClass} px-3`}>
+      <div className="d-flex justify-content-center">
+        <NextLink 
+          href={`/${locale}/${data.link || "shop"}`} 
+          className="w-100 transition-opacity hover-opacity-90" 
+          style={{ maxWidth }}
+        >
+          <div
+            style={{
+              position: "relative",
+              aspectRatio,
+              width: "100%",
+              borderRadius: isMobile ? 14 : 16,
+              overflow: "hidden",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+            }}
+          >
+            <img
+              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${data.image}`}
+              alt={data.title || "Campaign Banner"}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              loading={isMobile ? "lazy" : "eager"} // Desktop banner is usually LCP
+            />
+          </div>
+        </NextLink>
+      </div>
+    </div>
+  );
+};
 
 function CityWalk() {
-    const locale = useLocale();
-    const t = useTranslations();
-    const { homeSliders, homeMobileSliders } = useMenu();
-    const isSaleLink = (link) => {
-        if (!link) return false;
-        const s = String(link).toLowerCase();
-        return s === 'sale' || s === '/sale' || s.includes('/sale');
+  const locale = useLocale();
+  const { homeSliders, homeMobileSliders } = useMenu();
+
+  // Memoize search to prevent expensive array filtering on every render
+  const banners = useMemo(() => {
+    const checkSale = (s) => {
+      const link = String(s.link || "").toLowerCase();
+      return link === "sale" || link.includes("/sale");
     };
-    const saleDesktop = Array.isArray(homeSliders)
-        ? homeSliders.find((s) => isSaleLink(s.link))
-        : null;
-    const saleMobile = Array.isArray(homeMobileSliders)
-        ? homeMobileSliders.find((s) => isSaleLink(s.link))
-        : null;
-    return (
-        <>
-            {/* Hero Section */}
-            <div>
-                {/* Desktop Banner (centered, polished card) */}
-                <div className="container-fluid pt-4 d-none d-lg-block px-3 px-xl-4">
-                    <div className="d-flex justify-content-center">
-                        <div className="w-100" style={{ maxWidth: 1680 }}>
-                            {saleDesktop ? (
-                                (() => {
-                                    const elm = saleDesktop;
-                                    return (
-                                        <Link href={`/${locale}/${elm.link || "shop"}`} className="d-block">
-                                            <div
-                                                style={{
-                                                    position: "relative",
-                                                    aspectRatio: "21 / 11",
-                                                    width: "100%",
-                                                    borderRadius: 16,
-                                                    overflow: "hidden",
-                                                    boxShadow: "0 12px 30px rgba(0,0,0,.12)",
-                                                }}
-                                            >
-                                                <Image
-                                                    loading="lazy"
-                                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
-                                                    alt={elm?.title || "Home Slider"}
-                                                    fill
-                                                    sizes="(min-width: 1680px) 1680px, 100vw"
-                                                    style={{ objectFit: "cover" }}
-                                                />
-                                            </div>
-                                        </Link>
-                                    );
-                                })()
-                            ) : (
-                                <div style={{display:'none'}}>
-                                    <div
-                                        style={{
-                                            position: "relative",
-                                            aspectRatio: "21 / 11",
-                                            width: "100%",
-                                            borderRadius: 16,
-                                            overflow: "hidden",
-                                            boxShadow: "0 12px 30px rgba(0,0,0,.12)",
-                                        }}
-                                    >
-                                        <Image
-                                            loading="lazy"
-                                            src="/assets/images/campaigns/eos_desktop.jpg"
-                                            alt="Campaign Desktop"
-                                            fill
-                                            sizes="(min-width: 1680px) 1680px, 100vw"
-                                            style={{ objectFit: "cover" }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
 
-                {/* Mobile Banner (centered, polished card) */}
-                <div className="container-fluid pt-3 d-lg-none px-3">
-                    <div className="d-flex justify-content-center">
-                        <div className="w-100" style={{ maxWidth: 980 }}>
-                            {saleMobile ? (
-                                (() => {
-                                    const elm = saleMobile;
-                                    return (
-                                        <Link href={`/${locale}/${elm.link || "shop"}`} className="d-block">
-                                            <div
-                                                style={{
-                                                    position: "relative",
-                                                    aspectRatio: "6 / 10.5",
-                                                    width: "100%",
-                                                    borderRadius: 14,
-                                                    overflow: "hidden",
-                                                    boxShadow: "0 10px 24px rgba(0,0,0,.12)",
-                                                }}
-                                            >
-                                                <Image
-                                                    loading="lazy"
-                                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
-                                                    alt={elm?.title || "Home Slider Mobile"}
-                                                    fill
-                                                    sizes="(max-width: 980px) 100vw, 980px"
-                                                    style={{ objectFit: "cover" }}
-                                                />
-                                            </div>
-                                        </Link>
-                                    );
-                                })()
-                            ) : (
-                                <div style={{display:'none'}}>
-                                    <div
-                                        style={{
-                                            position: "relative",
-                                            aspectRatio: "6/ 10.5",
-                                            width: "100%",
-                                            borderRadius: 14,
-                                            overflow: "hidden",
-                                            boxShadow: "0 10px 24px rgba(0,0,0,.12)",
-                                        }}
-                                    >
-                                        <Image
-                                            loading="lazy"
-                                            src="/assets/images/campaigns/eos_mobile.jpg"
-                                            alt="Campaign Mobile"
-                                            fill
-                                            sizes="(max-width: 980px) 100vw, 980px"
-                                            style={{ objectFit: "cover" }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div className="mt-3">
+    return {
+      desktop: Array.isArray(homeSliders) ? homeSliders.find(checkSale) : null,
+      mobile: Array.isArray(homeMobileSliders) ? homeMobileSliders.find(checkSale) : null,
+    };
+  }, [homeSliders, homeMobileSliders]);
 
-        <DiscountGrid title={saleDesktop?.title} onlyDiscounted={true}/>
-        </div>
-            {/* <section className="d-flex section-3">
-                <div className="">
-                    <div className="section-content">
-                        <div className="d-flex flex-column justify-content-around ">
-                        <div className="section-head pt-5 pb-5 text-uppercase w-100">
-  <h2 className="text-center">
-    <span className="d-block h3  h3-sm h2-md">
-    Capture Summer’s Essence:
-    </span>
-    <span className="d-block text-uppercase h3 h3-sm h3-md">
-    Perfumes That Shine
-    </span>
-  </h2>
-</div>
+  return (
+    <main className="citywalk-campaign">
+      {/* Dynamic Banners */}
+      <Banner data={banners.desktop} locale={locale} isMobile={false} />
+      <Banner data={banners.mobile} locale={locale} isMobile={true} />
 
-
-                            <div className="d-none d-md-block pb-3">
-                                <div className="videoarea d-flex align-items-center">
-                                    <VideoPanel
-                                        src="/assets/videos/SummerVideo.mp4"
-                                        section=""
-                                    />
-                                </div>
-                            </div>
-                            <div className="d-block d-sm-none pb-3">
-                                <div className="videoarea d-flex align-items-center">
-                                    <VideoPanel
-                                        src="/assets/videos/SummerMob.mp4"
-                                        section="hundred"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a
-                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/product-category/dakhoon/oud-maattar`}
-                        >
-                            Shop Now
-                        </a>
-
-            </section> */}
-            {/* <DiscountedProductsGrid onlyDiscounted={true} /> */}
-
-            {/* <div className="container pt-2 mt-3">
-        <div className="section2 text-center">
-          <h3 className="text-uppercase fs-2 mb-5">
-          This Father's Day, Give the Gift of Elegance
-          </h3>
-        </div>
-        <div className="row align-items-center mt-4">
-          <div className="col-md-6">
-            <video className="w-100" autoPlay loop muted>
-              <source
-                src="https://www.ahmedalmaghribi.com/wp-content/uploads/2024/07/SHOP-VIDEO-1.mp4"
-                type="video/mp4"
-              />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div className="col-md-6 text-center pt-5">
-            <h4 className="text-uppercase fs-2">
-              "The Perfect Father’s Day Gift"
-            </h4>
-            <p className="mt-3 fs-6">
-           
-                "Celebrate Father's Day with Gift Set a luxurious fragrance collection that captures the essence of strength, elegance, and timeless sophistication. Thoughtfully curated with premium perfumes, each scent is crafted to perfection making it the perfect gift for the father who deserves nothing but the finest. This Father's Day, honor him with a touch of class and a scent that lasts."
-              
-            </p>
-            <div className="d-flex justify-content-center pt-3">
-            <a
-                                    className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                                    href={`/${locale}/shop/gift-sets/gift-sets/aazz-o-azeez`}
-                                >
-                                    Shop Now
-                                </a>
-                    </div>
-          </div>
-        </div>
-      </div> */}
-            {/* <div className="container pt-5 mt-5">
-                <div className="row align-items-center">
-                
-                    <div className="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
-                        <Image
-                            width={0}
-                            height={0}
-                            sizes="100%"
-                            className="img-fluid"
-                            src="/assets/images/campaigns/oud roses.jpg"
-                            alt="Wedding products display"
-                            loading="lazy"
-                            style={{ width: "100%", height: "auto" }}
-                            aria-label="Wedding products"
-                        />
-                    </div>
-
-                
-                    <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
-                        <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                        Oud & Roses
-                        </p>
-                        <p className="fs-6 mb-3">
-                        A timeless fusion of elegance and depth, Oud & Roses opens with a luminous bouquet of Turkish rose, lavender, and peony kissed by fresh lemon. At its heart, soft sandalwood and white florals entwine with a whisper of frankincense, leading to a rich, musky base of agarwood, amber, and oak moss. A truly captivating scent that lingers with sensual warmth.
-                            </p>
-                        <a
-                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/perfumes/occidental-fragrance/oud-roses`}
-                        >
-                            Shop Now
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div className="container">
-                <div className="row align-items-center">
-                
-                    <div className="col-md-6 order-1 order-md-1 mb-4 mb-md-0">
-                        <Image
-                            width={0}
-                            height={0}
-                            sizes="100%"
-                            className="img-fluid"
-                            src="/assets/images/campaigns/ignite rose.jpg"
-                            alt="Aazz-O-Azeez Gift Set"
-                            loading="lazy"
-                            style={{ width: "100%", height: "auto" }}
-                            aria-label="Aazz-O-Azeez Gift Set"
-                        />
-                    </div>
-
-                   
-                    <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-2">
-                        <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                        Ignite Rose
-                        </p>
-                        <p className="fs-6 mb-3">
-                        Ignite Rose is more than a fragrance; it’s an invitation to experience a moment of pure indulgence, where every spray transports you to a world of luxury and timeless beauty
-                        </p>
-                        <a
-                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/perfumes/occidental-fragrance/ignite-rose`}
-                        >
-                            Shop Now
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-           
-
-            <section className="d-flex flex-column align-items-center pt-5">
-                            <span className="t-subtitle text-uppercase fs-4 text-center">
-                                {"Scent of Summer: Fresh & Vibrant Perfumes"}
-                            </span>
-                            <div className="d-flex flex-row align-items-center ">
-                                <div className="mt-4 mb-5 d-none d-md-block">
-                                    <a
-                                        href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
-                                    >
-                                        <Image
-                                            loading="lazy"
-                                            src="/assets/images/campaigns/marj.jpg"
-                                            width="600"
-                                            height="600"
-                                            alt="Aazz-o-Azzeez"
-                                            className="px-1"
-                                            style={{ objectFit: "contain" }}
-                                        />
-                                    </a>
-                                    <div className="d-flex justify-content-center pt-3">
-                                        <Link
-                                            href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
-                                        >
-                                            {t("Shop Now")}
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="mt-4 mb-5 d-none d-md-block">
-                                    <a
-                                        href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}
-                                    >
-                                        <Image
-                                            className="px-1"
-                                            src="/assets/images/campaigns/lavender.jpg"
-                                            width="600"
-                                            height="600"
-                                            alt="Antee"
-                                            style={{ objectFit: "contain" }}
-                                        />
-                                    </a>
-                                    <div className="d-flex justify-content-center pt-3">
-                                        <Link
-                                            href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
-                                        >
-                                            {t("Shop Now")}
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div className="mt-4 mb-5 d-block d-sm-none d-flex flex-column">
-                            <a
-                                        href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
-                                    >
-                                        <Image
-                                            loading="lazy"
-                                            src="/assets/images/campaigns/marj.jpg"
-                                            width="600"
-                                            height="600"
-                                            alt="Aazz-o-Azzeez"
-                                            className="px-1"
-                                            style={{ objectFit: "contain" }}
-                                        />
-                                    </a>
-                                <div className="d-flex justify-content-center pt-3">
-                                    
-                                <Link
-                                            href={`/${locale}/shop/perfumes/oriental-fragrance/marj`}
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
-                                        >
-                                            {t("Shop Now")}
-                                        </Link>
-                                </div>
-                                <a href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}>
-                                    <Image
-                                        className="w-100 h-100 px-1"
-                                        src="/assets/images/campaigns/lavender.jpg"
-                                        width="600"
-                                        height="600"
-                                        alt="Oud-Asateen"
-                                        style={{ paddingTop: "1rem", objectFit: "contain" }}
-                                    />
-                                </a>
-                                <div className="d-flex justify-content-center pt-3">
-                                    <Link
-                                        href={`/${locale}/shop/perfumes/occidental-fragrance/oud-lavender`}
-                                        className="btn-rounded btn-link_lg text-uppercase fw-medium "
-                                    >
-                                        {t("Shop Now")}
-                                    </Link>
-                                </div>
-                            </div>
-                        </section> */}
-                        {/* <TopCollections
-  categoryId={8}
-  category={"perfumes"}
-  sub_category={"occidental"}
-  title={"Indulge in the Rich Aroma of Bakhoor"}
-  onlyDiscounted={true}
-/> */}
-                        
-
-            {/* <Contact_campaign/> */}
-        </>
-    );
+      {/* Product Display Section */}
+      <div className="mt-4">
+        <DiscountGrid 
+          title={banners.desktop?.title || "Limited Time Offers"} 
+          onlyDiscounted={true} 
+        />
+      </div>
+    </main>
+  );
 }
 
 export default CityWalk;

@@ -1,12 +1,7 @@
+import React from "react";
+import Header14 from "@/components/headers/Header14";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
-
-
-import Header14 from "@/components/headers/Header14";
-
-
-import React from "react";
-// import Loader from "@/components/loader/Loader";
 import CityWalk from "@/components/campagin/Citywalk";
 
 export const metadata = {
@@ -19,20 +14,30 @@ export const metadata = {
 
 const Citywalk = () => {
   return (
-    <>
-      {/* <Loader/> */}
+    <div className="page-wrapper min-vh-100 d-flex flex-column">
+      {/* Navigation Header */}
       <Header14 />
-   <CityWalk/>
-    
-      <section className="d-none d-lg-block" style={{ height: "100%" }}>
-        <Footer14 />
-      </section>
-      <section className="d-sm-block d-md-none bg-dark pt-5  ">
-        <div className="MobileFooter">
-          <MobileFooter2/>
-        </div>
-      </section>
-    </>
+
+      {/* Main Content Area */}
+      <main className="flex-grow-1">
+        <CityWalk />
+      </main>
+
+      {/* Responsive Footer Strategy */}
+      <footer>
+        {/* Desktop Footer */}
+        <section className="d-none d-lg-block border-top">
+          <Footer14 />
+        </section>
+
+        {/* Mobile Footer */}
+        <section className="d-block d-lg-none bg-dark pt-5 pb-4">
+          <div className="container">
+            <MobileFooter2 />
+          </div>
+        </section>
+      </footer>
+    </div>
   );
 }
 
