@@ -142,13 +142,13 @@ export default function Context({ children }) {
     const codeLower = couponDataContext?.code?.toLowerCase();
     const isCustomerCoupon = couponDataContext && couponDataContext.type === "customer";
     const isCustomerCouponActive = isCustomerCoupon && (!couponDataContext.start_date || !couponDataContext.end_date || (new Date(current_date_time) >= new Date(couponDataContext.start_date) && new Date(current_date_time) <= new Date(couponDataContext.end_date)));
-    const subtotal = state.products.reduce((accumulator, product) => {
+    const subtotal = state.products.reduce((accumuLator, product) => {
       // Ensure numbers
       const qty = Number(product?.quantity || 0);
       const basePrice = Number(product?.price || 0);
       // console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
       // Skip free gifts entirely
-      if (product?.is_gift) return accumulator;
+      if (product?.is_gift) return accumuLator;
 
       if (product?.discount) {
         console.log('discountC', product?.discount);
@@ -159,12 +159,12 @@ export default function Context({ children }) {
         ) {
           if (product.discount.discount_type === 'percent') {
               discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
-              // return accumulator + product.quantity * discount_price;
+              // return accumuLator + product.quantity * discount_price;
           } else if (product.discount.discount_type === 'amount') {
               discounted = Number(product.discount.final_price || 0);
-              // return accumulator + product.quantity * discount_price;
+              // return accumuLator + product.quantity * discount_price;
           }
-          return accumulator + qty * Number(discounted.toFixed(2));
+          return accumuLator + qty * Number(discounted.toFixed(2));
         }
       }
 
@@ -180,7 +180,7 @@ export default function Context({ children }) {
       //   const end = new Date(c?.end_date);
       //   if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
       //     const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-      //     return accumulator + qty * Number(discounted.toFixed(2));
+      //     return accumuLator + qty * Number(discounted.toFixed(2));
       //   }
       // }
 
@@ -198,17 +198,17 @@ export default function Context({ children }) {
           discounted = basePrice - value;
         }
 
-        return accumulator + qty * Number(discounted.toFixed(2));
+        return accumuLator + qty * Number(discounted.toFixed(2));
       }
 
       // 4) Sale price fallback
       // if (product?.sale_price != null) {
       //   console.log('product', 'sale price', product);
-      //   return accumulator + qty * Number(Number(product.sale_price).toFixed(2));
+      //   return accumuLator + qty * Number(Number(product.sale_price).toFixed(2));
       // }
 
       // 5) Default
-      return accumulator + qty * basePrice;
+      return accumuLator + qty * basePrice;
     }, 0);
 
     setTotalPrice(subtotal);

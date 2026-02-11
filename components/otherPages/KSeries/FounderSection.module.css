@@ -21,11 +21,12 @@
   box-shadow:
     0 0 70px rgba(0, 0, 0, 0.9),
     0 0 20px rgba(212, 175, 55, 0.3);
-  padding: 3rem 3.5rem; /* desktop padding */
+  padding: 3rem 3.5rem;
+  /* desktop padding */
 }
 
 .founderTitle {
-  font-family: "Playfair Display", serif;
+  font-family: "Lato-Regular", sans-serif;
   font-weight: 700;
   font-size: 3rem;
   letter-spacing: 0.15em;
@@ -116,7 +117,8 @@
   .founderText {
     font-size: 1rem;
     line-height: 1.5;
-    text-align: center; /* reads cleaner on small screens */
+    text-align: center;
+    /* reads cleaner on small screens */
   }
 }
 

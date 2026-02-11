@@ -233,7 +233,7 @@ export default function PopularProducts() {
                 textTransform: "uppercase",
                 letterSpacing: "1.5px",
                 padding: "8px 0",
-                fontFamily: "SofiaProRegular",
+                fontFamily: "'Lato-Regular', sans-serif",
                 flexShrink: 0,
                 fontWeight: 500,
                 color: currentCategory === cat ? "#000" : "#a67b30",
@@ -382,7 +382,7 @@ export default function PopularProducts() {
           <h3
             style={{
               fontSize: 26,
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lato-Regular', sans-serif",
               fontWeight: 300,
               marginBottom: 10,
             }}
@@ -395,7 +395,7 @@ export default function PopularProducts() {
               fontSize: 19,
               fontWeight: 300,
               marginBottom: 30,
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lato-Regular', sans-serif",
             }}
           >
             AED {activeProduct.price}

@@ -1,8 +1,8 @@
 @font-face {
   // font-family: "Lato-Regular";
-  // src: url(/assets/fonts/lato/Lato-Regular.ttf);
+  // src: url(/assets/fonts/Lato/Lato-Regular.ttf);
   font-family: "Lato-Regular";
-  src: url(/assets/fonts/lato/Lato-Bold.ttf);
+  src: url(/public/assets/fonts/lato/Lato-Regular.ttf);
 }
 
 body {
@@ -38,10 +38,6 @@ h6 {
 .fs-base,
 .form-title {
   font-size: $font-size-base !important;
-}
-
-.font-sofia {
-  font-family: "SofiaProBold";
 }
 
 .third-color {
@@ -224,38 +220,22 @@ h6 {
 }
 
 .smooth-16 {
-  text-shadow: calc(var(--stroke-width) * 1) calc(var(--stroke-width) * 0) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0.9239) calc(var(--stroke-width) * 0.3827) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0.7071) calc(var(--stroke-width) * 0.7071) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0.3827) calc(var(--stroke-width) * 0.9239) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0) calc(var(--stroke-width) * 1) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -0.3827) calc(var(--stroke-width) * 0.9239) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -0.7071) calc(var(--stroke-width) * 0.7071) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -0.9239) calc(var(--stroke-width) * 0.3827) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -1) calc(var(--stroke-width) * 0) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -0.9239) calc(var(--stroke-width) * -0.3827) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -0.7071) calc(var(--stroke-width) * -0.7071) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * -0.3827) calc(var(--stroke-width) * -0.9239) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0) calc(var(--stroke-width) * -1) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0.3827) calc(var(--stroke-width) * -0.9239) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0.7071) calc(var(--stroke-width) * -0.7071) 0
-      var(--stroke-color),
-    calc(var(--stroke-width) * 0.9239) calc(var(--stroke-width) * -0.3827) 0
-      var(--stroke-color);
+  text-shadow: calc(var(--stroke-width) * 1) calc(var(--stroke-width) * 0) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0.9239) calc(var(--stroke-width) * 0.3827) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0.7071) calc(var(--stroke-width) * 0.7071) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0.3827) calc(var(--stroke-width) * 0.9239) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0) calc(var(--stroke-width) * 1) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -0.3827) calc(var(--stroke-width) * 0.9239) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -0.7071) calc(var(--stroke-width) * 0.7071) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -0.9239) calc(var(--stroke-width) * 0.3827) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -1) calc(var(--stroke-width) * 0) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -0.9239) calc(var(--stroke-width) * -0.3827) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -0.7071) calc(var(--stroke-width) * -0.7071) 0 var(--stroke-color),
+    calc(var(--stroke-width) * -0.3827) calc(var(--stroke-width) * -0.9239) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0) calc(var(--stroke-width) * -1) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0.3827) calc(var(--stroke-width) * -0.9239) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0.7071) calc(var(--stroke-width) * -0.7071) 0 var(--stroke-color),
+    calc(var(--stroke-width) * 0.9239) calc(var(--stroke-width) * -0.3827) 0 var(--stroke-color);
 }
 
 @include media-breakpoint-up(lg) {
@@ -275,6 +255,7 @@ h6 {
 .fs-15 {
   font-size: 0.9375rem !important;
 }
+
 .fs-16 {
   font-size: 1rem !important;
 }
@@ -318,6 +299,7 @@ h6 {
 .fs-70 {
   @include font-size(4.375rem);
 }
+
 .fs-80 {
   @include font-size(5rem);
 }

@@ -253,7 +253,7 @@ setSaveLoading(false);
   ];
 
   return (
-    <div style={{ maxWidth: 520, margin: "60px auto", fontFamily: "Lato, SofiaProRegular" }}>
+    <div style={{ maxWidth: 520, margin: "60px auto", fontFamily: "'Lato-Regular', sans-serif" }}>
       <h2 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-4" style={{ letterSpacing: ".02em" }}>
         MY DETAILS
       </h2>

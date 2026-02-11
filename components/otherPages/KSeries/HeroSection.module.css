@@ -7,17 +7,21 @@
   font-weight: 700;
 }
 
-/* .sansFont {
+.sansFont {
   font-family: 'Lato', sans-serif;
-} */
+}
 
 /* --- Brand Colors --- */
 .textGold {
-  color: #D4AF37; /* A rich, classic gold */
+  color: #D4AF37;
+  /* A rich, classic gold */
 }
+
 .textChampagne {
-  color: #F7E7CE; /* A soft, elegant off-white */
+  color: #F7E7CE;
+  /* A soft, elegant off-white */
 }
+
 .btnGold {
   background-color: #D4AF37;
   color: #121212;
@@ -28,6 +32,7 @@
   border: none;
   letter-spacing: 0.1em;
 }
+
 .btnGold:hover {
   background-color: #E6C25E;
   color: #000;
@@ -48,14 +53,17 @@
   background-size: cover;
   background-position: center center;
 }
+
 .rootsTheme {
   /* Warm, natural theme */
   background-color: #5D4037;
 }
+
 .alchemyTheme {
   /* Bright, gold theme */
   background-color: #0A0A0A;
 }
+
 .beyondTheme {
   /* Cool, future theme */
   background-color: #283593;
@@ -83,38 +91,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* Hide content overflow */
+  overflow: hidden;
+  /* Hide content overflow */
   min-height: 50vh;
   z-index: 5;
 }
 
 .textWatermark {
-  font-family: 'Playfair Display', serif;
-  font-size: 15rem; /* Massive size */
+  font-family: "Lato-Regular", sans-serif;
+  font-size: 15rem;
+  /* Massive size */
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.358); /* Almost invisible */
+  color: rgba(255, 255, 255, 0.358);
+  /* Almost invisible */
   position: absolute;
   top: -50px;
   left: -30px;
-  z-index: -1; /* Sits behind the text */
+  z-index: -1;
+  /* Sits behind the text */
   line-height: 1;
 }
 
 .goldDivider {
   border-color: #D4AF37;
   opacity: 0.3;
-  width: 100px; /* Short, elegant line */
+  width: 100px;
+  /* Short, elegant line */
   margin: 2rem 0;
 }
 
 .imageFrame {
-  border: 1px solid rgba(212, 175, 55, 0.2); /* Faint gold border */
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  /* Faint gold border */
   border-radius: 8px;
   padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.03); /* Slight background */
-  
+  background-color: rgba(255, 255, 255, 0.03);
+  /* Slight background */
+
   /* Adds an "inner glow" to frame the bottle */
-  box-shadow: inset 0 0 40px 20px rgba(10, 10, 10, 0.5); 
+  box-shadow: inset 0 0 40px 20px rgba(10, 10, 10, 0.5);
 }
 
 /* Add some responsive padding for mobile */
@@ -122,21 +137,26 @@
   .productSection {
     padding: 0 1rem;
   }
+
   .productSection .row {
     text-align: center;
   }
+
   .productSection .col-md-6 {
     /* Stack text and image vertically */
     order: 2;
   }
+
   .productSection .col-md-5 {
     order: 1;
     margin-bottom: 2rem;
   }
+
   .productSection .offset-md-1 {
     margin-left: 0;
   }
 }
+
 /* --- Global Fonts --- */
 /* Import in _app.js or layout.js:
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400&display=swap');
@@ -145,11 +165,13 @@
 
 /* --- Brand Colors --- */
 .textGold {
-  color: #D4AF37; /* Rich, classic gold */
+  color: #D4AF37;
+  /* Rich, classic gold */
 }
 
 .textChampagne {
-  color: #F7E7CE; /* Soft, elegant off-white */
+  color: #F7E7CE;
+  /* Soft, elegant off-white */
 }
 
 .btnGold {
@@ -176,13 +198,11 @@
   inset: 0;
   z-index: 2;
 
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 50%,
-    rgba(0,0,0,0.35) 75%,
-    rgba(0,0,0,0.65) 100%
-  );
-  
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 0.35) 75%,
+      rgba(0, 0, 0, 0.65) 100%);
+
   pointer-events: none;
 }
 
@@ -256,7 +276,8 @@
 
 .productShowcaseContainer {
   position: relative;
-  height: 300vh; /* 3x viewport for 3 sticky sections */
+  height: 300vh;
+  /* 3x viewport for 3 sticky sections */
   z-index: 2;
 }
 
@@ -274,7 +295,7 @@
 }
 
 .textWatermark {
-  font-family: 'Playfair Display', serif;
+  font-family: "Lato-Regular", sans-serif;
   font-size: 15rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.358);
@@ -312,7 +333,8 @@
   }
 
   .productSection .col-md-6 {
-    order: 2; /* text below image */
+    order: 2;
+    /* text below image */
   }
 
   .productSection .col-md-5 {
@@ -337,13 +359,15 @@
 
 /* Position the title block a bit below top, centered horizontally */
 .heroTitleWrapper {
-  top: 9vh;            /* few pixels/one band down from top */
+  top: 9vh;
+  /* few pixels/one band down from top */
 }
 
 /* Wrapper so logo scales with viewport */
 .heroLogoWrapper {
   max-width: 310px;
-  width: min(60vw, 525px);  /* responsive width */
+  width: min(60vw, 525px);
+  /* responsive width */
   margin: 0 auto;
 }
 
@@ -367,7 +391,8 @@
 /* Mobile tweaks */
 @media (max-width: 768px) {
   .heroTitleWrapper {
-    top: 8vh; /* slightly closer to top on small screens */
+    top: 8vh;
+    /* slightly closer to top on small screens */
   }
 
   .heroLogoWrapper {
@@ -380,26 +405,34 @@
     letter-spacing: 0.14em;
   }
 }
+
 .heroWrapper {
   position: relative;
-  width: 100%;         /* instead of 100vw */
-  max-width: 100%;     /* prevents width overflow */
+  width: 100%;
+  /* instead of 100vw */
+  max-width: 100%;
+  /* prevents width overflow */
   min-height: 100vh;
-  overflow: hidden;    /* prevents scrollbars */
+  overflow: hidden;
+  /* prevents scrollbars */
 }
+
 .heroBg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;         /* no vw units */
+  width: 100%;
+  /* no vw units */
   height: 100%;
   overflow: hidden;
   z-index: 1;
 }
+
 .heroImage {
   object-fit: cover;
   object-position: center;
-  width: 100%;        /* safe: does NOT cause scroll */
+  width: 100%;
+  /* safe: does NOT cause scroll */
   height: 100%;
   pointer-events: none;
 }
