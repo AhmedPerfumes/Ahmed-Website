@@ -56,7 +56,7 @@ const arabicFont = localFont({
 
 // Import Sofia Pro Regular font as a secondary font
 const sofiaFont = localFont({
-  src: "../../public/assets/fonts/sofia/SofiaProRegular.ttf",
+  src: "../../public/assets/fonts/lato/Lato-Bold.ttf",
 });
 
 export default async function LocaleLayout({ children, params: { locale } }) {
