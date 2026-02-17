@@ -378,6 +378,23 @@ export default function Checkout() {
 
   const isExpired = (end_date) => { return new Date(end_date) < new Date(); };
 
+  const mapProductsFromFormData = (products) =>
+    products.map((item) => ({
+      product_id: item.product_id,
+      product_name: item.product_name,
+      quantity: item.quantity,
+      category_name: item.category_name,
+      subcategory_name: item.subcategory_name,
+      coupon: item.coupon,
+      discount: item.discount,
+      ...('is_coupon' in item && { is_coupon: item.is_coupon }),
+      ...('is_gift' in item && { is_gift: item.is_gift }),
+      ...('coupon_type' in item && { coupon_type: item.coupon_type }),
+      ...('value' in item && { value: item.value }),
+      ...('campaign' in item && { campaign: item.campaign }),
+      ...('type' in item && { type: item.type }),
+  }));
+
   async function onOrder(event) {
     event.preventDefault();
     setIsLoading(true);
@@ -416,15 +433,51 @@ export default function Checkout() {
       const user = atob(localStorage.getItem("user"));
       userJson = JSON.parse(user);
     }
-    const additionalFields = {...formData, products: cartProducts, payment_method: selectedOption, shippingPrice, shippingPriceVat, servicePrice, servicePriceVat, vatTax: vatTax.percentage, totalPrice, finalPrice, customer_id: isLoggedIn && userJson ? userJson.id : null, locale, couponCode, codPrice, codPriceVat, couponData, };
+
+    const {
+      shippingAdd,
+      note,
+      password,
+      otp,
+      ...cleanFormData
+    } = formData;
+
+    const additionalFields = {...cleanFormData, products: mapProductsFromFormData(cartProducts), payment_method: selectedOption, shippingPrice, shippingPriceVat, servicePrice, servicePriceVat, vatTax: vatTax.percentage, totalPrice, finalPrice, customer_id: isLoggedIn && userJson ? userJson.id : null, locale, couponCode, codPrice, codPriceVat, couponData, };
+    const token = localStorage.getItem('token');
+    // console.log('additionalFields', additionalFields);return;
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/storeOrder`,
         {
           method: "POST",
           body: JSON.stringify(additionalFields),
-          headers: { "content-type": "application/json", },
+          headers: { "content-type": "application/json", ...(token && { Authorization: `Bearer ${token}` })},
         }
       );
+
+      if (response.status === 401) {
+        // Clear all authentication-related items
+        if (localStorage.getItem('user')) {
+          localStorage.removeItem('user');
+        }
+        if (localStorage.getItem('token')) {
+          localStorage.removeItem('token');
+        }
+
+        // If they were a guest user verified via OTP, they need to re-verify
+        // If they were logged in, they need to re-login
+        const errorMsg = isLoggedIn 
+          ? 'Your session has expired. Please login again.' 
+          : 'Mobile verification expired. Please verify your number again.';
+
+        setError(errorMsg);
+
+        setTimeout(() => {
+          // Redirecting to the combined login/register/OTP page
+          window.location.reload();
+        }, 2000);
+
+        return; // Stop execution
+      }
       const data = await response.json();
       if (!response.ok) {
         const errorMessage = data.message || data.error || "Failed to submit the data. Please try again.";
@@ -567,6 +620,7 @@ export default function Checkout() {
         setIsOTPVerified(true);
         setIsDisabled(false);
         setOTPError(null);
+        localStorage.setItem("token", data.access_token);
       } else {
         if (data["mobile"]) setOTPError(data["mobile"]);
         if (data["otp"]) setOTPError(data["otp"]);

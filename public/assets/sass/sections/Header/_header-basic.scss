@@ -9,7 +9,7 @@
     height: 2.5rem;
     padding: 0.375rem 2.025rem 0.3rem 1.125rem;
     background-image: escape-svg($svg-arrow-down-bg);
-    font-family: 'Lato-Bold';
+    font-family: "Lato-Regular", sans-serif;
 
     &.color-white {
       background-image: escape-svg($svg-arrow-down-white-bg);
@@ -163,19 +163,19 @@
   }
 
   .header-search__input {
-    flex: 1;                // take full width
-    height: 100%;           // fill parent height
+    flex: 1; // take full width
+    height: 100%; // fill parent height
     padding: 0 $header-search-box-padding-r; // keep same look
     border: 0;
     background-color: transparent;
     color: $header-search-color;
     outline: none;
-    text-align: center;     // center placeholder + text vertically
-    font-size: inherit;     // keep consistent typography
+    text-align: center; // center placeholder + text vertically
+    font-size: inherit; // keep consistent typography
 
     &::placeholder {
       color: $header-search-placeholder;
-      text-align: center;   // center placeholder horizontally
+      text-align: center; // center placeholder horizontally
     }
   }
 }

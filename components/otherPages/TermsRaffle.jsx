@@ -7,7 +7,7 @@ export default function TermsRaffle() {
         <>
             <section
                 className="container mw-930 lh-30 p-4"
-                style={{ fontFamily: "SofiaProRegular" }}
+                style={{ fontFamily: "'Lato-Regular', sans-serif" }}
             >
 
                 <h2 style={{ fontSize: "36px" }}>

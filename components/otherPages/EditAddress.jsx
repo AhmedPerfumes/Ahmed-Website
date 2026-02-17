@@ -207,10 +207,12 @@ const save = async () => {
 
   setShow(false);
 
+  const token = localStorage.getItem('token');
+
   try {
-    await fetch(`${API_BASE}api/customerAddressUpdate`, {
+    const resp = await fetch(`${API_BASE}api/customerAddressUpdate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...(token && { Authorization: `Bearer ${token}` }) },
       body: JSON.stringify({
         address_id: form.id,
         customer_id: customerId,
@@ -223,6 +225,15 @@ const save = async () => {
         is_default: form.isDefault ? 1 : 0,
       }),
     });
+
+    const res = await resp.json();
+    if (res?.message || res?.error) {
+        if(res.error == 'Unauthorized' || res.message == 'Unauthorized') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login_register';
+        }
+    }
   } catch (e) {
     // console.error("API update failed", e);
   }
@@ -234,7 +245,7 @@ const save = async () => {
         <p className="sub-menu__title border-bottom mb-4">
           Your Default address will be used at checkout
         </p>
-        <div className="d-flex gap-3 flex-column " style={{ fontFamily: "SofiaProRegular" }}>
+        <div className="d-flex gap-3 flex-column " style={{ fontFamily: "'Lato-Regular', sans-serif" }}>
           {["Home Address", "Other Address"].map((label, idx) => (
             <div
               key={label}
@@ -275,7 +286,7 @@ const save = async () => {
       </div>
 
       {/* Edit Modal */}
-      <Modal style={{ fontFamily: "SofiaProRegular" }} show={show} onHide={() => setShow(false)} centered>
+      <Modal style={{ fontFamily: "'Lato-Regular', sans-serif" }} show={show} onHide={() => setShow(false)} centered>
         <Modal.Header closeButton className="border-0 pb-0">
           <Modal.Title className="h6 fw-semibold">
             Edit {editingIndex === 0 ? "Home" : "Other"} Address

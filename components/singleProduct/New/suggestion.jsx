@@ -52,7 +52,7 @@ const Suggestion = () => {
     <motion.div
       className="container pb-4"
       style={{
-        fontFamily: "SofiaProRegular",
+        fontFamily: "'Lato-Regular', sans-serif",
         color: "#1C1C1E",
         maxWidth: "1140px",
       }}

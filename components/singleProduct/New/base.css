@@ -27,7 +27,8 @@
 
 .gallery-container {
   width: 100%;
-  min-height: 60vh; /* Flexible height */
+  min-height: 60vh;
+  /* Flexible height */
   max-width: 100%;
 }
 
@@ -41,14 +42,16 @@
 @media (min-width: 992px) {
   .gallery-container {
     max-width: 33.3333%;
-    min-height: auto; /* Adjusted for desktop */
+    min-height: auto;
+    /* Adjusted for desktop */
   }
+
   .info-container,
   .accordion-container {
     max-width: 30%;
     /* padding-top: 7rem; */
   }
-  
+
 }
 
 @media (max-width: 991.98px) {
@@ -56,10 +59,12 @@
     min-height: auto;
     max-width: 100%;
   }
+
   .info-container,
   .accordion-container {
     max-width: 100%;
   }
+
   .accordion-padding {
     padding-top: 1.5rem;
   }
@@ -76,58 +81,64 @@
 
 /* Desktop (keep original styles) */
 .gallery-base {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* horizontal centering */
-    /* justify-content: center; vertical centering */
-    /* min-height: 100vh; */
-    text-align: center;
-    max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* horizontal centering */
+  /* justify-content: center; vertical centering */
+  /* min-height: 100vh; */
+  text-align: center;
+  max-width: 480px;
 }
 
 /* Mobile (remove all spacing/alignment) */
 @media (max-width: 991px) {
-    .gallery-base {
-        display: block;
-        min-height: auto;
-        text-align: left;
-        padding: 0;
-        margin: 0;
-    }
+  .gallery-base {
+    display: block;
+    min-height: auto;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
 
-    .gallery-base > * {
-        margin: 0;
-        padding: 0;
-    }
+  .gallery-base>* {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 
 /* Zoom Css */
 /* Add to your global stylesheet */
 .translate-up {
-    transform: scale(0.25) translateY(-8px);
+  transform: scale(0.25) translateY(-8px);
 }
+
 .opacity-0 {
-    opacity: 0;
+  opacity: 0;
 }
+
 .opacity-100 {
-    opacity: 1;
+  opacity: 1;
 }
+
 .scale-100 {
-    transform: scale(1);
+  transform: scale(1);
 }
+
 .scale-25 {
-    transform: scale(0.25);
+  transform: scale(0.25);
 }
 
 /* Hide scrollbar */
 /* Hide scrollbar */
 .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
+
 .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .accordion-button {
@@ -141,9 +152,11 @@
 }
 
 .accordion-button.collapsed .accordion-arrow {
-  transform: rotate(0deg); /* Down */
+  transform: rotate(0deg);
+  /* Down */
 }
 
 .accordion-button:not(.collapsed) .accordion-arrow {
-  transform: rotate(180deg); /* Up */
+  transform: rotate(180deg);
+  /* Up */
 }

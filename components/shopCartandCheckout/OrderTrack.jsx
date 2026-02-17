@@ -90,7 +90,7 @@ export default function OrderTrack() {
       // }
     } else if(elm?.coupon) {
       // console.log('else if');
-        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
     // else if(elm?.sale_price) {
     //   console.log('else if 2');
