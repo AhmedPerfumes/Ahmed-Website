@@ -37,7 +37,7 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      order_number: initialOrderCode || orderData.code // Ensure we send the Order Code/ID
+                      order_number: initialOrderCode || orderData.order_id // Ensure we send the Order Code/ID
                     })
                 });
 
@@ -138,7 +138,7 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
       // }
     } else if(elm?.coupon) {
         // console.log('else if');
-        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
     // else if(elm?.sale_price) {
     //   console.log('else if 2');
