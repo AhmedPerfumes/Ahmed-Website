@@ -38,7 +38,7 @@ export default function LoginRegister() {
   // Redirect if already logged in
   useEffect(() => {
     if (!hasMounted) return;
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("user");
     if (token) {
       router.replace(`/${locale}/account_dashboard`);
     }
