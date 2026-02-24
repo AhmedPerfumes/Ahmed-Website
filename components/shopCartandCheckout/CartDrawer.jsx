@@ -9,15 +9,17 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 import { useUser } from "@/context/UserContext";
+import RamadanOffersModal from "../ramadan/RamadanOffersModal";
 
 export default function CartDrawer() {
   const { isLoading: isMenuLoading, error: isMenuError, currency, shippingServiceCharges } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
+  const [ramadanModalOpen, setRamadanModalOpen] = useState(false);
   const { cartProducts, setCartProducts, totalPrice, promotionsContext, couponDataContext } = useContextElement();
   const { isLoggedIn } = useUser();
   const pathname = usePathname();
-  const t= useTranslations();
+  const t = useTranslations();
 
   // Helpers to build product URLs (consistent with ProductGrid)
   const removeSpecialCharacters = (str) =>
@@ -164,8 +166,8 @@ export default function CartDrawer() {
     } else {
       setError(
         !withinStock
-          ? "Quantity is more than available quantity"
-          : `Maximum allowed quantity is ${MAX_LIMIT}`
+          ? t("CartDrawer.MaxQuantityAvailable")
+          : t("CartDrawer.MaxQuantityAllowed", { limit: MAX_LIMIT })
       );
     }
   };
@@ -189,16 +191,16 @@ export default function CartDrawer() {
     const currentUTC = new Date(); // Current UTC time
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        if(elm.discount.discount_type == "percent") {
-          return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
-        } else if(elm.discount.discount_type == "amount") {
-          return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{(elm.discount.final_price * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
+    if (elm?.discount) {
+      if (new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        if (elm.discount.discount_type == "percent") {
+          return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{currency.symbol}</span></>;
+        } else if (elm.discount.discount_type == "amount") {
+          return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{(elm.discount.final_price * elm.quantity).toFixed(2)}{currency.symbol}</span></>;
         }
         // return  <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
       } else {
-        return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+        return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{currency.symbol}</span>;
       }
     }
     // else if(elm?.sale_price) {
@@ -233,12 +235,12 @@ export default function CartDrawer() {
       // console.log('common Customer Coupon', elm);
       const validCoupon = promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)
-        ) && (
-        !couponDataContext.start_date ||
-        !couponDataContext.end_date ||
-        (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
-          new Date(current_date_time) <= new Date(couponDataContext.end_date))
-      );
+      ) && (
+          !couponDataContext.start_date ||
+          !couponDataContext.end_date ||
+          (new Date(current_date_time) >= new Date(couponDataContext.start_date) &&
+            new Date(current_date_time) <= new Date(couponDataContext.end_date))
+        );
 
       if (
         elm.is_coupon &&
@@ -263,13 +265,13 @@ export default function CartDrawer() {
       }
     }
     // else {
-      return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+    return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{currency.symbol}</span>;
     // }
   };
 
   return (
-    <>
-      <div className="aside aside_right overflow-hidden cart-drawer " id="cartDrawer">
+    <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      <div className={`aside ${locale === 'ar' ? 'aside_left' : 'aside_right'} overflow-hidden cart-drawer`} id="cartDrawer">
         <div className="aside-header d-flex align-items-center">
           <h3 className="text-uppercase fs-6 mb-0">
             {t("SHOPPING BAG")} (
@@ -280,7 +282,7 @@ export default function CartDrawer() {
           </h3>
           <button
             onClick={closeCart}
-            className="btn-close-lg js-close-aside btn-close-aside ms-auto"
+            className={`btn-close-lg js-close-aside btn-close-aside ${locale === 'ar' ? 'me-auto' : 'ms-auto'}`}
           ></button>
         </div>
         <h6 style={{ color: "red" }}>{error && error}</h6>
@@ -315,9 +317,8 @@ export default function CartDrawer() {
                           src={
                             elm.image
                               ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`
-                              : `${process.env.NEXT_PUBLIC_API_URL}storage/${
-                                  elm?.images && JSON.parse(elm.images)[0]
-                                }`
+                              : `${process.env.NEXT_PUBLIC_API_URL}storage/${elm?.images && JSON.parse(elm.images)[0]
+                              }`
                           }
                           alt="image"
                           onClick={closeCart}
@@ -344,7 +345,7 @@ export default function CartDrawer() {
                         const href = `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
                         return (
                           <Link href={href} onClick={closeCart}>
-                            {elm?.product_name && he.decode(elm.product_name)}
+                            {elm?.product_name && t(he.decode(elm.product_name))}
                           </Link>
                         );
                       })()}
@@ -384,8 +385,8 @@ export default function CartDrawer() {
                         </div>
                       </div> : elm.quantity}
 
-                        {subTotalPrice(elm)}
-                      
+                      {subTotalPrice(elm)}
+
                     </div>
                   </div>
 
@@ -399,7 +400,7 @@ export default function CartDrawer() {
             ))}
 
             {/* Free Shipping Progress Bar */}
-           
+
           </div>
         ) : (
           <div className="fs-18 mt-5 px-5 cart-drawer-items-list">
@@ -407,47 +408,135 @@ export default function CartDrawer() {
           </div>
         )}
         <div className="cart-drawer-actions">
-        {/* <Image
+          {/* Ramadan Offers Card */}
+          <div
+            onClick={() => setRamadanModalOpen(true)}
+            style={{
+              background: "linear-gradient(135deg, #F5F1E8 0%, #EDE8DC 100%)",
+              borderRadius: "16px",
+              padding: "20px",
+              marginBottom: "20px",
+              cursor: "pointer",
+              position: "relative",
+              overflow: "hidden",
+              border: "3px solid rgba(191, 149, 63, 0.4)",
+              transition: "all 0.3s ease",
+              boxShadow: "0 4px 15px rgba(191, 149, 63, 0.2)"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-3px)";
+              e.currentTarget.style.boxShadow = "0 10px 30px rgba(191, 149, 63, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 15px rgba(191, 149, 63, 0.2)";
+            }}
+          >
+            {/* Pattern Background */}
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              opacity: 0.08,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23BF953F' fill-opacity='1'%3E%3Cpath d='M30 15 L35 25 L45 25 L37 32 L40 42 L30 35 L20 42 L23 32 L15 25 L25 25 Z'/%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundSize: "120px 120px"
+            }} />
+
+            {/* Gold Glow */}
+            <div style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "200px",
+              height: "200px",
+              background: "radial-gradient(circle, rgba(191, 149, 63, 0.15) 0%, transparent 70%)",
+              filter: "blur(40px)",
+              zIndex: 0,
+              pointerEvents: "none"
+            }} />
+
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <p style={{
+                color: "#8B6914",
+                fontSize: "11px",
+                letterSpacing: "3px",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                marginBottom: "8px",
+                textAlign: "center"
+              }}>
+                ☪ {t("RamadanModal.CartHeader")} ☪
+              </p>
+              <h6 style={{
+                background: "linear-gradient(135deg, #BF953F 0%, #8B6914 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontSize: "16px",
+                fontWeight: 700,
+                marginBottom: "6px",
+                textAlign: "center"
+              }}>
+                {t("RamadanModal.ViewOffers")}
+              </h6>
+              <p style={{
+                color: "#5C4A3A",
+                fontSize: "13px",
+                marginBottom: 0,
+                textAlign: "center"
+              }}>
+                {t("RamadanModal.Subtext")}
+              </p>
+            </div>
+          </div>
+
+          <RamadanOffersModal
+            open={ramadanModalOpen}
+            onClose={() => setRamadanModalOpen(false)}
+          />
+
+          {/* <Image
           loading="lazy"
           src={"/assets/images/home/demo8/square banner final.jpg"}
           width={200}
           height={200}
           alt="image"
         /> */}
-       <p className="text-center fs-6 fw-bold success">Note :- Promotions and offers will be reflected at the time of checkout.</p>
-       <hr className="cart-drawer-divider"></hr>
-        <div className="free-shipping-progress mt-3">
-          
-              {totalPrice < freeShippingThreshold ? (
-                <div>
-                  
-                  <p className="fs-6 fw-bold">
-                    {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{ currency.symbol } more to get free
-                    shipping! ⛟
-                  </p>
-                  
-                  <div className="progress">
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{ width: `${progressPercentage}%` }}
-                      aria-valuenow={progressPercentage}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-              
-                </div>  
-                
-              ) : (
-                
-                <h4 className="success fw-bold fs-6">☆ Congratulations! You qualify for free shipping!</h4>
-              )}
-        </div>
+          <p className="text-center fs-6 fw-bold success">{t("CartDrawer.CheckoutNote")}</p>
+          <hr className="cart-drawer-divider"></hr>
+          <div className="free-shipping-progress mt-3">
+
+            {totalPrice < freeShippingThreshold ? (
+              <div>
+
+                <p className="fs-6 fw-bold">
+                  {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{currency.symbol} {t("CartDrawer.MoreForFreeShipping")}
+                </p>
+
+                <div className="progress">
+                  <div
+                    className="progress-bar"
+                    role="progressbar"
+                    style={{ width: `${progressPercentage}%` }}
+                    aria-valuenow={progressPercentage}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+
+              </div>
+
+            ) : (
+
+              <h4 className="success fw-bold fs-6">{t("CartDrawer.FreeShippingQualified")}</h4>
+            )}
+          </div>
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">{t("SUBTOTAL")}:</h6>
-            <span className="cart-subtotal fw-medium">{totalPrice.toFixed(2)}{ currency.symbol }</span>
+            <span className="cart-subtotal fw-medium">{totalPrice.toFixed(2)}{currency.symbol}</span>
           </div>
           {cartProducts.length ? (
             <>
@@ -473,6 +562,6 @@ export default function CartDrawer() {
         onClick={closeCart}
         className="page-overlay"
       ></div>
-    </>
+    </div>
   );
 }

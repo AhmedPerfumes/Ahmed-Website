@@ -1280,5 +1280,40 @@
   "Garden of Scent Notes": "",
   "Eternal Blossom Description": "<p>Eternal Blossom is a celebration of everlasting beauty. Each fragrance in this collection captures the delicate grace of flowers in full bloom — timeless, romantic, and endlessly captivating. A scent that lingers like a memory.Collection consist of Ignite Rose,Rose Noir,Oud Kiflain,Ghali and Hayyana</p>",
   "Eternal Blossom Content": "<p>Eternal Blossom is a celebration of everlasting beauty. Each fragrance in this collection captures the delicate grace of flowers in full bloom — timeless, romantic, and endlessly captivating. A scent that lingers like a memory.</p>",
-  "Eternal Blossom Notes": ""
+  "Eternal Blossom Notes": "",
+  "RamadanModal": {
+    "CartHeader": "عروض رمضان الخاصة",
+    "Title": "عروض رمضان الخاصة",
+    "Subtext": "هدايا رمضان حصرية، عروض، وخدمات فاخرة.",
+    "Offer1Title": "عروض رمضان",
+    "Offer1Desc": "شحن مجاني خلال شهر رمضان للطلبات التي تزيد عن ٢٠٠ درهم.",
+    "Offer2Title": "هدايا مجانية",
+    "Offer2Desc": "اشترِ بقيمة تصل إلى ٥٠٠ درهم واحصل على منتج تصدير بقيمة ٥٠ درهم.",
+    "Offer3Title": "أطقم الهدايا",
+    "Offer3Desc": "اشترِ أي طقم هدايا واحصل على منتج واحد مجانًا (باستثناء ليتل هارت وبدون اسم). يتضمن منتج تصدير واحد.",
+    "Offer4Title": "اشترِ ٢ واحصل على ١ مجانًا",
+    "Offer4Desc": "اشترِ ٢ واحصل على ١ مجانًا، بالإضافة إلى منتج تصدير مجاني على أصناف مختارة.",
+    "Offer5Title": "عرض يومي خاص",
+    "Offer5Desc": "عروض خاصة على منتجات مختارة، تنتهي يومياً عند موعد الإفطار.",
+    "Offer6Title": "تقييم ومكافآت",
+    "Offer6Desc": "أضف تقييماً لمنتجاتك المفضلة للحصول على قسائم خصم خاصة.",
+    "ViewOffers": "عرض العروض الحصرية"
+  },
+  "CartDrawer": {
+    "CheckoutNote": "ملحوظة: سيتم تطبيق العروض والخصومات عند الدفع.",
+    "FreeShippingQualified": "☆ تهانينا! لقد حصلت على شحن مجاني!",
+    "MoreForFreeShipping": "إضافية للحصول على شحن مجاني! ⛟",
+    "MaxQuantityAvailable": "الكمية المطلوبة أكبر من المتوفرة",
+    "MaxQuantityAllowed": "أقصى كمية مسموح بها هي {limit}",
+    "TODAYS EXCLUSIVE DEAL": "عرض اليوم الحصري",
+    "Ramadan Special Offers": "عروض رمضان الخاصة",
+    "Hours": "ساعات",
+    "Minutes": "دقائق",
+    "Seconds": "ثواني"
+  },
+  "Special Ramadan Offer": "عرض رمضان الخاص",
+  "Exclusive": "ينتهي عرض اليوم الحصري خلال",
+  "Everyday Ramadan Deals": "عروض رمضان اليومية",
+  "Last Chance To Avail": "آخر فرصة للاستفادة",
+  "Ramadan Special Offers": "عروض رمضان الخاصة"
 }

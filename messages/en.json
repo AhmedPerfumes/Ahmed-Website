@@ -1419,5 +1419,40 @@
   "Royal Collection": "Royal Collection",
   "Royal Collection Description": " Experience timeless elegance with the Royal Collection – a summer-perfect blend of heritage and luxury.",
   "Royal Collection Content": "Curated for those who appreciate depth, warmth, and sophistication, this unisex collection features Marj, the vibrant signature scent, Dehn Al Oud Hindi Seufi, a rich and bold oud oil, and the exotic Bakhoor Hind to elevate your space with fragrant trails of tradition.Complement your summer self-care with the refreshing Rose Noir Hair Mist and Oud & Roses Body Gel, leaving a lasting impression wherever you go. To complete the ritual, Royal Wood delivers earthy elegance with every note.",
-  "Royal Collection Notes": ""
+  "Royal Collection Notes": "",
+  "RamadanModal": {
+    "CartHeader": "RAMADAN SPECIAL OFFERS",
+    "Title": "Ramadan Special Offers",
+    "Subtext": "Exclusive Ramadan gifts, offers, and premium services.",
+    "Offer1Title": "Ramadan Offers",
+    "Offer1Desc": "Free shipping during Ramadan on orders above AED 200.",
+    "Offer2Title": "Giveaways",
+    "Offer2Desc": "Purchase up to AED 500 and get 50 AED export product.",
+    "Offer3Title": "Giftsets",
+    "Offer3Desc": "Buy any gift set and get 1 product free (except Little Heart & Bidun Esam). Includes 1 export product.",
+    "Offer4Title": "Buy 2 Get 1 Free",
+    "Offer4Desc": "Buy 2 and get 1 free, plus a free export product on selected items.",
+    "Offer5Title": "Daily Special Offer",
+    "Offer5Desc": "Special deals on selected products, expires daily at Iftar timing.",
+    "Offer6Title": "Review & Rewards",
+    "Offer6Desc": "Drop a review on your favorite products to receive special coupons.",
+    "ViewOffers": "View Exclusive Offers"
+  },
+  "CartDrawer": {
+    "CheckoutNote": "Note :- Promotions and offers will be reflected at the time of checkout.",
+    "FreeShippingQualified": "☆ Congratulations! You qualify for free shipping!",
+    "MoreForFreeShipping": "more to get free shipping! ⛟",
+    "MaxQuantityAvailable": "Quantity is more than available quantity",
+    "MaxQuantityAllowed": "Maximum allowed quantity is {limit}",
+    "TODAYS EXCLUSIVE DEAL": "TODAY'S EXCLUSIVE DEAL",
+    "Ramadan Special Offers": "Ramadan Special Offers",
+    "Hours": "Hours",
+    "Minutes": "Minutes",
+    "Seconds": "Seconds"
+  },
+  "Special Ramadan Offer": "Special Ramadan Offer",
+  "Exclusive": "Deal Ends In",
+  "Everyday Ramadan Deals": "Everyday Ramadan Deals",
+  "Last Chance To Avail": "Last Chance To Avail",
+  "Ramadan Special Offers": "Ramadan Special Offers"
 }
