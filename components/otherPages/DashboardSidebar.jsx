@@ -40,10 +40,10 @@ export default function DashboardSidebar() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     const encryptedUser = localStorage.getItem("user");
 
-    if (!token || !encryptedUser) {
+    if (!encryptedUser) {
       router.replace("/login_register");
       return;
     }

@@ -91,3 +91,23 @@ export const socialLinks = [
   },
 
 ];
+
+export const paymentMethods = [
+  {
+    name: "PayTabs",
+    image: null,
+    alt: "PayTabs",
+    isSvg: true,
+    component: "paytabs-full"
+  },
+  {
+    name: "Tamara",
+    image: "/assets/images/paymentGateway/tamara.svg",
+    alt: "Tamara",
+  },
+  {
+    name: "Tabby",
+    image: "/assets/images/paymentGateway/Tabby.png",
+    alt: "Tabby",
+  },
+];

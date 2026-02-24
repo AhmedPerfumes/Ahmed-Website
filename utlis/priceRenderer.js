@@ -3,8 +3,24 @@ import React from "react";
 
 export const renderPrice = (product, currency) => {
   const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST offset
-  const start = new Date(product?.discount?.start_date);
-  const end = new Date(product?.discount?.end_date);
+  // const start = new Date(product?.discount?.start_date);
+  // const end = new Date(product?.discount?.end_date);
+  function parseUTC(dateTime) {
+  if (!dateTime) return null;
+  return new Date(dateTime.replace(' ', 'T') + 'Z');
+}
+
+
+const start = product?.discount?.start_date
+  ? parseUTC(product.discount.start_date)
+  : null;
+
+const end = product?.discount?.end_date
+  ? parseUTC(product.discount.end_date)
+  : null;
+  console.log({"Date001": now, start, end });
+  console.log(product,"product001");
+  
 
   if (product?.discount && now >= start && now <= end) {
     const { discount_type, value } = product.discount;
