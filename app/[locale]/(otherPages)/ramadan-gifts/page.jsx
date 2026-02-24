@@ -8,7 +8,7 @@ import RamadanCountdown from "@/components/ramadan/RamadanCountdown";
 import RamadanTabSlider from "@/components/ramadan/RamadanTabSlider";
 import RamadanBentoGrid from "@/components/ramadan/RamadanBentoGrid";
 import RamadanVideoSlider from "@/components/ramadan/RamadanVideoSlider";
-import RamadanEmailSignup from "@/components/ramadan/RamadanEmailSignup";
+// import RamadanEmailSignup from "@/components/ramadan/RamadanEmailSignup";
 import RamadanSEOContent from "@/components/ramadan/RamadanSEOContent";
 
 
