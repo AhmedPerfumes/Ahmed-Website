@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 import { useUser } from "@/context/UserContext";
-import RamadanOffersModal from "../ramadan/RamadanOffersModal";
+// import RamadanOffersModal from "../ramadan/RamadanOffersModal";
 
 export default function CartDrawer() {
   const { isLoading: isMenuLoading, error: isMenuError, currency, shippingServiceCharges } = useMenu();
@@ -409,7 +409,7 @@ export default function CartDrawer() {
         )}
         <div className="cart-drawer-actions">
           {/* Ramadan Offers Card */}
-          <div
+          {/* <div
             onClick={() => setRamadanModalOpen(true)}
             style={{
               background: "linear-gradient(135deg, #F5F1E8 0%, #EDE8DC 100%)",
@@ -432,7 +432,6 @@ export default function CartDrawer() {
               e.currentTarget.style.boxShadow = "0 4px 15px rgba(191, 149, 63, 0.2)";
             }}
           >
-            {/* Pattern Background */}
             <div style={{
               position: "absolute",
               top: 0,
@@ -444,7 +443,6 @@ export default function CartDrawer() {
               backgroundSize: "120px 120px"
             }} />
 
-            {/* Gold Glow */}
             <div style={{
               position: "absolute",
               top: "50%",
@@ -490,12 +488,12 @@ export default function CartDrawer() {
                 {t("RamadanModal.Subtext")}
               </p>
             </div>
-          </div>
+          </div> */}
 
-          <RamadanOffersModal
+          {/* <RamadanOffersModal
             open={ramadanModalOpen}
             onClose={() => setRamadanModalOpen(false)}
-          />
+          /> */}
 
           {/* <Image
           loading="lazy"
