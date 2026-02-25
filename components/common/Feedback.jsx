@@ -45,7 +45,7 @@ export default function FeedbackForm({ orderId, customerName }) {
     return (
       <div className="container mt-5 text-center">
         <div className="alert alert-success" role="alert">
-          Thank you for your feedback!
+          Rate Your Website Experience
         </div>
       </div>
     );
@@ -55,10 +55,10 @@ export default function FeedbackForm({ orderId, customerName }) {
     <div className="container">
       <div className="card shadow-sm mx-auto" style={{ maxWidth: "600px" }}>
         <div className="card-body">
-          <h4 className="text-center section-paragraph">Your feedback helps us improve</h4>
+          <h4 className="text-center section-paragraph"> This feedback is about your experience using our website.Your feedback helps us improve</h4>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text-center">
-              <p className="form-label d-block fw-semibold">Rate Your Experience:</p>
+              <p className="form-label d-block fw-semibold">How was your experience using our website?</p>
               <div className="d-flex justify-content-center">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
@@ -82,7 +82,7 @@ export default function FeedbackForm({ orderId, customerName }) {
 
             <div className="mb-4">
               <label htmlFor="feedbackMessage" className="form-label fw-semibold">
-                <h4 className="text-center section-paragraph">How was your experience? We'd appreciate your feedback</h4>
+                <h4 className="text-center section-paragraph">Tell us about your experience using our website</h4>
               </label>
               <textarea
                 className="form-control"
@@ -90,7 +90,7 @@ export default function FeedbackForm({ orderId, customerName }) {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={4}
-                placeholder="Write your feedback here..."
+                placeholder="Example: Was the website easy to use? Was checkout smooth?"
                 required
               />
             </div>
