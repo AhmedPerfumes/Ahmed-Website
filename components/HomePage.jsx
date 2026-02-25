@@ -21,7 +21,7 @@ import Link from "next/link";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
-// import TabSlider from "./TabSlider";
+import TabSlider from "./TabSlider";
 import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 import { useMenu } from "@/context/MenuContext";
 import NewsLetter from '@/components/modals/NewsLetter';
@@ -215,7 +215,7 @@ const ScrollSnapHorizontalBootstrap = () => {
             <ProductShowcase />
 
             {/* <Tab Category Slider />             */}
-            {/* <TabSlider /> */}
+            <TabSlider />
 
             <section className="scroll-section d-flex flex-direction-column section-1">
                 <div className="panel section-slider w-100 vh-100">
