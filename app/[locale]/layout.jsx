@@ -46,7 +46,7 @@ export const metadata = {
 
 // Import English font
 const englishFont = localFont({
-  src: "../../public/assets/fonts/wulkan/WulkanDisplayItalic.ttf",
+  src: "../../public/assets/fonts/wulkan/WulkanDisplayRegular.ttf",
 });
 
 // Import Arabic font
@@ -56,7 +56,7 @@ const arabicFont = localFont({
 
 // Import Lato Regular font as a secondary font
 const sofiaFont = localFont({
-  src: "../../public/assets/fonts/lato/Lato-Regular.ttf",
+  src: "../../public/assets/fonts/kanit/Kanit-Regular.ttf",
 });
 
 export default async function LocaleLayout({ children, params: { locale } }) {

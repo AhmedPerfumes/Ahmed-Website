@@ -40,7 +40,7 @@ const ProductInfoTabs = ({ product, category, subcategory }) => {
 
     return (
         <>
-            <div className="product-tabs-container container">
+            <div className="product-tabs-container container" style={{ padding: '50px 0px 100px 0px'}}>
                 <div className="tab-headers">
                     
                     {hasFragranceNotes && (
