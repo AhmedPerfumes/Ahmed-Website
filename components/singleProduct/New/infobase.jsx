@@ -32,7 +32,7 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
       // className="container"
       style={{
         maxWidth: "500px",
-        fontFamily: "'Lato-Regular', sans-serif",
+        fontFamily: "'Kanit-Regular', sans-serif",
         display: "flex",
         flexDirection: "column",
         // minHeight: isMobile ? "auto" : "70vh",

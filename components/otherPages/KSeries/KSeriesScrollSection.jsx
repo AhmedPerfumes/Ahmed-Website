@@ -184,7 +184,7 @@ const KSeriesScrollSection = () => {
 
           .kseries-title {
             margin: 0;
-            font-family: "Lato-Regular", sans-serif;
+            font-family: "Kanit-Regular", sans-serif;
             font-size: 1.5rem;
             line-height: 1.3;
             font-weight: 600;
@@ -364,7 +364,7 @@ const KSeriesScrollSection = () => {
 
         .kseries-title {
           margin: 0;
-          font-family: "Lato-Regular", sans-serif;
+          font-family: "Kanit-Regular", sans-serif;
           font-size: 2.8rem;
           line-height: 1.2;
           font-weight: 600;

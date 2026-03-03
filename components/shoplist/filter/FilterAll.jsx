@@ -177,7 +177,7 @@ export default function FilterAll({ products = [] }) {
       className="filter-all p-2"
       style={{
         maxWidth: 400,
-        fontFamily: "'Lato-Regular', sans-serif"
+        fontFamily: "'Kanit-Regular', sans-serif"
       }}
     >
       <div className="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
