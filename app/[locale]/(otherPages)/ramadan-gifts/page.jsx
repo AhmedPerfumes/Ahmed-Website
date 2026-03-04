@@ -49,7 +49,7 @@ const RamadanGifting = () => {
         <RamadanSpecialOffer />
 
         {/* Trial Section 2: Ramadan Tab Slider */}
-        <RamadanTabSlider />
+        {/* <RamadanTabSlider /> */}
 
         {/* Trial Section 3: Bento Grid Gallery */}
         <RamadanBentoGrid />

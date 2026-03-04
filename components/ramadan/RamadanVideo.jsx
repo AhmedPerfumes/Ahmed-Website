@@ -11,7 +11,7 @@ const RamadanVideo = () => {
       <div className="container text-center position-relative">
         {/* Section Title */}
         <h2
-          className="display-5 fw-bold mb-4"
+          className="display-5 fw-bold mb-4 text-uppercase"
           style={{ color: goldColor, letterSpacing: "1px" }}
         >
           Unity In Scent – Ramadan Kareem
