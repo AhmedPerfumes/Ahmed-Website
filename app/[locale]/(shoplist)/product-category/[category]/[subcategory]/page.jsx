@@ -150,7 +150,7 @@ const ShopPage8 = async ({ params }) => {
           <div className="mb-4 pb-lg-3"></div>
           <Shop10 products={ data.products }/>
           <div className="mb-4 pb-lg-3"></div>
-          <CollapsibleDescription  scription description={activeDescription}locale={locale} />
+          <CollapsibleDescription description={activeDescription}locale={locale} />
         </main>
         <div className="mb-5 pb-xl-5"></div>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>

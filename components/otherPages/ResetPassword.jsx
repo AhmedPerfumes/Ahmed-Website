@@ -161,6 +161,7 @@ export default function ResetPasswordOTP() {
           setMessage(null);
           setShowOtpSuccessIcon(false);
         }, 1800);
+         localStorage.setItem("token", data.access_token);
 
         setStep(3);
         bumpStepKey();
