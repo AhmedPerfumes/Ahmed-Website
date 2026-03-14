@@ -44,10 +44,12 @@ export default function Shop10({ subCategories, products }) {
   const [subCatProducts, setSubCatProducts] = useState(products);
 
   useEffect(() => {
+    const sortType = category === 'collections' ? 'date' : sortOption;
+    setSortOption(sortType);
     if(subcategory || category == 'hair-mist' || category == 'gift-sets' || category == 'extrait-de-parfum' || category == 'online-exclusive') {
-      setSubCatProducts(sortSubCategory(subCatProducts, sortOption));
+      setSubCatProducts(sortSubCategory(subCatProducts, sortType));
     } else {
-      setCatProducts(sortCategory(catProducts, sortOption));
+      setCatProducts(sortCategory(catProducts, sortType));
     }
   }, []);
 
