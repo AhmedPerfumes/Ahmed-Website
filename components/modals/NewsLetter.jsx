@@ -100,7 +100,7 @@ export default function NewsLetter({popUp}) {
                             <div className="col-md-8 p-0">
                                 <div className="newsletter-popup__bg w-100">
                                     <div className="d-none d-lg-block">
-                                        <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
@@ -110,10 +110,10 @@ export default function NewsLetter({popUp}) {
                                                 className="h-100 w-100 object-fit-cover d-block"
                                                 alt="image"
                                             />
-                                        </Link>
+                                        </a>
                                     </div>
                                     <div className="d-sm-block d-md-none">
-                                        <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
@@ -123,7 +123,7 @@ export default function NewsLetter({popUp}) {
                                                 className="h-100 w-100 object-fit-cover d-block hover-effect"
                                                 alt="image"
                                             />
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -152,12 +152,12 @@ export default function NewsLetter({popUp}) {
                                     />
 
                                     <div className="d-flex justify-content-center">
-                                        <Link
+                                        <a
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium hover-effect"
                                             href={`/${locale}/${elm.link}`}
                                         >
                                             {t("Shop Now")}
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
