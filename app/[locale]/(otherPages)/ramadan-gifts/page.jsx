@@ -10,6 +10,7 @@ import RamadanBentoGrid from "@/components/ramadan/RamadanBentoGrid";
 import RamadanVideoSlider from "@/components/ramadan/RamadanVideoSlider";
 // import RamadanEmailSignup from "@/components/ramadan/RamadanEmailSignup";
 import RamadanSEOContent from "@/components/ramadan/RamadanSEOContent";
+import RamadanVideo from "@/components/ramadan/RamadanVideo";
 
 
 export async function generateMetadata({ params }) {
@@ -42,12 +43,13 @@ const RamadanGifting = () => {
 
         {/* Trial Section 1: Islamic Hero */}
         <IslamicHero />
+        <RamadanVideo/>
 
         {/* Ramadan Special Offers Section */}
         <RamadanSpecialOffer />
 
         {/* Trial Section 2: Ramadan Tab Slider */}
-        <RamadanTabSlider />
+        {/* <RamadanTabSlider /> */}
 
         {/* Trial Section 3: Bento Grid Gallery */}
         <RamadanBentoGrid />

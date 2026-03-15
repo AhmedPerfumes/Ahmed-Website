@@ -140,6 +140,7 @@ const marqueeStyles = `
     align-items: center;
     width: fit-content; /* Crucial: Calculates exact width of all items */
     will-change: transform;
+    font-family: "Kanit-Regular";
     }
     .marquee-track:hover {
     animation-play-state: paused;

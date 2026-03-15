@@ -30,7 +30,7 @@
   line-height: $navigation-item-line-height;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: 'Lato-Regular', sans-serif;
+  font-family: 'Kanit-Regular', sans-serif;
 
   &:after {
     content: '';
@@ -71,7 +71,7 @@
   color: $sub-menu-title-color;
   font-weight: $font-weight-heading;
   text-transform: uppercase;
-  font-family: 'Lato-Regular', sans-serif;
+  font-family: 'Kanit-Regular', sans-serif;
 }
 
 .menu-link {
@@ -80,7 +80,7 @@
   padding: $menu-link-padding-y $menu-link-padding-x;
   color: $sub-menu-link-color;
   line-height: $menu-link-line-height;
-  font-family: 'Lato-Regular', sans-serif;
+  font-family: 'Kanit-Regular', sans-serif;
 }
 
 // Menu link underlined small

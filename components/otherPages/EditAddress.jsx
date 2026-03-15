@@ -245,7 +245,7 @@ const save = async () => {
         <p className="sub-menu__title border-bottom mb-4">
           Your Default address will be used at checkout
         </p>
-        <div className="d-flex gap-3 flex-column " style={{ fontFamily: "'Lato-Regular', sans-serif" }}>
+        <div className="d-flex gap-3 flex-column " style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
           {["Home Address", "Other Address"].map((label, idx) => (
             <div
               key={label}
@@ -286,7 +286,7 @@ const save = async () => {
       </div>
 
       {/* Edit Modal */}
-      <Modal style={{ fontFamily: "'Lato-Regular', sans-serif" }} show={show} onHide={() => setShow(false)} centered>
+      <Modal style={{ fontFamily: "'Kanit-Regular', sans-serif" }} show={show} onHide={() => setShow(false)} centered>
         <Modal.Header closeButton className="border-0 pb-0">
           <Modal.Title className="h6 fw-semibold">
             Edit {editingIndex === 0 ? "Home" : "Other"} Address

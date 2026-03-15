@@ -41,7 +41,7 @@ export default function Cart() {
 
     const cleanContainer = () => {
       const container = document.getElementById("TabbyPromo");
-      if (container) container.innerHTML = "";
+      // if (container) container.innerHTML = "";
     };
 
     const initTabby = () => {

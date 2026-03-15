@@ -253,7 +253,7 @@ const Checkout = ({ product }) => {
             if (window.TabbyPromo && typeof window.TabbyPromo === 'function') {
                 try {
                     const tabbyNode = document.getElementById("TabbyPromo");
-                    if (tabbyNode) tabbyNode.innerHTML = "";
+                    // if (tabbyNode) tabbyNode.innerHTML = "";
 
                     const unitPrice = parseFloat(tabbyPrice(product));
                     const totalPrice = (unitPrice * currentQuantity).toFixed(2);
@@ -311,81 +311,7 @@ const Checkout = ({ product }) => {
                 </p>
             </div> */}
             <div className="product-single__price">{renderPrice(product, currency)}</div>
-            {/* Size Selector */}
-            {/* <div className="w-100 mt-3">
-                <div
-                    className="d-flex justify-content-between border-bottom pb-1"
-                    style={{ fontFamily: "Georgia, serif" }}
-                >
-                    <label
-                        htmlFor="size-select"
-                        className="text-muted me-2 mb-0 h6"
-                    >
-                        Size:
-                    </label>
-
-                    <div
-                        className="position-relative w-100"
-                        style={{ maxWidth: "100px" }}
-                    >
-                        {sizes.length > 1 ? (
-                            <div className="dropdown w-100">
-                                <button
-                                    className="btn btn-sm dropdown-toggle w-100 text-start"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    style={{
-                                        backgroundColor: "rgba(250, 249, 247)", // glassy effect
-                                        backdropFilter: "blur(6px)",
-                                        color: "#000",
-                                        fontSize: "0.875rem",
-                                        padding: "4px 8px",
-                                    }}
-                                >
-                                    {selectedSize}
-                                </button>
-
-                                <ul
-                                    className="dropdown-menu w-100"
-                                    style={{
-                                        fontSize: "0.875rem",
-                                        minWidth: "100px",
-                                    }}
-                                >
-                                    {sizes.map((size) => (
-                                        <li key={size}>
-                                            <button
-                                                className="dropdown-item"
-                                                type="button"
-                                                onClick={() =>
-                                                    setSelectedSize(size)
-                                                }
-                                            >
-                                                {size}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ) : (
-                            <div
-                                className="btn btn-sm w-100 text-start"
-                                style={{
-                                    backgroundColor: "rgba(250, 249, 247)", // glassy effect
-                                    backdropFilter: "blur(6px)",
-                                    color: "#000",
-                                    fontSize: "0.875rem",
-                                    padding: "4px 8px",
-                                    cursor: "default", // Prevent pointer cursor
-                                }}
-                            >
-                                {selectedSize}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div> */}
+           
             {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
             {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
                 <div className="w-100 mb-3">
