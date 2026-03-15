@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react"; // No longer need useState
 import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 
 
 export default function NewsLetter({popUp}) {
@@ -99,7 +100,7 @@ export default function NewsLetter({popUp}) {
                             <div className="col-md-8 p-0">
                                 <div className="newsletter-popup__bg w-100">
                                     <div className="d-none d-lg-block">
-                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                        <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
@@ -109,18 +110,20 @@ export default function NewsLetter({popUp}) {
                                                 className="h-100 w-100 object-fit-cover d-block"
                                                 alt="image"
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className="d-sm-block d-md-none">
-                                        <Image
-                                            width={550}
-                                            height={650}
-                                            style={{ height: "fit-content" }}
-                                            loading="lazy"
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
-                                            className="h-100 w-100 object-fit-cover d-block hover-effect"
-                                            alt="image"
-                                        />
+                                        <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                            <Image
+                                                width={550}
+                                                height={650}
+                                                style={{ height: "fit-content" }}
+                                                loading="lazy"
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
+                                                className="h-100 w-100 object-fit-cover d-block hover-effect"
+                                                alt="image"
+                                            />
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -149,12 +152,12 @@ export default function NewsLetter({popUp}) {
                                     />
 
                                     <div className="d-flex justify-content-center">
-                                        <a
+                                        <Link
                                             className="btn-rounded btn-link_lg text-uppercase fw-medium hover-effect"
                                             href={`/${locale}/${elm.link}`}
                                         >
                                             {t("Shop Now")}
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
