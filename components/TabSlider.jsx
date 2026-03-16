@@ -4,11 +4,14 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { renderPrice } from "@/utlis/priceRenderer";
 import "swiper/css";
 
 import { useContextElement } from "@/context/Context";
 import { useLocale } from "next-intl";
 import { Weight } from "lucide-react";
+import { ElevenMp } from "@mui/icons-material";
+import { useMenu } from "@/context/MenuContext";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -44,6 +47,7 @@ const isSubcat = (cat, sub) =>
 export default function PopularProducts() {
   const { addProductToCart } = useContextElement();
   const locale = useLocale();
+  const { currency, isLoading: isMenuLoading } = useMenu();
 
   const [apiData, setApiData] = useState({});
   const [currentCategory, setCurrentCategory] = useState("All");
@@ -420,7 +424,8 @@ export default function PopularProducts() {
               fontFamily: "'Kanit-Regular', sans-serif",
             }}
           >
-            AED {activeProduct.price}
+            {/* AED {activeProduct.price} */}
+            {renderPrice(activeProduct, currency)}
           </div>
 
           {/* ✅ RESTORED BUTTON (you had it earlier) */}
