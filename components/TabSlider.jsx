@@ -329,6 +329,27 @@ export default function PopularProducts() {
                         )}
                       </Link>
 
+
+                      {/* --- ADDED LABEL LOGIC --- */}
+                      {item.label_name && (
+                        <div style={{ backgroundColor: item.label_color, zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
+                          {item.label_name}
+                        </div>
+                      )}
+
+                      {item.product_qty <= 0 ? (
+                        <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 ">
+                          Out Of Stock
+                        </div>
+                      ) : (
+                        item.discount && item.discount.discount_type === 'percent' && (
+                          <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            Sale {item.discount.value}%
+                          </div>
+                        )
+                      )}
+                      {/* --- END LABEL LOGIC --- */}
+
                       {/* ✅ ADD TO CART — ONLY CENTER SLIDE */}
                       {isActive && (
                         <button
@@ -353,6 +374,7 @@ export default function PopularProducts() {
             );
           })}
         </Swiper>
+        
       </div>
 
       {/* ===== INFO BLOCK ===== */}
