@@ -1,6 +1,6 @@
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
-
+import Script from 'next/script' 
 import Header14 from "@/components/headers/Header14";
 // import Loader from "@/components/loader/Loader";
 import About from "@/components/otherPages/about/About";
@@ -17,8 +17,26 @@ export const metadata = {
 };
 
 export default function AboutPage() {
+  const jsonLd = {                              // ← ADD THIS
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Ahmed Al Maghribi Perfumes",
+    "founder": "Kafeel Ahmed Gudekar",
+    "foundingDate": "2000",
+    "description": "Global UAE-based luxury fragrance house with 190+ stores.",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "2026 Fragrance Catalog",
+      "url": "https://ae.ahmedalmaghribi.com/llms-full.txt"
+    }
+  }
   return (
     <>
+    <Script                                   // ← ADD THIS
+        id="organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     {/* <Loader/> */}
       <Header14 />
       <main className="">

@@ -4,6 +4,16 @@ Disallow: /
 
 # Allow everything else
 User-agent: *
-Disallow: 
+Disallow:
+Allow: /llms-full.txt
+Allow: /llms.txt
+
+# Explicitly permit major AI crawlers
+User-agent: GPTBot
+Allow: /llms-full.txt
+
+User-agent: Google-Extended
+Allow: /llms-full.txt
 
 Sitemap: https://ae.ahmedalmaghribi.com/assets/sitemap.xml
+Sitemap: https://ae.ahmedalmaghribi.com/sitemap.xml
