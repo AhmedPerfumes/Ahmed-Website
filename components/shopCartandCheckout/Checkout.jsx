@@ -74,9 +74,22 @@ export default function Checkout() {
 
   useEffect(() => {
     if (hasCleaned.current) return;
-    const hasBogo = cartProducts.some((item) => promotionsContext.some((promo) => promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)));
-    if (!hasBogo) {
-      const cleanedCart = cartProducts.map(({ is_coupon, value, ...rest }) => rest);
+    // Check if any regular (non-gift, non-free) products are in BOGO
+    const hasBogoRegularItems = cartProducts.some((item) => 
+      !item.is_gift && 
+      promotionsContext.some((promo) => promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id))
+    );
+    
+    if (!hasBogoRegularItems) {
+      // Only remove coupon properties from products that have no BOGO and no discount
+      const cleanedCart = cartProducts.map((item) => {
+        const hasDiscount = item.discount != null;
+        if (!hasDiscount) {
+          const { is_coupon, value, ...rest } = item;
+          return rest;
+        }
+        return item;
+      });
       setCartProducts(cleanedCart);
       setCouponDataContext(null);
       hasCleaned.current = true; // prevent future runs
@@ -339,7 +352,21 @@ export default function Checkout() {
     const currentUTC = new Date();
     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
     const current_date_time = currentGST.toISOString() .slice(0, 19).replace("T", " ");
+    const bogoFreeQty = Number(elm.bogo_free_qty || 0);
+    const paidQty = Math.max(0, (elm.quantity || 0) - bogoFreeQty);
     let itemPrice = elm.price;
+
+    // BOGO: show paid + free breakdown
+    if (bogoFreeQty > 0) {
+      return (
+        <td>
+          <span className="money price price-sale"> {currency.symbol} {(itemPrice * paidQty).toFixed(2)} </span>
+          <span className="money price price-old"> {currency.symbol} {(itemPrice * elm.quantity).toFixed(2)} </span>
+          <br /><span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '12px' }}>🎁 {bogoFreeQty} FREE</span>
+        </td>
+      );
+    }
+
     if ( elm?.discount && new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
       if (elm.discount.discount_type == "percent") { itemPrice = elm.price - (elm.price / 100) * elm.discount.value; } 
       else if (elm.discount.discount_type == "amount") { itemPrice = elm.discount.final_price; }
@@ -378,22 +405,64 @@ export default function Checkout() {
 
   const isExpired = (end_date) => { return new Date(end_date) < new Date(); };
 
-  const mapProductsFromFormData = (products) =>
-    products.map((item) => ({
-      product_id: item.product_id,
-      product_name: item.product_name,
-      quantity: item.quantity,
-      category_name: item.category_name,
-      subcategory_name: item.subcategory_name,
-      coupon: item.coupon,
-      discount: item.discount,
-      ...('is_coupon' in item && { is_coupon: item.is_coupon }),
-      ...('is_gift' in item && { is_gift: item.is_gift }),
-      ...('coupon_type' in item && { coupon_type: item.coupon_type }),
-      ...('value' in item && { value: item.value }),
-      ...('campaign' in item && { campaign: item.campaign }),
-      ...('type' in item && { type: item.type }),
-  }));
+  const mapProductsFromFormData = (products) => {
+    const mapped = [];
+    products.forEach((item) => {
+      if (item.bogo_free_qty && item.bogo_free_qty > 0) {
+        const paidQty = (item.quantity || 0) - item.bogo_free_qty;
+
+        // Paid portion
+        if (paidQty > 0) {
+          mapped.push({
+            product_id: item.product_id,
+            product_name: item.product_name,
+            quantity: paidQty,
+            category_name: item.category_name,
+            subcategory_name: item.subcategory_name,
+            coupon: item.coupon,
+            discount: null,
+            _original_discount: item._original_discount || null,
+            ...('is_coupon' in item && { is_coupon: item.is_coupon }),
+            ...('coupon_type' in item && { coupon_type: item.coupon_type }),
+            ...('value' in item && { value: item.value }),
+          });
+        }
+
+        // BOGO free portion
+        mapped.push({
+          product_id: item.product_id,
+          product_name: item.product_name,
+          quantity: item.bogo_free_qty,
+          category_name: item.category_name,
+          subcategory_name: item.subcategory_name,
+          coupon: [],
+          discount: null,
+          is_gift: true,
+          type: 'bogo',
+          campaign: item.bogo_campaign,
+        });
+      } else {
+        // Regular product (no BOGO)
+        mapped.push({
+          product_id: item.product_id,
+          product_name: item.product_name,
+          quantity: item.quantity,
+          category_name: item.category_name,
+          subcategory_name: item.subcategory_name,
+          coupon: item.coupon,
+          discount: item.discount,
+          ...('_original_discount' in item && { _original_discount: item._original_discount }),
+          ...('is_coupon' in item && { is_coupon: item.is_coupon }),
+          ...('is_gift' in item && { is_gift: item.is_gift }),
+          ...('coupon_type' in item && { coupon_type: item.coupon_type }),
+          ...('value' in item && { value: item.value }),
+          ...('campaign' in item && { campaign: item.campaign }),
+          ...('type' in item && { type: item.type }),
+        });
+      }
+    });
+    return mapped;
+  };
 
   async function onOrder(event) {
     event.preventDefault();
@@ -512,6 +581,8 @@ export default function Checkout() {
         setError(data.collectionMessage);
       } else if (data.focMessage) {
         setError(data.focMessage);
+      } else if (data.bogoMessage) {
+        setError(data.bogoMessage);
       } else {
         if (data.products) setError(data.products);
         if (data["billingAddress.first_name"]) setError(data["billingAddress.first_name"]);
