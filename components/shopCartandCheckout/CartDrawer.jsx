@@ -502,7 +502,15 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-          <p className="text-center fs-6 fw-bold success">{t("CartDrawer.CheckoutNote")}</p>
+          {(cartProducts.some((item) => item.bogo_free_qty && item.bogo_free_qty > 0) || cartProducts.reduce((total, item) => total + item.quantity, 0) > 3) ? (
+            <div style={{ backgroundColor: "#d4edda", border: "1px solid #28a745", borderRadius: "4px", padding: "12px 16px", marginBottom: "12px", color: "#155724", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
+              ✓ <strong>Your buy 3 get 1 offer will be applied on Checkout!</strong>
+            </div>
+          ) : (cartProducts.length === 3 && cartProducts.reduce((total, item) => total + item.quantity, 0) === 3) && (
+            <div style={{ backgroundColor: "#fff3cd", border: "1px solid #ffc107", borderRadius: "4px", padding: "12px 16px", marginBottom: "12px", color: "#856404", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
+              🎁 <strong>Great! You're one step away!</strong> Add one more product to your cart to get 1 product FREE with our Buy 3 Get 1 Free offer!
+            </div>
+          )}
           <hr className="cart-drawer-divider"></hr>
           <div className="free-shipping-progress mt-3">
 
