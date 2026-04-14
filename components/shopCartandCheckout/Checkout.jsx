@@ -930,7 +930,7 @@ export default function Checkout() {
                         
                         return (hasBogoActive || regularQuantity > 3) && hasRegularProducts ? (
                           <div style={{ backgroundColor: "#d4edda", border: "1px solid #28a745", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#155724", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                            ✓ <strong>Your buy 3 get 1 offer has been applied!</strong>  
+                            ✓ <strong>Your Buy 3 Get 1 Offer has been applied!</strong>  
                           </div>
                         ) : regularQuantity === 3 && hasRegularProducts ? (
                           <div style={{ backgroundColor: "#fff3cd", border: "1px solid #ffc107", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#856404", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
