@@ -496,7 +496,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
 
                     <div className="mt-4 mb-5 d-block d-sm-none d-flex flex-column">
-                        <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                        <a href={`/${locale}/shop/gift-sets/gift-sets/ihdaa-khaas`}>
                             <Image
                                 loading="lazy"
                                 src="/assets/images/Ihda-khas-giftset.jpg"
@@ -515,7 +515,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 {t("Shop Now")}
                             </Link>
                         </div>
-                        <a href={`/${locale}/shop/dakhoon/gift-sets`}>
+                        <a href={`/${locale}/shop/gift-sets/gift-sets/antee-gift-set-05`}>
                             <Image
                                 className="w-100 h-100 px-1"
                                 src="/assets/images/Antee-05-Giftset.jpg"
