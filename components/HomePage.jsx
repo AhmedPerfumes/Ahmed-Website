@@ -786,7 +786,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                                 height={0}
                                 sizes="100%"
                                 className="h-auto w-100"
-                                src="/assets/images/home/demo8/Shop.jpg"
+                                src="/assets/images/home/demo8/Shop2.jpg"
                                 alt="Ahmed Al Maghribi Perfumes"
                                 loading="lazy"
                                 style={{ width: "100%", height: "auto" }}
