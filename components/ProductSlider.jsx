@@ -113,7 +113,7 @@ const productSlider = ({ prodSlide }) => {
                                     className="img-classic img-fragrance"
                                     srcSet="/assets/images/best-sellers/zumar@1x.jpg 1x, /assets/images/best-sellers/zumar@2x.jpg 2x"
                                     sizes="(min-width: 768px) 1040w"
-                                    src="/assets/images/best-sellers/zumar.jpg"
+                                    src="/assets/images/best-sellers/zumar@2x.jpg"
                                     alt=""
                                     loading="lazy"
                                 />
