@@ -179,7 +179,10 @@ export default function Cart() {
       setError(null);
 
       const items = [...cartProducts];
-      const itemIndex = items.findIndex((elm) => elm.product_id == id);
+      const itemIndex = items.findIndex(
+        (elm) =>
+          elm.product_id == id && !elm.is_gift_card
+      );
 
       if (itemIndex !== -1) {
         items[itemIndex] = {
@@ -199,9 +202,15 @@ export default function Cart() {
   };
 
 
-  const removeItem = async(id) => {
-    setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
-  };
+  const removeItem = (id, uniqueKey = null) => {
+  setCartProducts((prev) =>
+    prev.filter((elm) =>
+      uniqueKey
+        ? elm.unique_key !== uniqueKey
+        : elm.product_id !== id
+    )
+  );
+};
 
   // Step 2: Create a handler function
   const handleCheckboxChange = (event) => {
@@ -362,7 +371,15 @@ export default function Cart() {
                       <div className="shopping-cart__product-item">
                         <Image
                           loading="lazy"
-                          src={elm.image ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}` : `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                          src={
+                            elm.is_gift_card
+                              ? "/assets/images/gift-card.png"
+                              : elm.image
+                                ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`
+                                : elm.images
+                                  ? `${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`
+                                  : "/assets/images/placeholder.png"
+                          }
                           width="120"
                           height="120"
                           alt="image"
@@ -371,7 +388,34 @@ export default function Cart() {
                     </td>
                     <td>
                       <div className="shopping-cart__product-item__detail">
-                        <h4>{elm.product_name}</h4>
+                        <h4>
+                          {elm.product_name}
+
+                          {elm.is_gift_card && (
+                            <span
+                              style={{
+                                background: "#000",
+                                color: "#fff",
+                                fontSize: "10px",
+                                padding: "2px 6px",
+                                marginLeft: "6px",
+                                borderRadius: "3px",
+                              }}
+                            >
+                              GIFT CARD
+                            </span>
+                          )}
+                        </h4>
+
+                        {elm.is_gift_card && (
+                          <div style={{ fontSize: "12px", marginTop: "4px", color: "#666" }}>
+                            <div><strong>To:</strong> {elm.meta?.recipient_name}</div>
+                            <div><strong>Email:</strong> {elm.meta?.recipient_email}</div>
+                            {elm.meta?.message && (
+                              <div><strong>Msg:</strong> {elm.meta.message}</div>
+                            )}
+                          </div>
+                        )}
                         {/* <ul className="shopping-cart__product-item__options">
                           <li>Color: Yellow</li>
                           <li>Size: L</li>
@@ -383,7 +427,7 @@ export default function Cart() {
                       { renderPrice(elm, currency) }
                     </td>
                     <td>
-                      {!elm.is_gift ? <div className="qty-control position-relative">
+                      {!elm.is_gift && !elm.is_gift_card ? <div className="qty-control position-relative">
                         <input
                           type="number"
                           name="quantity"
@@ -407,7 +451,7 @@ export default function Cart() {
                         >
                           +
                         </div>
-                      </div> : 1}
+                      </div> : <span>1</span>}
                     </td>
                     <td>
                       
@@ -416,7 +460,7 @@ export default function Cart() {
                     </td>
                     <td>
                       <a
-                        onClick={() => removeItem(elm.product_id)}
+                        onClick={() => removeItem(elm.product_id, elm.unique_key)}
                         className="remove-cart"
                       >
                         <svg

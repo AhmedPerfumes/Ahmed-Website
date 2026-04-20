@@ -14,11 +14,20 @@ export const useContextElement = () => useContext(dataContext);
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_PRODUCT': {
-      const existingProduct = state.products.find(
-        (p) =>
+      // const existingProduct = state.products.find(
+      //   (p) =>
+      //     p.product_id === action.payload.product_id &&
+      //     p.campaign === action.payload.campaign
+      // );
+      const existingProduct = state.products.find((p) => {
+        // 🚨 DO NOT merge gift cards
+        if (action.payload.is_gift_card) return false;
+
+        return (
           p.product_id === action.payload.product_id &&
           p.campaign === action.payload.campaign
-      );
+        );
+      });
 
       let updatedProducts;
 
@@ -62,11 +71,15 @@ const cartReducer = (state, action) => {
         isProcessing: false,
       };
     case 'REMOVE_PRODUCT':
-      return {
-        ...state,
-        products: state.products.filter((p) => p.product_id !== action.payload.productId),
-        isProcessing: false,
-      };
+  return {
+    ...state,
+    products: state.products.filter((p) =>
+      p.unique_key
+        ? p.unique_key !== action.payload.uniqueKey
+        : p.product_id !== action.payload.productId
+    ),
+    isProcessing: false,
+  };
     case 'SET_PRODUCTS':
       // Ensure payload is an array
       const newProducts = Array.isArray(action.payload) ? action.payload : [];
@@ -143,6 +156,12 @@ export default function Context({ children }) {
     const isCustomerCoupon = couponDataContext && couponDataContext.type === "customer";
     const isCustomerCouponActive = isCustomerCoupon && (!couponDataContext.start_date || !couponDataContext.end_date || (new Date(current_date_time) >= new Date(couponDataContext.start_date) && new Date(current_date_time) <= new Date(couponDataContext.end_date)));
     const subtotal = state.products.reduce((accumuLator, product) => {
+      // 🚨 NEVER apply discounts/coupons on gift cards
+      if (product?.is_gift_card) {
+        const qty = Number(product?.quantity || 0);
+        const basePrice = Number(product?.price || 0);
+        return accumuLator + qty * basePrice;
+      }
       // Ensure numbers
       const qty = Number(product?.quantity || 0);
       const basePrice = Number(product?.price || 0);
@@ -323,7 +342,9 @@ export default function Context({ children }) {
 
   const addProductToCart = (product) => {
     if (state.isProcessing) return;
-
+    if (product.is_gift_card) {
+      product.collection_name = "gift-card";
+    }
     const newProductCollection = product?.collection_name?.toLowerCase();
     const cartProducts = [...state.products];
 
@@ -361,14 +382,18 @@ export default function Context({ children }) {
     }
 
     // --- DYNAMIC MAX QUANTITY LOGIC ---
-    const MAX_LIMIT =
-      product.maximum_order_quantity && product.maximum_order_quantity > 0
-        ? product.maximum_order_quantity
-        : product.product_qty; // fallback to stock
+    const MAX_LIMIT = product.is_gift_card
+      ? 10 // or any safe cap
+      : (product.maximum_order_quantity && product.maximum_order_quantity > 0
+          ? product.maximum_order_quantity
+          : product.product_qty);
 
-    const existingItemIndex = cartProducts.findIndex(
-      (p) => p.product_id === product.product_id
-    );
+    const existingItemIndex = cartProducts.findIndex((p) => {
+      // 🚨 Gift cards should NEVER merge
+      if (product.is_gift_card) return false;
+
+      return p.product_id === product.product_id;
+    });
 
 
     if (existingItemIndex !== -1 && !product.is_gift) {
@@ -413,7 +438,9 @@ export default function Context({ children }) {
       meta: {
         toast: {
           name: product?.product_name,
-          image: buildToastImageUrl(product),
+          image: product.is_gift_card
+          ? "/assets/images/gift-card.png" // add a placeholder
+          : buildToastImageUrl(product),
           message: "Added to your cart",
         },
       },
@@ -430,15 +457,16 @@ export default function Context({ children }) {
     dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
   };
 
-  const removeProduct = (productId) => {
-    if (state.isProcessing) {
-      // console.log('Skipping removeProduct: processing in progress', { productId });
-      return;
-    }
-    // console.log('removeProduct:', { productId });
-    dispatch({ type: 'SET_PROCESSING', payload: true });
-    dispatch({ type: 'REMOVE_PRODUCT', payload: { productId } });
-  };
+  const removeProduct = (productId, uniqueKey = null) => {
+  if (state.isProcessing) return;
+
+  dispatch({ type: 'SET_PROCESSING', payload: true });
+
+  dispatch({
+    type: 'REMOVE_PRODUCT',
+    payload: { productId, uniqueKey },
+  });
+};
 
   const setCartProducts = (productsOrFn) => {
     let newProducts = [];
@@ -523,7 +551,8 @@ export default function Context({ children }) {
     removeGiftFromCart,
     promotionsContext,
     setPromotionsContext,
-    hasPreBookItem
+    hasPreBookItem,
+    triggerToast,
   };
 
   return (

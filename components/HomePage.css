@@ -1286,3 +1286,67 @@ button[data-v-7aa9e1a2] {
 	height: 100%;
 	border: 0;
 }
+
+.floating-input {
+	position: relative;
+	width: 100%;
+}
+
+.floating-input input,
+.floating-input textarea {
+	width: 100%;
+	padding: 16px 12px;
+	border: 1px solid #e5e5e5;
+	outline: none;
+	font-size: 15px;
+	background: #fff;
+	border-radius: 6px;
+	transition: all 0.25s ease;
+}
+
+.floating-input input:focus,
+.floating-input textarea:focus {
+	border-color: #c9a96e;
+	box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.15);
+}
+
+.floating-input label {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: #fff;
+	padding: 0 6px;
+	color: #999;
+	font-size: 14px;
+	transition: all 0.25s ease;
+	pointer-events: none;
+}
+
+/* FLOAT EFFECT */
+.floating-input input:focus+label,
+.floating-input input:not(:placeholder-shown)+label,
+.floating-input textarea:focus+label,
+.floating-input textarea:not(:placeholder-shown)+label {
+	top: -8px;
+	font-size: 11px;
+	color: #c9a96e;
+}
+
+.input-error {
+	border: 1px solid #e53935 !important;
+}
+
+.error-text {
+	color: #e53935;
+	font-size: 12px;
+	margin-top: 4px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.error-text::before {
+	content: "⚠";
+	font-size: 12px;
+}
