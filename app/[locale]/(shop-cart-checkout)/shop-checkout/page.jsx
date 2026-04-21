@@ -19,7 +19,7 @@ export default function () {
     <>
       <Header14 />
       <main className="page-wrapper">
-        <div className="mb-4 pb-4"></div>
+        <div className="mb-4 pb-4 d-none d-lg-block"></div>
         <section className="shop-checkout container">
        
           <h2 className="page-title">Shipping and Checkout</h2>

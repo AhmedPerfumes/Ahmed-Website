@@ -54,8 +54,8 @@ export default function HomePage8() {
       <div className="d-sm-block d-md-none">{/* MobileAnimation */}</div>
 
       <main>
-        {/* <HomePage /> */}
-        <NewHomePage/>
+        <HomePage />
+        {/* <NewHomePage/> */}
       </main>
 
       <section className="d-none d-md-block" style={{ height: '100%' }}>
