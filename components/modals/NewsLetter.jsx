@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react"; // No longer need useState
 import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 
 
 export default function NewsLetter({popUp}) {
@@ -112,15 +113,17 @@ export default function NewsLetter({popUp}) {
                                         </a>
                                     </div>
                                     <div className="d-sm-block d-md-none">
-                                        <Image
-                                            width={550}
-                                            height={650}
-                                            style={{ height: "fit-content" }}
-                                            loading="lazy"
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
-                                            className="h-100 w-100 object-fit-cover d-block hover-effect"
-                                            alt="image"
-                                        />
+                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                            <Image
+                                                width={550}
+                                                height={650}
+                                                style={{ height: "fit-content" }}
+                                                loading="lazy"
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
+                                                className="h-100 w-100 object-fit-cover d-block hover-effect"
+                                                alt="image"
+                                            />
+                                        </a>
                                     </div>
                                 </div>
                             </div>

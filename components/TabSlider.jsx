@@ -4,11 +4,14 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { renderPrice } from "@/utlis/priceRenderer";
 import "swiper/css";
 
 import { useContextElement } from "@/context/Context";
 import { useLocale } from "next-intl";
 import { Weight } from "lucide-react";
+import { ElevenMp } from "@mui/icons-material";
+import { useMenu } from "@/context/MenuContext";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -44,6 +47,7 @@ const isSubcat = (cat, sub) =>
 export default function PopularProducts() {
   const { addProductToCart } = useContextElement();
   const locale = useLocale();
+  const { currency, isLoading: isMenuLoading } = useMenu();
 
   const [apiData, setApiData] = useState({});
   const [currentCategory, setCurrentCategory] = useState("All");
@@ -329,6 +333,27 @@ export default function PopularProducts() {
                         )}
                       </Link>
 
+
+                      {/* --- ADDED LABEL LOGIC --- */}
+                      {item.label_name && (
+                        <div style={{ backgroundColor: item.label_color, zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
+                          {item.label_name}
+                        </div>
+                      )}
+
+                      {item.product_qty <= 0 ? (
+                        <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 ">
+                          Out Of Stock
+                        </div>
+                      ) : (
+                        item.discount && item.discount.discount_type === 'percent' && (
+                          <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                            Sale {item.discount.value}%
+                          </div>
+                        )
+                      )}
+                      {/* --- END LABEL LOGIC --- */}
+
                       {/* ✅ ADD TO CART — ONLY CENTER SLIDE */}
                       {isActive && (
                         <button
@@ -353,6 +378,7 @@ export default function PopularProducts() {
             );
           })}
         </Swiper>
+        
       </div>
 
       {/* ===== INFO BLOCK ===== */}
@@ -398,7 +424,8 @@ export default function PopularProducts() {
               fontFamily: "'Kanit-Regular', sans-serif",
             }}
           >
-            AED {activeProduct.price}
+            {/* AED {activeProduct.price} */}
+            {renderPrice(activeProduct, currency)}
           </div>
 
           {/* ✅ RESTORED BUTTON (you had it earlier) */}

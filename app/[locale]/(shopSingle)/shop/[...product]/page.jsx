@@ -128,28 +128,32 @@ const ProductSchema = ({ category, subcategory, product }) => {
             }`
         );
     const jsonLd = {
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        name: product.product_name,
-        image: images,
-        description: product.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
-        sku: product.sku,
-        brand: { "@type": "Brand", name: "Ahmed Al Maghribi Perfumes" },
-        offers: {
-            "@type": "Offer",
-            priceCurrency: "AED",
-            price: product.price,
-            url: `https://ae.ahmedalmaghribi.com/en/shop/${category}/${subcategory}/${product.product_name
-                .split(" ")
-                .join("-")
-                .toLowerCase()}`,
-            availability:
-                product.product_qty <= 0
-                    ? "https://schema.org/OutOfStock"
-                    : "https://schema.org/InStock",
-        },
-    };
-    // console.log(jsonLd);
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: product.product_name,
+    image: images,
+    description: product.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
+    sku: product.sku,
+    brand: { "@type": "Brand", name: "Ahmed Al Maghribi Perfumes" },
+    category: category,
+    ...(product.tags && product.tags.length > 0 && {
+        size: product.tags[0],
+    }),
+    offers: {
+        "@type": "Offer",
+        priceCurrency: "AED",
+        price: product.price,
+        url: `https://ae.ahmedalmaghribi.com/en/shop/${category}/${subcategory}/${product.product_name
+            .split(" ")
+            .join("-")
+            .toLowerCase()}`,
+        availability:
+            product.product_qty <= 0
+                ? "https://schema.org/OutOfStock"
+                : "https://schema.org/InStock",
+    },
+};
+    console.log("jsonLd" , jsonLd );
     return (
         <script
             type="application/ld+json"

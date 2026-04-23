@@ -463,9 +463,9 @@ const ProductAccordion = ({ product }) => {
                     </div>
                     <div className="collection-card-details">
                     <div className="collection-card-name">{itemName}</div>
-                    <div className="collection-card-quantity">
+                    {/* <div className="collection-card-quantity">
                         {isProduct ? renderPrice(item, currency) : `Quantity: ${item.quantity}`}
-                    </div>
+                    </div> */}
                     </div>
                 </>
                 );
