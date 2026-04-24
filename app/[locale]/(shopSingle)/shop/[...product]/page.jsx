@@ -153,7 +153,7 @@ const ProductSchema = ({ category, subcategory, product }) => {
                 : "https://schema.org/InStock",
     },
 };
-    console.log("jsonLd" , jsonLd );
+    // console.log("jsonLd" , jsonLd );
     return (
         <script
             type="application/ld+json"
@@ -163,14 +163,20 @@ const ProductSchema = ({ category, subcategory, product }) => {
 };
 
 export async function generateMetadata({ params }) {
+    const { locale } = params;
     const [categoryName, subCategoryName, product] = params.product;
+
+    const canonicalUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/shop/${categoryName}/${subCategoryName}/${product}`;
 
     try {
         const data = await getProductSEO(categoryName, subCategoryName, product);
         // console.log(JSON.parse(data.meta_value)[0]);
         return {
             title: JSON.parse(data.meta_value)[0]?.seo_title ? `${JSON.parse(data.meta_value)[0]?.seo_title}` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-            description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes."
+            description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+            alternates: {
+                canonical: canonicalUrl,
+            },
             // openGraph: {
             //     // title: data.product_name,
             //     // description: data.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
