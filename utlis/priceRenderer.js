@@ -19,7 +19,7 @@ const end = product?.discount?.end_date
   ? parseUTC(product.discount.end_date)
   : null;
   console.log({"Date001": now, start, end });
-  console.log(product,"product001");
+  // console.log(product,"product001");
   
 
   if (product?.discount && now >= start && now <= end) {
