@@ -25,6 +25,7 @@ import TabSlider from "./TabSlider";
 import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 import { useMenu } from "@/context/MenuContext";
 import NewsLetter from '@/components/modals/NewsLetter';
+import HorizontalScroll from "./HorizontalScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,24 +95,7 @@ const ScrollSnapHorizontalBootstrap = () => {
         // navCircles.forEach((circle, index) => {
         //     circle.addEventListener("click", () => handleNavCircleClick(index));
         // });
-        // Horizontal scrolling within `.horizontal-scroll`
-        const panels = gsap.utils.toArray(".cont .panel2");
-        if (panels.length > 0) {
-            const panelTween = gsap.to(panels, {
-                xPercent:
-                    locale == "en"
-                        ? -100 * (panels.length - 1)
-                        : 100 * (panels.length - 1),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".cont",
-                    start: "top top",
-                    end: `+=${panels.length * window.innerWidth}`,
-                    pin: true,
-                    scrub: 1,
-                },
-            });
-        }
+
 
         const isDesktop = window.matchMedia("(min-width: 992px)").matches;
 
@@ -578,95 +562,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 </section>
 
                 {/* Horizontal Scrolling Section */}
-
-                <section className="cont testsect">
-                    <div className="panel2 mb-4">
-                        <div className="inner2 mt-5 d-flex align-items-center">
-                            {/* Iconic indulgence */}
-                            <Categories section="section4" />
-                        </div>
-                    </div>
-
-                    {/* <div className="panel2 mt-5">
-                    <div className="inner2">
-                        <VideoPanel
-                            src="https://youtu.be/gf0kYWgy-58?si=oC082F-p5XUgnaFu"
-                            section="hundred"
-                        />
-                    </div>
-                </div> */}
-
-                    <div className="panel2 mt-5">
-                        <div className="inner2">
-                            <div className="youtube-wrapper">
-                                <iframe
-                                    src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0"
-                                    title="K - Series"
-                                    frameBorder="0"
-                                    allow="autoplay; fullscreen; picture-in-picture"
-                                    allowFullScreen
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="panel2 mt-5">
-                        <div className="inner2 d-flex flex-column align-items-center">
-                            <Categories />
-                        </div>
-                    </div>
-
-                    <div className="panel2 mt-5 ">
-                        <div className="d-flex flex-column align-items-center justify-content-center">
-                            <h3 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-2">
-                                {/* {t("Reaching Every Corner of the World")} */}
-                                {t("Essence of Arabia")}
-                            </h3>
-                            <p className="text-center section-paragraph pb-3">
-                                {/* {t("Exports Text")} */}
-                                {t("Step into")}
-                            </p>
-                            <Link
-                                href={`/${locale}/shop/dakhoon`}
-                                className="btn-rounded btn-link_lg  text-uppercase fw-medium"
-                            >
-                                {t("Discover")}
-                            </Link>
-                        </div>
-                        <div className="inner2 mt-4 d-flex align-items-center ">
-                            <Link
-                                href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-ahmed-40-tabs`}
-                            >
-                                <Image
-                                    width={0}
-                                    height={0}
-                                    sizes="100%"
-                                    className="w-100"
-                                    src="/assets/images/bakhoor-ahmed.jpg"
-                                    alt="Bakhoor Ahmed"
-                                    loading="lazy"
-                                    style={{ width: "100%", height: "auto" }}
-                                    aria-label="Bakhoor Ahmed"
-                                />
-                            </Link>
-                            <Link
-                                href={`/${locale}/shop/dakhoon/oud-maattar/oud-kiflain`}
-                            >
-                                <Image
-                                    width={0}
-                                    height={0}
-                                    sizes="100%"
-                                    className="w-100"
-                                    src="/assets/images/oud-kiflain.jpg"
-                                    alt="Bakhoor Ahmed"
-                                    loading="lazy"
-                                    style={{ width: "100%", height: "auto" }}
-                                    aria-label="Bakhoor Ahmed"
-                                />
-                            </Link>
-                        </div>
-                    </div>
-                </section>
+                <HorizontalScroll />
 
                 {/* For Mobile Horizontal Slider  */}
 

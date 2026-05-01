@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCreative } from 'swiper/modules';
@@ -15,14 +15,25 @@ const NewHero = () => {
     const locale = useLocale();
     const t = useTranslations();
     const swiperRef = useRef(null);
-    const { homeSliders, isLoading, error } = useMenu();
+    const { homeSliders, homeMobileSliders, isLoading, error } = useMenu();
     const [activeIndex, setActiveIndex] = useState(0);
     const [progressKey, setProgressKey] = useState(0); // Forces SVG animation restart
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     if (isLoading) return <div><Pagination1 /></div>;
     if (error) return <div>{error}</div>;
 
-    const total = homeSliders?.length || 0;
+    const slidersToDisplay = (isMobile && homeMobileSliders?.length > 0) ? homeMobileSliders : homeSliders;
+    const total = slidersToDisplay?.length || 0;
 
     const handleSlideChange = (swiper) => {
         if (!swiper || !swiper.slides) return;
@@ -42,7 +53,7 @@ const NewHero = () => {
         );
 
         gsap.fromTo(bg,
-            { scale: 1.12, transformOrigin: 'center center' },
+            { scale: isMobile ? 1.02 : 1.12, transformOrigin: 'center center' },
             { scale: 1, duration: 6, ease: "power1.out" }
         );
     };
@@ -70,7 +81,7 @@ const NewHero = () => {
                 onInit={(swiper) => { setTimeout(() => handleSlideChange(swiper), 300); }}
                 className="h-100 w-100"
             >
-                {homeSliders?.map((elm, i) => (
+                {slidersToDisplay?.map((elm, i) => (
                     <SwiperSlide key={i} className="h-100 w-100 position-relative overflow-hidden">
 
                         {/* Background Image */}
@@ -81,12 +92,12 @@ const NewHero = () => {
                                 alt={elm.title || "Hero Image"}
                                 fill
                                 className="gsap-bg"
-                                style={{ objectFit: 'cover' }}
+                                style={{ objectFit: 'cover', objectPosition: 'center center' }}
                             />
                             {/* Left Gradient for text contrast */}
-                            <div className="position-absolute top-0 start-0 w-100 h-100" style={{
+                            {/* <div className="position-absolute top-0 start-0 w-100 h-100" style={{
                                 background: 'linear-gradient(105deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 100%)'
-                            }} />
+                            }} /> */}
                         </div>
 
                         {/* Text Content */}

@@ -1,10 +1,12 @@
 "use client";
 import React, { useRef, useEffect, useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
 import gsap from "gsap";
+import { useContextElement } from "@/context/Context";
 
 // Import Swiper styles
 import "swiper/css";
@@ -19,7 +21,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/zumar@2x.jpg",
         productImg: "/assets/images/best-sellers/zumar@2x.jpg",
         link: "/shop/perfumes/oriental-fragrance/zumar",
-        theme: { bg: "#0f0c08", accent: "#c5a059", glow: "rgba(197, 160, 89, 0.2)", roman: "I" }
+        theme: { bg: "#F9F6F0", accent: "rgba(197, 160, 89, 1)", glow: "rgba(197, 160, 89, 0.15)", roman: "I" }
     },
     {
         id: 1,
@@ -29,7 +31,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/binshaikh@2x.jpg",
         productImg: "/assets/images/best-sellers/bin-shaikh@2x.jpg",
         link: "/shop/perfumes/oriental-fragrance/bin-shaikh",
-        theme: { bg: "#0d0a0f", accent: "#8a59c5", glow: "rgba(138, 89, 197, 0.15)", roman: "II" }
+        theme: { bg: "#F4EFEA", accent: "#8a59c5", glow: "rgba(138, 89, 197, 0.1)", roman: "II" }
     },
     {
         id: 2,
@@ -39,7 +41,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/ignite-oud@2x.jpg",
         productImg: "/assets/images/best-sellers/ignite-oud@2x.jpg",
         link: "/shop/perfumes/occidental-fragrance/ignite-oud",
-        theme: { bg: "#0f0505", accent: "#e63946", glow: "rgba(230, 57, 70, 0.2)", roman: "III" }
+        theme: { bg: "#Fdfbf7", accent: "#e63946", glow: "rgba(230, 57, 70, 0.1)", roman: "III" }
     },
     {
         id: 3,
@@ -49,7 +51,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/marj@2x.jpg",
         productImg: "/assets/images/best-sellers/marj@2x.jpg",
         link: "/shop/perfumes/oriental-fragrance/marj",
-        theme: { bg: "#0f0a0d", accent: "#ffb7c5", glow: "rgba(255, 183, 197, 0.2)", roman: "IV" }
+        theme: { bg: "#F8F1F2", accent: "#ffb7c5", glow: "rgba(255, 183, 197, 0.15)", roman: "IV" }
     },
     {
         id: 4,
@@ -59,7 +61,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/oud-and-rose@2x.jpg",
         productImg: "/assets/images/best-sellers/oud-and-roses@2x.jpg",
         link: "/shop/perfumes/occidental-fragrance/oud-roses",
-        theme: { bg: "#0a0f0c", accent: "#d4af37", glow: "rgba(212, 175, 55, 0.2)", roman: "V" }
+        theme: { bg: "#FCF9F2", accent: "#d4af37", glow: "rgba(212, 175, 55, 0.15)", roman: "V" }
     },
     {
         id: 5,
@@ -69,7 +71,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/kaaf@2x.jpg",
         productImg: "/assets/images/best-sellers/kaaf@2x.jpg",
         link: "/shop/perfumes/oriental-fragrance/kaaf",
-        theme: { bg: "#050a0f", accent: "#598ac5", glow: "rgba(89, 138, 197, 0.2)", roman: "VI" }
+        theme: { bg: "rgba(242, 245, 248, 1)", accent: "#598ac5", glow: "rgba(89, 138, 197, 0.15)", roman: "VI" }
     }
 ];
 
@@ -79,9 +81,48 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
     const swiperRef = useRef(null);
     const containerRef = useRef(null);
     const cursorRef = useRef(null);
+    const { addProductToCart } = useContextElement();
     const [activeIndex, setActiveIndex] = useState(0);
+    const [fetchedSlides, setFetchedSlides] = useState([]);
+
+    useEffect(() => {
+        let isMounted = true;
+        const fetchDynamicSlides = async () => {
+            try {
+                const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
+                const apiUrl = `${apiBase}api/new-product-sliders?lang=${locale}`;
+                console.log("Calling New Product Slider API:", apiUrl);
+                const res = await fetch(apiUrl);
+                const json = await res.json();
+                if (isMounted && json && !json.error && json.data?.length > 0) {
+                    const mapped = json.data.map((item) => ({
+                        id: item.id,
+                        name: item.name,
+                        tagline: item.category || "LUXURY CREATION",
+                        subtitle: item.desc || "",
+                        noteImg: item.noteImg || "/assets/images/best-sellers/notes/zumar@2x.jpg",
+                        productImg: item.productImg || "/assets/images/best-sellers/zumar@2x.jpg",
+                        link: item.link || "/shop",
+                        theme: {
+                            bg: item.theme?.bg || "#FDFBF7",
+                            accent: item.theme?.accent || "#c5a059",
+                            glow: item.theme?.glow || "rgba(197, 160, 89, 0.15)",
+                            roman: item.theme?.roman || "I"
+                        },
+                        product: item.product // Store the full product object for Add to Cart
+                    }));
+                    setFetchedSlides(mapped);
+                }
+            } catch (err) {
+                console.error("Failed to fetch dynamic new product sliders:", err);
+            }
+        };
+        fetchDynamicSlides();
+        return () => { isMounted = false; };
+    }, [locale]);
 
     const slides = useMemo(() => {
+        if (fetchedSlides.length > 0) return fetchedSlides;
         if (prodSlide === "bestSellers") return SLIDES_DATA;
         return [
             {
@@ -92,11 +133,11 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 noteImg: "/assets/images/dakhoon/oud-mtr/maria-horizontal.jpg",
                 productImg: "/assets/images/dakhoon/oud-mtr/maria-1080.jpg",
                 link: "/shop/dakhoon/oud-maattar/oud-mtr-asaateen",
-                theme: { bg: "#0a0a0d", accent: "#c5a059", glow: "rgba(197, 160, 89, 0.15)", roman: "O" }
+                theme: { bg: "#FAF3EB", accent: "#c5a059", glow: "rgba(197, 160, 89, 0.15)", roman: "O" }
             },
             ...SLIDES_DATA.slice(1)
         ];
-    }, [prodSlide]);
+    }, [prodSlide, fetchedSlides]);
 
 
 
@@ -111,15 +152,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             gsap.to(cursorRef.current, { x: x, y: y, duration: 0.2, ease: "power2.out" });
         }
 
-        const currentBottle = containerRef.current.querySelector(".swiper-slide-active .master-bottle");
-        if (currentBottle) {
-            const xRotation = (y / height - 0.5) * -20;
-            const yRotation = (x / width - 0.5) * 20;
-            gsap.to(currentBottle, {
+        const currentSecondary = containerRef.current.querySelector(".swiper-slide-active .secondary-photo");
+        if (currentSecondary) {
+            const xRotation = (y / height - 0.5) * -15;
+            const yRotation = (x / width - 0.5) * 15;
+            gsap.to(currentSecondary, {
                 rotateX: xRotation,
                 rotateY: yRotation,
-                x: (x / width - 0.5) * 30,
-                y: (y / height - 0.5) * 30,
+                x: (x / width - 0.5) * 20,
+                y: (y / height - 0.5) * 20,
                 duration: 1,
                 ease: "power2.out"
             });
@@ -129,43 +170,65 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
     const onSlideChange = (swiper) => {
         const index = swiper.realIndex;
         setActiveIndex(index);
-        
+
 
 
         const currentSlide = swiper.slides[swiper.activeIndex];
+        const prevSlide = swiper.slides[swiper.previousIndex];
+
+        // Animate out the old text aggressively so it clears the space
+        if (prevSlide && swiper.activeIndex !== swiper.previousIndex) {
+            const oldTitleElements = prevSlide.querySelectorAll(".stagger-row span");
+            const oldSubtitle = prevSlide.querySelector(".master-desc");
+            const oldTagline = prevSlide.querySelector(".master-tagline");
+
+            gsap.to([oldTitleElements, oldSubtitle, oldTagline], {
+                opacity: 0,
+                y: -30,
+                duration: 0.5,
+                ease: "power2.in"
+            });
+        }
+
         const titleElements = currentSlide.querySelectorAll(".stagger-row span");
         const subtitle = currentSlide.querySelector(".master-desc");
-        const bottle = currentSlide.querySelector(".master-bottle");
-        const shards = currentSlide.querySelectorAll(".ingredient-shard");
+        const tagline = currentSlide.querySelector(".master-tagline");
+        const primary = currentSlide.querySelector(".primary-photo img");
+        const secondary = currentSlide.querySelector(".secondary-photo");
 
         gsap.to(containerRef.current, {
             backgroundColor: slides[index].theme.bg,
-            duration: 1.2,
-            ease: "expo.out"
+            duration: 1.4,
+            ease: "sine.inOut"
         });
+
+        // Delay entry to 0.8s so old text is gone and cross-fade is 60% complete
+        gsap.fromTo(tagline, { opacity: 0, x: -15 }, { opacity: 1, x: 0, duration: 1.2, delay: 0.7, ease: "power2.out" });
 
         gsap.fromTo(titleElements,
             { y: "100%", opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, stagger: 0.04, ease: "expo.out", delay: 0.2 }
+            { y: 0, opacity: 1, duration: 1.2, stagger: 0.08, ease: "power3.out", delay: 0.8 }
         );
 
-        gsap.fromTo(subtitle, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.6 });
+        gsap.fromTo(subtitle, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.2, delay: 1.0, ease: "power3.out" });
 
-        gsap.fromTo(bottle,
-            { y: 40, opacity: 0, scale: 0.9 },
-            { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "power3.out", delay: 0.3 }
-        );
-
-        shards.forEach((shard, i) => {
-            gsap.fromTo(shard, 
-                { opacity: 0, scale: 0.8, x: (i % 2 === 0 ? -100 : 100) },
-                { opacity: 0.3, scale: 1, x: 0, duration: 2, delay: 0.6 + (i * 0.2), ease: "power2.out" }
+        if (primary) {
+            gsap.fromTo(primary,
+                { scale: 1.05 },
+                { scale: 1, duration: 5, ease: "sine.out", delay: 0 }
             );
-        });
+        }
+
+        if (secondary) {
+            gsap.fromTo(secondary,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.5, delay: 0.5, ease: "power2.out" }
+            );
+        }
     };
 
     return (
-        <section 
+        <section
             ref={containerRef}
             className="master-gallery-section"
             onMouseMove={handleMouseMove}
@@ -176,13 +239,24 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 <div className="master-flashlight" style={{ borderColor: slides[activeIndex].theme.glow }}></div>
             </div>
 
+            <div className="best-sellers-header-wrap">
+                <span className="best-sellers-tagline">{t("Premium Collection")}</span>
+                <h2 className="best-sellers-heading">
+                    {t("Best Sellers")}
+                </h2>
+                <p className="best-sellers-desc">
+                    {t("Discover our most loved and highly sought-after signature creations.")}
+                </p>
+                <div className="best-sellers-line"></div>
+            </div>
+
             <style jsx global>{`
                 .master-gallery-section {
                     position: relative;
                     width: 100%;
                     min-height: 100vh;
                     overflow: hidden;
-                    background-color: #0d0a0f;
+                    background-color: #FDFBF7;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -191,7 +265,64 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
 
                 @media (max-width: 991px) {
-                    .master-gallery-section { padding: 40px 0 100px; }
+                    .master-gallery-section { padding: 0; min-height: 100dvh; height: auto; overflow: hidden; }
+                }
+
+                .best-sellers-header-wrap {
+                    position: absolute;
+                    top: 40px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 200;
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .best-sellers-tagline {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    letter-spacing: 4px;
+                    color: #A69F92;
+                    text-transform: uppercase;
+                }
+
+                .best-sellers-heading {
+                    font-family: 'Playfair Display', serif;
+                    font-size: 2.8rem;
+                    font-weight: 500;
+                    color: #1D1B19;
+                    font-style: italic;
+                    margin: 0;
+                    line-height: 1.2;
+                }
+
+                .best-sellers-desc {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 0.95rem;
+                    color: #5A554A;
+                    margin-top: 5px;
+                    max-width: 450px;
+                    line-height: 1.5;
+                }
+
+                .best-sellers-line {
+                    width: 40px;
+                    height: 2px;
+                    background: #1D1B19;
+                    margin-top: 10px;
+                    opacity: 0.8;
+                }
+
+                @media (max-width: 991px) {
+                    .best-sellers-header-wrap { top: 30px; gap: 4px; }
+                    .best-sellers-tagline { font-size: 0.6rem; letter-spacing: 3px; font-weight: 600; }
+                    .best-sellers-heading { font-size: 1.6rem; }
+                    .best-sellers-desc { font-size: 0.85rem; max-width: 300px; margin-top: 4px; }
+                    .best-sellers-line { width: 30px; height: 1px; margin-top: 6px; }
                 }
 
                 .master-cursor-wrap {
@@ -200,7 +331,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     left: 0;
                     pointer-events: none;
                     z-index: 1000;
-                    mix-blend-mode: screen;
+                    mix-blend-mode: multiply;
                     display: block;
                 }
 
@@ -210,40 +341,44 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     width: 400px;
                     height: 400px;
                     border-radius: 50%;
-                    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+                    background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
                     border: 1px solid transparent;
                     transition: border-color 1s ease;
                 }
 
                 .master-swiper { width: 100%; height: 100%; }
-                .master-slide { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: 100vh; }
+                .master-slide { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: auto; min-height: 100vh; }
                 
                 @media (max-width: 991px) {
-                    .master-slide { height: auto; min-height: 100vh; }
+                    .master-slide { height: auto; min-height: 100dvh; padding-top: 100px; padding-bottom: 120px; }
                 }
 
-                .master-grid {
+                .master-grid, .global-cta-grid {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     width: 100%;
                     max-width: 1400px;
-                    padding: 0 80px;
+                    padding: 0 40px;
                     z-index: 10;
                     align-items: center;
                 }
 
                 @media (max-width: 991px) {
-                    .master-grid { 
-                        grid-template-columns: 1fr; 
-                        grid-template-rows: auto auto;
-                        text-align: center; 
-                        padding: 0 20px;
-                        gap: 20px;
+                    .master-grid, .global-cta-grid {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        padding: 0 15px;
+                        gap: 0px;
+                        min-height: 100%;
+                        justify-content: flex-start;
                     }
                 }
 
-                .master-text-col { display: flex; flex-direction: column; gap: 30px; }
-                @media (max-width: 991px) { .master-text-col { order: 2; padding-bottom: 40px; } }
+                .master-text-col, .global-cta-text-col { display: flex; flex-direction: column; gap: 10px; z-index: 5; }
+                @media (max-width: 991px) { 
+                    .master-text-col, .global-cta-text-col { order: 2; padding-bottom: 20px; gap: 8px; justify-content: flex-start; padding-top: 40px; } 
+                }
 
                 .master-tagline {
                     font-family: 'Inter', sans-serif;
@@ -254,29 +389,32 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     text-transform: uppercase;
                 }
 
-                .master-title-wrap { overflow: hidden; padding-bottom: 4px; }
-                .stagger-row { display: block; overflow: hidden; margin: -6px 0; }
+                .master-title-wrap { overflow: hidden; padding-bottom: 15px; }
+                .stagger-row { display: block; overflow: hidden; margin: 0; }
                 .stagger-row span {
                     display: inline-block;
                     font-family: 'Playfair Display', serif;
-                    font-size: clamp(3rem, 8vw, 7rem);
+                    font-size: clamp(3.5rem, 7vw, 6rem);
                     font-weight: 700;
-                    color: #fff;
-                    line-height: 1;
-                    text-shadow: 0 0 60px rgba(255,255,255,0.15);
+                    color: #1D1B19;
+                    line-height: 1.1;
+                    letter-spacing: -1px;
                 }
+                
+                @media (max-width: 991px) { .stagger-row span { font-size: clamp(3rem, 12vw, 4.5rem); } }
 
                 .master-desc {
                     font-family: 'Inter', sans-serif;
-                    font-size: 1.05rem;
-                    color: rgba(255,255,255,0.65);
-                    max-width: 480px;
-                    line-height: 1.9;
-                    font-weight: 300;
-                    letter-spacing: 0.3px;
+                    font-size: 1.1rem;
+                    color: #5A554A;
+                    max-width: 450px;
+                    line-height: 1.7;
+                    font-weight: 400;
+                    letter-spacing: 0.2px;
+                    margin-top: 15px;
                 }
 
-                @media (max-width: 991px) { .master-desc { margin: 0 auto; font-size: 1rem; line-height: 1.6; } }
+                @media (max-width: 991px) { .master-desc { margin: 10px auto 0; font-size: 0.95rem; line-height: 1.6; max-width: 320px; padding: 0 10px; } }
 
                 /* Large Background Kinetic Typography */
                 .kinetic-bg-text {
@@ -284,7 +422,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     font-family: 'Playfair Display', serif;
                     font-size: 35vw;
                     font-weight: 900;
-                    color: rgba(255,255,255,0.03);
+                    color: rgba(0,0,0,0.025);
                     z-index: 1;
                     top: 50%;
                     left: 50%;
@@ -297,7 +435,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) { .kinetic-bg-text { font-size: 20vw; top: 30%; } }
 
-                /* Visual Column — Full Photo Panel */
+                /* Visual Column — Dual Photo Layout */
                 .master-visual-col {
                     position: relative;
                     perspective: 3000px;
@@ -305,137 +443,142 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     justify-content: center;
                     align-items: center;
                     height: 100%;
-                    overflow: hidden;
+                    overflow: visible;
+                    padding-bottom: 40px;
                 }
 
-                @media (max-width: 991px) { .master-visual-col { order: 1; min-height: 50vh; } }
+                @media (max-width: 991px) { 
+                    .master-visual-col { 
+                        order: 1; 
+                        height: auto; 
+                        padding-top: 40px; 
+                        padding-bottom: 60px; 
+                        width: 100%; 
+                    } 
+                }
 
-                /* Full-bleed ambient photo panel */
-                .note-panel {
+                .primary-photo {
                     position: absolute;
-                    inset: -10% -5%;
+                    right: 0%;
+                    width: 75%;
+                    height: auto;
+                    max-height: 85vh;
+                    aspect-ratio: 4/5;
                     border-radius: 20px;
                     overflow: hidden;
                     z-index: 1;
-                }
-
-                .note-panel-img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    filter: saturate(0.9) brightness(0.75);
-                    transition: transform 1.4s ease;
-                }
-
-                /* Gradient fades on left and top edges so it bleeds into dark bg */
-                .note-panel::after {
-                    content: '';
-                    position: absolute;
-                    inset: 0;
-                    background:
-                        linear-gradient(to right, var(--panel-fade-color, #0f0c08) 0%, transparent 35%),
-                        linear-gradient(to bottom, var(--panel-fade-color, #0f0c08) 0%, transparent 20%),
-                        linear-gradient(to top, var(--panel-fade-color, #0f0c08) 0%, transparent 20%);
-                    z-index: 2;
-                }
-
-                /* Accent glow behind bottle */
-                .bottle-glow {
-                    position: absolute;
-                    width: 300px;
-                    height: 300px;
-                    border-radius: 50%;
-                    background: var(--bottle-glow, rgba(197,160,89,0.2));
-                    filter: blur(80px);
-                    z-index: 3;
-                    pointer-events: none;
-                }
-
-                .master-bottle {
-                    position: relative;
-                    z-index: 10;
-                    max-height: 80vh;
-                    width: auto;
-                    filter: drop-shadow(0 30px 80px rgba(0,0,0,0.7));
-                    transform-style: preserve-3d;
+                    box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+                    top: 50%;
+                    transform: translateY(-50%);
                 }
 
                 @media (max-width: 991px) {
-                    .master-bottle { max-height: 42vh; }
-                    .note-panel { border-radius: 0; inset: 0; }
-                }
-
-                /* Roman Navigation Optimized for Mobile */
-                .master-nav {
-                    position: absolute;
-                    left: 50%;
-                    bottom: 60px;
-                    transform: translateX(-50%);
-                    z-index: 150;
-                    display: flex;
-                    align-items: center;
-                    gap: 60px;
-                    background: rgba(255,255,255,0.03);
-                    backdrop-filter: blur(20px);
-                    padding: 15px 40px;
-                    border-radius: 100px;
-                    border: 1px solid rgba(255,255,255,0.05);
-                    width: auto;
-                    transition: all 0.5s ease;
-                }
-
-                @media (max-width: 991px) {
-                    .master-nav { 
-                        bottom: 20px; 
-                        gap: 30px; 
-                        padding: 10px 25px;
-                        width: 90%;
-                        max-width: 350px;
-                        justify-content: space-between;
+                    .primary-photo { 
+                        position: relative; 
+                        width: 70%; 
+                        max-height: none; 
+                        aspect-ratio: 4/5; 
+                        border-radius: 12px; 
+                        top: auto; 
+                        transform: none; 
+                        margin: 0 auto; 
                     }
                 }
 
-                .roman-counter {
-                    font-family: 'Playfair Display', serif;
-                    color: #fff;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
+                .primary-photo img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 1.4s ease;
                 }
 
-                .roman-current { font-size: 2.5rem; font-weight: 700; color: var(--accent-color); font-style: italic; }
-                @media (max-width: 991px) { .roman-current { font-size: 1.8rem; } }
-                .roman-line { width: 30px; height: 1px; background: rgba(255,255,255,0.2); }
-                .roman-total { font-size: 0.9rem; opacity: 0.3; letter-spacing: 2px; }
+                .secondary-photo {
+                    position: absolute;
+                    left: 5%;
+                    bottom: 10%;
+                    width: 45%;
+                    aspect-ratio: 1/1;
+                    border-radius: 4px;
+                    overflow: hidden;
+                    z-index: 10;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+                    transform: translateY(20px);
+                }
 
-                .master-arrows { display: flex; gap: 15px; }
-                @media (max-width: 991px) { .master-arrows { gap: 10px; } }
+                @media (max-width: 991px) {
+                    .secondary-photo { 
+                        width: 50%; 
+                        left: 5%; 
+                        bottom: 0%; 
+                        transform: translateY(10%);
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+                    }
+                }
 
-                .master-arrow {
-                    width: 70px;
-                    height: 70px;
-                    border: 1px solid rgba(255,255,255,0.1);
-                    border-radius: 50%;
+                .secondary-photo img {
+                    width: 100%; height: 100%; object-fit: cover;
+                }
+
+                /* Modern Fractional Pagination */
+                .modern-pagination {
+                    position: absolute;
+                    left: 80px;
+                    bottom: 60px;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    gap: 30px;
+                    z-index: 150;
+                }
+
+                @media (max-width: 991px) {
+                    .modern-pagination {
+                        left: 50%;
+                        transform: translateX(-50%);
+                        bottom: 15px;
+                        background: rgba(255,255,255,0.85);
+                        backdrop-filter: blur(10px);
+                        padding: 8px 20px;
+                        border-radius: 50px;
+                        gap: 20px;
+                    }
+                }
+
+                .modern-pagination .nav-btn {
+                    background: transparent;
+                    border: none;
                     cursor: pointer;
-                    color: #fff;
-                    background: rgba(255,255,255,0.02);
-                    backdrop-filter: blur(20px);
-                    transition: all 0.4s ease;
+                    color: #1D1B19;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    transition: opacity 0.3s;
                 }
 
-                @media (max-width: 991px) { .master-arrow { width: 50px; height: 50px; } .master-arrow svg { width: 20px; height: 20px; } }
-                .master-arrow:hover { background: #fff; color: #000; }
+                .modern-pagination .nav-btn:hover { opacity: 0.6; }
+
+                .fraction {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    font-family: 'Inter', sans-serif;
+                    color: #1D1B19;
+                    font-weight: 500;
+                    letter-spacing: 2px;
+                }
+
+                .fraction .line {
+                    width: 40px;
+                    height: 1px;
+                    background: #1D1B19;
+                    opacity: 0.2;
+                }
 
                 /* Master Button */
                 .master-btn {
-                    margin-top: 10px;
                     padding: 22px 55px;
                     background: transparent;
-                    border: 1px solid rgba(255,255,255,0.2);
-                    color: #fff;
+                    border: 1px solid #1D1B19;
+                    color: #1D1B19;
                     font-family: 'Inter', sans-serif;
                     text-transform: uppercase;
                     letter-spacing: 5px;
@@ -445,6 +588,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     cursor: pointer;
                     position: relative;
                     transition: all 0.5s ease;
+                    z-index: 1;
+                    overflow: hidden;
                 }
 
                 @media (max-width: 991px) { .master-btn { padding: 15px 35px; letter-spacing: 3px; font-size: 0.7rem; } }
@@ -452,19 +597,71 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     content: '';
                     position: absolute;
                     top: 0; left: 0; width: 0; height: 100%;
-                    background: #fff;
+                    background: #1D1B19;
                     z-index: -1;
-                    transition: width 0.5s ease;
+                    transition: width 0.5s cubic-bezier(0.86, 0, 0.07, 1);
                 }
-                .master-btn:hover { color: #000; letter-spacing: 8px; border-color: #fff; }
+                .master-btn:hover { color: #fff; letter-spacing: 8px; }
                 .master-btn:hover::before { width: 100%; }
+
+                .global-cta-wrap {
+                    position: absolute;
+                    top: 0; left: 0; width: 100%; height: 100%;
+                    pointer-events: none;
+                    z-index: 150;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                @media (max-width: 991px) {
+                    .global-cta-wrap { align-items: stretch; padding-top: 40px; height: 100%; min-height: 100dvh; padding-bottom: 80px; }
+                }
+
+                .global-cta-text-col {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    height: 100%;
+                    gap: 20px;
+                    pointer-events: none;
+                    visibility: hidden; /* Hide the dummy text without affecting child override */
+                }
+                
+                @media (max-width: 991px) {
+                    .global-cta-dummy-visual {
+                        order: 1;
+                        padding-top: 40px;
+                        padding-bottom: 60px;
+                        width: 100%;
+                    }
+                    .global-cta-dummy-ratio {
+                        width: 70%;
+                        aspect-ratio: 4/5;
+                        margin: 0 auto;
+                    }
+                }
+
+                .global-cta-btn-container {
+                    pointer-events: auto;
+                    visibility: visible;
+                    opacity: 1;
+                    padding-top: 30px; /* Space between description and button */
+                }
+                
+                @media (max-width: 991px) { .global-cta-btn-container { padding-top: 5px; } }
             `}</style>
 
             <Swiper
                 modules={[Autoplay, Navigation, Pagination, EffectFade]}
                 effect="fade"
                 fadeEffect={{ crossFade: true }}
-                speed={1200}
+                speed={1400}
+                loop={true}
+                autoplay={{
+                    delay: 5000,
+                    disableOnInteraction: false
+                }}
                 onInit={(swiper) => {
                     swiperRef.current = swiper;
                     onSlideChange(swiper);
@@ -488,59 +685,94 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                                 <p className="master-desc">
                                     {t(slide.subtitle)}
                                 </p>
-                                <div>
-                                    <Link href={`/${locale}${slide.link}`}>
-                                        <button className="master-btn">
-                                            {t("Discover the Note")}
-                                        </button>
-                                    </Link>
-                                </div>
                             </div>
-                            
+
                             <div className="master-visual-col">
-                                {/* Full atmospheric photo panel */}
-                                <div 
-                                    className="note-panel"
-                                    style={{ "--panel-fade-color": slide.theme.bg }}
-                                >
-                                    <img src={slide.noteImg} className="note-panel-img" alt={slide.name + " notes"} />
+                                <div className="primary-photo">
+                                    <Image
+                                        src={slide.productImg}
+                                        alt={slide.name}
+                                        fill
+                                        sizes="(max-width: 991px) 70vw, 40vw"
+                                        style={{ objectFit: "cover" }}
+                                    />
                                 </div>
-
-                                {/* Accent glow orb behind bottle */}
-                                <div 
-                                    className="bottle-glow"
-                                    style={{ "--bottle-glow": slide.theme.glow }}
-                                ></div>
-
-                                <img 
-                                    src={slide.productImg} 
-                                    className="master-bottle" 
-                                    alt={slide.name} 
-                                />
+                                <div className="secondary-photo">
+                                    <Image
+                                        src={slide.noteImg}
+                                        alt={slide.name + " notes"}
+                                        fill
+                                        sizes="(max-width: 991px) 50vw, 25vw"
+                                        style={{ objectFit: "cover" }}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
 
-            <div className="master-nav">
-                <div className="roman-counter" style={{ "--accent-color": slides[activeIndex].theme.accent }}>
-                    <span className="roman-current">{slides[activeIndex].theme.roman}</span>
-                    <div className="roman-line"></div>
-                    <span className="roman-total d-none d-md-block">{slides.length} EDITIONS</span>
-                </div>
-                <div className="master-arrows">
-                    <div className="master-arrow" onClick={() => swiperRef.current?.slidePrev()}>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
+            <div className="global-cta-wrap">
+                <div className="global-cta-grid">
+                    <div className="global-cta-text-col">
+                        <span className="master-tagline" style={{ display: 'block' }}>
+                            {slides[activeIndex]?.tagline || "TAGLINE"}
+                        </span>
+                        <div className="master-title-wrap">
+                            <div className="stagger-row">
+                                <span>{t(slides[activeIndex]?.name || "TITLE")}</span>
+                            </div>
+                        </div>
+                        <p className="master-desc">
+                            {t(slides[activeIndex]?.subtitle || "DESC")}
+                        </p>
+                        <div className="global-cta-btn-container">
+                            <button
+                                className="master-btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const activeSlide = slides[activeIndex];
+                                    if (activeSlide?.product) {
+                                        addProductToCart(activeSlide.product);
+                                    } else {
+                                        // Fallback if no product is linked
+                                        window.location.href = `/${locale}${activeSlide?.link || "/shop"}`;
+                                    }
+                                }}
+                            >
+                                {slides[activeIndex]?.product ? t("Add To Cart") : t("Discover the Note")}
+                            </button>
+                        </div>
                     </div>
-                    <div className="master-arrow" onClick={() => swiperRef.current?.slideNext()}>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
+                    {/* Dynamic layout matching block to mimic primary photo constraints exactly on mobile */}
+                    <div className="global-cta-dummy-visual">
+                        <div className="global-cta-dummy-ratio d-block d-lg-none"></div>
                     </div>
                 </div>
+            </div>
+
+            <div className="modern-pagination">
+                <button className="nav-btn prev-btn" onClick={() => swiperRef.current?.slidePrev()}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <div className="fraction">
+                    <span className="current">
+                        {String(activeIndex + 1).padStart(2, '0')}
+                    </span>
+                    <span className="line"></span>
+                    <span className="total">
+                        {String(slides.length).padStart(2, '0')}
+                    </span>
+                </div>
+
+                <button className="nav-btn next-btn" onClick={() => swiperRef.current?.slideNext()}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
         </section>
     );

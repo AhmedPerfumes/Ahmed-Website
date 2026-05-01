@@ -12,6 +12,7 @@ import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
+import { TbTruckDelivery } from "react-icons/tb";
 import { IoLocationOutline } from "react-icons/io5";
 import { useMenu } from "../../context/MenuContext";
 import { useUser } from "../../context/UserContext";
@@ -152,6 +153,7 @@ const headerStyles = `
 .header-bottom {
     border-top: 1px solid rgba(0,0,0,0.04);
     background: #fff;
+    transition: all 0.1s ease;
 }
 .header-bottom .navigation {
     padding: 0 !important;
@@ -192,68 +194,84 @@ const headerStyles = `
 .navigation__list > li.active > a::after {
     width: 60%;
 }
-/* ─── Floating Nav Bar (appears on scroll) ─── */
-.floating-nav-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+/* ─── Natively Sticky Header Bottom (appears on scroll) ─── */
+.header-bottom-wrapper {
+    position: sticky;
+    top: -1px;
     z-index: 1001;
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    box-shadow: 0 1px 30px rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    transform: translateY(-100%);
-    opacity: 0;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-    pointer-events: none;
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: background-color 0.1s ease, backdrop-filter 0.1s ease, box-shadow 0.1s ease;
+    will-change: background-color, backdrop-filter, box-shadow;
 }
-.floating-nav-bar.floating-nav--visible {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
+
+.header-bottom-wrapper.is-stuck {
+    background: #ffffff;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
-.floating-nav-inner {
+
+.header-bottom {
+    background: transparent;
+    border-top: none;
+}
+
+.header-bottom-wrapper .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 2rem;
     position: relative;
 }
-.floating-nav-logo {
-    position: absolute;
-    left: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
+
+.sticky-logo {
     display: flex;
     align-items: center;
-    transition: opacity 0.3s ease;
-}
-.floating-nav-logo:hover { opacity: 0.7; }
-.floating-nav-bar .navigation__list {
-    margin: 0;
-}
-.floating-nav-bar .navigation__list > li > a,
-.floating-nav-bar .navigation__list > li > .menu-link {
-    padding: 14px 18px;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-}
-.floating-nav-actions {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    pointer-events: none;
     position: absolute;
-    right: 2rem;
     top: 50%;
     transform: translateY(-50%);
+    inset-inline-start: 1.5rem;
+}
+
+.sticky-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    inset-inline-end: 1.5rem;
+    justify-content: flex-end;
 }
-.floating-nav-actions .header-tools__item {
+
+.header-bottom-wrapper.is-stuck .sticky-logo,
+.header-bottom-wrapper.is-stuck .sticky-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+
+.sticky-actions .header-tools__item {
     font-size: 18px;
+    color: #333;
+    transition: color 0.3s ease;
+    white-space: nowrap;
 }
+
+.sticky-actions .header-tools__item:hover {
+    color: #a67b30;
+}
+
 @media (max-width: 991px) {
-    .floating-nav-bar { display: none; }
+    .header-bottom-wrapper { display: none; }
 }
 `;
 
@@ -432,7 +450,7 @@ export default function Header14() {
             const currentScrollY = window.scrollY;
 
             // Track if we've scrolled past the full header
-            setIsScrolled(currentScrollY > 250);
+            setIsScrolled(currentScrollY > 100);
 
             if (currentScrollY <= 50) {
                 setScrollState("visible");
@@ -1060,7 +1078,15 @@ export default function Header14() {
 
                                 <Link
                                     className="header-tools__item"
+                                    href={`/${locale}/order-tracking`}
+                                    title={t("Track Order") || "Track Order"}
+                                >
+                                    <TbTruckDelivery size={24} strokeWidth={1.5} />
+                                </Link>
+                                <Link
+                                    className="header-tools__item"
                                     href={`/${locale}/store-locator`}
+                                    title={t("Store Locator") || "Store Locator"}
                                 >
                                     <IoLocationOutline size={20} />
                                 </Link>
@@ -1085,52 +1111,50 @@ export default function Header14() {
                         </div>
                     </div>
 
-                    {/* Bottom navigation */}
-                    <div className="header-bottom">
-                        <div className="container">
-                            <nav className="navigation w-100 d-flex align-items-center justify-content-center py-2">
-                                <ul className="navigation__list list-unstyled d-flex my-1">
-                                    <Nav
-                                        categoriesSubCategories={
-                                            categoriesSubCategories
-                                        }
-                                    />
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
                 </div>
             </header>
 
-            {/* ── Floating Nav Bar (slides in on scroll) ── */}
-            <div className={`floating-nav-bar d-none d-lg-block ${isScrolled ? "floating-nav--visible" : ""}`}>
-                <div className="floating-nav-inner">
-                    <Link href="/" className="floating-nav-logo">
-                        <Image
-                            src="/assets/images/about/AhmedLogo.png"
-                            width={45}
-                            height={45}
-                            alt="Ahmed Al Maghribi"
-                        />
-                    </Link>
-                    <nav className="navigation d-flex align-items-center justify-content-center">
-                        <ul className="navigation__list list-unstyled d-flex my-0">
-                            <Nav categoriesSubCategories={categoriesSubCategories} />
-                        </ul>
-                    </nav>
-                    <div className="floating-nav-actions">
-                        <a
-                            onClick={() => openCart()}
-                            className="header-tools__item header-tools__cart js-open-aside"
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <use href="#icon_cart" />
-                            </svg>
-                            <span className="cart-amount d-block position-absolute js-cart-items-count">
-                                <CartLength />
-                            </span>
-                        </a>
+            {/* Bottom navigation is natively sticky exactly where it usually rests. */}
+            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''}`}>
+                <div className="header-bottom">
+                    <div className="container">
+                        <div className="sticky-logo align-items-center">
+                            <Link href="/">
+                                <Image
+                                    src="/assets/images/about/AhmedLogo.png"
+                                    width={45}
+                                    height={45}
+                                    alt="Ahmed Al Maghribi"
+                                    style={{ objectFit: 'contain' }}
+                                />
+                            </Link>
+                        </div>
+
+                        <nav className="navigation d-flex align-items-center justify-content-center py-2 w-100">
+                            <ul className="navigation__list list-unstyled d-flex my-1">
+                                <Nav
+                                    categoriesSubCategories={categoriesSubCategories}
+                                />
+                            </ul>
+                        </nav>
+
+                        <div className="sticky-actions d-flex align-items-center gap-3">
+                            <Link href={`/${locale}/order-tracking`} className="header-tools__item d-none d-md-flex align-items-center justify-content-center" title={t("Track Order") || "Track Order"}>
+                                <TbTruckDelivery size={24} strokeWidth={1.5} />
+                            </Link>
+                            <a
+                                onClick={() => openCart()}
+                                className="header-tools__item header-tools__cart js-open-aside position-relative d-flex align-items-center justify-content-center"
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <use href="#icon_cart" />
+                                </svg>
+                                <span className="cart-amount d-block position-absolute js-cart-items-count" style={{ top: '-6px', right: '-8px' }}>
+                                    <CartLength />
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

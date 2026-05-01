@@ -43,20 +43,15 @@ const swiperOptions = {
 
 const FreeGiftFeature = ({ couponData }) => {
   const { cartProducts, totalPrice, addProductToCart, setCartProducts, promotionsContext, removeGiftFromCart } = useContextElement();
-  const [selectedGift, setSelectedGift] = useState(null);
   const [thresholds, setThresholds] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const { isLoggedIn } = useUser();
 
-  // Filter out "Collections" products
+  // Filter products that count towards the threshold
   const nonCollectionProducts = cartProducts.filter(
     (item) =>
-    // item.category_name?.toLowerCase() !== "collections" &&
-    // item.category_name?.toLowerCase() !== 'online exclusive' &&
-    item.discount === null &&
     !item.is_gift &&
-    // && item.coupon.length == 0
     !promotionsContext.some((promo) =>
       promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
     )
@@ -69,9 +64,9 @@ const FreeGiftFeature = ({ couponData }) => {
   // Total price of non-Collections products
   const nonCollectionTotalPrice = nonCollectionProducts.reduce(
     (acc, item) => {
-      // console.log('hasCleaned', couponData?.code, new Date(current_date_time), new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date));
+      const actualPrice = item.sale_price || item.price;
       if(couponData?.code && new Date(current_date_time) >= new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon[couponData?.code.toLowerCase()]?.end_date) && item.coupon[couponData?.code.toLowerCase().toLowerCase()].code == couponData?.code.toLowerCase()) {
-        return acc + (parseFloat(item.price - (item.price / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
+        return acc + (parseFloat(actualPrice - (actualPrice / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
       } else if (
       isLoggedIn &&
       couponData &&
@@ -80,17 +75,11 @@ const FreeGiftFeature = ({ couponData }) => {
         !couponData.end_date ||
         (new Date(current_date_time) >= new Date(couponData.start_date) &&
           new Date(current_date_time) <= new Date(couponData.end_date)))
-      // &&
-      // !elm.sale_price &&
-      // !elm.discount &&
-      // !promotionsContext.some((promo) =>
-      //   promo.buy_products.some((item) => item.product_id === elm.product_id)
-      // )
     ) {
-      let itemPrice = item.price - (item.price / 100) * couponData.value;
+      let itemPrice = actualPrice - (actualPrice / 100) * couponData.value;
         return acc + (parseFloat(itemPrice) * item.quantity);
     } else {
-        return acc + (parseFloat(item.price) * item.quantity);
+        return acc + (parseFloat(actualPrice) * item.quantity);
       }
     },
     0
@@ -133,74 +122,62 @@ const FreeGiftFeature = ({ couponData }) => {
     // console.log('Active threshold:', activeThreshold);
   }, [activeThreshold]);
 
-  // Handle gift selection with error handling
+  // Handle gift selection with toggle and swap behavior
   const handleGiftSelect = (product) => {
     try {
-      // console.log('999 Gift selected:', product.product_id, product.product_name);
-      // Remove all existing gifts from cart to ensure only one gift
-      cartProducts.forEach((item) => {
-        if (item.is_gift) {
-          removeGiftFromCart(null, item.campaign);
+      const giftLimit = activeThreshold?.gift_limit || 1;
+      const giftsInCart = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
+      const isAlreadySelected = giftsInCart.some((item) => item.product_id === product.product_id);
+
+      if (isAlreadySelected) {
+        // If already selected, remove only this specific product
+        removeGiftFromCart(product.product_id, product.campaign);
+      } else {
+        // If limit reached, remove the first (oldest) gift to make room for the new one (Swap)
+        if (giftsInCart.length >= giftLimit) {
+          const firstGift = giftsInCart[0];
+          removeGiftFromCart(firstGift.product_id, firstGift.campaign);
         }
-      });
-      addProductToCart({ ...product, quantity: 1, is_gift: true, campaign: product.campaign });
-      setSelectedGift(product.product_id);
-      // console.log('Cart updated, selectedGift set to:', product.product_id);
-      // console.log('Updated cartProducts:', cartProducts);
+        
+        // Add the new gift
+        addProductToCart({ ...product, quantity: 1, is_gift: true, campaign: product.campaign, type: 'foc' });
+      }
     } catch (error) {
       // console.error('Error in handleGiftSelect:', error);
     }
   };
 
-  // Synchronize selectedGift with cartProducts and auto-add single gift
+  // Synchronize with cartProducts
   useEffect(() => {
     if (!activeThreshold) {
-      // No active threshold, remove any gift
-      if (selectedGift) {
-        // console.log('999 No active threshold, removing gift and clearing selectedGift');
-        cartProducts.forEach((item) => {
-          if (item.is_gift) {
-            removeGiftFromCart(null, item.campaign);
-          }
-        });
-        setSelectedGift(null);
-      }
+      // No active threshold, remove all gifts
+      cartProducts.forEach((item) => {
+        if (item.is_gift && item.type === 'foc') {
+          removeGiftFromCart(item.product_id, item.campaign);
+        }
+      });
     } else {
-      // Determine the campaign for the threshold
-      const thresholdCampaign = activeThreshold.gifts[0]?.campaign || '';
-      // Check if there’s a gift in the cart for this threshold's campaign
-      const giftInCart = cartProducts.find((item) => { return item.type == 'foc' && item.is_gift});
-      // console.log('123456789', giftInCart);
-      if (activeThreshold.gifts.length === 1) {
-        // Single gift: auto-add if not already in cart
+      const giftLimit = activeThreshold.gift_limit || 1;
+      const giftsInCart = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
+
+      // Auto-add if there's only one product available and limit is 1
+      if (activeThreshold.gifts.length === 1 && giftLimit === 1) {
         const singleGift = activeThreshold.gifts[0];
-        if (!giftInCart || giftInCart.product_id !== singleGift.product_id) {
-          // console.log('Auto-adding single gift:', singleGift.product_id);
+        const isAlreadyInCart = giftsInCart.some(item => item.product_id === singleGift.product_id);
+        if (!isAlreadyInCart) {
           handleGiftSelect(singleGift);
-        } else if (giftInCart.product_id !== selectedGift) {
-          // Update selectedGift to match cart
-          setSelectedGift(giftInCart.product_id);
         }
-      } else if (giftInCart) {
-        // Multiple gifts: ensure the gift in cart is valid for the current threshold
-        const isValidGift = activeThreshold.gifts.some(
-          (gift) => gift.product_id === giftInCart.product_id
-        );
-        if (!isValidGift) {
-          // console.log('999 invalid gift for current threshold, removing gift');
-          removeGiftFromCart(null, giftInCart.campaign);
-          setSelectedGift(null);
-        } else if (giftInCart.product_id !== selectedGift) {
-          // Update selectedGift to match cart
-          setSelectedGift(giftInCart.product_id);
-        }
-      } else if (selectedGift) {
-        // No gift in cart but selectedGift exists, clear it
-        // console.log('No gift in cart, clearing selectedGift');
-        setSelectedGift(null);
       }
+
+      // Ensure all gifts in cart are valid for current threshold
+      giftsInCart.forEach((gift) => {
+        const isValid = activeThreshold.gifts.some(g => g.product_id === gift.product_id);
+        if (!isValid) {
+          removeGiftFromCart(gift.product_id, gift.campaign);
+        }
+      });
     }
-  }, [activeThreshold, cartProducts, selectedGift, removeGiftFromCart]);
+  }, [activeThreshold, cartProducts, removeGiftFromCart]);
 
   // Calculate next threshold message
   const getNextThresholdMessage = () => {
@@ -220,15 +197,18 @@ const FreeGiftFeature = ({ couponData }) => {
 
   if (loading) return <></>;
 
+  const giftsInCart = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
+  const giftLimit = activeThreshold?.gift_limit || 1;
+
   return (
     <div className="my-4 px-4">
       {activeThreshold ? (
         <div>
-          {activeThreshold.gifts.length === 1 ? (
-            // Render single gift card
+          {activeThreshold.gifts.length === 1 && giftLimit === 1 ? (
+            // Render single gift card header
             <h4 className="font-bold mb-4">
               <span className='t-subtitle' style={{ color:'#198754',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
-                {thresholds.length > 0 && activeThreshold.name} :- You've Earned a Free Gift!
+                {activeThreshold.name} :- You've Earned a Free Gift!
               </span>
             </h4>
           ) : (
@@ -236,7 +216,9 @@ const FreeGiftFeature = ({ couponData }) => {
             <>
               <h4 className="font-bold mb-4">
                 <span className='t-subtitle' style={{ color:'#198754',fontSize: '18px', lineHeight: '1.5rem',textAlign: 'center' }}>
-                  {thresholds.length > 0 && activeThreshold.name} :- You've Earned a Free Gift – Choose 1 Perfume From Below!
+                  {activeThreshold.name} :- You've Earned Free Gifts – 
+                  Choose {giftLimit} {giftLimit > 1 ? 'Perfumes' : 'Perfume'} From Below! 
+                  ({giftsInCart.length}/{giftLimit} Selected)
                 </span>
               </h4>
               <Swiper
@@ -244,40 +226,39 @@ const FreeGiftFeature = ({ couponData }) => {
                 className="swiper-container js-swiper-slider"
                 data-settings=""
               >
-                {activeThreshold.gifts.map((product, i) => (
-                  <SwiperSlide key={i} className="swiper-slide product-card">
-                    <div className="pc__img-wrapper">
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${product.image}`}
-                        alt={he.decode(product.product_name)}
-                        width="330"
-                        height="400"
-                        className="pc__img"
-                        loading="lazy"
-                      />
-                      <button
-                        onClick={() => {
-                          // console.log('Button clicked for:', product.product_id);
-                          handleGiftSelect(product);
-                        }}
-                        className={`pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside ${
-                          selectedGift === product.product_id
-                            ? 'bg-blue-500'
-                            : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                        }`}
-                        disabled={selectedGift === product.product_id}
-                        aria-label={`Select ${he.decode(product.product_name)} as free gift`}
-                        key={product.product_id}
-                      >
-                        {selectedGift === product.product_id ? 'Already Selected' : 'Select Gift'}
-                      </button>
-                    </div>
-                    <div className="pc__info position-relative">
-                      <h3 className="pc__title">{he.decode(product.product_name)}</h3>
-                      <p className="pc__category">Free!</p>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                {activeThreshold.gifts.map((product, i) => {
+                  const isSelected = giftsInCart.some(item => item.product_id === product.product_id);
+
+                  return (
+                    <SwiperSlide key={i} className="swiper-slide product-card">
+                      <div className="pc__img-wrapper">
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_API_URL}storage/${product.image}`}
+                          alt={he.decode(product.product_name)}
+                          width="330"
+                          height="400"
+                          className="pc__img"
+                          loading="lazy"
+                        />
+                        <button
+                          onClick={() => handleGiftSelect(product)}
+                          className={`pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside ${
+                            isSelected
+                              ? 'bg-success text-white'
+                              : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                          }`}
+                          aria-label={`Select ${he.decode(product.product_name)} as free gift`}
+                        >
+                          {isSelected ? 'Remove Gift' : 'Select Gift'}
+                        </button>
+                      </div>
+                      <div className="pc__info position-relative">
+                        <h3 className="pc__title">{he.decode(product.product_name)}</h3>
+                        <p className="pc__category">Free!</p>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
               <div className="products-carousel__prev ssp11 position-absolute">
                 <svg

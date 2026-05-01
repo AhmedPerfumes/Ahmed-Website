@@ -715,219 +715,184 @@ export default function Checkout() {
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">
-               <div className="billing-info__wrapper text-uppercase">
-                 <div className="checkout-section-card">
-                   <h4>
-                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                     Billing Details
-                   </h4>
-                   <div className="field-group-row">
-                     <div className="flex-grow-1">
-                       <div className="form-floating my-3">
-                         <input type="text" className="form-control" id="checkout_first_name" placeholder="First Name" readOnly={isLoggedIn} name="billingAddress.first_name" value={formData.billingAddress.first_name} onChange={handleChange} required />
-                         <label htmlFor="checkout_first_name">First Name</label>
-                         {fieldErrors.first_name && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.first_name} </div> )}
-                       </div>
-                     </div>
-                     <div className="flex-grow-1">
-                       <div className="form-floating my-3">
-                         <input type="text" className="form-control" id="checkout_last_name" placeholder="Last Name" readOnly={isLoggedIn} name="billingAddress.last_name" value={formData.billingAddress.last_name} onChange={handleChange} />
-                         <label htmlFor="checkout_last_name">Last Name</label>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-
-                 <div className="checkout-section-card">
-                   <h4>
-                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                     Contact & Address
-                   </h4>
-                   <div className="row">
-                     <div className="col-md-12">
-                       <div className="form-floating my-3">
-                         <input type="email" className="form-control" id="billingAddress.email" placeholder="Your Mail *" name="billingAddress.email" readOnly={isLoggedIn} value={formData.billingAddress.email} onChange={handleChange} required />
-                         <label htmlFor="checkout_email">Email Address *</label>
-                       </div>
-                     </div>
-                     <div className="col-md-12">
-                       <div className="form-floating my-3">
-                         <input type="tel" className="form-control" id="checkout_billing_mobile" placeholder="Eg. 0500000000 *" name="billingAddress.mobile" readOnly={isLoggedIn} value={formData.billingAddress.mobile} onChange={handleChange} required />
-                         <label htmlFor="checkout_phone"> Mobile Number (Eg. 0500000000)* </label>
-                       </div>
-                     </div>
-
-                     {!isLoggedIn && (
-                       <div className="col-md-12">
-                         <div className="secure-otp-wrapper">
-                           <div className="d-flex align-items-center gap-2 mb-2">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a67b30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                             <span style={{ fontSize: '13px', fontWeight: '600', color: '#a67b30' }}>Secure Verification</span>
-                           </div>
-                           {OTPError ? ( <div style={{ color: "red", fontSize: '13px' }}>{OTPError}</div> ) : ( <div style={{ color: "green", fontSize: '13px' }}>{OTPSuccess}</div> )}
-                           {isOTPButton ? ( <button className="btn btn-primary w-100 text-uppercase" style={{ borderRadius: '6px' }} type="button" disabled={isSendOTPLoading} onClick={sendOTP} > {isSendOTPLoading ? "Loading..." : "Send OTP"} </button> ) : ( 
-                             <>
-                             {!isOTPVerified && ( 
-                               <>
-                                 <div className="form-floating my-3">
-                                   <input type="number" className="form-control" id="billing_otp" placeholder="Eg. 1234 *" name="otp" value={formData.otp} onChange={handleChange} />
-                                   <label htmlFor="billing_otp"> OTP (Eg. 1234)* </label>
-                                 </div>
-                                 <button className="btn btn-primary w-100 text-uppercase" style={{ borderRadius: '6px' }} type="button" disabled={isSendOTPLoading} onClick={verifyOTP} >
-                                   {isSendOTPLoading ? "Loading..." : "Verify OTP"} 
-                                 </button>
-                               </>
-                             )}
-                             </>
-                           )}
-                         </div>
-                       </div>
-                     )}
-
-                   <div className="col-md-12">
-                     <div className="row mt-3">
-                         <div className="col-md-12">
-                           <div className="search-field my-3">
-                             <div className={`form-label-fixed hover-container ${ idDDActive ? "js-content_visible" : "" }`}>
-                               <label htmlFor="country" className="form-label"> Country / Region* </label>
-                               <div className="js-hover__open">
-                                 <input type="text" className="form-control form-control-lg search-field__actor" id="country" name="billingAddress.country" value="United Arab Emirates" readOnly={isLoggedIn} placeholder="United Arab Emirates"/>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
-                         <div className="col-md-12">
-                           <div className="form-floating mt-3 mb-3">
-                             <input type="text" className="form-control" id="checkout_street_address" placeholder="Area / Mantaqa *" readOnly={isLoggedIn} name="billingAddress.area" value={formData.billingAddress.area} onChange={handleChange} required />
-                             <label htmlFor="checkout_company_name"> Area / Mantaqa * </label>
-                             {fieldErrors.area && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.area} </div> )}
-                           </div>
-                           <div className="form-floating mt-3 mb-3">
-                             <input type="text" className="form-control" id="checkout_street_address_2" placeholder="Building / Villa / Apartment" name="billingAddress.building" readOnly={isLoggedIn} value={formData.billingAddress.building} onChange={handleChange} required />
-                             <label htmlFor="checkout_company_name"> Building / Villa / Apartment </label>
-                             {fieldErrors.building && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.building} </div> )}
-                           </div>
-                         </div>
-                         <div className="col-md-12">
-                           <div className="search-field my-3">
-                             <div className={`form-label-fixed hover-container ${ idDDActive ? "js-content_visible" : "" }`} >
-                               <label htmlFor="search-dropdown" className="form-label" > Emirates* </label>
-                               <div className="js-hover__open">
-                                 <input type="text" className="form-control form-control-lg search-field__actor search-field__arrow-down" id="search-dropdown" name="billingAddress.emirates" value={formData.billingAddress.emirates} readOnly={isLoggedIn} placeholder="Select Emirate..." onClick={() => setIdDDActive((pre) => !pre)} required />
-                               </div>
-                               <div className="filters-container js-hidden-content mt-2">
-                                 <div className="search-field__input-wrapper">
-                                   <input type="text" className="search-field__input form-control form-control-sm bg-lighter border-lighter" placeholder="Search" onChange={(e) => {setSearchQuery(e.target.value);}}/>
-                                 </div>
-                                 <ul className="search-suggestion list-unstyled">
-                                   {countries.filter((elm) => elm.toLowerCase().includes(searchQuery.toLowerCase())).map((elm, i) => (
-                                     <li id="billingAddress.emirates" onClick={(e) => { handleEmiratesChange(e, elm); setIdDDActive(false); }} key={i} className="search-suggestion__item js-search-select"> {elm} </li>
-                                   ))}
-                                 </ul>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
-                         {isLoggedIn && ( <Link className="btn-link btn-link_lg text-center fw-bold text-danger p-2" href={`/${locale}/account_edit_address`} target="_blank" > - Click to Edit Address - </Link> )}
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-
-                 <div className="checkout-section-card">
-                    <div className="col-md-12">
-                      {!isLoggedIn && (
-                        <div className="form-check mt-3">
-                          <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="create_account" onClick={(prev) => setCreateAccount(!createAccount)} name="create_account" />
-                          <label className="form-check-label" htmlFor="create_account" > CREATE AN ACCOUNT? </label>
+              <div className="billing-info__wrapper text-uppercase">
+                <h4>Billing Details</h4>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-floating my-3">
+                      <input type="text" className="form-control" id="checkout_first_name" placeholder="First Name" readOnly={isLoggedIn} name="billingAddress.first_name" value={formData.billingAddress.first_name} onChange={handleChange} required />
+                      <label htmlFor="checkout_first_name">First Name</label>
+                      {fieldErrors.first_name && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.first_name} </div> )}
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-floating my-3">
+                      <input type="text" className="form-control" id="checkout_last_name" placeholder="Last Name" readOnly={isLoggedIn} name="billingAddress.last_name" value={formData.billingAddress.last_name} onChange={handleChange} />
+                      <label htmlFor="checkout_last_name">Last Name</label>
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="search-field my-3">
+                      <div className={`form-label-fixed hover-container ${ idDDActive ? "js-content_visible" : "" }`}>
+                        <label htmlFor="country" className="form-label"> Country / Region* </label>
+                        <div className="js-hover__open">
+                          <input type="text" className="form-control form-control-lg search-field__actor" id="country" name="billingAddress.country" value="United Arab Emirates" readOnly={isLoggedIn} placeholder="United Arab Emirates"/>
                         </div>
-                      )}
-                      <div className="form-check mb-3">
-                        <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="ship_different_address" onClick={handleCheckboxChange} name="shipping" />
-                        <label className="form-check-label" htmlFor="ship_different_address" > SHIP TO A DIFFERENT ADDRESS? </label>
                       </div>
                     </div>
-                 </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="form-floating mt-3 mb-3">
+                      <input type="text" className="form-control" id="checkout_street_address" placeholder="Area / Mantaqa *" readOnly={isLoggedIn} name="billingAddress.area" value={formData.billingAddress.area} onChange={handleChange} required />
+                      <label htmlFor="checkout_company_name"> Area / Mantaqa * </label>
+                      {fieldErrors.area && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.area} </div> )}
+                    </div>
+                    <div className="form-floating mt-3 mb-3">
+                      <input type="text" className="form-control" id="checkout_street_address_2" placeholder="Building / Villa / Apartment" name="billingAddress.building" readOnly={isLoggedIn} value={formData.billingAddress.building} onChange={handleChange} required />
+                      <label htmlFor="checkout_company_name"> Building / Villa / Apartment </label>
+                      {fieldErrors.building && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.building} </div> )}
+                    </div>
+                  </div>
 
+                  <div className="col-md-12">
+                    <div className="search-field my-3">
+                      <div className={`form-label-fixed hover-container ${ idDDActive ? "js-content_visible" : "" }`} >
+                        <label htmlFor="search-dropdown" className="form-label" > Emirates* </label>
+                        <div className="js-hover__open">
+                          <input type="text" className="form-control form-control-lg search-field__actor search-field__arrow-down" id="search-dropdown" name="billingAddress.emirates" value={formData.billingAddress.emirates} readOnly={isLoggedIn} placeholder="Select Emirate..." onClick={() => setIdDDActive((pre) => !pre)} required />
+                        </div>
+                        <div className="filters-container js-hidden-content mt-2">
+                          <div className="search-field__input-wrapper">
+                            <input type="text" className="search-field__input form-control form-control-sm bg-lighter border-lighter" placeholder="Search" onChange={(e) => {setSearchQuery(e.target.value);}}/>
+                          </div>
+                          <ul className="search-suggestion list-unstyled">
+                            {countries.filter((elm) => elm.toLowerCase().includes(searchQuery.toLowerCase())).map((elm, i) => (
+                              <li id="billingAddress.emirates" onClick={(e) => { handleEmiratesChange(e, elm); setIdDDActive(false); }} key={i} className="search-suggestion__item js-search-select"> {elm} </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {isLoggedIn && ( <Link className="btn-link btn-link_lg text-center fw-bold text-danger p-2" href={`/${locale}/account_edit_address`} target="_blank" > - Click to Edit Address - </Link> )}
+                  <div className="col-md-12">
+                    <div className="form-floating my-3">
+                      <input type="email" className="form-control" id="billingAddress.email" placeholder="Your Mail *" name="billingAddress.email" readOnly={isLoggedIn} value={formData.billingAddress.email} onChange={handleChange} required />
+                      <label htmlFor="checkout_email">Email Address *</label>
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="form-floating my-3">
+                      <input type="tel" className="form-control" id="checkout_billing_mobile" placeholder="Eg. 0500000000 *" name="billingAddress.mobile" readOnly={isLoggedIn} value={formData.billingAddress.mobile} onChange={handleChange} required />
+                      <label htmlFor="checkout_phone"> Mobile Number (Eg. 0500000000)* </label>
+                    </div>
+                  </div>
+
+                  {!isLoggedIn && (
+                    <div className="col-md-12">
+                      {OTPError ? ( <div style={{ color: "red" }}>{OTPError}</div> ) : ( <div style={{ color: "green" }}>{OTPSuccess}</div> )}
+                      {isOTPButton ? ( <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={sendOTP} > {isSendOTPLoading ? "Loading..." : "Send OTP"} </button> ) : ( 
+                        <>
+                        {!isOTPVerified && ( 
+                          <>
+                            <div className="form-floating my-3">
+                              <input type="number" className="form-control" id="billing_otp" placeholder="Eg. 1234 *" name="otp" value={formData.otp} onChange={handleChange} />
+                              <label htmlFor="billing_otp"> OTP (Eg. 1234)* </label>
+                            </div>
+                            <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={verifyOTP} >
+                              {isSendOTPLoading ? "Loading..." : "Verify OTP"} 
+                            </button>
+                          </>
+                        )}
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="col-md-12">
+                    {!isLoggedIn && (
+                      <div className="form-check mt-3">
+                        <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="create_account" onClick={(prev) => setCreateAccount(!createAccount)} name="create_account" />
+                        <label className="form-check-label" htmlFor="create_account" > CREATE AN ACCOUNT? </label>
+                      </div>
+                    )}
+                    <div className="form-check mb-3">
+                      <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="ship_different_address" onClick={handleCheckboxChange} name="shipping" />
+                      <label className="form-check-label" htmlFor="ship_different_address" > SHIP TO A DIFFERENT ADDRESS? </label>
+                    </div>
+                  </div>
                   {formData.shippingAdd && (
-                    <div className="checkout-section-card mt-3">
-                      <h4>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        Shipping Details
-                      </h4>
-                      <div id="shippingAddressAccordion" >
-                        <div className="accordion-item border-0">
-                          <div id="collapseShipping" className="accordion-collapse collapse show" >
-                            <div>
-                              <div className="field-group-row">
-                                <div className="flex-grow-1">
-                                  <div className="form-floating my-3">
-                                    <input type="text" className="form-control" id="shipping_first_name" placeholder="First Name" name="shippingAddress.first_name" value={ formData.shippingAddress.first_name } onChange={handleChange} required />
-                                    <label htmlFor="shipping_first_name"> First Name </label>
-                                  </div>
-                                </div>
-                                <div className="flex-grow-1">
-                                  <div className="form-floating my-3">
-                                    <input type="text" className="form-control" id="shipping_last_name" placeholder="Last Name" name="shippingAddress.last_name" value={formData.shippingAddress.last_name} onChange={handleChange} required />
-                                    <label htmlFor="shipping_last_name"> Last Name </label>
-                                  </div>
+                    <div className="accordion mt-3" id="shippingAddressAccordion" >
+                      <div className="accordion-item">
+                        <h4 className="accordion-header" id="headingShipping" > Shipping Details </h4>
+                        <div id="collapseShipping" className="accordion-collapse collapse show" aria-labelledby="headingShipping" data-bs-parent="#shippingAddressAccordion" >
+                          <div>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="form-floating my-3">
+                                  <input type="text" className="form-control" id="shipping_first_name" placeholder="First Name" name="shippingAddress.first_name" value={ formData.shippingAddress.first_name } onChange={handleChange} required />
+                                  <label htmlFor="shipping_first_name"> First Name </label>
                                 </div>
                               </div>
-                              <div className="row">
-                                <div className="col-md-12">
-                                  <div className="form-floating my-3">
-                                    <input type="text" className="form-control" id="shipping_area" placeholder="Area / Mantaqa" name="shippingAddress.area" value={formData.shippingAddress.area} onChange={handleChange} required />
-                                    <label htmlFor="shipping_area"> Area / Mantaqa * </label>
-                                  </div>
+                              <div className="col-md-6">
+                                <div className="form-floating my-3">
+                                  <input type="text" className="form-control" id="shipping_last_name" placeholder="Last Name" name="shippingAddress.last_name" value={formData.shippingAddress.last_name} onChange={handleChange} required />
+                                  <label htmlFor="shipping_last_name"> Last Name </label>
                                 </div>
-                                <div className="col-md-12">
-                                  <div className="form-floating my-3">
-                                    <input type="text" className="form-control" id="shipping_building" placeholder="Building / Villa / Apartment" name="shippingAddress.building" value={ formData.shippingAddress.building } onChange={handleChange} required />
-                                    <label htmlFor="shipping_building"> Building / Villa / Apartment </label>
-                                  </div>
-                                </div>
-                                <div className="col-md-12">
-                                  <div className="search-field my-3">
-                                    <label htmlFor="shipping_emirates" className="form-label" style={{ fontSize: '12px', fontWeight: '600' }}> Emirates* </label>
-                                    <select id="shipping_emirates" className="form-control" name="shippingAddress.emirates" value={ formData.shippingAddress.emirates } onChange={handleChange} required >
-                                      <option value=""> Select Emirate... </option>
-                                      {countries.map((em, i) => ( <option key={i} value={em}> {em} </option> ))}
-                                    </select>
-                                  </div>
-                                </div>
-                                <div className="col-md-12">
-                                  <div className="form-floating my-3">
-                                    <input type="email" className="form-control" id="shipping_email" placeholder="Your Mail" name="shippingAddress.email" value={formData.shippingAddress.email} onChange={handleChange} required />
-                                    <label htmlFor="shipping_email"> Email Address * </label>
-                                  </div>
-                                </div>
-                                <div className="col-md-12">
-                                  <div className="form-floating my-3">
-                                    <input type="tel" className="form-control" id="shipping_mobile" placeholder="Eg. 0500000000" name="shippingAddress.mobile" value={formData.shippingAddress.mobile} onChange={handleChange} required />
-                                    <label htmlFor="shipping_mobile"> Mobile Number (Eg. 0500000000)* </label>
-                                  </div>
-                                </div>
-                                {isLoggedIn && (
-                                  <div className="col-md-12">
-                                    {OTPError ? ( <div style={{ color: "red" }}> {OTPError} </div>) : ( <div style={{ color: "green" }}> {OTPSuccess} </div> )}
-                                    {isOTPButton ? ( <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={sendOTP} > {isSendOTPLoading ? "Loading..." : "Send OTP"} </button> ) : (
-                                      <>
-                                        {!isOTPVerified && (
-                                          <>
-                                            <div className="form-floating my-3">
-                                              <input type="number" className="form-control" id="shipping_otp" placeholder="Eg. 1234"  name="otp" value={formData.otp} onChange={handleChange} />
-                                              <label htmlFor="shipping_otp"> OTP (Eg. 1234)* </label>
-                                            </div>
-                                            <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={verifyOTP} >
-                                              {isSendOTPLoading ? "Loading..." : "Verify OTP"}
-                                            </button>
-                                          </>
-                                        )}
-                                      </>
-                                    )}
-                                  </div>
-                                )}
                               </div>
+                              <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                  <input type="text" className="form-control" id="shipping_area" placeholder="Area / Mantaqa" name="shippingAddress.area" value={formData.shippingAddress.area} onChange={handleChange} required />
+                                  <label htmlFor="shipping_area"> Area / Mantaqa * </label>
+                                </div>
+                              </div>
+                              <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                  <input type="text" className="form-control" id="shipping_building" placeholder="Building / Villa / Apartment" name="shippingAddress.building" value={ formData.shippingAddress.building } onChange={handleChange} required />
+                                  <label htmlFor="shipping_building"> Building / Villa / Apartment </label>
+                                </div>
+                              </div>
+                              <div className="col-md-12">
+                                <div className="search-field my-3">
+                                  <label htmlFor="shipping_emirates" className="form-label" > Emirates* </label>
+                                  <select id="shipping_emirates" className="form-control" name="shippingAddress.emirates" value={ formData.shippingAddress.emirates } onChange={handleChange} required >
+                                    <option value=""> Select Emirate... </option>
+                                    {countries.map((em, i) => ( <option key={i} value={em}> {em} </option> ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                  <input type="email" className="form-control" id="shipping_email" placeholder="Your Mail" name="shippingAddress.email" value={formData.shippingAddress.email} onChange={handleChange} required />
+                                  <label htmlFor="shipping_email"> Email Address * </label>
+                                </div>
+                              </div>
+                              <div className="col-md-12">
+                                <div className="form-floating my-3">
+                                  <input type="tel" className="form-control" id="shipping_mobile" placeholder="Eg. 0500000000" name="shippingAddress.mobile" value={formData.shippingAddress.mobile} onChange={handleChange} required />
+                                  <label htmlFor="shipping_mobile"> Mobile Number (Eg. 0500000000)* </label>
+                                </div>
+                              </div>
+                              {isLoggedIn && (
+                                <div className="col-md-12">
+                                  {OTPError ? ( <div style={{ color: "red" }}> {OTPError} </div>) : ( <div style={{ color: "green" }}> {OTPSuccess} </div> )}
+                                  {isOTPButton ? ( <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={sendOTP} > {isSendOTPLoading ? "Loading..." : "Send OTP"} </button> ) : (
+                                    <>
+                                      {!isOTPVerified && (
+                                        <>
+                                          <div className="form-floating my-3">
+                                            <input type="number" className="form-control" id="shipping_otp" placeholder="Eg. 1234"  name="otp" value={formData.otp} onChange={handleChange} />
+                                            <label htmlFor="shipping_otp"> OTP (Eg. 1234)* </label>
+                                          </div>
+                                          <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={verifyOTP} >
+                                            {isSendOTPLoading ? "Loading..." : "Verify OTP"}
+                                          </button>
+                                        </>
+                                      )}
+                                    </>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1066,49 +1031,6 @@ export default function Checkout() {
                     .coupon-action-btn:hover { background-color: #000; border-color: #000; }
                     .coupon-action-btn.remove { background-color: transparent; color: #dc3545; border: 1px solid #dc3545; }
                     .coupon-action-btn.remove:hover { background-color: #dc3545; color: #fff; }
-  `}</style>
-                  
-                  <style jsx>{`
-                    .checkout-section-card {
-                      background: #fff;
-                      border: 1px solid #e5e5e5;
-                      border-radius: 12px;
-                      padding: 24px;
-                      margin-bottom: 24px;
-                      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-                    }
-                    .checkout-section-card h4 {
-                      font-size: 16px;
-                      font-weight: 700;
-                      letter-spacing: 0.05em;
-                      margin-bottom: 20px;
-                      display: flex;
-                      align-items: center;
-                      gap: 10px;
-                      color: #111;
-                    }
-                    .secure-otp-wrapper {
-                      background: #fbfbfb;
-                      border: 1px solid #eee;
-                      border-left: 4px solid #a67b30;
-                      border-radius: 8px;
-                      padding: 20px;
-                      margin-top: 15px;
-                    }
-                    .field-group-row {
-                      display: flex;
-                      gap: 15px;
-                    }
-                    @media (max-width: 576px) {
-                      .field-group-row {
-                        flex-direction: column;
-                        gap: 0;
-                      }
-                      .checkout-section-card {
-                        padding: 16px;
-                        border-radius: 8px;
-                      }
-                    }
                   `}</style>
 
                   <div className="checkout__payment-methods">
