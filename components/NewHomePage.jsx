@@ -12,17 +12,17 @@ import HorizontalScroll from "./HorizontalScroll";
 
 const NewHomePage = () => {
     return (
-        <React.Fragment>
+        <div style={{ overflowX: "hidden", position: "relative" }}>
             <NewHero />
             <TabSlider />
             <ProductShowcase />
             <Section2 />
             <NewProductSlider />
             <NewGiftSection />
-            {/* <HorizontalScroll/> */}
+            <HorizontalScroll />
             <GiftSetBanner />
             <DakhoonSection />
-        </React.Fragment>
+        </div>
     );
 };
 
