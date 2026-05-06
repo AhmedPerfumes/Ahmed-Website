@@ -34,11 +34,18 @@ const styles = `
     justify-content: center;
     position: relative;
     overflow: hidden;
+    padding-top: 60px; /* Accounts for sticky header */
   }
 
   /* Last panel fills remaining viewport — no trailing gap */
   .hs-panel:last-child {
     width: 100%;
+  }
+  
+  @media (min-width: 992px) {
+    .hs-panel {
+      padding-top: 100px;
+    }
   }
 
   /* ═══════════════════════════════════════
@@ -73,7 +80,7 @@ const styles = `
 
   .hs-cat-header__title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
     font-weight: 400;
     color: #1D1B19;
     letter-spacing: 3px;
@@ -264,7 +271,7 @@ const styles = `
 
   .hs-vid-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
     color: #1D1B19;
     font-weight: 400;
     letter-spacing: 3px;

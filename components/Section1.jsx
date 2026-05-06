@@ -233,7 +233,7 @@ const DakhoonSection = () => {
 
                 .dk-heading {
                     font-family: 'Playfair Display', serif;
-                    font-size: clamp(2.2rem, 5vw, 3.8rem);
+                    font-size: clamp(2rem, 4vw, 3.4rem);
                     font-weight: 400;
                     color: #f5f0e8;
                     line-height: 1.1;
@@ -592,7 +592,7 @@ const DakhoonSection = () => {
                                 <PiMosqueLight size={22} color="#b9a16b" />
                             </div>
                             <div className="dk-feat__label">
-                                {t("Arabic")}<br />{t("Heritage")}
+                                Arabic<br />Heritage
                             </div>
                         </div>
                     </motion.div>

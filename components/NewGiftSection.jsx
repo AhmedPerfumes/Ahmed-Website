@@ -1,3 +1,4 @@
+
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -120,7 +121,7 @@ const NewGiftSection = () => {
     const t = useTranslations();
 
     return (
-        <>
+        <div className="gs-wrapper" style={{ position: "relative" }}>
             {/* ═══════════════════════════════════════
                 SECTION 1: GIFT CARDS GRID
                 ═══════════════════════════════════════ */}
@@ -134,6 +135,9 @@ const NewGiftSection = () => {
                         padding: 80px 0 60px;
                         overflow: hidden;
                         font-family: 'Inter', sans-serif;
+                        position: sticky;
+                        top: 80px;
+                        z-index: 1;
                     }
 
                     @media (max-width: 768px) {
@@ -144,7 +148,7 @@ const NewGiftSection = () => {
                     .gs-header {
                         text-align: center;
                         max-width: 700px;
-                        margin: 0 auto 50px;
+                        margin: 0 auto 30px;
                         padding: 0 20px;
                     }
 
@@ -160,7 +164,7 @@ const NewGiftSection = () => {
 
                     .gs-header__title {
                         font-family: 'Playfair Display', serif;
-                        font-size: clamp(2rem, 5vw, 3.8rem);
+                        font-size: clamp(1.8rem, 3.5vw, 3.2rem);
                         font-weight: 400;
                         color: #1D1B19;
                         letter-spacing: 3px;
@@ -340,6 +344,8 @@ const NewGiftSection = () => {
                         background: #edeae4;
                         padding: 0 0 70px;
                         font-family: 'Inter', sans-serif;
+                        position: relative;
+                        z-index: 2;
                     }
 
                     @media (max-width: 768px) {
@@ -792,7 +798,7 @@ const NewGiftSection = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 

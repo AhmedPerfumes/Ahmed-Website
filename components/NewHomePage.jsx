@@ -1,5 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import NewHero from "./NewHero";
 import TabSlider from "./TabSlider";
 import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
@@ -10,9 +14,41 @@ import DakhoonSection from "./Section1";
 import Section2 from "./Section2";
 import HorizontalScroll from "./HorizontalScroll";
 
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
 const NewHomePage = () => {
+    useEffect(() => {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        const updateLenis = (time) => {
+            lenis.raf(time * 1000);
+        };
+
+        gsap.ticker.add(updateLenis);
+        gsap.ticker.lagSmoothing(0);
+
+        return () => {
+            lenis.destroy();
+            gsap.ticker.remove(updateLenis);
+        };
+    }, []);
+
     return (
-        <div style={{ overflowX: "hidden", position: "relative" }}>
+        <div style={{ overflowX: "clip", position: "relative" }}>
             <NewHero />
             <TabSlider />
             <ProductShowcase />

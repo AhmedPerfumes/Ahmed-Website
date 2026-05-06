@@ -194,6 +194,25 @@ const headerStyles = `
 .navigation__list > li.active > a::after {
     width: 60%;
 }
+
+/* Laptop Responsive fixes to avoid overlap with sticky logo */
+@media (max-width: 1550px) {
+    .navigation__list > li > a,
+    .navigation__list > li > .menu-link {
+        padding: 12px 8px;
+        font-size: 11px;
+        letter-spacing: 0.02em;
+    }
+}
+@media (max-width: 1200px) {
+    .navigation__list > li > a,
+    .navigation__list > li > .menu-link {
+        padding: 12px 4px;
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+}
+
 /* ─── Natively Sticky Header Bottom (appears on scroll) ─── */
 .header-bottom-wrapper {
     position: sticky;
