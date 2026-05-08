@@ -793,3 +793,59 @@ footer {
     padding-left: 0;
   }
 }
+
+/* ==========================================================================
+   ARABIC TYPOGRAPHY ENHANCEMENTS (RTL)
+   ========================================================================== */
+[dir="rtl"] {
+  /* Use a slightly larger base font size for Arabic readability */
+  font-size: 17px; 
+
+  /* Headings: Arabic fonts often need more line-height and no letter-spacing */
+  h1, h2, h3, h4, h5, h6, 
+  .qb-title, .hs-vid-title, .hs-cat-header__title,
+  .mainnn-wrapper h1, .cat-title {
+    line-height: 1.3 !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Paragraphs and Descriptions */
+  p, .qb-description, .hs-vid-sub, .para-sec, .content {
+    line-height: 1.8 !important;
+    font-size: 1.05rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* Small Labels and Taglines */
+  .qb-tagline, .hs-vid-eyebrow, .hs-cat-header__tagline, .sub-title {
+    letter-spacing: 0 !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+  }
+
+  /* Navigation and Buttons */
+  .qb-cta, .unique-btn-modern, .navigation__link {
+    letter-spacing: 0 !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Specific Component Overrides */
+  .qb-title {
+    font-size: clamp(2.4rem, 5vw, 3.5rem) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  [dir="rtl"] {
+    font-size: 15px;
+
+    .qb-title {
+      font-size: 1.8rem !important;
+    }
+    
+    p {
+      font-size: 0.95rem !important;
+    }
+  }
+}

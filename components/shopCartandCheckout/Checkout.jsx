@@ -1033,7 +1033,7 @@ export default function Checkout() {
                     .coupon-loading, .coupon-empty { text-align: center; padding: 30px; color: #777; font-size: 13px; }
                     .coupon-action-btn { width: 100%; padding: 12px; background-color: #222; color: #fff; border: 1px solid #222; border-radius: 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: 8px; }
                     .coupon-action-btn:hover { background-color: #000; border-color: #000; }
-                    .coupon-action-btn.remove { background-color: transparent; color: #dc3545; border: 1px solid #dc3545; 
+                    .coupon-action-btn.remove { background-color: transparent; color: #dc3545; border: 1px solid #dc3545; }
                     .coupon-action-btn.remove:hover { background-color: #dc3545; color: #fff; }
                   `}</style>
 
