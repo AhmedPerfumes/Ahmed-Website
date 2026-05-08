@@ -13,6 +13,7 @@ import GiftSetBanner from "./GiftSetBanner";
 import DakhoonSection from "./Section1";
 import Section2 from "./Section2";
 import HorizontalScroll from "./HorizontalScroll";
+import QualityBoutiqueSection from "./QualityBoutiqueSection";
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
@@ -58,6 +59,7 @@ const NewHomePage = () => {
             <HorizontalScroll />
             <GiftSetBanner />
             <DakhoonSection />
+            <QualityBoutiqueSection/>
         </div>
     );
 };

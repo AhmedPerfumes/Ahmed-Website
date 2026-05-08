@@ -7,15 +7,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { PiGiftLight, PiFlowerLotusLight, PiStarLight, PiHeartLight } from "react-icons/pi";
 
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 
+
+
 const GIFT_SETS = [
     {
         id: 1,
-        title: "ANTEE GIFT SET",
-        desc: "A perfect introduction to timeless elegance.",
+        title: "Antee Gift Set",
+        desc: "A perfect introduction to timeless elegance",
         thumbnail: "/assets/videos/giftsets/thumbnails/antee.jpg",
         video: "/assets/videos/giftsets/antee.mp4",
         link: "/shop/gift-sets/antee-05-gift-set",
@@ -23,8 +26,8 @@ const GIFT_SETS = [
     },
     {
         id: 2,
-        title: "THE DAKHOON COLLECTION",
-        desc: "A rich tribute to heritage and sophistication.",
+        title: "The Dukhoon Collection",
+        desc: "A rich tribute to heritage and sophistication",
         thumbnail: "/assets/videos/giftsets/thumbnails/dukhoon-collection.jpg",
         video: "/assets/videos/giftsets/dakhoon-collection.mp4",
         link: "/shop/gift-sets/the-dakhoon-collection",
@@ -32,8 +35,8 @@ const GIFT_SETS = [
     },
     {
         id: 3,
-        title: "IHDAA KHAAS GIFT SET",
-        desc: "Where opulence meets modern refinement.",
+        title: "Ihdaa Khaas Gift Set",
+        desc: "Where opulence meets modern refinement",
         thumbnail: "/assets/videos/giftsets/thumbnails/ihda-khas.jpg",
         video: "/assets/videos/giftsets/ihdakhas.mp4",
         link: "/shop/gift-sets/ihdaa-khaas-gift-set",
@@ -41,8 +44,8 @@ const GIFT_SETS = [
     },
     {
         id: 4,
-        title: "OUD & ROSES GIFT SET",
-        desc: "The essence of romance in every detail.",
+        title: "Oud & Roses Gift Set",
+        desc: "The essence of romance in every detail",
         thumbnail: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
         video: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
         link: "/shop/gift-sets/oud-roses-gift-set",
@@ -50,8 +53,8 @@ const GIFT_SETS = [
     },
     {
         id: 5,
-        title: "SHAUQUE AL SHUYOOKH",
-        desc: "Unveiling the art of fine perfumery.",
+        title: "Shauque Al Shuyookh",
+        desc: "Unveiling the art of fine perfumery",
         thumbnail: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
         video: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
         link: "/shop/gift-sets/shauque-al-shuyookh",
@@ -61,6 +64,7 @@ const GIFT_SETS = [
 
 
 function GiftCard({ item, index, locale }) {
+    const t = useTranslations();
     const videoRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -106,10 +110,10 @@ function GiftCard({ item, index, locale }) {
                 />
             </div>
             <div className="gs-card__info">
-                <h3 className="gs-card__title">{item.title}</h3>
-                <p className="gs-card__desc">{item.desc}</p>
+                <h3 className="gs-card__title">{t(item.title)}</h3>
+                <p className="gs-card__desc">{t(item.desc)}</p>
                 <Link href={`/${locale}${item.link}`} className="gs-card__link">
-                    SHOP NOW <span className="gs-card__arrow">→</span>
+                    {t("Shop Now")} <span className="gs-card__arrow">→</span>
                 </Link>
             </div>
         </div>
@@ -643,10 +647,10 @@ const NewGiftSection = () => {
 
                 {/* ── HEADER ── */}
                 <div className="gs-header">
-                    <span className="gs-header__tagline">{t("Curated Luxury. Timeless Gestures.")}</span>
-                    <h2 className="gs-header__title">{t("Gifts for Every Occasion")}</h2>
+                    <span className="gs-header__tagline">{t("Curated Luxury Timeless Gestures")}</span>
+                    <h2 className="gs-header__title">{t("Gifts for Every")}</h2>
                     <p className="gs-header__subtitle">
-                        {t("Delight your loved ones with our luxurious gift sets, thoughtfully curated to include our most exquisite fragrances.")}
+                        {t("Delight your loved ones with our luxurious gift sets thoughtfully curated to include our most exquisite fragrances")}
                     </p>
                 </div>
 
@@ -713,7 +717,7 @@ const NewGiftSection = () => {
                                 <path d="M13 11v12" stroke="currentColor" strokeWidth="1.2"/>
                             </svg>
                         </div>
-                        <span className="gs-divider__text">{t("The Perfect Gift for Every Occasion")}</span>
+                        <span className="gs-divider__text">{t("The perfect gift for every occasion")}</span>
                     </div>
                     <div className="gs-divider__line" />
                 </div>
@@ -728,7 +732,7 @@ const NewGiftSection = () => {
                                 <div className="gs-banner__content">
                                     <span className="gs-banner__small">{t("A Signature of")}</span>
                                     <span className="gs-banner__big">{t("Distinction")}</span>
-                                    <span className="gs-banner__desc">{t("Celebrate life's most memorable moments.")}</span>
+                                    <span className="gs-banner__desc">{t("Celebrate lifes most memorable moments")}</span>
                                     <span className="gs-banner__btn">{t("Explore Gift Sets")}</span>
                                 </div>
                             </Link>
@@ -737,7 +741,7 @@ const NewGiftSection = () => {
                                 <div className="gs-banner__content">
                                     <span className="gs-banner__small">{t("Beautifully")}</span>
                                     <span className="gs-banner__big">{t("Presented")}</span>
-                                    <span className="gs-banner__desc">{t("Thoughtfully packaged for a lasting impression.")}</span>
+                                    <span className="gs-banner__desc">{t("Thoughtfully packaged for a lasting impression")}</span>
                                     <span className="gs-banner__btn">{t("Explore Gift Sets")}</span>
                                 </div>
                             </Link>
@@ -752,7 +756,7 @@ const NewGiftSection = () => {
                                 </div>
                                 <div className="gs-feature__text">
                                     <h4>{t("Premium Packaging")}</h4>
-                                    <p>{t("Exquisite presentation for every gift.")}</p>
+                                    <p>{t("Exquisite presentation for every gift")}</p>
                                 </div>
                             </div>
 
@@ -765,7 +769,7 @@ const NewGiftSection = () => {
                                 </div>
                                 <div className="gs-feature__text">
                                     <h4>{t("Luxurious Fragrances")}</h4>
-                                    <p>{t("Crafted with the finest ingredients.")}</p>
+                                    <p>{t("Crafted with the finest ingredients")}</p>
                                 </div>
                             </div>
 
@@ -778,7 +782,7 @@ const NewGiftSection = () => {
                                 </div>
                                 <div className="gs-feature__text">
                                     <h4>{t("Perfect for Every Occasion")}</h4>
-                                    <p>{t("Thoughtful gifts for every special moment.")}</p>
+                                    <p>{t("Thoughtful gifts for every special moment")}</p>
                                 </div>
                             </div>
 
@@ -791,7 +795,7 @@ const NewGiftSection = () => {
                                 </div>
                                 <div className="gs-feature__text">
                                     <h4>{t("Made to be Remembered")}</h4>
-                                    <p>{t("Timeless scents that leave a lasting impression.")}</p>
+                                    <p>{t("Timeless scents that leave a lasting impression")}</p>
                                 </div>
                             </div>
                         </div>

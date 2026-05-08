@@ -298,12 +298,21 @@ const styles = `
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(185,161,107,0.3), 0 16px 50px rgba(0,0,0,0.12);
+    /* overflow: visible; handled by removal */
+    box-shadow: 0 16px 50px rgba(0,0,0,0.12);
   }
 
-  .hs-vid-frame iframe {
+  .hs-vid-inner {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(185,161,107,0.3);
+  }
+
+  .hs-vid-inner iframe {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -314,16 +323,16 @@ const styles = `
   /* Corner brackets */
   .hs-vid-corner {
     position: absolute;
-    width: 16px;
-    height: 16px;
-    z-index: 3;
+    width: 24px;
+    height: 24px;
+    z-index: 10;
     pointer-events: none;
   }
 
-  .hs-vid-corner--tl { top: 10px;    left: 10px;  border-top: 1.5px solid rgba(185,161,107,0.5); border-left: 1.5px solid rgba(185,161,107,0.5); }
-  .hs-vid-corner--tr { top: 10px;    right: 10px; border-top: 1.5px solid rgba(185,161,107,0.5); border-right: 1.5px solid rgba(185,161,107,0.5); }
-  .hs-vid-corner--bl { bottom: 10px; left: 10px;  border-bottom: 1.5px solid rgba(185,161,107,0.5); border-left: 1.5px solid rgba(185,161,107,0.5); }
-  .hs-vid-corner--br { bottom: 10px; right: 10px; border-bottom: 1.5px solid rgba(185,161,107,0.5); border-right: 1.5px solid rgba(185,161,107,0.5); }
+  .hs-vid-corner--tl { top: -12px;    left: -12px;  border-top: 2px solid #b9a16b; border-left: 2px solid #b9a16b; }
+  .hs-vid-corner--tr { top: -12px;    right: -12px; border-top: 2px solid #b9a16b; border-right: 2px solid #b9a16b; }
+  .hs-vid-corner--bl { bottom: -12px; left: -12px;  border-bottom: 2px solid #b9a16b; border-left: 2px solid #b9a16b; }
+  .hs-vid-corner--br { bottom: -12px; right: -12px; border-bottom: 2px solid #b9a16b; border-right: 2px solid #b9a16b; }
 
   .hs-vid-badge {
     display: block;
@@ -583,6 +592,28 @@ const styles = `
     background: #b9a16b;
     width: 40px;
   }
+
+  /* RTL TYPOGRAPHY IMPROVEMENTS */
+  [dir='rtl'] .hs-cat-header__tagline,
+  [dir='rtl'] .hs-vid-eyebrow,
+  [dir='rtl'] .hs-vid-badge {
+    letter-spacing: 0 !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  [dir='rtl'] .hs-cat-header__title,
+  [dir='rtl'] .hs-vid-title {
+    letter-spacing: 0 !important;
+    line-height: 1.3;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+  }
+
+  [dir='rtl'] .hs-cat-header__subtitle,
+  [dir='rtl'] .hs-vid-sub {
+    line-height: 1.8;
+    font-size: 1.15rem;
+  }
 `;
 
 const HorizontalScroll = () => {
@@ -676,7 +707,7 @@ const HorizontalScroll = () => {
                             {t("Now Showing")}
                             <span className="hs-vid-line" />
                         </span>
-                        <h2 className="hs-vid-title">K-Series</h2>
+                        <h2 className="hs-vid-title">{t("K-Series")}</h2>
                         <p className="hs-vid-sub">
                             {t("Experience the fragrance in motion")}
                         </p>
@@ -687,16 +718,18 @@ const HorizontalScroll = () => {
                             <span className="hs-vid-corner hs-vid-corner--tr" />
                             <span className="hs-vid-corner hs-vid-corner--bl" />
                             <span className="hs-vid-corner hs-vid-corner--br" />
-                            <iframe
-                                src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0"
-                                title="K - Series"
-                                frameBorder="0"
-                                allow="autoplay; fullscreen; picture-in-picture"
-                                allowFullScreen
-                            />
+                            <div className="hs-vid-inner">
+                                <iframe
+                                    src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0"
+                                    title="K - Series"
+                                    frameBorder="0"
+                                    allow="autoplay; fullscreen; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            </div>
                         </div>
                     </div>
-                    <span className="hs-vid-badge">Ahmed Al Maghribi</span>
+                    <span className="hs-vid-badge">{t("Ahmed Al Maghribi")}</span>
                 </div>
 
                 {/* ── Slide 3: Luxury Delight ─────────────── */}
@@ -732,7 +765,7 @@ const HorizontalScroll = () => {
                             <h2 className="hs-essence-title">{t("Essence of Arabia")}</h2>
                             <div className="hs-essence-divider" />
                             <p className="hs-essence-desc">
-                                {t("Step into a realm of refreshing warmth with Ahmed Al Maghribi's exclusive Dakhoon collection.")}
+                                {t("Step into a realm of refreshing warmth with Ahmed Al Maghribis exclusive Dakhoon collection")}
                             </p>
                             <Link href={`/${locale}/shop/dakhoon`} className="hs-essence-btn">
                                 {t("Discover Collection")}
@@ -757,9 +790,9 @@ const HorizontalScroll = () => {
                                     />
                                 </div>
                                 <div className="hs-essence-card__info">
-                                    <h3 className="hs-essence-card__name">Bakhoor Ahmed</h3>
+                                    <h3 className="hs-essence-card__name">{t("Bakhoor Ahmed")}</h3>
                                     <div className="hs-essence-card__cta">
-                                        SHOP NOW <span className="hs-essence-card__arrow"></span>
+                                        {t("Shop Now")} <span className="hs-essence-card__arrow"></span>
                                     </div>
                                 </div>
                             </Link>
@@ -779,9 +812,9 @@ const HorizontalScroll = () => {
                                     />
                                 </div>
                                 <div className="hs-essence-card__info">
-                                    <h3 className="hs-essence-card__name">Oud Kiflain</h3>
+                                    <h3 className="hs-essence-card__name">{t("Oud Kiflain")}</h3>
                                     <div className="hs-essence-card__cta">
-                                        SHOP NOW <span className="hs-essence-card__arrow"></span>
+                                        {t("Shop Now")} <span className="hs-essence-card__arrow"></span>
                                     </div>
                                 </div>
                             </Link>

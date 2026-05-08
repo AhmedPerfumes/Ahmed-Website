@@ -435,6 +435,29 @@ const GiftSetBanner = () => {
                 @media (max-width: 991px) {
                     .gsb-side-text { display: none; }
                 }
+
+                /* RTL TYPOGRAPHY IMPROVEMENTS */
+                [dir='rtl'] .gsb-tagline,
+                [dir='rtl'] .gsb-side-text span,
+                [dir='rtl'] .gsb-feat__label {
+                    letter-spacing: 0 !important;
+                    font-size: 0.9rem !important;
+                    font-weight: 500 !important;
+                }
+                [dir='rtl'] .gsb-heading {
+                    line-height: 1.3 !important;
+                    letter-spacing: 0 !important;
+                    font-size: clamp(2.2rem, 5vw, 3.8rem) !important;
+                }
+                [dir='rtl'] .gsb-description {
+                    line-height: 1.8 !important;
+                    font-size: 1.05rem !important;
+                    max-width: 480px !important;
+                }
+                [dir='rtl'] .gsb-cta {
+                    letter-spacing: 0 !important;
+                    font-size: 0.9rem !important;
+                }
             `}</style>
 
             {/* Background */}
@@ -518,7 +541,7 @@ const GiftSetBanner = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.7, delay: 0.4 }}
                     >
-                        {t("Discover our handpicked gift sets, beautifully presented and crafted to leave a lasting impression on every occasion.")}
+                        {t("Discover our handpicked gift sets beautifully presented and crafted to leave a lasting impression on every occasion")}
                     </motion.p>
 
                     <motion.div

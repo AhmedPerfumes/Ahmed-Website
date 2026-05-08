@@ -378,7 +378,31 @@ const DakhoonSection = () => {
                     font-weight: 600;
                     color: rgba(245,240,232,0.85);
                     text-transform: uppercase;
-                    line-height: 1.4;
+                    line-height: 1.3;
+                }
+
+                /* RTL TYPOGRAPHY IMPROVEMENTS */
+                [dir='rtl'] .dk-tagline,
+                [dir='rtl'] .dk-side-text span,
+                [dir='rtl'] .dk-feat__label {
+                    letter-spacing: 0 !important;
+                    font-size: 0.9rem !important;
+                    font-weight: 500 !important;
+                }
+                [dir='rtl'] .dk-heading {
+                    line-height: 1.3 !important;
+                    letter-spacing: 0 !important;
+                    font-size: clamp(2.2rem, 5vw, 3.8rem) !important;
+                }
+                [dir='rtl'] .dk-description {
+                    line-height: 1.8 !important;
+                    font-size: 1.05rem !important;
+                    max-width: 480px !important;
+                }
+                [dir='rtl'] .dk-cta {
+                    letter-spacing: 0 !important;
+                    font-size: 0.9rem !important;
+                }
                 }
 
                 @media (max-width: 768px) {
@@ -536,7 +560,7 @@ const DakhoonSection = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.4 }}
                         >
-                            {t("Experience the heritage of Arabic Dakhoon, made from natural ingredients. Enjoy rich, long-lasting aromas that bring warmth and tradition to your home.")}
+                            {t("Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich longlasting aromas that bring warmth and tradition to your home")}
                         </motion.p>
 
                         <motion.div
@@ -592,7 +616,7 @@ const DakhoonSection = () => {
                                 <PiMosqueLight size={22} color="#b9a16b" />
                             </div>
                             <div className="dk-feat__label">
-                                Arabic<br />Heritage
+                                {t("Arabic")}<br />{t("Heritage")}
                             </div>
                         </div>
                     </motion.div>
