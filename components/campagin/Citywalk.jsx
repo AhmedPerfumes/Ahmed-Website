@@ -36,7 +36,7 @@ const Banner = ({ data, locale, isMobile }) => {
             }}
           >
             <img
-              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${data.image}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile ? (data.mobile_image || data.image) : data.image}`}
               alt={data.title || "Campaign Banner"}
               style={{
                 width: "100%",
@@ -54,7 +54,7 @@ const Banner = ({ data, locale, isMobile }) => {
 
 function CityWalk() {
   const locale = useLocale();
-  const { homeSliders, homeMobileSliders } = useMenu();
+  const { homeSliders } = useMenu();
 
   // Memoize search to prevent expensive array filtering on every render
   const banners = useMemo(() => {
@@ -63,11 +63,13 @@ function CityWalk() {
       return link === "sale" || link.includes("/sale");
     };
 
+    const saleSlider = Array.isArray(homeSliders) ? homeSliders.find(checkSale) : null;
+
     return {
-      desktop: Array.isArray(homeSliders) ? homeSliders.find(checkSale) : null,
-      mobile: Array.isArray(homeMobileSliders) ? homeMobileSliders.find(checkSale) : null,
+      desktop: saleSlider,
+      mobile: saleSlider,
     };
-  }, [homeSliders, homeMobileSliders]);
+  }, [homeSliders]);
 
   return (
     <main className="citywalk-campaign">
