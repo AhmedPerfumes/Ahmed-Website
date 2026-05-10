@@ -16,11 +16,16 @@ import Categories from "@/components/shoplist/Categories";
 import { headers } from 'next/headers';
 import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription";
 
+const canonicalUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/en/product-category/gift-sets`;
+
 export const metadata = {
   title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
   description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
   icons: {
     icon: "/assets/images/ahmed-favicon.png",
+  },
+  alternates: {
+    canonical: canonicalUrl,
   },
 };
 

@@ -332,7 +332,9 @@ const ProductAccordion = ({ product }) => {
             } else {
                 typeLabel = t(`${noteType}Notes`);
             }
-            notesData.push({
+             const imagePath = product[`${noteType}_note_image`];
+
+            const noteObj = {
                 id: noteType,
                 type: typeLabel,
                 description: product[noteKey],
@@ -342,10 +344,14 @@ const ProductAccordion = ({ product }) => {
                             ? `${noteType}_note_description_ar`
                             : `${noteType}_note_description`
                     ],
-                image: `${process.env.NEXT_PUBLIC_API_URL}storage/${
-                    product[`${noteType}_note_image`]
-                }`,
-            });
+            };
+
+            // Only add image if it exists
+            if (imagePath) {
+                noteObj.image = `${process.env.NEXT_PUBLIC_API_URL}storage/${imagePath}`;
+            }
+
+            notesData.push(noteObj);
         }
     });
 

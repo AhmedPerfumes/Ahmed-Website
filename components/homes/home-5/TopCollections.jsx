@@ -154,12 +154,7 @@ export default function TopCollections({
                 {filteredProducts.map((elm, i) => (
                   <SwiperSlide key={i} className="swiper-slide product-card">
                     <div className="pc__img-wrapper">
-                      <Link
-                        href={`/${locale}/shop/${category}/${sub_category}/${removeSpecialCharactersAndAmp(elm?.product_name)
-                          ?.split(" ")
-                          .join("-")
-                          .toLowerCase()}`}
-                      >
+                      <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)?.split(" ").join("-").toLowerCase()}/${removeSpecialCharactersAndAmp(sub_category)?.split(" ").join("-").toLowerCase()}/${removeSpecialCharactersAndAmp(elm?.product_name)?.split(" ").join("-").toLowerCase()}`} >
                         {JSON.parse(elm.images)[0] && (
                           <Image
                             loading="lazy"

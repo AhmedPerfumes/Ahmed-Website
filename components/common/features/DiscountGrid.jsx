@@ -164,12 +164,13 @@ export default function DiscountGrid({ title, onlyDiscounted = false }) {
           <div className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-3`}>
             {currentProducts.map((elm, i) => (
               <div key={elm.product_id || i} className="product-card-wrapper">
+                {console.log(elm, "elmmm")}
                 <div className="product-card mb-3 mb-md-4 mb-xxl-5">
                   <div className="pc__img-wrapper">
                     <Swiper className="background-img" slidesPerView={1} navigation={false} modules={[Navigation]}>
                       {JSON.parse(elm.images).map((img, index) => (
                         <SwiperSlide key={index}>
-                          <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`}>
+                          <Link href={`/${locale}/shop/${clean(elm.category_name)}/${elm.subcategory ? clean(elm.subcategory.subcategory_name) : clean(elm.category_name)}/${clean(elm.product_name)}`}>
                             <Image
                               loading="lazy"
                               src={`${process.env.NEXT_PUBLIC_API_URL}storage/${img}`}
@@ -216,7 +217,7 @@ export default function DiscountGrid({ title, onlyDiscounted = false }) {
                   <div className="pc__info position-relative">
                     <p className="pc__category">{t(elm.category_name)}</p>
                     <h6 className="pc__title">
-                      <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`}>
+                      <Link href={`/${locale}/shop/${clean(elm.category_name)}/${elm.subcategory ? clean(elm.subcategory.subcategory_name) : clean(elm.category_name)}/${clean(elm.product_name)}`}>
                         {t(he.decode(elm.product_name))}
                       </Link>
                     </h6>

@@ -3,8 +3,8 @@ import HomePage8 from "./(homes)/home-8/page";
 import {useTranslations} from 'next-intl';
 
 export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+  title: "Buy Perfumes Online | Best Perfumes in UAE | Ahmed Al Maghribi Perfumes",
+  description: "Shop Ahmed Al Maghribi Perfumes in UAE Discover Premium Oriental Fragrance Collection with Oud Perfumes Gift Sets and Long Lasting Scents Buy Online Today",
   icons: {
       icon: "/assets/images/ahmed-favicon.png",
   },

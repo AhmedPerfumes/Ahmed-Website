@@ -6,10 +6,14 @@ import MobileFooter2 from "@/components/footers/MobileFooter2";
 import React from "react";
 
 export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+  title: "Order Tracking | Track Perfume Order | Ahmed Al Maghribi",
+  description: "Track Your Order Easily at Ahmed Al Maghribi UAE Stay Updated on Perfume Delivery Status Fast Secure Tracking System for Hassle Free Shopping Experience",
   icons: {
       icon: "/assets/images/ahmed-favicon.png",
+  },
+  robots: {
+    index: false,
+    follow: false,
   },
 };
 
