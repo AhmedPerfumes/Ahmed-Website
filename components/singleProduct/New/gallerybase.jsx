@@ -16,7 +16,7 @@ const GalleryBase = ({ images, product, activeIndex, setActiveIndex, onThumbnail
         <div
             className="container gallery-base"
             style={{
-                maxWidth: "480px",
+                maxWidth: "100%",
             }}
         >
             <div className="d-lg-none">

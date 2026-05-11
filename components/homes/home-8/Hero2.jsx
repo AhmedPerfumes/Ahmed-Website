@@ -26,7 +26,7 @@ export default function Hero() {
         },
     };
     const {
-        homeMobileSliders,
+        homeSliders,
         isLoading: isMenuLoading,
         error,
     } = useMenu();
@@ -42,7 +42,7 @@ export default function Hero() {
             className="swiper-container js-swiper-slider slideshow minh-100 swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events"
             {...swiperOptions}
         >
-            {homeMobileSliders?.map((elm, i) => (
+            {homeSliders?.map((elm, i) => (
                 <SwiperSlide key={i} className="swiper-slide">
                     <div className="overflow-hidden position-relative h-100">
                         <div className="slideshow-bg">
@@ -57,7 +57,7 @@ export default function Hero() {
                                 /> */}
 
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image || elm.image}`}
                                     alt={elm.title || "slide image"}
                                     fill                              // cover entire container
                                     style={{ objectFit: "cover" }}
@@ -70,22 +70,22 @@ export default function Hero() {
                             </Link>
                         </div>
                         <div className="slideshow-text container position-absolute start-50 top-50 translate-middle banner-text">
-                            {elm.title && (
+                            {(elm.title || elm.title_ar) && (
                                 <h6
                                     className={`t-subtitle text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3`} style={{ 'color': elm.color}}
                                 >
-                                    {t(elm.season)}
+                                    {locale === 'ar' ? (elm.season_ar || elm.season) : elm.season}
                                 </h6>
                             )}
                             <h2
                                 className={`h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5`} style={{ 'color': elm.color}}
                             >
-                                {t(elm.title)}
+                                {locale === 'ar' ? (elm.title_ar || elm.title) : elm.title}
                             </h2>
                             <h2
                                 className={`h1 fw-bold mb-4 animate animate_fade animate_btt animate_delay-5`} style={{ 'color': elm.color}}
                             >
-                                {t(elm.sub_title)}
+                                {locale === 'ar' ? (elm.sub_title_ar || elm.sub_title) : elm.sub_title}
                             </h2>
                             {elm.title && (
                                 <Link

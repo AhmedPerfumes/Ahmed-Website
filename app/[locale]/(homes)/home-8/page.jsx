@@ -7,6 +7,7 @@ import MobileFooter2 from '@/components/footers/MobileFooter2';
 import NewsLetter from '@/components/modals/NewsLetter';
 import React from 'react';
 import PopUp from '@/components/common/Popup';
+import NewHomePage from '@/components/NewHomePage';
 
 export const metadata = {
   title: 'Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes',
@@ -53,7 +54,8 @@ export default function HomePage8() {
       <div className="d-sm-block d-md-none">{/* MobileAnimation */}</div>
 
       <main>
-        <HomePage />
+        {/* <HomePage /> */}
+        <NewHomePage/>
       </main>
 
       <section className="d-none d-md-block" style={{ height: '100%' }}>
