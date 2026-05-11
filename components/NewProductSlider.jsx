@@ -274,7 +274,13 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
 
                 @media (max-width: 991px) {
-                    .master-gallery-section { padding: 0; min-height: 100dvh; height: auto; overflow: hidden; }
+                    .master-gallery-section {
+                        padding: 0 0 40px;
+                        min-height: auto;
+                        height: auto;
+                        overflow: visible;
+                        display: block;
+                    }
                 }
 
                 .best-sellers-header-wrap {
@@ -327,11 +333,23 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
 
                 @media (max-width: 991px) {
-                    .best-sellers-header-wrap { top: 30px; gap: 4px; }
-                    .best-sellers-tagline { font-size: 0.6rem; letter-spacing: 3px; font-weight: 600; }
-                    .best-sellers-heading { font-size: 1.6rem; }
-                    .best-sellers-desc { font-size: 0.85rem; max-width: 300px; margin-top: 4px; }
-                    .best-sellers-line { width: 30px; height: 1px; margin-top: 6px; }
+                    .best-sellers-header-wrap {
+                        position: absolute;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        gap: 3px;
+                        width: 100%;
+                        padding: 0 20px;
+                    }
+                    .best-sellers-tagline { font-size: 0.58rem; letter-spacing: 3px; }
+                    .best-sellers-heading { font-size: 1.45rem; }
+                    .best-sellers-desc { font-size: 0.8rem; max-width: 90%; margin-top: 3px; line-height: 1.35; }
+                    .best-sellers-line { width: 28px; height: 1px; margin-top: 5px; }
+                }
+                @media (max-width: 480px) {
+                    .best-sellers-heading { font-size: 1.25rem; }
+                    .best-sellers-desc { font-size: 0.74rem; }
                 }
 
                 .master-cursor-wrap {
@@ -359,8 +377,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 .master-slide { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: auto; min-height: 100vh; }
                 
                 @media (max-width: 991px) {
-                    .master-slide { height: auto; min-height: 100dvh; padding-top: 100px; padding-bottom: 120px; }
+                    .master-slide {
+                        height: auto;
+                        min-height: auto;
+                        padding: 0;
+                        display: block;
+                        background: transparent;
+                    }
                 }
+                @media (max-width: 991px) { .master-swiper { background: transparent; } }
 
                 .master-grid, .global-cta-grid {
                     display: grid;
@@ -374,19 +399,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) {
                     .master-grid, .global-cta-grid {
-                        display: flex;
-                        flex-direction: column;
-                        text-align: center;
-                        padding: 0 15px;
-                        gap: 0px;
-                        min-height: 100%;
-                        justify-content: flex-start;
+                        display: block;
+                        padding: 0;
+                        width: 100%;
                     }
                 }
 
                 .master-text-col, .global-cta-text-col { display: flex; flex-direction: column; gap: 10px; z-index: 5; }
                 @media (max-width: 991px) { 
-                    .master-text-col, .global-cta-text-col { order: 2; padding-bottom: 20px; gap: 8px; justify-content: flex-start; padding-top: 40px; } 
+                    .master-text-col { display: none; }
                 }
 
                 .master-tagline {
@@ -410,7 +431,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     letter-spacing: -1px;
                 }
                 
-                @media (max-width: 991px) { .stagger-row span { font-size: clamp(3rem, 12vw, 4.5rem); } }
+                @media (max-width: 991px) { .stagger-row span { font-size: clamp(2.2rem, 9vw, 3.5rem); } }
+                @media (max-width: 480px) { .stagger-row span { font-size: clamp(1.8rem, 8vw, 2.8rem); } }
 
                 .master-desc {
                     font-family: 'Inter', sans-serif;
@@ -423,7 +445,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     margin-top: 15px;
                 }
 
-                @media (max-width: 991px) { .master-desc { margin: 10px auto 0; font-size: 0.95rem; line-height: 1.6; max-width: 320px; padding: 0 10px; } }
+                @media (max-width: 991px) { .master-desc { margin: 8px auto 0; font-size: 0.88rem; line-height: 1.5; max-width: 90%; padding: 0 16px; } }
+                @media (max-width: 480px) { .master-desc { font-size: 0.82rem; } }
 
                 /* Large Background Kinetic Typography */
                 .kinetic-bg-text {
@@ -458,12 +481,17 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) { 
                     .master-visual-col { 
-                        order: 1; 
-                        height: auto; 
-                        padding-top: 40px; 
-                        padding-bottom: 60px; 
-                        width: 100%; 
+                        order: 1;
+                        width: 100%;
+                        height: auto;
+                        padding: 110px 20px 50px;
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
                     } 
+                }
+                @media (max-width: 480px) {
+                    .master-visual-col { padding: 100px 16px 44px; }
                 }
 
                 .primary-photo {
@@ -483,15 +511,19 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) {
                     .primary-photo { 
-                        position: relative; 
-                        width: 70%; 
-                        max-height: none; 
-                        aspect-ratio: 4/5; 
-                        border-radius: 12px; 
-                        top: auto; 
-                        transform: none; 
-                        margin: 0 auto; 
+                        position: relative;
+                        width: 60%;
+                        max-height: none;
+                        aspect-ratio: 4/5;
+                        border-radius: 12px;
+                        top: auto;
+                        right: auto;
+                        transform: none;
+                        margin: 0 auto;
                     }
+                }
+                @media (max-width: 480px) {
+                    .primary-photo { width: 55%; border-radius: 10px; }
                 }
 
                 .primary-photo img {
@@ -516,12 +548,18 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) {
                     .secondary-photo { 
-                        width: 50%; 
-                        left: 5%; 
-                        bottom: 0%; 
-                        transform: translateY(10%);
-                        box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+                        position: absolute;
+                        width: 36%;
+                        left: 12px;
+                        bottom: 8px;
+                        transform: none;
+                        box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+                        border-radius: 6px;
+                        z-index: 10;
                     }
+                }
+                @media (max-width: 480px) {
+                    .secondary-photo { width: 32%; left: 8px; bottom: 4px; }
                 }
 
                 .secondary-photo img {
@@ -541,14 +579,22 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) {
                     .modern-pagination {
-                        left: 50%;
-                        transform: translateX(-50%);
-                        bottom: 15px;
-                        background: rgba(255,255,255,0.85);
+                        position: relative;
+                        left: auto;
+                        bottom: auto;
+                        transform: none;
+                        width: fit-content;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background: rgba(255, 255, 255, 0.95);
                         backdrop-filter: blur(10px);
-                        padding: 8px 20px;
+                        padding: 10px 20px;
                         border-radius: 50px;
-                        gap: 20px;
+                        gap: 16px;
+                        margin: 20px auto 0;
+                        border: 1px solid rgba(0, 0, 0, 0.04);
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
                     }
                 }
 
@@ -557,30 +603,41 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     border: none;
                     cursor: pointer;
                     color: #1D1B19;
-                    padding: 0;
+                    padding: 4px;
                     display: flex;
                     align-items: center;
-                    transition: opacity 0.3s;
+                    transition: all 0.3s ease;
                 }
 
-                .modern-pagination .nav-btn:hover { opacity: 0.6; }
+                @media (max-width: 991px) {
+                    .modern-pagination .nav-btn svg { width: 18px; height: 18px; }
+                }
+
+                .modern-pagination .nav-btn:hover { opacity: 0.6; transform: scale(1.1); }
 
                 .fraction {
                     display: flex;
                     align-items: center;
-                    gap: 15px;
+                    gap: 12px;
                     font-family: 'Inter', sans-serif;
                     color: #1D1B19;
-                    font-weight: 500;
-                    letter-spacing: 2px;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    font-size: 0.9rem;
+                }
+
+                @media (max-width: 991px) {
+                    .fraction { gap: 8px; font-size: 0.8rem; }
                 }
 
                 .fraction .line {
-                    width: 40px;
+                    width: 30px;
                     height: 1px;
                     background: #1D1B19;
                     opacity: 0.2;
                 }
+                
+                @media (max-width: 991px) { .fraction .line { width: 20px; } }
 
                 /* Master Button */
                 .master-btn {
@@ -643,7 +700,18 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
                 
                 @media (max-width: 991px) {
-                    .global-cta-wrap { align-items: stretch; padding-top: 40px; height: 100%; min-height: 100dvh; padding-bottom: 80px; }
+                    .global-cta-wrap {
+                        position: relative;
+                        top: auto;
+                        left: auto;
+                        width: 100%;
+                        height: auto;
+                        min-height: auto;
+                        padding: 0;
+                        pointer-events: auto;
+                        display: block;
+                        background: transparent;
+                    }
                 }
 
                 .global-cta-text-col {
@@ -653,21 +721,26 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     height: 100%;
                     gap: 20px;
                     pointer-events: none;
-                    visibility: hidden; /* Hide the dummy text without affecting child override */
+                    visibility: hidden;
+                }
+                @media (max-width: 991px) {
+                    .global-cta-text-col {
+                        visibility: visible;
+                        pointer-events: auto;
+                        height: auto;
+                        gap: 6px;
+                        text-align: center;
+                        align-items: center;
+                        padding: 16px 20px 0;
+                        justify-content: flex-start;
+                    }
+                }
+                @media (max-width: 480px) {
+                    .global-cta-text-col { padding: 12px 16px 0; gap: 4px; }
                 }
                 
                 @media (max-width: 991px) {
-                    .global-cta-dummy-visual {
-                        order: 1;
-                        padding-top: 40px;
-                        padding-bottom: 60px;
-                        width: 100%;
-                    }
-                    .global-cta-dummy-ratio {
-                        width: 70%;
-                        aspect-ratio: 4/5;
-                        margin: 0 auto;
-                    }
+                    .global-cta-dummy-visual { display: none; }
                 }
 
                 .global-cta-btn-container {
@@ -677,7 +750,11 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     padding-top: 30px; /* Space between description and button */
                 }
                 
-                @media (max-width: 991px) { .global-cta-btn-container { padding-top: 5px; } }
+                @media (max-width: 991px) { .global-cta-btn-container { padding-top: 16px; padding-bottom: 20px; } }
+                @media (max-width: 480px) { .global-cta-btn-container { padding-top: 12px; padding-bottom: 16px; } }
+                @media (max-width: 991px) { .master-btn { padding: 14px 32px; letter-spacing: 3px; font-size: 0.7rem; } }
+                @media (max-width: 480px) { .master-btn { padding: 12px 28px; font-size: 0.68rem; } }
+                @media (max-width: 991px) { .global-cta-wrap { padding-bottom: 0px; } }
             `}</style>
 
             <Swiper
