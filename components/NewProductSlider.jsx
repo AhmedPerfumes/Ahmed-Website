@@ -288,7 +288,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     top: 40px;
                     left: 50%;
                     transform: translateX(-50%);
-                    z-index: 200;
+                    z-index: 99;
                     text-align: center;
                     display: flex;
                     flex-direction: column;
@@ -574,7 +574,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     display: flex;
                     align-items: center;
                     gap: 30px;
-                    z-index: 150;
+                    z-index: 99;
                 }
 
                 @media (max-width: 991px) {
@@ -693,7 +693,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     position: absolute;
                     top: 0; left: 0; width: 100%; height: 100%;
                     pointer-events: none;
-                    z-index: 150;
+                    z-index: 99;
                     display: flex;
                     align-items: center;
                     justify-content: center;
