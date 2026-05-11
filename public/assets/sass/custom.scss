@@ -2870,6 +2870,11 @@ footer {
     transition: transform 0.4s ease;
 }
 
+.bs-cta--dark {
+    color: #1D1B19;
+    border-color: #b9a16b;
+}
+
 .bs-cta:hover svg {
     transform: translateX(4px);
 }
