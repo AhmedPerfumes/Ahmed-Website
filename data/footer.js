@@ -47,6 +47,9 @@ export const currencyOptions = [
   { value: "kw", text: "KUWAIT", link: "https://kw.ahmedalmaghribi.com" },
   { value: "qa", text: "QATAR", link: "https://qa.ahmedalmaghribi.com" },
   { value: "in", text: "INDIA", link: "https://www.ahmedalmaghribi.co.in" },
+  { value: "us", text: "USA", link: "https://www.ahmedalmaghribi.us" },
+  { value: "uk", text: "UK", link: "https://www.ahmedalmaghribi.uk" },
+  { value: "ca", text: "CANADA", link: "https://ahmedalmaghribi.ca" },
 ];
 
 

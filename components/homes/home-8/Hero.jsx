@@ -58,22 +58,22 @@ export default function Hero() {
                             </Link>
                         </div>
                         <div className="slideshow-text container position-absolute start-50 top-50 translate-middle banner-text">
-                            {elm.title && (
+                            {(elm.title || elm.title_ar) && (
                                 <h6
                                     className={`t-subtitle text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3`} style={{ 'color': elm.color}}
                                 >
-                                    {t(elm.season)}
+                                    {locale === 'ar' ? (elm.season_ar || elm.season) : elm.season}
                                 </h6>
                             )}
                             <h2
                                 className={`h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5`} style={{ 'color': elm.color}}
                             >
-                                {t(elm.title)}
+                                {locale === 'ar' ? (elm.title_ar || elm.title) : elm.title}
                             </h2>
                             <h2
                                 className={`h1 fw-bold mb-2 animate animate_fade animate_btt animate_delay-5`} style={{ 'color': elm.color}}
                             >
-                                {t(elm.sub_title)}
+                                {locale === 'ar' ? (elm.sub_title_ar || elm.sub_title) : elm.sub_title}
                             </h2>
                             {elm.title && (
                                 <Link

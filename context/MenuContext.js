@@ -9,7 +9,6 @@ export function MenuProvider({ children }) {
   const [shippingServiceCharges, setshippingServiceCharges] = useState([]);
   const [currency, setCurrency] = useState('د.إ');
   const [homeSliders, setHomeSliders] = useState([]);
-  const [homeMobileSliders, setHomeMobileSliders] = useState([]);
   const [popUp, setPopUp] = useState([]);
   const [shop_pop_up, setshop_pop_up] = useState([]);
   const [saleSection, setSaleSection] = useState([]);
@@ -83,13 +82,7 @@ export function MenuProvider({ children }) {
         //   setError(data);
         // }
 
-        if (data && data.home_mobile_sliders) {
-          setError(null);
-          setHomeMobileSliders(data.home_mobile_sliders);
-        } else {
-          setHomeMobileSliders(null);
-          setError(data);
-        }
+
         if (data && data.pop_up) {
           setError(null);
           setPopUp(data.pop_up);
@@ -135,7 +128,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders, popUp, shop_pop_up, topHeader, saleSection }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, popUp, shop_pop_up, topHeader, saleSection }}>
       {children}
     </MenuContext.Provider>
   );

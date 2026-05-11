@@ -7,10 +7,14 @@ import React from "react";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+  title: "Login Register | Account Access | Ahmed Al Maghribi",
   description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
   icons: {
       icon: "/assets/images/ahmed-favicon.png",
+  },
+  robots: {
+    index: false,
+    follow: false,
   },
 };
 

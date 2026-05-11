@@ -164,10 +164,15 @@ export default function Context({ children }) {
       }
       // Ensure numbers
       const qty = Number(product?.quantity || 0);
+      const bogoFreeQty = Number(product?.bogo_free_qty || 0);
+      const paidQty = Math.max(0, qty - bogoFreeQty); // BOGO free units don't get charged
       const basePrice = Number(product?.price || 0);
       // console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
-      // Skip free gifts entirely
+      // Skip free gifts entirely (FOC, etc.)
       if (product?.is_gift) return accumuLator;
+
+      // If all units are free via BOGO, skip
+      if (paidQty <= 0) return accumuLator;
 
       if (product?.discount) {
         console.log('discountC', product?.discount);
@@ -183,7 +188,7 @@ export default function Context({ children }) {
               discounted = Number(product.discount.final_price || 0);
               // return accumuLator + product.quantity * discount_price;
           }
-          return accumuLator + qty * Number(discounted.toFixed(2));
+          return accumuLator + paidQty * Number(discounted.toFixed(2));
         }
       }
 
@@ -199,7 +204,7 @@ export default function Context({ children }) {
       //   const end = new Date(c?.end_date);
       //   if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
       //     const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-      //     return accumuLator + qty * Number(discounted.toFixed(2));
+      //     return accumuLator + paidQty * Number(discounted.toFixed(2));
       //   }
       // }
 
@@ -217,17 +222,17 @@ export default function Context({ children }) {
           discounted = basePrice - value;
         }
 
-        return accumuLator + qty * Number(discounted.toFixed(2));
+        return accumuLator + paidQty * Number(discounted.toFixed(2));
       }
 
       // 4) Sale price fallback
       // if (product?.sale_price != null) {
       //   console.log('product', 'sale price', product);
-      //   return accumuLator + qty * Number(Number(product.sale_price).toFixed(2));
+      //   return accumuLator + paidQty * Number(Number(product.sale_price).toFixed(2));
       // }
 
       // 5) Default
-      return accumuLator + qty * basePrice;
+      return accumuLator + paidQty * basePrice;
     }, 0);
 
     setTotalPrice(subtotal);

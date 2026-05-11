@@ -6,8 +6,8 @@ import React from "react";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+  title: "Buy Perfumes & Fragrances Online UAE - Best Arabic Perfumes",
+  description: "Description: Shop premium perfumes & fragrances in the UAE from the best online perfume store in Dubai. Buy perfumes for men and women at the best prices online",
   icons: {
       icon: "/assets/images/ahmed-favicon.png",
   },

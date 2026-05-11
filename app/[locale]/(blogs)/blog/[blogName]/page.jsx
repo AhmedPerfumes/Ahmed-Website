@@ -95,14 +95,19 @@ async function getBlogSEO(blogName) {
 }
 
 export async function generateMetadata({ params }) {
-    const { blogName } = params;
+    const { blogName, locale } = params;
+
+    const canonicalUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/blog/${blogName}`;
 
     try {
         const data = await getBlogSEO(blogName);
         // console.log(JSON.parse(data.meta_value)[0]);
         return {
             title: JSON.parse(data.meta_value)[0]?.seo_title ? `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-            description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes."
+            description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+            alternates: {
+                canonical: canonicalUrl,
+            },
             // openGraph: {
             //     // title: data.product_name,
             //     // description: data.description.replace(/<\/?[^>]+(>|$)/g, "").trim(),
