@@ -920,7 +920,7 @@ export default function Checkout() {
                       <tbody> {cartProducts.map((elm, i) => ( <tr key={i}> <td> {he.decode(elm.product_name)} x {elm.quantity} </td> {subTotalPrice(elm)} </tr> ))} </tbody>
                     </table>
                     
-                    {
+                    {/* {
                       (() => {
                         // Only count non-excluded products
                         const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
@@ -942,7 +942,7 @@ export default function Checkout() {
                           </div>
                         ) : null;
                       })()
-                    }
+                    } */}
                     
                     <table className="checkout-totals">
                       <tbody>

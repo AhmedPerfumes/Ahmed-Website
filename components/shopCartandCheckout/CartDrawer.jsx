@@ -502,7 +502,7 @@ export default function CartDrawer() {
           height={200}
           alt="image"
         /> */}
-          {
+          {/* {
                       (() => {
                         // Only count non-excluded products
                         const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
@@ -520,7 +520,7 @@ export default function CartDrawer() {
                           </div>
                         ) : null;
                       })()
-                    }
+                    } */}
           <hr className="cart-drawer-divider"></hr>
           <div className="free-shipping-progress mt-3">
 
