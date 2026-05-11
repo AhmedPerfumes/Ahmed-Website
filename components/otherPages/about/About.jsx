@@ -75,7 +75,7 @@ export default function About() {
             </p>
             <p className="mt-3 fs-5">
               {t(
-                "With over 180 branches across the GCC and a growing international presence we have evolved the art of perfumery While honoring traditional Arabic techniques our innovative blends cater to diverse tastes ensuring each fragrance delivers a rich lasting experience"
+                "With over 190 branches across the GCC and a growing international presence we have evolved the art of perfumery While honoring traditional Arabic techniques our innovative blends cater to diverse tastes ensuring each fragrance delivers a rich lasting experience"
               )}
             </p>
             <p className="mt-3 fs-5">
