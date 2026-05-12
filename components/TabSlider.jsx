@@ -13,16 +13,17 @@ import { useLocale, useTranslations } from "next-intl";
 import { Weight } from "lucide-react";
 import { ElevenMp } from "@mui/icons-material";
 import { useMenu } from "@/context/MenuContext";
+import Skeleton from "@mui/material/Skeleton";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 const filterCategories = [
-  "All",
-  "Perfumes",
-  "Dakhoon",
-  "Concentrated Parfum",
-  "Gift Sets",
-  "Care Essentials",
+  { id: "All", key: "all" },
+  { id: "Perfumes", key: "perfumes" },
+  { id: "Dakhoon", key: "dakhoon" },
+  { id: "Concentrated Parfum", key: "concentratedParfum" },
+  { id: "Gift Sets", key: "giftSets" },
+  { id: "Care Essentials", key: "careEssentials" },
 ];
 
 /* ===== SAME HELPERS AS SHOP PAGE ===== */
@@ -45,30 +46,70 @@ const isSubcat = (cat, sub) =>
       ? clean(cat)
       : "online-exclusive";
 
+const TabSliderSkeleton = () => {
+  return (
+    <div style={{ width: '100%', padding: "100px 0", textAlign: "center" }}>
+      {/* Header Skeleton */}
+      <div className="d-flex flex-column align-items-center mb-5">
+        <Skeleton variant="text" width={180} height={20} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
+        <Skeleton variant="text" width={280} height={45} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
+        <Skeleton variant="rectangular" width={60} height={2} sx={{ bgcolor: 'rgba(185,161,107,0.2)', mb: 4 }} />
+      </div>
+
+      {/* Tabs Skeleton */}
+      <div className="d-flex justify-content-center gap-4 mb-5 overflow-hidden px-4">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <Skeleton key={i} variant="rounded" width={80} height={25} sx={{ bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '20px' }} />
+        ))}
+      </div>
+
+      {/* Cards Row Skeleton */}
+      <div className="d-flex justify-content-center gap-4 mb-5 overflow-hidden px-4">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="flex-shrink-0" style={{ width: "240px" }}>
+            <Skeleton variant="rectangular" width="100%" height={300} sx={{ bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '12px' }} />
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom Info Skeleton */}
+      <div className="d-flex flex-column align-items-center mt-5">
+        <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 1 }} />
+        <Skeleton variant="text" width={220} height={35} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
+        <Skeleton variant="rectangular" width={140} height={45} sx={{ bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '99px' }} />
+      </div>
+    </div>
+  );
+};
+
 export default function PopularProducts() {
+  const t = useTranslations("PopularProducts");
   const { addProductToCart } = useContextElement();
   const locale = useLocale();
-  const t = useTranslations();
   const { currency, isLoading: isMenuLoading } = useMenu();
 
   const [apiData, setApiData] = useState({});
   const [currentCategory, setCurrentCategory] = useState("All");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const rafRef = useRef(null);
 
   /* ================= FETCH ================= */
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await fetch(`${BASE_URL}api/getBestSelling`);
-        const data = await res.json();
-        setApiData(data || {});
-      } catch (err) {
-        console.error("API error:", err);
-        setApiData({});
-      }
+  async function fetchProducts() {
+    setLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}api/getBestSelling`);
+      const data = await res.json();
+      setApiData(data || {});
+    } catch (err) {
+      console.error("API error:", err);
+      setApiData({});
+    } finally {
+      setLoading(false);
     }
+  }
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -152,9 +193,31 @@ export default function PopularProducts() {
   const shouldCenter = filtered.length > 5;
 
   return (
-    <section className="tab-slider-section">
-      {/* Subtle texture overlay */}
-      <div className="tab-slider-bg-noise" />
+    <section
+      style={{
+        width: "100%",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "60px 0 0",
+        background: "radial-gradient(circle at center, #f8f5f0 0%, #f3efe8 60%, #ece8e1 100%)",
+        overflow: "hidden",
+        position: 'relative'
+      }}
+    >
+      {loading ? (
+        <TabSliderSkeleton />
+      ) : (
+        <>
+          {/* Subtle texture overlay */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, right: 0, bottom: 0,
+        opacity: 0.03,
+        pointerEvents: 'none',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+      }} />
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -172,7 +235,7 @@ export default function PopularProducts() {
 
       .scroll-tabs button {
         font-family: 'Inter', sans-serif !important;
-        font-size: clamp(0.55rem, 2vw, 0.68rem) !important;
+        font-size: clamp(0.55rem, 3vw, 0.68rem) !important;
         letter-spacing: 2px !important;
         font-weight: 500 !important;
         position: relative;
@@ -209,14 +272,34 @@ export default function PopularProducts() {
       {/* ===== HEADER & TABS ===== */}
       <div className="tab-slider-header">
         {/* Sub-tagline */}
-        <div className="tab-slider-subtagline">
+        <div style={{
+          fontSize: 'clamp(0.5rem, 1.5vw, 0.6rem)',
+          letterSpacing: '6px',
+          color: '#b9a16b',
+          textTransform: 'uppercase',
+          fontWeight: 500,
+          marginBottom: 14,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 8,
+          fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
+        }}>
           <span style={{ fontSize: 6, color: '#b9a16b', opacity: 0.6 }}>◆</span>
-          {t("Explore Our Collection")}
+          {t("subTitle")}
         </div>
 
         {/* Main title */}
-        <h2 className="tab-slider-title">
-          {t("Explore by Category")}
+        <h2 style={{
+          fontFamily: locale === 'ar' ? 'sans-serif' : "'Playfair Display', serif",
+          fontSize: 'clamp(1.4rem, 5vw, 2.4rem)',
+          fontWeight: 400,
+          color: '#1a1714',
+          letterSpacing: locale === 'ar' ? '0' : '5px',
+          textTransform: 'uppercase',
+          margin: '0 0 14px',
+        }}>
+          {t("title")}
         </h2>
 
         {/* Diamond divider */}
@@ -229,15 +312,29 @@ export default function PopularProducts() {
         <div className="scroll-tabs">
           {filterCategories.map((cat) => (
             <button
-              key={cat}
+              key={cat.id}
               onClick={() => {
-                setCurrentCategory(cat);
+                setCurrentCategory(cat.id);
                 setActiveIndex(0);
               }}
-              className={`tab-slider-tab-btn ${currentCategory === cat ? 'active' : ''}`}
+              style={{
+                background: "none",
+                border: "none",
+                textTransform: "uppercase",
+                padding: "8px 0",
+                flexShrink: 0,
+                color: currentCategory === cat.id ? "#1a1714" : "#8a8078",
+                fontWeight: currentCategory === cat.id ? 700 : 500,
+                transition: "color 0.3s ease",
+                cursor: "pointer",
+                position: 'relative',
+                fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit',
+                fontSize: locale === 'ar' ? 'clamp(0.85rem, 2.5vw, 1rem)' : 'clamp(0.65rem, 2.2vw, 0.75rem)',
+                letterSpacing: locale === 'ar' ? '0' : '2px'
+              }}
             >
-              {t(cat)}
-              {currentCategory === cat && (
+              {t(cat.key)}
+              {currentCategory === cat.id && (
                 <motion.div
                   layoutId="activeTab"
                   style={{
@@ -330,19 +427,19 @@ export default function PopularProducts() {
 
                       {/* --- ADDED LABEL LOGIC --- */}
                       {item.label_name && (
-                        <div style={{ backgroundColor: item.label_color, zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
-                          {item.label_name}
+                        <div style={{ backgroundColor: item.label_color, zIndex: 10, position: 'absolute' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'left-0' : 'right-0'}`}>
+                          {locale === 'ar' ? item.label_name_ar : item.label_name}
                         </div>
                       )}
 
                       {item.product_qty <= 0 ? (
-                        <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 ">
-                          {t("Out Of Stock")}
+                        <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                          {t("outOfStock")}
                         </div>
                       ) : (
                         item.discount && item.discount.discount_type === 'percent' && (
-                          <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                            {t("Sale")} {item.discount.value}%
+                          <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                            {t("sale", { value: item.discount.value })}
                           </div>
                         )
                       )}
@@ -362,7 +459,7 @@ export default function PopularProducts() {
                             });
                           }}
                         >
-                          {t("Add To Cart")}
+                          {t("addToCart")}
                         </button>
                       )}
                     </div>
@@ -393,12 +490,31 @@ export default function PopularProducts() {
                 width: '100%'
               }}
             >
-              <span className="tab-slider-info-category">
-                {activeProduct.category_name}
+              <span
+                style={{
+                  fontSize: 'clamp(0.45rem, 1.5vw, 0.55rem)',
+                  textTransform: "uppercase",
+                  letterSpacing: 3,
+                  marginBottom: 8,
+                  color: "#b9a16b",
+                  fontWeight: 500,
+                  fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
+                }}
+              >
+                {locale === 'ar' ? activeProduct.category_name_ar : activeProduct.category_name}
               </span>
 
-              <h3 className="tab-slider-info-title">
-                {decodeHtml(activeProduct.product_name)}
+              <h3
+                style={{
+                  fontSize: 'clamp(1.0rem, 4.5vw, 1.5rem)',
+                  fontFamily: locale === 'ar' ? 'sans-serif' : "'Playfair Display', serif",
+                  fontWeight: 400,
+                  marginBottom: 8,
+                  color: '#1a1714',
+                  letterSpacing: 0.5,
+                }}
+              >
+                {locale === 'ar' ? decodeHtml(activeProduct.product_name_ar) : decodeHtml(activeProduct.product_name)}
               </h3>
 
               {/* Diamond divider */}
@@ -417,22 +533,62 @@ export default function PopularProducts() {
                     activeProduct.subcategory
                   )}/${clean(activeProduct.product_name)}`}
                 >
-                  <button className="tab-slider-explore-btn">
-                    {t("Explore Product")}
+                  <button
+                    style={{
+                      background: "#1a1714",
+                      color: "#fff",
+                      border: "none",
+                      padding: "12px 48px",
+                      fontSize: 'clamp(0.5rem, 1.8vw, 0.58rem)',
+                      letterSpacing: 2.5,
+                      textTransform: "uppercase",
+                      cursor: "pointer",
+                      fontWeight: 600,
+                      transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+                      boxShadow: '0 10px 20px rgba(0,0,0,0.08)',
+                      fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#b9a16b';
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 15px 30px rgba(185,161,107,0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = '#1a1714';
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 10px 20px rgba(0,0,0,0.08)';
+                    }}
+                  >
+                    {t("exploreProduct")}
                   </button>
                 </Link>
 
                 <Link
                   href={`/${locale}/shop`}
-                  className="tab-slider-view-all"
+                  style={{
+                    fontSize: '0.68rem',
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    color: "#1a1714",
+                    textDecoration: "none",
+                    letterSpacing: 2,
+                    borderBottom: "1.5px solid #b9a16b",
+                    paddingBottom: 3,
+                    transition: 'opacity 0.3s ease',
+                    fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = 0.7}
+                  onMouseLeave={(e) => e.target.style.opacity = 1}
                 >
-                  {t("View Full Collection")} &gt;
+                  {t("viewFullCollection")}
                 </Link>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </section>
+    </>
+  )}
+</section>
   );
 }

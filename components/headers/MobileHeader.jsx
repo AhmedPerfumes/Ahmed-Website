@@ -32,8 +32,6 @@ export default function MobileHeader() {
   
       const { isLoggedIn } = useUser();
 
-  const [scrollDirection, setScrollDirection] = useState("down");
-
   const [searchKeyWord, setSearchKeyWord] = useState("");
 
   // Inside MobileHeader function
@@ -79,36 +77,6 @@ useEffect(() => {
     window.location.href = "/";
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > 250) {
-        if (currentScrollY > lastScrollY.current) {
-          // Scrolling down
-          setScrollDirection("down");
-        } else {
-          // Scrolling up
-          setScrollDirection("up");
-        }
-      } else {
-        // Below 250px
-        setScrollDirection("down");
-      }
-
-      lastScrollY.current = currentScrollY;
-    };
-
-    const lastScrollY = { current: window.scrollY };
-
-    // Add scroll event listener
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup: remove event listener when component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const handleLangChange = (e) => {
     // console.log(pathname, e.target.value);
@@ -149,174 +117,68 @@ useEffect(() => {
   }
 
   return (
-    <div
-      className={`header-mobile header_sticky ${
-        scrollDirection == "up" ? "header_sticky-active" : "position-relative"
-      } `}
-    >
-      {/* <Swiper
-          className="swiper-container js-swiper-slider slideshow type4 slideshow-navigation-white-sm swiper-container-fade swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events bg-black"
-          {...swiperOptions}
-          style={{ height: "2.5rem" }}
-      >
-          {slideData1000.map((elm, i) => (
-              <SwiperSlide
-                  key={i}
-                  style={{
-                      textTransform: "uppercase",
-                      fontSize: "12px",
-                  }}
-                  className="swiper-slide text-center"
-              >
-                  <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                      <Link
-                          href={`/${locale}/${elm.btnLink}`}
-                          className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white"
-                      >
-                          {t(
-                              elm.description
-                                  .split(" ")
-                                  .slice(0, 13)
-                                  .join(" ")
-                          )}
-                      </Link>
-                  </div>
-              </SwiperSlide>
-          ))}
-      </Swiper> */}
-
-      <style jsx global>{`
-        @keyframes marquee-ltr {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        @keyframes marquee-rtl {
-          0% { transform: translateX(-50%); } 
-          100% { transform: translateX(0); }
-        }
-          .mobile-search-results {
-    background: white;
-    width: 100%;
-    max-height: 70vh; /* Don't cover the whole screen, let them see the context */
-    overflow-y: auto;
-    border: 1px solid #eee;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.mobile-suggestion-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #f5f5f5;
-    text-decoration: none !important;
-}
-
-.mobile-suggestion-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 4px;
-    flex-shrink: 0;
-}
-
-.mobile-suggestion-info {
-    flex-grow: 1;
-    margin: 0 12px;
-    overflow: hidden;
-}
-
-.mobile-suggestion-name {
-    display: block;
-    font-size: 14px;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 500;
-}
-
-.mobile-suggestion-price {
-    font-size: 13px;
-    color: #a67b30;
-    font-weight: 600;
-}
-      `}</style>
-      <div 
-          className="bg-black d-flex align-items-center" 
-          style={{ height: "2.5rem", overflow: "hidden" }}
-      >
-          
-          {/* Marquee Track: The element that gets the animation. Must contain two copies of the content. */}
-          <div 
-              className="d-flex align-items-center" 
-              style={{ 
-                  whiteSpace: "nowrap", 
-                  width: "fit-content", // Crucial for marquee effect
-                  willChange: "transform", 
-                  // Apply animation based on locale
-                  animation: locale === 'ar' ? "marquee-rtl 90s linear infinite" : "marquee-ltr 90s linear infinite",
-                  height: "100%"
-              }}
-          >
-              
-              {/*
-                Loop over the topHeader items multiple times (e.g., 20)
-                to create a continuous stream of repeated announcements.
-              */}
-              {[...Array(20)].map((_, idx) => (
-                  topHeader.map((elm, i) => (
-                      <span 
-                          key={`${idx}-${i}`} 
-                          className="d-flex align-items-center flex-nowrap" 
-                          style={{ 
-                              textTransform: "uppercase", 
-                              fontSize: "12px" 
-                          }}
-                      >
-                          <Link
-                              href={`/${locale}/${elm.color}`}
-                              className="text-white text-decoration-none mx-4"
-                              style={{ display: "inline-block" }}
-                          >
-                              {/* Translate and display the truncated title */}
-                              {t(
-                                  elm.title
-                                      .split(" ")
-                                      .slice(0, 13)
-                                      .join(" ")
-                              )}
-                          </Link>
-                          {/* Separator */}
-                          <span className="text-white">-</span>
-                      </span>
-                  ))
-              ))}
-              
+    <>
+      <div className="bg-black d-flex align-items-center d-lg-none" style={{ height: "2.5rem", overflow: "hidden" }}>
+        <div 
+          className="marquee-track marquee-ltr"
+          dir="ltr"
+        >
+          <div className="marquee-content d-flex align-items-center">
+            {topHeader.map((elm, i) => (
+              <span key={i} className="d-flex align-items-center flex-nowrap">
+                <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
+                  {t(elm.title)}
+                </Link>
+                <span className="text-white">-</span>
+              </span>
+            ))}
           </div>
+          {/* Duplicate 1 */}
+          <div className="marquee-content d-flex align-items-center">
+            {topHeader.map((elm, i) => (
+              <span key={`dup1-${i}`} className="d-flex align-items-center flex-nowrap">
+                <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
+                  {t(elm.title)}
+                </Link>
+                <span className="text-white">-</span>
+              </span>
+            ))}
+          </div>
+          {/* Duplicate 2 */}
+          <div className="marquee-content d-flex align-items-center">
+            {topHeader.map((elm, i) => (
+              <span key={`dup2-${i}`} className="d-flex align-items-center flex-nowrap">
+                <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
+                  {t(elm.title)}
+                </Link>
+                <span className="text-white">-</span>
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
       
-      <div className="container d-flex align-items-center h-100">
-        <Link className="mobile-nav-activator d-block position-relative" href="#">
-          <svg
-            className="nav-icon"
-            width="25"
-            height="18"
-            viewBox="0 0 25 18"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <use href="#icon_nav" />
-          </svg>
-          <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
-        </Link>
+      <div className="header-mobile header_sticky header_sticky-active" style={{ position: 'sticky', top: 0, zIndex: 100 }} >
+        <div className="container d-flex align-items-center h-100">
+          <Link className="mobile-nav-activator d-block position-relative" href="#">
+            <svg
+              className="nav-icon"
+              width="20"
+              height="15"
+              viewBox="0 0 25 18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <use href="#icon_nav" />
+            </svg>
+            <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
+          </Link>
 
         <div className="logo">
           <a href="/">
             <Image
               src="/assets/images/about/AhmedLogo.png"
-              width={70}
-              height={70}
+              width={50}
+              height={50}
               alt="Ahmed"
               className=""
             />
@@ -330,8 +192,8 @@ useEffect(() => {
         >
           <svg
             className="d-block"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -348,7 +210,7 @@ useEffect(() => {
       <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
         <div className="container">
          <form onSubmit={onSearch} className="search-field position-relative mt-4 mb-3">
-    <div className="position-relative d-flex align-items-center">
+        <div className="position-relative d-flex align-items-center">
         <input
             className="search-field__input w-100 border rounded-1 form-control shadow-sm"
             type="text"
@@ -534,5 +396,6 @@ useEffect(() => {
       </nav>
       {/* <!-- /.navigation --> */}
     </div>
+    </>
   );
 }

@@ -1016,7 +1016,7 @@ button[data-v-7aa9e1a2] {
 	transform: translateY(10px);
 	pointer-events: none;
 	transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-	z-index: 1000;
+	z-index: 1100;
 }
 
 .hover-account:hover .account-hover-menu,

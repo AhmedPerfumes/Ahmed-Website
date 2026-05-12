@@ -176,6 +176,9 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         const currentSlide = swiper.slides[swiper.activeIndex];
         const prevSlide = swiper.slides[swiper.previousIndex];
 
+        // Accessibility check
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
         // Animate out the old text aggressively so it clears the space
         if (prevSlide && swiper.activeIndex !== swiper.previousIndex) {
             const oldTitleElements = prevSlide.querySelectorAll(".stagger-row span");
@@ -184,9 +187,9 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
             gsap.to([oldTitleElements, oldSubtitle, oldTagline], {
                 opacity: 0,
-                y: -30,
-                duration: 0.5,
-                ease: "power2.in"
+                y: prefersReducedMotion ? 0 : -30,
+                duration: 0.4,
+                ease: "power2.out"
             });
         }
 
@@ -198,19 +201,25 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
         gsap.to(containerRef.current, {
             backgroundColor: slides[index].theme.bg,
-            duration: 1.4,
+            duration: 1.0,
             ease: "sine.inOut"
         });
 
-        // Delay entry to 0.8s so old text is gone and cross-fade is 60% complete
-        gsap.fromTo(tagline, { opacity: 0, x: -15 }, { opacity: 1, x: 0, duration: 1.2, delay: 0.7, ease: "power2.out" });
-
-        gsap.fromTo(titleElements,
-            { y: "100%", opacity: 0 },
-            { y: 0, opacity: 1, duration: 1.2, stagger: 0.08, ease: "power3.out", delay: 0.8 }
+        // Delay entry to 0.4s so old text is gone and cross-fade is 60% complete
+        gsap.fromTo(tagline, 
+            { opacity: 0, x: prefersReducedMotion ? 0 : -15 }, 
+            { opacity: 1, x: 0, duration: 1.0, delay: 0.4, ease: "power2.out" }
         );
 
-        gsap.fromTo(subtitle, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.2, delay: 1.0, ease: "power3.out" });
+        gsap.fromTo(titleElements,
+            { y: prefersReducedMotion ? 0 : "100%", opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.0, stagger: prefersReducedMotion ? 0 : 0.06, ease: "power3.out", delay: 0.5 }
+        );
+
+        gsap.fromTo(subtitle, 
+            { opacity: 0, y: prefersReducedMotion ? 0 : 20 }, 
+            { opacity: 1, y: 0, duration: 1.0, delay: 0.7, ease: "power3.out" }
+        );
 
         if (primary) {
             gsap.fromTo(primary,
@@ -221,8 +230,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
         if (secondary) {
             gsap.fromTo(secondary,
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1.5, delay: 0.5, ease: "power2.out" }
+                { y: prefersReducedMotion ? 0 : 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.2, delay: 0.3, ease: "power2.out" }
             );
         }
     };
@@ -279,7 +288,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     top: 40px;
                     left: 50%;
                     transform: translateX(-50%);
-                    z-index: 200;
+                    z-index: 99;
                     text-align: center;
                     display: flex;
                     flex-direction: column;
@@ -565,7 +574,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     display: flex;
                     align-items: center;
                     gap: 30px;
-                    z-index: 150;
+                    z-index: 99;
                 }
 
                 @media (max-width: 991px) {
@@ -644,12 +653,33 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     border-radius: 0;
                     cursor: pointer;
                     position: relative;
-                    transition: all 0.5s ease;
+                    transition: transform 160ms ease-out, color 0.4s ease-out, letter-spacing 0.4s ease-out;
                     z-index: 1;
                     overflow: hidden;
+                    will-change: transform;
                 }
 
-                @media (max-width: 991px) { .master-btn { padding: 15px 35px; letter-spacing: 3px; font-size: 0.7rem; } }
+                .master-btn:active {
+                    transform: scale(0.97);
+                }
+
+                @media (hover: hover) and (pointer: fine) {
+                    .master-btn:hover { 
+                        color: #fff; 
+                        letter-spacing: 8px; 
+                    }
+                    .master-btn:hover::before { 
+                        width: 100%; 
+                    }
+                }
+
+                @media (max-width: 991px) { 
+                    .master-btn { 
+                        padding: 15px 35px; 
+                        letter-spacing: 3px; 
+                        font-size: 0.7rem; 
+                    } 
+                }
                 .master-btn::before {
                     content: '';
                     position: absolute;
@@ -658,14 +688,12 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     z-index: -1;
                     transition: width 0.5s cubic-bezier(0.86, 0, 0.07, 1);
                 }
-                .master-btn:hover { color: #fff; letter-spacing: 8px; }
-                .master-btn:hover::before { width: 100%; }
 
                 .global-cta-wrap {
                     position: absolute;
                     top: 0; left: 0; width: 100%; height: 100%;
                     pointer-events: none;
-                    z-index: 150;
+                    z-index: 99;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -829,13 +857,13 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             </div>
 
             <div className="modern-pagination">
-                <button className="nav-btn prev-btn" onClick={() => swiperRef.current?.slidePrev()}>
+                <button className="nav-btn prev-btn" onClick={() => swiperRef.current?.slidePrev()} aria-label={t("Previous Slide")}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                 </button>
 
-                <div className="fraction">
+                <div className="fraction" aria-live="polite">
                     <span className="current">
                         {String(activeIndex + 1).padStart(2, '0')}
                     </span>
@@ -845,7 +873,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     </span>
                 </div>
 
-                <button className="nav-btn next-btn" onClick={() => swiperRef.current?.slideNext()}>
+                <button className="nav-btn next-btn" onClick={() => swiperRef.current?.slideNext()} aria-label={t("Next Slide")}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>

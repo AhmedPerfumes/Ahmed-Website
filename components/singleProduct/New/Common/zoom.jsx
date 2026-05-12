@@ -2,6 +2,8 @@ import Image from "next/image";
 import React, { useRef, useState, useEffect } from "react";
 
 const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
+  const baseScale = 1.1; // Scale the product up to reduce white space
+
   const containerRef = useRef(null);
   const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
 
@@ -88,9 +90,11 @@ const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
           height: "auto",
           objectFit: "cover",
           mixBlendMode: "multiply",
-          transition: "filter 0.3s ease",
+          transition: "filter 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1)",
           // The base image is blurred only when the lens is visible
           filter: visible ? "blur(2px)" : "none",
+          transform: `scale(${baseScale})`,
+          transformOrigin: "center",
         }}
         loading="lazy"
       />
@@ -108,18 +112,18 @@ const Zoom = ({ src, zoom = 2, lensSize = 150 }) => {
           backgroundImage: `url(${src})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: `${
-            containerRef.current?.offsetWidth * zoom || 0
+            (containerRef.current?.offsetWidth * baseScale) * zoom || 0
           }px`,
-          backgroundPosition: `-${lensPosition.x * zoom - lensSize / 2}px -${
-            lensPosition.y * zoom - lensSize / 2
+          backgroundPosition: `-${(lensPosition.x * baseScale) * zoom - lensSize / 2}px -${
+            (lensPosition.y * baseScale) * zoom - lensSize / 2
           }px`,
           backdropFilter: "blur(8px)",
           backgroundColor: "rgba(255, 255, 255, 0.05)",
           boxShadow:
             "0 0 15px 5px rgba(150, 150, 150, 0.4), 0 0 25px 10px rgba(100, 100, 100, 0.2)",
           border: "2px solid rgba(255, 255, 255, 0.4)",
-          transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
-          transform: visible ? "scale(1)" : "scale(0.25) translateY(-8px)",
+          transition: "transform 200ms cubic-bezier(0.23, 1, 0.32, 1), opacity 200ms cubic-bezier(0.23, 1, 0.32, 1)",
+          transform: visible ? "scale(1)" : "scale(0.95)",
           opacity: visible ? 1 : 0,
           zIndex: 50,
         }}

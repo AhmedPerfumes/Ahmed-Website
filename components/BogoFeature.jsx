@@ -402,11 +402,10 @@ const BOGOFeature = () => {
       {promotions.map((promo) => {
         const { campaign, name, selection_rule, free_products, buy_products, buy_quantity, get_quantity } = promo;
         if (!campaign) return null;
+        debugger
 
         // Calculate eligibility
-        const eligibleProducts = cartProducts.filter(
-          (item) => !item.is_gift && buy_products.some((b) => b.product_id === item.product_id)
-        );
+        const eligibleProducts = cartProducts.filter((item) => !item.is_gift && buy_products.some((b) => b.product_id === item.product_id));
         const totalQuantity = eligibleProducts.reduce((sum, item) => sum + (item.quantity || 0), 0);
         const giftSets = Math.floor(totalQuantity / buy_quantity);
         const giftsAllowed = giftSets * get_quantity;
@@ -417,6 +416,7 @@ const BOGOFeature = () => {
         const freeProduct = eligibleProducts.find(
           (item) => item.bogo_campaign === campaign && item.bogo_free_qty > 0
         );
+        console.log(freeProduct, "freeeeeeeeeeeeeeeeee");
 
         // Get candidate products from free_products that are in the cart
         const purchasedProductIds = eligibleProducts.map((p) => p.product_id);

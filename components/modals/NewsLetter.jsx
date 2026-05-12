@@ -131,14 +131,14 @@ export default function NewsLetter({popUp}) {
                                 <div className="block-newsletter w-100 px-3 py-4">
                                     <h3
                                         className="section-title fw-normal mb-3"
-                                        style={{ color: "#5c6137" }}
+                                        style={{ color: "#1D1B19", fontFamily: "'Playfair Display', serif", fontSize: "1.8rem" }}
                                     >
                                         {locale === 'ar' ? "سجّل ووفّر ۱۰٪" : elm.name}
                                     </h3>
 
                                     <p
                                         className="mb-3"
-                                        style={{ fontSize: "1rem", color: "#333" }}
+                                        style={{ fontSize: "0.95rem", color: "#5A554A", fontFamily: "'Inter', sans-serif", lineHeight: "1.6" }}
                                     >
                                         {locale === 'ar' ? "سجّل الآن واستمتع بخصم ۱۰٪ على طلبك الأول!" : elm.description}
                                     </p>
@@ -152,12 +152,12 @@ export default function NewsLetter({popUp}) {
                                     />
 
                                     <div className="d-flex justify-content-center">
-                                        <a
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium hover-effect"
-                                            href={`/${locale}/${elm.link}`}
-                                        >
+                                        <Link href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark">
                                             {t("Shop Now")}
-                                        </a>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M5 12h14M12 5l7 7-7 7" />
+                                            </svg>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

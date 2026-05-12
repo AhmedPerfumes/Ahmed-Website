@@ -22,7 +22,7 @@ import { renderPrice } from "@/utlis/priceRenderer";
 
 const headerStyles = `
 /* ─── Core Header ─── */
-.header { position: relative; z-index: 1000; background-color: white; }
+.header { position: relative; z-index: 1040; background-color: white; }
 
 /* ─── Middle Row ─── */
 .header-middle { border-bottom: 1px solid rgba(0,0,0,0.06); }
@@ -53,14 +53,29 @@ const headerStyles = `
 }
 .header-tools__item:hover {
     color: #a67b30;
-    transform: translateY(-1px);
 }
 
 /* ─── Search ─── */
-.search-popup { opacity: 0; transform: translateY(-10px); pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease; z-index: 1200; }
+.search-popup {
+    position: absolute;
+    top: 133%;
+    left: 0;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 2.45rem;
+    border-top: 1px solid #e4e4e4;
+    background-color: #ffffff;
+    box-shadow: 0 0.625rem 1.5625rem 0 rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 1200;
+}
 .js-content_visible .search-popup { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .js-content_hidden .search-popup { opacity: 0; transform: translateY(-50px); pointer-events: none; }
 .search-minimal { margin-left: auto; }
+[dir="rtl"] .search-minimal { margin-left: 0; }
 .search-minimal form { width: 220px; }
 .search-minimal .form-control {
     border: 1px solid #e8e8e8;
@@ -85,7 +100,7 @@ const headerStyles = `
     overflow-y: auto;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1);
     margin-top: 15px;
 }
 .search-results__footer {
