@@ -48,7 +48,7 @@ const GIFT_SETS = [
         desc: "The essence of romance in every detail",
         thumbnail: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
         video: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
-        link: "/shop/gift-sets/oud-roses-gift-set/shop/gift-sets/gift-sets/oud-roses-gift-set",
+        link: "/shop/gift-sets/gift-sets/oud-roses-gift-set",
         bg: "#f0e8e0",
     },
     {
@@ -89,6 +89,9 @@ function GiftCard({ item, index, locale }) {
             className="gs-card"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={handleMouseEnter}
+            onTouchEnd={handleMouseLeave}
+            onTouchCancel={handleMouseLeave}
         >
             <div className="gs-card__media" style={{ backgroundColor: item.bg }}>
                 <Image

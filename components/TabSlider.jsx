@@ -9,7 +9,7 @@ import { renderPrice } from "@/utlis/priceRenderer";
 import "swiper/css";
 
 import { useContextElement } from "@/context/Context";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Weight } from "lucide-react";
 import { ElevenMp } from "@mui/icons-material";
 import { useMenu } from "@/context/MenuContext";
@@ -48,6 +48,7 @@ const isSubcat = (cat, sub) =>
 export default function PopularProducts() {
   const { addProductToCart } = useContextElement();
   const locale = useLocale();
+  const t = useTranslations();
   const { currency, isLoading: isMenuLoading } = useMenu();
 
   const [apiData, setApiData] = useState({});
@@ -151,27 +152,9 @@ export default function PopularProducts() {
   const shouldCenter = filtered.length > 5;
 
   return (
-    <section
-      style={{
-        width: "100%",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: "60px 0 0",
-        background: "radial-gradient(circle at center, #f8f5f0 0%, #f3efe8 60%, #ece8e1 100%)",
-        overflow: "hidden",
-        position: 'relative'
-      }}
-    >
+    <section className="tab-slider-section">
       {/* Subtle texture overlay */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, right: 0, bottom: 0,
-        opacity: 0.03,
-        pointerEvents: 'none',
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-      }} />
+      <div className="tab-slider-bg-noise" />
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -224,42 +207,23 @@ export default function PopularProducts() {
       />
 
       {/* ===== HEADER & TABS ===== */}
-      <div style={{ textAlign: "center", marginBottom: 40 }}>
+      <div className="tab-slider-header">
         {/* Sub-tagline */}
-        <div style={{
-          fontSize: 'clamp(0.5rem, 1.5vw, 0.6rem)',
-          letterSpacing: '6px',
-          color: '#b9a16b',
-          textTransform: 'uppercase',
-          fontWeight: 500,
-          marginBottom: 14,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 8,
-        }}>
+        <div className="tab-slider-subtagline">
           <span style={{ fontSize: 6, color: '#b9a16b', opacity: 0.6 }}>◆</span>
-          Explore Our Collection
+          {t("Explore Our Collection")}
         </div>
 
         {/* Main title */}
-        <h2 style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 'clamp(1.4rem, 5vw, 2.4rem)',
-          fontWeight: 400,
-          color: '#1a1714',
-          letterSpacing: '5px',
-          textTransform: 'uppercase',
-          margin: '0 0 14px',
-        }}>
-          Explore by Category
+        <h2 className="tab-slider-title">
+          {t("Explore by Category")}
         </h2>
 
         {/* Diamond divider */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 20 }}>
-          <div style={{ width: 30, height: 1, background: 'linear-gradient(to right, transparent, rgba(185,161,107,0.5))' }} />
-          <div style={{ width: 5, height: 5, background: '#b9a16b', transform: 'rotate(45deg)', opacity: 0.6 }} />
-          <div style={{ width: 30, height: 1, background: 'linear-gradient(to left, transparent, rgba(185,161,107,0.5))' }} />
+        <div className="tab-slider-diamond-divider">
+          <div className="tab-slider-diamond-line-left" />
+          <div className="tab-slider-diamond" />
+          <div className="tab-slider-diamond-line-right" />
         </div>
 
         <div className="scroll-tabs">
@@ -270,20 +234,9 @@ export default function PopularProducts() {
                 setCurrentCategory(cat);
                 setActiveIndex(0);
               }}
-              style={{
-                background: "none",
-                border: "none",
-                textTransform: "uppercase",
-                padding: "8px 0",
-                flexShrink: 0,
-                color: currentCategory === cat ? "#1a1714" : "#8a8078",
-                fontWeight: currentCategory === cat ? 700 : 500,
-                transition: "color 0.3s ease",
-                cursor: "pointer",
-                position: 'relative'
-              }}
+              className={`tab-slider-tab-btn ${currentCategory === cat ? 'active' : ''}`}
             >
-              {cat}
+              {t(cat)}
               {currentCategory === cat && (
                 <motion.div
                   layoutId="activeTab"
@@ -304,15 +257,7 @@ export default function PopularProducts() {
       </div>
 
       {/* ===== SLIDER ===== */}
-      {/* ===== SLIDER ===== */}
-      <div
-        className="popularProductsGutter"
-        style={{
-          width: "100%",
-          margin: "40px 0",
-          perspective: 1500,
-        }}
-      >
+      <div className="popularProductsGutter tab-slider-slider-wrapper">
         <Swiper
           key={currentCategory}
           centeredSlides={shouldCenter}
@@ -392,12 +337,12 @@ export default function PopularProducts() {
 
                       {item.product_qty <= 0 ? (
                         <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 ">
-                          Out Of Stock
+                          {t("Out Of Stock")}
                         </div>
                       ) : (
                         item.discount && item.discount.discount_type === 'percent' && (
                           <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                            Sale {item.discount.value}%
+                            {t("Sale")} {item.discount.value}%
                           </div>
                         )
                       )}
@@ -417,7 +362,7 @@ export default function PopularProducts() {
                             });
                           }}
                         >
-                          Add To Cart
+                          {t("Add To Cart")}
                         </button>
                       )}
                     </div>
@@ -431,7 +376,7 @@ export default function PopularProducts() {
       </div>
 
       {/* ===== INFO BLOCK ===== */}
-      <div style={{ minHeight: 220, position: 'relative', marginTop: 40 }}>
+      <div className="tab-slider-info-block">
         <AnimatePresence mode="wait">
           {activeProduct && (
             <motion.div
@@ -448,44 +393,18 @@ export default function PopularProducts() {
                 width: '100%'
               }}
             >
-              <span
-                style={{
-                  fontSize: 'clamp(0.45rem, 1.5vw, 0.55rem)',
-                  textTransform: "uppercase",
-                  letterSpacing: 3,
-                  marginBottom: 8,
-                  color: "#b9a16b",
-                  fontWeight: 500,
-                }}
-              >
+              <span className="tab-slider-info-category">
                 {activeProduct.category_name}
               </span>
 
-              <h3
-                style={{
-                  fontSize: 'clamp(1.0rem, 4.5vw, 1.5rem)',
-                  fontFamily: "'Playfair Display', serif",
-                  fontWeight: 400,
-                  marginBottom: 8,
-                  color: '#1a1714',
-                  letterSpacing: 0.5,
-                }}
-              >
+              <h3 className="tab-slider-info-title">
                 {decodeHtml(activeProduct.product_name)}
               </h3>
 
               {/* Diamond divider */}
               <div style={{ width: 5, height: 5, background: '#b9a16b', transform: 'rotate(45deg)', opacity: 0.5, marginBottom: 12 }} />
 
-              <div
-                style={{
-                  fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
-                  fontWeight: 300,
-                  marginBottom: 22,
-                  color: '#3a342d',
-                  fontFamily: "'Inter', sans-serif"
-                }}
-              >
+              <div className="tab-slider-info-price">
                 {renderPrice(activeProduct, currency)}
               </div>
 
@@ -498,52 +417,16 @@ export default function PopularProducts() {
                     activeProduct.subcategory
                   )}/${clean(activeProduct.product_name)}`}
                 >
-                  <button
-                    style={{
-                      background: "#1a1714",
-                      color: "#fff",
-                      border: "none",
-                      padding: "12px 48px",
-                      fontSize: 'clamp(0.5rem, 1.8vw, 0.58rem)',
-                      letterSpacing: 2.5,
-                      textTransform: "uppercase",
-                      cursor: "pointer",
-                      fontWeight: 600,
-                      transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-                      boxShadow: '0 10px 20px rgba(0,0,0,0.08)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#b9a16b';
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 15px 30px rgba(185,161,107,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = '#1a1714';
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 10px 20px rgba(0,0,0,0.08)';
-                    }}
-                  >
-                    Explore Product
+                  <button className="tab-slider-explore-btn">
+                    {t("Explore Product")}
                   </button>
                 </Link>
 
                 <Link
                   href={`/${locale}/shop`}
-                  style={{
-                    fontSize: '0.68rem',
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    color: "#1a1714",
-                    textDecoration: "none",
-                    letterSpacing: 2,
-                    borderBottom: "1.5px solid #b9a16b",
-                    paddingBottom: 3,
-                    transition: 'opacity 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.target.style.opacity = 0.7}
-                  onMouseLeave={(e) => e.target.style.opacity = 1}
+                  className="tab-slider-view-all"
                 >
-                  View Full Collection &gt;
+                  {t("View Full Collection")} &gt;
                 </Link>
               </div>
             </motion.div>

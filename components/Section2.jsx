@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { PiStarLight, PiDropLight, PiHeartLight } from "react-icons/pi";
 import { motion } from "framer-motion";
@@ -14,10 +15,13 @@ const Section2 = () => {
 
             {/* ── Background Image ── */}
             <div className="bs-bg">
-                <img
+                <Image
                     src="/assets/images/home/demo8/avif/top-banner-full.avif"
                     alt="Signature Selections"
-                    loading="lazy"
+                    fill
+                    sizes="100vw"
+                    style={{ objectFit: 'cover' }}
+                    priority
                 />
             </div>
 
@@ -28,7 +32,7 @@ const Section2 = () => {
 
                 {/* ── Logo ── */}
                 <div className="bs-logo-wrap">
-                    <img src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" />
+                    <Image src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" width={120} height={40} style={{ objectFit: 'contain' }} />
                 </div>
 
                 {/* Gold corner ornaments */}

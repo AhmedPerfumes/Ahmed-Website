@@ -46,45 +46,83 @@ const HorizontalScroll = () => {
       panel.style.zIndex = i + 1;
     });
 
-    // ── All panels (except first) start off-screen to the right ─
-    gsap.set([...panels].slice(1), { x: "100%" });
+    let triggers = [];
 
-    // ── Initialise UI for first slide ───────────────────────────
-    updateUI(0);
+    /**
+     * WHY THE DEFERRED SETUP:
+     * useEffect fires right after hydration, but images / fonts above this
+     * section haven't loaded yet. Their dimensions are unknown, so the
+     * section's Y-offset on the page is wrong. GSAP then calculates wrong
+     * start/end positions, fires onLeave immediately for panel[1], and
+     * covers slide 1 before the user has even scrolled there.
+     *
+     * Fix: defer trigger creation to after the first paint AND after all
+     * resources have loaded, so GSAP always gets the true layout.
+     */
+    const buildTriggers = () => {
+      // Kill any previously created triggers before rebuilding
+      triggers.forEach((t) => t.kill());
+      triggers = [];
 
-    // ── One ScrollTrigger per incoming panel ────────────────────
-    const triggers = [];
+      // Reset all panels to their correct off-screen starting position
+      gsap.set([...panels].slice(1), { x: "100%" });
+      updateUI(0);
 
-    [...panels].slice(1).forEach((panel, i) => {
-      const panelIndex = i + 1; // 1-based position in the stack
+      // Hard-refresh ScrollTrigger so it recalculates all element offsets
+      ScrollTrigger.refresh(true);
 
-      const st = ScrollTrigger.create({
-        trigger: el,
-        // Each panel's entry occupies one viewport-height of scroll
-        start: () => `top+=${i * window.innerHeight}px top`,
-        end:   () => `top+=${panelIndex * window.innerHeight}px top`,
-        scrub: 1.0,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          // Slide panel from right (100%) to resting position (0%)
-          gsap.set(panel, { x: `${(1 - self.progress) * 100}%` });
+      // Calculate available scroll distance accurately (offsetHeight - windowHeight)
+      const sectionHeight = el.offsetHeight || window.innerHeight * 6;
+      const scrollableDistance = sectionHeight - window.innerHeight;
+      
+      const numSlidesToTransition = panels.length - 1; // 3 slides
+      const BUFFER_START = scrollableDistance * 0.12; // 12% delay before first slide
+      const BUFFER_END = scrollableDistance * 0.1;   // 10% stick time after last slide completes
+      const SLIDE_DISTANCE = (scrollableDistance - BUFFER_START - BUFFER_END) / numSlidesToTransition;
 
-          // Dot / counter follow the leading edge of the transition
-          updateUI(self.progress >= 0.5 ? panelIndex : panelIndex - 1);
-        },
-        onLeave: () => {
-          gsap.set(panel, { x: "0%" });
-          updateUI(panelIndex);
-        },
-        onEnterBack: () => {
-          updateUI(panelIndex - 1);
-        },
+      [...panels].slice(1).forEach((panel, i) => {
+        const panelIndex = i + 1;
+
+        const st = ScrollTrigger.create({
+          trigger: el,
+          // Start after buffer + previous slides' distances
+          start: () => `top+=${BUFFER_START + i * SLIDE_DISTANCE}px top`,
+          end:   () => `top+=${BUFFER_START + panelIndex * SLIDE_DISTANCE}px top`,
+          scrub: 1.0,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            gsap.set(panel, { x: `${(1 - self.progress) * 100}%` });
+            updateUI(self.progress >= 0.5 ? panelIndex : panelIndex - 1);
+          },
+          onLeave: () => {
+            gsap.set(panel, { x: "0%" });
+            updateUI(panelIndex);
+          },
+          onEnterBack: () => {
+            updateUI(panelIndex - 1);
+          },
+        });
+
+        triggers.push(st);
       });
+    };
 
-      triggers.push(st);
+    // ── Defer setup: wait one rAF + a small timeout so the browser
+    //    has painted and image heights are known ───────────────────
+    let rafId;
+    let timeoutId;
+    rafId = requestAnimationFrame(() => {
+      timeoutId = setTimeout(buildTriggers, 150);
     });
 
+    // ── Also re-refresh when ALL resources (images etc.) are loaded ─
+    const handleLoad = () => ScrollTrigger.refresh(true);
+    window.addEventListener("load", handleLoad);
+
     return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
+      window.removeEventListener("load", handleLoad);
       triggers.forEach((t) => t.kill());
     };
   }, [locale]);
@@ -94,7 +132,18 @@ const HorizontalScroll = () => {
     const container = containerRef.current;
     if (!container) return;
     const sectionTop = container.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: sectionTop + i * window.innerHeight, behavior: "smooth" });
+    
+    // To show slide i fully, we scroll to the point where its transition finishes
+    const sectionHeight = container.offsetHeight || window.innerHeight * 6;
+    const scrollableDistance = sectionHeight - window.innerHeight;
+    const numSlidesToTransition = TOTAL_PANELS - 1;
+    const BUFFER_START = scrollableDistance * 0.12;
+    const BUFFER_END = scrollableDistance * 0.1;
+    const SLIDE_DISTANCE = (scrollableDistance - BUFFER_START - BUFFER_END) / numSlidesToTransition;
+
+    const offset = i === 0 ? 0 : BUFFER_START + i * SLIDE_DISTANCE;
+
+    window.scrollTo({ top: sectionTop + offset, behavior: "smooth" });
   };
 
   return (
@@ -148,6 +197,7 @@ const HorizontalScroll = () => {
                     frameBorder="0"
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
+                    style={{ pointerEvents: 'none' }}
                   />
                 </div>
               </div>

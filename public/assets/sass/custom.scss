@@ -1367,8 +1367,9 @@ footer {
 .hs-section {
   position: relative;
   width: 100%;
-  /* 4 panels × 100vh: first panel is free, panels 2-4 each consume one 100vh of scroll */
-  height: 400vh;
+  /* 600vh: provides 500vh of scroll distance. 
+     Enough for buffer start + 3 slow transitions + stay time at end */
+  height: 600vh;
 }
 
 /* ── Sticky viewport — stays pinned while scroll space is consumed ─ */
@@ -1396,11 +1397,11 @@ footer {
   will-change: transform;
 }
 
-/* Shadow on the left edge of every incoming panel — creates the 
-   physical "card stacking on top" separation as it slides in from right */
+/* Soft separation shadow on the left edge of incoming panels — 
+   provides elegant "card stacking" depth without harsh black tones */
 .hs-panel:not(:first-child) {
-  box-shadow: -24px 0 80px rgba(0, 0, 0, 0.28),
-              -6px  0 20px rgba(0, 0, 0, 0.18);
+  box-shadow: -15px 0 45px rgba(29, 27, 25, 0.15),
+              -5px 0 15px rgba(0, 0, 0, 0.08);
 }
 
 @media (min-width: 992px) {
@@ -1605,6 +1606,11 @@ footer {
   width: 88vw;
   max-width: 1300px;
   padding: 0;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  @media (max-width: 768px) {
+    width: 94vw;
+  }
 }
 
 .hs-vid-frame {
@@ -1612,6 +1618,18 @@ footer {
   width: 100%;
   aspect-ratio: 16/9;
   box-shadow: 0 16px 50px rgba(0,0,0,0.12);
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+  cursor: pointer;
+
+  &:hover, &:active {
+    transform: scale(1.02);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+    
+    .hs-vid-corner--tl { transform: translate(-4px, -4px); }
+    .hs-vid-corner--tr { transform: translate(4px, -4px); }
+    .hs-vid-corner--bl { transform: translate(-4px, 4px); }
+    .hs-vid-corner--br { transform: translate(4px, 4px); }
+  }
 }
 
 .hs-vid-inner {
@@ -1622,6 +1640,7 @@ footer {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 0 0 1px rgba(185,161,107,0.3);
+  background: #000; /* Prevent flash before video loads */
 }
 
 .hs-vid-inner iframe {
@@ -1638,6 +1657,7 @@ footer {
   height: 24px;
   z-index: 10;
   pointer-events: none;
+  transition: transform 0.4s ease;
 }
 
 .hs-vid-corner--tl { top: -12px; left: -12px; border-top: 2px solid #b9a16b; border-left: 2px solid #b9a16b; }
@@ -1653,7 +1673,7 @@ footer {
   color: #8a7a5e;
   text-transform: uppercase;
   font-weight: 600;
-  padding-top: 18px;
+  padding-top: 24px;
   flex-shrink: 0;
 }
 
@@ -3472,3 +3492,172 @@ footer {
 
 @media (max-width: 991px) { .global-cta-btn-container { padding-top: 8px; } }
 @media (max-width: 576px) { .global-cta-btn-container { padding-top: 6px; } }
+/* TabSlider Component Styles */
+.tab-slider-section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 0 0;
+  background: radial-gradient(circle at center, #f8f5f0 0%, #f3efe8 60%, #ece8e1 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.tab-slider-bg-noise {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.tab-slider-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.tab-slider-subtagline {
+  font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+  letter-spacing: 6px;
+  color: #b9a16b;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-slider-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 5vw, 2.4rem);
+  font-weight: 400;
+  color: #1a1714;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+.tab-slider-diamond-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab-slider-diamond-line-left {
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(185,161,107,0.5));
+}
+
+.tab-slider-diamond-line-right {
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(to left, transparent, rgba(185,161,107,0.5));
+}
+
+.tab-slider-diamond {
+  width: 5px;
+  height: 5px;
+  background: #b9a16b;
+  transform: rotate(45deg);
+  opacity: 0.6;
+}
+
+.tab-slider-tab-btn {
+  background: none;
+  border: none;
+  text-transform: uppercase;
+  padding: 8px 0;
+  flex-shrink: 0;
+  color: #8a8078;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  
+  &.active {
+    color: #1a1714;
+    font-weight: 700;
+  }
+}
+
+.tab-slider-slider-wrapper {
+  width: 100%;
+  margin: 40px 0;
+  perspective: 1500px;
+}
+
+.tab-slider-info-block {
+  min-height: 220px;
+  position: relative;
+  margin-top: 40px;
+}
+
+.tab-slider-info-category {
+  font-size: clamp(0.45rem, 1.5vw, 0.55rem);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  color: #b9a16b;
+  font-weight: 500;
+}
+
+.tab-slider-info-title {
+  font-size: clamp(1.0rem, 4.5vw, 1.5rem);
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: #1a1714;
+  letter-spacing: 0.5px;
+}
+
+.tab-slider-info-price {
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  font-weight: 300;
+  margin-bottom: 22px;
+  color: #3a342d;
+  font-family: 'Inter', sans-serif;
+}
+
+.tab-slider-explore-btn {
+  background: #1a1714;
+  color: #fff;
+  border: none;
+  padding: 12px 48px;
+  font-size: clamp(0.5rem, 1.8vw, 0.58rem);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+
+  &:hover {
+    background: #b9a16b;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(185,161,107,0.2);
+  }
+}
+
+.tab-slider-view-all {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #1a1714;
+  text-decoration: none;
+  letter-spacing: 2px;
+  border-bottom: 1.5px solid #b9a16b;
+  padding-bottom: 3px;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.7;
+    color: #1a1714;
+  }
+}
