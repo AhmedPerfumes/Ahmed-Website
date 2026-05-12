@@ -41,7 +41,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/ignite-oud@2x.jpg",
         productImg: "/assets/images/best-sellers/ignite-oud@2x.jpg",
         link: "/shop/perfumes/occidental-fragrance/ignite-oud",
-        theme: { bg: "#Fdfbf7", accent: "#e63946", glow: "rgba(230, 57, 70, 0.1)", roman: "III" }
+        theme: { bg: "rgba(253, 251, 247, 1)", accent: "rgba(230, 57, 70, 1)", glow: "rgba(230, 57, 70, 0.1)", roman: "III" }
     },
     {
         id: 3,

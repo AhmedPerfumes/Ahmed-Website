@@ -349,8 +349,8 @@ export const categories88 = [
     altText: "Kaaf",
     videoSrc: "/assets/videos/vlogs/Rico.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/Rico.jpg",
-    link: "/shop/perfumes/oriental-fragrance/kaaf",
-    btn: "/shop/perfumes/oriental-fragrance/kaaf"
+    link: "/shop/perfumes/occidental-fragrance/kaaf",
+    btn: "/shop/perfumes/occidental-fragrance/kaaf"
   },
   {
     id: 5,

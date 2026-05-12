@@ -115,7 +115,7 @@ const DakhoonSection = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.5 }}
                         >
-                            <Link href={`/${locale}/shop/dakhoon`} className="dk-cta">
+                            <Link href={`/${locale}/product-category/dakhoon`} className="dk-cta">
                                 {t("Shop Now")}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14M12 5l7 7-7 7" />

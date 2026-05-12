@@ -115,7 +115,7 @@ const Section2 = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.5 }}
                         >
-                            <Link href={`/${locale}/shop/bestsellers`} className="bs-cta">
+                            <Link href={`/${locale}/shop`} className="bs-cta">
                                 {t("Explore Bestsellers")}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
