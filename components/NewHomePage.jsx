@@ -10,7 +10,6 @@ import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 import NewProductSlider from "./NewProductSlider";
 import NewGiftSection from "./NewGiftSection";
 import GiftSetBanner from "./GiftSetBanner";
-import DakhoonSection from "./Section1";
 import Section2 from "./Section2";
 import HorizontalScroll from "./HorizontalScroll";
 import QualityBoutiqueSection from "./QualityBoutiqueSection";
@@ -59,10 +58,9 @@ const NewHomePage = () => {
             <ProductShowcase />
             <Section2 />
             <NewProductSlider />
+            <GiftSetBanner />
             <NewGiftSection />
             <HorizontalScroll />
-            <GiftSetBanner />
-            <DakhoonSection />
             <QualityBoutiqueSection/>
         </div>
     );

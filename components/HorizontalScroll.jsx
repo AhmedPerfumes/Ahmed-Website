@@ -6,10 +6,11 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import Categories from "@/components/homes/home-15/Categories";
+import DakhoonSection from "@/components/Section1";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TOTAL_PANELS = 4;
+const TOTAL_PANELS = 5;
 
 const HorizontalScroll = () => {
   const locale = useLocale();
@@ -223,7 +224,12 @@ const HorizontalScroll = () => {
             </div>
           </div>
 
-          {/* ── Slide 4: Essence of Arabia ──────────── */}
+          {/* ── Slide 4: Dakhoon Section ────────────── */}
+          <div className="hs-panel hs-dakhoon-panel">
+            <DakhoonSection />
+          </div>
+
+          {/* ── Slide 5: Essence of Arabia ──────────── */}
           <div className="hs-panel hs-essence-panel">
             <div className="hs-essence-bg-text">ARABIA</div>
             <div className="hs-essence-inner">
