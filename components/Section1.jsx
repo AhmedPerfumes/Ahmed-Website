@@ -130,8 +130,7 @@ const DakhoonSection = () => {
                 </div>
 
                 {/* ── Bottom Area ── */}
-                <div className="dk-bottom">
-                    {/* Features Row */}
+                {/* <div className="dk-bottom">
                     <motion.div
                         className="dk-features"
                         initial={{ opacity: 0, y: 25 }}
@@ -170,7 +169,7 @@ const DakhoonSection = () => {
                             </div>
                         </div>
                     </motion.div>
-                </div>
+                </div> */}
             </div>
         </section>
     );

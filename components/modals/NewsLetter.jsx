@@ -113,7 +113,7 @@ export default function NewsLetter({popUp}) {
                                         </a>
                                     </div>
                                     <div className="d-sm-block d-md-none">
-                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                        <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
@@ -123,7 +123,7 @@ export default function NewsLetter({popUp}) {
                                                 className="h-100 w-100 object-fit-cover d-block hover-effect"
                                                 alt="image"
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -152,12 +152,12 @@ export default function NewsLetter({popUp}) {
                                     />
 
                                     <div className="d-flex justify-content-center">
-                                        <Link href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark">
+                                        <a href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark">
                                             {t("Shop Now")}
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M5 12h14M12 5l7 7-7 7" />
                                             </svg>
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
