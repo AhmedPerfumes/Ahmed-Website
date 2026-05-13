@@ -244,7 +244,8 @@ const HorizontalScroll = () => {
                 <p className="hs-essence-desc">
                   {t("Step into a realm of refreshing warmth with Ahmed Al Maghribis exclusive Dakhoon collection")}
                 </p>
-                <Link href={`/${locale}/shop/dakhoon`} className="hs-essence-btn">
+                <Link href={`/${locale}/product-category/dakhoon`} className="hs-essence-btn">
+
                   {t("Discover Collection")}
                   <span style={{ fontSize: "1.2rem", marginLeft: "5px" }}>→</span>
                 </Link>
