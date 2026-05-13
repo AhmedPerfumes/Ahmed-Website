@@ -20,10 +20,10 @@ export default function MobileHeader() {
   const [scrollDirection, setScrollDirection] = useState("down");
 
   const [searchKeyWord, setSearchKeyWord] = useState("");
-  
-    const handleChange = (event) => {
-      setSearchKeyWord(event.target.value);
-    };
+
+  const handleChange = (event) => {
+    setSearchKeyWord(event.target.value);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,9 +85,8 @@ export default function MobileHeader() {
 
   return (
     <div
-      className={`header-mobile header_sticky ${
-        scrollDirection == "up" ? "header_sticky-active" : "position-absolute"
-      } `}
+      className={`header-mobile header_sticky ${scrollDirection == "up" ? "header_sticky-active" : "position-absolute"
+        } `}
     >
       <div className="container d-flex align-items-center h-100">
         <Link className="mobile-nav-activator d-block position-relative" href="#">

@@ -149,9 +149,8 @@ export default function Header14() {
 
         <div
           ref={containerRef}
-          className={`header-tools__item hover-container ${
-            isPopupOpen ? "js-content_visible" : ""
-          }`}
+          className={`header-tools__item hover-container ${isPopupOpen ? "js-content_visible" : ""
+            }`}
         >
           <div className="search-popup js-hidden-content">
             <form onSubmit={onSearch} className="search-field container">
