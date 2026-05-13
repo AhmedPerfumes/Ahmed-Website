@@ -26,7 +26,7 @@ export default function ScrollTop() {
     <div
       id="scrollTop"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`end-0 ${isVisible ? "" : "visually-hidden"}`}
+      className={`${isVisible ? "" : "visually-hidden"}`}
     >
       {/* Your scroll to top content */}
     </div>

@@ -45,7 +45,32 @@
 // }
 
 #botpenguin-launcher-12 {
-  top: 84%;
+  bottom: 4.5rem !important;
+  z-index: 999 !important;
+  @media (max-width: 576px) {
+    right: 5px !important;
+    bottom: 6.5rem !important;
+  }
+
+  .botpenguin-launcher-image-12 {
+    background-color: #e6e4d9 !important;
+    border: 1px solid #a5792c !important;
+    width: 44px !important;
+    height: 44px !important;
+
+    @media (max-width: 576px) {
+      width: 30px !important;
+      height: 30px !important;
+    }
+  }
+
+  #botpenguin-launcher-text-12 {
+    @media (max-width: 576px) {
+      font-size: 15px !important;
+      line-height: 1.2 !important;
+      margin-bottom: 16px !important; 
+    }
+  }
 }
 
 #ele-24 {
@@ -599,9 +624,6 @@ footer {
   line-height: 36px;
   text-decoration: none;
 
-}
-#botpenguin-launcher-12 {
-  z-index: 999 !important;
 }
 
 .swiper-center .swiper-wrapper {
