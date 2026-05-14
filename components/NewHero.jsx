@@ -41,21 +41,21 @@ const HeroSkeleton = () => {
                 }}
             />
 
-            {/* Left content */}
-            <div
-                className="position-absolute"
+            {/* Center content */}
+            <Box
+                className="position-absolute d-flex flex-column align-items-center"
                 style={{
-                    top: "50%",
-                    left: "7%",
-                    transform: "translateY(-50%)",
+                    top: "15%",
+                    left: "50%",
+                    transform: "translateX(-50%)",
                     zIndex: 2,
-                    width: "500px",
-                    maxWidth: "85%",
+                    width: "600px",
+                    maxWidth: "90%",
                 }}
             >
                 <Skeleton
                     variant="text"
-                    width={120}
+                    width={140}
                     height={25}
                     sx={{ bgcolor: "rgba(0,0,0,0.08)", mb: 2, borderRadius: "4px" }}
                 />
@@ -67,7 +67,7 @@ const HeroSkeleton = () => {
                 />
                 <Skeleton
                     variant="text"
-                    width="100%"
+                    width="80%"
                     height={90}
                     animation="wave"
                     sx={{
@@ -79,11 +79,12 @@ const HeroSkeleton = () => {
                 {/* Subtitle */}
                 <Skeleton
                     variant="text"
-                    width="70%"
-                    height={70}
+                    width="60%"
+                    height={40}
                     animation="wave"
                     sx={{
                         bgcolor: "rgba(0,0,0,0.08)",
+                        mt: 2,
                         mb: 4,
                         borderRadius: "8px",
                     }}
@@ -100,27 +101,6 @@ const HeroSkeleton = () => {
                         borderRadius: "999px",
                     }}
                 />
-            </Box>
-
-            {/* Right thumbnails */}
-            <div
-                className="position-absolute d-flex flex-column gap-2"
-                style={{
-                    right: "30px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    zIndex: 2,
-                }}
-            >
-                {[1, 2, 3].map((_, i) => (
-                    <Skeleton
-                        key={i}
-                        variant="rounded"
-                        width={52}
-                        height={70}
-                        sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}
-                    />
-                ))}
             </Box>
 
             {/* Counter */}
