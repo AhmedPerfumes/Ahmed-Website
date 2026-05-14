@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const backgroundVariants = {
   initial: { opacity: 0.2 },
@@ -16,6 +16,7 @@ const GLOW_COLOR = HIGHLIGHT_COLOR;
 
 export default function FamilySection({ data = {} }) {
   const locale = useLocale();
+  const t = useTranslations();
   const baseUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/k-series/`;
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -234,7 +235,7 @@ export default function FamilySection({ data = {} }) {
           </motion.div>
           <motion.div initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }} className="d-flex flex-column align-items-center p-4">
                 <Link
-                 href="en/k-series">
+                 href={`/${locale}/k-series`}>
                   <button
                     data-v-7aa9e1a2
                     data-v-8967c2b9
@@ -252,7 +253,7 @@ export default function FamilySection({ data = {} }) {
                       backgroundColor: "transparent",
                     }}
                   >
-                    <span>Discover</span>
+                    <span>{t("Discover")}</span>
                   </button>
                  </Link>
           </motion.div>

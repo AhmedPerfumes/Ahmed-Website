@@ -173,16 +173,16 @@ const GiftSetBanner = () => {
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
-                    padding: 80px 40px 40px;
+                    padding: 80px 40px 160px;
                     max-width: 600px;
                 }
 
                 @media (max-width: 768px) {
-                    .gsb-center { padding: 60px 24px 32px; }
+                    .gsb-center { padding: 60px 24px 140px; }
                 }
 
-                @media (max-width: 480px) {
-                    .gsb-center { padding: 50px 18px 24px; }
+                @media (max-width: 576px) {
+                    .gsb-center { padding: 50px 18px 40px; }
                 }
 
                 /* Decorative horizontal lines flanking the tagline */
@@ -314,6 +314,13 @@ const GiftSetBanner = () => {
 
                 @media (max-width: 768px) {
                     .gsb-bottom { padding: 0 14px 24px; }
+                }
+
+                @media (max-width: 576px) {
+                    .gsb-bottom { 
+                        position: relative;
+                        padding: 0 14px 40px;
+                    }
                 }
 
                 .gsb-features {
@@ -550,7 +557,7 @@ const GiftSetBanner = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.5 }}
                     >
-                        <Link href={`/${locale}/shop/gift-sets`} className="gsb-cta">
+                        <Link href={`/${locale}/product-category/gift-sets`} className="gsb-cta">
                             {t("Explore Gift Sets")}
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12h14M12 5l7 7-7 7" />

@@ -26,44 +26,44 @@ export default function MobileHeader() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-      const t = useTranslations();
+  const t = useTranslations();
 
-   //  const pathname = usePathname();
-  
-      const { isLoggedIn } = useUser();
+  //  const pathname = usePathname();
+
+  const { isLoggedIn } = useUser();
 
   const [searchKeyWord, setSearchKeyWord] = useState("");
 
   // Inside MobileHeader function
-const [searchSuggestions, setSearchSuggestions] = useState([]);
-const [isSearching, setIsSearching] = useState(false);
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchSuggestions = async () => {
-        if (searchKeyWord.trim().length < 2) {
-            setSearchSuggestions([]);
-            return;
-        }
+      if (searchKeyWord.trim().length < 2) {
+        setSearchSuggestions([]);
+        return;
+      }
 
-        setIsSearching(true);
-        try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}api/search-suggestions?keyword=${searchKeyWord}`
-            );
-            const result = await response.json();
-            if (result.success) {
-                setSearchSuggestions(result.data);
-            }
-        } catch (err) {
-            console.error("Mobile search error:", err);
-        } finally {
-            setIsSearching(false);
+      setIsSearching(true);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/search-suggestions?keyword=${searchKeyWord}`
+        );
+        const result = await response.json();
+        if (result.success) {
+          setSearchSuggestions(result.data);
         }
+      } catch (err) {
+        console.error("Mobile search error:", err);
+      } finally {
+        setIsSearching(false);
+      }
     };
 
     const timeoutId = setTimeout(fetchSuggestions, 300);
     return () => clearTimeout(timeoutId);
-}, [searchKeyWord]);
+  }, [searchKeyWord]);
 
 
   const handleChange = (event) => {
@@ -84,15 +84,15 @@ useEffect(() => {
   };
 
   const swiperOptions = {
-        autoplay: {
-            delay: 5000,
-        },
-        modules: [Autoplay, Navigation, EffectFade],
-        pagination: false,
-        slidesPerView: 1,
-        effect: "fade",
-        loop: true,
-    };
+    autoplay: {
+      delay: 5000,
+    },
+    modules: [Autoplay, Navigation, EffectFade],
+    pagination: false,
+    slidesPerView: 1,
+    effect: "fade",
+    loop: true,
+  };
 
   const onSearch = (event) => {
     event.preventDefault();
@@ -119,7 +119,7 @@ useEffect(() => {
   return (
     <>
       <div className="bg-black d-flex align-items-center d-lg-none" style={{ height: "2.5rem", overflow: "hidden" }}>
-        <div 
+        <div
           className="marquee-track marquee-ltr"
           dir="ltr"
         >
@@ -157,7 +157,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      
+
       <div className="header-mobile header_sticky header_sticky-active" style={{ position: 'sticky', top: 0, zIndex: 100 }} >
         <div className="container d-flex align-items-center h-100">
           <Link className="mobile-nav-activator d-block position-relative" href="#">
@@ -173,129 +173,129 @@ useEffect(() => {
             <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
           </Link>
 
-        <div className="logo">
-          <a href="/">
-            <Image
-              src="/assets/images/about/AhmedLogo.png"
-              width={50}
-              height={50}
-              alt="Ahmed"
-              className=""
-            />
+          <div className="logo">
+            <a href="/">
+              <Image
+                src="/assets/images/Ahmed-logo.svg"
+                width={140}
+                height={50}
+                alt="Ahmed"
+                className=""
+              />
+            </a>
+          </div>
+          {/* <!-- /.logo --> */}
+
+          <a
+            onClick={() => openCart()}
+            className="header-tools__item header-tools__cart js-open-aside"
+          >
+            <svg
+              className="d-block"
+              width="18"
+              height="18"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <use href="#icon_cart" />
+            </svg>
+            <span className="cart-amount d-block position-absolute js-cart-items-count">
+              <CartLength />
+            </span>
           </a>
         </div>
-        {/* <!-- /.logo --> */}
+        {/* <!-- /.container --> */}
 
-        <a
-          onClick={() => openCart()}
-          className="header-tools__item header-tools__cart js-open-aside"
-        >
-          <svg
-            className="d-block"
-            width="18"
-            height="18"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <use href="#icon_cart" />
-          </svg>
-          <span className="cart-amount d-block position-absolute js-cart-items-count">
-            <CartLength />
-          </span>
-        </a>
-      </div>
-      {/* <!-- /.container --> */}
+        <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
+          <div className="container">
+            <form onSubmit={onSearch} className="search-field position-relative mt-4 mb-3">
+              <div className="position-relative d-flex align-items-center">
+                <input
+                  className="search-field__input w-100 border rounded-1 form-control shadow-sm"
+                  type="text"
+                  name="search-keyword"
+                  placeholder={locale === 'ar' ? "ابحث عن المنتجات" : "Search products"}
+                  value={searchKeyWord}
+                  onChange={handleChange}
+                  style={{
+                    height: '45px',
+                    paddingLeft: locale === 'ar' ? '3rem' : '1rem',
+                    paddingRight: locale === 'ar' ? '1rem' : '3rem',
+                    textAlign: locale === 'ar' ? 'right' : 'left'
+                  }}
+                />
+                {/* ... existing search buttons ... */}
+              </div>
 
-      <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
-        <div className="container">
-         <form onSubmit={onSearch} className="search-field position-relative mt-4 mb-3">
-        <div className="position-relative d-flex align-items-center">
-        <input
-            className="search-field__input w-100 border rounded-1 form-control shadow-sm"
-            type="text"
-            name="search-keyword"
-            placeholder={locale === 'ar' ? "ابحث عن المنتجات" : "Search products"}
-            value={searchKeyWord}
-            onChange={handleChange}
-            style={{ 
-                height: '45px', 
-                paddingLeft: locale === 'ar' ? '3rem' : '1rem', 
-                paddingRight: locale === 'ar' ? '1rem' : '3rem', 
-                textAlign: locale === 'ar' ? 'right' : 'left'
-            }}
-        />
-        {/* ... existing search buttons ... */}
-    </div>
+              {/* MOBILE SUGGESTIONS DROPDOWN */}
+              {(isSearching || searchSuggestions.length > 0) && (
+                <div className="mobile-search-results position-absolute start-0 top-100 w-100" style={{ zIndex: 999 }}>
+                  {isSearching && (
+                    <div className="p-3 text-center fs-13 text-muted">
+                      <div className="spinner-border spinner-border-sm me-2" role="status"></div>
+                      {t("Searching...")}
+                    </div>
+                  )}
 
-    {/* MOBILE SUGGESTIONS DROPDOWN */}
-    {(isSearching || searchSuggestions.length > 0) && (
-        <div className="mobile-search-results position-absolute start-0 top-100 w-100" style={{ zIndex: 999 }}>
-            {isSearching && (
-                <div className="p-3 text-center fs-13 text-muted">
-                    <div className="spinner-border spinner-border-sm me-2" role="status"></div>
-                    {t("Searching...")}
-                </div>
-            )}
-
-            {!isSearching && searchSuggestions.map((item, index) => (
-                <Link 
-                    key={index}
-                    href={`/${locale}${item.url_path}`}
-                    className="mobile-suggestion-item"
-                    onClick={() => {
+                  {!isSearching && searchSuggestions.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={`/${locale}${item.url_path}`}
+                      className="mobile-suggestion-item"
+                      onClick={() => {
                         setSearchKeyWord("");
                         setSearchSuggestions([]);
-                    }}
-                >
-                    <img 
-                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`} 
+                      }}
+                    >
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`}
                         alt={item.name}
                         className="mobile-suggestion-img"
-                    />
-                    <div className="mobile-suggestion-info">
+                      />
+                      <div className="mobile-suggestion-info">
                         <span className="mobile-suggestion-name">{item.name}</span>
                         <span className="mobile-suggestion-price">{item.price} {t("AED")}</span>
-                    </div>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2">
+                      </div>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2">
                         <path d="M9 18l6-6-6-6" />
-                    </svg>
-                </Link>
-            ))}
+                      </svg>
+                    </Link>
+                  ))}
 
-            {/* "View All" Link for Mobile */}
-            {!isSearching && searchSuggestions.length > 0 && (
-                <Link 
-                    href={`/${locale}/shop?q=${searchKeyWord}`}
-                    className="d-block text-center p-3 fs-13 fw-bold text-uppercase border-top bg-light text-dark"
-                    onClick={() => {
+                  {/* "View All" Link for Mobile */}
+                  {!isSearching && searchSuggestions.length > 0 && (
+                    <Link
+                      href={`/${locale}/shop?q=${searchKeyWord}`}
+                      className="d-block text-center p-3 fs-13 fw-bold text-uppercase border-top bg-light text-dark"
+                      onClick={() => {
                         setSearchKeyWord("");
                         setSearchSuggestions([]);
-                    }}
-                >
-                    {t("View All Results")}
-                </Link>
-            )}
-        </div>
-    )}
-</form>
-          {/* <!-- /.header-search --> */}
-        </div>
-        {/* <!-- /.container --> */}
-
-        <div className="container">
-          <div className="overflow-hidden">
-            <ul className="navigation__list list-unstyled position-relative">
-              <MobileNav />
-            </ul>
-            {/* <!-- /.navigation__list --> */}
+                      }}
+                    >
+                      {t("View All Results")}
+                    </Link>
+                  )}
+                </div>
+              )}
+            </form>
+            {/* <!-- /.header-search --> */}
           </div>
-          {/* <!-- /.overflow-hidden --> */}
-        </div>
-        {/* <!-- /.container --> */}
+          {/* <!-- /.container --> */}
 
-        <div className="border-top mt-2 pb-2">
-          {/* <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
+          <div className="container">
+            <div className="overflow-hidden">
+              <ul className="navigation__list list-unstyled position-relative">
+                <MobileNav />
+              </ul>
+              {/* <!-- /.navigation__list --> */}
+            </div>
+            {/* <!-- /.overflow-hidden --> */}
+          </div>
+          {/* <!-- /.container --> */}
+
+          <div className="border-top mt-2 pb-2">
+            {/* <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
             {!isLoggedIn ? (
                 <Link
                     className="js-open-aside"
@@ -312,90 +312,90 @@ useEffect(() => {
                 </Link>
             )}
           </div> */}
-          <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
-            <Link href={`/${locale}/order-tracking`}>
+            <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
+              <Link href={`/${locale}/order-tracking`}>
                 <IoReorderTwoSharp size={20} />
                 <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-                {t("Track Your Order")}
-              </span>
-            </Link>
-          </div>
-          <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
-          <Link href={`/${locale}/store-locator`}>
-              <IoLocationOutline size={20} />
-              <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-              {t("Find a store")}
-            </span>
-          </Link>
-          </div>
-      <div className="d-flex">
-          <div className="container d-flex align-items-center">
-            <label className="me-2 text-secondary">{t("Language")}</label>
-            <select
-              className="form-select form-select-sm bg-transparent border-0"
-              aria-label="Default select example"
-              name="store-language"
-              value={locale}
-              onChange={handleLangChange}
-            >
-              {languageOptions.map((option, index) => (
-                <option
-                  key={index}
-                  className="footer-select__option"
-                  value={option.value}
+                  {t("Track Your Order")}
+                </span>
+              </Link>
+            </div>
+            <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
+              <Link href={`/${locale}/store-locator`}>
+                <IoLocationOutline size={20} />
+                <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
+                  {t("Find a store")}
+                </span>
+              </Link>
+            </div>
+            <div className="d-flex">
+              <div className="container d-flex align-items-center">
+                <label className="me-2 text-secondary">{t("Language")}</label>
+                <select
+                  className="form-select form-select-sm bg-transparent border-0"
+                  aria-label="Default select example"
+                  name="store-language"
+                  value={locale}
+                  onChange={handleLangChange}
                 >
-                  {option.text}
-                </option>
-              ))}
-            </select>
-          </div>
+                  {languageOptions.map((option, index) => (
+                    <option
+                      key={index}
+                      className="footer-select__option"
+                      value={option.value}
+                    >
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="container d-flex align-items-center">
-            <label className="me-2 text-secondary">{t("Country")}</label>
-            <select
-              className="form-select form-select-sm bg-transparent border-0"
-              aria-label="Default select example"
-              name="store-language"
-              onChange={(e) => window.open(e.target.value,"_self")}
-            >
-              {currencyOptions.map((option, index) => (
-                <option
-                  key={index}
-                  className="footer-select__option"
-                  value={option.link}
+              <div className="container d-flex align-items-center">
+                <label className="me-2 text-secondary">{t("Country")}</label>
+                <select
+                  className="form-select form-select-sm bg-transparent border-0"
+                  aria-label="Default select example"
+                  name="store-language"
+                  onChange={(e) => window.open(e.target.value, "_self")}
                 >
-                  {t(option.text)}
-                </option>
-              ))}
-            </select>
-          </div>
-          </div>
-          
+                  {currencyOptions.map((option, index) => (
+                    <option
+                      key={index}
+                      className="footer-select__option"
+                      value={option.link}
+                    >
+                      {t(option.text)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-          <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">
-            {socialLinks.map((link, index) => (
-              <li key={index}>
-                <Link
-                  href={link.href}
-                  className="footer__social-link d-block"
-                >
-                  <svg
-                    className={link.className}
-                    width={link.width}
-                    height={link.height}
-                    viewBox={link.viewBox}
-                    xmlns="http://www.w3.org/2000/svg"
+
+            <ul className="container social-links list-unstyled d-flex flex-wrap mb-0">
+              {socialLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className="footer__social-link d-block"
                   >
-                    <use href={link.icon} />
-                  </svg>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-      {/* <!-- /.navigation --> */}
-    </div>
+                    <svg
+                      className={link.className}
+                      width={link.width}
+                      height={link.height}
+                      viewBox={link.viewBox}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <use href={link.icon} />
+                    </svg>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+        {/* <!-- /.navigation --> */}
+      </div>
     </>
   );
 }

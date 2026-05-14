@@ -21,7 +21,7 @@ const GIFT_SETS = [
         desc: "A perfect introduction to timeless elegance",
         thumbnail: "/assets/videos/giftsets/thumbnails/antee.jpg",
         video: "/assets/videos/giftsets/antee.mp4",
-        link: "/shop/gift-sets/antee-05-gift-set",
+        link: "/shop/gift-sets/gift-sets/antee-gift-set-05",
         bg: "#e8e4df",
     },
     {
@@ -30,7 +30,7 @@ const GIFT_SETS = [
         desc: "A rich tribute to heritage and sophistication",
         thumbnail: "/assets/videos/giftsets/thumbnails/dukhoon-collection.jpg",
         video: "/assets/videos/giftsets/dakhoon-collection.mp4",
-        link: "/shop/gift-sets/the-dakhoon-collection",
+        link: "/shop/gift-sets/gift-sets/the-dukhoon-collection",
         bg: "#ddd5ca",
     },
     {
@@ -39,7 +39,7 @@ const GIFT_SETS = [
         desc: "Where opulence meets modern refinement",
         thumbnail: "/assets/videos/giftsets/thumbnails/ihda-khas.jpg",
         video: "/assets/videos/giftsets/ihdakhas.mp4",
-        link: "/shop/gift-sets/ihdaa-khaas-gift-set",
+        link: "/shop/gift-sets/gift-sets/ihdaa-khaas",
         bg: "#d5cfe6",
     },
     {
@@ -48,7 +48,7 @@ const GIFT_SETS = [
         desc: "The essence of romance in every detail",
         thumbnail: "/assets/videos/giftsets/thumbnails/oud-roses-giftset.jpg",
         video: "/assets/videos/giftsets/oud-and-roses-giftset.mp4",
-        link: "/shop/gift-sets/oud-roses-gift-set",
+        link: "/shop/gift-sets/gift-sets/oud-roses-gift-set",
         bg: "#f0e8e0",
     },
     {
@@ -57,7 +57,7 @@ const GIFT_SETS = [
         desc: "Unveiling the art of fine perfumery",
         thumbnail: "/assets/videos/giftsets/thumbnails/shauque-al-shuyookh.jpg",
         video: "/assets/videos/giftsets/shaquealsheukh-giftset.mp4",
-        link: "/shop/gift-sets/shauque-al-shuyookh",
+        link: "/shop/gift-sets/gift-sets/shauque-al-shuyookh",
         bg: "#e0d2c0",
     },
 ];
@@ -89,6 +89,9 @@ function GiftCard({ item, index, locale }) {
             className="gs-card"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={handleMouseEnter}
+            onTouchEnd={handleMouseLeave}
+            onTouchCancel={handleMouseLeave}
         >
             <div className="gs-card__media" style={{ backgroundColor: item.bg }}>
                 <Image
@@ -214,7 +217,7 @@ const NewGiftSection = () => {
                     <div className="gs-elevated-box__inner">
                         {/* Banners */}
                         <div className="gs-banners">
-                            <Link href={`/${locale}/shop/gift-sets`} className="gs-banner gs-banner--left">
+                            <Link href={`/${locale}/product-category/gift-sets`} className="gs-banner gs-banner--left">
                                 <Image src="/assets/images/campaigns/Azzo-Azzeez.jpg" alt="A Signature of Distinction" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
                                 <div className="gs-banner__content">
                                     <span className="gs-banner__small">{t("A Signature of")}</span>
@@ -223,7 +226,7 @@ const NewGiftSection = () => {
                                     <span className="gs-banner__btn">{t("Explore Gift Sets")}</span>
                                 </div>
                             </Link>
-                            <Link href={`/${locale}/shop/gift-sets`} className="gs-banner gs-banner--right">
+                            <Link href={`/${locale}/product-category/gift-sets`} className="gs-banner gs-banner--right">
                                 <Image src="/assets/images/Antee-05-Giftset.jpg" alt="Beautifully Presented" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
                                 <div className="gs-banner__content">
                                     <span className="gs-banner__small">{t("Beautifully")}</span>

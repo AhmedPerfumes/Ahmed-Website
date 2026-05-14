@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { PiLeafLight, PiFireLight, PiMosqueLight, PiDiamondLight } from "react-icons/pi";
 import { motion } from "framer-motion";
@@ -14,10 +15,13 @@ const DakhoonSection = () => {
 
             {/* ── Background Image ── */}
             <div className="dk-bg">
-                <img
+                <Image
                     src="/assets/images/home/demo8/avif/dakhoon-bnr.avif"
                     alt="Arabic Dakhoon Collection"
-                    loading="lazy"
+                    fill
+                    sizes="100vw"
+                    style={{ objectFit: 'cover' }}
+                    priority
                 />
             </div>
 
@@ -28,7 +32,7 @@ const DakhoonSection = () => {
 
                 {/* ── Logo ── */}
                 <div className="dk-logo-wrap">
-                    <img src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" />
+                    <Image src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" width={120} height={40} style={{ objectFit: 'contain' }} />
                 </div>
 
                 {/* Gold corner ornaments */}
@@ -115,7 +119,7 @@ const DakhoonSection = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.5 }}
                         >
-                            <Link href={`/${locale}/shop/dakhoon`} className="dk-cta">
+                            <Link href={`/${locale}/product-category/dakhoon`} className="dk-cta">
                                 {t("Shop Now")}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
@@ -126,8 +130,7 @@ const DakhoonSection = () => {
                 </div>
 
                 {/* ── Bottom Area ── */}
-                <div className="dk-bottom">
-                    {/* Features Row */}
+                {/* <div className="dk-bottom">
                     <motion.div
                         className="dk-features"
                         initial={{ opacity: 0, y: 25 }}
@@ -166,7 +169,7 @@ const DakhoonSection = () => {
                             </div>
                         </div>
                     </motion.div>
-                </div>
+                </div> */}
             </div>
         </section>
     );
