@@ -173,16 +173,16 @@ const GiftSetBanner = () => {
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
-                    padding: 80px 40px 40px;
+                    padding: 80px 40px 160px;
                     max-width: 600px;
                 }
 
                 @media (max-width: 768px) {
-                    .gsb-center { padding: 60px 24px 32px; }
+                    .gsb-center { padding: 60px 24px 140px; }
                 }
 
-                @media (max-width: 480px) {
-                    .gsb-center { padding: 50px 18px 24px; }
+                @media (max-width: 576px) {
+                    .gsb-center { padding: 50px 18px 40px; }
                 }
 
                 /* Decorative horizontal lines flanking the tagline */
@@ -314,6 +314,13 @@ const GiftSetBanner = () => {
 
                 @media (max-width: 768px) {
                     .gsb-bottom { padding: 0 14px 24px; }
+                }
+
+                @media (max-width: 576px) {
+                    .gsb-bottom { 
+                        position: relative;
+                        padding: 0 14px 40px;
+                    }
                 }
 
                 .gsb-features {

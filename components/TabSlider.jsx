@@ -86,6 +86,7 @@ export default function PopularProducts() {
   const t = useTranslations("PopularProducts");
   const { addProductToCart } = useContextElement();
   const locale = useLocale();
+  
   const { currency, isLoading: isMenuLoading } = useMenu();
 
   const [apiData, setApiData] = useState({});
@@ -496,113 +497,58 @@ export default function PopularProducts() {
                 width: '100%'
               }}
             >
-              <span
-                style={{
-                  fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)',
-                  textTransform: "uppercase",
-                  letterSpacing: 2,
-                  marginBottom: 10,
-                  color: "#b9a16b",
-                  fontWeight: 600,
-                  fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif"
-                }}
-              >
-                {locale === 'ar' ? activeProduct.category_name_ar : activeProduct.category_name}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+                <div style={{ width: 24, height: 1, background: 'rgba(185, 161, 107, 0.5)' }} />
+                <span
+                  style={{
+                    fontSize: '0.65rem',
+                    textTransform: "uppercase",
+                    letterSpacing: 4,
+                    color: "#b9a16b",
+                    fontWeight: 700,
+                    fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif"
+                  }}
+                >
+                  {locale === 'ar' ? activeProduct.category_name_ar : activeProduct.category_name}
+                </span>
+                <div style={{ width: 24, height: 1, background: 'rgba(185, 161, 107, 0.5)' }} />
+              </div>
 
               <h3
                 style={{
-                  fontSize: 'clamp(1.5rem, 5vw, 2.2rem)',
+                  fontSize: 'clamp(2rem, 6vw, 3.2rem)',
                   fontFamily: locale === 'ar' ? 'inherit' : "'Playfair Display', serif",
                   fontWeight: 400,
-                  marginBottom: 10,
+                  marginBottom: 16,
                   color: '#1a1714',
-                  letterSpacing: '0.02em',
-                  lineHeight: 1.2
+                  letterSpacing: '0.01em',
+                  lineHeight: 1.1,
+                  fontStyle: locale === 'ar' ? 'normal' : 'italic'
                 }}
               >
                 {locale === 'ar' ? decodeHtml(activeProduct.product_name_ar) : decodeHtml(activeProduct.product_name)}
               </h3>
 
-              {/* Diamond divider */}
-              <div style={{ width: 5, height: 5, background: '#b9a16b', transform: 'rotate(45deg)', opacity: 0.5, marginBottom: 12 }} />
-
               <div
                 style={{
-                  fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-                  fontWeight: 400,
-                  marginBottom: 28,
-                  color: '#3a342d',
-                  fontFamily: "'Inter', sans-serif"
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                  fontWeight: 500,
+                  marginBottom: 32,
+                  color: '#1a1714',
+                  fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif",
+                  letterSpacing: 1
                 }}
               >
                 {renderPrice(activeProduct, currency)}
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-                <Link
-                  href={`/${locale}/shop/${clean(
-                    activeProduct.category_name
-                  )}/${isSubcat(
-                    activeProduct.category_name,
-                    activeProduct.subcategory
-                  )}/${clean(activeProduct.product_name)}`}
-                >
-                  <button
-                    style={{
-                      background: "#1a1714",
-                      color: "#fff",
-                      border: "none",
-                      padding: "16px 56px",
-                      fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)',
-                      letterSpacing: 2,
-                      textTransform: "uppercase",
-                      cursor: "pointer",
-                      fontWeight: 600,
-                      transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-                      boxShadow: '0 10px 20px rgba(0,0,0,0.08)',
-                      fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#b9a16b';
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 15px 30px rgba(185,161,107,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = '#1a1714';
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 10px 20px rgba(0,0,0,0.08)';
-                    }}
-                  >
-                    {t("exploreProduct")}
-                  </button>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Link href={`/${locale}/shop`} className="ts-modern-btn">
+                  <span>{t("viewFullCollection")}</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Link>
-
-                  <Link
-                    href={`/${locale}/shop`}
-                    style={{
-                      fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)',
-                      fontWeight: 600,
-                      textTransform: "uppercase",
-                      color: "#1a1714",
-                      textDecoration: "none",
-                      letterSpacing: 1.5,
-                      borderBottom: "1.5px solid #b9a16b",
-                      paddingBottom: 4,
-                      transition: 'all 0.3s ease',
-                      fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.opacity = 0.7;
-                      e.target.style.letterSpacing = '2px';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.opacity = 1;
-                      e.target.style.letterSpacing = '1.5px';
-                    }}
-                  >
-                    {t("viewFullCollection")}
-                  </Link>
               </div>
             </motion.div>
           )}

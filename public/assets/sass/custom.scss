@@ -77,12 +77,30 @@
   display: none;
 }
 
-/* Mobile only: make modal close button white */
+/* Mobile only: make modal close button premium glassmorphic */
 @media (max-width: 767.98px) {
   .newsletter-popup .btn-close {
     filter: invert(1);
-    opacity: 1;
+    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    padding: 0.6rem;
+    margin: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 100;
   }
+}
+
+/* Premium modal rounded corners & global close button z-index */
+.newsletter-popup .btn-close {
+  z-index: 100;
+}
+
+.newsletter-popup .modal-content {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
 }
 
 
@@ -886,6 +904,12 @@ footer {
   position: sticky;
   top: 80px;
   z-index: 1;
+
+  @media (max-height: 900px), (max-width: 1366px) {
+    position: relative;
+    top: auto;
+    padding: 60px 0 40px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1009,6 +1033,8 @@ footer {
   cursor: pointer;
   transition: transform 0.4s ease;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 1100px) {
@@ -1046,7 +1072,12 @@ footer {
 .gs-card__video        { opacity: 0; z-index: 1; }
 .gs-card__video--visible { opacity: 1; }
 
-.gs-card__info { padding: 0 2px; }
+.gs-card__info { 
+  padding: 0 2px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 
 .gs-card__title {
   font-size: 0.95rem;
@@ -1066,6 +1097,7 @@ footer {
 }
 
 .gs-card__link {
+  margin-top: auto;
   font-size: 0.82rem;
   letter-spacing: 2px;
   font-weight: 700;
@@ -1429,6 +1461,8 @@ footer {
 @media (min-width: 992px) {
   .hs-panel {
     padding-top: 100px;
+    padding-bottom: 100px; /* Make room for the navigation pill */
+    box-sizing: border-box;
   }
 }
 
@@ -1582,7 +1616,7 @@ footer {
 .hs-vid-header {
   text-align: center;
   flex-shrink: 0;
-  padding: 0 20px 28px;
+  padding: 0 20px 16px;
 }
 
 .hs-vid-eyebrow {
@@ -1626,12 +1660,13 @@ footer {
 .hs-vid-wrap {
   flex-shrink: 0;
   width: 88vw;
-  max-width: 1300px;
+  max-width: min(1100px, 90vh);
   padding: 0;
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   
   @media (max-width: 768px) {
     width: 94vw;
+    max-width: none;
   }
 }
 
@@ -1695,7 +1730,7 @@ footer {
   color: #8a7a5e;
   text-transform: uppercase;
   font-weight: 600;
-  padding-top: 24px;
+  padding-top: 16px;
   flex-shrink: 0;
 }
 
@@ -3186,4 +3221,61 @@ footer {
   font-size: 13px;
   color: #a67b30;
   font-weight: 600;
+}
+
+/* ==========================================================================
+   TAB SLIDER MODERN BUTTON
+   ========================================================================== */
+.ts-modern-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #1a1714;
+  color: #fff !important;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(26, 23, 20, 0.15);
+  font-family: 'Inter', sans-serif;
+
+  span {
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  &:hover {
+    background: #b9a16b;
+    box-shadow: 0 12px 28px rgba(185, 161, 107, 0.25);
+    color: #fff !important;
+    transform: translateY(-2px);
+
+    span {
+      transform: translateX(-4px);
+    }
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 14px 20px;
+    width: 100%;
+    max-width: 280px;
+    letter-spacing: 2px;
+    font-size: 0.7rem;
+    gap: 8px;
+  }
 }

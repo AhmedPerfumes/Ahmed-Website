@@ -98,61 +98,62 @@ export default function NewsLetter({popUp}) {
                     {popUp.map((elm, i) => (
                         <div className="row p-0 m-0" key={i}>
                             <div className="col-md-8 p-0">
-                                <div className="newsletter-popup__bg w-100">
+                                <div className="newsletter-popup__bg w-100 position-relative">
                                     <div className="d-none d-lg-block">
                                         <a href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
                                                 height={650}
-                                                style={{ height: "fit-content" }}
+                                                style={{ height: "fit-content", minHeight: "400px", objectFit: "cover" }}
                                                 loading="lazy"
                                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
-                                                className="h-100 w-100 object-fit-cover d-block"
+                                                className="w-100 d-block"
                                                 alt="image"
                                             />
                                         </a>
                                     </div>
-                                    <div className="d-sm-block d-md-none">
+                                    <div className="d-block d-lg-none">
                                         <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
                                             <Image
                                                 width={550}
-                                                height={650}
-                                                style={{ height: "fit-content" }}
+                                                height={400}
+                                                style={{ height: "30vh", minHeight: "220px", maxHeight: "300px", objectFit: "cover" }}
                                                 loading="lazy"
                                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
-                                                className="h-100 w-100 object-fit-cover d-block hover-effect"
+                                                className="w-100 d-block hover-effect"
                                                 alt="image"
                                             />
                                         </Link>
                                     </div>
+                                    <div className="d-block d-lg-none position-absolute bottom-0 w-100" style={{ height: "80px", background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)", pointerEvents: "none" }}></div>
                                 </div>
                             </div>
-                            <div className="col-md-4 p-0 d-flex align-items-center text-center">
-                                <div className="block-newsletter w-100 px-3 py-4">
+                            <div className="col-lg-4 p-0 d-flex align-items-center text-center">
+                                <div className="block-newsletter w-100 p-3 p-lg-4">
                                     <h3
-                                        className="section-title fw-normal mb-3"
-                                        style={{ color: "#1D1B19", fontFamily: "'Playfair Display', serif", fontSize: "1.8rem" }}
+                                        className="section-title fw-normal mb-2 mb-lg-3"
+                                        style={{ color: "#1D1B19", fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem, 5vw, 1.8rem)" }}
                                     >
                                         {locale === 'ar' ? "سجّل ووفّر ۱۰٪" : elm.name}
                                     </h3>
 
                                     <p
-                                        className="mb-3"
-                                        style={{ fontSize: "0.95rem", color: "#5A554A", fontFamily: "'Inter', sans-serif", lineHeight: "1.6" }}
+                                        className="mb-2 mb-lg-3"
+                                        style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: "#5A554A", fontFamily: "'Inter', sans-serif", lineHeight: "1.5" }}
                                     >
                                         {locale === 'ar' ? "سجّل الآن واستمتع بخصم ۱۰٪ على طلبك الأول!" : elm.description}
                                     </p>
 
                                     <div
-                                        className="mb-4"
-                                        style={{ fontSize: "0.95rem", color: "#555" }}
+                                        className="mb-3 mb-lg-4"
+                                        style={{ fontSize: "clamp(0.8rem, 3vw, 0.95rem)", color: "#555" }}
                                         dangerouslySetInnerHTML={{
                                             __html: locale === 'ar' ? '<span style="color:hsl(0,75%,60%);"><strong>ملاحظة: سيتم تطبيق جميع العروض والخصومات عند الدفع</strong></span>' : elm.content?.replace(/<\/?p>/g, ""),
                                         }}
                                     />
 
-                                    <div className="d-flex justify-content-center">
-                                        <a href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark">
+                                    <div className="d-flex justify-content-center mt-2">
+                                        <a href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark w-100 text-center justify-content-center">
                                             {t("Shop Now")}
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M5 12h14M12 5l7 7-7 7" />
