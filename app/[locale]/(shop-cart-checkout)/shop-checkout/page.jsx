@@ -18,11 +18,9 @@ export default function () {
   return (
     <>
       <Header14 />
-      <main className="page-wrapper">
-        <div className="mb-4 pb-4 d-none d-lg-block"></div>
-        <div className="mb-2 pb-2 d-block d-lg-none"></div>
-        <section className="shop-checkout container">
-       
+      <main>
+        <div className="mb-3 pb-3 mb-lg-4 pb-lg-4"></div>
+        <section className="shop-checkout container mb-5 pb-5">
           <h2 className="page-title">Shipping and Checkout</h2>
           <ChectoutSteps />
           <Checkout />
@@ -30,14 +28,11 @@ export default function () {
       </main>
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
-        
       </section>
-      <section className="d-sm-block d-md-none bg-dark pt-5  ">
-      <div className="MobileFooter">
-      
-
-      <MobileFooter2/>
-      </div>
+      <section className="d-sm-block d-md-none bg-dark pt-5">
+        <div className="MobileFooter">
+          <MobileFooter2/>
+        </div>
       </section>
     </>
   );

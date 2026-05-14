@@ -1,19 +1,20 @@
 .cart-drawer {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden; // prevents double scroll
-  background-color: $body-bg;
+  padding-bottom: 22.5rem;
 }
 
 .cart-drawer-items-list {
-  flex: 1;
+  max-height: 27rem;
   overflow-y: auto;
-  padding-bottom: 1rem;
-  border-bottom: 0.5px solid $border-color; // separates visually
+  height: 100%;
 }
 
-
+@media (min-width: 660px) and (max-width: 770px) {
+  .cart-drawer-items-list {
+    max-height: 20rem;
+    overflow-y: auto;
+    height: 100%;
+  }
+}
 
 .cart-drawer-item {
   max-height: 7.5rem;
@@ -75,13 +76,9 @@
   -ms-user-select: none;
 }
 
-.qty-control__reduce {
-  left: 0;
-}
+.qty-control__reduce { left: 0; }
 
-.qty-control__increase {
-  right: 0;
-}
+.qty-control__increase { right: 0; }
 
 .cart-drawer-divider {
   margin: 1.25rem 0;
@@ -96,12 +93,14 @@
 }
 
 .cart-drawer-actions {
-  flex-shrink: 0;
   background-color: $body-bg;
-  padding: $aside-padding-x / 2;
-  border-top: 0.5px solid $border-color; // matches divider styling
+  padding-right: $aside-padding-x / 2;
+  padding-bottom: $aside-padding-x / 2;
+  padding-left: $aside-padding-x / 2;
 
   @include media-breakpoint-up(sm) {
-    padding: $aside-padding-x;
+    padding-right: $aside-padding-x;
+    padding-bottom: $aside-padding-x;
+    padding-left: $aside-padding-x;
   }
 }

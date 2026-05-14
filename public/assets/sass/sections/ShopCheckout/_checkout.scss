@@ -5,6 +5,7 @@
   @include media-breakpoint-down(xl) {
     flex-direction: column;
     gap: 1.5rem;
+    padding-bottom: 8rem; // Clearance for fixed Place Order button
   }
 
   .billing-info__wrapper {
@@ -12,7 +13,8 @@
     flex-grow: 1;
 
     @include media-breakpoint-down(xl) {
-      padding-top: 1.5rem;
+      padding-top: 1rem;
+      order: 2; // billing under totals
     }
 
     .form-floating > label, .form-label-fixed > .form-label {
@@ -21,11 +23,64 @@
   }
 
   .checkout__totals-wrapper {
+    @include media-breakpoint-down(xl) {
+      display: contents;
+    }
+
     .sticky-content {
       padding-top: 3.125rem;
 
+      @include media-breakpoint-up(xl) {
+        position: sticky;
+        top: 11.25rem;
+      }
+
       @include media-breakpoint-down(xl) {
-        padding-top: 0;
+        display: contents;
+      }
+    }
+
+    .mobile_fixed-btn_wrapper {
+      .button-wrapper:not(.fixed-btn) {
+        padding: 0;
+      }
+
+      .fixed-btn {
+        position: fixed;
+        left: var(--bs-gutter-x, 0.9375rem);
+        right: var(--bs-gutter-x, 0.9375rem);
+        bottom: 4rem;
+        width: auto;
+
+        @include media-breakpoint-up(md) {
+          bottom: 1rem;
+        }
+
+        @include media-breakpoint-up(lg) {
+          position: static;
+        }
+      }
+
+      // Sticky checkout button at viewport bottom
+      @include media-breakpoint-down(xl) {
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0.75rem 1rem;
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+        background: #fff;
+        border-top: 1px solid #F0F0F0;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+        order: 5;
+      }
+    }
+
+    .checkout__coupon-wrapper {
+      margin-top: 1rem;
+      @include media-breakpoint-down(xl) {
+        order: 3; // After the form (billing is 2)
       }
     }
 
@@ -33,6 +88,21 @@
       width: 100%;
       height: 3.75rem;
       font-size: 0.875rem;
+      transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+
+      &:active {
+        transform: scale(0.96);
+      }
+
+      // Refined mobile checkout button
+      @include media-breakpoint-down(xl) {
+        height: 3.125rem;
+        font-weight: 700;
+        font-size: 0.8125rem;
+        letter-spacing: 0.04em;
+        border-radius: 8px;
+        order: 4;
+      }
     }
   }
 
@@ -44,11 +114,8 @@
     
     @include media-breakpoint-down(xl) {
       width: 100%;
-      padding: 1.5rem 1.5rem 1rem;
-    }
-
-    @include media-breakpoint-down(md) {
-      padding: 1rem 1rem 0.5rem;
+      padding: 1.25rem 1rem 1rem;
+      order: 4; // payment under billing and coupon
     }
 
     label {
@@ -79,23 +146,35 @@
 
 .checkout__totals {
   border: 1px solid #222;
-  margin-bottom: 1.25rem;
+  // margin-top: 1.25rem;
+  margin-bottom: 0;
   padding: 2.5rem 2.5rem 0.5rem;
   width: 26.25rem;
   
   @include media-breakpoint-down(xl) {
     width: 100%;
-    padding: 1.5rem 1.5rem 0.5rem;
+    padding: 1.25rem 1rem 0.5rem;
+    border-color: #E5E7EB;
+    order: 1; // totals at the top
   }
 
-  @include media-breakpoint-down(md) {
-    padding: 1rem 1rem 0.5rem;
+  .cart-items-collapse {
+    @include media-breakpoint-down(xl) {
+      margin-bottom: 0.5rem;
+    }
   }
 
   > h3 {
     font-size: 1rem;
     text-transform: uppercase;
     margin-bottom: 1.25rem;
+
+    @include media-breakpoint-down(xl) {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
   }
 
   table {
@@ -103,19 +182,72 @@
   }
 
   .checkout-cart-items {
+    display: flex;
+    flex-direction: column;
+
+    thead {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    th:first-child, td:first-child {
+      width: 70%;
+      padding-right: 10px;
+    }
+
+    th:last-child, td:last-child {
+      width: 30%;
+      text-align: right;
+    }
+
     thead {
       th {
         border-bottom: 1px solid #e4e4e4;
         padding: 0.875rem 0;
         font-size: 0.875rem;
         font-weight: 500;
+
+        @include media-breakpoint-down(xl) {
+          font-size: 0.8125rem;
+          padding: 0.5rem 0;
+        }
       }
     }
 
     tbody {
+      display: block;
+      max-height: 238px;
+      overflow-y: auto;
+      width: 100%;
+      padding-right: 0.5rem;
+      border-bottom: 1px solid #E5E7EB;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #f9f9f9;
+        border-radius: 4px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #b3b3b3;
+        border-radius: 4px;
+      }
+
       td {
         padding: 0.40625rem 0;
         color: $secondary;
+
+        @include media-breakpoint-down(xl) {
+          font-size: 0.8125rem;
+        }
       }
 
       tr:first-child {
@@ -131,15 +263,6 @@
         }
       }
     }
-
-    td, th {
-      word-break: break-word;
-      vertical-align: top;
-      &:last-child {
-        text-align: right;
-        min-width: 100px;
-      }
-    }
   }
 
   .checkout-totals {
@@ -148,8 +271,10 @@
       padding: 0.875rem 0;
       font-size: 0.875rem;
       font-weight: 500;
-      &:last-child {
-        text-align: right;
+
+      @include media-breakpoint-down(xl) {
+        font-size: 0.8125rem;
+        padding: 0.5rem 0;
       }
     }
 

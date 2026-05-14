@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
 
 import { useMenu } from "@/context/MenuContext";
 import { useLocale, useTranslations } from "next-intl";
@@ -35,10 +36,12 @@ const HeroSkeleton = () => {
                 }}
             />
 
-            {/* Left content */}
-            <div
-                className="position-absolute px-4 px-md-0"
-                style={{
+            {/* Desktop Content (Left-aligned) */}
+            <Box
+                sx={{
+                    display: { xs: "none", md: "flex" },
+                    flexDirection: "column",
+                    position: "absolute",
                     top: "50%",
                     left: "5%",
                     transform: "translateY(-50%)",
@@ -47,64 +50,81 @@ const HeroSkeleton = () => {
                     maxWidth: "500px",
                 }}
             >
-                {/* Season */}
                 <Skeleton
                     variant="text"
                     width={120}
                     height={25}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        mb: 2,
-                        borderRadius: "4px",
-                    }}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", mb: 2, borderRadius: "4px" }}
                 />
-
-                {/* Main title */}
                 <Skeleton
                     variant="text"
-                    width="min(80%, 400px)"
+                    width="100%"
+                    height={90}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}
+                />
+                <Skeleton
+                    variant="text"
+                    width="70%"
                     height={70}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        borderRadius: "8px",
-                        width: { xs: "85%", md: "100%" }
-                    }}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", mb: 4, borderRadius: "8px" }}
                 />
-
-                {/* Subtitle */}
-                <Skeleton
-                    variant="text"
-                    width="min(50%, 300px)"
-                    height={60}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        mb: 4,
-                        borderRadius: "8px",
-                        width: { xs: "60%", md: "70%" }
-                    }}
-                />
-
-                {/* Button */}
                 <Skeleton
                     variant="rounded"
-                    width={110}
-                    height={35}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        borderRadius: "999px",
-                        marginTop: "20px",
-                    }}
+                    width={180}
+                    height={52}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "999px" }}
                 />
-            </div>
+            </Box>
 
-            {/* Right thumbnails */}
-            <div
-                className="position-absolute d-none d-md-flex flex-column gap-2"
-                style={{
+            {/* Mobile Content (Centered Top) */}
+            <Box
+                sx={{
+                    display: { xs: "flex", md: "none" },
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    position: "absolute",
+                    top: "18%",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    zIndex: 2,
+                    width: "90%",
+                    maxWidth: "95%",
+                }}
+            >
+                <Skeleton
+                    variant="text"
+                    width={90}
+                    height={20}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", mb: 2, borderRadius: "4px" }}
+                />
+                <Skeleton
+                    variant="text"
+                    width="100%"
+                    height={60}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}
+                />
+                <Skeleton
+                    variant="text"
+                    width="70%"
+                    height={40}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", mb: 3, borderRadius: "8px" }}
+                />
+                <Skeleton
+                    variant="rounded"
+                    width={150}
+                    height={45}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "999px" }}
+                />
+            </Box>
+
+            {/* Right thumbnails (Desktop only) */}
+            <Box
+                sx={{
+                    display: { xs: "none", md: "flex" },
+                    flexDirection: "column",
+                    gap: "8px",
+                    position: "absolute",
                     right: "30px",
                     top: "50%",
                     transform: "translateY(-50%)",
@@ -117,35 +137,27 @@ const HeroSkeleton = () => {
                         variant="rounded"
                         width={52}
                         height={70}
-                        animation="wave"
-                        sx={{
-                            bgcolor: "rgba(0,0,0,0.08)",
-                            borderRadius: "8px",
-                        }}
+                        sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}
                     />
                 ))}
-            </div>
+            </Box>
 
             {/* Counter */}
-            <div
-                className="position-absolute"
-                style={{
-                    left: "50px",
-                    bottom: "40px",
+            <Box
+                sx={{
+                    position: "absolute",
+                    left: { xs: "20px", md: "50px" },
+                    bottom: { xs: "20px", md: "40px" },
                     zIndex: 2,
                 }}
             >
                 <Skeleton
                     variant="rounded"
-                    width={90}
-                    height={40}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        borderRadius: "10px",
-                    }}
+                    width={{ xs: 70, md: 90 }}
+                    height={{ xs: 30, md: 40 }}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "10px" }}
                 />
-            </div>
+            </Box>
         </div>
     );
 };

@@ -19,6 +19,7 @@ import { useUser } from "../../context/UserContext";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { renderPrice } from "@/utlis/priceRenderer";
+import Skeleton from "@mui/material/Skeleton";
 
 const headerStyles = `
 /* ─── Core Header ─── */
@@ -255,7 +256,6 @@ const headerStyles = `
     padding-left: 1rem;
     padding-right: 1rem;
     display: flex;
-    align-items: center;
     justify-content: center;
     position: relative;
 }
@@ -354,6 +354,72 @@ const marqueeStyles = `
     font-weight: 700;
 }
 `;
+
+const HeaderSkeleton = () => {
+    return (
+        <div className="header bg-white">
+            {/* Top Bar Skeleton */}
+            <div className="bg-black" style={{ height: "2.5rem" }}>
+                <div className="container h-100 d-flex align-items-center justify-content-center">
+                    <Skeleton 
+                        variant="text" 
+                        width={300} 
+                        height={20} 
+                        sx={{ bgcolor: "rgba(255,255,255,0.2)" }} 
+                    />
+                </div>
+            </div>
+
+            {/* Middle Bar Skeleton */}
+            <div className="header-middle border-bottom">
+                <div className="container-fluid d-flex align-items-center px-5 py-2">
+                    {/* Left: Currency/Language */}
+                    <div className="flex-1 d-flex gap-3">
+                        <Skeleton variant="rounded" width={80} height={25} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                        <Skeleton variant="rounded" width={80} height={25} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                    </div>
+
+                    {/* Center: Logo */}
+                    <div className="logo">
+                        <Link href="/">
+                            <Image
+                                loading="eager"
+                                src="/assets/images/about/AhmedLogo.png"
+                                width="100"
+                                height="100"
+                                alt="Ahmed Al Maghribi"
+                            />
+                        </Link>
+                    </div>
+
+                    {/* Right: Search & Tools */}
+                    <div className="header-tools d-flex align-items-center flex-1 justify-content-end gap-3">
+                        <Skeleton variant="rounded" width={215} height={35} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} className="d-none d-lg-block" />
+                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Bar Skeleton */}
+            <div className="header-bottom border-top d-none d-lg-block">
+                <div className="container d-flex justify-content-center py-2" style={{"gap": "5.5rem"}}>
+                    {[...Array(8)].map((_, i) => (
+                        <Skeleton 
+                            key={i} 
+                            variant="text" 
+                            width={70} 
+                            height={30} 
+                            sx={{ bgcolor: "rgba(0,0,0,0.05)" }} 
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default function Header14() {
     const locale = useLocale();
@@ -575,7 +641,7 @@ export default function Header14() {
         error,
         currency,
     } = useMenu();
-    if (isMenuLoading) return <div></div>;
+    if (isMenuLoading) return <HeaderSkeleton />;
     if (error) return <div>{error}</div>;
 
     const swiperOptions = {
@@ -589,6 +655,7 @@ export default function Header14() {
 
     return (
         <>
+        {/* <HeaderSkeleton /> */}
             <style>
                 {headerStyles} {marqueeStyles}
             </style>
