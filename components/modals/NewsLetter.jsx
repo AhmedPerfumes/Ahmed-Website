@@ -100,7 +100,7 @@ export default function NewsLetter({popUp}) {
                             <div className="col-md-8 p-0">
                                 <div className="newsletter-popup__bg w-100 position-relative">
                                     <div className="d-none d-lg-block">
-                                        <a href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                       
                                             <Image
                                                 width={550}
                                                 height={650}
@@ -110,10 +110,10 @@ export default function NewsLetter({popUp}) {
                                                 className="w-100 d-block"
                                                 alt="image"
                                             />
-                                        </a>
+                                       
                                     </div>
                                     <div className="d-block d-lg-none">
-                                        <Link href={`/${locale}/${elm.link}`} className="hover-effect" >
+                                       
                                             <Image
                                                 width={550}
                                                 height={400}
@@ -123,7 +123,7 @@ export default function NewsLetter({popUp}) {
                                                 className="w-100 d-block hover-effect"
                                                 alt="image"
                                             />
-                                        </Link>
+                                      
                                     </div>
                                     <div className="d-block d-lg-none position-absolute bottom-0 w-100" style={{ height: "80px", background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)", pointerEvents: "none" }}></div>
                                 </div>
