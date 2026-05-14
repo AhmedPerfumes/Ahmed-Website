@@ -905,15 +905,19 @@ footer {
   top: 80px;
   z-index: 1;
 
-  @media (max-height: 900px), (max-width: 1366px) {
-    position: relative;
-    top: auto;
+  @media (max-width: 1366px) {
     padding: 60px 0 40px;
+    top: 65px;
   }
-}
+  
+  @media (max-width: 991px) {
+    top: 55px;
+  }
 
-@media (max-width: 768px) {
-  .gs-section { padding: 50px 0 40px; }
+  @media (max-width: 768px) {
+    padding: 50px 0 40px;
+    top: 50px;
+  }
 }
 
 /* ── HEADER ── */
@@ -1421,9 +1425,9 @@ footer {
 .hs-section {
   position: relative;
   width: 100%;
-  /* 600vh: provides 500vh of scroll distance. 
-     Enough for buffer start + 3 slow transitions + stay time at end */
-  height: 600vh;
+  /* 480vh: provides a refined scroll distance. 
+     Enough for buffer start + smooth transitions, removing dead space at end */
+  height: 480vh;
 }
 
 /* ── Sticky viewport — stays pinned while scroll space is consumed ─ */

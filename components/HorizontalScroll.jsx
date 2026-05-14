@@ -78,7 +78,7 @@ const HorizontalScroll = () => {
       
       const numSlidesToTransition = panels.length - 1; // 3 slides
       const BUFFER_START = scrollableDistance * 0.12; // 12% delay before first slide
-      const BUFFER_END = scrollableDistance * 0.1;   // 10% stick time after last slide completes
+      const BUFFER_END = scrollableDistance * 0.02;   // 2% stick time after last slide completes (almost no dead scroll)
       const SLIDE_DISTANCE = (scrollableDistance - BUFFER_START - BUFFER_END) / numSlidesToTransition;
 
       [...panels].slice(1).forEach((panel, i) => {
