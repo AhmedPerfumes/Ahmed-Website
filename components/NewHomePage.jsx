@@ -4,21 +4,20 @@ import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMenu } from "@/context/MenuContext";
+
 import dynamic from "next/dynamic";
 
 import NewHero from "./NewHero";
 
-// SSR-enabled dynamic imports — keeps content indexable by Google
-const TabSlider = dynamic(() => import("./TabSlider"));
-const ProductShowcase = dynamic(() => import("./singleProduct/ProductShowcase/ProductShowcase"));
-const Section2 = dynamic(() => import("./Section2"));
-const NewProductSlider = dynamic(() => import("./NewProductSlider"));
-const GiftSetBanner = dynamic(() => import("./GiftSetBanner"));
-const NewGiftSection = dynamic(() => import("./NewGiftSection"));
-const QualityBoutiqueSection = dynamic(() => import("./QualityBoutiqueSection"));
-
-// ssr:false — browser-only APIs (GSAP ScrollTrigger) or modals
+// Dynamic imports for below-fold components to improve PageSpeed performance
+const TabSlider = dynamic(() => import("./TabSlider"), { ssr: false });
+const ProductShowcase = dynamic(() => import("./singleProduct/ProductShowcase/ProductShowcase"), { ssr: false });
+const Section2 = dynamic(() => import("./Section2"), { ssr: false });
+const NewProductSlider = dynamic(() => import("./NewProductSlider"), { ssr: false });
+const GiftSetBanner = dynamic(() => import("./GiftSetBanner"), { ssr: false });
+const NewGiftSection = dynamic(() => import("./NewGiftSection"), { ssr: false });
 const HorizontalScroll = dynamic(() => import("./HorizontalScroll"), { ssr: false });
+const QualityBoutiqueSection = dynamic(() => import("./QualityBoutiqueSection"), { ssr: false });
 const NewsLetter = dynamic(() => import("./modals/NewsLetter"), { ssr: false });
 
 if (typeof window !== "undefined") {
@@ -27,7 +26,6 @@ if (typeof window !== "undefined") {
 
 const NewHomePage = () => {
     const { popUp } = useMenu();
-
     useEffect(() => {
         let lenis;
         let rafId;
@@ -70,6 +68,7 @@ const NewHomePage = () => {
             }
             if (lenis) {
                 lenis.destroy();
+                gsap.ticker.remove((time) => lenis.raf(time * 1000));
             }
         };
     }, []);
