@@ -67,11 +67,15 @@ async function getCategorySubCategory(categoryName) {
 }
 
 // export default function ShopPage5() {
-  const ShopPage5 = async () => {
+  const ShopPage5 = async ({params}) => {
+    const locale = params.locale;
+
     const category = 'gift-sets';
+    
     // console.log(category);
     try {
       const data = await getCategorySubCategory(category);
+      const description= locale === 'ar' ? data.description_ar : data.description_en;
       // console.log(data);
       return data && (
       <>
@@ -87,7 +91,7 @@ async function getCategorySubCategory(categoryName) {
           <Shop10 products={ data.products }/>
           
           
-          <CollapsibleDescription description={data.description}  />
+          <CollapsibleDescription description={description}  />
         </main>
 
         <section className=" d-none d-lg-block" style={{ height: "100%" }}>
