@@ -194,7 +194,16 @@ export default function MobileHeader() {
               <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
             </Link>
 
-            <div className="logo">
+            <div 
+              className="logo"
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                zIndex: 1
+              }}
+            >
               <a href="/">
                 <Image
                   src="/assets/images/Ahmed-logo.svg"
