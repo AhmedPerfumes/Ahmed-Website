@@ -18,6 +18,7 @@ import {
   formatPrice 
 } from "@/utils/shop";
 import { sortingOptions } from "@/data/products/productCategories";
+import ProductFilter from "../../shoplist/ProductFilter";
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
@@ -96,6 +97,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   const [sortOption, setSortOption] = useState('popularity');
   const [maxPrice, setMaxPrice] = useState(1000);
   const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const ref = useRef(null);
   const gridRef = useRef(null);
 
@@ -108,6 +110,17 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     const labels = rawProducts.map(p => p.category_name).filter(Boolean);
     return [...new Set(labels)].sort();
   }, [rawProducts]);
+
+  const uniqueSubcategories = useMemo(() => {
+    const activeProducts = selectedLabels.length > 0 
+      ? rawProducts.filter(p => selectedLabels.includes(p.category_name))
+      : rawProducts;
+
+    const subcats = activeProducts
+      .map(p => p.subcategory?.subcategory_name || p.subcategory_name || p.subcategory)
+      .filter((s) => s && typeof s === 'string');
+    return [...new Set(subcats)].sort();
+  }, [rawProducts, selectedLabels]);
 
   const uniqueTags = useMemo(() => {
     const tags = rawProducts.flatMap(p => Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : [])).filter(Boolean);
@@ -208,10 +221,24 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     });
   };
 
+  const handleReset = () => {
+    setPriceRange([0, maxPrice]);
+    setStockAvailability('all');
+    setSelectedLabels([]);
+    setSelectedSubcategories([]);
+    setSelectedTags([]);
+    setSearchTerm('');
+  };
+
   const filteredProducts = useMemo(() => {
     const [low, high] = priceRange;
 
     const filtered = rawProducts.filter((p) => {
+      // "New Launch" items are never filtered out
+      if (p.collection_name === 'New Launch') {
+        return true;
+      }
+
       // 1. Search Filter
       const matchesSearch = p.product_name.toLowerCase().includes(searchTerm.toLowerCase());
       if (!matchesSearch) return false;
@@ -232,6 +259,12 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
         if (!selectedLabels.includes(p.category_name)) return false;
       }
 
+      // 5b. Subcategory Filter
+      if (selectedSubcategories.length > 0) {
+        const subcatVal = p.subcategory?.subcategory_name || p.subcategory_name || p.subcategory;
+        if (!selectedSubcategories.includes(subcatVal)) return false;
+      }
+
       // 6. Tags Filter
       if (selectedTags.length > 0) {
         const pTags = Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []);
@@ -242,7 +275,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     });
     
     return sortItems(filtered, sortOption);
-  }, [rawProducts, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedTags]);
+  }, [rawProducts, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
 
   const totalPages = Math.ceil(filteredProducts.length / perPage);
   const currentProducts = filteredProducts.slice((page - 1) * perPage, page * perPage);
@@ -290,6 +323,11 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
               <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
             <span className="d-none d-xs-inline">{t("Filter")}</span>
+            {(selectedLabels.length > 0 || selectedTags.length > 0 || selectedSubcategories.length > 0 || stockAvailability !== 'all' || priceRange[0] !== 0 || priceRange[1] !== maxPrice) && (
+              <span className="ms-1 rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style={{ width: '16px', height: '16px', fontSize: '10px' }}>
+                {selectedLabels.length + selectedTags.length + selectedSubcategories.length + (stockAvailability !== 'all' ? 1 : 0) + (priceRange[0] !== 0 || priceRange[1] !== maxPrice ? 1 : 0)}
+              </span>
+            )}
           </button>
 
           {isDDActive && (
@@ -306,149 +344,41 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                 boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
               }}
             >
-              <div className="mb-4">
-                <label className="text-uppercase fw-bold text-secondary mb-3 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Sort By")}</label>
-                <select
-                  className="form-select border rounded-3 fs-sm py-2 px-3"
-                  value={sortOption}
-                  onChange={(e) => setSortOption(e.target.value)}
-                  style={{ fontSize: '14px', cursor: 'pointer' }}
-                >
-                  {sortingOptions.map((option, index) => (
-                    <option key={index} value={option.value}>
-                      {t(option.label)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="mb-4 d-none d-md-block">
-                <label className="text-uppercase fw-bold text-secondary mb-3 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("View")}</label>
-                <div className="d-flex align-items-center gap-2">
-                  {availableViews.map((c, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedColView(c)}
-                      className={`flex-grow-1 py-2 rounded-3 border transition-all justify-content-center ${selectedColView === c ? "bg-dark border-dark" : "bg-light border-light"} ${c === 4 ? 'd-none d-lg-flex' : 'd-flex'}`}
-                      aria-label={`View ${c} columns`}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke={selectedColView === c ? "#fff" : "#666"}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        {Array.from({ length: c }).map((_, idx) => {
-                          const spacing = 16 / (c + 1);
-                          const x = 4 + spacing * (idx + 1);
-                          return <line key={idx} x1={x} y1="5" x2={x} y2="19" />;
-                        })}
-                      </svg>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mb-0">
-                <label className="text-uppercase fw-bold text-secondary mb-4 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Price Range")}</label>
-                <div className="px-2">
-                  <Slider
-                    range
-                    max={maxPrice}
-                    min={0}
-                    defaultValue={priceRange}
-                    value={priceRange}
-                    onChange={(value) => setPriceRange(value)}
-                    reverse={locale === 'ar'}
-                  />
-                </div>
-                <div className="d-flex justify-content-between mt-3 pt-1 fw-medium" style={{ fontSize: '12px' }}>
-                  <div>
-                    <span className={`${locale === 'ar' ? 'ms-1' : 'me-1'} text-secondary`}>{t("Min")}:</span>
-                    <span>{priceRange[0]}{currency?.symbol}</span>
-                  </div>
-                  <div>
-                    <span className={`${locale === 'ar' ? 'ms-1' : 'me-1'} text-secondary`}>{t("Max")}:</span>
-                    <span>{priceRange[1]}{currency?.symbol}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Stock Availability */}
-              <div className="mt-4 pt-3 border-top">
-                <label className="text-uppercase fw-bold text-secondary mb-3 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Availability")}</label>
-                <div className="d-flex gap-2">
-                  {['all', 'in_stock'].map((option) => (
-                    <button
-                      key={option}
-                      className={`btn btn-sm px-3 py-2 border rounded-pill transition-all ${stockAvailability === option ? 'bg-dark text-white border-dark' : 'bg-light text-dark'}`}
-                      onClick={() => setStockAvailability(option)}
-                      style={{ fontSize: '12px' }}
-                    >
-                      {t(option === 'all' ? "All" : "In Stock")}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Categories/Labels */}
-              {uniqueLabels.length > 0 && (
-                <div className="mt-4 pt-3 border-top">
-                  <label className="text-uppercase fw-bold text-secondary mb-3 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Categories")}</label>
-                  <div className="d-flex flex-wrap gap-2" style={{ maxHeight: '120px', overflowY: 'auto' }}>
-                    {uniqueLabels.map((label) => (
-                      <button
-                        key={label}
-                        className={`btn btn-sm px-2 py-1 border rounded-3 transition-all ${selectedLabels.includes(label) ? 'bg-dark text-white border-dark' : 'bg-light text-dark'}`}
-                        onClick={() => setSelectedLabels(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label])}
-                        style={{ fontSize: '11px' }}
-                      >
-                        {t(label)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Tags */}
-              {uniqueTags.length > 0 && (
-                <div className="mt-4 pt-3 border-top">
-                  <label className="text-uppercase fw-bold text-secondary mb-3 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Tags")}</label>
-                  <div className="d-flex flex-wrap gap-2" style={{ maxHeight: '100px', overflowY: 'auto' }}>
-                    {uniqueTags.map((tag) => (
-                      <button
-                        key={tag}
-                        className={`btn btn-sm px-2 py-1 border rounded-3 transition-all ${selectedTags.includes(tag) ? 'bg-dark text-white border-dark' : 'bg-light text-dark'}`}
-                        onClick={() => setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])}
-                        style={{ fontSize: '11px' }}
-                      >
-                        {tag}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Clear Filters */}
-              {(selectedLabels.length > 0 || selectedTags.length > 0 || stockAvailability !== 'all' || priceRange[0] !== 0 || priceRange[1] !== maxPrice) && (
-                <button 
-                  className="btn btn-link btn-sm text-danger mt-4 p-0 text-decoration-none fw-bold w-100" 
-                  style={{ fontSize: '11px', letterSpacing: '1px' }}
-                  onClick={() => {
-                    setPriceRange([0, maxPrice]);
-                    setStockAvailability('all');
-                    setSelectedLabels([]);
-                    setSelectedTags([]);
-                  }}
-                >
-                  {t("Clear All Filters")}
-                </button>
-              )}
+              {/* Centralized filter component */}
+              <ProductFilter
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                maxPrice={maxPrice}
+                currency={currency}
+                uniqueCategories={uniqueLabels}
+                selectedCategories={selectedLabels}
+                setSelectedCategories={setSelectedLabels}
+                uniqueSubcategories={uniqueSubcategories}
+                selectedSubcategories={selectedSubcategories}
+                setSelectedSubcategories={setSelectedSubcategories}
+                availableTags={uniqueTags}
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+                stockAvailability={stockAvailability}
+                setStockAvailability={setStockAvailability}
+                handleReset={handleReset}
+                showSortBy={true}
+                showPriceRange={true}
+                showCategories={true}
+                showSubcategories={true}
+                showSize={true}
+                showAvailability={true}
+                showLabel={false}
+                showOffers={false}
+                showViewSelector={true}
+                availableViews={availableViews}
+                selectedColView={selectedColView}
+                setSelectedColView={setSelectedColView}
+              />
             </div>
           )}
         </div>

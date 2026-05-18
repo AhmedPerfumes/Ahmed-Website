@@ -15,6 +15,7 @@ import Image from "next/image";
 import he from "he";
 import { useLocale, useTranslations} from "next-intl";
 import { useMenu } from '@/context/MenuContext';
+import LabelIcon from "@/components/labels/LabelIcon";
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
@@ -62,7 +63,7 @@ const ProductCardSkeleton = () => (
   </div>
 );
 
-export default function Style2({ category, subcategory, products: initialProducts }) {
+export default function Style2({ category, subcategory, products: initialProducts, selectedColView = 3 }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const t=useTranslations();
@@ -171,7 +172,7 @@ export default function Style2({ category, subcategory, products: initialProduct
 
   if (isMenuLoading || products.length === 0) {
     return (
-      <div className="products-grid row row-cols-2 row-cols-md-3 row-cols-lg-3">
+      <div className={`products-grid row row-cols-2 row-cols-md-${selectedColView === 2 ? 2 : 3} row-cols-lg-${selectedColView}`}>
         {Array.from({ length: 6 }).map((_, i) => (
           <ProductCardSkeleton key={i} />
         ))}
@@ -181,7 +182,7 @@ export default function Style2({ category, subcategory, products: initialProduct
 
   return (
     <div
-      className="products-grid row row-cols-2 row-cols-md-3 row-cols-lg-3"
+      className={`products-grid row row-cols-2 row-cols-md-${selectedColView === 2 ? 2 : 3} row-cols-lg-${selectedColView}`}
       id="products-grid-2"
     >
       {products.map((elm, i) => {
@@ -242,12 +243,27 @@ export default function Style2({ category, subcategory, products: initialProduct
                             </>
                         }
                       </Link>
-                      {elm?.label_name && (
-                        <div 
-                          style={{ backgroundColor: elm.label_color }} 
-                          className="product-label text-uppercase text-white"
-                        >
-                          {elm?.label_name}
+                      {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                        <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 5 }}>
+                          {elm.labels.map((lbl, idx) => (
+                            <LabelIcon
+                              key={idx}
+                              name={lbl.label_name}
+                              title={lbl.label_name}
+                              icon={lbl.label_color}
+                              size={40}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      {!Array.isArray(elm.labels) && elm.label_name && (
+                        <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 5 }}>
+                          <LabelIcon
+                            name={elm.label_name}
+                            title={elm.label_name}
+                            icon={elm.label_color}
+                            size={40}
+                          />
                         </div>
                       )}
                       {elm.product_qty <= 0 ? (

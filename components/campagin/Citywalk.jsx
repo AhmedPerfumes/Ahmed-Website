@@ -6,10 +6,36 @@ import { useLocale, useTranslations } from "next-intl";
 import DiscountGrid from "../common/features/DiscountGrid";
 import { useMenu } from "../../context/MenuContext";
 
+const BannerSkeleton = ({ isMobile }) => {
+    return (
+        <div 
+            className="w-100 skeleton-shimmer" 
+            style={{ 
+                position: "relative",
+                aspectRatio: "21 / 11",
+                width: "100%",
+                borderRadius: isMobile ? 14 : 16,
+                overflow: "hidden",
+                boxShadow: isMobile ? "0 6px 18px rgba(0,0,0,.08)" : "0 12px 30px rgba(0,0,0,.12)",
+                background: "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
+                backgroundSize: "200% 100%",
+                animation: "shimmer 1.5s infinite linear"
+            }}
+        >
+            <style>{`
+                @keyframes shimmer {
+                    0% { background-position: 200% 0; }
+                    100% { background-position: -200% 0; }
+                }
+            `}</style>
+        </div>
+    );
+};
+
 function CityWalk() {
     const locale = useLocale();
     const t = useTranslations();
-    const { homeSliders, homeMobileSliders } = useMenu();
+    const { homeSliders, homeMobileSliders, isLoading } = useMenu();
     
     const isSaleLink = (link) => {
         if (!link) return false;
@@ -28,7 +54,28 @@ function CityWalk() {
     return (
         <div className="citywalk-campaign">
             {/* Hero Section */}
-            {(saleDesktop || saleMobile) && (
+            {isLoading && (
+                <div className="campaign-hero">
+                    {/* Desktop Skeleton */}
+                    <div className="container-fluid pt-4 d-none d-lg-block px-3 px-xl-4">
+                        <div className="d-flex justify-content-center">
+                            <div className="w-100" style={{ maxWidth: 1680 }}>
+                                <BannerSkeleton isMobile={false} />
+                            </div>
+                        </div>
+                    </div>
+                    {/* Mobile Skeleton */}
+                    <div className="container-fluid pt-3 d-lg-none px-3">
+                        <div className="d-flex justify-content-center">
+                            <div className="w-100" style={{ maxWidth: 980 }}>
+                                <BannerSkeleton isMobile={true} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {!isLoading && (saleDesktop || saleMobile) && (
                 <div className="campaign-hero">
                     {/* Desktop Banner (centered, polished card) */}
                     {saleDesktop && (
@@ -80,7 +127,7 @@ function CityWalk() {
                                         >
                                             <Image
                                                 loading="lazy"
-                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${(saleMobile || saleDesktop).mobile_image || (saleMobile || saleDesktop).image}`}
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${saleDesktop.image}`}
                                                 alt={(saleMobile || saleDesktop)?.title || "Sale Banner Mobile"}
                                                 fill
                                                 sizes="(max-width: 980px) 100vw, 980px"

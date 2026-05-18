@@ -14,6 +14,7 @@ import { Weight } from "lucide-react";
 import { ElevenMp } from "@mui/icons-material";
 import { useMenu } from "@/context/MenuContext";
 import Skeleton from "@mui/material/Skeleton";
+import LabelIcon from "@/components/labels/LabelIcon";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -84,7 +85,7 @@ const TabSliderSkeleton = () => {
 
 export default function PopularProducts() {
   const t = useTranslations("PopularProducts");
-  const { addProductToCart } = useContextElement();
+  const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
   const locale = useLocale();
   
   const { currency, isLoading: isMenuLoading } = useMenu();
@@ -95,6 +96,24 @@ export default function PopularProducts() {
   const [loading, setLoading] = useState(true);
 
   const rafRef = useRef(null);
+
+  const getProductQuantity = (id) => {
+    const item = (cartProducts || []).find(p => p.product_id === id);
+    return item ? item.quantity : 0;
+  };
+
+  const updateQuantity = (id, delta) => {
+    if (!setCartProducts) return;
+    setCartProducts(prev => {
+      return prev.map(p => {
+        if (p.product_id === id) {
+          const newQty = (p.quantity || 1) + delta;
+          return newQty > 0 ? { ...p, quantity: newQty } : null;
+        }
+        return p;
+      }).filter(Boolean);
+    });
+  };
 
   /* ================= FETCH ================= */
   async function fetchProducts() {
@@ -261,6 +280,48 @@ export default function PopularProducts() {
       @media (min-width: 768px) {
         .scroll-tabs {
           justify-content: center;
+        }
+      }
+
+      .product-card-wrapper .product-card__actions {
+        z-index: 10;
+        background: rgba(26, 26, 26, 0.95);
+      }
+
+      .product-card-wrapper .pc__qty-selector--desktop {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        height: 44px;
+      }
+
+      .product-card-wrapper .pc__qty-selector--desktop .qty-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 0 15px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .product-card-wrapper .pc__qty-selector--desktop .qty-value {
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 767px) {
+        .product-card-wrapper .product-card__actions {
+          display: flex !important;
+          transform: translateY(0) !important;
+          background: rgba(26, 26, 26, 0.9) !important;
+          bottom: 0 !important;
         }
       }
     `,
@@ -433,9 +494,27 @@ export default function PopularProducts() {
 
 
                       {/* --- ADDED LABEL LOGIC --- */}
-                      {item.label_name && (
-                        <div style={{ backgroundColor: item.label_color, zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'left-0' : 'right-0'}`}>
-                          {locale === 'ar' ? item.label_name_ar : item.label_name}
+                      {Array.isArray(item.labels) && item.labels.length > 0 && (
+                        <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 10 }}>
+                          {item.labels.map((lbl, idx) => (
+                            <LabelIcon
+                              key={idx}
+                              name={lbl.label_name}
+                              title={lbl.label_name}
+                              icon={lbl.label_color}
+                              size={40}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      {!Array.isArray(item.labels) && item.label_name && (
+                        <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 10 }}>
+                          <LabelIcon
+                            name={item.label_name}
+                            title={item.label_name}
+                            icon={item.label_color}
+                            size={40}
+                          />
                         </div>
                       )}
 
@@ -452,22 +531,61 @@ export default function PopularProducts() {
                       )}
                       {/* --- END LABEL LOGIC --- */}
 
-                      {/* ✅ ADD TO CART — ONLY CENTER SLIDE */}
+                      {/* ✅ ADD TO CART & QUANTITY ACTIONS — ONLY CENTER SLIDE */}
                       {isActive && (
-                        <button
-                          className="pc__atc btn btn-primary anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            addProductToCart({
-                              ...item,
-                              category_name: item.category_name,
-                              subcategory_name: item.subcategory?.subcategory_name,
-                            });
-                          }}
-                        >
-                          {t("addToCart")}
-                        </button>
+                        <div className="product-card__actions">
+                          {getProductQuantity(item.product_id) > 0 ? (
+                            <div className="pc__qty-selector--desktop">
+                              <button 
+                                className="qty-btn" 
+                                onClick={(e) => { 
+                                  e.preventDefault(); 
+                                  e.stopPropagation(); 
+                                  updateQuantity(item.product_id, -1); 
+                                }} 
+                                aria-label="Decrease quantity"
+                              >
+                                −
+                              </button>
+                              <span className="qty-value">{getProductQuantity(item.product_id)}</span>
+                              <button 
+                                className="qty-btn" 
+                                onClick={(e) => { 
+                                  e.preventDefault(); 
+                                  e.stopPropagation(); 
+                                  updateQuantity(item.product_id, 1); 
+                                }} 
+                                aria-label="Increase quantity"
+                              >
+                                +
+                              </button>
+                            </div>
+                          ) : item.product_qty > 0 ? (
+                            <button
+                              className="btn btn-primary js-add-cart w-100 h-100 border-0"
+                              style={{ height: '44px', background: 'none' }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                addProductToCart({
+                                  ...item,
+                                  category_name: item.category_name,
+                                  subcategory_name: item.subcategory?.subcategory_name,
+                                });
+                              }}
+                            >
+                              {t("addToCart")}
+                            </button>
+                          ) : (
+                            <button 
+                              className="btn btn-out-of-stock w-100 h-100 border-0 text-white" 
+                              disabled 
+                              style={{ height: '44px', background: 'none' }}
+                            >
+                              {t("outOfStock")}
+                            </button>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>

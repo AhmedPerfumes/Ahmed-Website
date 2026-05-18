@@ -9,6 +9,8 @@ import { useContextElement } from "@/context/Context";
 import Image from "next/image";
 import he from 'he';
 import Slider from "rc-slider";
+import LabelIcon from "@/components/labels/LabelIcon";
+import ProductFilter from "./ProductFilter";
 
 import { useLocale, useTranslations } from 'next-intl';
 import { useMenu } from '@/context/MenuContext';
@@ -100,6 +102,72 @@ export default function Shop1({ search }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sortOption, setSortOption] = useState('popularity');
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+
+  // Extract all unique category names dynamically from active products
+  const uniqueCategories = useMemo(() => {
+    const categories = products.map(p => p.category_name).filter(Boolean);
+    return [...new Set(categories)].sort();
+  }, [products]);
+
+  // Extract all unique subcategory names dynamically from active products
+  const uniqueSubcategories = useMemo(() => {
+    const activeProducts = selectedCategories.length > 0 
+      ? products.filter(p => selectedCategories.includes(p.category_name))
+      : products;
+
+    const subcats = activeProducts
+      .map(p => p.subcategory?.subcategory_name || p.subcategory_name || p.subcategory)
+      .filter((s) => s && typeof s === 'string');
+    return [...new Set(subcats)].sort();
+  }, [products, selectedCategories]);
+
+  const [collapsedSections, setCollapsedSections] = useState({
+    sortBy: false,
+    priceRange: false,
+    categories: false,
+    labels: false,
+    size: true,
+    availability: false,
+    promotional: true,
+  });
+
+  const toggleSection = (section) => {
+    setCollapsedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const renderSectionHeader = (title, key) => {
+    const isCollapsed = collapsedSections[key];
+    return (
+      <div 
+        className="d-flex justify-content-between align-items-center cursor-pointer mb-3 select-none"
+        onClick={() => toggleSection(key)}
+        style={{ cursor: 'pointer', userSelect: 'none' }}
+      >
+        <span 
+          className="text-uppercase fw-bold text-secondary mb-0 transition-colors" 
+          style={{ fontSize: '10px', letterSpacing: '1.5px', transition: 'color 0.2s ease' }}
+        >
+          {title}
+        </span>
+        <svg 
+          className="transition-transform duration-200 text-secondary"
+          style={{ 
+            transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)', 
+            transition: 'transform 0.2s ease',
+            opacity: 0.6
+          }} 
+          width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+        >
+          <polyline points="2 4 5 7 8 4" />
+        </svg>
+      </div>
+    );
+  };
   const [maxPrice, setMaxPrice] = useState(1000);
   const [isDDActive, setIsDDActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -138,6 +206,11 @@ export default function Shop1({ search }) {
 
   const filteredProducts = useMemo(() => {
     const filtered = products.filter(product => {
+      // "New Launch" items are never filtered out
+      if (product.collection_name === 'New Launch') {
+        return true;
+      }
+
       // Search filter
       const translatedName = t(he.decode(product.product_name)).toLowerCase();
       const matchesSearch = translatedName.includes(searchTerm.toLowerCase());
@@ -161,6 +234,19 @@ export default function Shop1({ search }) {
         if (!hasLabel) return false;
       }
 
+      // Categories filter
+      if (selectedCategories.length > 0) {
+        const matchesCategory = selectedCategories.includes(product.category_name);
+        if (!matchesCategory) return false;
+      }
+
+      // Subcategories filter
+      if (selectedSubcategories.length > 0) {
+        const subcatVal = product.subcategory?.subcategory_name || product.subcategory_name || product.subcategory;
+        const matchesSubcategory = selectedSubcategories.includes(subcatVal);
+        if (!matchesSubcategory) return false;
+      }
+
       // Tags filter
       if (selectedTags.length > 0) {
         const tags = Array.isArray(product.tags) ? product.tags : [];
@@ -171,7 +257,7 @@ export default function Shop1({ search }) {
       return true;
     });
     return sortItems(filtered, sortOption);
-  }, [products, priceRange, stockAvailability, promotionalOnly, selectedLabels, selectedTags, sortOption, searchTerm, t]);
+  }, [products, priceRange, stockAvailability, promotionalOnly, selectedLabels, selectedCategories, selectedSubcategories, selectedTags, sortOption, searchTerm, t]);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -289,6 +375,8 @@ export default function Shop1({ search }) {
     setPromotionalOnly(false);
     setSelectedLabels([]);
     setSelectedTags([]);
+    setSelectedCategories([]);
+    setSelectedSubcategories([]);
   };
 
   return (
@@ -352,9 +440,9 @@ export default function Shop1({ search }) {
                 <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
               {t("Filter")}
-              {(selectedLabels.length > 0 || selectedTags.length > 0 || promotionalOnly || stockAvailability !== 'all') && (
+              {(selectedLabels.length > 0 || selectedTags.length > 0 || selectedCategories.length > 0 || selectedSubcategories.length > 0 || promotionalOnly || stockAvailability !== 'all') && (
                 <span className="ms-1 rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style={{ width: '16px', height: '16px', fontSize: '10px' }}>
-                  {selectedLabels.length + selectedTags.length + (promotionalOnly ? 1 : 0) + (stockAvailability !== 'all' ? 1 : 0)}
+                  {selectedLabels.length + selectedTags.length + selectedCategories.length + selectedSubcategories.length + (promotionalOnly ? 1 : 0) + (stockAvailability !== 'all' ? 1 : 0)}
                 </span>
               )}
             </button>
@@ -372,114 +460,45 @@ export default function Shop1({ search }) {
                   overflowY: 'auto'
                 }}
               >
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h6 className="text-uppercase fw-bold mb-0" style={{ letterSpacing: '1px' }}>{t("Filters")}</h6>
-                  <button className="btn btn-link p-0 text-decoration-none text-primary fw-medium" style={{ fontSize: '12px' }} onClick={handleReset}>{t("Reset All")}</button>
-                </div>
-
-                {/* Sorting */}
-                <div className="mb-4">
-                  <label className="text-uppercase fw-bold text-secondary mb-2 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Sort By")}</label>
-                  <select
-                    className="form-select border rounded-3 fs-sm py-2 px-3"
-                    value={sortOption}
-                    onChange={(e) => setSortOption(e.target.value)}
-                    style={{ fontSize: '14px', cursor: 'pointer' }}
-                  >
-                    <option value="popularity">{t("Most Popular")}</option>
-                    <option value="date">{t("New Arrivals")}</option>
-                    <option value="price">{t("Price: Low to High")}</option>
-                    <option value="price-desc">{t("Price: High to Low")}</option>
-                  </select>
-                </div>
-
-                {/* Price Range */}
-                <div className="mb-4">
-                  <label className="text-uppercase fw-bold text-secondary mb-4 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Price Range")}</label>
-                  <div className="px-2">
-                    <Slider
-                      range
-                      max={maxPrice}
-                      min={0}
-                      value={priceRange}
-                      onChange={setPriceRange}
-                    />
-                  </div>
-                  <div className="d-flex justify-content-between mt-3 pt-1 fw-medium" style={{ fontSize: '12px' }}>
-                    <span>{priceRange[0]}{currency.symbol}</span>
-                    <span>{priceRange[1]}{currency.symbol}</span>
-                  </div>
-                </div>
-
-                {/* Categories (Labels) */}
-                {availableLabels.length > 0 && (
-                  <div className="mb-4">
-                    <label className="text-uppercase fw-bold text-secondary mb-2 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Categories")}</label>
-                    <div className="d-flex flex-wrap gap-2">
-                      {availableLabels.map((l, i) => (
-                        <button
-                          key={i}
-                          onClick={() => toggleFilter(selectedLabels, setSelectedLabels, l.label_name)}
-                          className={`btn btn-sm rounded-pill px-3 py-1 border transition-all ${selectedLabels.includes(l.label_name) ? 'btn-dark' : 'btn-light'}`}
-                          style={{ fontSize: '11px' }}
-                        >
-                          {l.label_name}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Size (Tags) */}
-                {availableTags.length > 0 && (
-                  <div className="mb-4">
-                    <label className="text-uppercase fw-bold text-secondary mb-2 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Size")}</label>
-                    <div className="d-flex flex-wrap gap-2">
-                      {availableTags.map((tag, i) => (
-                        <button
-                          key={i}
-                          onClick={() => toggleFilter(selectedTags, setSelectedTags, tag)}
-                          className={`btn btn-sm rounded-pill px-3 py-1 border transition-all ${selectedTags.includes(tag) ? 'btn-dark' : 'btn-light'}`}
-                          style={{ fontSize: '11px' }}
-                        >
-                          {tag}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Availability */}
-                <div className="mb-4">
-                  <label className="text-uppercase fw-bold text-secondary mb-2 d-block" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Availability")}</label>
-                  <div className="d-flex gap-2">
-                    {['all', 'in_stock'].map((val) => (
-                      <button
-                        key={val}
-                        onClick={() => setStockAvailability(val)}
-                        className={`btn btn-sm rounded-pill px-3 py-1 border flex-grow-1 transition-all ${stockAvailability === val ? 'btn-dark' : 'btn-light'}`}
-                        style={{ fontSize: '11px' }}
-                      >
-                        {val === 'all' ? t('All Items') : t('In Stock')}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Promotional */}
-                <div className="mb-0">
-                  <div className="form-check form-switch d-flex align-items-center justify-content-between p-0">
-                    <label className="text-uppercase fw-bold text-secondary mb-0" style={{ fontSize: '10px', letterSpacing: '1.5px' }}>{t("Offers Only")}</label>
-                    <input
-                      className="form-check-input ms-0"
-                      type="checkbox"
-                      role="switch"
-                      checked={promotionalOnly}
-                      onChange={() => setPromotionalOnly(!promotionalOnly)}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </div>
-                </div>
+                <ProductFilter
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  sortOption={sortOption}
+                  setSortOption={setSortOption}
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  maxPrice={maxPrice}
+                  currency={currency}
+                  uniqueCategories={uniqueCategories}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                  uniqueSubcategories={uniqueSubcategories}
+                  selectedSubcategories={selectedSubcategories}
+                  setSelectedSubcategories={setSelectedSubcategories}
+                  availableLabels={availableLabels}
+                  selectedLabels={selectedLabels}
+                  setSelectedLabels={setSelectedLabels}
+                  availableTags={availableTags}
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  stockAvailability={stockAvailability}
+                  setStockAvailability={setStockAvailability}
+                  promotionalOnly={promotionalOnly}
+                  setPromotionalOnly={setPromotionalOnly}
+                  handleReset={handleReset}
+                  showSortBy={true}
+                  showPriceRange={true}
+                  showCategories={true}
+                  showSubcategories={true}
+                  showLabel={true}
+                  showSize={true}
+                  showAvailability={true}
+                  showOffers={true}
+                  showViewSelector={true}
+                  availableViews={availableViews}
+                  selectedColView={selectedColView}
+                  setSelectedColView={setSelectedColView}
+                />
               </div>
             )}
           </div>
@@ -554,9 +573,27 @@ export default function Shop1({ search }) {
                             </>
                           )}
                         </Link>
-                        {elm?.label_name && (
-                          <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                            { elm?.label_name }
+                        {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                          <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 5 }}>
+                            {elm.labels.map((lbl, idx) => (
+                              <LabelIcon
+                                key={idx}
+                                name={lbl.label_name}
+                                title={lbl.label_name}
+                                icon={lbl.label_color}
+                                size={40}
+                              />
+                            ))}
+                          </div>
+                        )}
+                        {!Array.isArray(elm.labels) && elm.label_name && (
+                          <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 5 }}>
+                            <LabelIcon
+                              name={elm.label_name}
+                              title={elm.label_name}
+                              icon={elm.label_color}
+                              size={40}
+                            />
                           </div>
                         )}
                         {elm.product_qty <= 0 ? (

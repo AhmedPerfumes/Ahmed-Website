@@ -19,6 +19,8 @@ import { useMenu } from "@/context/MenuContext";
 import { useLocale, useTranslations } from "next-intl";
 
 const HeroSkeleton = () => {
+    
+    
     return (
         <div
             className="position-relative w-100 vh-100 overflow-hidden"
@@ -124,6 +126,7 @@ const HeroSkeleton = () => {
 };
 
 const NewHero = () => {
+   
     const locale = useLocale();
     const t = useTranslations();
 
@@ -139,6 +142,8 @@ const NewHero = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [progressKey, setProgressKey] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
+
+
 
     useEffect(() => {
         const checkMobile = () => {

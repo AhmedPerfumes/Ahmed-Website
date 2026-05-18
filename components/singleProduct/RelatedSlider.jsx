@@ -8,6 +8,7 @@ import Image from "next/image";
 import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
+import LabelIcon from "@/components/labels/LabelIcon";
 
 import { renderPrice } from "@/utlis/priceRenderer";
 
@@ -156,11 +157,29 @@ export default function RelatedSlider({ relatedProds }) {
                     // ))
                     }
                 </Link>
-                  {elm?.label_name && (
-                  <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                    { elm?.label_name }
-                  </div>
-                )}
+                  {Array.isArray(elm.labels) && elm.labels.length > 0 && (
+                    <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 5 }}>
+                      {elm.labels.map((lbl, idx) => (
+                        <LabelIcon
+                          key={idx}
+                          name={lbl.label_name}
+                          title={lbl.label_name}
+                          icon={lbl.label_color}
+                          size={40}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  {!Array.isArray(elm.labels) && elm.label_name && (
+                    <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 5 }}>
+                      <LabelIcon
+                        name={elm.label_name}
+                        title={elm.label_name}
+                        icon={elm.label_color}
+                        size={40}
+                      />
+                    </div>
+                  )}
                 {elm.product_qty <= 0 ? (
                   <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                     Out Of Stock

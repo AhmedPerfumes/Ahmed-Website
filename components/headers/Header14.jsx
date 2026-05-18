@@ -356,6 +356,27 @@ const marqueeStyles = `
 `;
 
 const HeaderSkeleton = () => {
+    const t = useTranslations();
+    const locale = useLocale();
+
+    const handleLangChange = (e) => {
+        const newLocale = e.target.value;
+        const currentPath = window.location.pathname;
+        const localeRegex = new RegExp(`^/${locale}`);
+        let newPath;
+        if (localeRegex.test(currentPath)) {
+            // If path has the locale (e.g. /en/about), swap it -> /ar/about
+            newPath = currentPath.replace(localeRegex, `/${newLocale}`);
+        } else {
+            // If path has no locale (e.g. default /about), prepend it -> /ar/about
+            // Handle root "/" gracefully
+            const cleanPath = currentPath === "/" ? "" : currentPath;
+            newPath = `/${newLocale}${cleanPath}`;
+        }
+        window.location.href = newPath;
+
+        // router.push(pathname, { locale: e.target.value })
+    };
     return (
         <div className="header bg-white">
             {/* Top Bar Skeleton */}
@@ -375,8 +396,22 @@ const HeaderSkeleton = () => {
                 <div className="container-fluid d-flex align-items-center px-5 py-2">
                     {/* Left: Currency/Language */}
                     <div className="flex-1 d-flex gap-3">
-                        <Skeleton variant="rounded" width={80} height={25} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
-                        <Skeleton variant="rounded" width={80} height={25} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                        <select className="form-select form-select-sm bg-transparent color-black" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
+                            {currencyOptions.map((option, index) => (
+                                <option key={index} value={option.link} >
+                                    {t(option.text)}
+                                </option>
+                                )
+                            )}
+                        </select>
+                        <select className="form-select form-select-sm bg-transparent text-dark border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: "pointer", outline: "none", }} >
+                            {languageOptions2.map((option, index) => (
+                                <option key={index} value={option.value} >
+                                    {option.text}
+                                </option>
+                                )
+                            )}
+                        </select>
                     </div>
 
                     {/* Center: Logo */}
