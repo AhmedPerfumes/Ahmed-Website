@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { PiGiftLight, PiSparkleLight, PiHeartLight } from "react-icons/pi";
@@ -470,13 +469,10 @@ const GiftSetBanner = () => {
 
             {/* Background */}
             <div className="gsb-bg">
-                <Image
+                <img
                     src="/assets/images/home/demo8/avif/giftset-bnr.avif"
                     alt="Premium Gift Sets Collection"
-                    fill
-                    sizes="100vw"
-                    style={{ objectFit: 'cover' }}
-                    priority
+                    loading="lazy"
                 />
             </div>
 
@@ -486,7 +482,7 @@ const GiftSetBanner = () => {
 
                 {/* ── Logo ── */}
                 <div className="gsb-logo-wrap">
-                    <Image src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" width={120} height={40} style={{ objectFit: 'contain' }} />
+                    <img src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" />
                 </div>
 
                 {/* Corner ornaments */}

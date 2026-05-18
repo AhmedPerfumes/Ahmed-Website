@@ -295,8 +295,9 @@ const NewHero = () => {
                         <Link href={`/${locale}/${elm.link || "#"}`} className="position-absolute top-0 start-0 w-100 h-100 d-block" style={{ zIndex: 0 }}>
                             <Image
                                 priority={i === 0}
-                                quality={90}
-                                sizes="100vw"
+                                quality={100}
+                                sizes="(max-width: 768px) 200vw, 100vw"
+                                loading={i === 0 ? "eager" : "lazy"}
                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile && elm.mobile_image ? elm.mobile_image : elm.image}`}
                                 alt={elm.title || "Hero Image"}
                                 fill

@@ -47,22 +47,16 @@ export const metadata = {
 // Import English font
 const englishFont = localFont({
   src: "../../public/assets/fonts/wulkan/WulkanDisplayRegular.ttf",
-  display: "swap",
-  preload: true,
 });
 
 // Import Arabic font
 const arabicFont = localFont({
   src: "../../public/assets/fonts/alexandria-arabic/static/Alexandria-Regular.ttf",
-  display: "swap",
-  preload: true,
 });
 
-// Import Kanit font as a secondary font
+// Import Lato Regular font as a secondary font
 const sofiaFont = localFont({
   src: "../../public/assets/fonts/kanit/Kanit-Regular.ttf",
-  display: "swap",
-  preload: true,
 });
 
 export default async function LocaleLayout({ children, params: { locale } }) {
@@ -84,15 +78,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
-      <head>
-        {/* Resource hints to reduce external domain latency */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
-        <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://ae.ahmedalmaghribi.com" />
-      </head>
+      <head></head>
 
       <body className={selectedFont.className}>
         <Script id="gtm-script" strategy="afterInteractive">
