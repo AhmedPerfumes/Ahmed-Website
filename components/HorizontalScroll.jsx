@@ -302,10 +302,6 @@ const HorizontalScroll = () => {
 
           {/* ── Global Navigation (lives in sticky viewport) ──── */}
           <div className="hs-nav">
-            <div className="hs-scroll-hint">
-              <span>{t("Scroll to explore")}</span>
-              <div className="hs-hint-line" />
-            </div>
             <div className="hs-nav-inner">
               <div className="hs-counter">
                 <span className="hs-counter-current">01</span> / {String(TOTAL_PANELS).padStart(2, "0")}
@@ -320,6 +316,10 @@ const HorizontalScroll = () => {
                   />
                 ))}
               </div>
+            </div>
+            <div className="hs-scroll-hint">
+              <div className="hs-hint-line" />
+              <span>{t("Scroll to explore")}</span>
             </div>
           </div>
 

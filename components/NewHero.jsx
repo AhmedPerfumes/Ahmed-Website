@@ -268,7 +268,7 @@ const NewHero = () => {
                         className="h-100 w-100 position-relative overflow-hidden"
                     >
                         {/* Background Image */}
-                        <div className="position-absolute top-0 start-0 w-100 h-100">
+                        <Link href={`/${locale}/${elm.link || "#"}`} className="position-absolute top-0 start-0 w-100 h-100 d-block" style={{ zIndex: 0 }}>
                             <Image
                                 priority={i === 0}
                                 quality={100}
@@ -279,7 +279,7 @@ const NewHero = () => {
                                 fill
                                 className="gsap-bg"
                             />
-                        </div>
+                        </Link>
                         {/* Mobile Overlay for text readability */}
                         <div 
                             className="position-absolute top-0 start-0 w-100 h-100 d-block d-md-none gsap-overlay" 
@@ -291,7 +291,7 @@ const NewHero = () => {
                         />
 
                         {/* Content */}
-                        <div className="container h-100 position-relative" style={{ zIndex: 2 }}>
+                        <div className="container h-100 position-relative" style={{ zIndex: 2, pointerEvents: "none" }}>
                             <div className="row h-100 align-items-start align-items-md-center pt-5 pt-md-0">
                                 <div className={`col-lg-6 col-md-8 px-4 px-md-5 ${isMobile ? 'text-center mt-5 pt-4' : (locale === 'ar' ? 'text-end' : 'text-start')}`}>
 
@@ -376,7 +376,7 @@ const NewHero = () => {
 
                                     {/* Button */}
                                     {elm.title && (
-                                        <div className="mt-4">
+                                        <div className="mt-4" style={{ pointerEvents: "auto" }}>
                                             <Link
                                                 href={`/${locale}/${elm.link || "#"}`}
                                                 className="gsap-text unique-btn-modern text-uppercase d-inline-flex align-items-center text-decoration-none"
