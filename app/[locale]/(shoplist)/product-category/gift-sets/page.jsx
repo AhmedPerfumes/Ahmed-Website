@@ -16,18 +16,36 @@ import Categories from "@/components/shoplist/Categories";
 import { headers } from 'next/headers';
 import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription";
 
-const canonicalUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/en/product-category/gift-sets`;
+export async function generateMetadata({ params }) {
+  const { locale } = params;
 
-export const metadata = {
-  title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-  icons: {
-    icon: "/assets/images/ahmed-favicon.png",
-  },
-  alternates: {
-    canonical: canonicalUrl,
-  },
-};
+  const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
+
+  const canonicalUrl = `${baseUrl}/${locale}/product-category/gift-sets`;
+
+  return {
+    metadataBase: new URL(baseUrl),
+
+    title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+
+    description:
+      "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+
+    icons: {
+      icon: "/assets/images/ahmed-favicon.png",
+    },
+
+    alternates: {
+      canonical: canonicalUrl,
+
+      languages: {
+        en: "/en/product-category/gift-sets",
+        ar: "/ar/product-category/gift-sets",
+        "x-default": "/en/product-category/gift-sets",
+      },
+    },
+  };
+}
 
 function getRequestOrigin() {
   const headersList = headers();
