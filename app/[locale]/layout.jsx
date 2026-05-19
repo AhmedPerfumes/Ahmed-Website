@@ -34,14 +34,32 @@ import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
 import { Toaster } from "react-hot-toast";
 
+const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
 
-export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-  icons: {
-    icon: "/assets/images/ahmed-favicon.png",
-  },
-};
+export async function generateMetadata({ params: { locale } }) {
+  return {
+    metadataBase: new URL(baseUrl),
+
+    title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+
+    description:
+      "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+
+    icons: {
+      icon: "/assets/images/ahmed-favicon.png",
+    },
+
+    alternates: {
+      canonical: `/${locale}`,
+
+      languages: {
+        en: "/en",
+        ar: "/ar",
+        "x-default": "/en",
+      },
+    },
+  };
+}
 
 // Import English font
 const englishFont = localFont({

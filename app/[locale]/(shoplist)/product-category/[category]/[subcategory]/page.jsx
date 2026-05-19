@@ -107,16 +107,24 @@ async function getProductCategorySEO(categoryName, subCategoryName) {
 export async function generateMetadata({ params }) {
   const { category, subcategory, locale } = params;
 
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/product-category/${category}/${subcategory}`;
+  const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN;
+
+  const canonicalUrl = `${baseUrl}/${locale}/product-category/${category}/${subcategory}`;
 
   try {
       const data = await getProductCategorySEO(category, subcategory);
       // console.log(JSON.parse(data.meta_value)[0]);
       return {
+          metadataBase: new URL(baseUrl),
           title: JSON.parse(data.meta_value)[0]?.seo_title ? `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
           description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
           alternates: {
             canonical: canonicalUrl,
+            languages: {
+              en: `/en/product-category/${category}/${subcategory}`,
+              ar: `/ar/product-category/${category}/${subcategory}`,
+              "x-default": `/en/product-category/${category}/${subcategory}`,
+            },
           },
           // openGraph: {
           //     // title: data.product_name,
