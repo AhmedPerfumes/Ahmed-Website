@@ -61,18 +61,10 @@ export default function FindYourScentEntry() {
         </motion.p>
 
         {/* Stats row */}
-        <motion.div
-          className="fys-entry__stats"
-          initial={{ opacity: 0, y: 12 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 0.6, ease }}
-        >
-          {STATS.map((s, i) => (
-            <div key={i} className="fys-entry__stat">
-              <span className="fys-entry__stat-num">{s.num}</span>
-              <span className="fys-entry__stat-label">{s.label}</span>
-            </div>
-          ))}
+        <motion.div className="fys-home__stages " initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.58 }}>
+          <div className="fys-home__stage">About</div>
+          <div className="fys-home__stage">Personality</div>
+          <div className="fys-home__stage">Scents</div>
         </motion.div>
 
         <motion.div
