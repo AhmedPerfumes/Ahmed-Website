@@ -7,7 +7,7 @@ import MobileFooter2 from '@/components/footers/MobileFooter2';
 import NewsLetter from '@/components/modals/NewsLetter';
 import React from 'react';
 import PopUp from '@/components/common/Popup';
-import NewHomePage from '@/components/NewHomePage';
+import NewHomePage from '@/components/new-homepage/NewHomePage';
 
 export const metadata = {
   title: 'Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes',

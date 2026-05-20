@@ -169,7 +169,7 @@ export default function MobileHeader() {
       <div className="header-mobile header_sticky header_sticky-active" style={{ position: 'sticky', top: 0, zIndex: 100 }} >
         <div className="container position-relative h-100 overflow-hidden" style={{ minHeight: '60px' }}>
           {/* Default Header Content Wrapper */}
-          <div 
+          <div
             className="w-100 h-100 d-flex align-items-center justify-content-between px-3"
             style={{
               position: "absolute",
@@ -194,7 +194,7 @@ export default function MobileHeader() {
               <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
             </Link>
 
-            <div 
+            <div
               className="logo"
               style={{
                 position: "absolute",
@@ -256,7 +256,7 @@ export default function MobileHeader() {
           </div>
 
           {/* Search Field Content Wrapper */}
-          <div 
+          <div
             className="w-100 h-100 d-flex align-items-center gap-2 px-3 py-2"
             style={{
               position: "absolute",
@@ -370,80 +370,7 @@ export default function MobileHeader() {
         {/* <!-- /.container --> */}
 
         <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
-          <div className="container">
-            <form onSubmit={onSearch} className="search-field position-relative mt-4 mb-3">
-              <div className="position-relative d-flex align-items-center">
-                <input
-                  className="search-field__input w-100 border rounded-1 form-control shadow-sm"
-                  type="text"
-                  name="search-keyword"
-                  placeholder={locale === 'ar' ? "ابحث عن المنتجات" : "Search products"}
-                  value={searchKeyWord}
-                  onChange={handleChange}
-                  style={{
-                    height: '45px',
-                    paddingLeft: locale === 'ar' ? '3rem' : '1rem',
-                    paddingRight: locale === 'ar' ? '1rem' : '3rem',
-                    textAlign: locale === 'ar' ? 'right' : 'left'
-                  }}
-                />
-                {/* ... existing search buttons ... */}
-              </div>
 
-              {/* MOBILE SUGGESTIONS DROPDOWN */}
-              {(isSearching || searchSuggestions.length > 0) && (
-                <div className="mobile-search-results position-absolute start-0 top-100 w-100" style={{ zIndex: 999 }}>
-                  {isSearching && (
-                    <div className="p-3 text-center fs-13 text-muted">
-                      <div className="spinner-border spinner-border-sm me-2" role="status"></div>
-                      {t("Searching...")}
-                    </div>
-                  )}
-
-                  {!isSearching && searchSuggestions.map((item, index) => (
-                    <Link
-                      key={index}
-                      href={`/${locale}${item.url_path}`}
-                      className="mobile-suggestion-item"
-                      onClick={() => {
-                        setSearchKeyWord("");
-                        setSearchSuggestions([]);
-                      }}
-                    >
-                      <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`}
-                        alt={item.name}
-                        className="mobile-suggestion-img"
-                      />
-                      <div className="mobile-suggestion-info">
-                        <span className="mobile-suggestion-name">{item.name}</span>
-                        <span className="mobile-suggestion-price">{item.price} {t("AED")}</span>
-                      </div>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2">
-                        <path d="M9 18l6-6-6-6" />
-                      </svg>
-                    </Link>
-                  ))}
-
-                  {/* "View All" Link for Mobile */}
-                  {!isSearching && searchSuggestions.length > 0 && (
-                    <Link
-                      href={`/${locale}/shop?q=${searchKeyWord}`}
-                      className="d-block text-center p-3 fs-13 fw-bold text-uppercase border-top bg-light text-dark"
-                      onClick={() => {
-                        setSearchKeyWord("");
-                        setSearchSuggestions([]);
-                      }}
-                    >
-                      {t("View All Results")}
-                    </Link>
-                  )}
-                </div>
-              )}
-            </form>
-            {/* <!-- /.header-search --> */}
-          </div>
-          {/* <!-- /.container --> */}
 
           <div className="container">
             <div className="overflow-hidden">

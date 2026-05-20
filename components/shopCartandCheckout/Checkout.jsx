@@ -54,6 +54,7 @@ export default function Checkout() {
     password: "",
     otp: "",
   });
+  const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState(false);
 
   // CONTEXT & HOOKS
   const t = useTranslations("Tabby")
@@ -71,6 +72,12 @@ export default function Checkout() {
   useEffect(() => {
     if (hasPreBookItem) { setSelectedOption("paytabs"); }
   }, [hasPreBookItem]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth >= 1200) {
+      setIsOrderSummaryOpen(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (hasCleaned.current) return;
@@ -707,6 +714,23 @@ export default function Checkout() {
   if (isMenuLoading) { return ( <div> <Pagination1 /> </div> ); }
   if (isMenuError) { return <div>{isMenuError}</div>; }
 
+  // Price calculations and helpers for clean code
+  const shippingCost = !freeShippingFlag && shippingServiceCharges && shippingServiceCharges[0] ? parseFloat(shippingServiceCharges[0].price || 0) : 0;
+  const serviceFee = shippingServiceCharges && shippingServiceCharges[1] ? parseFloat(shippingServiceCharges[1].price || 0) : 0;
+  const codFee = selectedOption === "cod" && shippingServiceCharges && shippingServiceCharges[2] ? parseFloat(shippingServiceCharges[2].price || 0) : 0;
+  const finalOrderPrice = (totalPrice + shippingCost + serviceFee + codFee).toFixed(2);
+
+  const vatRate = parseFloat(vatTax?.percentage || 0) / 100;
+  const calculateVatForAmount = (amount) => {
+    return amount - (amount / (1 + vatRate));
+  };
+  const totalVat = (
+    calculateVatForAmount(totalPrice) +
+    calculateVatForAmount(shippingCost) +
+    calculateVatForAmount(serviceFee) +
+    calculateVatForAmount(codFee)
+  ).toFixed(2);
+
   return (
     <>
       {cartProducts.length ? (
@@ -914,53 +938,68 @@ export default function Checkout() {
               <div className="checkout__totals-wrapper">
                 <div className="sticky-content">
                   <div className="checkout__totals">
-                    <h3>Your Order</h3>
-                    <div className="cart-items-collapse">
-                      <table className="checkout-cart-items">
-                        <thead> <tr> <th>PRODUCT</th> <th>SUBTOTAL</th> </tr> </thead>
-                        <tbody> {cartProducts.map((elm, i) => ( <tr key={i}> <td> {he.decode(elm.product_name)} x {elm.quantity} </td> {subTotalPrice(elm)} </tr> ))} </tbody>
-                      </table>
+                    {/* Collapsible Header/Toggle Bar */}
+                    <div 
+                      className="checkout-summary-toggle-bar" 
+                      onClick={() => setIsOrderSummaryOpen(!isOrderSummaryOpen)}
+                      role="button"
+                      aria-expanded={isOrderSummaryOpen}
+                    >
+                      <div className="toggle-left">
+                        <svg className="summary-bag-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                          <line x1="3" y1="6" x2="21" y2="6"></line>
+                          <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span className="toggle-text">
+                          {isOrderSummaryOpen ? "Hide order summary" : "Show order summary"}
+                        </span>
+                        <svg 
+                          className={`toggle-chevron ${isOrderSummaryOpen ? "rotated" : ""}`} 
+                          viewBox="0 0 24 24" 
+                          width="16" 
+                          height="16" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </div>
+                      <div className="toggle-right">
+                        <span className="summary-total-price">
+                          {finalOrderPrice} {currency.symbol}
+                        </span>
+                      </div>
                     </div>
-                    
-                    {/* {
-                      (() => {
-                        // Only count non-excluded products
-                        const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
-                        const regularQuantity = regularProducts.reduce((total, item) => total + item.quantity, 0);
-                        const hasRegularProducts = regularProducts.length > 0;
-                        const hasBogoActive = cartProducts.some((item) => item.bogo_free_qty && item.bogo_free_qty > 0);
-                        
-                        return (hasBogoActive || regularQuantity > 3) && hasRegularProducts ? (
-                          <>
-                            <div style={{ backgroundColor: "#d4edda", border: "1px solid #28a745", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#155724", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                              ✓ <strong>Your Buy 3 Get 1 Offer has been applied!</strong>  
-                            </div>
 
-                            <div style={{ backgroundColor: "#e3f2fd", color: "#1565c0", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px", border: "1px solid #bbdefb" }} > Your cart qualifies for a Buy 3 Get 1 Free promotion, which replaces other discounts. You may remove items to reapply percentage-based discounts. </div>
-                          </>
-                        ) : regularQuantity === 3 && hasRegularProducts ? (
-                          <div style={{ backgroundColor: "#fff3cd", border: "1px solid #ffc107", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#856404", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                            🎁 <strong>Great! You're one step away!</strong> Add one more product to your cart to get 1 product FREE with our Buy 3 Get 1 Free offer!
-                          </div>
-                        ) : null;
-                      })()
-                    } */}
-                    
-                    <table className="checkout-totals">
-                      <tbody>
-                        <tr> <th>SUBTOTAL</th> <td> {totalPrice.toFixed(2)}{currency.symbol} </td> </tr>
-                        <tr> <th>SHIPPING</th> <td> {freeShippingFlag ? "You Got Free Shipping" : `Shipping Cost: ${shippingServiceCharges[0].price}${currency.symbol}`} </td> </tr>
-                        <tr> <th>SERVICE FEE</th> <td> {shippingServiceCharges[1].price} {currency.symbol} </td> </tr>
-                        {selectedOption === "cod" && ( <tr> <th>COD Charges</th> <td> {shippingServiceCharges[2].price}{currency.symbol} </td> </tr> )}
-                        <tr> 
-                          <th>TOTAL</th>
-                          <td> 
-                            {!freeShippingFlag ? ( parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2)} {currency.symbol} (includes{" "}{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100)) + (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) + (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100))) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) - parseFloat(shippingServiceCharges[2].price) / (1 + parseFloat(vatTax.percentage / 100)) : parseFloat(0.0))).toFixed(2) : (0 + (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) + (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100))) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) - parseFloat(shippingServiceCharges[2].price) / (1 + parseFloat(vatTax.percentage / 100)) : parseFloat(0.0))).toFixed(2)} {currency.symbol} VAT)
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <TamaraWidget amount={!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
+                    {/* Collapsible Content */}
+                    <div className={`checkout-summary-collapsible-content ${isOrderSummaryOpen ? "expanded" : ""}`}>
+                      <div className="cart-items-collapse">
+                        <table className="checkout-cart-items">
+                          <thead> <tr> <th>PRODUCT</th> <th>SUBTOTAL</th> </tr> </thead>
+                          <tbody> {cartProducts.map((elm, i) => ( <tr key={i}> <td> {he.decode(elm.product_name)} x {elm.quantity} </td> {subTotalPrice(elm)} </tr> ))} </tbody>
+                        </table>
+                      </div>
+                      
+                      <table className="checkout-totals">
+                        <tbody>
+                          <tr> <th>SUBTOTAL</th> <td> {totalPrice.toFixed(2)}{currency.symbol} </td> </tr>
+                          <tr> <th>SHIPPING</th> <td> {freeShippingFlag ? "You Got Free Shipping" : `Shipping Cost: ${shippingServiceCharges[0].price}${currency.symbol}`} </td> </tr>
+                          <tr> <th>SERVICE FEE</th> <td> {shippingServiceCharges[1].price} {currency.symbol} </td> </tr>
+                          {selectedOption === "cod" && ( <tr> <th>COD Charges</th> <td> {shippingServiceCharges[2].price}{currency.symbol} </td> </tr> )}
+                          <tr> 
+                            <th>TOTAL</th>
+                            <td> 
+                              {finalOrderPrice} {currency.symbol} (includes {totalVat} {currency.symbol} VAT)
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <TamaraWidget amount={finalOrderPrice} inlineType='2' inlineVariant='outlined'/>
+                    </div>
                   </div>
 
                   <div className="checkout__coupon-wrapper"> {couponError ? (<div style={{ color: "red" }}>{couponError}</div>) : (<div style={{ color: "green" }}>{couponSuccess}</div>)}
@@ -1037,6 +1076,158 @@ export default function Checkout() {
                     .coupon-action-btn:hover { background-color: #000; border-color: #000; }
                     .coupon-action-btn.remove { background-color: transparent; color: #dc3545; border: 1px solid #dc3545; }
                     .coupon-action-btn.remove:hover { background-color: #dc3545; color: #fff; }
+
+                    /* Collapsible Order Summary Premium Styles */
+                    .checkout-summary-toggle-bar {
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      padding: 1rem 1.25rem;
+                      background-color: #FCFAF6;
+                      border: none;
+                      border-bottom: 1px solid transparent;
+                      cursor: pointer;
+                      user-select: none;
+                      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    .checkout-summary-toggle-bar[aria-expanded="true"] {
+                      border-bottom: 1px solid #F1ECE0;
+                      background-color: #ffffff;
+                    }
+
+                    .checkout-summary-toggle-bar:hover {
+                      background-color: #FAF6EE;
+                    }
+
+                    .toggle-left {
+                      display: flex;
+                      align-items: center;
+                      gap: 0.625rem;
+                    }
+
+                    .summary-bag-icon {
+                      color: #bca172;
+                      flex-shrink: 0;
+                      transition: transform 0.3s ease;
+                    }
+
+                    .checkout-summary-toggle-bar:hover .summary-bag-icon {
+                      transform: translateY(-1px);
+                    }
+
+                    .toggle-text {
+                      font-size: 0.75rem;
+                      font-weight: 500;
+                      color: #222;
+                      letter-spacing: 0.08em;
+                      text-transform: uppercase;
+                      font-family: "Inter", sans-serif;
+                    }
+
+                    .toggle-chevron {
+                      color: #bca172;
+                      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    .toggle-chevron.rotated {
+                      transform: rotate(180deg);
+                    }
+
+                    .toggle-right {
+                      display: flex;
+                      align-items: center;
+                      gap: 0.5rem;
+                    }
+
+                    .summary-total-price {
+                      font-size: 0.9375rem;
+                      font-weight: 600;
+                      color: #111;
+                      letter-spacing: 0.02em;
+                      font-family: "Inter", sans-serif;
+                    }
+
+                    .checkout-summary-collapsible-content {
+                      overflow: hidden;
+                      max-height: 0;
+                      opacity: 0;
+                      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+                      padding: 0 1.25rem;
+                    }
+
+                    .checkout-summary-collapsible-content.expanded {
+                      max-height: 2000px;
+                      opacity: 1;
+                      padding: 0.5rem 1.25rem 1.25rem 1.25rem;
+                    }
+
+                    @media (max-width: 1199.98px) {
+                      .checkout__totals {
+                        position: sticky !important;
+                        top: 64px !important;
+                        z-index: 99 !important;
+                        background: #ffffff !important;
+                        border: 1px solid #efeae0 !important;
+                        border-radius: 12px !important;
+                        padding: 0 !important;
+                        margin-bottom: 1.5rem !important;
+                        box-shadow: 0 10px 30px rgba(166, 123, 48, 0.08) !important;
+                        overflow: hidden;
+                        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                      }
+                    }
+
+                    @media (min-width: 1200px) {
+                      .checkout__totals {
+                        position: static !important;
+                        border: 1px solid #222 !important;
+                        padding: 2.5rem 2.5rem 0.5rem !important;
+                        background: #ffffff !important;
+                        border-radius: 0 !important;
+                        box-shadow: none !important;
+                        overflow: visible !important;
+                      }
+
+                      .checkout-summary-toggle-bar {
+                        cursor: default;
+                        background: transparent;
+                        border: none;
+                        padding: 0 0 1rem 0;
+                        border-bottom: 1px solid #e4e4e4;
+                        border-radius: 0;
+                        box-shadow: none;
+                        margin-bottom: 1.5rem;
+                        pointer-events: none;
+                      }
+
+                      .checkout-summary-toggle-bar:hover {
+                        background: transparent;
+                        box-shadow: none;
+                        border-color: #e4e4e4;
+                      }
+
+                      .toggle-chevron {
+                        display: none;
+                      }
+
+                      .toggle-text {
+                        font-size: 1rem;
+                        font-weight: 700;
+                        color: #222;
+                        letter-spacing: 0.04em;
+                      }
+
+                      .summary-total-price {
+                        display: none;
+                      }
+
+                      .checkout-summary-collapsible-content {
+                        max-height: none !important;
+                        opacity: 1 !important;
+                        padding: 0 !important;
+                      }
+                    }
                   `}</style>
 
                   <div className="checkout__payment-methods">

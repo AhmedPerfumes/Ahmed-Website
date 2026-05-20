@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { PiMapPinLight, PiClockCounterClockwiseLight, PiCertificateLight } from "react-icons/pi";
-import VideoPanel from "./VideoPanel";
+import VideoPanel from "@/components/VideoPanel";
 
 const QualityBoutiqueSection = () => {
     const locale = useLocale();

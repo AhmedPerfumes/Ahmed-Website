@@ -6,14 +6,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import NewHero from "./NewHero";
 import TabSlider from "./TabSlider";
-import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
+import ProductShowcase from "@/components/singleProduct/ProductShowcase/ProductShowcase";
 import NewProductSlider from "./NewProductSlider";
 import NewGiftSection from "./NewGiftSection";
 import GiftSetBanner from "./GiftSetBanner";
 import Section2 from "./Section2";
 import HorizontalScroll from "./HorizontalScroll";
 import QualityBoutiqueSection from "./QualityBoutiqueSection";
-import NewsLetter from "./modals/NewsLetter";
+import NewsLetter from "@/components/modals/NewsLetter";
 import { useMenu } from "@/context/MenuContext";
 
 if (typeof window !== "undefined") {

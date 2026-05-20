@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import Categories from "@/components/homes/home-15/Categories";
-import DakhoonSection from "@/components/Section1";
+import DakhoonSection from "@/components/new-homepage/Section1";
 
 gsap.registerPlugin(ScrollTrigger);
 

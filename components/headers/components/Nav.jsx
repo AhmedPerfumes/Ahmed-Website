@@ -85,23 +85,22 @@ export default function Nav({ categoriesSubCategories }) {
           ${isActiveParentMenu(`/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
           `}
         >
-          { t(item.name) }
+          {t(item.name)}
         </Link>
-        { item.productSubCategories.length > 0 ?
+        {item.productSubCategories.length > 0 ?
           <div className="mega-menu">
             <div className="container d-flex justify-content-center">
               <div className="col pe-4">
                 <p href="#" className="sub-menu__title border-bottom">
-                {t("PRODUCT TYPES")}
+                  {t("PRODUCT TYPES")}
                 </p>
                 <ul className="sub-menu__list list-unstyled">
                   {item.productSubCategories.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
                       <Link
                         href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
-                        className={`menu-link menu-link_us-s ${
-                          isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
-                        }`}
+                        className={`menu-link menu-link_us-s ${isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
+                          }`}
                       >
                         {t(elm.name)}
                       </Link>
@@ -148,7 +147,7 @@ export default function Nav({ categoriesSubCategories }) {
       </li>
     );
   });
-   categoriesSubCategoriesBody.push(
+  categoriesSubCategoriesBody.push(
     <li key="sale" className="navigation__item">
       <Link href={`/${locale}/sale`} className={`navigation__link
           ${isActiveExportMenu(`/sale`) ? "menu-active" : ""}
@@ -156,7 +155,7 @@ export default function Nav({ categoriesSubCategories }) {
         {t("Sale")}
       </Link>
     </li>
-    
+
   );
 
   categoriesSubCategoriesBody.push(
@@ -167,13 +166,13 @@ export default function Nav({ categoriesSubCategories }) {
         {t("Worldwide Distribution")}
       </Link>
     </li>
-    
+
   );
-   
+
 
   return (
     <>
-      { categoriesSubCategoriesBody && categoriesSubCategoriesBody }
+      {categoriesSubCategoriesBody && categoriesSubCategoriesBody}
     </>
   );
 }

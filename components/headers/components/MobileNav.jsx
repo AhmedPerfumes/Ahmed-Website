@@ -101,9 +101,8 @@ export default function MobileNav() {
             <div className="d-flex align-items-center w-100 py-2">
               <Link
                 href={categorySlug}
-                className={`navigation__link text-start flex-grow-1 ${
-                  isActiveParentMenu(categorySlug) ? "menu-active fw-bold" : ""
-                }`}
+                className={`navigation__link text-start flex-grow-1 ${isActiveParentMenu(categorySlug) ? "menu-active fw-bold" : ""
+                  }`}
                 style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
               >
                 {t(item.name)}
@@ -112,8 +111,8 @@ export default function MobileNav() {
                 <button
                   type="button"
                   onClick={(e) => {
-                      e.preventDefault(); // Prevent link click if nested
-                      setOpenCategoryIndex(isOpen ? null : i);
+                    e.preventDefault(); // Prevent link click if nested
+                    setOpenCategoryIndex(isOpen ? null : i);
                   }}
                   className="toggle-button"
                   aria-label="Toggle sub-menu"
@@ -134,14 +133,13 @@ export default function MobileNav() {
                             ? `/${locale}/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`
                             : `/${locale}/product-category/gift-sets`
                         }
-                        className={`menu-link d-block py-1 text-secondary ${
-                          isMenuActive(`/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`)
+                        className={`menu-link d-block py-1 text-secondary ${isMenuActive(`/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`)
                             ? "menu-active text-dark fw-medium"
                             : ""
-                        }`}
+                          }`}
                         style={{
-                            textAlign: locale === 'ar' ? 'right' : 'left',
-                            fontSize: '0.95rem'
+                          textAlign: locale === 'ar' ? 'right' : 'left',
+                          fontSize: '0.95rem'
                         }}
                       >
                         {t(elm.name)}
@@ -154,6 +152,15 @@ export default function MobileNav() {
           </li>
         );
       })}
+      <li key="export" className="navigation__item border-bottom py-2">
+        <Link
+          href={`/${locale}/sale`}
+          className={`navigation__link d-block text-start ${isActiveExportMenu(`/sale`) ? "menu-active fw-bold" : ""}`}
+          style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
+        >
+          {t("Sale")}
+        </Link>
+      </li>
 
       <li key="export" className="navigation__item border-bottom py-2">
         <Link

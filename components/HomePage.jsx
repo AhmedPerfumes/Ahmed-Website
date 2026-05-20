@@ -21,11 +21,11 @@ import Link from "next/link";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
-import TabSlider from "./TabSlider";
+import TabSlider from "@/components/new-homepage/TabSlider";
 import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 import { useMenu } from "@/context/MenuContext";
 import NewsLetter from '@/components/modals/NewsLetter';
-import HorizontalScroll from "./HorizontalScroll";
+import HorizontalScroll from "@/components/new-homepage/HorizontalScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
