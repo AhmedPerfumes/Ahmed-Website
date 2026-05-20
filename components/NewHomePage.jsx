@@ -16,6 +16,7 @@ import HorizontalScroll from "./HorizontalScroll";
 import QualityBoutiqueSection from "./QualityBoutiqueSection";
 import NewsLetter from "./modals/NewsLetter";
 import { useMenu } from "@/context/MenuContext";
+import FindYourScentEntry from "./FindYourScent/FindYourScentEntry";
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
@@ -60,6 +61,7 @@ const NewHomePage = () => {
             <Section2 />
             <NewProductSlider />
             <NewGiftSection />
+            <FindYourScentEntry />
             <HorizontalScroll />
             <GiftSetBanner />
             <DakhoonSection />
