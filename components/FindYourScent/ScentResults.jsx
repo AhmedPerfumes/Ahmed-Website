@@ -343,7 +343,7 @@ export default function ScentResults({ recommendations = [], scentProfile, userN
               <button className="fys-results-v2__retake" onClick={onRetake}>
                 ↺ RETAKE QUIZ
               </button>
-              <Link href={`/${locale}/perfumes`} className="fys-results-v2__explore">
+              <Link href={`/${locale}/product-category/perfumes/`} className="fys-results-v2__explore">
                 EXPLORE ALL FRAGRANCES →
               </Link>
             </motion.div>
