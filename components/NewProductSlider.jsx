@@ -7,10 +7,51 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
 import gsap from "gsap";
 import { useContextElement } from "@/context/Context";
+import { useMenu } from "@/context/MenuContext";
+import { formatPrice } from "@/utils/shop";
+import { allProducts } from "@/data/products";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-fade";
+
+const ProductPrice = ({ elm, currency }) => {
+  const currentUTC = new Date();
+  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
+  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+  
+  const isDiscountActive = elm?.discount && 
+    new Date(current_date_time) >= new Date(elm.discount.start_date) && 
+    new Date(current_date_time) <= new Date(elm.discount.end_date);
+
+  if (isDiscountActive) {
+    let discountedPrice = elm.price;
+    if (elm.discount.discount_type === "percent") {
+      discountedPrice = elm.price - (elm.price / 100 * elm.discount.value);
+    } else if (elm.discount.discount_type === "amount") {
+      discountedPrice = elm.price - elm.discount.value;
+    }
+    return (
+      <div className="product-price-wrap d-flex align-items-center gap-2">
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
+      </div>
+    );
+  } else if (elm?.sale_price) {
+    const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
+    return (
+      <div className="product-price-wrap d-flex align-items-center gap-2">
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
+      </div>
+    );
+  }
+  return (
+    <div className="product-price-wrap d-flex align-items-center gap-2">
+      <span className="money price">{formatPrice(elm.price, currency)}</span>
+    </div>
+  );
+};
 
 const SLIDES_DATA = [
     {
@@ -41,7 +82,7 @@ const SLIDES_DATA = [
         noteImg: "/assets/images/best-sellers/notes/ignite-oud@2x.jpg",
         productImg: "/assets/images/best-sellers/ignite-oud@2x.jpg",
         link: "/shop/perfumes/occidental-fragrance/ignite-oud",
-        theme: { bg: "#Fdfbf7", accent: "#e63946", glow: "rgba(230, 57, 70, 0.1)", roman: "III" }
+        theme: { bg: "rgba(253, 251, 247, 1)", accent: "rgba(230, 57, 70, 1)", glow: "rgba(230, 57, 70, 0.1)", roman: "III" }
     },
     {
         id: 3,
@@ -81,7 +122,9 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
     const swiperRef = useRef(null);
     const containerRef = useRef(null);
     const cursorRef = useRef(null);
-    const { addProductToCart } = useContextElement();
+    const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
+    const { currency } = useMenu();
+    const [liveStatuses, setLiveStatuses] = useState({});
     const [activeIndex, setActiveIndex] = useState(0);
     const [fetchedSlides, setFetchedSlides] = useState([]);
 
@@ -121,10 +164,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         return () => { isMounted = false; };
     }, [locale]);
 
-    const slides = useMemo(() => {
-        if (fetchedSlides.length > 0) return fetchedSlides;
-        if (prodSlide === "bestSellers") return SLIDES_DATA;
-        return [
+    const baseSlides = useMemo(() => {
+        const raw = fetchedSlides.length > 0 ? fetchedSlides : (prodSlide === "bestSellers" ? SLIDES_DATA : [
             {
                 id: -1,
                 name: "Maria Oud",
@@ -136,8 +177,96 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 theme: { bg: "#FAF3EB", accent: "#c5a059", glow: "rgba(197, 160, 89, 0.15)", roman: "O" }
             },
             ...SLIDES_DATA.slice(1)
-        ];
+        ]);
+
+        return raw.map(slide => {
+            let prod = slide.product;
+            if (!prod && allProducts && allProducts.length > 0) {
+                prod = allProducts.find(p => 
+                    p.product_name?.toLowerCase().includes(slide.name.toLowerCase()) || 
+                    slide.name.toLowerCase().includes(p.product_name?.toLowerCase())
+                );
+            }
+            return { ...slide, product: prod };
+        });
     }, [prodSlide, fetchedSlides]);
+
+    useEffect(() => {
+        const productIds = baseSlides
+            .map(s => s.product?.product_id)
+            .filter(Boolean);
+
+        if (productIds.length === 0) return;
+
+        const fetchLiveStatus = async () => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products/live-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ product_ids: productIds })
+                });
+                const data = await response.json();
+                if (data && typeof data === 'object') {
+                    setLiveStatuses(prev => ({ ...prev, ...data }));
+                }
+            } catch (err) {
+                console.error("Failed to fetch live statuses for slider products:", err);
+            }
+        };
+
+        fetchLiveStatus();
+    }, [baseSlides]);
+
+    const slides = useMemo(() => {
+        return baseSlides.map(slide => {
+            if (!slide.product) return slide;
+            const liveData = liveStatuses[slide.product.product_id];
+            const updatedProduct = liveData ? { ...slide.product, ...liveData } : slide.product;
+            return { ...slide, product: updatedProduct };
+        }).filter(slide => {
+            if (slide.product) {
+                if (Number(slide.product.product_qty) <= 0) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }, [baseSlides, liveStatuses]);
+
+    const getProductQuantity = (id) => {
+        if (!id) return 0;
+        const item = cartProducts?.find(p => p.product_id === id);
+        return item ? item.quantity : 0;
+    };
+
+    const handleIncrement = (product) => {
+        if (!product) return;
+        const MAX_LIMIT =
+            product.maximum_order_quantity && product.maximum_order_quantity > 0
+                ? product.maximum_order_quantity
+                : product.product_qty;
+
+        const currentQty = getProductQuantity(product.product_id);
+        if (currentQty >= MAX_LIMIT) {
+            return;
+        }
+        addProductToCart(product);
+    };
+
+    const handleDecrement = (productId) => {
+        if (!productId) return;
+        setCartProducts(prev => {
+            return prev.map(p => {
+                if (p.product_id === productId) {
+                    const newQty = (p.quantity || 1) - 1;
+                    return newQty > 0 ? { ...p, quantity: newQty } : null;
+                }
+                return p;
+            }).filter(Boolean);
+        });
+    };
 
 
 
@@ -184,8 +313,9 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             const oldTitleElements = prevSlide.querySelectorAll(".stagger-row span");
             const oldSubtitle = prevSlide.querySelector(".master-desc");
             const oldTagline = prevSlide.querySelector(".master-tagline");
+            const oldPrice = prevSlide.querySelector(".product-price-wrap");
 
-            gsap.to([oldTitleElements, oldSubtitle, oldTagline], {
+            gsap.to([oldTitleElements, oldPrice, oldSubtitle, oldTagline], {
                 opacity: 0,
                 y: prefersReducedMotion ? 0 : -30,
                 duration: 0.4,
@@ -194,6 +324,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         }
 
         const titleElements = currentSlide.querySelectorAll(".stagger-row span");
+        const price = currentSlide.querySelector(".product-price-wrap");
         const subtitle = currentSlide.querySelector(".master-desc");
         const tagline = currentSlide.querySelector(".master-tagline");
         const primary = currentSlide.querySelector(".primary-photo img");
@@ -216,6 +347,13 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             { y: 0, opacity: 1, duration: 1.0, stagger: prefersReducedMotion ? 0 : 0.06, ease: "power3.out", delay: 0.5 }
         );
 
+        if (price) {
+            gsap.fromTo(price,
+                { y: prefersReducedMotion ? 0 : "100%", opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.0, ease: "power3.out", delay: 0.6 }
+            );
+        }
+
         gsap.fromTo(subtitle, 
             { opacity: 0, y: prefersReducedMotion ? 0 : 20 }, 
             { opacity: 1, y: 0, duration: 1.0, delay: 0.7, ease: "power3.out" }
@@ -237,40 +375,55 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
     };
 
     return (
-        <section
+        <div
             ref={containerRef}
-            className="master-gallery-section"
+            className="master-gallery-wrapper"
             onMouseMove={handleMouseMove}
+            style={{ backgroundColor: slides[activeIndex].theme.bg, transition: "background-color 1s ease" }}
         >
-
-
-            <div ref={cursorRef} className="master-cursor-wrap">
-                <div className="master-flashlight" style={{ borderColor: slides[activeIndex].theme.glow }}></div>
+            <div className="best-sellers-header-section">
+                <div className="best-sellers-header-wrap">
+                    <span className="best-sellers-tagline">{t("Premium Collection")}</span>
+                    <h2 className="best-sellers-heading">
+                        {t("Best Sellers")}
+                    </h2>
+                    <p className="best-sellers-desc">
+                        {t("Discover our most loved and highly sought-after signature creations.")}
+                    </p>
+                    <div className="best-sellers-line"></div>
+                </div>
             </div>
 
-            <div className="best-sellers-header-wrap">
-                <span className="best-sellers-tagline">{t("Premium Collection")}</span>
-                <h2 className="best-sellers-heading">
-                    {t("Best Sellers")}
-                </h2>
-                <p className="best-sellers-desc">
-                    {t("Discover our most loved and highly sought-after signature creations.")}
-                </p>
-                <div className="best-sellers-line"></div>
-            </div>
+            <section className="master-gallery-section">
 
             <style jsx global>{`
+                .master-gallery-wrapper {
+                    position: relative;
+                    width: 100%;
+                    overflow: hidden;
+                    background-color: #FDFBF7;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .best-sellers-header-section {
+                    width: 100%;
+                    padding: 40px 0 10px;
+                    background: transparent;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 100;
+                }
+
                 .master-gallery-section {
                     position: relative;
                     width: 100%;
-                    min-height: 100vh;
+                    min-height: 70vh;
                     overflow: hidden;
-                    background-color: #FDFBF7;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin: 0;
-                    padding: 0;
                 }
 
                 @media (max-width: 991px) {
@@ -284,10 +437,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
 
                 .best-sellers-header-wrap {
-                    position: absolute;
-                    top: 40px;
-                    left: 50%;
-                    transform: translateX(-50%);
+                    position: relative;
                     z-index: 99;
                     text-align: center;
                     display: flex;
@@ -333,11 +483,13 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
 
                 @media (max-width: 991px) {
+                    .best-sellers-header-section {
+                        padding: 20px 0 5px;
+                    }
                     .best-sellers-header-wrap {
-                        position: absolute;
-                        top: 20px;
-                        left: 50%;
-                        transform: translateX(-50%);
+                        position: relative;
+                        left: auto;
+                        transform: none;
                         gap: 3px;
                         width: 100%;
                         padding: 0 20px;
@@ -374,7 +526,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
 
                 .master-swiper { width: 100%; height: 100%; }
-                .master-slide { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: auto; min-height: 100vh; }
+                .master-slide { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: auto; min-height: 75vh; }
                 
                 @media (max-width: 991px) {
                     .master-slide {
@@ -424,7 +576,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 .stagger-row span {
                     display: inline-block;
                     font-family: 'Playfair Display', serif;
-                    font-size: clamp(3.5rem, 7vw, 6rem);
+                    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
                     font-weight: 700;
                     color: #1D1B19;
                     line-height: 1.1;
@@ -445,7 +597,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     margin-top: 15px;
                 }
 
-                @media (max-width: 991px) { .master-desc { margin: 8px auto 0; font-size: 0.88rem; line-height: 1.5; max-width: 90%; padding: 0 16px; } }
+                @media (max-width: 991px) { 
+                    .master-desc { 
+                        margin: 0 auto; 
+                        font-size: 0.88rem; 
+                        line-height: 1.5; 
+                        max-width: 85%; 
+                        padding: 0; 
+                    } 
+                }
                 @media (max-width: 480px) { .master-desc { font-size: 0.82rem; } }
 
                 /* Large Background Kinetic Typography */
@@ -484,22 +644,22 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                         order: 1;
                         width: 100%;
                         height: auto;
-                        padding: 110px 20px 50px;
+                        padding: 110px 20px 60px;
                         position: relative;
                         display: flex;
                         justify-content: center;
                     } 
                 }
                 @media (max-width: 480px) {
-                    .master-visual-col { padding: 100px 16px 44px; }
+                    .master-visual-col { padding: 15px 16px 44px; }
                 }
 
                 .primary-photo {
                     position: absolute;
                     right: 0%;
-                    width: 75%;
+                    width: 70%;
                     height: auto;
-                    max-height: 85vh;
+                    max-height: 80vh;
                     aspect-ratio: 4/5;
                     border-radius: 20px;
                     overflow: hidden;
@@ -507,6 +667,12 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     box-shadow: 0 40px 100px rgba(0,0,0,0.08);
                     top: 50%;
                     transform: translateY(-50%);
+                }
+
+                @media (max-width: 1400px) {
+                    .primary-photo {
+                        width: 65%;
+                    }
                 }
 
                 @media (max-width: 991px) {
@@ -535,15 +701,22 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 .secondary-photo {
                     position: absolute;
-                    left: 5%;
+                    left: 15%;
                     bottom: 10%;
-                    width: 45%;
+                    width: 40%;
                     aspect-ratio: 1/1;
                     border-radius: 4px;
                     overflow: hidden;
                     z-index: 10;
                     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
                     transform: translateY(20px);
+                }
+
+                @media (max-width: 1400px) {
+                    .secondary-photo {
+                        left: 20%;
+                        width: 35%;
+                    }
                 }
 
                 @media (max-width: 991px) {
@@ -728,15 +901,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                         visibility: visible;
                         pointer-events: auto;
                         height: auto;
-                        gap: 6px;
+                        gap: 12px;
                         text-align: center;
                         align-items: center;
-                        padding: 16px 20px 0;
+                        padding: 30px 20px 0;
                         justify-content: flex-start;
                     }
                 }
                 @media (max-width: 480px) {
-                    .global-cta-text-col { padding: 12px 16px 0; gap: 4px; }
+                    .global-cta-text-col { padding: 24px 16px 0; gap: 10px; }
                 }
                 
                 @media (max-width: 991px) {
@@ -747,14 +920,126 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     pointer-events: auto;
                     visibility: visible;
                     opacity: 1;
-                    padding-top: 30px; /* Space between description and button */
+                    padding-top: 10px; /* Reduced to match the more even gap structure */
                 }
                 
-                @media (max-width: 991px) { .global-cta-btn-container { padding-top: 16px; padding-bottom: 20px; } }
-                @media (max-width: 480px) { .global-cta-btn-container { padding-top: 12px; padding-bottom: 16px; } }
+                @media (max-width: 991px) { .global-cta-btn-container { padding-top: 12px; padding-bottom: 25px; } }
+                @media (max-width: 480px) { .global-cta-btn-container { padding-top: 10px; padding-bottom: 20px; } }
                 @media (max-width: 991px) { .master-btn { padding: 14px 32px; letter-spacing: 3px; font-size: 0.7rem; } }
                 @media (max-width: 480px) { .master-btn { padding: 12px 28px; font-size: 0.68rem; } }
                 @media (max-width: 991px) { .global-cta-wrap { padding-bottom: 0px; } }
+
+                .price-anim-wrap {
+                    display: block;
+                    overflow: hidden;
+                    margin-top: 5px;
+                }
+
+                .product-price-wrap {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 1.25rem;
+                    font-weight: 500;
+                    margin-top: 5px;
+                }
+                .product-price-wrap .price-old {
+                    text-decoration: line-through;
+                    color: rgba(0,0,0,0.35);
+                    font-size: 0.95rem;
+                    font-weight: 400;
+                }
+                .product-price-wrap .price-sale {
+                    color: #c5a059;
+                    font-weight: 700;
+                }
+                @media (max-width: 991px) {
+                    .product-price-wrap {
+                        font-size: 1.15rem;
+                        margin-top: 3px;
+                    }
+                    .product-price-wrap .price-old {
+                        font-size: 0.88rem;
+                    }
+                }
+
+                .slider-qty-selector {
+                    display: inline-flex;
+                    align-items: stretch;
+                    border: 1px solid #1D1B19;
+                    background: transparent;
+                    border-radius: 0;
+                    pointer-events: auto;
+                    visibility: visible;
+                    opacity: 1;
+                    min-width: 220px;
+                    height: 60px;
+                    box-sizing: border-box;
+                    padding: 0;
+                }
+
+                @media (max-width: 991px) {
+                    .slider-qty-selector {
+                        min-width: 170px;
+                        height: 48px;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .slider-qty-selector {
+                        min-width: 150px;
+                        height: 42px;
+                    }
+                }
+
+                .slider-qty-selector .qty-btn {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    width: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 0;
+                    color: #1D1B19;
+                    transition: background-color 0.3s ease;
+                    padding: 0;
+                    height: 100%;
+                }
+
+                @media (max-width: 991px) {
+                    .slider-qty-selector .qty-btn {
+                        width: 40px;
+                    }
+                }
+
+                .slider-qty-selector .qty-btn:hover {
+                    background: rgba(29, 27, 25, 0.08);
+                }
+
+                .slider-qty-selector .qty-value {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 0.85rem;
+                    font-weight: 700;
+                    letter-spacing: 2px;
+                    color: #1D1B19;
+                    border-left: 1px solid rgba(29, 27, 25, 0.15);
+                    border-right: 1px solid rgba(29, 27, 25, 0.15);
+                    text-transform: uppercase;
+                    height: 100%;
+                    min-width: 50px;
+                    text-align: center;
+                }
+
+                @media (max-width: 991px) {
+                    .slider-qty-selector .qty-value {
+                        font-size: 0.75rem;
+                        letter-spacing: 1px;
+                    }
+                }
             `}</style>
 
             <Swiper
@@ -787,6 +1072,11 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                                         <span>{t(slide.name)}</span>
                                     </div>
                                 </div>
+                                {slide.product && (
+                                    <div className="price-anim-wrap">
+                                        <ProductPrice elm={slide.product} currency={currency} />
+                                    </div>
+                                )}
                                 <p className="master-desc">
                                     {t(slide.subtitle)}
                                 </p>
@@ -828,25 +1118,61 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                                 <span>{t(slides[activeIndex]?.name || "TITLE")}</span>
                             </div>
                         </div>
+                        {slides[activeIndex]?.product && (
+                            <ProductPrice elm={slides[activeIndex].product} currency={currency} />
+                        )}
                         <p className="master-desc">
                             {t(slides[activeIndex]?.subtitle || "DESC")}
                         </p>
                         <div className="global-cta-btn-container">
-                            <button
-                                className="master-btn"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    const activeSlide = slides[activeIndex];
-                                    if (activeSlide?.product) {
-                                        addProductToCart(activeSlide.product);
-                                    } else {
-                                        // Fallback if no product is linked
-                                        window.location.href = `/${locale}${activeSlide?.link || "/shop"}`;
-                                    }
-                                }}
-                            >
-                                {slides[activeIndex]?.product ? t("Add To Cart") : t("Discover the Note")}
-                            </button>
+                            {slides[activeIndex]?.product && getProductQuantity(slides[activeIndex].product.product_id) > 0 ? (
+                                <div className="slider-qty-selector">
+                                    <button 
+                                        className="qty-btn dec-btn" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleDecrement(slides[activeIndex].product.product_id);
+                                        }}
+                                        aria-label="Decrease quantity"
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                    </button>
+                                    <span className="qty-value font-weight-bold">
+                                        {getProductQuantity(slides[activeIndex].product.product_id)}
+                                    </span>
+                                    <button 
+                                        className="qty-btn inc-btn" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleIncrement(slides[activeIndex].product);
+                                        }}
+                                        aria-label="Increase quantity"
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <line x1="12" y1="5" x2="12" y2="19" />
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            ) : (
+                                <button
+                                    className="master-btn"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const activeSlide = slides[activeIndex];
+                                        if (activeSlide?.product) {
+                                            addProductToCart(activeSlide.product);
+                                        } else {
+                                            // Fallback if no product is linked
+                                            window.location.href = `/${locale}${activeSlide?.link || "/shop"}`;
+                                        }
+                                    }}
+                                >
+                                    {slides[activeIndex]?.product ? t("Add To Cart") : t("Discover the Note")}
+                                </button>
+                            )}
                         </div>
                     </div>
                     {/* Dynamic layout matching block to mimic primary photo constraints exactly on mobile */}
@@ -879,7 +1205,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     </svg>
                 </button>
             </div>
-        </section>
+            </section>
+        </div>
     );
 };
 

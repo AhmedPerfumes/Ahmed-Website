@@ -2,98 +2,58 @@
 import { categories2 } from "@/data/categories";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function Categories({ params, subCategories }) {
     const locale = useLocale();
-    const categoryName = usePathname().split("/")[3];
+    const pathname = usePathname();
+    const categoryName = pathname.split("/")[3];
     const t = useTranslations();
 
-    const handleMouseOver = (e) => {
-        const tooltip = document.getElementById("video-tooltip");
-        const tooltipVideo = document.getElementById("tooltip-video");
-        const videoSrc = e.target.getAttribute("data-video-src");
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
-        if (tooltip && tooltipVideo) {
-            tooltipVideo.querySelector("source").src = videoSrc;
-            tooltipVideo.load();
-            tooltip.classList.add("show");
-            tooltip.style.display = "block";
-            const rect = e.target.getBoundingClientRect();
-            tooltip.style.left = `${rect.left}px`;
-            tooltip.style.top = `${rect.top - tooltip.offsetHeight}px`;
-        }
+    const handleMouseEnter = (index) => {
+        setHoveredIndex(index);
     };
 
-    const handleMouseOut = () => {
-        const tooltip = document.getElementById("video-tooltip");
-
-        if (tooltip) {
-            tooltip.classList.remove("show");
-            tooltip.style.display = "none";
-        }
+    const handleMouseLeave = () => {
+        setHoveredIndex(null);
     };
-
-    // useEffect(() => {
-    //   document.addEventListener("mousemove", (e) => {
-    //     const tooltip = document.getElementById("video-tooltip");
-    //     if (tooltip && tooltip.classList.contains("show")) {
-    //       tooltip.style.left = `${e.pageY}px`;
-    //     }
-    //   });
-    // }, []);
-    // // -----------
 
     const swiperOptions = {
         autoplay: {
-            delay: 5000,
+            delay: 3000,
+            disableOnInteraction: false,
         },
-        slidesPerView: 4,
+        slidesPerView: 2.5,
+        spaceBetween: 20,
         slidesPerGroup: 1,
-        effect: "none",
         loop: true,
         modules: [Autoplay, Navigation],
-        navigation: {
-            nextEl: ".products-carousel__next-1",
-            prevEl: ".products-carousel__prev-1",
-        },
         breakpoints: {
-            320: {
-                slidesPerView: 4,
-                slidesPerGroup: 1,
-                pagination: false,
+            576: {
+                slidesPerView: 3.5,
+                spaceBetween: 20,
             },
             768: {
                 slidesPerView: 4,
-                slidesPerGroup: 1,
-                pagination: false,
-            },
-            992: {
-                slidesPerView: 4,
-                slidesPerGroup: 1,
-                pagination: false,
+                spaceBetween: 30,
             },
             1200: {
-                slidesPerView: 5,
-                slidesPerGroup: 0,
-                pagination: false,
+                slidesPerView: 6,
+                spaceBetween: 40,
             },
         },
     };
 
     function removeSpecialCharactersAndAmp(str) {
-        // Remove the specific word "&amp;"
+        if (!str) return "";
         let cleanedStr = str.replace(/&amp;/g, "");
-
-        // Remove all special characters
         cleanedStr = cleanedStr.replace(/[^\w\s-]/g, "");
-
-        // Replace multiple spaces with a single space and trim
         cleanedStr = cleanedStr.replace(/\s+/g, " ").trim();
-
         return cleanedStr;
     }
 
@@ -103,63 +63,69 @@ export default function Categories({ params, subCategories }) {
                 <div className="position-relative">
                     <Swiper
                         {...swiperOptions}
-                        className="swiper-center swiper-container js-swiper-slider sub-cat-video"
+                        className="swiper-container js-swiper-slider sub-cat-video pb-4"
                     >
-                        {subCategories?.map((elm, i) => (
-                            <SwiperSlide
-                                key={i}
-                                className="swiper-slide text-center"
-                            >
-                                <Link
+                        {subCategories?.map((elm, i) => {
+                            const subcatSlug = removeSpecialCharactersAndAmp(elm.name)
+                                .split(" ")
+                                .join("-")
+                                .toLowerCase();
+                            const isActive = pathname.includes(`/${subcatSlug}`);
+
+                            return (
+                                <SwiperSlide
                                     key={i}
-                                    href={`/${locale}/product-category/${removeSpecialCharactersAndAmp(
-                                        categoryName
-                                    )}/${removeSpecialCharactersAndAmp(elm.name)
-                                        .split(" ")
-                                        .join("-")
-                                        .toLowerCase()}`}
-                                    className="shop-categories__item mb-3"
+                                    className={`swiper-slide text-center ${
+                                        hoveredIndex === i ? "is-hovered" : ""
+                                    } ${isActive ? "is-active" : ""}`}
+                                    style={{
+                                        animation: `cat-fade-in-up 0.6s ease-out both ${
+                                            i * 0.1
+                                        }s`,
+                                        zIndex: hoveredIndex === i ? 100 : 1,
+                                    }}
                                 >
-                                    <video
-                                        playsInline
-                                        loading="lazy"
-                                        width="200"
-                                        height="120"
-                                        className="shop-categories__item-img rounded-circle text-center"
-                                        autoPlay
-                                        loop
-                                        muted
-                                        data-video-src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.video}`}
-                                        onMouseOver={(e) => handleMouseOver(e)}
-                                        onMouseOut={handleMouseOut}
-                                    >
-                                        <source
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.video}`}
-                                            type="video/mp4"
-                                            width={200}
-                                        />
-                                    </video>
-                                </Link>
-                                <div className="text-center">
                                     <Link
-                                        href={`/${locale}/product-category/${categoryName}/${elm.name
-                                            .split(" ")
-                                            .join("-")
-                                            .toLowerCase()}`}
-                                        className="menu-link fw-medium"
-                                        key={i}
+                                        href={`/${locale}/product-category/${removeSpecialCharactersAndAmp(
+                                            categoryName
+                                        )}/${subcatSlug}`}
+                                        className={`shop-categories__item d-block mb-3 ${
+                                            isActive ? "active-subcategory" : ""
+                                        }`}
+                                        onMouseEnter={() => handleMouseEnter(i)}
+                                        onMouseLeave={handleMouseLeave}
                                     >
-                                        {t(elm.name)}
+                                        <div className="video-container rounded-circle overflow-hidden mx-auto">
+                                            <video
+                                                loading="lazy"
+                                                className="w-100 h-100 object-fit-cover"
+                                                autoPlay
+                                                loop
+                                                muted
+                                                playsInline
+                                            >
+                                                <source
+                                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.video}`}
+                                                    type="video/mp4"
+                                                />
+                                            </video>
+                                        </div>
                                     </Link>
-                                </div>
-                            </SwiperSlide>
-                        ))}
+                                    <div className="text-center">
+                                        <Link
+                                            href={`/${locale}/product-category/${categoryName}/${subcatSlug}`}
+                                            className={`menu-link fw-medium text-uppercase small ${
+                                                isActive ? "text-primary-gold" : ""
+                                            }`}
+                                            style={{ letterSpacing: "0.05em" }}
+                                        >
+                                            {t(elm.name)}
+                                        </Link>
+                                    </div>
+                                </SwiperSlide>
+                            );
+                        })}
                     </Swiper>
-                    <div id="video-tooltip" className="video-tooltip">
-                        <video id="tooltip-video" autoPlay loop muted>
-                            <source src="" type="video/mp4" />
-                        </video>
-                    </div>
                 </div>
             )}
         </section>

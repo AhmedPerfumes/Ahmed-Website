@@ -6,6 +6,8 @@ import { useLocale } from "next-intl";
 import UserLoggedIn from "../headers/components/UserLoggedIn";
 import User from "../headers/components/User";
 import { useUser } from "../../context/UserContext";
+import { BsTruck } from "react-icons/bs";
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 
 export default function MobileFooter1() {
     const locale = useLocale();
@@ -18,9 +20,8 @@ export default function MobileFooter1() {
 
     return (
         <footer
-            className={`footer-mobile container w-100 px-5 d-md-none bg-body ${
-                showFooter ? "position-fixed footer-mobile_initialized" : ""
-            }`}
+            className={`footer-mobile container w-100 px-5 d-md-none bg-body ${showFooter ? "position-fixed footer-mobile_initialized" : ""
+                }`}
         >
             <div className="row text-center">
                 <div className="col-3">
@@ -64,47 +65,33 @@ export default function MobileFooter1() {
                 {/* <!-- /.col-3 --> */}
                 <div className="col-3">
                     {!isLoggedIn ? (
-                <Link
-                    className="footer-mobile__link d-flex flex-column align-items-center"
-                    href="#"
-                >
-                    <User  />
-                    <span>
-                      LogIn
-                    </span>
-                </Link>
-            ) : (
-                <Link href="/account_dashboard" className="footer-mobile__link d-flex flex-column align-items-center">
-                    <UserLoggedIn />
-                    <span>
-                      Account
-                    </span>
-                </Link>
-            )}
+                        <Link
+                            className="footer-mobile__link d-flex flex-column align-items-center"
+                            href="#"
+                        >
+                            <User />
+                            <span>
+                                LogIn
+                            </span>
+                        </Link>
+                    ) : (
+                        <Link href="/account_dashboard" className="footer-mobile__link d-flex flex-column align-items-center">
+                            <UserLoggedIn />
+                            <span>
+                                Account
+                            </span>
+                        </Link>
+                    )}
                 </div>
                 {/* <!-- /.col-3 --> */}
 
                 <div className="col-3">
                     <Link
-                        href={`/${locale}/shop-cart`}
+                        href={`/${locale}/order-tracking`}
                         className="footer-mobile__link d-flex flex-column align-items-center"
                     >
-                        <div className="position-relative">
-                            <svg
-                                className="d-block"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 20 20"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <use href="#icon_cart"></use>
-                            </svg>
-                            <span className="wishlist-amount d-block position-absolute js-wishlist-count">
-                                {cartProducts.length}
-                            </span>
-                        </div>
-                        <span>Cart</span>
+                        <BsTruck  size={18} className="d-block" />
+                        <span>Tracking</span>
                     </Link>
                 </div>
                 {/* <!-- /.col-3 --> */}

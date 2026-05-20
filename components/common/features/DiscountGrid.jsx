@@ -1,294 +1,548 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import { useContextElement } from "@/context/Context";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from "he";
-import Link from "next/link";
+import Slider from "rc-slider";
+import Pagination2 from "@/components/common/Pagination2";
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import { useShopFilter } from "@/context/ShopFilterContext";
-import { useContextElement } from "@/context/Context";
-import { renderPrice } from "@/utlis/priceRenderer";
-import { openModalShopFilter } from "@/utlis/aside";
-// import FilterAll from "../../shop/filter/FilterAll";
-import Pagination1 from "../Pagination1";
-import FilterDiscounted from "./FilterDiscounted";
-import FilterMobileAside from "./FilterMobileAside";
+import Link from "next/link";
+import { 
+  removeSpecialCharactersAndAmp, 
+  sanitizeUrlParam,
+  formatPrice 
+} from "@/utils/shop";
+import { sortingOptions } from "@/data/products/productCategories";
+import ProductFilter from "../../shoplist/ProductFilter";
 
-export default function DiscountGrid({ title, onlyDiscounted = false }) {
-  const { currency, isLoading: isMenuLoading } = useMenu();
-  const locale = useLocale();
-  const t = useTranslations();
-  const { addProductToCart, isAddedToCartProducts } = useContextElement();
+const ProductPrice = ({ elm, currency }) => {
+  const currentUTC = new Date();
+  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
+  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+  
+  const isDiscountActive = elm?.discount && 
+    new Date(current_date_time) >= new Date(elm.discount.start_date) && 
+    new Date(current_date_time) <= new Date(elm.discount.end_date);
 
-  // Filter Context Logic
-  const {
-    rawProducts,
+  if (isDiscountActive) {
+    let discountedPrice = elm.price;
+    if (elm.discount.discount_type === "percent") {
+      discountedPrice = elm.price - (elm.price / 100 * elm.discount.value);
+    } else if (elm.discount.discount_type === "amount") {
+      discountedPrice = elm.price - elm.discount.value;
+    }
+    return (
+      <>
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
+      </>
+    );
+  } else if (elm?.sale_price) {
+    const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
+    return (
+      <>
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
+      </>
+    );
+  }
+  return <span className="money price">{formatPrice(elm.price, currency)}</span>;
+};
+
+const ProductCardSkeleton = () => (
+  <div className="product-card-wrapper">
+    <div className="product-card">
+      <div className="pc__img-wrapper" style={{ background: '#f0f0f0', aspectRatio: '4/5' }}></div>
+      <div className="pc__info" style={{ padding: '15px 10px' }}>
+        <div className="skeleton-bar" style={{ height: '14px', width: '70%', background: '#eee', margin: '0 auto 8px', borderRadius: '4px' }}></div>
+        <div className="skeleton-bar" style={{ height: '12px', width: '40%', background: '#f5f5f5', margin: '0 auto', borderRadius: '4px' }}></div>
+      </div>
+    </div>
+  </div>
+);
+
+function DiscountGrid({ title, onlyDiscounted = false }) {
+  const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
+  const { 
+    rawProducts, 
     setRawProducts,
-    priceRange,
-    setPriceRange,
     stockAvailability,
-    promotionalOnly,
+    setStockAvailability,
     selectedLabels,
+    setSelectedLabels,
     selectedTags,
+    setSelectedTags
   } = useShopFilter();
+  
+  const locale = useLocale();
+  const { 
+    addProductToCart, 
+    cartProducts,
+    setCartProducts 
+  } = useContextElement();
 
   const [loading, setLoading] = useState(true);
+  const [selectedColView, setSelectedColView] = useState(3);
   const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isAsideOpen, setIsAsideOpen] = useState(false);
   const perPage = 12;
+  const t = useTranslations();
 
-  // 1. Fetch Data
+  const [isDDActive, setIsDDActive] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('popularity');
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+  const ref = useRef(null);
+  const gridRef = useRef(null);
+
+  const availableViews = [2, 3, 4];
+
+  // Helper for Clean URLs (legacy compatibility)
+  const clean = (s) => s?.toLowerCase().replace(/&amp;/g, "").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
+
+  const uniqueLabels = useMemo(() => {
+    const labels = rawProducts.map(p => p.category_name).filter(Boolean);
+    return [...new Set(labels)].sort();
+  }, [rawProducts]);
+
+  const uniqueSubcategories = useMemo(() => {
+    const activeProducts = selectedLabels.length > 0 
+      ? rawProducts.filter(p => selectedLabels.includes(p.category_name))
+      : rawProducts;
+
+    const subcats = activeProducts
+      .map(p => p.subcategory?.subcategory_name || p.subcategory_name || p.subcategory)
+      .filter((s) => s && typeof s === 'string');
+    return [...new Set(subcats)].sort();
+  }, [rawProducts, selectedLabels]);
+
+  const uniqueTags = useMemo(() => {
+    const tags = rawProducts.flatMap(p => Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : [])).filter(Boolean);
+    return [...new Set(tags)].sort();
+  }, [rawProducts]);
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsDDActive(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const sortItems = (items, option) => {
+    switch (option) {
+      case 'popularity':
+        return [...items].sort((a, b) => (b.sales || 0) - (a.sales || 0));
+      case 'date':
+        return [...items].sort((a, b) => b.product_id - a.product_id);
+      case 'price':
+        return [...items].sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return [...items].sort((a, b) => b.price - a.price);
+      default:
+        return items;
+    }
+  };
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      if (rawProducts.length > 0) {
+        setLoading(false);
+        const calculatedMax = Math.ceil(Math.max(...rawProducts.map(p => p.price)));
+        setMaxPrice(calculatedMax);
+        setPriceRange([0, calculatedMax]);
+        return;
+      }
+
       setLoading(true);
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ page: 1, limit: 1000 }),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/allProducts`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ page: 1, limit: 1000 }),
+          }
+        );
         const result = await response.json();
-        const norm = (result.data || []).map((p) => ({ ...p, price: Number(p.price) }));
+        const data = result.data || [];
+        const norm = data.map((p) => ({ ...p, price: Number(p.price) }));
         setRawProducts(norm);
+        
+        const calculatedMax = norm.length > 0 ? Math.ceil(Math.max(...norm.map(p => p.price))) : 1000;
+        setMaxPrice(calculatedMax);
+        setPriceRange([0, calculatedMax]);
       } catch (error) {
-        console.error("Failed to fetch products", error);
+        console.error("Failed to fetch all products", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchProducts();
-  }, [setRawProducts]);
 
-  // 2. Scroll to Grid Start on Page Change
-  useEffect(() => {
-    if (!loading) {
-      const element = document.getElementById("product-grid-start");
-      if (element) {
-        window.scrollTo({
-          top: element.offsetTop - 120,
-          behavior: "smooth",
-        });
-      }
-    }
-  }, [page, loading]);
+    getAllProducts();
+  }, [setRawProducts]); // Only fetch if context is empty
 
-  // 3. Integrated Filtering Logic
+  const isSubcategoryFunc = (category, subcategory) => {
+    if (subcategory) return sanitizeUrlParam(subcategory.subcategory_name);
+    
+    const categorySlug = removeSpecialCharactersAndAmp(category).split(" ").join("-").toLowerCase();
+    const categoryMap = {
+      "gift-sets": "gift-sets",
+      "hair-mist": "hair-mist",
+      "extrait-de-parfum": "extrait-de-parfum",
+      "xtrait-de-parfum": "extrait-de-parfum"
+    };
+
+    return categoryMap[categorySlug] || "online-exclusive";
+  };
+
+  const getProductQuantity = (id) => {
+    const item = cartProducts.find(p => p.product_id === id);
+    return item ? item.quantity : 0;
+  };
+
+  const updateQuantity = (id, delta) => {
+    setCartProducts(prev => {
+      return prev.map(p => {
+        if (p.product_id === id) {
+          const newQty = (p.quantity || 1) + delta;
+          return newQty > 0 ? { ...p, quantity: newQty } : null;
+        }
+        return p;
+      }).filter(Boolean);
+    });
+  };
+
+  const handleReset = () => {
+    setPriceRange([0, maxPrice]);
+    setStockAvailability('all');
+    setSelectedLabels([]);
+    setSelectedSubcategories([]);
+    setSelectedTags([]);
+    setSearchTerm('');
+  };
+
   const filteredProducts = useMemo(() => {
     const [low, high] = priceRange;
 
-    return rawProducts.filter((p) => {
-      // Search Filter
-      const matchesSearch = p.product_name.toLowerCase().includes(searchQuery.toLowerCase());
+    const filtered = rawProducts.filter((p) => {
+      // "New Launch" items are never filtered out
+      if (p.collection_name === 'New Launch') {
+        return true;
+      }
+
+      // 1. Search Filter
+      const matchesSearch = p.product_name.toLowerCase().includes(searchTerm.toLowerCase());
       if (!matchesSearch) return false;
 
-      // Stock Filter
+      // 2. Stock Filter
       if (stockAvailability === "in_stock" && p.product_qty <= 0) return false;
       
-      // Price Filter
+      // 3. Price Filter
       if (p.price < low || p.price > high) return false;
 
-      // Campaign/Promotional Filter
-      if (onlyDiscounted || promotionalOnly) {
+      // 4. Campaign/Promotional Filter (Reverted to old logic)
+      if (onlyDiscounted) {
         if (!p.discount) return false;
       }
 
-      // Sidebar Label/Category Filter
-      if (selectedLabels?.length > 0) {
+      // 5. Category/Label Filter
+      if (selectedLabels.length > 0) {
         if (!selectedLabels.includes(p.category_name)) return false;
       }
 
-      // Sidebar Size/Tag Filter
-      if (selectedTags?.length > 0) {
-        const tags = Array.isArray(p.tags) ? p.tags : [];
-        if (!tags.some((t) => selectedTags.includes(t))) return false;
+      // 5b. Subcategory Filter
+      if (selectedSubcategories.length > 0) {
+        const subcatVal = p.subcategory?.subcategory_name || p.subcategory_name || p.subcategory;
+        if (!selectedSubcategories.includes(subcatVal)) return false;
+      }
+
+      // 6. Tags Filter
+      if (selectedTags.length > 0) {
+        const pTags = Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []);
+        if (!pTags.some(t => selectedTags.includes(t))) return false;
       }
 
       return true;
     });
-  }, [rawProducts, searchQuery, priceRange, stockAvailability, promotionalOnly, selectedLabels, selectedTags, onlyDiscounted]);
+    
+    return sortItems(filtered, sortOption);
+  }, [rawProducts, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
 
   const totalPages = Math.ceil(filteredProducts.length / perPage);
   const currentProducts = filteredProducts.slice((page - 1) * perPage, page * perPage);
 
-  // Helper for Clean URLs
-  const clean = (s) => s?.toLowerCase().replace(/&amp;/g, "").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
-
-  const openCampaignFilter = () => {
-    const filterAside = document.getElementById("campaignFilter");
-    if (filterAside) {
-      filterAside.classList.add("opened");
-      document.body.classList.add("aside-opened");
-    }
-  };
-
-  if (loading || isMenuLoading) return <Pagination1 />;
+  if (isMenuError) return <div className="container py-5 text-center">Error loading products</div>;
 
   return (
-    <section className="container py-4" id="product-grid-start">
-      <div className="row">
-        {/* Desktop Sidebar */}
-        <aside className="col-lg-3 d-none d-lg-block side-sticky">
-          <FilterDiscounted products={rawProducts} />
-        </aside>
-
-        {/* Main Grid Area */}
-        <div className="col-lg-9">
-          {/* Header & Search */}
-          <div className="d-flex flex-column justify-content-between align-items-center mb-4 gap-3">
-            <h2 className="section-title h4 fw-normal mb-0 text-uppercase">{title}</h2>
-            
-            <div className="d-flex gap-2 w-100 justify-content-end">
-              <input
-                type="text"
-                className="form-control form-control-sm border-2 rounded-0 shadow-none w-25 "
-                placeholder={t("Search perfumes...")}
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
-                style={{ minWidth: '250px' }}
-              />
-              {/* 2. Mobile Filter Trigger Button */}
-              <button 
-              className="btn btn-outline-dark d-lg-none btn-sm" 
-              onClick={() => setIsAsideOpen(true)}
+    <section className="container py-4" ref={gridRef}>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+        <h2 className="section-title fw-normal mb-0 text-uppercase h4 text-center text-md-start w-100">{title}</h2>
+        
+        <div className="shop-acs d-flex align-items-center justify-content-end gap-2 gap-md-3 position-relative w-100 w-md-auto" ref={ref}>
+          <div className="search-field position-relative flex-grow-1 flex-md-grow-0">
+            <input 
+              type="text" 
+              className="form-control border px-3 py-1" 
+              placeholder={t("Search Products")}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ 
+                fontSize: '13px', 
+                width: '100%',
+                maxWidth: '180px',
+                backgroundColor: '#f8f9fa',
+                border: '1px solid #eee',
+                borderRadius: 0
+              }}
+            />
+            <svg 
+              className="position-absolute top-50 translate-middle-y" 
+              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }} 
+              width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             >
-              Filter
-            </button>
-            </div>
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
           </div>
 
-          {/* Grid */}
-          <div className={`products-grid row row-cols-2 row-cols-md-3 row-cols-lg-3`}>
-            {currentProducts.map((elm, i) => (
-              <div key={elm.product_id || i} className="product-card-wrapper">
-                {console.log(elm, "elmmm")}
-                <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-                  <div className="pc__img-wrapper">
-                    <Swiper className="background-img" slidesPerView={1} navigation={false} modules={[Navigation]}>
-                      {JSON.parse(elm.images).map((img, index) => (
-                        <SwiperSlide key={index}>
-                          <Link href={`/${locale}/shop/${clean(elm.category_name)}/${elm.subcategory ? clean(elm.subcategory.subcategory_name) : clean(elm.category_name)}/${clean(elm.product_name)}`}>
-                            <Image
-                              loading="lazy"
-                              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${img}`}
-                              width={330}
-                              height={400}
-                              alt={elm.product_name}
-                              className={`pc__img ${index === 1 ? "pc__img-second" : ""}`}
-                            />
-                          </Link>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
+          <button 
+            className={`btn d-flex align-items-center text-uppercase fw-bold p-0 border-0 ${isDDActive ? 'text-dark' : 'text-secondary'}`}
+            onClick={() => setIsDDActive(!isDDActive)}
+            style={{ letterSpacing: '1px', fontSize: '13px', whiteSpace: 'nowrap' }}
+            dir="ltr"
+          >
+            <svg className="me-1 me-md-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <span className="d-none d-xs-inline">{t("Filter")}</span>
+            {(selectedLabels.length > 0 || selectedTags.length > 0 || selectedSubcategories.length > 0 || stockAvailability !== 'all' || priceRange[0] !== 0 || priceRange[1] !== maxPrice) && (
+              <span className="ms-1 rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style={{ width: '16px', height: '16px', fontSize: '10px' }}>
+                {selectedLabels.length + selectedTags.length + selectedSubcategories.length + (stockAvailability !== 'all' ? 1 : 0) + (priceRange[0] !== 0 || priceRange[1] !== maxPrice ? 1 : 0)}
+              </span>
+            )}
+          </button>
 
-                    {/* Preserved Original Labels/Badges */}
-                    {elm.label_name && (
-                      <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-auto right-0 mt-2 mx-2">
-                        {elm.label_name}
-                      </div>
-                    )}
-
-                    {elm.product_qty <= 0 ? (
-                      <div style={{ backgroundColor: "#dc3545" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2 ">
-                        Out Of Stock
-                      </div>
-                    ) : (
-                      elm.discount && elm.discount.discount_type === 'percent' && (
-                        <div style={{ backgroundColor: "#198754" }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                          Sale {elm.discount.value}%
-                        </div>
-                      )
-                    )}
-
-                    {elm.product_qty > 0 && (
-                      <button
-                        className="pc__atc btn anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
-                        onClick={() => addProductToCart(elm)}
-                        disabled={isAddedToCartProducts(elm.product_id)}
-                      >
-                        {t(isAddedToCartProducts(elm.product_id) ? "Already Added" : "Add To Cart")}
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="pc__info position-relative">
-                    <p className="pc__category">{t(elm.category_name)}</p>
-                    <h6 className="pc__title">
-                      <Link href={`/${locale}/shop/${clean(elm.category_name)}/${elm.subcategory ? clean(elm.subcategory.subcategory_name) : clean(elm.category_name)}/${clean(elm.product_name)}`}>
-                        {t(he.decode(elm.product_name))}
-                      </Link>
-                    </h6>
-                    <div className="product-card__price d-flex">{renderPrice(elm, currency)}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Smart Ellipsis Pagination */}
-          {totalPages > 1 && (
-            <div className="d-flex justify-content-center mt-5">
-               <PaginationGroup currentPage={page} totalPages={totalPages} setPage={setPage} />
+          {isDDActive && (
+            <div 
+              className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster" 
+              style={{ 
+                zIndex: 1000, 
+                width: '320px', 
+                maxWidth: 'calc(100vw - 30px)',
+                maxHeight: '80vh',
+                overflowY: 'auto',
+                [locale === 'ar' ? 'left' : 'right']: 0,
+                border: '1px solid #f0f0f0',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
+              }}
+            >
+              {/* Centralized filter component */}
+              <ProductFilter
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                maxPrice={maxPrice}
+                currency={currency}
+                uniqueCategories={uniqueLabels}
+                selectedCategories={selectedLabels}
+                setSelectedCategories={setSelectedLabels}
+                uniqueSubcategories={uniqueSubcategories}
+                selectedSubcategories={selectedSubcategories}
+                setSelectedSubcategories={setSelectedSubcategories}
+                availableTags={uniqueTags}
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+                stockAvailability={stockAvailability}
+                setStockAvailability={setStockAvailability}
+                handleReset={handleReset}
+                showSortBy={true}
+                showPriceRange={true}
+                showCategories={true}
+                showSubcategories={true}
+                showSize={true}
+                showAvailability={true}
+                showLabel={false}
+                showOffers={false}
+                showViewSelector={true}
+                availableViews={availableViews}
+                selectedColView={selectedColView}
+                setSelectedColView={setSelectedColView}
+              />
             </div>
           )}
         </div>
       </div>
 
-      <FilterMobileAside 
-        products={rawProducts} 
-        isOpen={isAsideOpen} 
-        onClose={() => setIsAsideOpen(false)} 
-      />
+      <div className={`products-grid row row-cols-2 row-cols-md-${selectedColView === 2 ? 2 : 3} row-cols-lg-${selectedColView}`}>
+        {loading || isMenuLoading ? (
+            Array.from({ length: 12 }).map((_, i) => (
+              <ProductCardSkeleton key={i} />
+            ))
+          ) : (
+            currentProducts.map((elm, i) => (
+          <div key={elm.product_id || i} className="product-card-wrapper">
+            <div className="product-card mb-3 mb-md-4 mb-xxl-5">
+              <div className="pc__img-wrapper">
+                <Swiper 
+                  className="swiper swiper-container background-img js-swiper-slider" 
+                  slidesPerView={1} 
+                >
+                  <SwiperSlide className="swiper-slide">
+                    <Link
+                      href={`/${locale}/shop/${sanitizeUrlParam(elm.category_name)}/${isSubcategoryFunc(elm.category_name, elm.subcategory)}/${sanitizeUrlParam(elm.product_name)}`}
+                    >
+                      {elm?.images && (
+                        <>
+                          {JSON.parse(elm.images)[0] && (
+                            <Image
+                              loading="lazy"
+                              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                              width={480}
+                              height={600}
+                              alt={elm.product_name}
+                              className="pc__img"
+                              sizes="(max-width: 768px) 50vw, 33vw"
+                            />
+                          )}
+                          {JSON.parse(elm.images)[1] && (
+                            <Image
+                              loading="lazy"
+                              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                              width={480}
+                              height={600}
+                              alt={elm.product_name}
+                              className="pc__img pc__img-second"
+                              sizes="(max-width: 768px) 50vw, 33vw"
+                            />
+                          )}
+                        </>
+                      )}
+                    </Link>
+                    {elm.label_name && (
+                      <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                        {elm.label_name}
+                      </div>
+                    )}
+
+                    {elm.product_qty <= 0 ? (
+                      <div className="product-label label--out-of-stock">
+                        {t("Out Of Stock")}
+                      </div>
+                    ) : (
+                      elm.discount && (
+                        <div className="product-label label--sale">
+                          {t("Sale")} {elm.discount.value}%
+                        </div>
+                      )
+                    )}
+                  </SwiperSlide>
+                </Swiper>
+                <div className="product-card__actions">
+                  {getProductQuantity(elm.product_id) > 0 ? (
+                    <div className="pc__qty-selector--desktop">
+                      <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, -1)} aria-label={t("Decrease quantity")}>−</button>
+                      <span className="qty-value">{getProductQuantity(elm.product_id)}</span>
+                      <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, 1)} aria-label={t("Increase quantity")}>+</button>
+                    </div>
+                  ) : elm.product_qty > 0 ? (
+                    <button
+                      className="btn btn-primary js-add-cart"
+                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
+                      title={t("Add To Cart")}
+                    >
+                      {t("Add To Cart")}
+                    </button>
+                  ) : (
+                    <button className="btn btn-out-of-stock" disabled>
+                      {t("Out Of Stock")}
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="pc__info position-relative">
+                <p className="pc__category">{t(elm.category_name)}</p>
+                <h6 className="pc__title">
+                  <Link
+                    href={`/${locale}/shop/${sanitizeUrlParam(elm.category_name)}/${isSubcategoryFunc(elm.category_name, elm.subcategory)}/${sanitizeUrlParam(elm.product_name)}`}
+                  >
+                    {t(he.decode(elm.product_name))}
+                  </Link>
+                </h6>
+
+                <div className="product-card__price d-flex">
+                  <ProductPrice elm={elm} currency={currency} />
+                </div>
+
+                {getProductQuantity(elm.product_id) > 0 ? (
+                  <div className="pc__qty-selector">
+                    <button 
+                      className="qty-btn" 
+                      onClick={() => updateQuantity(elm.product_id, -1)}
+                      aria-label={t("Decrease quantity")}
+                    >
+                      −
+                    </button>
+                    <span className="qty-value">{getProductQuantity(elm.product_id)}</span>
+                    <button 
+                      className="qty-btn" 
+                      onClick={() => updateQuantity(elm.product_id, 1)}
+                      aria-label={t("Increase quantity")}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : elm?.product_qty > 0 ? (
+                  <button
+                    className="pc__atc-mobile"
+                    onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
+                    aria-label={t("Add {name} to cart", { name: elm.product_name })}
+                  >
+                    {t("Add To Cart")}
+                  </button>
+                ) : (
+                  <button className="pc__atc-mobile pc__atc-mobile--oos" disabled>
+                    {t("Out Of Stock")}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+      </div>
+
+
+
+      {!loading && filteredProducts.length > 0 && (
+        <p className="mt-5 mb-2 text-center fw-medium text-secondary" style={{ fontSize: '13px' }}>
+          {t("Showing")} {filteredProducts.length} {t("items")}
+        </p>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination2 
+          totalPages={totalPages} 
+          currentPage={page} 
+          onPageChange={(p) => {
+            setPage(p);
+            gridRef.current?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      )}
     </section>
   );
 }
 
-/**
- * Logic for 1, 2, 3 ... 54 Pagination
- */
-function PaginationGroup({ currentPage, totalPages, setPage }) {
-  const getPages = () => {
-    const pages = [];
-    if (totalPages <= 5) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      if (currentPage <= 2) {
-        pages.push(1, 2, 3, "...", totalPages);
-      } else if (currentPage >= totalPages - 1) {
-        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
-      }
-    }
-    return pages;
-  };
-
-  return (
-    <ul className="pagination pagination-sm gap-2 align-items-center">
-      <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-        <button className="page-link rounded-circle border-0" onClick={() => setPage(p => p - 1)}>&laquo;</button>
-      </li>
-      {getPages().map((pg, i) => (
-        <li key={i} className={`page-item ${currentPage === pg ? 'active' : ''} ${pg === '...' ? 'disabled' : ''}`}>
-          {pg === "..." ? (
-            <span className="px-2">...</span>
-          ) : (
-            <button 
-              className={`page-link rounded-circle border-0 ${currentPage === pg ? 'bg-dark text-white' : 'bg-light text-dark'}`} 
-              onClick={() => setPage(pg)}
-              style={{ width: '38px', height: '38px' }}
-            >
-              {pg}
-            </button>
-          )}
-        </li>
-      ))}
-      <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-        <button className="page-link rounded-circle border-0" onClick={() => setPage(p => p + 1)}>&raquo;</button>
-      </li>
-    </ul>
-  );
-}
+export default DiscountGrid;

@@ -915,10 +915,12 @@ export default function Checkout() {
                 <div className="sticky-content">
                   <div className="checkout__totals">
                     <h3>Your Order</h3>
-                    <table className="checkout-cart-items">
-                      <thead> <tr> <th>PRODUCT</th> <th>SUBTOTAL</th> </tr> </thead>
-                      <tbody> {cartProducts.map((elm, i) => ( <tr key={i}> <td> {he.decode(elm.product_name)} x {elm.quantity} </td> {subTotalPrice(elm)} </tr> ))} </tbody>
-                    </table>
+                    <div className="cart-items-collapse">
+                      <table className="checkout-cart-items">
+                        <thead> <tr> <th>PRODUCT</th> <th>SUBTOTAL</th> </tr> </thead>
+                        <tbody> {cartProducts.map((elm, i) => ( <tr key={i}> <td> {he.decode(elm.product_name)} x {elm.quantity} </td> {subTotalPrice(elm)} </tr> ))} </tbody>
+                      </table>
+                    </div>
                     
                     {/* {
                       (() => {
@@ -961,7 +963,7 @@ export default function Checkout() {
                     <TamaraWidget amount={!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2) : (0 + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : parseFloat(0.0))).toFixed(2)} inlineType='2' inlineVariant='outlined'/>
                   </div>
 
-                  <div> {couponError ? (<div style={{ color: "red" }}>{couponError}</div>) : (<div style={{ color: "green" }}>{couponSuccess}</div>)}
+                  <div className="checkout__coupon-wrapper"> {couponError ? (<div style={{ color: "red" }}>{couponError}</div>) : (<div style={{ color: "green" }}>{couponSuccess}</div>)}
                   <div style={{ position: "relative" }}>
                     <input className="form-control mb-1" type="text" name="coupon_code" placeholder="Coupon Code" value={couponCode} onChange={handleCouponChange} style={{ paddingRight: "100px" }} />
                     <span style={{ position: "absolute", top: "50%", right: "12px", transform: "translateY(-50%)", fontSize: 14, color: "#a67b30", cursor: "pointer", textDecoration: "underline", }} onClick={() => setShowCouponModal(true)}> View Coupons </span>
@@ -1097,12 +1099,17 @@ export default function Checkout() {
                   </div>
 
                   {error ? ( <div style={{ backgroundColor: "#ffebe9", color: "#cf1e1e", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px",}}>{error}</div>) : success ? ( <div style={{ backgroundColor: "#e8f5e9", color: "#2e7d32", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px", }} > {success} </div>) : null}
-                  <button className="btn btn-primary w-100 text-uppercase mb-3" type="submit" disabled={disablePlaceOrder} > {isLoading ? "Loading..." : "Place Order"} </button>
+                  <div className="mobile_fixed-btn_wrapper">
+                    <div className="button-wrapper container">
+                      <button className="btn btn-primary w-100 text-uppercase btn-checkout" type="submit" disabled={disablePlaceOrder} > {isLoading ? "Loading..." : "Place Order"} </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </form>
         </>
+
       ) : (
         <>
           <div className="fs-20">Your Shopping cart is empty</div>

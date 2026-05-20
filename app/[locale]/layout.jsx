@@ -32,17 +32,34 @@ import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from "react-hot-toast";
 
+const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
 
-export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-  icons: {
-    icon: "/assets/images/ahmed-favicon.png",
-  },
-};
+export async function generateMetadata({ params: { locale } }) {
+  return {
+    metadataBase: new URL(baseUrl),
+
+    title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+
+    description:
+      "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+
+    icons: {
+      icon: "/assets/images/ahmed-favicon.png",
+    },
+
+    alternates: {
+      canonical: `/${locale}`,
+
+      languages: {
+        en: "/en",
+        ar: "/ar",
+        "x-default": "/en",
+      },
+    },
+  };
+}
 
 // Import English font
 const englishFont = localFont({
@@ -244,7 +261,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                   <ProductDescription />
                   <ProductAdditionalInformation />
                   <ProductReviews />
-                  <ToastContainer />
+                  <Toaster />
                 </ShopFilterProvider>
               </UserProvider>
             </Context>

@@ -14,6 +14,7 @@ import { Weight } from "lucide-react";
 import { ElevenMp } from "@mui/icons-material";
 import { useMenu } from "@/context/MenuContext";
 import Skeleton from "@mui/material/Skeleton";
+import LabelIcon from "@/components/labels/LabelIcon";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -51,9 +52,9 @@ const TabSliderSkeleton = () => {
     <div style={{ width: '100%', padding: "100px 0", textAlign: "center" }}>
       {/* Header Skeleton */}
       <div className="d-flex flex-column align-items-center mb-5">
-        <Skeleton variant="text" width={180} height={20} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
-        <Skeleton variant="text" width={280} height={45} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
-        <Skeleton variant="rectangular" width={60} height={2} sx={{ bgcolor: 'rgba(185,161,107,0.2)', mb: 4 }} />
+        <Skeleton variant="text" width={220} height={24} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
+        <Skeleton variant="text" width={340} height={56} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
+        <Skeleton variant="rectangular" width={80} height={2} sx={{ bgcolor: 'rgba(185,161,107,0.2)', mb: 4 }} />
       </div>
 
       {/* Tabs Skeleton */}
@@ -74,9 +75,9 @@ const TabSliderSkeleton = () => {
 
       {/* Bottom Info Skeleton */}
       <div className="d-flex flex-column align-items-center mt-5">
-        <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 1 }} />
-        <Skeleton variant="text" width={220} height={35} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
-        <Skeleton variant="rectangular" width={140} height={45} sx={{ bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '99px' }} />
+        <Skeleton variant="text" width={120} height={24} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 1 }} />
+        <Skeleton variant="text" width={280} height={42} sx={{ bgcolor: 'rgba(0,0,0,0.05)', mb: 2 }} />
+        <Skeleton variant="rectangular" width={160} height={50} sx={{ bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '99px' }} />
       </div>
     </div>
   );
@@ -84,8 +85,9 @@ const TabSliderSkeleton = () => {
 
 export default function PopularProducts() {
   const t = useTranslations("PopularProducts");
-  const { addProductToCart } = useContextElement();
+  const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
   const locale = useLocale();
+  
   const { currency, isLoading: isMenuLoading } = useMenu();
 
   const [apiData, setApiData] = useState({});
@@ -94,6 +96,24 @@ export default function PopularProducts() {
   const [loading, setLoading] = useState(true);
 
   const rafRef = useRef(null);
+
+  const getProductQuantity = (id) => {
+    const item = (cartProducts || []).find(p => p.product_id === id);
+    return item ? item.quantity : 0;
+  };
+
+  const updateQuantity = (id, delta) => {
+    if (!setCartProducts) return;
+    setCartProducts(prev => {
+      return prev.map(p => {
+        if (p.product_id === id) {
+          const newQty = (p.quantity || 1) + delta;
+          return newQty > 0 ? { ...p, quantity: newQty } : null;
+        }
+        return p;
+      }).filter(Boolean);
+    });
+  };
 
   /* ================= FETCH ================= */
   async function fetchProducts() {
@@ -235,9 +255,6 @@ export default function PopularProducts() {
 
       .scroll-tabs button {
         font-family: 'Inter', sans-serif !important;
-        font-size: clamp(0.55rem, 3vw, 0.68rem) !important;
-        letter-spacing: 2px !important;
-        font-weight: 500 !important;
         position: relative;
       }
 
@@ -265,6 +282,48 @@ export default function PopularProducts() {
           justify-content: center;
         }
       }
+
+      .product-card-wrapper .product-card__actions {
+        z-index: 10;
+        background: rgba(26, 26, 26, 0.95);
+      }
+
+      .product-card-wrapper .pc__qty-selector--desktop {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        height: 44px;
+      }
+
+      .product-card-wrapper .pc__qty-selector--desktop .qty-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 0 15px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .product-card-wrapper .pc__qty-selector--desktop .qty-value {
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 767px) {
+        .product-card-wrapper .product-card__actions {
+          display: flex !important;
+          transform: translateY(0) !important;
+          background: rgba(26, 26, 26, 0.9) !important;
+          bottom: 0 !important;
+        }
+      }
     `,
         }}
       />
@@ -273,17 +332,17 @@ export default function PopularProducts() {
       <div style={{ textAlign: "center", marginBottom: 40 }}>
         {/* Sub-tagline */}
         <div style={{
-          fontSize: 'clamp(0.5rem, 1.5vw, 0.6rem)',
-          letterSpacing: '6px',
+          fontSize: 'clamp(0.7rem, 2vw, 0.85rem)',
+          letterSpacing: '4px',
           color: '#b9a16b',
           textTransform: 'uppercase',
-          fontWeight: 500,
-          marginBottom: 14,
+          fontWeight: 600,
+          marginBottom: 16,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 8,
-          fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
+          gap: 10,
+          fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif"
         }}>
           <span style={{ fontSize: 6, color: '#b9a16b', opacity: 0.6 }}>◆</span>
           {t("subTitle")}
@@ -291,13 +350,14 @@ export default function PopularProducts() {
 
         {/* Main title */}
         <h2 style={{
-          fontFamily: locale === 'ar' ? 'sans-serif' : "'Playfair Display', serif",
-          fontSize: 'clamp(1.4rem, 5vw, 2.4rem)',
+          fontFamily: locale === 'ar' ? 'inherit' : "'Playfair Display', serif",
+          fontSize: 'clamp(1.75rem, 6vw, 3.2rem)',
           fontWeight: 400,
           color: '#1a1714',
-          letterSpacing: locale === 'ar' ? '0' : '5px',
+          letterSpacing: locale === 'ar' ? '0' : '2px',
           textTransform: 'uppercase',
-          margin: '0 0 14px',
+          margin: '0 0 16px',
+          lineHeight: 1.2
         }}>
           {t("title")}
         </h2>
@@ -328,9 +388,9 @@ export default function PopularProducts() {
                 transition: "color 0.3s ease",
                 cursor: "pointer",
                 position: 'relative',
-                fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit',
-                fontSize: locale === 'ar' ? 'clamp(0.85rem, 2.5vw, 1rem)' : 'clamp(0.65rem, 2.2vw, 0.75rem)',
-                letterSpacing: locale === 'ar' ? '0' : '2px'
+                fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif",
+                fontSize: locale === 'ar' ? 'clamp(0.95rem, 2.5vw, 1.1rem)' : 'clamp(0.75rem, 2vw, 0.85rem)',
+                letterSpacing: locale === 'ar' ? '0' : '1.5px'
               }}
             >
               {t(cat.key)}
@@ -434,41 +494,98 @@ export default function PopularProducts() {
 
 
                       {/* --- ADDED LABEL LOGIC --- */}
-                      {item.label_name && (
-                        <div style={{ backgroundColor: item.label_color, zIndex: 10, position: 'absolute' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'left-0' : 'right-0'}`}>
-                          {locale === 'ar' ? item.label_name_ar : item.label_name}
+                      {Array.isArray(item.labels) && item.labels.length > 0 && (
+                        <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 10 }}>
+                          {item.labels.map((lbl, idx) => (
+                            <LabelIcon
+                              key={idx}
+                              name={lbl.label_name}
+                              title={lbl.label_name}
+                              icon={lbl.label_color}
+                              size={40}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      {!Array.isArray(item.labels) && item.label_name && (
+                        <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 10 }}>
+                          <LabelIcon
+                            name={item.label_name}
+                            title={item.label_name}
+                            icon={item.label_color}
+                            size={40}
+                          />
                         </div>
                       )}
 
                       {item.product_qty <= 0 ? (
-                        <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                        <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
                           {t("outOfStock")}
                         </div>
                       ) : (
                         item.discount && item.discount.discount_type === 'percent' && (
-                          <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                          <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
                             {t("sale", { value: item.discount.value })}
                           </div>
                         )
                       )}
                       {/* --- END LABEL LOGIC --- */}
 
-                      {/* ✅ ADD TO CART — ONLY CENTER SLIDE */}
+                      {/* ✅ ADD TO CART & QUANTITY ACTIONS — ONLY CENTER SLIDE */}
                       {isActive && (
-                        <button
-                          className="pc__atc btn btn-primary anim_appear-bottom position-absolute border-0 text-uppercase fw-medium"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            addProductToCart({
-                              ...item,
-                              category_name: item.category_name,
-                              subcategory_name: item.subcategory?.subcategory_name,
-                            });
-                          }}
-                        >
-                          {t("addToCart")}
-                        </button>
+                        <div className="product-card__actions">
+                          {getProductQuantity(item.product_id) > 0 ? (
+                            <div className="pc__qty-selector--desktop">
+                              <button 
+                                className="qty-btn" 
+                                onClick={(e) => { 
+                                  e.preventDefault(); 
+                                  e.stopPropagation(); 
+                                  updateQuantity(item.product_id, -1); 
+                                }} 
+                                aria-label="Decrease quantity"
+                              >
+                                −
+                              </button>
+                              <span className="qty-value">{getProductQuantity(item.product_id)}</span>
+                              <button 
+                                className="qty-btn" 
+                                onClick={(e) => { 
+                                  e.preventDefault(); 
+                                  e.stopPropagation(); 
+                                  updateQuantity(item.product_id, 1); 
+                                }} 
+                                aria-label="Increase quantity"
+                              >
+                                +
+                              </button>
+                            </div>
+                          ) : item.product_qty > 0 ? (
+                            <button
+                              className="btn btn-primary js-add-cart w-100 h-100 border-0"
+                              style={{ height: '44px', background: 'none' }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                addProductToCart({
+                                  ...item,
+                                  category_name: item.category_name,
+                                  subcategory_name: item.subcategory?.subcategory_name,
+                                });
+                              }}
+                            >
+                              {t("addToCart")}
+                            </button>
+                          ) : (
+                            <button 
+                              className="btn btn-out-of-stock w-100 h-100 border-0 text-white" 
+                              disabled 
+                              style={{ height: '44px', background: 'none' }}
+                            >
+                              {t("outOfStock")}
+                            </button>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -498,105 +615,57 @@ export default function PopularProducts() {
                 width: '100%'
               }}
             >
-              <span
-                style={{
-                  fontSize: 'clamp(0.45rem, 1.5vw, 0.55rem)',
-                  textTransform: "uppercase",
-                  letterSpacing: 3,
-                  marginBottom: 8,
-                  color: "#b9a16b",
-                  fontWeight: 500,
-                  fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
-                }}
-              >
-                {locale === 'ar' ? activeProduct.category_name_ar : activeProduct.category_name}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+                <div style={{ width: 24, height: 1, background: 'rgba(185, 161, 107, 0.5)' }} />
+                <span
+                  style={{
+                    fontSize: '0.65rem',
+                    textTransform: "uppercase",
+                    letterSpacing: 4,
+                    color: "#b9a16b",
+                    fontWeight: 700,
+                    fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif"
+                  }}
+                >
+                  {locale === 'ar' ? activeProduct.category_name_ar : activeProduct.category_name}
+                </span>
+                <div style={{ width: 24, height: 1, background: 'rgba(185, 161, 107, 0.5)' }} />
+              </div>
 
               <h3
                 style={{
-                  fontSize: 'clamp(1.0rem, 4.5vw, 1.5rem)',
-                  fontFamily: locale === 'ar' ? 'sans-serif' : "'Playfair Display', serif",
+                  fontSize: 'clamp(2rem, 6vw, 3.2rem)',
+                  fontFamily: locale === 'ar' ? 'inherit' : "'Playfair Display', serif",
                   fontWeight: 400,
-                  marginBottom: 8,
+                  marginBottom: 16,
                   color: '#1a1714',
-                  letterSpacing: 0.5,
+                  letterSpacing: '0.01em',
+                  lineHeight: 1.1,
+                  fontStyle: locale === 'ar' ? 'normal' : 'italic'
                 }}
               >
                 {locale === 'ar' ? decodeHtml(activeProduct.product_name_ar) : decodeHtml(activeProduct.product_name)}
               </h3>
 
-              {/* Diamond divider */}
-              <div style={{ width: 5, height: 5, background: '#b9a16b', transform: 'rotate(45deg)', opacity: 0.5, marginBottom: 12 }} />
-
               <div
                 style={{
-                  fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
-                  fontWeight: 300,
-                  marginBottom: 22,
-                  color: '#3a342d',
-                  fontFamily: "'Inter', sans-serif"
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                  fontWeight: 500,
+                  marginBottom: 32,
+                  color: '#1a1714',
+                  fontFamily: locale === 'ar' ? 'inherit' : "'Inter', sans-serif",
+                  letterSpacing: 1
                 }}
               >
                 {renderPrice(activeProduct, currency)}
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-                <Link
-                  href={`/${locale}/shop/${clean(
-                    activeProduct.category_name
-                  )}/${isSubcat(
-                    activeProduct.category_name,
-                    activeProduct.subcategory
-                  )}/${clean(activeProduct.product_name)}`}
-                >
-                  <button
-                    style={{
-                      background: "#1a1714",
-                      color: "#fff",
-                      border: "none",
-                      padding: "12px 48px",
-                      fontSize: 'clamp(0.5rem, 1.8vw, 0.58rem)',
-                      letterSpacing: 2.5,
-                      textTransform: "uppercase",
-                      cursor: "pointer",
-                      fontWeight: 600,
-                      transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-                      boxShadow: '0 10px 20px rgba(0,0,0,0.08)',
-                      fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#b9a16b';
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 15px 30px rgba(185,161,107,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = '#1a1714';
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 10px 20px rgba(0,0,0,0.08)';
-                    }}
-                  >
-                    {t("exploreProduct")}
-                  </button>
-                </Link>
-
-                <Link
-                  href={`/${locale}/shop`}
-                  style={{
-                    fontSize: '0.68rem',
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    color: "#1a1714",
-                    textDecoration: "none",
-                    letterSpacing: 2,
-                    borderBottom: "1.5px solid #b9a16b",
-                    paddingBottom: 3,
-                    transition: 'opacity 0.3s ease',
-                    fontFamily: locale === 'ar' ? 'sans-serif' : 'inherit'
-                  }}
-                  onMouseEnter={(e) => e.target.style.opacity = 0.7}
-                  onMouseLeave={(e) => e.target.style.opacity = 1}
-                >
-                  {t("viewFullCollection")}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Link href={`/${locale}/shop`} className="ts-modern-btn">
+                  <span>{t("viewFullCollection")}</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Link>
               </div>
             </motion.div>

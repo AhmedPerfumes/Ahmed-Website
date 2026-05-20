@@ -3,9 +3,12 @@
 import { allProducts } from "@/data/products";
 import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
 import { useMenu } from './MenuContext';
-// import React, { useEffect, useContext, useState } from "react";
-// import { useMenu } from "./MenuContext";
+import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 import { openCart } from "@/utlis/openCart";
+import Image from "next/image";
+import he from "he";
+import { removeSpecialCharactersAndAmp } from "@/utils/shop";
 // import { bogoProducts } from "@/components/BogoFeature";
 
 const dataContext = createContext();
@@ -81,6 +84,7 @@ const cartReducer = (state, action) => {
     isProcessing: false,
   };
     case 'SET_PRODUCTS':
+    case 'UPDATE_CART':
       // Ensure payload is an array
       const newProducts = Array.isArray(action.payload) ? action.payload : [];
       return { ...state, products: newProducts, isProcessing: false };
@@ -92,6 +96,7 @@ const cartReducer = (state, action) => {
 };
 
 export default function Context({ children }) {
+  const t = useTranslations();
   const [state, dispatch] = useReducer(cartReducer, {
     products: [], // Ensure initial state is an array
     isProcessing: false,
@@ -241,13 +246,13 @@ export default function Context({ children }) {
     setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
   }, [state.products, couponDataContext, shippingServiceCharges]);
 
-  useEffect(() => {
-  if (state.toastMeta) {
-    setToastData(state.toastMeta);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 4000);
-  }
-}, [state.toastMeta]);
+  // useEffect(() => {
+  // if (state.toastMeta) {
+  //   setToastData(state.toastMeta);
+  //   setShowToast(true);
+  //   setTimeout(() => setShowToast(false), 4000);
+  // }
+  // }, [state.toastMeta]);
 
    // helper to build toast image
   const buildToastImageUrl = (product) => {
@@ -279,9 +284,19 @@ export default function Context({ children }) {
   };
 
   const triggerToast = ({ name = "", image = "/placeholder.png", message = "", type = "success" }) => {
-    setToastData({ name, image, message, type });
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 4000);
+    toast.custom((toastObj) => (
+      <div className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'} ${type}`}>
+        <img src={image} alt={name} className="toast-image" />
+        <div className="toast-details">
+          <p className="toast-title">{name}</p>
+          <p className="toast-msg">{message}</p>
+        </div>
+        <button className="close-toast" onClick={() => toast.dismiss(toastObj.id)}>×</button>
+      </div>
+    ), {
+      duration: 3000,
+      position: 'bottom-right',
+    });
   };
 
   // const addProductToCart = (product) => {
@@ -345,11 +360,12 @@ export default function Context({ children }) {
   //   // document.getElementById("cartDrawer")?.classList.add("aside_visible");
   // };
 
-  const addProductToCart = (product) => {
+  const addProductToCart = (productOrId) => {
     if (state.isProcessing) return;
-    if (product.is_gift_card) {
-      product.collection_name = "gift-card";
-    }
+
+    let product = typeof productOrId === 'object' ? productOrId : allProducts.find(p => p.id === productOrId || p.product_id === productOrId);
+    if (!product) return;
+
     const newProductCollection = product?.collection_name?.toLowerCase();
     const cartProducts = [...state.products];
 
@@ -439,16 +455,34 @@ export default function Context({ children }) {
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({
       type: 'ADD_PRODUCT',
-      payload: product,
-      meta: {
-        toast: {
-          name: product?.product_name,
-          image: product.is_gift_card
-          ? "/assets/images/gift-card.png" // add a placeholder
-          : buildToastImageUrl(product),
-          message: "Added to your cart",
-        },
-      },
+      payload: product
+    });
+
+    const imageUrl = buildToastImageUrl(product);
+
+    toast.custom((toastObj) => (
+      <div className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'}`}>
+        <Image width={50} height={50} src={imageUrl} alt={removeSpecialCharactersAndAmp(product.product_name)} className="toast-image" />
+        <div className="toast-details">
+          <p className="toast-title">{removeSpecialCharactersAndAmp(product.product_name)}</p>
+          <div className="toast-actions">
+            <button 
+              className="view-cart-btn" 
+              onClick={() => {
+                document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+                document.getElementById("cartDrawer")?.classList.add("aside_visible");
+                toast.dismiss(toastObj.id);
+              }}
+            >
+              {t("View Cart")}
+            </button>
+          </div>
+        </div>
+        <button className="close-toast" onClick={() => toast.dismiss(toastObj.id)}>×</button>
+      </div>
+    ), {
+      duration: 3000,
+      position: 'bottom-right',
     });
   };
 
@@ -475,10 +509,11 @@ export default function Context({ children }) {
 
   const setCartProducts = (productsOrFn) => {
     let newProducts = [];
+    const oldProducts = [...state.products];
 
     if (typeof productsOrFn === 'function') {
       // Functional update
-      newProducts = productsOrFn(state.products);
+      newProducts = productsOrFn(oldProducts);
     } else {
       // Direct array update
       newProducts = productsOrFn;
@@ -498,22 +533,52 @@ export default function Context({ children }) {
 
     // ❌ If mixing pre book + regular → reject update
     if (hasPreBook && hasRegular) {
-      // alert(
-      //   "You cannot mix Pre Book products with other items in the cart."
-      // );
       triggerToast({
         name: "Cart Restriction",
         message: "You cannot mix Pre Book products with other items in the cart.",
         image: "/assets/images/danger.png",
-        type: "error",
-        showButton: false
+        type: "error"
       });
       return; // Don't update cart
     }
 
+    // --- DETECT NEW ITEM FOR TOAST ---
+    if (newProducts.length === oldProducts.length + 1) {
+      const addedItem = newProducts[newProducts.length - 1];
+      if (addedItem && !addedItem.is_gift) {
+        const imageUrl = buildToastImageUrl(addedItem);
+        const productName = addedItem.product_name || addedItem.title || "Product";
+
+        toast.custom((toastObj) => (
+          <div className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'}`}>
+            <img src={imageUrl} alt={productName} className="toast-image" />
+            <div className="toast-details">
+              <p className="toast-title">{productName}</p>
+              <div className="toast-actions">
+                <button 
+                  className="view-cart-btn" 
+                  onClick={() => {
+                    document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
+                    document.getElementById("cartDrawer")?.classList.add("aside_visible");
+                    toast.dismiss(toastObj.id);
+                  }}
+                >
+                  {t("View Cart")}
+                </button>
+              </div>
+            </div>
+            <button className="close-toast" onClick={() => toast.dismiss(toastObj.id)}>×</button>
+          </div>
+        ), {
+          duration: 3000,
+          position: 'bottom-right',
+        });
+      }
+    }
+
     // --- IF VALID, UPDATE ---
     dispatch({ type: 'SET_PRODUCTS', payload: newProducts });
-};
+  };
 
   const addProductToQuickView = (product) => {
     setQuickViewItem(product);
@@ -563,108 +628,6 @@ export default function Context({ children }) {
   return (
     <dataContext.Provider value={contextElement}>
       {children}
-
-      {toastData && (
-        <div
-          className={`custom-toast shadow-lg ${toastData.type} ${showToast ? "show" : "hide"}`}
-          onClick={openCart}
-          style={{ cursor: "pointer" }}
-        >
-          <img src={toastData.image} alt={toastData.name} className="toast-img" />
-          <div className="toast-content">
-            <div>
-              <strong>{toastData.name}</strong>
-              <div>{toastData.message}</div>
-              {!toastData.type && <button
-                className="btn btn-sm btn-dark text-white mt-1"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openCart();
-                }}
-              >
-                View Cart
-              </button>}
-            </div>
-          </div>
-          <button
-            className="toast-close"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowToast(false);
-            }}
-          >
-            ✕
-          </button>
-        </div>
-      )}
-
-      <style jsx>{`
-        .custom-toast {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          background: #fff;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 10px 14px;
-          max-width: 350px;
-          transition: all 0.3s ease;
-          transform: translateY(100px);
-          opacity: 0;
-          z-index: 9999;
-        }
-        .custom-toast.show {
-          transform: translateY(0);
-          opacity: 1;
-        }
-        .toast-img {
-          width: 50px;
-          height: 50px;
-          object-fit: cover;
-          border-radius: 4px;
-        }
-        .toast-content {
-          flex: 1;
-          display: flex;
-          gap: 8px;
-          align-items: center;
-        }
-        .toast-close {
-          background: none;
-          border: none;
-          font-size: 16px;
-          cursor: pointer;
-          color: #666;
-        }
-        .custom-toast.success {
-          border-left: 6px solid #28a745;
-        }
-        .custom-toast.warning {
-          border-left: 6px solid #ffc107;
-          background: #fff8e5;
-        }
-        .custom-toast.error {
-          border-left: 6px solid #dc3545;
-          background: #ffe8e8;
-        }
-        .custom-toast.warning strong,
-        .custom-toast.warning div {
-          color: #b68400;
-        }
-        .custom-toast.error strong,
-        .custom-toast.error div {
-          color: #b30000;
-        }
-        @media (max-width: 576px) {
-          .custom-toast {
-            right: 10px;
-            left: 10px;
-            max-width: unset;
-          }
-        }
-      `}</style>
     </dataContext.Provider>
   );
 }

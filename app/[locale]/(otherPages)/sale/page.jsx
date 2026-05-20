@@ -4,17 +4,39 @@ import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 import CityWalk from "@/components/campagin/Citywalk";
 
-export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-  icons: {
-      icon: "/assets/images/ahmed-favicon.png",
-  },
-};
+export async function generateMetadata({ params }) {
+  const { locale } = params;
+
+  const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
+
+  const canonicalUrl = `${baseUrl}/${locale}/sale`;
+
+  return {
+    metadataBase: new URL(baseUrl),
+
+    title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
+
+    description: "Buy Best Perfumes Online Ahmed Perfume",
+
+    icons: {
+      icon: '/assets/images/ahmed-favicon.png',
+    },
+
+    alternates: {
+      canonical: canonicalUrl,
+
+      languages: {
+        en: "/en/sale",
+        ar: "/ar/sale",
+        "x-default": "/en/sale",
+      },
+    },
+  };
+}
 
 const Citywalk = () => {
   return (
-    <div className="page-wrapper min-vh-100 d-flex flex-column">
+    <div className="page-wrapper pt-0 min-vh-100 d-flex flex-column">
       {/* Navigation Header */}
       <Header14 />
 
@@ -33,7 +55,9 @@ const Citywalk = () => {
         {/* Mobile Footer */}
         <section className="d-block d-lg-none bg-dark pt-5 pb-4">
           <div className="container">
-            <MobileFooter2 />
+            <div className="MobileFooter">
+              <MobileFooter2 />
+            </div>
           </div>
         </section>
       </footer>

@@ -115,16 +115,37 @@ async function getProductCategorySEO(categoryName) {
 export async function generateMetadata({ params }) {
   const { category, locale } = params;
 
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/product-category/${category}`;
+  const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN;
+
+  const canonicalUrl = `${baseUrl}/${locale}/product-category/${category}`;
 
   try {
     const data = await getProductCategorySEO(category);
     // console.log(JSON.parse(data.meta_value)[0]);
+    const meta = JSON.parse(data.meta_value)[0] || {};
+
+        // Select Arabic SEO fields only if locale is ar and values exist
+        const seoTitle =
+            locale === "ar" && meta.seo_title_ar
+                ? meta.seo_title_ar
+                : meta.seo_title;
+
+        const seoDescription =
+            locale === "ar" && meta.seo_description_ar
+                ? meta.seo_description_ar
+                : meta.seo_description;
+
     return {
-        title: JSON.parse(data.meta_value)[0]?.seo_title ? `${JSON.parse(data.meta_value)[0]?.seo_title} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-        description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+        metadataBase: new URL(baseUrl),
+        title: seoTitle ? `${seoTitle} | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+        description: seoDescription ? seoDescription.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
         alternates: {
             canonical: canonicalUrl,
+            languages: {
+              en: `/en/product-category/${category}`,
+              ar: `/ar/product-category/${category}`,
+              "x-default": `/en/product-category/${category}`,
+            },
         },
         // openGraph: {
         //     // title: data.product_name,
@@ -159,15 +180,15 @@ const ShopPage8 = async ({ params }) => {
       <>
         <QuickView />
         <Header14 />
-        <Banner5 image={ data.image } mobile_image={data.mobile_image}/>
+        <Banner5 image={ data.image } mobile_image={data.mobile_image} categoryName={category}/>
         <main className="page-wrapper pt-0">
           <Categories subCategories={ data.productSubCategories }/>
-          <div className="mb-4 pb-lg-3"></div>
+          {/* <div className="mb-4 pb-lg-3"></div> */}
           <Shop10 subCategories={ data.productSubCategories } products={ data.products }/>
-          <div className="mb-4 pb-lg-3"></div>
+          {/* <div className="mb-4 pb-lg-3"></div> */}
           <CollapsibleDescription description={activeDescription}locale={locale} />
         </main>
-        <div className="mb-5 pb-xl-5"></div>
+        {/* <div className="mb-5 pb-xl-5"></div> */}
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <Footer14 />
         </section>

@@ -50,78 +50,6 @@ export default function CartDrawer() {
       .classList.remove("page-overlay_visible");
     document.getElementById("cartDrawer").classList.remove("aside_visible");
   };
-  // const setQuantity = (id, quantity, productQty) => {
-  //   if (quantity >= 1 && quantity <= productQty) {
-  //     setError(null);
-
-  //     const items = [...cartProducts];
-
-  //     // Update the paid product
-  //     const paidItemIndex = items.findIndex(
-  //       (item) => item.product_id == id && !item.is_gift
-  //     );
-
-  //     if (paidItemIndex !== -1) {
-  //       items[paidItemIndex].quantity = quantity;
-  //     }
-
-  //     // Also update the matching gift (if exists)
-  //     const giftItemIndex = items.findIndex(
-  //       (item) => item.product_id == id && item.is_gift && item.selection_rule != 'least_expensive'
-  //     );
-
-  //     if (giftItemIndex !== -1) {
-  //       items[giftItemIndex].quantity = quantity;
-  //     }
-
-  //     setCartProducts(items);
-  //   } else {
-  //     setError("Quantity is more than available quantity");
-  //   }
-  // };
-
-  // const setQuantity = (id, quantity, productQty) => {
-  //   // First check: quantity within stock
-  //   const withinStock = quantity >= 1 && quantity <= productQty;
-
-  //   // Second check: max 6 per product
-  //   const withinLimit = quantity <= 6;
-
-  //   if (withinStock && withinLimit) {
-  //     setError(null);
-
-  //     const items = [...cartProducts];
-
-  //     // Update the paid product
-  //     const paidItemIndex = items.findIndex(
-  //       (item) => item.product_id == id && !item.is_gift
-  //     );
-
-  //     if (paidItemIndex !== -1) {
-  //       items[paidItemIndex].quantity = quantity;
-  //     }
-
-  //     // Also update the matching gift (if exists)
-  //     const giftItemIndex = items.findIndex(
-  //       (item) =>
-  //         item.product_id == id &&
-  //         item.is_gift &&
-  //         item.selection_rule != "least_expensive"
-  //     );
-
-  //     if (giftItemIndex !== -1) {
-  //       items[giftItemIndex].quantity = quantity;
-  //     }
-
-  //     setCartProducts(items);
-  //   } else {
-  //     setError(
-  //       !withinStock
-  //         ? "Quantity is more than available quantity"
-  //         : "Maximum allowed quantity is 6"
-  //     );
-  //   }
-  // };
 
   const setQuantity = (id, quantity, productQty, maxOrderQty) => {
     // Determine dynamic max allowed per product
@@ -204,41 +132,12 @@ export default function CartDrawer() {
         } else if (elm.discount.discount_type == "amount") {
           return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{(elm.discount.final_price * elm.quantity).toFixed(2)}{currency.symbol}</span></>;
         }
-        // return  <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
       } else {
         return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{currency.symbol}</span>;
       }
     }
-    // else if(elm?.sale_price) {
-    //   return <><span className="money price price-old">{currency.symbol}{elm?.price}</span><span className="cart-drawer-item__price money price price-sale">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span></>;
-    // }
     let itemPrice = elm.price;
-    // if (
-    //   elm?.coupon &&
-    //   Object.keys(elm.coupon).length !== 0 &&
-    //   couponDataContext &&
-    //   couponDataContext.code &&
-    //   elm.coupon[couponDataContext.code.toLowerCase()]?.code === couponDataContext.code.toLowerCase() &&
-    //   new Date(current_date_time) >= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.start_date) &&
-    //   new Date(current_date_time) <= new Date(elm.coupon[couponDataContext.code.toLowerCase()]?.end_date)
-    // ) {
-    //   // console.log('common copuon', elm);
-    //   itemPrice = elm.price - (elm.price / 100) * elm.coupon[couponDataContext.code.toLowerCase()].value;
-    //   return (
-    //     <td>
-    //       <span className="money price price-sale">
-    //         {currency.symbol}
-    //         {(itemPrice * elm.quantity).toFixed(2)}
-    //       </span>
-    //       <span className="money price price-old">
-    //         {currency.symbol}
-    //         {(elm.price * elm.quantity).toFixed(2)}
-    //       </span>
-    //     </td>
-    //   );
-    // }
     if (isLoggedIn && couponDataContext && couponDataContext.code && couponDataContext.type === "customer") {
-      // console.log('common Customer Coupon', elm);
       const validCoupon = promotionsContext.some((promo) =>
         promo.buy_products.some((item) => item.product_id === elm.product_id)
       ) && (
@@ -251,10 +150,8 @@ export default function CartDrawer() {
       if (
         elm.is_coupon &&
         !validCoupon &&
-        // !elm.sale_price &&
         !elm.discount
       ) {
-        // console.log('common Customer Coupon If', elm);
         itemPrice = elm.price - (elm.price / 100) * couponDataContext.value;
         return (
           <td>
@@ -270,9 +167,7 @@ export default function CartDrawer() {
         );
       }
     }
-    // else {
     return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(2)}{currency.symbol}</span>;
-    // }
   };
 
   return (
@@ -293,7 +188,7 @@ export default function CartDrawer() {
         </div>
         <h6 style={{ color: "red" }}>{error && error}</h6>
         {cartProducts.length ? (
-          <div className="cart-drawer-items-list">
+          <div className="aside-content cart-drawer-items-list">
             {cartProducts.map((elm, i) => (
               <React.Fragment key={i}>
                 <div className="cart-drawer-item d-flex position-relative">
@@ -375,23 +270,6 @@ export default function CartDrawer() {
                         );
                       })()}
                     </h6>
-
-                    {/* ✅ Gift card details BELOW title */}
-                    {elm.is_gift_card && (
-                      <div style={{ fontSize: "12px", marginTop: "4px", color: "#666" }}>
-                        <div><strong>To:</strong> {elm.meta?.recipient_name}</div>
-                        <div><strong>Email:</strong> {elm.meta?.recipient_email}</div>
-                        {elm.meta?.message && (
-                          <div><strong>Msg:</strong> {elm.meta.message}</div>
-                        )}
-                      </div>
-                    )}
-                    {/* <p className="cart-drawer-item__option text-secondary">
-                      Color: Yellow
-                    </p>
-                    <p className="cart-drawer-item__option text-secondary">
-                      Size: L
-                    </p> */}
                     <div className="d-flex align-items-center justify-content-between mt-1">
                       {!elm.is_gift && !elm.is_gift_card ? <div className="qty-control position-relative">
                         <input
@@ -434,139 +312,20 @@ export default function CartDrawer() {
                 <hr className="cart-drawer-divider" />
               </React.Fragment>
             ))}
-
-            {/* Free Shipping Progress Bar */}
-
           </div>
         ) : (
           <div className="fs-18 mt-5 px-5 cart-drawer-items-list">
             {t("Your cart is empty Start shopping")}
           </div>
         )}
-        <div className="cart-drawer-actions">
-          {/* Ramadan Offers Card */}
-          {/* <div
-            onClick={() => setRamadanModalOpen(true)}
-            style={{
-              background: "linear-gradient(135deg, #F5F1E8 0%, #EDE8DC 100%)",
-              borderRadius: "16px",
-              padding: "20px",
-              marginBottom: "20px",
-              cursor: "pointer",
-              position: "relative",
-              overflow: "hidden",
-              border: "3px solid rgba(191, 149, 63, 0.4)",
-              transition: "all 0.3s ease",
-              boxShadow: "0 4px 15px rgba(191, 149, 63, 0.2)"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-3px)";
-              e.currentTarget.style.boxShadow = "0 10px 30px rgba(191, 149, 63, 0.4)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 15px rgba(191, 149, 63, 0.2)";
-            }}
-          >
-            <div style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              opacity: 0.08,
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23BF953F' fill-opacity='1'%3E%3Cpath d='M30 15 L35 25 L45 25 L37 32 L40 42 L30 35 L20 42 L23 32 L15 25 L25 25 Z'/%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: "120px 120px"
-            }} />
 
-            <div style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "200px",
-              height: "200px",
-              background: "radial-gradient(circle, rgba(191, 149, 63, 0.15) 0%, transparent 70%)",
-              filter: "blur(40px)",
-              zIndex: 0,
-              pointerEvents: "none"
-            }} />
-
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <p style={{
-                color: "#8B6914",
-                fontSize: "11px",
-                letterSpacing: "3px",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                marginBottom: "8px",
-                textAlign: "center"
-              }}>
-                ☪ {t("RamadanModal.CartHeader")} ☪
-              </p>
-              <h6 style={{
-                background: "linear-gradient(135deg, #BF953F 0%, #8B6914 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontSize: "16px",
-                fontWeight: 700,
-                marginBottom: "6px",
-                textAlign: "center"
-              }}>
-                {t("RamadanModal.ViewOffers")}
-              </h6>
-              <p style={{
-                color: "#5C4A3A",
-                fontSize: "13px",
-                marginBottom: 0,
-                textAlign: "center"
-              }}>
-                {t("RamadanModal.Subtext")}
-              </p>
-            </div>
-          </div> */}
-
-          {/* <RamadanOffersModal
-            open={ramadanModalOpen}
-            onClose={() => setRamadanModalOpen(false)}
-          /> */}
-
-          {/* <Image
-          loading="lazy"
-          src={"/assets/images/home/demo8/square banner final.jpg"}
-          width={200}
-          height={200}
-          alt="image"
-        /> */}
-          {/* {
-                      (() => {
-                        // Only count non-excluded products
-                        const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
-                        const regularQuantity = regularProducts.reduce((total, item) => total + item.quantity, 0);
-                        const hasRegularProducts = regularProducts.length > 0;
-                        const hasBogoActive = cartProducts.some((item) => item.bogo_free_qty && item.bogo_free_qty > 0);
-                        
-                        return (hasBogoActive || regularQuantity > 3) && hasRegularProducts ? (
-                          <div style={{ backgroundColor: "#d4edda", border: "1px solid #28a745", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#155724", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                            ✓ <strong>Your Buy 3 Get 1 Offer has been applied!</strong>  
-                          </div>
-                        ) : regularQuantity === 3 && hasRegularProducts ? (
-                          <div style={{ backgroundColor: "#fff3cd", border: "1px solid #ffc107", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#856404", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                            🎁 <strong>Great! You're one step away!</strong> Add one more product to your cart to get 1 product FREE with our Buy 3 Get 1 Free offer!
-                          </div>
-                        ) : null;
-                      })()
-                    } */}
-          <hr className="cart-drawer-divider"></hr>
-          <div className="free-shipping-progress mt-3">
-
+        <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
+          <div className="free-shipping-progress mt-2">
             {totalPrice < freeShippingThreshold ? (
               <div>
-
-                <p className="fs-6 fw-bold">
+                <p>
                   {t("Spend")} {(freeShippingThreshold - totalPrice).toFixed(2)}{currency.symbol} {t("CartDrawer.MoreForFreeShipping")}
                 </p>
-
                 <div className="progress">
                   <div
                     className="progress-bar"
@@ -577,19 +336,19 @@ export default function CartDrawer() {
                     aria-valuemax="100"
                   ></div>
                 </div>
-
               </div>
-
             ) : (
-
-              <h4 className="success fw-bold fs-6">{t("CartDrawer.FreeShippingQualified")}</h4>
+              <p className="success mb-0">{t("CartDrawer.FreeShippingQualified")}</p>
             )}
           </div>
+
           <hr className="cart-drawer-divider" />
+          
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">{t("SUBTOTAL")}:</h6>
             <span className="cart-subtotal fw-medium">{totalPrice.toFixed(2)}{currency.symbol}</span>
           </div>
+
           {cartProducts.length ? (
             <>
               <Link href={`/${locale}/shop-cart`} className="btn btn-light mt-3 d-block">

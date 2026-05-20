@@ -16,4 +16,5 @@ User-agent: Google-Extended
 Allow: /llms-full.txt
 
 Sitemap: https://ae.ahmedalmaghribi.com/assets/sitemap.xml
-Sitemap: https://ae.ahmedalmaghribi.com/sitemap.xml
+Sitemap: https://ae.ahmedalmaghribi.com/en/sitemap.xml
+Sitemap: https://ae.ahmedalmaghribi.com/ar/sitemap.xml

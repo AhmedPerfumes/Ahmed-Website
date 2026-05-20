@@ -1,18 +1,26 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectCreative } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/effect-creative";
 
 import Image from "next/image";
 import Link from "next/link";
 
 import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
 
 import { useMenu } from "@/context/MenuContext";
 import { useLocale, useTranslations } from "next-intl";
 
 const HeroSkeleton = () => {
+    
+    
     return (
         <div
             className="position-relative w-100 vh-100 overflow-hidden"
@@ -35,122 +43,90 @@ const HeroSkeleton = () => {
                 }}
             />
 
-            {/* Left content */}
-            <div
-                className="position-absolute px-4 px-md-0"
+            {/* Center content */}
+            <Box
+                className="position-absolute d-flex flex-column align-items-center"
                 style={{
-                    top: "50%",
-                    left: "5%",
-                    transform: "translateY(-50%)",
+                    top: "15%",
+                    left: "50%",
+                    transform: "translateX(-50%)",
                     zIndex: 2,
-                    width: "100%",
-                    maxWidth: "500px",
+                    width: "600px",
+                    maxWidth: "90%",
                 }}
             >
-                {/* Season */}
                 <Skeleton
                     variant="text"
-                    width={120}
+                    width={140}
                     height={25}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        mb: 2,
-                        borderRadius: "4px",
-                    }}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", mb: 2, borderRadius: "4px" }}
                 />
-
-                {/* Main title */}
                 <Skeleton
                     variant="text"
-                    width="min(80%, 400px)"
-                    height={70}
+                    width="100%"
+                    height={90}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}
+                />
+                <Skeleton
+                    variant="text"
+                    width="80%"
+                    height={90}
                     animation="wave"
                     sx={{
                         bgcolor: "rgba(0,0,0,0.08)",
                         borderRadius: "8px",
-                        width: { xs: "85%", md: "100%" }
                     }}
                 />
 
                 {/* Subtitle */}
                 <Skeleton
                     variant="text"
-                    width="min(50%, 300px)"
-                    height={60}
+                    width="60%"
+                    height={40}
                     animation="wave"
                     sx={{
                         bgcolor: "rgba(0,0,0,0.08)",
+                        mt: 2,
                         mb: 4,
                         borderRadius: "8px",
-                        width: { xs: "60%", md: "70%" }
                     }}
                 />
 
                 {/* Button */}
                 <Skeleton
                     variant="rounded"
-                    width={110}
-                    height={35}
+                    width={180}
+                    height={52}
                     animation="wave"
                     sx={{
                         bgcolor: "rgba(0,0,0,0.08)",
                         borderRadius: "999px",
-                        marginTop: "20px",
                     }}
                 />
-            </div>
-
-            {/* Right thumbnails */}
-            <div
-                className="position-absolute d-none d-md-flex flex-column gap-2"
-                style={{
-                    right: "30px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    zIndex: 2,
-                }}
-            >
-                {[1, 2, 3].map((_, i) => (
-                    <Skeleton
-                        key={i}
-                        variant="rounded"
-                        width={52}
-                        height={70}
-                        animation="wave"
-                        sx={{
-                            bgcolor: "rgba(0,0,0,0.08)",
-                            borderRadius: "8px",
-                        }}
-                    />
-                ))}
-            </div>
+            </Box>
 
             {/* Counter */}
-            <div
-                className="position-absolute"
-                style={{
-                    left: "50px",
-                    bottom: "40px",
+            <Box
+                sx={{
+                    position: "absolute",
+                    left: { xs: "20px", md: "50px" },
+                    bottom: { xs: "20px", md: "40px" },
                     zIndex: 2,
                 }}
             >
                 <Skeleton
                     variant="rounded"
-                    width={90}
-                    height={40}
-                    animation="wave"
-                    sx={{
-                        bgcolor: "rgba(0,0,0,0.08)",
-                        borderRadius: "10px",
-                    }}
+                    width={{ xs: 70, md: 90 }}
+                    height={{ xs: 30, md: 40 }}
+                    sx={{ bgcolor: "rgba(0,0,0,0.08)", borderRadius: "10px" }}
                 />
-            </div>
+            </Box>
         </div>
     );
 };
 
 const NewHero = () => {
+   
     const locale = useLocale();
     const t = useTranslations();
 
@@ -158,6 +134,7 @@ const NewHero = () => {
 
     const {
         homeSliders,
+        homeMobileSliders,
         isLoading,
         error,
     } = useMenu();
@@ -165,28 +142,8 @@ const NewHero = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [progressKey, setProgressKey] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
-    const [direction, setDirection] = useState(0);
 
-    const slidersToDisplay = homeSliders || [];
-    const total = slidersToDisplay.length;
 
-    const nextSlide = useCallback(() => {
-        setDirection(1);
-        setActiveIndex((prev) => (prev + 1) % slidersToDisplay.length);
-        setProgressKey((prev) => prev + 1);
-    }, [slidersToDisplay.length]);
-
-    const prevSlide = useCallback(() => {
-        setDirection(-1);
-        setActiveIndex((prev) => (prev - 1 + slidersToDisplay.length) % slidersToDisplay.length);
-        setProgressKey((prev) => prev + 1);
-    }, [slidersToDisplay.length]);
-
-    const goToSlide = (index) => {
-        setDirection(index > activeIndex ? 1 : -1);
-        setActiveIndex(index);
-        setProgressKey((prev) => prev + 1);
-    };
 
     useEffect(() => {
         const checkMobile = () => {
@@ -200,16 +157,6 @@ const NewHero = () => {
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    // Autoplay - 8s for premium storytelling feel
-    useEffect(() => {
-        if (isLoading || error || slidersToDisplay.length === 0) return;
-
-        const timer = setInterval(() => {
-            nextSlide();
-        }, 8000);
-        return () => clearInterval(timer);
-    }, [nextSlide, isLoading, error, slidersToDisplay.length]);
-
     if (isLoading) return <HeroSkeleton />;
 
     if (error) {
@@ -220,57 +167,64 @@ const NewHero = () => {
         );
     }
 
-    // Custom ease-out curve from Emil Kowalski's philosophy
-    const emilEaseOut = [0.23, 1, 0.32, 1];
+    const slidersToDisplay =
+        isMobile && homeMobileSliders?.length > 0
+            ? homeMobileSliders
+            : homeSliders;
 
-    const slideVariants = {
-        enter: (direction) => ({
-            transform: direction > 0 ? "translateX(100%)" : "translateX(-100%)",
-            opacity: 1,
-            zIndex: 1,
-        }),
-        center: {
-            transform: "translateX(0%)",
-            opacity: 1,
-            zIndex: 2,
-            transition: {
-                transform: { type: "spring", stiffness: 100, damping: 20, mass: 1, duration: 1.2 },
-                opacity: { duration: 0.6, ease: emilEaseOut },
+    const total = slidersToDisplay?.length || 0;
+
+    const handleSlideChange = (swiper) => {
+        if (!swiper || !swiper.slides) return;
+
+        const realIndex = swiper.realIndex;
+
+        setActiveIndex(realIndex);
+
+        setProgressKey((prev) => prev + 1);
+
+        const activeSlide = swiper.slides[swiper.activeIndex];
+
+        if (!activeSlide) return;
+
+        const texts = activeSlide.querySelectorAll(".gsap-text");
+
+        const bg = activeSlide.querySelector(".gsap-bg");
+
+        gsap.fromTo(
+            texts,
+            {
+                y: 80,
+                opacity: 0,
             },
-        },
-        exit: (direction) => ({
-            transform: direction < 0 ? "translateX(100%)" : "translateX(-100%)",
-            opacity: 0,
-            scale: 0.96,
-            zIndex: 0,
-            transition: {
-                transform: { type: "spring", stiffness: 100, damping: 20, mass: 1, duration: 1.2 },
-                opacity: { duration: 0.6, ease: emilEaseOut },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1.1,
+                stagger: 0.12,
+                ease: "power4.out",
+                delay: 0.4,
+            }
+        );
+
+        gsap.fromTo(
+            bg,
+            {
+                scale: isMobile ? 1.15 : 1.12,
+                transformOrigin: "center center",
             },
-        }),
+            {
+                scale: 1,
+                duration: 6,
+                ease: "power1.out",
+            }
+        );
     };
 
-    const contentVariants = {
-        initial: { y: 40, opacity: 0 },
-        animate: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.9,
-                ease: emilEaseOut,
-                delay: 0.5,
-            },
-        },
-    };
-
-    const imageVariants = {
-        animate: {
-            scale: 1,
-            transition: { duration: 6, ease: "linear" },
-        },
-        initial: {
-            scale: 1.15,
-        },
+    const goToSlide = (index) => {
+        if (swiperRef.current?.swiper) {
+            swiperRef.current.swiper.slideToLoop(index);
+        }
     };
 
     return (
@@ -281,80 +235,77 @@ const NewHero = () => {
                 transition: "opacity 0.8s ease",
             }}
         >
-            <div className="h-100 w-100 position-relative">
-                <AnimatePresence initial={false} custom={direction} mode="popLayout">
-                    <motion.div
-                        key={activeIndex}
-                        custom={direction}
-                        variants={slideVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        drag="x"
-                        dragConstraints={{ left: 0, right: 0 }}
-                        dragElastic={1}
-                        onDragEnd={(e, { offset, velocity }) => {
-                            const swipe = Math.abs(offset.x) * velocity.x;
-
-                            if (swipe < -10000) {
-                                nextSlide();
-                            } else if (swipe > 10000) {
-                                prevSlide();
-                            }
-                        }}
-                        className="position-absolute top-0 start-0 w-100 h-100 overflow-hidden"
-                        style={{ cursor: "grab" }}
-                        whileTap={{ cursor: "grabbing" }}
+            <Swiper
+                key={isMobile ? "mobile" : "desktop"}
+                ref={swiperRef}
+                modules={[Autoplay, EffectCreative]}
+                effect="creative"
+                creativeEffect={{
+                    prev: {
+                        shadow: true,
+                        translate: ["-20%", 0, -1],
+                        opacity: 0,
+                    },
+                    next: {
+                        translate: ["100%", 0, 0],
+                    },
+                }}
+                speed={1200}
+                autoplay={{
+                    delay: 6000,
+                    disableOnInteraction: false,
+                }}
+                loop={true}
+                onSlideChangeTransitionStart={handleSlideChange}
+                onInit={(swiper) => {
+                    setTimeout(() => handleSlideChange(swiper), 300);
+                }}
+                className="h-100 w-100"
+            >
+                {slidersToDisplay?.map((elm, i) => (
+                    <SwiperSlide
+                        key={i}
+                        className="h-100 w-100 position-relative overflow-hidden"
                     >
                         {/* Background Image */}
-                        <motion.div 
-                            variants={imageVariants}
-                            initial="initial"
-                            animate="animate"
-                            className="position-absolute top-0 start-0 w-100 h-100"
-                        >
+                        <Link href={`/${locale}/${elm.link || "#"}`} className="position-absolute top-0 start-0 w-100 h-100 d-block" style={{ zIndex: 0 }}>
                             <Image
-                                priority
-                                quality={85}
-                                sizes="100vw"
-                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile ? slidersToDisplay[activeIndex].mobile_image : slidersToDisplay[activeIndex].image}`}
-                                alt={(locale === "ar" ? slidersToDisplay[activeIndex].title_ar : slidersToDisplay[activeIndex].title) || "Hero Image"}
+                                priority={i === 0}
+                                quality={100}
+                                sizes="(max-width: 768px) 200vw, 100vw"
+                                loading={i === 0 ? "eager" : "lazy"}
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile && elm.mobile_image ? elm.mobile_image : elm.image}`}
+                                alt={elm.title || "Hero Image"}
                                 fill
-                                style={{
-                                    objectFit: "cover",
-                                    objectPosition: "center center",
-                                }}
+                                className="gsap-bg"
                             />
-                        </motion.div>
-
-                        {/* Overlay */}
+                        </Link>
+                        {/* Mobile Overlay for text readability */}
                         <div 
-                            className="position-absolute inset-0" 
+                            className="position-absolute top-0 start-0 w-100 h-100 d-block d-md-none gsap-overlay" 
                             style={{ 
-                                background: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1), rgba(0,0,0,0.5))",
-                                zIndex: 1
+                                background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 40%)",
+                                zIndex: 1,
+                                pointerEvents: "none"
                             }} 
                         />
 
                         {/* Content */}
-                        <div className="container h-100 position-relative" style={{ zIndex: 2 }}>
-                            <div className="row h-100 align-items-end align-items-md-center pb-5 pb-md-0">
-                                <div className={`col-lg-7 col-md-9 px-4 px-md-5 text-center ${locale === 'ar' ? 'text-md-end' : 'text-md-start'}`}>
+                        <div className="container h-100 position-relative" style={{ zIndex: 2, pointerEvents: "none" }}>
+                            <div className="row h-100 align-items-start align-items-md-center pt-5 pt-md-0">
+                                <div className={`col-lg-6 col-md-8 px-4 px-md-5 ${isMobile ? 'text-center mt-5 pt-4' : (locale === 'ar' ? 'text-end' : 'text-start')}`}>
 
                                     {/* Season */}
-                                    {(locale === "ar" ? slidersToDisplay[activeIndex].season_ar : slidersToDisplay[activeIndex].season) && (
-                                        <motion.div 
-                                            variants={contentVariants}
-                                            className="overflow-hidden mb-3 mb-md-4"
-                                        >
-                                            <div className="d-inline-flex align-items-center gap-2">
+                                    {elm.season && (
+                                        <div className="overflow-hidden mb-4">
+                                            <div className="gsap-text d-inline-flex align-items-center gap-2">
                                                 <span
-                                                    className="d-none d-md-block"
                                                     style={{
+                                                        display: "block",
                                                         width: "28px",
                                                         height: "1px",
                                                         background:
-                                                            slidersToDisplay[activeIndex].color || "#fff",
+                                                            elm.color || "#fff",
                                                         opacity: 0.7,
                                                     }}
                                                 />
@@ -362,89 +313,81 @@ const NewHero = () => {
                                                 <span
                                                     style={{
                                                         color:
-                                                            slidersToDisplay[activeIndex].color || "#fff",
+                                                            elm.color || "#fff",
                                                         letterSpacing: "5px",
-                                                        fontSize: "0.7rem",
+                                                        fontSize: "0.78rem",
                                                         fontFamily:
                                                             "sans-serif",
                                                         textTransform:
                                                             "uppercase",
                                                         opacity: 0.85,
-                                                        textShadow: "0 1px 4px rgba(0,0,0,0.6)",
                                                     }}
                                                 >
-                                                    {locale === "ar" ? slidersToDisplay[activeIndex].season_ar : slidersToDisplay[activeIndex].season}
+                                                    {t(elm.season)}
                                                 </span>
                                             </div>
-                                        </motion.div>
+                                        </div>
                                     )}
 
                                     {/* Title */}
-                                    {(locale === "ar" ? slidersToDisplay[activeIndex].title_ar : slidersToDisplay[activeIndex].title) && (
+                                    {elm.title && (
                                         <div className="overflow-hidden">
-                                            <motion.h1
-                                                variants={contentVariants}
-                                                className="fw-normal text-uppercase mb-n2"
+                                            <h1
+                                                className="gsap-text fw-normal text-uppercase mb-n2"
                                                 style={{
                                                     color:
-                                                        slidersToDisplay[activeIndex].color || "#fff",
+                                                        elm.color || "#fff",
                                                     fontSize:
-                                                        "clamp(2rem, 8vw, 4.2rem)",
-                                                    lineHeight: 1.1,
-                                                    letterSpacing: "0.02em",
+                                                        "clamp(3rem, 7vw, 5.5rem)",
+                                                    lineHeight: 1.05,
+                                                    letterSpacing: "1px",
                                                     textShadow:
-                                                        "0 2px 12px rgba(0,0,0,0.8)",
+                                                        "0 4px 20px rgba(0,0,0,0.5)",
                                                     fontFamily:
-                                                        locale === 'ar' ? 'sans-serif' : '"Playfair Display", serif',
+                                                        '"Playfair Display", serif',
                                                 }}
                                             >
-                                                {locale === "ar" ? slidersToDisplay[activeIndex].title_ar : slidersToDisplay[activeIndex].title}
-                                            </motion.h1>
+                                                {t(elm.title)}
+                                            </h1>
                                         </div>
                                     )}
 
                                     {/* Subtitle */}
-                                    {(locale === "ar" ? slidersToDisplay[activeIndex].sub_title_ar : slidersToDisplay[activeIndex].sub_title) && (
+                                    {elm.sub_title && (
                                         <div className="overflow-hidden mb-5">
-                                            <motion.h2
-                                                variants={contentVariants}
-                                                className="fw-light text-uppercase"
+                                            <h2
+                                                className="gsap-text fw-light text-uppercase"
                                                 style={{
                                                     color:
-                                                        slidersToDisplay[activeIndex].color || "#e8e8e8",
+                                                        elm.color || "#e8e8e8",
                                                     fontSize:
-                                                        "clamp(0.95rem, 4vw, 2.4rem)",
-                                                    lineHeight: 1.2,
+                                                        "clamp(1.6rem, 4vw, 3rem)",
+                                                    lineHeight: 1.15,
                                                     fontFamily:
-                                                        locale === 'ar' ? 'sans-serif' : '"Playfair Display", serif',
-                                                    letterSpacing: "0.05em",
-                                                    marginLeft: "0",
-                                                    marginRight: "0",
-                                                    textShadow: "0 2px 10px rgba(0,0,0,0.4)",
+                                                        '"Playfair Display", serif',
+                                                    letterSpacing: "2px",
+                                                    marginLeft: "2%",
                                                 }}
                                             >
-                                                {locale === "ar" ? slidersToDisplay[activeIndex].sub_title_ar : slidersToDisplay[activeIndex].sub_title}
-                                            </motion.h2>
+                                                {t(elm.sub_title)}
+                                            </h2>
                                         </div>
                                     )}
 
                                     {/* Button */}
-                                    {(locale === "ar" ? slidersToDisplay[activeIndex].title_ar : slidersToDisplay[activeIndex].title) && (
-                                        <motion.div 
-                                            variants={contentVariants}
-                                            className="mt-4"
-                                        >
+                                    {elm.title && (
+                                        <div className="mt-4" style={{ pointerEvents: "auto" }}>
                                             <Link
-                                                href={`/${locale}/${slidersToDisplay[activeIndex].link || "#"}`}
-                                                className="unique-btn-modern text-uppercase d-inline-flex align-items-center text-decoration-none"
+                                                href={`/${locale}/${elm.link || "#"}`}
+                                                className="gsap-text unique-btn-modern text-uppercase d-inline-flex align-items-center text-decoration-none"
                                             >
                                                 <span
                                                     className="btn-text-content fw-medium d-flex align-items-center"
                                                     style={{
-                                                        color: slidersToDisplay[activeIndex].color || "#fff",
+                                                        color:
+                                                            elm.color || "#fff",
                                                         letterSpacing: "3px",
-                                                        fontSize: "0.75rem",
-                                                        textShadow: "0 1px 3px rgba(0,0,0,0.4)",
+                                                        fontSize: "0.82rem",
                                                     }}
                                                 >
                                                     {t("Discover More")}
@@ -464,18 +407,18 @@ const NewHero = () => {
                                                     </svg>
                                                 </span>
                                             </Link>
-                                        </motion.div>
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
-                </AnimatePresence>
-            </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
 
             {/* Thumbnail Strip */}
             <div className="hero-thumb-strip">
-                {slidersToDisplay?.map((elm, i) => (
+                {homeSliders?.map((elm, i) => (
                     <button
                         key={i}
                         className={`hero-thumb-item ${
@@ -486,7 +429,7 @@ const NewHero = () => {
                     >
                         <div className="thumb-img-wrap">
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile ? elm.mobile_image : elm.image}`}
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile && elm.mobile_image ? elm.mobile_image : elm.image}`}
                                 alt={elm.title || `Slide ${i + 1}`}
                                 fill
                                 style={{
@@ -637,15 +580,21 @@ const NewHero = () => {
 
                 .counter-sep,
                 .counter-total {
-                    font-size: 1rem;
-                    color: rgba(255,255,255,0.4);
+                    font-size: 0.9rem;
+                    opacity: 0.6;
+                }
+
+                .gsap-bg {
+                    object-fit: cover !important;
+                    object-position: center center !important;
+                    will-change: transform;
                 }
 
                 .unique-btn-modern {
                     position: relative;
                     display: inline-flex;
                     align-items: center;
-                    padding: 0.75rem 2.4rem;
+                    padding: 0.9rem 2.8rem;
                     border-radius: 50px;
                     background: rgba(0, 0, 0, 0.15);
                     backdrop-filter: blur(15px);
@@ -667,10 +616,6 @@ const NewHero = () => {
                     transform: translateX(6px);
                 }
 
-                [dir='rtl'] .unique-btn-modern:hover .btn-icon-content {
-                    transform: translateX(-6px) scaleX(-1);
-                }
-
                 .mb-n2 {
                     margin-bottom: -0.5rem !important;
                 }
@@ -688,6 +633,11 @@ const NewHero = () => {
                     .counter-current {
                         font-size: 1.8rem;
                     }
+                    
+                    h2.gsap-text {
+                        margin-left: 0 !important;
+                        margin-right: 0 !important;
+                    }
                 }
 
                 /* RTL TYPOGRAPHY IMPROVEMENTS */
@@ -695,33 +645,22 @@ const NewHero = () => {
                     letter-spacing: 0 !important;
                 }
                 [dir='rtl'] h1.gsap-text {
-                    font-size: clamp(2rem, 8vw, 4.2rem) !important;
-                    line-height: 1.1 !important;
+                    font-size: clamp(2.5rem, 8vw, 5rem) !important;
+                    line-height: 1.2 !important;
                 }
                 [dir='rtl'] h2.gsap-text {
-                    font-size: clamp(0.95rem, 4vw, 2rem) !important;
+                    font-size: clamp(1.4rem, 5vw, 2.5rem) !important;
                     line-height: 1.3 !important;
                     margin-left: 0 !important;
                     margin-right: 2% !important;
                 }
                 [dir='rtl'] .btn-text-content {
                     letter-spacing: 0 !important;
-                    font-size: 0.85rem !important;
+                    font-size: 0.95rem !important;
                 }
                 [dir='rtl'] .gsap-text span {
                     letter-spacing: 0 !important;
-                    font-size: 0.8rem !important;
-                }
-                [dir='rtl'] .thumb-progress-fill {
-                    left: auto;
-                    right: 0;
-                }
-                [dir='rtl'] .thumb-progress-bar {
-                    left: auto;
-                    right: 0;
-                }
-                [dir='rtl'] .btn-icon-content {
-                    transform: scaleX(-1);
+                    font-size: 0.9rem !important;
                 }
             `}</style>
         </div>
