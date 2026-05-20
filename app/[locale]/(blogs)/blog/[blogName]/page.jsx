@@ -124,9 +124,9 @@ export async function generateMetadata({ params }) {
             alternates: {
                 canonical: canonicalUrl,
                 languages: {
-                  en: `/en/blog/${blogName}`,
-                  ar: `/ar/blog/${blogName}`,
-                  "x-default": `/en/blog/${blogName}`,
+                  en: `${baseUrl}/en/blog/${blogName}`,
+                  ar: `${baseUrl}/ar/blog/${blogName}`,
+                  "x-default": `${baseUrl}/en/blog/${blogName}`,
                 },
             },
             // openGraph: {

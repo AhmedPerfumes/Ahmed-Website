@@ -33,9 +33,9 @@ export async function generateMetadata({ params }) {
       canonical: canonicalUrl,
 
       languages: {
-        en: "/en/export",
-        ar: "/ar/export",
-        "x-default": "/en/export",
+        en: `${baseUrl}/en/export`,
+        ar: `${baseUrl}/ar/export`,
+        "x-default": `${baseUrl}/en/export`,
       },
     },
   };
