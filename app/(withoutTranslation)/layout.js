@@ -41,8 +41,7 @@ const myFont = localFont({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={myFont.className}>
+    <div className={myFont.className}>
       <Svgs />
         <Context>
           <UserProvider>
@@ -69,7 +68,6 @@ export default function RootLayout({ children }) {
         </Context>
         <div className="page-overlay" id="pageOverlay"></div>
         <ScrollTop />
-      </body>
-    </html>
+      </div>
   )
 }

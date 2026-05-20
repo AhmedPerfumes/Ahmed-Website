@@ -193,9 +193,9 @@ export async function generateMetadata({ params }) {
             alternates: {
                 canonical: canonicalUrl,
                 languages: {
-                    en: `/en/shop/${categoryName}/${subCategoryName}/${product}`,
-                    ar: `/ar/shop/${categoryName}/${subCategoryName}/${product}`,
-                    "x-default": `/en/shop/${categoryName}/${subCategoryName}/${product}`,
+                    en: `${baseUrl}/en/shop/${categoryName}/${subCategoryName}/${product}`,
+                    ar: `${baseUrl}/ar/shop/${categoryName}/${subCategoryName}/${product}`,
+                    "x-default": `${baseUrl}/en/shop/${categoryName}/${subCategoryName}/${product}`,
                 },
             },
             // openGraph: {
