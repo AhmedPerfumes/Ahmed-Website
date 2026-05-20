@@ -270,6 +270,85 @@
   display: inline-block
 }
 
+/* ─── SCENT DNA SAVED BANNER ─────────────────────────────────────────────── */
+.fys-dna-banner {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, rgba(156,126,74,.08) 0%, rgba(156,126,74,.03) 100%);
+  border-radius: 3px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.fys-dna-banner__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fys-dna-banner__icon {
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: .1em;
+}
+
+.fys-dna-banner__label {
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  flex: 1;
+}
+
+.fys-dna-banner__date {
+  font-size: 9px;
+  color: var(--ink5);
+  letter-spacing: .06em;
+}
+
+.fys-dna-banner__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: .04em;
+  line-height: 1.2;
+  margin: 0;
+  font-style: italic;
+}
+
+.fys-dna-banner__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.fys-dna-banner__retake {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink5);
+  font-family: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+  transition: color var(--t);
+}
+
+.fys-dna-banner__retake:hover {
+  color: var(--ink);
+}
+
 /* ── BUTTONS ── */
 .fys-btn-primary {
   display: inline-flex;

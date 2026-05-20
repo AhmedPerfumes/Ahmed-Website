@@ -10,8 +10,44 @@ import "./FindYourScent.css";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const TOTAL = ALL_QUESTIONS.length;
 
+// ─── SCENT DNA UTILS ────────────────────────────────────────────────────────
+const DNA_KEY = "ahmed_scent_dna";
+
+function saveDNA(result, answers) {
+  try {
+    localStorage.setItem(DNA_KEY, JSON.stringify({
+      savedAt: Date.now(),
+      answers,
+      profile: result.profile,
+      recommendations: result.recommendations,
+    }));
+  } catch {}
+}
+
+function loadDNA() {
+  try {
+    const raw = localStorage.getItem(DNA_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    // Expire after 90 days
+    if (Date.now() - data.savedAt > 90 * 24 * 60 * 60 * 1000) {
+      localStorage.removeItem(DNA_KEY);
+      return null;
+    }
+    return data;
+  } catch { return null; }
+}
+
+function clearDNA() {
+  try { localStorage.removeItem(DNA_KEY); } catch {}
+}
+
 // ─── INTRO ────────────────────────────────────────────────────────────────────
-function IntroScreen({ onStart }) {
+function IntroScreen({ onStart, onResumeDNA, savedDNA }) {
+  const savedDate = savedDNA
+    ? new Date(savedDNA.savedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+    : null;
+
   return (
     <motion.div className="fys-intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
       <motion.span className="fys-intro__eyebrow"
@@ -45,13 +81,41 @@ function IntroScreen({ onStart }) {
         <span>8 questions</span><span className="fys-dot" /><span>~3 minutes</span><span className="fys-dot" /><span>Personalised results</span>
       </motion.div>
 
-      <motion.button className="fys-btn-primary" onClick={onStart} id="fys-start-experience"
-        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.78 }}
-        whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-      >
-        <span>Begin My Discovery</span>
-        <span className="fys-btn-arrow">→</span>
-      </motion.button>
+      {/* Saved DNA banner */}
+      {savedDNA && (
+        <motion.div
+          className="fys-dna-banner"
+          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+        >
+          <div className="fys-dna-banner__top">
+            <span className="fys-dna-banner__icon">◆</span>
+            <span className="fys-dna-banner__label">Scent DNA Saved</span>
+            <span className="fys-dna-banner__date">{savedDate}</span>
+          </div>
+          {savedDNA.profile?.title && (
+            <p className="fys-dna-banner__title">{savedDNA.profile.title}</p>
+          )}
+          <div className="fys-dna-banner__actions">
+            <button className="fys-btn-primary" onClick={onResumeDNA} id="fys-resume-dna">
+              <span>View My Results</span>
+              <span className="fys-btn-arrow">→</span>
+            </button>
+            <button className="fys-dna-banner__retake" onClick={onStart}>
+              Retake Quiz
+            </button>
+          </div>
+        </motion.div>
+      )}
+
+      {!savedDNA && (
+        <motion.button className="fys-btn-primary" onClick={onStart} id="fys-start-experience"
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.78 }}
+          whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+        >
+          <span>Begin My Discovery</span>
+          <span className="fys-btn-arrow">→</span>
+        </motion.button>
+      )}
     </motion.div>
   );
 }
@@ -161,6 +225,7 @@ export default function FindYourScent() {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [savedDNA, setSavedDNA] = useState(null);
   const productsRef = useRef([]);
 
   const userName = answers.name || "";
@@ -169,6 +234,10 @@ export default function FindYourScent() {
 
   useEffect(() => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+    // Load saved DNA on mount
+    const dna = loadDNA();
+    if (dna) setSavedDNA(dna);
 
     // Fetch ALL products for scoring — POST with limit:1000 (same pattern as rest of site)
     (async () => {
@@ -222,6 +291,9 @@ export default function FindYourScent() {
 
         setResult({ ...computed, recommendations: enriched, answers: newAnswers });
         setPhase("results");
+        // ── Auto-save Scent DNA to localStorage ──
+        saveDNA({ ...computed, recommendations: enriched }, newAnswers);
+        setSavedDNA(loadDNA());
       };
 
       setTimeout(() => finalize(), reducedMotion ? 200 : 2200);
@@ -246,14 +318,27 @@ export default function FindYourScent() {
   }, [stepIdx]);
 
   const handleRetake = useCallback(() => {
+    clearDNA();
+    setSavedDNA(null);
     setAnswers({}); setStepIdx(0); setResult(null); setPhase("intro");
   }, []);
+
+  const handleResumeDNA = useCallback(() => {
+    if (!savedDNA) return;
+    setResult({
+      recommendations: savedDNA.recommendations,
+      profile: savedDNA.profile,
+      answers: savedDNA.answers,
+    });
+    setAnswers(savedDNA.answers || {});
+    setPhase("results");
+  }, [savedDNA]);
 
   return (
     <section className="fys-section" aria-label="Find Your Scent">
       <div className="fys-container">
         <AnimatePresence mode="wait">
-          {phase === "intro" && <IntroScreen key="intro" onStart={() => setPhase("quiz")} />}
+          {phase === "intro" && <IntroScreen key="intro" onStart={() => { clearDNA(); setSavedDNA(null); setPhase("quiz"); }} savedDNA={savedDNA} onResumeDNA={handleResumeDNA} />}
 
           {phase === "quiz" && currentQ && (
             <motion.div key={`q-${stepIdx}`}
