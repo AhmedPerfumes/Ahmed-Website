@@ -504,7 +504,7 @@ const ProductAccordion = ({ product }) => {
                 <AccordionItem
                     title={t("accordion.fragranceProfile")}
                     id="Two"
-                    defaultOpen={true}
+                    // defaultOpen={true}
                 >
                     {/* Conditionally render the Scent Journey only if notesData exists */}
                     {notesData?.length > 0 && (

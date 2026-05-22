@@ -33,6 +33,7 @@ import GTMPageView from "@/components/common/GTMPageView";
 import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
 import { Toaster } from "react-hot-toast";
+import IntlProviderClient from './IntlProviderClient';
 
 
 export const metadata = {
@@ -221,7 +222,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
         </noscript>
 
 
-        <NextIntlClientProvider messages={messages}>
+        <IntlProviderClient locale={locale} messages={messages}>
           <Svgs />
           <MenuProvider>
             <Context>
@@ -251,7 +252,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
           <div className="page-overlay" id="pageOverlay"></div>
           <ScrollTop />
           <CountryMismatchPopup />
-        </NextIntlClientProvider>
+        </IntlProviderClient>
       </body>
     </html>
   );

@@ -28,8 +28,7 @@ const RamadanVideo = () => {
           <iframe
             src="https://www.youtube.com/embed/LlaGANDEYJ8?autoplay=1&mute=1&controls=0&loop=1&playlist=LlaGANDEYJ8&modestbranding=1"
             title="Unity In Scent - Ramadan Kareem"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
           ></iframe>
         </div>
       </div>

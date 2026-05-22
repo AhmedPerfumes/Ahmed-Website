@@ -39,6 +39,7 @@ export default function HomePage8() {
           src="/assets/background-ivory.webp"
           alt=""               // decorative
           fill
+          sizes="100vw"
           style={{ objectFit: 'cover' }}
           priority            // eager + high fetch priority
         />

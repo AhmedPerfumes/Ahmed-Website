@@ -245,7 +245,7 @@ const ProductDetailsPage16 = async ({ params }) => {
                     subcategory={subCategoryName}
                     product={data}
                 />
-                <main className="page-wrapper">
+                <main className="page-wrapper pt-0 min-vh-100">
                     {/* <div className="mb-md-1 pb-md-3"></div> */}
                     <SingleProduct11
                         category={categoryName}
