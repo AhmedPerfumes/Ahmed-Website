@@ -3,17 +3,11 @@
 import React from 'react';
 import {NextIntlClientProvider} from 'next-intl';
 
-interface IntlProviderClientProps {
-  children: React.ReactNode;
-  locale: string;
-  messages: any;
-}
-
 export default function IntlProviderClient({
   children,
   locale,
   messages
-}: IntlProviderClientProps) {
+}) {
   return (
     <NextIntlClientProvider
       locale={locale}
