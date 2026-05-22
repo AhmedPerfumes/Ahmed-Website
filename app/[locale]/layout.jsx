@@ -35,14 +35,32 @@ import { ShopFilterProvider } from "@/context/ShopFilterContext";
 import { Toaster } from "react-hot-toast";
 import IntlProviderClient from './IntlProviderClient';
 
+const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
 
-export const metadata = {
-  title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-  description: "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-  icons: {
-    icon: "/assets/images/ahmed-favicon.png",
-  },
-};
+export async function generateMetadata({ params: { locale } }) {
+  return {
+    metadataBase: new URL(baseUrl),
+
+    title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
+
+    description:
+      "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
+
+    icons: {
+      icon: "/assets/images/ahmed-favicon.png",
+    },
+
+    alternates: {
+      canonical: `/${locale}`,
+
+      languages: {
+        en: `${baseUrl}/en`,
+        ar: `${baseUrl}/ar`,
+        "x-default": `${baseUrl}/en`,
+      },
+    },
+  };
+}
 
 // Import English font
 const englishFont = localFont({
@@ -77,183 +95,184 @@ export default async function LocaleLayout({ children, params: { locale } }) {
   const GTM_ID = "GTM-M4B7GLV";
 
   return (
-    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
-      <head></head>
+    <div
+      lang={locale}
+      dir={locale === "ar" ? "rtl" : "ltr"}
+      className={selectedFont.className}
+    >
 
-      <body className={selectedFont.className}>
-        <Script id="gtm-script" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${GTM_ID}');
-          `}
-        </Script>
+      <Script id="gtm-script" strategy="afterInteractive">
+        {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${GTM_ID}');
+        `}
+      </Script>
 
-        <Script id="tiktok-pixel" strategy="afterInteractive">
-          {`
-            !function (w, d, t) {
-              w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-              ttq.load('CA6RMBBC77UC097ILMD0');
-              ttq.page();
-            }(window, document, 'ttq');
-          `}
-        </Script>
+      <Script id="tiktok-pixel" strategy="afterInteractive">
+        {`
+          !function (w, d, t) {
+            w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+            ttq.load('CA6RMBBC77UC097ILMD0');
+            ttq.page();
+          }(window, document, 'ttq');
+        `}
+      </Script>
 
-        <Script id="tiktok-listener" strategy="afterInteractive">
-          {`
-            (function(){
-              // Ensure dataLayer exists
-              window.dataLayer = window.dataLayer || [];
+      <Script id="tiktok-listener" strategy="afterInteractive">
+        {`
+          (function(){
+            // Ensure dataLayer exists
+            window.dataLayer = window.dataLayer || [];
 
-              // Save original push method
-              const originalPush = window.dataLayer.push;
+            // Save original push method
+            const originalPush = window.dataLayer.push;
 
-              // Override push to also send TikTok events
-              window.dataLayer.push = function(){
-                const args = Array.from(arguments);
-                originalPush.apply(window.dataLayer, args);
+            // Override push to also send TikTok events
+            window.dataLayer.push = function(){
+              const args = Array.from(arguments);
+              originalPush.apply(window.dataLayer, args);
 
-                const eventObj = args[0];
-                if(eventObj && eventObj.event){
-                  const ecommerce = eventObj.ecommerce || {};
-                  const items = ecommerce.items || [];
+              const eventObj = args[0];
+              if(eventObj && eventObj.event){
+                const ecommerce = eventObj.ecommerce || {};
+                const items = ecommerce.items || [];
 
-                  switch(eventObj.event){
-                    case "view_item":
-                      window.ttq?.track("ViewContent", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id,
-                          content_type: "product",
-                          content_name: i.item_name
-                        })),
-                        value: ecommerce.value,
-                        currency: ecommerce.currency
-                      });
-                      break;
+                switch(eventObj.event){
+                  case "view_item":
+                    window.ttq?.track("ViewContent", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id,
+                        content_type: "product",
+                        content_name: i.item_name
+                      })),
+                      value: ecommerce.value,
+                      currency: ecommerce.currency
+                    });
+                    break;
 
-                    case "add_to_cart":
-                      window.ttq?.track("AddToCart", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id,
-                          content_type: "product",
-                          content_name: i.item_name
-                        })),
-                        value: ecommerce.value,
-                        currency: ecommerce.currency
-                      });
-                      break;
+                  case "add_to_cart":
+                    window.ttq?.track("AddToCart", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id,
+                        content_type: "product",
+                        content_name: i.item_name
+                      })),
+                      value: ecommerce.value,
+                      currency: ecommerce.currency
+                    });
+                    break;
 
-                    case "begin_checkout":
-                      window.ttq?.track("InitiateCheckout", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id,
-                          content_type: "product",
-                          content_name: i.item_name
-                        })),
-                        value: ecommerce.value,
-                        currency: ecommerce.currency
-                      });
-                      break;
+                  case "begin_checkout":
+                    window.ttq?.track("InitiateCheckout", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id,
+                        content_type: "product",
+                        content_name: i.item_name
+                      })),
+                      value: ecommerce.value,
+                      currency: ecommerce.currency
+                    });
+                    break;
 
-                    case "add_payment_info":
-                      window.ttq?.track("AddPaymentInfo", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id,
-                          content_type: "product",
-                          content_name: i.item_name
-                        })),
-                        value: ecommerce.value,
-                        currency: ecommerce.currency
-                      });
-                      break;
+                  case "add_payment_info":
+                    window.ttq?.track("AddPaymentInfo", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id,
+                        content_type: "product",
+                        content_name: i.item_name
+                      })),
+                      value: ecommerce.value,
+                      currency: ecommerce.currency
+                    });
+                    break;
 
-                    case "purchase":
-                      window.ttq?.track("Purchase", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id,
-                          content_type: "product",
-                          content_name: i.item_name
-                        })),
-                        value: ecommerce.value,
-                        currency: ecommerce.currency
-                      });
-                      break;
+                  case "purchase":
+                    window.ttq?.track("Purchase", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id,
+                        content_type: "product",
+                        content_name: i.item_name
+                      })),
+                      value: ecommerce.value,
+                      currency: ecommerce.currency
+                    });
+                    break;
 
-                    case "place_order": // custom GA4 event name if used
-                      window.ttq?.track("PlaceAnOrder", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id,
-                          content_type: "product",
-                          content_name: i.item_name
-                        })),
-                        value: ecommerce.value,
-                        currency: ecommerce.currency
-                      });
-                      break;
+                  case "place_order": // custom GA4 event name if used
+                    window.ttq?.track("PlaceAnOrder", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id,
+                        content_type: "product",
+                        content_name: i.item_name
+                      })),
+                      value: ecommerce.value,
+                      currency: ecommerce.currency
+                    });
+                    break;
 
-                    case "search":
-                      window.ttq?.track("Search", {
-                        contents: items.map(i => ({
-                          content_id: i.item_id || "search", // fallback if no product_id
-                          content_type: "product",
-                          content_name: i.item_name || (eventObj.search_term || "search")
-                        })),
-                        value: ecommerce.value || 0,
-                        currency: ecommerce.currency || "AED",
-                        search_string: eventObj.search_term || ""
-                      });
-                      break;
-                  }
+                  case "search":
+                    window.ttq?.track("Search", {
+                      contents: items.map(i => ({
+                        content_id: i.item_id || "search", // fallback if no product_id
+                        content_type: "product",
+                        content_name: i.item_name || (eventObj.search_term || "search")
+                      })),
+                      value: ecommerce.value || 0,
+                      currency: ecommerce.currency || "AED",
+                      search_string: eventObj.search_term || ""
+                    });
+                    break;
                 }
-              };
-            })();
-          `}
-          </Script>
+              }
+            };
+          })();
+        `}
+        </Script>
 
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        />
+      </noscript>
 
 
-        <IntlProviderClient locale={locale} messages={messages}>
-          <Svgs />
-          <MenuProvider>
-            <Context>
-              <UserProvider>
-                <FacebookPixelEvents />
-                <MobileHeader />
-                <ShopFilterProvider>
-                  {children}
-                  <MobileFooter1 />
-                  <GTMPageView />
-                  {/* Modals and Asides */}
-                  <LoginFormPopup />
-                  <SizeGuide />
-                  <Delivery />
-                  <CartDrawer />
-                  <SiteMap />
-                  <CustomerLogin />
-                  <ShopFilter />
-                  <ProductDescription />
-                  <ProductAdditionalInformation />
-                  <ProductReviews />
-                  <Toaster />
-                </ShopFilterProvider>
-              </UserProvider>
-            </Context>
-          </MenuProvider>
-          <div className="page-overlay" id="pageOverlay"></div>
-          <ScrollTop />
-          <CountryMismatchPopup />
-        </IntlProviderClient>
-      </body>
-    </html>
+      <IntlProviderClient locale={locale} messages={messages}>
+        <Svgs />
+        <MenuProvider>
+          <Context>
+            <UserProvider>
+              <FacebookPixelEvents />
+              <MobileHeader />
+              <ShopFilterProvider>
+                {children}
+                <MobileFooter1 />
+                <GTMPageView />
+                {/* Modals and Asides */}
+                <LoginFormPopup />
+                <SizeGuide />
+                <Delivery />
+                <CartDrawer />
+                <SiteMap />
+                <CustomerLogin />
+                <ShopFilter />
+                <ProductDescription />
+                <ProductAdditionalInformation />
+                <ProductReviews />
+                <Toaster />
+              </ShopFilterProvider>
+            </UserProvider>
+          </Context>
+        </MenuProvider>
+        <div className="page-overlay" id="pageOverlay"></div>
+        <ScrollTop />
+        <CountryMismatchPopup />
+      </IntlProviderClient>
+    </div>
   );
 }
