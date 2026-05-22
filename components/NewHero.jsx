@@ -188,37 +188,40 @@ const NewHero = () => {
         if (!activeSlide) return;
 
         const texts = activeSlide.querySelectorAll(".gsap-text");
-
         const bg = activeSlide.querySelector(".gsap-bg");
 
-        gsap.fromTo(
-            texts,
-            {
-                y: 80,
-                opacity: 0,
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1.1,
-                stagger: 0.12,
-                ease: "power4.out",
-                delay: 0.4,
-            }
-        );
+        if (texts && texts.length > 0) {
+            gsap.fromTo(
+                texts,
+                {
+                    y: 80,
+                    opacity: 0,
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.1,
+                    stagger: 0.12,
+                    ease: "power4.out",
+                    delay: 0.4,
+                }
+            );
+        }
 
-        gsap.fromTo(
-            bg,
-            {
-                scale: isMobile ? 1.15 : 1.12,
-                transformOrigin: "center center",
-            },
-            {
-                scale: 1,
-                duration: 6,
-                ease: "power1.out",
-            }
-        );
+        if (bg) {
+            gsap.fromTo(
+                bg,
+                {
+                    scale: isMobile ? 1.15 : 1.12,
+                    transformOrigin: "center center",
+                },
+                {
+                    scale: 1,
+                    duration: 6,
+                    ease: "power1.out",
+                }
+            );
+        }
     };
 
     const goToSlide = (index) => {
@@ -432,6 +435,7 @@ const NewHero = () => {
                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile && elm.mobile_image ? elm.mobile_image : elm.image}`}
                                 alt={elm.title || `Slide ${i + 1}`}
                                 fill
+                                sizes="52px"
                                 style={{
                                     objectFit: "cover",
                                 }}

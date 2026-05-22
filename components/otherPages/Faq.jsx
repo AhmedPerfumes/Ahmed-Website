@@ -42,7 +42,7 @@ export default function Faq() {
 
   if (loading) return (
     <div className="container py-5 text-center">
-      <p>{t("Loading FAQs...")}</p>
+      <p>{t("Loading FAQs")}</p>
     </div>
   );
 

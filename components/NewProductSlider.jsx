@@ -208,9 +208,19 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     body: JSON.stringify({ product_ids: productIds })
                 });
                 const data = await response.json();
-                if (data && typeof data === 'object') {
-                    setLiveStatuses(prev => ({ ...prev, ...data }));
+
+                const mappedData = {};
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        if (item && item.product_id) {
+                            mappedData[item.product_id] = item;
+                        }
+                    });
+                } else if (data && typeof data === 'object') {
+                    Object.assign(mappedData, data);
                 }
+
+                setLiveStatuses(prev => ({ ...prev, ...mappedData }));
             } catch (err) {
                 console.error("Failed to fetch live statuses for slider products:", err);
             }
@@ -300,8 +310,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         const index = swiper.realIndex;
         setActiveIndex(index);
 
-
-
         const currentSlide = swiper.slides[swiper.activeIndex];
         const prevSlide = swiper.slides[swiper.previousIndex];
 
@@ -315,13 +323,23 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             const oldTagline = prevSlide.querySelector(".master-tagline");
             const oldPrice = prevSlide.querySelector(".product-price-wrap");
 
-            gsap.to([oldTitleElements, oldPrice, oldSubtitle, oldTagline], {
-                opacity: 0,
-                y: prefersReducedMotion ? 0 : -30,
-                duration: 0.4,
-                ease: "power2.out"
-            });
+            const targetsToAnimateOut = [];
+            if (oldTitleElements && oldTitleElements.length > 0) targetsToAnimateOut.push(oldTitleElements);
+            if (oldPrice) targetsToAnimateOut.push(oldPrice);
+            if (oldSubtitle) targetsToAnimateOut.push(oldSubtitle);
+            if (oldTagline) targetsToAnimateOut.push(oldTagline);
+
+            if (targetsToAnimateOut.length > 0) {
+                gsap.to(targetsToAnimateOut, {
+                    opacity: 0,
+                    y: prefersReducedMotion ? 0 : -30,
+                    duration: 0.4,
+                    ease: "power2.out"
+                });
+            }
         }
+
+        if (!currentSlide) return;
 
         const titleElements = currentSlide.querySelectorAll(".stagger-row span");
         const price = currentSlide.querySelector(".product-price-wrap");
@@ -330,22 +348,28 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         const primary = currentSlide.querySelector(".primary-photo img");
         const secondary = currentSlide.querySelector(".secondary-photo");
 
-        gsap.to(containerRef.current, {
-            backgroundColor: slides[index].theme.bg,
-            duration: 1.0,
-            ease: "sine.inOut"
-        });
+        if (containerRef.current && slides[index]) {
+            gsap.to(containerRef.current, {
+                backgroundColor: slides[index].theme.bg,
+                duration: 1.0,
+                ease: "sine.inOut"
+            });
+        }
 
         // Delay entry to 0.4s so old text is gone and cross-fade is 60% complete
-        gsap.fromTo(tagline, 
-            { opacity: 0, x: prefersReducedMotion ? 0 : -15 }, 
-            { opacity: 1, x: 0, duration: 1.0, delay: 0.4, ease: "power2.out" }
-        );
+        if (tagline) {
+            gsap.fromTo(tagline, 
+                { opacity: 0, x: prefersReducedMotion ? 0 : -15 }, 
+                { opacity: 1, x: 0, duration: 1.0, delay: 0.4, ease: "power2.out" }
+            );
+        }
 
-        gsap.fromTo(titleElements,
-            { y: prefersReducedMotion ? 0 : "100%", opacity: 0 },
-            { y: 0, opacity: 1, duration: 1.0, stagger: prefersReducedMotion ? 0 : 0.06, ease: "power3.out", delay: 0.5 }
-        );
+        if (titleElements && titleElements.length > 0) {
+            gsap.fromTo(titleElements,
+                { y: prefersReducedMotion ? 0 : "100%", opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.0, stagger: prefersReducedMotion ? 0 : 0.06, ease: "power3.out", delay: 0.5 }
+            );
+        }
 
         if (price) {
             gsap.fromTo(price,
@@ -354,10 +378,12 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             );
         }
 
-        gsap.fromTo(subtitle, 
-            { opacity: 0, y: prefersReducedMotion ? 0 : 20 }, 
-            { opacity: 1, y: 0, duration: 1.0, delay: 0.7, ease: "power3.out" }
-        );
+        if (subtitle) {
+            gsap.fromTo(subtitle, 
+                { opacity: 0, y: prefersReducedMotion ? 0 : 20 }, 
+                { opacity: 1, y: 0, duration: 1.0, delay: 0.7, ease: "power3.out" }
+            );
+        }
 
         if (primary) {
             gsap.fromTo(primary,
