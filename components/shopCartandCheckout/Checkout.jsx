@@ -937,7 +937,7 @@ export default function Checkout() {
 
               <div className="checkout__totals-wrapper">
                 <div className="sticky-content">
-                  <div className="checkout__totals">
+                  <div className={`checkout__totals ${isOrderSummaryOpen ? "is-open" : ""}`}>
                     {/* Collapsible Header/Toggle Bar */}
                     <div 
                       className="checkout-summary-toggle-bar" 
@@ -1175,6 +1175,10 @@ export default function Checkout() {
                         box-shadow: 0 10px 30px rgba(166, 123, 48, 0.08) !important;
                         overflow: hidden;
                         transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                      }
+
+                      .checkout__totals.is-open {
+                        position: static !important;
                       }
                     }
 
