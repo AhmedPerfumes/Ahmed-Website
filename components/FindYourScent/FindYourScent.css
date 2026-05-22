@@ -174,12 +174,26 @@
   margin: 0 auto;
 }
 
+/* ─── Eyebrow: chapter/act marker style — no hairline, different from homepage ─── */
 .fys-intro__eyebrow {
-  font-size: 10px;
-  letter-spacing: .32em;
+  font-size: 9px;
+  letter-spacing: .5em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 28px
+  color: var(--ink5);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fys-intro__eyebrow::before,
+.fys-intro__eyebrow::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--ink2);
+  flex-shrink: 0;
 }
 
 .fys-intro__headline {
@@ -194,7 +208,28 @@
 
 .fys-intro__headline em {
   font-style: italic;
-  color: var(--gold)
+  font-weight: 300;
+  /* Slow gold shimmer — like light through a crystal bottle */
+  background: linear-gradient(to right, #9C7E4A 0%, #c9a060 45%, #9C7E4A 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fys-gold-sheen 5s ease-in-out infinite;
+}
+
+@keyframes fys-gold-sheen {
+  0% {
+    background-position: 0%;
+  }
+
+  50% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
 }
 
 .fys-intro__body {
@@ -210,9 +245,9 @@
   display: flex;
   justify-content: center;
   border: 1px solid var(--rp);
-  border-radius: 3px;
+  border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 32px
+  margin-bottom: 32px;
 }
 
 .fys-home__stage {
@@ -230,27 +265,38 @@
 
 .fys-intro__stages {
   display: flex;
-  border: 1px solid var(--ink2);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 32px
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
+  justify-content: center;
 }
 
 .fys-intro__stage {
-  padding: 10px 28px;
-  font-size: 10px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: .06em;
   color: var(--ink5);
-  border-right: 1px solid var(--ink2)
+  position: relative;
 }
 
-.fys-intro__stage:last-child {
-  border-right: none
+/* Elegant gold dot separator between stages */
+.fys-intro__stage+.fys-intro__stage::before {
+  content: '\B7';
+  position: absolute;
+  left: -13px;
+  color: var(--gold);
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
 }
 
 .fys-intro__meta {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ink5);
   margin-bottom: 32px;
   display: flex;
@@ -258,7 +304,8 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  letter-spacing: .04em
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
 
 .fys-dot {
@@ -267,7 +314,26 @@
   border-radius: 50%;
   background: currentColor;
   opacity: .3;
-  display: inline-block
+  display: inline-block;
+  animation: fys-dot-breathe 2.4s ease-in-out infinite;
+}
+
+.fys-dot:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+@keyframes fys-dot-breathe {
+
+  0%,
+  100% {
+    opacity: .25;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .6;
+    transform: scale(1.4);
+  }
 }
 
 /* ─── SCENT DNA SAVED BANNER ─────────────────────────────────────────────── */
@@ -275,7 +341,7 @@
   width: 100%;
   max-width: 400px;
   border: 1px solid var(--gold);
-  background: linear-gradient(135deg, rgba(156,126,74,.08) 0%, rgba(156,126,74,.03) 100%);
+  background: linear-gradient(135deg, rgba(156, 126, 74, .08) 0%, rgba(156, 126, 74, .03) 100%);
   border-radius: 3px;
   padding: 20px 22px;
   display: flex;
@@ -518,7 +584,7 @@
   background: var(--lp);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 48px 56px;
   overflow: hidden;
@@ -528,7 +594,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 340px
+  max-width: 400px
 }
 
 .fys-split__q-title {
@@ -538,7 +604,7 @@
   color: var(--ink);
   margin: 0;
   letter-spacing: .02em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .fys-split__q-meta {
@@ -620,7 +686,7 @@
   stroke: var(--white) !important
 }
 
-/* Icon container — LARGE like Maison21G */
+/* Icon container */
 .fys-icon-opt__wrap {
   width: 130px;
   height: 130px;
@@ -630,7 +696,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--t);
+  transition: transform var(--t), box-shadow var(--t), background var(--t), border-color var(--t);
+  position: relative;
+  animation: fys-icon-breathe 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Stagger the breathing so options pulse organically out of sync */
+.fys-icon-opt:nth-child(2) .fys-icon-opt__wrap {
+  animation-delay: 1s;
+}
+
+.fys-icon-opt:nth-child(3) .fys-icon-opt__wrap {
+  animation-delay: 2s;
+}
+
+/* Freeze on hover — the circle reacts to user presence */
+.fys-icon-opt:hover .fys-icon-opt__wrap,
+.fys-icon-opt--sel .fys-icon-opt__wrap {
+  animation: none;
+}
+
+@keyframes fys-icon-breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(156, 126, 74, 0);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(156, 126, 74, .07);
+  }
 }
 
 .fys-icon-opt__wrap svg {
@@ -881,7 +979,7 @@
   font-size: clamp(22px, 3vw, 36px);
   font-weight: 300;
   letter-spacing: .06em;
-  text-transform: uppercase;
+  text-transform: capitalize;
   color: var(--ink);
   line-height: 1.2;
   margin: 0;
@@ -1097,131 +1195,202 @@
 }
 
 /* ── REVEAL SCREEN (50/50 split — pre-results) ── */
+/* ══ REVEAL SCREEN — Cinematic preparing experience ══ */
 .fys-reveal {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   min-height: calc(100vh - 140px);
   width: 100%;
-}
-
-.fys-reveal__left {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #C8BBA8 0%, #A89880 100%);
-}
-
-.fys-reveal__img-wrap {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.fys-reveal__img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: brightness(.92) contrast(1.05);
-}
-
-.fys-reveal__overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  background: linear-gradient(transparent, rgba(45, 42, 36, .7));
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  text-align: center;
+  background: var(--lp);
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
 }
 
-.fys-reveal__brand {
-  font-size: 11px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .8);
+/* Subtle large watermark ring in background */
+.fys-reveal::before {
+  content: '';
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  border: 1px solid rgba(156, 126, 74, .07);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
-.fys-reveal__collection {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-weight: 300;
-  color: #fff;
-  letter-spacing: .06em;
-}
-
-.fys-reveal__right {
+/* ─── Central animated glyph ─── */
+.fys-reveal__glyph {
+  position: relative;
+  width: 160px;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 56px;
-  background: var(--white);
+  flex-shrink: 0;
 }
 
+.fys-reveal__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(156, 126, 74, .3);
+}
+
+.fys-reveal__ring--outer {
+  width: 160px;
+  height: 160px;
+  border-style: dashed;
+  border-color: rgba(156, 126, 74, .2);
+  animation: fys-ring-cw 20s linear infinite;
+}
+
+.fys-reveal__ring--mid {
+  width: 108px;
+  height: 108px;
+  animation: fys-ring-ccw 13s linear infinite;
+}
+
+.fys-reveal__ring--inner {
+  width: 66px;
+  height: 66px;
+  border-color: rgba(156, 126, 74, .5);
+}
+
+.fys-reveal__diamond {
+  font-size: 22px;
+  color: var(--gold);
+  position: relative;
+  z-index: 1;
+  animation: fys-icon-breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes fys-ring-cw {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fys-ring-ccw {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* ─── Content ─── */
 .fys-reveal__content {
-  max-width: 480px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  align-items: center;
+  gap: 24px;
+  max-width: 480px;
+  width: 100%;
 }
 
-.fys-reveal__badge {
-  font-size: 11px;
-  letter-spacing: .2em;
+.fys-reveal__eyebrow {
+  font-size: 9px;
+  letter-spacing: .5em;
   text-transform: uppercase;
-  color: #6B8E23;
-  font-weight: 600;
+  color: var(--ink5);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fys-reveal__eyebrow::before,
+.fys-reveal__eyebrow::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--ink2);
+  flex-shrink: 0;
 }
 
 .fys-reveal__title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(22px, 2.4vw, 32px);
-  font-weight: 400;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  line-height: 1.35;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  line-height: 1.08;
   color: var(--ink);
   margin: 0;
+  letter-spacing: -.01em;
 }
 
-.fys-reveal__checklist {
+.fys-reveal__title em {
+  font-style: italic;
+  background: linear-gradient(to right, #9C7E4A 0%, #c9a060 45%, #9C7E4A 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fys-gold-sheen 5s ease-in-out infinite;
+}
+
+/* ─── Processing steps ─── */
+.fys-reveal__steps {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 20px 0;
+  width: 100%;
+  padding: 24px 0;
   border-top: 1px solid var(--ink2);
   border-bottom: 1px solid var(--ink2);
+  min-height: 100px;
+  /* reserve space so layout doesn't jump */
 }
 
-.fys-reveal__check-item {
+.fys-reveal__step {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13px;
+  gap: 14px;
+  font-size: 11px;
   color: var(--ink5);
-  line-height: 1.4;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: left;
 }
 
+.fys-reveal__step-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ─── CTA button ─── */
 .fys-reveal__cta {
-  display: block;
-  width: 100%;
-  padding: 18px 32px;
-  background: #5C5346;
-  color: #fff;
+  padding: 16px 44px;
+  background: var(--ink);
+  color: var(--white);
   border: none;
-  font-size: 12px;
-  letter-spacing: .16em;
+  font-size: 11px;
+  letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
   font-family: inherit;
   transition: background var(--t), transform var(--t);
+  border-radius: 50px;
 }
 
 .fys-reveal__cta:hover {
-  background: #4A4238;
-  transform: translateY(-1px)
+  background: var(--ink5);
+  transform: translateY(-2px);
 }
 
 /* ── PERSONALITY HERO ── */
@@ -1473,7 +1642,7 @@
   font-size: 13px;
   line-height: 1.75;
   color: var(--ink5);
-  font-weight: 300;
+  font-weight: 500;
   max-width: 400px;
 }
 
@@ -1502,7 +1671,7 @@
 }
 
 .fys-prod-row__note-label {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--gold);
@@ -1520,7 +1689,7 @@
 
 .fys-prod-row__pill {
   font-size: 10px;
-  color: var(--ink5);
+  color: var(--ink);
   background: rgba(28, 18, 8, .04);
   border: 1px solid var(--ink2);
   padding: 4px 12px;
@@ -1645,7 +1814,7 @@
 }
 
 .fys-results-v2__explore:hover {
-  background: #3a2a18
+  background: var(--gold);
 }
 
 .fys-results-v2__empty {
@@ -1684,17 +1853,30 @@
     grid-template-columns: 1fr
   }
 
-  /* Reveal — stack */
+  /* Reveal screen is already centered, just reduce gap on mobile */
   .fys-reveal {
-    grid-template-columns: 1fr
+    gap: 32px;
+    padding: 48px 24px;
   }
 
-  .fys-reveal__left {
-    min-height: 45vh
+  .fys-reveal__ring--outer {
+    width: 130px;
+    height: 130px;
   }
 
-  .fys-reveal__right {
-    padding: 36px 24px
+  .fys-reveal__ring--mid {
+    width: 88px;
+    height: 88px;
+  }
+
+  .fys-reveal__ring--inner {
+    width: 54px;
+    height: 54px;
+  }
+
+  .fys-reveal__glyph {
+    width: 130px;
+    height: 130px;
   }
 
   /* Personality */
@@ -1767,65 +1949,40 @@
     border-right: none;
     border-bottom: 1px solid var(--ink2);
   }
-
-  /* Homepage CTA entry — stack on tablet/phone */
-  .fys-entry {
-    flex-direction: column;
-    padding: 0;
-    min-height: auto;
-    align-items: stretch;
-    text-align: center;
-  }
-
-  .fys-entry__visual {
-    min-height: 260px;
-    display: block;
-  }
-
-  .fys-entry__content {
-    padding: 40px 24px 48px;
-    align-items: center;
-  }
-
-  .fys-entry__body {
-    max-width: 100%;
-  }
-
-  .fys-entry__headline {
-    font-size: clamp(32px, 9vw, 48px);
-  }
-
-  .fys-entry__cta {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .fys-entry__stats {
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .fys-home__stages {
-    flex-wrap: wrap;
-  }
 }
 
-/* HOMEPAGE CTA ENTRY */
+/* ═══════════════════════════════════════════════════
+   HOMEPAGE CTA ENTRY — "Find Your Perfect Scent"
+   ═══════════════════════════════════════════════════ */
 .fys-entry {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 560px;
   width: 100%;
-  background: #0e0e0de0;
+  min-height: 560px;
+  background: #d2c6b063;
   overflow: hidden;
-  padding: 2rem;
+  position: relative;
+  padding: 80px 24px;
+  border-top: 1px solid #cab893;
+  border-bottom: 1px solid #cab893;
+}
+
+/* Subtle radial glow behind content */
+.fys-entry::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(156, 126, 74, .08) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .fys-entry__visual {
   position: relative;
-  overflow: hidden
+  overflow: hidden;
+  display: none;
 }
 
 .fys-entry__visual-img {
@@ -1844,34 +2001,50 @@
 .fys-entry__visual-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, transparent 55%, #2D2A24 100%)
+  background: linear-gradient(to right, transparent 55%, #0d0d0c 100%)
 }
 
 .fys-entry__content {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 24px;
-  padding: 64px 64px 64px 56px;
-  background: #2D2A24;
-  border: 4px double var(--gold);
+  gap: 28px;
+  max-width: 640px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .fys-entry__eyebrow {
   font-size: 10px;
-  letter-spacing: .3em;
+  letter-spacing: .32em;
   text-transform: uppercase;
   color: var(--gold);
-  font-weight: 500
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Thin gold hairline above the eyebrow — luxury editorial detail */
+.fys-entry__eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
 }
 
 .fys-entry__headline {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(38px, 4vw, 60px);
+  font-size: clamp(44px, 6vw, 76px);
   font-weight: 300;
-  letter-spacing: .04em;
-  color: #E8DFD0;
-  line-height: 1.1;
+  letter-spacing: .02em;
+  color: #6a5632;
+  line-height: 1.08;
   margin: 0
 }
 
@@ -1883,10 +2056,32 @@
 .fys-entry__body {
   font-size: 13px;
   line-height: 1.8;
-  color: rgba(232, 223, 208, .65);
+  color: #6a5632;
   font-weight: 300;
-  max-width: 380px;
+  max-width: 420px;
   margin: 0
+}
+
+/* The About / Personality / Scents stage pills */
+.fys-home__stages {
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fys-home__stage {
+  padding: 10px 28px;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #6a5632;
+  border-right: 1px solid var(--gold)
+}
+
+.fys-home__stage:last-child {
+  border-right: none
 }
 
 .fys-entry__stats {
@@ -1895,8 +2090,8 @@
   justify-content: center;
   gap: 32px;
   padding: 20px 0;
-  border-top: 1px solid rgba(232, 223, 208, .12);
-  border-bottom: 1px solid rgba(232, 223, 208, .12)
+  border-top: 1px solid rgba(232, 223, 208, .1);
+  border-bottom: 1px solid rgba(232, 223, 208, .1)
 }
 
 .fys-entry__stat {
@@ -1918,7 +2113,7 @@
   font-size: 9px;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(232, 223, 208, .45);
+  color: rgba(232, 223, 208, .4);
   font-weight: 500
 }
 
@@ -1926,40 +2121,102 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 36px;
-  background: transparent;
+  padding: 16px 44px;
+  background: #9c7e4a;
   color: #E8DFD0;
-  border: 1px solid rgba(232, 223, 208, .35);
+  border: 1px solid rgba(232, 223, 208, .3);
   font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 500;
   font-family: 'Montserrat', sans-serif;
   text-decoration: none;
-  transition: all .3s var(--ease);
-  width: fit-content
+  transition: all .35s cubic-bezier(.22, 1, .36, 1);
+  width: fit-content;
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep on hover — light gloss across the pill */
+.fys-entry__cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.fys-entry__cta:hover::after {
+  animation: fys-cta-shimmer 0.55s ease forwards;
+}
+
+@keyframes fys-cta-shimmer {
+  0% {
+    left: -80%;
+  }
+
+  100% {
+    left: 140%;
+  }
 }
 
 .fys-entry__cta:hover {
-  background: var(--gold);
-  border-color: var(--gold);
+  background: #6a5632;
+  border-color: #6a5632;
   color: #fff;
-  letter-spacing: .22em
+  letter-spacing: .22em;
+  transform: translateY(-2px);
 }
 
-/* Homepage CTA — iPhone */
-@media(max-width:480px) {
+/* ── Tablet (≤ 768px) ── */
+@media(max-width:768px) {
   .fys-entry {
-    padding: 0;
+    padding: 64px 20px;
+    min-height: 480px;
   }
 
   .fys-entry__content {
-    padding: 32px 20px 40px;
+    gap: 22px;
+  }
+
+  .fys-entry__headline {
+    font-size: clamp(36px, 9vw, 52px);
+  }
+
+  .fys-entry__body {
+    font-size: 12.5px;
+    max-width: 100%;
+  }
+
+  .fys-home__stage {
+    padding: 9px 18px;
+    font-size: 9px;
+  }
+
+  .fys-entry__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Mobile (≤ 480px) ── */
+@media(max-width:480px) {
+  .fys-entry {
+    padding: 52px 16px;
+    min-height: 420px;
+  }
+
+  .fys-entry__content {
     gap: 18px;
   }
 
   .fys-entry__headline {
-    font-size: clamp(28px, 10vw, 38px);
+    font-size: clamp(30px, 11vw, 42px);
   }
 
   .fys-entry__eyebrow {
@@ -1975,9 +2232,16 @@
     padding: 14px 24px;
     font-size: 10px;
     letter-spacing: .14em;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .fys-home__stages {
+    flex-wrap: wrap;
   }
 
   .fys-home__stage {
-    padding: 8px 16px;
+    padding: 8px 14px;
+    font-size: 8.5px;
   }
-}
+}
