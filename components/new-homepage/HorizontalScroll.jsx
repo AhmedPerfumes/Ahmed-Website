@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
@@ -17,6 +17,28 @@ const HorizontalScroll = () => {
   const t = useTranslations();
   const containerRef = useRef(null);
   const dotsRef = useRef([]);
+  const [isMuted, setIsMuted] = useState(true);
+
+  // Send controls to YouTube player iframe
+  const postCommand = (func, args = []) => {
+    const iframe = document.getElementById("k-series-yt-iframe");
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: func,
+          args: args,
+        }),
+        "*"
+      );
+    }
+  };
+
+  const toggleMute = () => {
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+    postCommand(nextMuted ? "mute" : "unMute");
+  };
 
   useEffect(() => {
     const el = containerRef.current;
@@ -193,7 +215,8 @@ const HorizontalScroll = () => {
                 <span className="hs-vid-corner hs-vid-corner--br" />
                 <div className="hs-vid-inner">
                   <iframe
-                    src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0"
+                    id="k-series-yt-iframe"
+                    src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0&enablejsapi=1"
                     title="K - Series"
                     frameBorder="0"
                     allow="autoplay; fullscreen; picture-in-picture"
@@ -201,6 +224,26 @@ const HorizontalScroll = () => {
                     style={{ pointerEvents: 'none' }}
                   />
                 </div>
+                <button
+                  type="button"
+                  className="hs-vid-mute-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleMute();
+                  }}
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                >
+                  {isMuted ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                      <path d="M13.5 4.06c0-.75-.74-1.24-1.42-.89l-4.72 2.45H4.5A1.5 1.5 0 003 7.12v9.76a1.5 1.5 0 001.5 1.5h2.86l4.72 2.45c.68.35 1.42-.14 1.42-.89V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                      <path d="M13.5 4.06c0-.75-.74-1.24-1.42-.89l-4.72 2.45H4.5A1.5 1.5 0 003 7.12v9.76a1.5 1.5 0 001.5 1.5h2.86l4.72 2.45c.68.35 1.42-.14 1.42-.89V4.06zM18.57 17.47a.75.75 0 11-1.06-1.06 4.97 4.97 0 000-7.02.75.75 0 111.06-1.06 6.47 6.47 0 010 9.14z" />
+                      <path d="M21.22 20.12a.75.75 0 11-1.06-1.06 8.71 8.71 0 000-12.32.75.75 0 011.06-1.06 10.21 10.21 0 010 14.44z" />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
             <span className="hs-vid-badge">{t("Ahmed Al Maghribi")}</span>
