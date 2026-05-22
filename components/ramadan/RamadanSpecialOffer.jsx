@@ -101,7 +101,7 @@ const RamadanSpecialOffer = () => {
                             letterSpacing: "0.05em"
                         }}
                     >
-                        {t("Ramadan Special Offers")}
+                        {t("Eid Special Offers")}
                     </Typography>
                     <Box
                         sx={{

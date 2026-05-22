@@ -19,11 +19,11 @@ export async function generateMetadata({ params }) {
 
   return {
     title: isArabic
-      ? "هدايا رمضان الفاخرة وأطقم العطور في الإمارات"
-      : "Luxury Ramadan Gifts & Perfume Sets in UAE",
+      ? "هدايا العيد الفاخرة وأطقم العطور في الإمارات"
+      : "Luxury Eid Gifts & Perfume Sets in UAE",
     description: isArabic
-      ? "تسوّق هدايا رمضان الفاخرة وأطقم العطور والبخور وصناديق الهدايا الأنيقة للعائلة والأصدقاء وهدايا الشركات في الإمارات."
-      : "Shop luxury Ramadan gifts, perfume gift sets, bakhoor, and elegant hampers for family, friends, and corporate gifting across UAE.",
+      ? "تسوّق هدايا العيد الفاخرة وأطقم العطور والبخور وصناديق الهدايا الأنيقة للعائلة والأصدقاء وهدايا الشركات في الإمارات."
+      : "Shop luxury Eid gifts, perfume gift sets, bakhoor, and elegant hampers for family, friends, and corporate gifting across UAE.",
     icons: {
       icon: "/assets/images/ahmed-favicon.png",
     },
@@ -39,7 +39,7 @@ const RamadanGifting = () => {
       {/* Main Content Area */}
       <main className="flex-grow-1">
         {/* Deal Countdown */}
-        <RamadanCountdown />
+        {/* <RamadanCountdown /> */}
 
         {/* Trial Section 1: Islamic Hero */}
         <IslamicHero />

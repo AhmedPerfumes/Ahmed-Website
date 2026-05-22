@@ -14,8 +14,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 const translations = {
     en: {
-        subtitle: "✦ Shop Top Selling Products by Category This Ramadan ✦",
-        title: "RAMADAN FRAGRANCES",
+        subtitle: "✦ Shop Top Selling Products by Category This Eid ✦",
+        title: "EID FRAGRANCES",
         shop_now: "Shop Now",
         view_all: "View All",
         categories: [
@@ -28,8 +28,8 @@ const translations = {
         ]
     },
     ar: {
-        subtitle: "✦ تسوّق المنتجات الأكثر مبيعًا حسب الفئة في رمضان ✦",
-        title: "عطور رمضان",
+        subtitle: "✦ تسوّق المنتجات الأكثر مبيعًا حسب الفئة في العيد ✦",
+        title: "عطور العيد",
         shop_now: "تسوق الآن",
         view_all: "عرض الكل",
         categories: [

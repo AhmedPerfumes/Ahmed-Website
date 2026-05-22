@@ -208,7 +208,7 @@ const RamadanCountdown = ({ targetLink, isHomePage, isCheckout }) => {
                                 pointerEvents: "none"
                             }}
                         >
-                            {isCheckout ? t("Last Chance To Avail") : t("Everyday Ramadan Deals")}
+                            {isCheckout ? t("Last Chance To Avail") : t("Everyday Eid Deals")}
                         </Typography>
                     </Box>
                 </Box>
@@ -255,7 +255,7 @@ const RamadanCountdown = ({ targetLink, isHomePage, isCheckout }) => {
                                             fontSize: { xs: "0.6rem", md: "0.75rem" }
                                         }}
                                     >
-                                        {t("Special Ramadan Offer")}
+                                        {t("Special Eid Offer")}
                                     </Typography>
                                     <Typography
                                         variant="h6"

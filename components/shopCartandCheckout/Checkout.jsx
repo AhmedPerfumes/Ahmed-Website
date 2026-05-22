@@ -202,6 +202,13 @@ export default function Checkout() {
     }
   }, [searchParams]);
 
+  // Auto-scroll to top when mobile summary is opened
+  useEffect(() => {
+    if (isOrderSummaryOpen && typeof window !== "undefined" && window.innerWidth < 1200) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [isOrderSummaryOpen]);
+
   // HANDLERS
   const handleRadioChange = (event) => { setSelectedOption(event.target.value); };
 
@@ -951,7 +958,10 @@ export default function Checkout() {
                           <line x1="3" y1="6" x2="21" y2="6"></line>
                           <path d="M16 10a4 4 0 0 1-8 0"></path>
                         </svg>
-                        <span className="toggle-text">
+                        <span className="toggle-text toggle-text-desktop">
+                          Order Summary
+                        </span>
+                        <span className="toggle-text toggle-text-mobile">
                           {isOrderSummaryOpen ? "Hide order summary" : "Show order summary"}
                         </span>
                         <svg 
@@ -1125,6 +1135,14 @@ export default function Checkout() {
                       font-family: "Inter", sans-serif;
                     }
 
+                    .toggle-text-desktop {
+                      display: none;
+                    }
+
+                    .toggle-text-mobile {
+                      display: inline;
+                    }
+
                     .toggle-chevron {
                       color: #bca172;
                       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1220,6 +1238,14 @@ export default function Checkout() {
                         font-weight: 700;
                         color: #222;
                         letter-spacing: 0.04em;
+                      }
+
+                      .toggle-text-desktop {
+                        display: inline;
+                      }
+
+                      .toggle-text-mobile {
+                        display: none;
                       }
 
                       .summary-total-price {

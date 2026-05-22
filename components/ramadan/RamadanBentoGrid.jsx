@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 const translations = {
     en: {
         subtitle: "✦ EXPLORE BY CATEGORY ✦",
-        title: "Ramadan Essentials",
+        title: "Eid Essentials",
         categories: {
             perfumes: "Perfumes",
             concentrated_parfum: "Concentrated Parfum",
@@ -20,7 +20,7 @@ const translations = {
     },
     ar: {
         subtitle: "✦ استكشف حسب الفئة ✦",
-        title: "أساسيات رمضان",
+        title: "أساسيات العيد",
         categories: {
             perfumes: "عطور",
             concentrated_parfum: "العطورالزيتية",

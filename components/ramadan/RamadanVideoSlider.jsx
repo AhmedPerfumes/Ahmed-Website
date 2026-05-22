@@ -78,7 +78,7 @@ const RamadanVideoSlider = () => {
                             return {
                                 id: product.product_id,
                                 title: isRtl ? (product.product_name_ar || product.product_name) : product.product_name,
-                                subtitle: isRtl ? "مجموعة رمضان" : "Ramadan Collection",
+                                subtitle: isRtl ? "مجموعة العيد" : "Eid Collection",
                                 description: cleanDescription,
                                 image: `https://admin.ahmedalmaghribi.com/public/storage/${product.image}`,
                                 link: `/shop/collections/ramadan-collection/${productSlug}`
@@ -149,7 +149,7 @@ const RamadanVideoSlider = () => {
                             mb: 2
                         }}
                     >
-                        {isRtl ? "مجموعات رمضان" : "Ramadan Collections"}
+                        {isRtl ? "مجموعات العيد" : "Eid Collections"}
                     </Typography>
 
                     <Typography

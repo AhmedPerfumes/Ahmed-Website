@@ -14,7 +14,7 @@ const RamadanVideo = () => {
           className="display-5 fw-bold mb-4 text-uppercase"
           style={{ color: goldColor, letterSpacing: "1px" }}
         >
-          Unity In Scent – Ramadan Kareem
+          Unity In Scent – Eid Mubarak
         </h2>
         {/* <p className="text-light mb-4">
           مجموعة رمضان لدى أحمد المغربي للعطور
@@ -27,7 +27,7 @@ const RamadanVideo = () => {
         >
           <iframe
             src="https://www.youtube.com/embed/LlaGANDEYJ8?autoplay=1&mute=1&controls=0&loop=1&playlist=LlaGANDEYJ8&modestbranding=1"
-            title="Unity In Scent - Ramadan Kareem"
+            title="Unity In Scent - Eid Mubarak"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
           ></iframe>
         </div>

@@ -8,19 +8,19 @@ import Image from "next/image";
 
 const translations = {
     en: {
-        kareem: "RAMADAN KAREEM 2026",
-        title1: "Luxury Ramadan",
+        kareem: "EID MUBARAK 2026",
+        title1: "Luxury Eid",
         title2: "Gifts",
-        description: "Shop elegant perfumes, gift sets, Ramadan collection, and bakhoor for meaningful gifting.",
-        shop_collection: "Shop Ramadan Collection",
+        description: "Shop elegant perfumes, gift sets, Eid collection, and bakhoor for meaningful gifting.",
+        shop_collection: "Shop Eid Collection",
         explore_sets: "Explore Gift Sets",
     },
     ar: {
-        kareem: "رمضان كريم ٢٠٢٦",
-        title1: "هدايا رمضان",
+        kareem: "عيد مبارك ٢٠٢٦",
+        title1: "هدايا العيد",
         title2: "الفاخرة",
-        description: "تسوّق عطور أنيقة، مجموعات هدايا، تشكيلة رمضان، وبخور لهدايا تحمل معنى.",
-        shop_collection: "تسوّق مجموعة رمضان",
+        description: "تسوّق عطور أنيقة، مجموعات هدايا، تشكيلة العيد، وبخور لهدايا تحمل معنى.",
+        shop_collection: "تسوّق مجموعة العيد",
         explore_sets: "استكشف مجموعات الهدايا",
     },
 };
@@ -67,7 +67,7 @@ const IslamicHero = () => {
                         right: 0,
                         width: "100%",
                         height: "100%",
-                        backgroundImage: `url('${isMobile ? "/assets/images/ramadan/top-banner-ramadan-mobile.jpeg" : "/assets/images/ramadan/top-banner-ramadan.jpeg"}')`,
+                        backgroundImage: `url('${isMobile ? "/assets/images/ramadan/eid-mobile.jpeg" : "/assets/images/ramadan/eid-banner.jpeg"}')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat"

@@ -47,224 +47,215 @@ const RamadanSEOContent = () => {
 
     const content = {
         en: {
-            title: "From Premium Oriental Fragrances to Luxury Perfume Gift Sets – What Ramadan Truly Means in the UAE",
-            fullText: `Ramadan in the UAE is a season of reflection, generosity, and heartfelt Ramadan gifting. It is not about price tags. It is about meaning. Families gather, homes glow with warmth, and fragrances fill the air. This is where a carefully chosen gift set for Ramadan becomes more than a present. It becomes a gesture of respect. A well curated Ramadan gift box carries emotion, tradition, and elegance in one experience. Fragrance plays a deep role in the culture. A thoughtful Ramadan gift ideas list often begins with perfume because scent creates memory. A premium Ramadan gift set with rich oils and fine blends brings lasting joy. When people look for a signature Ramadan perfume, they seek depth, warmth, and identity. This is why Ramadan scents built on oud, amber, and florals remain timeless in every oriental floral perfume tradition. Ahmed Al Maghribi Perfumes captures this heritage through best oriental perfumes that blend craft and culture. These refined oriental fragrances speak of luxury without excess. They turn simple Ramadan gifts into personal treasures. A fragrance filled Ramadan hamper or elegant Ramadan hampers collection becomes a story the receiver remembers long after Eid.
+            title: "From Premium Oriental Fragrances to Luxury Perfume Gift Sets – What Eid Truly Means in the UAE",
+            fullText: `Eid in the UAE is a season of reflection, generosity, and heartfelt Eid gifting. It is not about price tags. It is about meaning. Families gather, homes glow with warmth, and fragrances fill the air. This is where a carefully chosen gift set for Eid becomes more than a present. It becomes a gesture of respect. A well curated Eid gift box carries emotion, tradition, and elegance in one experience. Fragrance plays a deep role in the culture. A thoughtful Eid gift ideas list often begins with perfume because scent creates memory. A premium Eid gift set with rich oils and fine blends brings lasting joy. When people look for a signature Eid perfume, they seek depth, warmth, and identity. This is why Eid scents built on oud, amber, and florals remain timeless in every oriental floral perfume tradition. Ahmed Al Maghribi Perfumes captures this heritage through best oriental perfumes that blend craft and culture. These refined oriental fragrances speak of luxury without excess. They turn simple Eid gifts into personal treasures. A fragrance filled Eid hamper or elegant Eid hampers collection becomes a story the receiver remembers long after Eid.
 
-            Ramadan Gifting Culture In UAE
+            Eid Gifting Culture In UAE
 
-            In the Emirates, Ramadan gifting is a language of care. People visit loved ones carrying sweets, dates, and perfume. A beautifully arranged gift set for Ramadan shows gratitude and connection. The presentation matters as much as the product. That is why a premium Ramadan gift box with layered packaging elevates the moment.
+            In the Emirates, Eid gifting is a language of care. People visit loved ones carrying sweets, dates, and perfume. A beautifully arranged gift set for Eid shows gratitude and connection. The presentation matters as much as the product. That is why a premium Eid gift box with layered packaging elevates the moment.
 
-            Families plan meaningful Ramadan gift ideas ahead of time. A curated Ramadan gift set filled with fragrance is a popular choice because scent suits all ages. A luxurious Ramadan perfume reflects respect for tradition. Rich Ramadan scents from oud and rose echo heritage. These notes define every oriental floral perfume and remain among the best oriental perfumes loved in the region. Such oriental fragrances transform ordinary Ramadan gifts into refined gestures. When combined in a luxury Ramadan hamper, the effect is powerful. Premium Ramadan hampers filled with scent and care items make ideal offerings. Many choose a complete Ramadan gift basket or elegant Ramadan gift hampers for family visits, while designer Ramadan gift boxes add sophistication.
+            Families plan meaningful Eid gift ideas ahead of time. A curated Eid gift set filled with fragrance is a popular choice because scent suits all ages. A luxurious Eid perfume reflects respect for tradition. Rich Eid scents from oud and rose echo heritage. These notes define every oriental floral perfume and remain among the best oriental perfumes loved in the region. Such oriental fragrances transform ordinary Eid gifts into refined gestures. When combined in a luxury Eid hamper, the effect is powerful. Premium Eid hampers filled with scent and care items make ideal offerings. Many choose a complete Eid gift basket or elegant Eid gift hampers for family visits, while designer Eid gift boxes add sophistication.
 
-            Ramadan Gift Sets That Strengthen Bonds
+            Eid Gift Sets That Strengthen Bonds
 
-            Relationships grow stronger through thoughtful Ramadan gifting. A well selected gift set for Ramadan says you value the bond. A curated Ramadan gift box with signature scents feels personal. People often search for unique Ramadan gift ideas that go beyond sweets. A luxury Ramadan gift set filled with perfume answers that need perfectly. Gifting a refined Ramadan perfume shows attention to detail. Deep Ramadan scents create calm and reflection. A balanced oriental floral perfume offers elegance without being heavy. These profiles define the best oriental perfumes in the Gulf. Premium oriental fragrances linger and create memory, turning simple Ramadan gifts into meaningful keepsakes.
+            Relationships grow stronger through thoughtful Eid gifting. A well selected gift set for Eid says you value the bond. A curated Eid gift box with signature scents feels personal. People often search for unique Eid gift ideas that go beyond sweets. A luxury Eid gift set filled with perfume answers that need perfectly. Gifting a refined Eid perfume shows attention to detail. Deep Eid scents create calm and reflection. A balanced oriental floral perfume offers elegance without being heavy. These profiles define the best oriental perfumes in the Gulf. Premium oriental fragrances linger and create memory, turning simple Eid gifts into meaningful keepsakes.
 
-            When arranged in a premium Ramadan hamper, the impact multiplies. Elegant Ramadan hampers filled with fragrance oils and sprays feel generous. A curated Ramadan gift basket or stylish Ramadan gift hampers set makes visits memorable. Signature Ramadan gift boxes and thoughtful Ramadan corporate gifts also strengthen professional ties.
+            When arranged in a premium Eid hamper, the impact multiplies. Elegant Eid hampers filled with fragrance oils and sprays feel generous. A curated Eid gift basket or stylish Eid gift hampers set makes visits memorable. Signature Eid gift boxes and thoughtful Eid corporate gifts also strengthen professional ties.
 
             Can’t Decide? Let The Fragrance Experts Guide You
 
-            Choosing from many Ramadan gifting options can feel overwhelming. Experts help you select the right gift set for Ramadan based on personality. A tailored Ramadan gift box ensures balance. If unsure, start with classic Ramadan gift ideas built around fragrance.
+            Choosing from many Eid gifting options can feel overwhelming. Experts help you select the right gift set for Eid based on personality. A tailored Eid gift box ensures balance. If unsure, start with classic Eid gift ideas built around fragrance.
 
-            A versatile Ramadan gift set with a signature Ramadan perfume works for most tastes. Soft Ramadan scents in a refined oriental floral perfume suit daily wear. For bold preferences, explore the best oriental perfumes rich in oud and amber. These iconic oriental fragrances define premium Ramadan gifts.
+            A versatile Eid gift set with a signature Eid perfume works for most tastes. Soft Eid scents in a refined oriental floral perfume suit daily wear. For bold preferences, explore the best oriental perfumes rich in oud and amber. These iconic oriental fragrances define premium Eid gifts.
 
-            A well curated Ramadan hamper simplifies choice. Luxury Ramadan hampers combine oils, sprays, and bakhoor. You can also opt for a Ramadan gift basket, elegant Ramadan gift hampers, or statement Ramadan gift boxes. For offices, tailored Ramadan corporate gifts leave a lasting impression.
+            A well curated Eid hamper simplifies choice. Luxury Eid hampers combine oils, sprays, and bakhoor. You can also opt for a Eid gift basket, elegant Eid gift hampers, or statement Eid gift boxes. For offices, tailored Eid corporate gifts leave a lasting impression.
 
-            Here we have top 5 giftsets you can gift your loved ones in Ramadan.
+            Here we have top 5 giftsets you can gift your loved ones for Eid.
 
-            Top 5 Luxury Ramadan Gift Sets You Can Share With Loved Ones
+            Top 5 Luxury Eid Gift Sets You Can Share With Loved Ones
 
-            Ramadan is a time of generosity, and thoughtful Ramadan gifting becomes a way to express care. During family visits, Iftar gatherings, and Eid celebrations, a refined gift set for Ramadan creates lasting memories. A premium Ramadan gift box filled with fragrance reflects culture and respect. Many people search for meaningful Ramadan gift ideas that feel elegant yet personal.
+            Eid is a time of generosity, and thoughtful Eid gifting becomes a way to express care. During family visits, festive gatherings, and Eid celebrations, a refined gift set for Eid creates lasting memories. A premium Eid gift box filled with fragrance reflects culture and respect. Many people search for meaningful Eid gift ideas that feel elegant yet personal.
 
-            A luxury Ramadan gift set built around fragrance never fails. Scent connects emotion, which is why a signature Ramadan perfume remains a classic choice. Rich Ramadan scents inspired by oud and florals suit every generation. These profiles define the beauty of an oriental floral perfume and explain why they remain among the best oriental perfumes in the region. Such oriental fragrances elevate simple Ramadan gifts into memorable treasures, especially when arranged in a premium Ramadan hamper or stylish Ramadan gift boxes.
+            A luxury Eid gift set built around fragrance never fails. Scent connects emotion, which is why a signature Eid perfume remains a classic choice. Rich Eid scents inspired by oud and florals suit every generation. These profiles define the beauty of an oriental floral perfume and explain why they remain among the best oriental perfumes in the region. Such oriental fragrances elevate simple Eid gifts into memorable treasures, especially when arranged in a premium Eid hamper or stylish Eid gift boxes.
 
-            Qarnain Gift Set The Qarnain set is designed for meaningful Ramadan gifting moments. This elegant gift set for Ramadan captures the joy of Eid and togetherness. Its premium presentation makes it a standout Ramadan gift box for family gatherings and festive visits.
+            Qarnain Gift Set The Qarnain set is designed for meaningful Eid gifting moments. This elegant gift set for Eid captures the joy of Eid and togetherness. Its premium presentation makes it a standout Eid gift box for family gatherings and festive visits.
 
-            As one of the refined Ramadan gift ideas, this luxurious Ramadan gift set includes a signature Ramadan perfume crafted for the season. The warm Ramadan scents reflect tradition and comfort. Inspired by classic oriental floral perfume heritage, it stands proudly among the best oriental perfumes. These timeless oriental fragrances transform thoughtful Ramadan gifts into keepsakes. Whether added to a Ramadan hamper or given in elegant Ramadan gift boxes, it makes a strong impression.
+            As one of the refined Eid gift ideas, this luxurious Eid gift set includes a signature Eid perfume crafted for the season. The warm Eid scents reflect tradition and comfort. Inspired by classic oriental floral perfume heritage, it stands proudly among the best oriental perfumes. These timeless oriental fragrances transform thoughtful Eid gifts into keepsakes. Whether added to a Eid hamper or given in elegant Eid gift boxes, it makes a strong impression.
 
             Shauque Al Shuyookh Gift Set
 
-            For those who value tradition, this set defines premium Ramadan gifting. It is more than a gift set for Ramadan. It is an experience. The luxurious Ramadan gift box includes Bin Shaikh Perfume, Oud Classic Perfume, and Dehn Al Oudh Mubakhar, blending iconic Ramadan scents. Among popular Ramadan gift ideas, Shauque Al Shuyookh Ramadan gift set stands out for its spiritual and cultural touch. Alongside a refined Ramadan perfume, it includes a Mabkhar, Prayer Mat, and Masbaha. The fragrance profile leans into rich oriental floral perfume notes and belongs to the best oriental perfumes category. Such deep oriental fragrances elevate premium Ramadan gifts. It also works beautifully in Ramadan corporate gifts and high-end Ramadan hampers.
+            For those who value tradition, this set defines premium Eid gifting. It is more than a gift set for Eid. It is an experience. The luxurious Eid gift box includes Bin Shaikh Perfume, Oud Classic Perfume, and Dehn Al Oudh Mubakhar, blending iconic Eid scents. Among popular Eid gift ideas, Shauque Al Shuyookh Eid gift set stands out for its spiritual and cultural touch. Alongside a refined Eid perfume, it includes a Mabkhar, Prayer Mat, and Masbaha. The fragrance profile leans into rich oriental floral perfume notes and belongs to the best oriental perfumes category. Such deep oriental fragrances elevate premium Eid gifts. It also works beautifully in Eid corporate gifts and high-end Eid hampers.
 
             The Dakhoon Collection
 
-            Traditional fragrance lovers appreciate this refined Ramadan gifting option. As a unique gift set for Ramadan, this aromatic Ramadan gift box focuses on ambiance. The Dakhoon Collection features Oud Ma’attar Majalis, Mariya Oud Mubakhar, Bakhoor Ahmed tabs, and Khashab Al Oud.
+            Traditional fragrance lovers appreciate this refined Eid gifting option. As a unique gift set for Eid, this aromatic Eid gift box focuses on ambiance. The Dakhoon Collection features Oud Ma’attar Majalis, Mariya Oud Mubakhar, Bakhoor Ahmed tabs, and Khashab Al Oud.
 
-            These selections represent classic Ramadan gift ideas centered around atmosphere. Though not a typical Ramadan gift set, the rich smoke pairs perfectly with a Ramadan perfume. Deep Ramadan scents from oud wood align with oriental floral perfume traditions. They remain part of the best oriental perfumes world of luxury. Such bold oriental fragrances make memorable Ramadan gifts, ideal inside a Ramadan hamper or elegant Ramadan gift hampers.
+            These selections represent classic Eid gift ideas centered around atmosphere. Though not a typical Eid gift set, the rich smoke pairs perfectly with a Eid perfume. Deep Eid scents from oud wood align with oriental floral perfume traditions. They remain part of the best oriental perfumes world of luxury. Such bold oriental fragrances make memorable Eid gifts, ideal inside a Eid hamper or elegant Eid gift hampers.
 
-            Ihdaa Khaas Gift Set Ihdaa Khaas defines sophisticated Ramadan gifting. This premium gift set for Ramadan arrives in a beautifully arranged Ramadan gift box that speaks of elegance. It is one of the most refined Ramadan gift ideas for luxury lovers.
+            Ihdaa Khaas Gift Set Ihdaa Khaas defines sophisticated Eid gifting. This premium gift set for Eid arrives in a beautifully arranged Eid gift box that speaks of elegance. It is one of the most refined Eid gift ideas for luxury lovers.
 
-            The Ramadan gift set includes Oud Lavender, Couture Noir, and Oud Arian Super. Each Ramadan perfume brings layered Ramadan scents. The presence of an air freshener adds lifestyle value. Inspired by oriental floral perfume heritage, this set belongs among the best oriental perfumes. These balanced oriental fragrances elevate meaningful Ramadan gifts and shine in upscale Ramadan gift hampers or exclusive Ramadan corporate gifts.
+            The Eid gift set includes Oud Lavender, Couture Noir, and Oud Arian Super. Each Eid perfume brings layered Eid scents. The presence of an air freshener adds lifestyle value. Inspired by oriental floral perfume heritage, this set belongs among the best oriental perfumes. These balanced oriental fragrances elevate meaningful Eid gifts and shine in upscale Eid gift hampers or exclusive Eid corporate gifts.
 
             Antee Gift Set 05
 
-            This elegant option supports graceful Ramadan gifting. A well crafted gift set for Ramadan, it arrives in a refined Ramadan gift box suited for gatherings. As one of the versatile Ramadan gift ideas, it balances beauty and scent. The Antee gift set includes Rose Noir, Bidun Esam, Rose Noir Hair Mist, and Bakhoor Antee. Each Ramadan perfume offers smooth Ramadan scents that feel modern yet rooted in oriental floral perfume character. These blends align with the best oriental perfumes tradition. Rich oriental fragrances transform everyday Ramadan gifts into luxury gestures. Perfect for a Ramadan hamper, stylish Ramadan gift baskets, or premium Ramadan gift boxes, this set delights every recipient.
+            This elegant option supports graceful Eid gifting. A well crafted gift set for Eid, it arrives in a refined Eid gift box suited for gatherings. As one of the versatile Eid gift ideas, it balances beauty and scent. The Antee gift set includes Rose Noir, Bidun Esam, Rose Noir Hair Mist, and Bakhoor Antee. Each Eid perfume offers smooth Eid scents that feel modern yet rooted in oriental floral perfume character. These blends align with the best oriental perfumes tradition. Rich oriental fragrances transform everyday Eid gifts into luxury gestures. Perfect for a Eid hamper, stylish Eid gift baskets, or premium Eid gift boxes, this set delights every recipient.
 
             Luxury Perfume Gift Sets For Her
 
-            Elegant Ramadan gifting for women focuses on grace. A delicate gift set for Ramadan with florals is ideal. A refined Ramadan gift box in soft tones adds charm. Popular Ramadan gift ideas include rose and vanilla blends.
+            Elegant Eid gifting for women focuses on grace. A delicate gift set for Eid with florals is ideal. A refined Eid gift box in soft tones adds charm. Popular Eid gift ideas include rose and vanilla blends.
 
-            A feminine Ramadan gift set with a signature Ramadan perfume offers beauty and identity. Light Ramadan scents in an oriental floral perfume feel timeless. These remain among the best oriental perfumes for women. Fine oriental fragrances elevate personal Ramadan gifts.
+            A feminine Eid gift set with a signature Eid perfume offers beauty and identity. Light Eid scents in an oriental floral perfume feel timeless. These remain among the best oriental perfumes for women. Fine oriental fragrances elevate personal Eid gifts.
 
-            A curated Ramadan hamper with perfume and oils feels indulgent. Stylish Ramadan hampers, a luxury Ramadan gift basket, or elegant Ramadan gift hampers complete the experience. Premium Ramadan gift boxes and thoughtful Ramadan gifts for friends make the moment special.
+            A curated Eid hamper with perfume and oils feels indulgent. Stylish Eid hampers, a luxury Eid gift basket, or elegant Eid gift hampers complete the experience. Premium Eid gift boxes and thoughtful Eid gifts for friends make the moment special.
 
             Best Perfume Gift Sets for Him
 
-            Masculine Ramadan gifting leans toward depth. A bold gift set for Ramadan with oud works well. A structured Ramadan gift box in dark tones feels premium. Strong Ramadan gift ideas focus on wood and spice.
+            Masculine Eid gifting leans toward depth. A bold gift set for Eid with oud works well. A structured Eid gift box in dark tones feels premium. Strong Eid gift ideas focus on wood and spice.
 
-            A rich Ramadan gift set built around a signature Ramadan perfume feels powerful. Deep Ramadan scents in an oriental floral perfume blend strength with elegance. These profiles define the best oriental perfumes for men. Classic oriental fragrances turn simple Ramadan gifts into statements.
+            A rich Eid gift set built around a signature Eid perfume feels powerful. Deep Eid scents in an oriental floral perfume blend strength with elegance. These profiles define the best oriental perfumes for men. Classic oriental fragrances turn simple Eid gifts into statements.
 
-            A premium Ramadan hamper with concentrated oils stands out. Luxury Ramadan hampers, a curated Ramadan gift basket, or refined Ramadan gift hampers work perfectly. Signature Ramadan gift boxes and thoughtful Ramadan gifts for friends add personal value.
+            A premium Eid hamper with concentrated oils stands out. Luxury Eid hampers, a curated Eid gift basket, or refined Eid gift hampers work perfectly. Signature Eid gift boxes and thoughtful Eid gifts for friends add personal value.
 
-            Ramadan Gifts For Friends and Family
+            Eid Gifts For Friends and Family
 
-            Meaningful Ramadan gifting strengthens community. A warm gift set for Ramadan fits every home. A welcoming Ramadan gift box makes visits memorable. Popular Ramadan gift ideas focus on fragrance and care.
+            Meaningful Eid gifting strengthens community. A warm gift set for Eid fits every home. A welcoming Eid gift box makes visits memorable. Popular Eid gift ideas focus on fragrance and care.
 
-            A versatile Ramadan gift set with a balanced Ramadan perfume suits all ages. Soft Ramadan scents from an oriental floral perfume feel comforting. These are among the best oriental perfumes for shared gifting. Elegant oriental fragrances turn thoughtful Ramadan gifts into cherished items.
+            A versatile Eid gift set with a balanced Eid perfume suits all ages. Soft Eid scents from an oriental floral perfume feel comforting. These are among the best oriental perfumes for shared gifting. Elegant oriental fragrances turn thoughtful Eid gifts into cherished items.
 
-            A generous Ramadan hamper filled with scent delights families. Premium Ramadan hampers, a festive Ramadan gift basket, or classic Ramadan gift hampers bring smiles. Designer Ramadan gift boxes and stylish Ramadan box options complete the experience.
+            A generous Eid hamper filled with scent delights families. Premium Eid hampers, a festive Eid gift basket, or classic Eid gift hampers bring smiles. Designer Eid gift boxes and stylish Eid box options complete the experience.
 
-            Best Ramadan Corporate Gifts
+            Best Eid Corporate Gifts
 
-            Professional Ramadan gifting builds respect. A luxury gift set for Ramadan shows appreciation. A refined Ramadan gift box with brand elegance leaves impact. Corporate Ramadan gift ideas focus on quality.
+            Professional Eid gifting builds respect. A luxury gift set for Eid shows appreciation. A refined Eid gift box with brand elegance leaves impact. Corporate Eid gift ideas focus on quality.
 
-            A premium Ramadan gift set with a signature Ramadan perfume feels prestigious. Sophisticated Ramadan scents in an oriental floral perfume convey class. These belong to the best oriental perfumes for executives. Elite oriental fragrances upgrade standard Ramadan gifts.
+            A premium Eid gift set with a signature Eid perfume feels prestigious. Sophisticated Eid scents in an oriental floral perfume convey class. These belong to the best oriental perfumes for executives. Elite oriental fragrances upgrade standard Eid gifts.
 
-            A branded Ramadan hamper adds value. Curated Ramadan hampers, a professional Ramadan gift basket, or custom Ramadan gift hampers strengthen relationships. Exclusive Ramadan gift boxes and premium Ramadan corporate gifts position your brand with distinction.
+            A branded Eid hamper adds value. Curated Eid hampers, a professional Eid gift basket, or custom Eid gift hampers strengthen relationships. Exclusive Eid gift boxes and premium Eid corporate gifts position your brand with distinction.
 
             Frequently Asked Questions
 
 
-            1. What is the best gift for Ramadan in UAE?
+            1. What is the best gift for Eid in UAE?
 
-            The best choice for Ramadan gifting in the UAE is a premium Ramadan gift set that includes perfume, oils, or bakhoor. Fragrance is meaningful, useful, and culturally appreciated during Ramadan visits. A well-presented Ramadan gift box feels thoughtful and suits both family and corporate exchanges. Many people prefer a Ramadan perfume set because scent plays a strong role in hospitality and personal care during the season.
+            The best choice for Eid gifting in the UAE is a premium Eid gift set that includes perfume, oils, or bakhoor. Fragrance is meaningful, useful, and culturally appreciated during Eid visits. A well-presented Eid gift box feels thoughtful and suits both family and corporate exchanges. Many people prefer a Eid perfume set because scent plays a strong role in hospitality and personal care during the season.
 
-            2. What fragrance do Emiratis wear in Ramadan?
+            2. What fragrance do Emiratis wear during Eid?
 
-            During Ramadan, Emiratis lean toward elegant Ramadan scents that feel smooth rather than overpowering. Traditional oriental fragrances with oud, amber, and musk are popular, often softened with florals. An oriental floral perfume works well for gatherings, while deeper blends are worn in evenings. Many consider these among the best oriental perfumes because they balance presence and respect for close settings.
+            During Eid, Emiratis lean toward elegant Eid scents that feel smooth rather than overpowering. Traditional oriental fragrances with oud, amber, and musk are popular, often softened with florals. An oriental floral perfume works well for gatherings, while deeper blends are worn in evenings. Many consider these among the best oriental perfumes because they balance presence and respect for close settings.
 
             3. Which perfume brand is famous in the UAE?
 
             Many local Arabic perfume brands have become famous in the UAE in recent years. Ahmed Al Maghribi is one of them. The brand has been in the market for over two decades and has become famous and a go to options for premium and luxury fragrances in the UAE.
 
-            The UAE fragrance market values brands that specialize in authentic oriental fragrances and long-lasting blends. Customers look for names known for quality oils, rich oud bases, and refined compositions. Brands offering curated Ramadan gift ideas and luxury Ramadan gift set options often stand out, especially during the festive season when gifting demand rises.
+            The UAE fragrance market values brands that specialize in authentic oriental fragrances and long-lasting blends. Customers look for names known for quality oils, rich oud bases, and refined compositions. Brands offering curated Eid gift ideas and luxury Eid gift set options often stand out, especially during the festive season when gifting demand rises.
 
-            4. What is the best corporate gift for Ramadan?
+            4. What is the best corporate gift for Eid?
 
-            For businesses, fragrance-based Ramadan gifting is highly effective. A premium Ramadan gift box with perfumes or bakhoor feels respectful and professional. Companies often choose a gift set for Ramadan because it is elegant, easy to present, and suitable for different recipients. These Ramadan gift ideas work well since scent connects with hospitality and tradition.
+            For businesses, fragrance-based Eid gifting is highly effective. A premium Eid gift box with perfumes or bakhoor feels respectful and professional. Companies often choose a gift set for Eid because it is elegant, easy to present, and suitable for different recipients. These Eid gift ideas work well since scent connects with hospitality and tradition.
 
             5. What is the most popular scent in Dubai?
 
-            Dubai is known for love of oriental fragrances that combine oud, amber, and musk. Many shoppers also choose an oriental floral perfume for daily elegance. These blends are often described as the best oriental perfumes because they last long and suit both day and evening wear. During the season, Ramadan scents with smooth warmth and depth become especially popular.S`,
-            // ─── EN Links ─────────────────────────────────────────────────────
-            // Add any phrase that appears in fullText and the URL you want it
-            // to point to. Longer phrases take priority over shorter ones.
-            // Example:
-            //   "Ahmed Al Maghribi Perfumes": "https://ahmedalmag.com",
-            //   "Ramadan gift set": "/en/ramadan",
+            Dubai is known for love of oriental fragrances that combine oud, amber, and musk. Many shoppers also choose an oriental floral perfume for daily elegance. These blends are often described as the best oriental perfumes because they last long and suit both day and evening wear. During the season, Eid scents with smooth warmth and depth become especially popular.`,
             links: {
-                // "Ahmed Al Maghribi Perfumes": "https://ahmedalmag.com",
-                "Ramadan gifting": "https://ae.ahmedalmaghribi.com/en",
-                "gift set for Ramadan": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
-                "Ramadan gift ideas": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
+                "Eid gifting": "https://ae.ahmedalmaghribi.com/en",
+                "gift set for Eid": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
+                "Eid gift ideas": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
                 "best oriental perfumes": "https://ae.ahmedalmaghribi.com/en/product-category/perfumes/oriental-fragrance",
-                "Ramadan gift box": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
+                "Eid gift box": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
                 "oriental fragrances": "https://ae.ahmedalmaghribi.com/en/product-category/perfumes/oriental-fragrance",
-                "Ramadan scent": "https://ae.ahmedalmaghribi.com/en/product-category/concentrated-parfum",
-                "Ramadan gift basket": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
-                "Ramadan corporate gifts": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
+                "Eid scent": "https://ae.ahmedalmaghribi.com/en/product-category/concentrated-parfum",
+                "Eid gift basket": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
+                "Eid corporate gifts": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
                 "The Qarnain set": "https://ae.ahmedalmaghribi.com/en/shop/gift-sets/gift-sets/qarnain",
                 "Shauque Al Shuyookh": "https://ae.ahmedalmaghribi.com/en/shop/gift-sets/gift-sets/shauque-al-shuyookh",
-                "The Dakhoon Collectio": "https://ae.ahmedalmaghribi.com/en/shop/gift-sets/gift-sets/the-dukhoon-collection",
+                "The Dakhoon Collection": "https://ae.ahmedalmaghribi.com/en/shop/gift-sets/gift-sets/the-dukhoon-collection",
                 "Ihdaa Khaas": "https://ae.ahmedalmaghribi.com/en/shop/gift-sets/gift-sets/ihdaa-khaas",
                 "The Antee gift set": "https://ae.ahmedalmaghribi.com/en/shop/gift-sets/gift-sets/antee-gift-set-05",
-                "Ramadan gifts for friend": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
-                "premium Ramadan corporate gift": "https://ae.ahmedalmaghribi.com/en/shop",
+                "Eid gifts for friend": "https://ae.ahmedalmaghribi.com/en/product-category/gift-sets",
+                "premium Eid corporate gift": "https://ae.ahmedalmaghribi.com/en/shop",
             }
         },
         ar: {
-            title: "محتوى صفحة هدايا رمضان – من العطور الشرقية المميزة إلى مجموعات الهدايا الفاخرة ماذا يعني رمضان فعلاً في الإمارات",
-            fullText: `رمضان في الإمارات موسم للتأمل، والكرم، وهدايا رمضان من القلب. الموضوع مو بس في السعر، الموضوع في المعنى. العائلة تتجمع، البيوت تتزين بالدفء، والروائح تعطر الأجواء. هنا يصير اختيار مجموعة هدايا رمضان بعناية أكثر من مجرد هدية، يصير تعبير عن احترام.
+            title: "محتوى صفحة هدايا العيد – من العطور الشرقية المميزة إلى مجموعات الهدايا الفاخرة ماذا يعني العيد فعلاً في الإمارات",
+            fullText: `العيد في الإمارات موسم للتأمل، والكرم، وهدايا العيد من القلب. الموضوع مو بس في السعر، الموضوع في المعنى. العائلة تتجمع، البيوت تتزين بالدفء، والروائح تعطر الأجواء. هنا يصير اختيار مجموعة هدايا العيد بعناية أكثر من مجرد هدية، يصير تعبير عن احترام.
 
-            صندوق هدايا رمضان المختار بعناية يحمل العاطفة، والتقاليد، والأناقة في تجربة واحدة. العطور لها دور عميق في الثقافة. قائمة أفكار هدايا رمضان غالباً تبدأ بالعطور لأن الريحة تخلق ذكرى. مجموعة هدايا رمضان فاخرة مع زيوت غنية وخلطات راقية تجيب فرحة دائمة.
+            صندوق هدايا العيد المختار بعناية يحمل العاطفة، والتقاليد، والأناقة في تجربة واحدة. العطور لها دور عميق في الثقافة. قائمة أفكار هدايا العيد غالباً تبدأ بالعطور لأن الريحة تخلق ذكرى. مجموعة هدايا العيد فاخرة مع زيوت غنية وخلطات راقية تجيب فرحة دائمة.
 
-            لما الناس يبحثون عن عطر رمضاني مميز، يدورون على العمق، الدفء، والهوية. عشان كذا الروائح الرمضانية المبنية على العود، العنبر، والأزهار تبقى خالدة في كل تقاليد العطور الشرقية الزهرية. عطور أحمد المغربي تعكس هذا التراث من خلال أفضل العطور الشرقية اللي تمزج الحرفة والثقافة. هالعطور الراقية تحكي عن الفخامة بدون مبالغة، وتحول هدايا رمضان العادية لكنوز شخصية. سلة هدايا رمضان المعطرة بالعطور أو مجموعة سلال رمضان الأنيقة تصير قصة يتذكرها المتلقي بعد العيد بفترة طويلة.
-
-            ---
-
-            ثقافة هدايا رمضان في الإمارات في الإمارات، هدايا رمضان لغة للعناية. الناس يزورون الأحباب ومعاهم حلويات، تمر، وعطور. مجموعة هدايا رمضان مرتبة بشكل جميل تعكس الامتنان والترابط. طريقة تقديم الهدية بنفس أهمية المنتج، عشان كذا صندوق هدايا رمضان فاخر مع تغليف متعدد الطبقات يرفع قيمة اللحظة.
-
-            العائلات تخطط لأفكار هدايا رمضان مسبقاً. مجموعة هدايا مختارة بعطر خيار شعبي لأنها تناسب كل الأعمار. عطر رمضاني فاخر يعكس احترام للتقاليد. الروائح الغنية من العود والورد تعكس التراث. هذي النفحات تحدد كل عطر شرقي زهري وتظل من أفضل العطور الشرقية المحبوبة في المنطقة. هذي العطور الشرقية تحول هدايا رمضان العادية إلى لمسات راقية. لما تضاف في سلة رمضان فاخرة، التأثير يكون قوي. سلال رمضان الفاخرة المليئة بالعطور ومواد العناية مثالية كعروض هدايا. كثير يختارون سلة هدايا رمضان كاملة أو مجموعات سلال رمضان الأنيقة للزيارات العائلية، بينما صناديق الهدايا المصممة تضيف لمسة أناقة.
+            لما الناس يبحثون عن عطر العيد المميز، يدورون على العمق، الدفء، والهوية. عشان كذا روائح العيد المبنية على العود، العنبر، والأزهار تبقى خالدة في كل تقاليد العطور الشرقية الزهرية. عطور أحمد المغربي تعكس هذا التراث من خلال أفضل العطور الشرقية اللي تمزج الحرفة والثقافة. هالعطور الراقية تحكي عن الفخامة بدون مبالغة، وتحول هدايا العيد العادية لكنوز شخصية. سلة هدايا العيد المعطرة بالعطور أو مجموعة سلال العيد الأنيقة تصير قصة يتذكرها المتلقي بعد العيد بفترة طويلة.
 
             ---
 
-            مجموعات هدايا رمضان اللي تقوي الروابط العلاقات تصير أقوى من خلال هدايا رمضان المدروسة. مجموعة هدايا رمضان مختارة بعناية تقول إنك تقدّر العلاقة. صندوق هدايا رمضان مع عطور مميزة يحسسك بالشخصية. كثير يبحثون عن أفكار هدايا رمضان فريدة تتجاوز الحلويات. مجموعة هدايا فاخرة مليانة عطور تجاوب هالحاجة بشكل مثالي. إهداء عطر رمضاني راقي يظهر اهتمامك بالتفاصيل. الروائح العميقة لرمضان تخلق هدوء وتأمل. عطر شرقي زهري متوازن يعطي أناقة بدون ثقل. هذي الروائح تحدد أفضل العطور الشرقية في الخليج. العطور الشرقية الفاخرة تدوم وتخلق ذكرى، تحول الهدايا البسيطة إلى تذكارات معنوية. لما تترتب في سلة هدايا رمضان فاخرة، التأثير يتضاعف. سلال رمضان الأنيقة المليئة بزيوت وعطور تحسسك بالكرم. صندوق هدايا رمضان مختار بعناية أو سلال أنيقة تجعل الزيارات لا تُنسى. صناديق هدايا رمضان المميزة وهدايا رمضان للشركات تعزز الروابط المهنية أيضاً.
+            ثقافة هدايا العيد في الإمارات في الإمارات، هدايا العيد لغة للعناية. الناس يزورون الأحباب ومعاهم حلويات، تمر، وعطور. مجموعة هدايا العيد مرتبة بشكل جميل تعكس الامتنان والترابط. طريقة تقديم الهدية بنفس أهمية المنتج، عشان كذا صندوق هدايا العيد فاخر مع تغليف متعدد الطبقات يرفع قيمة اللحظة.
+
+            العائلات تخطط لأفكار هدايا العيد مسبقاً. مجموعة هدايا مختارة بعطر خيار شعبي لأنها تناسب كل الأعمار. عطر العيد الفاخر يعكس احترام للتقاليد. الروائح الغنية من العود والورد تعكس التراث. هذي النفحات تحدد كل عطر شرقي زهري وتظل من أفضل العطور الشرقية المحبوبة في المنطقة. هذي العطور الشرقية تحول هدايا العيد العادية إلى لمسات راقية. لما تضاف في سلة العيد فاخرة، التأثير يكون قوي. سلال العيد الفاخرة المليئة بالعطور ومواد العناية مثالية كعروض هدايا. كثير يختارون سلة هدايا العيد كاملة أو مجموعات سلال العيد الأنيقة للزيارات العائلية، بينما صناديق الهدايا المصممة تضيف لمسة أناقة.
 
             ---
 
-            ما تعرف شنو تختار؟ خلي خبراء العطور يرشدونك الاختيار من بين خيارات هدايا رمضان الكثيرة ممكن يكون مربك. الخبراء يساعدونك تختار مجموعة الهدايا المناسبة لشخصية
-
-            المتلقي. صندوق هدايا رمضان مصمم خصيصاً يضمن التوازن. إذا كنت محتار، ابدأ بأفكار هدايا رمضانية كلاسيكية مبنية على العطور.
-
-            مجموعة هدايا رمضان متعددة الاستخدامات مع عطر رمضاني مميز تناسب أغلب الأذواق. روائح رمضان الناعمة في عطر شرقي زهري راقي مناسبة للارتداء اليومي. لمن يحبون الروائح القوية، استكشف أفضل العطور الشرقية الغنية بالعود والعنبر. هذي العطور الشرقية الأيقونية تحدد الهدايا الفاخرة في رمضان.
-
-            صندوق هدايا رمضان المختار بعناية يبسط الاختيار. سلال رمضان الفاخرة تجمع الزيوت، العطور، والبخور. تقدر تختار أيضاً سلة هدايا رمضان، سلال رمضان الأنيقة، أو صناديق هدايا رمضان الملفتة. للمكاتب، هدايا رمضان المخصصة للشركات تترك انطباع يدوم.
+            مجموعات هدايا العيد اللي تقوي الروابط العلاقات تصير أقوى من خلال هدايا العيد المدروسة. مجموعة هدايا العيد مختارة بعناية تقول إنك تقدّر العلاقة. صندوق هدايا العيد مع عطور مميزة يحسسك بالشخصية. كثير يبحثون عن أفكار هدايا العيد فريدة تتجاوز الحلويات. مجموعة هدايا فاخرة مليانة عطور تجاوب هالحاجة بشكل مثالي. إهداء عطر العيد راقي يظهر اهتمامك بالتفاصيل. الروائح العميقة للعيد تخلق هدوء وتأمل. عطر شرقي زهري متوازن يعطي أناقة بدون ثقل. هذي الروائح تحدد أفضل العطور الشرقية في الخليج. العطور الشرقية الفاخرة تدوم وتخلق ذكرى، تحول الهدايا البسيطة إلى تذكارات معنوية. لما تترتب في سلة هدايا العيد فاخرة، التأثير يتضاعف. سلال العيد الأنيقة المليئة بزيوت وعطور تحسسك بالكرم. صندوق هدايا العيد مختار بعناية أو سلال أنيقة تجعل الزيارات لا تُنسى. صناديق هدايا العيد المميزة وهدايا العيد للشركات تعزز الروابط المهنية أيضاً.
 
             ---
 
-            أفضل 5 مجموعات هدايا فاخرة في رمضان ممكن تشاركها مع الأحباب
+            ما تعرف شنو تختار؟ خلي خبراء العطور يرشدونك الاختيار من بين خيارات هدايا العيد الكثيرة ممكن يكون مربك. الخبراء يساعدونك تختار مجموعة الهدايا المناسبة لشخصية
 
-            رمضان وقت الكرم، وهدايا رمضان المدروسة تصير طريقة للتعبير عن الاهتمام. خلال الزيارات العائلية، الإفطار، واحتفالات العيد، مجموعة هدايا رمضان الفاخرة تخلق ذكريات دائمة. صندوق هدايا رمضان مليان بالعطور يعكس الثقافة والاحترام. كثير يبحثون عن أفكار هدايا رمضان ذات معنى وتشعر بالأناقة والشخصية. مجموعة هدايا فاخرة مبنية على العطور دايمًا خيار مضمون.
+            المتلقي. صندوق هدايا العيد مصمم خصيصاً يضمن التوازن. إذا كنت محتار، ابدأ بأفكار هدايا العيد كلاسيكية مبنية على العطور.
 
-            ---
+            مجموعة هدايا العيد متعددة الاستخدامات مع عطر العيد المميز تناسب أغلب الأذواق. روائح العيد الناعمة في عطر شرقي زهري راقي مناسبة للارتداء اليومي. لمن يحبون الروائح القوية، استكشف أفضل العطور الشرقية الغنية بالعود والعنبر. هذي العطور الشرقية الأيقونية تحدد الهدايا الفاخرة في العيد.
 
-            مجموعة قَرْنَيْن صممت مجموعة قَرْنَيْن للحظات هدايا رمضان ذات معنى. هالصندوق الراقي يعكس فرحة العيد والتجمعات. طريقة تقديمه الفاخرة تخليه بارز كصندوق هدايا رمضان للزيارات العائلية والمناسبات. من أفكار هدايا رمضان الراقية، تشمل مجموعة عطراً رمضانية مميزة صممت للموسم. الروائح الدافئة تعكس التقليد والراحة. مستوحاة من التراث الشرقي الزهري، تصنف ضمن أفضل العطور الشرقية. هذي العطور تحول الهدايا المدروسة لتذكارات. سواء أضيفت لسلة رمضان أو أعطيت في صناديق هدايا أنيقة، تترك أثر قوي.
-
-            ---
-
-            مجموعة شوق الشيوخ للي يقدّرون التقليد، هالمجموعة تعرف هدايا رمضان الفاخرة. أكثر من مجرد صندوق هدايا رمضان، هي تجربة. صندوق رمضان الفاخر يشمل عطر بن شيخ، عطر العود الكلاسيكي، ودهان العود مبخر، يمزجون الروائح الرمضانية الأيقونية. ضمن أفكار هدايا رمضان الشعبية، مجموعة شوق الشيوخ تبرز بلمسة روحية وثقافية. إلى جانب العطر، تشمل مبخرة، سجادة صلاة، ومسبحة. نغمة العطر تميل للروائح الشرقية الزهرية الغنية وتندرج ضمن أفضل العطور الشرقية. هذي الروائح العميقة ترفع مستوى الهدايا الفاخرة، وتصلح أيضاً كهدايا رمضان للشركات وسلال رمضان الراقية.
+            صندوق هدايا العيد المختار بعناية يبسط الاختيار. سلال العيد الفاخرة تجمع الزيوت، العطور، والبخور. تقدر تختار أيضاً سلة هدايا العيد، سلال العيد الأنيقة، أو صناديق هدايا العيد الملفتة. للمكاتب، هدايا العيد المخصصة للشركات تترك انطباع يدوم.
 
             ---
 
-            مجموعة الدخون محبو العطور التقليدية يقدّرون هالخيار الراقي. كهدية رمضان فريدة، يركز صندوق الدخون على خلق الجو. يشمل عود معطر مجالس، ماريّا عود مبخر، بخور أحمد تاب، وخشب العود. هذي الاختيارات تمثل أفكار هدايا رمضان الكلاسيكية المرتكزة على الأجواء. رغم إنها مو صندوق هدايا رمضان نموذجي، الدخان الغني ينسجم مع عطرك الرمضاني. الروائح العميقة من خشب العود تتماشى مع تقاليد العطر الشرقي الزهري، وتظل ضمن عالم أفضل العطور الشرقية الفاخرة. هذي الروائح الشرقية الجريئة تصنع هدايا رمضان لا تُنسى، مثالية داخل سلة رمضان أو سلال رمضان الأنيقة.
+            أفضل 5 مجموعات هدايا فاخرة في العيد ممكن تشاركها مع الأحباب
+
+            العيد وقت الكرم، وهدايا العيد المدروسة تصير طريقة للتعبير عن الاهتمام. خلال الزيارات العائلية، الإفطار، واحتفالات العيد، مجموعة هدايا العيد الفاخرة تخلق ذكريات دائمة. صندوق هدايا العيد مليان بالعطور يعكس الثقافة والاحترام. كثير يبحثون عن أفكار هدايا العيد ذات معنى وتشعر بالأناقة والشخصية. مجموعة هدايا فاخرة مبنية على العطور دايمًا خيار مضمون.
 
             ---
 
-            مجموعة إهداء خاص تعرف مجموعة إهداء خاص على هدايا رمضان الراقية. صندوق هدايا رمضان الفاخر يوصل بشكل مرتب ويعكس الأناقة. من أفكار هدايا رمضان الراقية لمحبي الفخامة. تشمل المجموعة عود لافندر، كوتور نوير، وعود أريان سوبر. كل عطر يضيف طبقات من الروائح الرمضانية. وجود معطر جو يضيف قيمة للحياة اليومية. مستوحاة من التراث الشرقي الزهري، تنتمي ضمن أفضل العطور الشرقية. العطور المتوازنة ترفع قيمة هدايا رمضان وتلمع في سلال رمضان الراقية أو هدايا رمضان للشركات الحصرية.
+            مجموعة قَرْنَيْن صممت مجموعة قَرْنَيْن للحظات هدايا العيد ذات معنى. هالصندوق الراقـي يعكس فرحة العيد والتجمعات. طريقة تقديمه الفاخرة تخليه بارز كصندوق هدايا العيد للزيارات العائلية والمناسبات. من أفكار هدايا العيد الراقية، تشمل مجموعة عطراً عيدية مميزة صممت للموسم. الروائح الدافئة تعكس التقليد والراحة. مستوحاة من التراث الشرقي الزهري، تصنف ضمن أفضل العطور الشرقية. هذي العطور تحول الهدايا المدروسة لتذكارات. سواء أضيفت لسلة العيد أو أعطيت في صناديق هدايا أنيقة، تترك أثر قوي.
 
             ---
 
-            مجموعة هدايا أنتي مجموعة أنتي تشمل روز نوير، بيدون عصام، رذاذ شعر روز نوير، وبخور أنتي. كل عطر رمضاني يقدم روائح سلسة تناسب العصر وفي نفس الوقت متجذرة في طابع العطور الشرقية الزهرية. هذي الخلطات تتماشى مع تقاليد أفضل العطور الشرقية. العطور الشرقية الغنية تحول هدايا رمضان اليومية إلى لمسات فاخرة. مثالية لسلة رمضان، سلال هدايا رمضان الأنيقة، أو صناديق هدايا رمضان الفاخرة، وتفرح كل من يستلمها---
-
-            مجموعات هدايا عطور فاخرة للنساء هدايا رمضان للنساء تركز على الرقة. صندوق هدايا رمضان ناعم مليان أزهار مثالي. صندوق هدايا رمضان مرتب بألوان هادئة يضيف سحر. أفكار هدايا رمضان الشعبية تشمل مزيج الورد والفانيليا. مجموعة نسائية مع عطر رمضاني مميز تمنح الجمال والهوية. الروائح الخفيفة في عطر شرقي زهري تحس بالخلود. تظل ضمن أفضل العطور الشرقية للنساء. العطور الراقية ترفع قيمة هدايا رمضان الشخصية. سلة رمضان المختارة بعناية مع العطر والزيوت تحس بالترف. سلال رمضان الأنيقة، سلة هدايا رمضان الفاخرة، أو صناديق هدايا رمضان تكمل التجربة.
+            مجموعة شوق الشيوخ للي يقدّرون التقليد، هالمجموعة تعرف هدايا العيد الفاخرة. أكثر من مجرد صندوق هدايا العيد، هي تجربة. صندوق العيد الفاخر يشمل عطر بن شيخ، عطر العود الكلاسيكي، ودهان العود مبخر، يمزجون روائح العيد الأيقونية. ضمن أفكار هدايا العيد الشعبية، مجموعة شوق الشيوخ تبرز بلمسة روحية وثقافية. إلى جانب العطر، تشمل مبخرة، سجادة صلاة، ومسبحة. نغمة العطر تميل للروائح الشرقية الزهرية الغنية وتندرج ضمن أفضل العطور الشرقية. هذي الروائح العميقة ترفع مستوى الهدايا الفاخرة، وتصلح أيضاً كهدايا العيد للشركات وسلال العيد الراقية.
 
             ---
 
-            أفضل مجموعات هدايا عطور للرجال هدايا رمضان الرجالية تميل للعمق. صندوق هدايا رمضان قوي مع العود مناسب. صندوق هدايا رمضان داكن يعطي إحساس بالفخامة. أفكار هدايا رمضان الغنية بالخشب والتوابل مميزة. مجموعة فاخرة مبنية على عطر رمضاني تعطي قوة. الروائح العميقة في عطر شرقي زهري تمزج القوة مع الأناقة. هذي النغمات تحدد أفضل العطور الشرقية للرجال. العطور الكلاسيكية تحول الهدايا البسيطة إلى بيانات. سلة رمضان الفاخرة مع الزيوت المركزة تبرز. سلال رمضان الفاخرة، سلة رمضان المختارة، أو سلال رمضان الراقية تعمل بشكل مثالي. صناديق هدايا رمضان المميزة وهدايا رمضان للأصدقاء تضيف قيمة شخصية.
+            مجموعة الدخون محبو العطور التقليدية يقدّرون هالخيار الراقي. كهدية العيد فريدة، يركز صندوق الدخون على خلق الجو. يشمل عود معطر مجالس، ماريّا عود مبخر، بخور أحمد تاب، وخشب العود. هذي الاختيارات تمثل أفكار هدايا العيد الكلاسيكية المرتكزة على الأجواء. رغم إنها مو صندوق هدايا العيد نموذجي، الدخان الغني ينسجم مع عطرك العيدي. الروائح العميقة من خشب العود تتماشى مع تقاليد العطر الشرقي الزهري، وتظل ضمن عالم أفضل العطور الشرقية الفاخرة. هذي الروائح الشرقية الجريئة تصنع هدايا العيد لا تُنسى، مثالية داخل سلة العيد أو سلال العيد الأنيقة.
 
             ---
 
-            هدايا رمضان للأصدقاء والعائلة هدايا رمضان ذات معنى تقوي المجتمع. صندوق هدايا دافئ يناسب كل بيت. صندوق هدايا رمضان مرحب يجعل الزيارات لا تُنسى. أفكار هدايا رمضان الشعبية تركز على العطور والعناية. مجموعة هدايا رمضان متعددة الاستخدامات مع عطر متوازن تناسب كل الأعمار. الروائح الناعمة من عطر شرقي زهري تحس بالراحة. هذي ضمن أفضل العطور الشرقية للهدايا المشتركة. العطور الشرقية الأنيقة تحول الهدايا المدروسة إلى مقتنيات ثمينة. سلة رمضان الكريمة المليئة بالعطور تسعد العائلات. سلال رمضان الفاخرة، سلة هدايا رمضان الاحتفالية، أو سلال رمضان الكلاسيكية تجيب الابتسامات. صناديق هدايا رمضان المصممة والمختارة تكمل التجربة.
+            مجموعة إهداء خاص تعرف مجموعة إهداء خاص على هدايا العيد الراقية. صندوق هدايا العيد الفاخر يوصل بشكل مرتب ويعكس الأناقة. من أفكار هدايا العيد الراقية لمحبي الفخامة. تشمل المجموعة عود لافندر، كوتور نوير، وعود أريان سوبر. كل عطر يضيف طبقات من روائح العيد. وجود معطر جو يضيف قيمة للحياة اليومية. مستوحاة من التراث الشرقي الزهري، تنتمي ضمن أفضل العطور الشرقية. العطور المتوازنة ترفع قيمة هدايا العيد وتلمع في سلال العيد الراقية أو هدايا العيد للشركات الحصرية.
 
             ---
 
-            أفضل هدايا رمضان للشركات هدايا رمضان المهنية تبني الاحترام. صندوق هدايا رمضان فاخر يظهر التقدير. صندوق هدايا رمضان راقي مع علامة تجارية يترك أثر. أفكار هدايا رمضان للشركات تركز على الجودة. مجموعة هدايا رمضان فاخرة مع عطر رمضاني مميز تحس بالهيبة. الروائح الراقية في عطر شرقي زهري تعكس الرقي. هذي ضمن أفضل العطور الشرقية للمديرين. العطور الشرقية الراقية ترفع مستوى الهدايا العادية. سلة رمضان بعلامة تجارية تضيف قيمة. سلال رمضان المختارة، سلة هدايا رمضان المهنية، أو سلال رمضان المخصصة تعزز العلاقات. صناديق هدايا رمضان الحصرية وهدايا رمضان الفاخرة للشركات تميز علامتك.
+            مجموعة هدايا أنتي مجموعة أنتي تشمل روز نوير، بيدون عصام، رذاذ شعر روز نوير، وبخور أنتي. كل عطر العيد يقدم روائح سلسة تناسب العصر وفي نفس الوقت متجذرة في طابع العطور الشرقية الزهرية. هذي الخلطات تتماشى مع تقاليد أفضل العطور الشرقية. العطور الشرقية الغنية تحول هدايا العيد اليومية إلى لمسات فاخرة. مثالية لسلة العيد، سلال هدايا العيد الأنيقة، أو صناديق هدايا العيد الفاخرة، وتفرح كل من يستلمها---
+
+            مجموعات هدايا عطور فاخرة للنساء هدايا العيد للنساء تركز على الرقة. صندوق هدايا العيد ناعم مليان أزهار مثالي. صندوق هدايا العيد مرتب بألوان هادئة يضيف سحر. أفكار هدايا العيد الشعبية تشمل مزيج الورد والفانيليا. مجموعة نسائية مع عطر العيد المميز تمنح الجمال والهوية. الروائح الخفيفة في عطر شرقي زهري تحس بالخلود. تظل ضمن أفضل العطور الشرقية للنساء. العطور الراقية ترفع قيمة هدايا العيد الشخصية. سلة العيد المختارة بعناية مع العطر والزيوت تحس بالترف. سلال العيد الأنيقة، سلة هدايا العيد الفاخرة، أو صناديق هدايا العيد تكمل التجربة.
+
+            ---
+
+            أفضل مجموعات هدايا عطور للرجال هدايا العيد الرجالية تميل للعمق. صندوق هدايا العيد قوي مع العود مناسب. صندوق هدايا العيد داكن يعطي إحساس بالفخامة. أفكار هدايا العيد الغنية بالخشب والتوابل مميزة. مجموعة فاخرة مبنية على عطر العيد تعطي قوة. الروائح العميقة في عطر شرقي زهري تمزج القوة مع الأناقة. هذي النغمات تحدد أفضل العطور الشرقية للرجال. العطور الكلاسيكية تحول الهدايا البسيطة إلى بيانات. سلة العيد الفاخرة مع الزيوت المركزة تبرز. سلال العيد الفاخرة، سلة العيد المختارة، أو سلال العيد الراقية تعمل بشكل مثالي. صناديق هدايا العيد المميزة وهدايا العيد للأصدقاء تضيف قيمة شخصية.
+
+            ---
+
+            هدايا العيد للأصدقاء والعائلة هدايا العيد ذات معنى تقوي المجتمع. صندوق هدايا دافئ يناسب كل بيت. صندوق هدايا العيد مرحب يجعل الزيارات لا تُنسى. أفكار هدايا العيد الشعبية تركز على العطور والعناية. مجموعة هدايا العيد متعددة الاستخدامات مع عطر متوازن تناسب كل الأعمار. الروائح الناعمة من عطر شرقي زهري تحس بالراحة. هذي ضمن أفضل العطور الشرقية للهدايا المشتركة. العطور الشرقية الأنيقة تحول الهدايا المدروسة إلى مقتنيات ثمينة. سلة العيد الكريمة المليئة بالعطور تسعد العائلات. سلال العيد الفاخرة، سلة هدايا العيد الاحتفالية، أو سلال العيد الكلاسيكية تجيب الابتسامات. صناديق هدايا العيد المصممة والمختارة تكمل التجربة.
+
+            ---
+
+            أفضل هدايا العيد للشركات هدايا العيد المهنية تبني الاحترام. صندوق هدايا العيد فاخر يظهر التقدير. صندوق هدايا العيد راقي مع علامة تجارية يترك أثر. أفكار هدايا العيد للشركات تركز على الجودة. مجموعة هدايا العيد فاخرة مع عطر العيد المميز تحس بالهيبة. الروائح الراقية في عطر شرقي زهري تعكس الرقي. هذي ضمن أفضل العطور الشرقية للمديرين. العطور الشرقية الراقية ترفع مستوى الهدايا العادية. سلة العيد بعلامة تجارية تضيف قيمة. سلال العيد المختارة، سلة هدايا العيد المهنية، أو سلال العيد المخصصة تعزز العلاقات. صناديق هدايا العيد الحصرية وهدايا العيد الفاخرة للشركات تميز علامتك.
 
             ---
 
             الأسئلة المتكررة
 
-            1. ما هو أفضل هدية لرمضان في الإمارات؟ أفضل خيار لهدايا رمضان في الإمارات هو صندوق هدايا رمضان فاخر يشمل عطور، زيوت، أو بخور. العطر له معنى، مفيد، ومقدر ثقافياً أثناء زيارات رمضان. صندوق هدايا رمضان مرتب يعطي شعور بالاهتمام ويناسب التبادل العائلي والشركات. كثير يفضلون مجموعة عطور رمضانية لأن الريحة جزء مهم من الضيافة والعناية الشخصية خلال الموسم.
+            1. ما هو أفضل هدية للعيد في الإمارات؟ أفضل خيار لهدايا العيد في الإمارات هو صندوق هدايا العيد فاخر يشمل عطور، زيوت، أو بخور. العطر له معنى، مفيد، ومقدر ثقافياً أثناء زيارات العيد. صندوق هدايا العيد مرتب يعطي شعور بالاهتمام ويناسب التبادل العائلي والشركات. كثير يفضلون مجموعة عطور العيد لأن الريحة جزء مهم من الضيافة والعناية الشخصية خلال الموسم.
 
-            2. أي عطر يرتديه الإماراتيون في رمضان؟ خلال رمضان، الإماراتيون يفضلون الروائح الرمضانية الأنيقة والناعمة بدون قوة زائدة. العطور الشرقية التقليدية
+            2. أي عطر يرتديه الإماراتيون في العيد؟ خلال العيد، الإماراتيون يفضلون روائح العيد الأنيقة والناعمة بدون قوة زائدة. العطور الشرقية التقليدية بالعود، العنبر، والمسك شائعة، وغالباً مع لمسة من الزهور. عطر شرقي زهري مناسب للتجمعات، والمزيج العميق يستخدم في المساء. كثير يعتبرونها من أفضل العطور الشرقية لأنها توازن بين الحضور والاحترام للأجواء المقربة.
 
-            بالعود، العنبر، والمسك شائعة، وغالباً مع لمسة من الزهور. عطر شرقي زهري مناسب للتجمعات، والمزيج العميق يستخدم في المساء. كثير يعتبرونها من أفضل العطور الشرقية لأنها توازن بين الحضور والاحترام للأجواء المقربة.
+            3. أي ماركة عطور مشهورة في الإمارات؟ الكثير من العلامات العربية المحلية صارت مشهورة في الإمارات أحمد المغربي من بينهم. العلامة موجودة أكثر من عشرين سنة وصارت خيار رئيسي للعطور الفاخرة في الإمارات. سوق العطور في الإمارات يقدّر العلامات المتخصصة بالعطور الشرقية الأصيلة والخليط الطويل الأمد. العملاء يبحثون عن أسماء معروفة بالزيوت ذات الجودة، قواعد العود الغنية، وتركيبات راقية. العلامات اللي تقدم أفكار هدايا العيد ومجموعات هدايا العيد الفاخرة غالباً تتميز، خصوصاً موسم الهدايا.
 
-            3. أي ماركة عطور مشهورة في الإمارات؟ الكثير من العلامات العربية المحلية صارت مشهورة في الإمارات أحمد المغربي من بينهم. العلامة موجودة أكثر من عشرين سنة وصارت خيار رئيسي للعطور الفاخرة في الإمارات. سوق العطور في الإمارات يقدّر العلامات المتخصصة بالعطور الشرقية الأصيلة والخليط الطويل الأمد. العملاء يبحثون عن أسماء معروفة بالزيوت ذات الجودة، قواعد العود الغنية، وتركيبات راقية. العلامات اللي تقدم أفكار هدايا رمضان ومجموعات هدايا رمضان الفاخرة غالباً تتميز، خصوصاً موسم الهدايا.
+            4. ما أفضل هدية للشركات في العيد؟ للشركات، هدايا العيد المعتمدة على العطور فعّالة جداً. صندوق هدايا العيد فاخر مع عطور أو بخور يعطي شعور بالاحترام والاحترافية. الشركات غالباً تختار مجموعة هدايا العيد لأنها أنيقة وسهلة التقديم وتناسب مختلف المستلمين. هذي أفكار هدايا العيد ناجحة لأن العطر يرتبط بالضيافة والتقاليد.
 
-            4. ما أفضل هدية للشركات في رمضان؟ للشركات، هدايا رمضان المعتمدة على العطور فعّالة جداً. صندوق هدايا رمضان فاخر مع عطور أو بخور يعطي شعور بالاحترام والاحترافية. الشركات غالباً تختار مجموعة هدايا رمضان لأنها أنيقة وسهلة التقديم وتناسب مختلف المستلمين. هذي أفكار هدايا رمضان ناجحة لأن العطر يرتبط بالضيافة والتقاليد.
-
-            5. ما هي الروائح الأكثر شعبية في دبي؟ دبي معروفة بحب العطور الشرقية اللي تمزج العود، العنبر، والمسك. كثير يشترون أيضاً عطر شرقي زهري للأناقة اليومية. هذي الخلطات غالباً توصف كأفضل العطور الشرقية لأنها تدوم وتناسب النهار والمساء. خلال الموسم، الروائح الرمضانية الناعمة والدافئة تصبح شعبية بشكل خاص`,
+            5. ما هي الروائح الأكثر شعبية في دبي؟ دبي معروفة بحب العطور الشرقية اللي تمزج العود، العنبر، والمسك. كثير يشترون أيضاً عطر شرقي زهري للأناقة اليومية. هذي الخلطات غالباً توصف كأفضل العطور الشرقية لأنها تدوم وتناسب النهار والمساء. خلال الموسم، روائح العيد الناعمة والدافئة تصبح شعبية بشكل خاص`,
             // ─── AR Links ─────────────────────────────────────────────────────
             // Add any Arabic phrase that appears in fullText and the URL.
             // Example:
@@ -272,21 +263,21 @@ const RamadanSEOContent = () => {
             //   "مجموعة هدايا رمضان": "/ar/ramadan",
             links: {
                 // "أحمد المغربي": "https://ahmedalmag.com",
-                "هدايا رمضان": "https://ae.ahmedalmaghribi.com/ar",
-                "مجموعة هدايا رمضان": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
-                "أفكار هدايا رمضان": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
+                "هدايا العيد": "https://ae.ahmedalmaghribi.com/ar",
+                "مجموعة هدايا العيد": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
+                "أفكار هدايا العيد": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
                 "أفضل العطور الشرقية": "https://ae.ahmedalmaghribi.com/ar/product-category/perfumes/oriental-fragrance",
-                "صندوق هدايا رمضان": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
+                "صندوق هدايا العيد": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
                 "العطور الشرقية": "https://ae.ahmedalmaghribi.com/ar/product-category/perfumes/oriental-fragrance",
-                "الروائح الرمضانية": "https://ae.ahmedalmaghribi.com/ar/product-category/concentrated-parfum",
-                "سلة هدايا رمضان": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
-                "هدايا رمضان للشركات": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
-                "مجموعة القرنين": "https://ae.ahmedalmaghribi.com/ar/shop/gift-sets/gift-sets/qarnain",
+                "روائح العيد": "https://ae.ahmedalmaghribi.com/ar/product-category/concentrated-parfum",
+                "سلة هدايا العيد": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
+                "هدايا العيد للشركات": "https://ae.ahmedalmaghribi.com/ar/product-category/gift-sets",
+                "مجموعة قَرْنَيْن": "https://ae.ahmedalmaghribi.com/ar/shop/gift-sets/gift-sets/qarnain",
                 "مجموعة شوق الشيوخ": "https://ae.ahmedalmaghribi.com/ar/shop/gift-sets/gift-sets/shauque-al-shuyookh",
                 "مجموعة الدخون": "https://ae.ahmedalmaghribi.com/ar/shop/gift-sets/gift-sets/the-dukhoon-collection",
                 "مجموعة إهداء خاص": "https://ae.ahmedalmaghribi.com/ar/shop/gift-sets/gift-sets/ihdaa-khaas",
                 "مجموعة أنتي": "https://ae.ahmedalmaghribi.com/ar/shop/gift-sets/gift-sets/antee-gift-set-05",
-                "هدايا رمضان الفاخرة للشركات": "https://ae.ahmedalmaghribi.com/ar/shop",
+                "هدايا العيد الفاخرة للشركات": "https://ae.ahmedalmaghribi.com/ar/shop",
             }
         }
     };
