@@ -19,10 +19,17 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
   // console.log('Middleware triggered for URL:', request.url);
 
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-pathname', pathname);
+
   // Skip middleware for API routes, including /<locale>/api/*
   if (pathname.startsWith('/api') || pathname.match(/^\/(en|ar)\/api/)) {
     // console.log('Skipping middleware for API route:', pathname);
-    return NextResponse.next();
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
  // Inside your middleware function
 if (pathname.includes('/couponRegister')) {
@@ -109,6 +116,7 @@ if (pathname.includes('/couponRegister')) {
 
     // Check for country mismatch
     const response = intlMiddleware(request);
+    response.headers.set('x-pathname', pathname);
     if (currentDomain !== targetDomain) {
       // console.log('Country mismatch detected. Setting countryMismatch cookie.');
       response.cookies.set('countryMismatch', countryCode, { path: '/' }); //, httpOnly: false

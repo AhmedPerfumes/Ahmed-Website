@@ -101,9 +101,15 @@ export default function CartDrawer() {
   };
 
 
-  const removeItem = (id) => {
-    setCartProducts((pre) => [...pre.filter((elm) => elm.product_id != id)]);
-  };
+  const removeItem = (id, uniqueKey = null) => {
+  setCartProducts((prev) =>
+    prev.filter((elm) =>
+      uniqueKey
+        ? elm.unique_key !== uniqueKey
+        : elm.product_id !== id
+    )
+  );
+};
   useEffect(() => {
     closeCart();
   }, [pathname]);
@@ -210,10 +216,11 @@ export default function CartDrawer() {
                           height={400}
                           style={{ height: "fit-content" }}
                           src={
-                            elm.image
-                              ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`
-                              : `${process.env.NEXT_PUBLIC_API_URL}storage/${elm?.images && JSON.parse(elm.images)[0]
-                              }`
+                            elm.is_gift_card
+                              ? "/assets/images/gift-card.jpg"
+                              : elm.image
+                                ? `${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`
+                                : `${process.env.NEXT_PUBLIC_API_URL}storage/${elm?.images && JSON.parse(elm.images)[0]}`
                           }
                           alt="image"
                           onClick={closeCart}
@@ -238,15 +245,33 @@ export default function CartDrawer() {
                           .join("-")
                           .toLowerCase();
                         const href = `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
+
                         return (
-                          <Link href={href} onClick={closeCart}>
-                            {elm?.product_name && t(he.decode(elm.product_name))}
-                          </Link>
+                          <>
+                            <Link href={href} onClick={closeCart}>
+                              {elm?.product_name && t(he.decode(elm.product_name))}
+                            </Link>
+
+                            {elm.is_gift_card && (
+                              <span
+                                style={{
+                                  background: "#000",
+                                  color: "#fff",
+                                  fontSize: "10px",
+                                  padding: "2px 6px",
+                                  marginLeft: "6px",
+                                  borderRadius: "3px",
+                                }}
+                              >
+                                GIFT CARD
+                              </span>
+                            )}
+                          </>
                         );
                       })()}
                     </h6>
                     <div className="d-flex align-items-center justify-content-between mt-1">
-                      {!elm.is_gift ? <div className="qty-control position-relative">
+                      {!elm.is_gift && !elm.is_gift_card ? <div className="qty-control position-relative">
                         <input
                           type="number"
                           name="quantity"
@@ -280,7 +305,7 @@ export default function CartDrawer() {
                   </div>
 
                   <button
-                    onClick={() => removeItem(elm.product_id)}
+                    onClick={() => removeItem(elm.product_id, elm.unique_key)}
                     className="btn-close-xs position-absolute top-0 end-0 js-cart-item-remove"
                   ></button>
                 </div>
