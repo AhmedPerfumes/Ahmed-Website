@@ -20,26 +20,30 @@ export const PART1_QUESTIONS = [
   },
   {
     id: "for", step: 2, part: 1, type: "choice", layout: "icon",
-    question: "Are you looking for a fragrance...",
-    subtitle: "This helps us match the right fragrance profiles",
+    question: "Who is this fragrance for?",
+    subtitle: "Every portrait starts with the person",
+    learnMore: {
+      label: "Did you know?",
+      text: "Fragrances carry distinct characters, some lean bold and woody, others soft and floral. While scent is deeply personal, knowing who wears it allows our Scent Intelligence to match with far greater precision. Your final result is always uniquely yours."
+    },
     options: [
-      { id: "self_him", icon: "self_him", label: "FOR MEN", scores: { masculine: 3, woody: 1, oriental: 1 } },
-      { id: "self_her", icon: "self_her", label: "FOR WOMEN", scores: { feminine: 3, floral: 2, musk: 1 } },
-      { id: "unisex", icon: "fusion", label: "UNISEX", scores: { musk: 3, fresh: 2, floral: 2, woody: 1 } },
+      { id: "self_him", icon: "self_him", label: "HIM", bg: "#BEC8D2", scores: { masculine: 3, woody: 1, oriental: 1 } },
+      { id: "self_her", icon: "self_her", label: "HER", bg: "#E4C9C4", scores: { feminine: 3, floral: 2, musk: 1 } },
+      { id: "unisex", icon: "fusion", label: "BOTH", bg: "#C8C4B4", scores: { musk: 3, fresh: 2, floral: 2, woody: 1 } },
     ],
   },
   {
     id: "matters", step: 3, part: 1, type: "choice", layout: "icon",
-    question: "WHICH MATTERS THE MOST TO YOU?",
-    subtitle: "Your values shape your fragrance personality",
+    question: "What calls to you more?",
+    subtitle: "Your answer shapes your scent personality",
     options: [
-      { id: "safe", icon: "safe", label: "Feeling safe & secure", scores: { musk: 3, floral: 2, occasion_daily: 2 } },
-      { id: "adventure", icon: "adventure", label: "Searching for adventure", scores: { spicy: 3, arabic: 2, sillage_strong: 2 } },
+      { id: "safe", icon: "safe", label: "SAFETY & WARMTH", bg: "#D9C9B0", scores: { musk: 3, floral: 2, occasion_daily: 2 } },
+      { id: "adventure", icon: "adventure", label: "ADVENTURE & BOLDNESS", bg: "#B8A8B2", scores: { spicy: 3, arabic: 2, sillage_strong: 2 } },
     ],
   },
   {
     id: "feel", step: 4, part: 1, type: "choice", layout: "color",
-    question: "HOW WOULD YOU LIKE TO FEEL WITH YOUR PERFUME?",
+    question: "How would you like to feel with your perfume?",
     subtitle: "Your mood as a fragrance",
     options: [
       { id: "fresh_elegant", label: "FRESH & ELEGANT", bg: "#C8D8E8", scores: { fresh: 4, occidental: 3, floral: 2 } },
@@ -53,23 +57,23 @@ export const PART1_QUESTIONS = [
 export const PART2_QUESTIONS = [
   {
     id: "world", step: 5, part: 3, type: "choice", layout: "icon",
-    question: "WHICH FRAGRANCE HERITAGE SPEAKS TO YOU?",
+    question: "Which fragrance heritage speaks to you?",
     subtitle: "Two great traditions — or a beautiful blend of both",
     learnMore: {
       label: "What's the difference?",
-      text: "Oriental fragrances are rich, warm, long-lasting — oud, spices, amber and resins. Occidental fragrances are fresh, elegant, modern — citrus, florals and musk. East meets West is a contemporary blend of both."
+      text: "Oriental fragrances are rich, warm, long-lasting; oud, spices, amber and resins. Occidental fragrances are fresh, elegant, modern - citrus, florals and musk. East meets West is a contemporary blend of both."
     },
     options: [
-      { id: "arabic", icon: "safe", label: "ORIENTAL", scores: { arabic: 6, oriental: 5, oud: 4, spicy: 2 } },
-      { id: "french", icon: "adventure", label: "OCCIDENTAL", scores: { occidental: 6, fresh: 4, floral: 2, musk: 3 } },
-      { id: "fusion", icon: "safe", label: "EAST MEETS WEST", scores: { arabic: 3, occidental: 3, floral: 2, oriental: 3, musk: 2 } },
-      { id: "explore", icon: "adventure", label: "SURPRISE ME", scores: { musk: 2, fresh: 2, floral: 2 } },
+      { id: "arabic", icon: "safe", label: "ORIENTAL", bg: "#C4A87A", scores: { arabic: 6, oriental: 5, oud: 4, spicy: 2 } },
+      { id: "french", icon: "adventure", label: "OCCIDENTAL", bg: "#BCC8D0", scores: { occidental: 6, fresh: 4, floral: 2, musk: 3 } },
+      { id: "fusion", icon: "safe", label: "EAST MEETS WEST", bg: "#C0BCB0", scores: { arabic: 3, occidental: 3, floral: 2, oriental: 3, musk: 2 } },
+      { id: "explore", icon: "adventure", label: "SURPRISE ME", bg: "#C4B8C8", scores: { musk: 2, fresh: 2, floral: 2 } },
     ],
   },
   {
     id: "notes", step: 6, part: 3, type: "notes", layout: "grid-image",
     multi: true, maxSelect: 2,
-    question: "ANY FAVORITE PERFUME FAMILY?",
+    question: "Select your favorite perfume families",
     subtitle: "Share with us your favourite scent families",
     learnMore: {
       label: "Learn More",
@@ -88,7 +92,7 @@ export const PART2_QUESTIONS = [
   },
   {
     id: "sillage", step: 7, part: 3, type: "choice", layout: "bars",
-    question: "HOW STRONG DO YOU LIKE YOUR PERFUME?",
+    question: "How strong do you like your perfume?",
     subtitle: "Sillage — the invisible art of leaving a signature",
     learnMore: {
       label: "Learn More",
@@ -102,7 +106,7 @@ export const PART2_QUESTIONS = [
   },
   {
     id: "longevity", step: 8, part: 3, type: "choice", layout: "bars",
-    question: "HOW LONG SHOULD IT LAST?",
+    question: "How long should it last?",
     subtitle: "From a light greeting to an everlasting trail",
     options: [
       { id: "light", label: "4-6 HRS", scores: { longevity_light: 4, fresh: 1, occidental: 1 } },

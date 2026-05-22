@@ -53,32 +53,31 @@ function IntroScreen({ onStart, onResumeDNA, savedDNA }) {
       <motion.span className="fys-intro__eyebrow"
         initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
       >
-        Ahmed Al Maghribi
+        A Private Consultation
       </motion.span>
 
       <motion.h1 className="fys-intro__headline"
         initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.32, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        Find Your<br /><em>Perfect Scent</em>
+        An Olfactive<br /><em>Portrait</em>
       </motion.h1>
 
       <motion.p className="fys-intro__body"
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.46 }}
       >
-        Answer 8 thoughtful questions about your personality, lifestyle and olfactive
-        preferences. Our Scent Intelligence will match you to fragrances from our atelier
-        with remarkable accuracy.
+        Eight carefully crafted questions. Your answers reveal a fragrance
+        portrait as individual and unmistakable as your own signature.
       </motion.p>
 
       <motion.div className="fys-intro__stages" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.58 }}>
-        <div className="fys-intro__stage">About</div>
-        <div className="fys-intro__stage">Personality</div>
-        <div className="fys-intro__stage">Scents</div>
+        <div className="fys-intro__stage">Identity</div>
+        <div className="fys-intro__stage">Character</div>
+        <div className="fys-intro__stage">Senses</div>
       </motion.div>
 
       <motion.div className="fys-intro__meta" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.68 }}>
-        <span>8 questions</span><span className="fys-dot" /><span>~3 minutes</span><span className="fys-dot" /><span>Personalised results</span>
+        <span>8 Questions</span><span className="fys-dot" /><span>3 Minutes</span><span className="fys-dot" /><span>Your Signature</span>
       </motion.div>
 
       {/* Saved DNA banner */}
@@ -112,7 +111,7 @@ function IntroScreen({ onStart, onResumeDNA, savedDNA }) {
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.78 }}
           whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
         >
-          <span>Begin My Discovery</span>
+          <span>Begin My Portrait</span>
           <span className="fys-btn-arrow">→</span>
         </motion.button>
       )}

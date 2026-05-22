@@ -77,65 +77,86 @@ const fadeIn = (delay = 0) => ({
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
-//  REVEAL SCREEN — Maison21G-style 50/50 pre-reveal with personality decoding
+//  REVEAL SCREEN — cinematic preparing experience
 // ═══════════════════════════════════════════════════════════════════════════════
+const PREPARE_STEPS = [
+  "Analysing your olfactive portrait",
+  "Cross-referencing 200+ fragrance dimensions",
+  "Selecting your three perfect matches",
+];
+
 function RevealScreen({ userName, profile, scentProfile, onReveal }) {
-  const [revealed, setRevealed] = useState(false);
+  const [step, setStep] = useState(0); // 0→none visible, 1–3→steps, 4→button
+  const [revealing, setRevealing] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setStep(1), 800);
+    const t2 = setTimeout(() => setStep(2), 2200);
+    const t3 = setTimeout(() => setStep(3), 3600);
+    const t4 = setTimeout(() => setStep(4), 5000);
+    return () => [t1, t2, t3, t4].forEach(clearTimeout);
+  }, []);
 
   const handleReveal = () => {
-    setRevealed(true);
+    setRevealing(true);
     setTimeout(onReveal, 800);
   };
 
   return (
     <motion.div className="fys-reveal" {...fadeIn()}>
-      {/* Left — editorial image */}
-      <div className="fys-reveal__left">
-        <div className="fys-reveal__img-wrap">
-          <img src="/assets/images/home/demo8/avif/giftset-bnr.avif" alt="Ahmed Al Maghribi Collection"
-            onError={(e) => { e.target.style.display = 'none'; }}
-          />
-          <div className="fys-reveal__overlay">
-            <span className="fys-reveal__brand">Ahmed Al Maghribi</span>
-            <span className="fys-reveal__collection">Lasting Impression</span>
-          </div>
+
+      {/* ── Central animated glyph ── */}
+      <div className="fys-reveal__glyph">
+        <div className="fys-reveal__ring fys-reveal__ring--outer" />
+        <div className="fys-reveal__ring fys-reveal__ring--mid" />
+        <div className="fys-reveal__ring fys-reveal__ring--inner" />
+        <span className="fys-reveal__diamond">◆</span>
+      </div>
+
+      {/* ── Content ── */}
+      <motion.div className="fys-reveal__content" {...fadeUp(0.3)}>
+        <span className="fys-reveal__eyebrow">Scent Intelligence</span>
+
+        <h2 className="fys-reveal__title">
+          Composing your<br /><em>Olfactive Portrait</em>
+        </h2>
+
+        {/* Sequential processing steps */}
+        <div className="fys-reveal__steps">
+          {PREPARE_STEPS.map((s, i) => (
+            <AnimatePresence key={i}>
+              {step > i && (
+                <motion.div
+                  className="fys-reveal__step"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <span className="fys-reveal__step-dot" />
+                  <span>{s}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          ))}
         </div>
-      </div>
 
-      {/* Right — personality reveal */}
-      <div className="fys-reveal__right">
-        <motion.div className="fys-reveal__content" {...fadeUp(0.3)}>
-          <span className="fys-reveal__badge">100% COMPLETED</span>
-          <h2 className="fys-reveal__title">
-            PREPARING YOUR PERSONALISED<br/>PERFUME RECOMMENDATIONS...
-          </h2>
-
-          <div className="fys-reveal__checklist">
-            <div className="fys-reveal__check-item">
-              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#8B7355" strokeWidth="1.5"/><path d="M5 9l3 3 5-5" fill="none" stroke="#8B7355" strokeWidth="1.5"/></svg>
-              <span>Your personality decoding</span>
-            </div>
-            <div className="fys-reveal__check-item">
-              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#8B7355" strokeWidth="1.5"/><path d="M5 9l3 3 5-5" fill="none" stroke="#8B7355" strokeWidth="1.5"/></svg>
-              <span>Your scent style analysis</span>
-            </div>
-            <div className="fys-reveal__check-item">
-              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#8B7355" strokeWidth="1.5"/><path d="M5 9l3 3 5-5" fill="none" stroke="#8B7355" strokeWidth="1.5"/></svg>
-              <span>Your personalised perfume recommendations</span>
-            </div>
-          </div>
-
-          <motion.button
-            className="fys-reveal__cta"
-            onClick={handleReveal}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            animate={revealed ? { opacity: 0.5 } : {}}
-          >
-            {revealed ? "REVEALING..." : "REVEAL MY RESULT"}
-          </motion.button>
-        </motion.div>
-      </div>
+        {/* CTA — appears only after all steps complete */}
+        <AnimatePresence>
+          {step >= 4 && (
+            <motion.button
+              className="fys-reveal__cta"
+              onClick={handleReveal}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: revealing ? 0.5 : 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={!revealing ? { scale: 1.02 } : {}}
+              whileTap={!revealing ? { scale: 0.98 } : {}}
+            >
+              {revealing ? "Unveiling…" : "View My Portrait →"}
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </motion.div>
   );
 }

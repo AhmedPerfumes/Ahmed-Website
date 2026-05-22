@@ -56,11 +56,11 @@ function LeftPanel({ question, userName }) {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <h2 className="fys-split__q-title">
-          {userName && question.step > 2 ? `${userName},\n` : ""}{question.question}
+          {question.question}
         </h2>
         <div className="fys-split__q-meta">
           <span className="fys-btn-select-count">
-            {question.multi ? `Select up to ${question.maxSelect || 2}.` : "Select only 1."}
+            {question.multi ? `Select up to ${question.maxSelect || 2}` : "Select only 1"}
           </span>
           {question.learnMore && <LearnMore item={question.learnMore} />}
         </div>
@@ -97,11 +97,16 @@ function NameInput({ question, onSubmit, userName }) {
 
 /* ─── ICON OPTIONS (with per-question background color) ── */
 function IconOpts({ options, selected, onSelect, bgColor }) {
+  const hasIndividualBg = options.some(opt => opt.bg);
   return (
-    <div className="fys-icon-opts fys-split__a" style={{ background: bgColor }}>
+    <div
+      className="fys-icon-opts fys-split__a"
+      style={{ background: hasIndividualBg ? "transparent" : bgColor }}
+    >
       {options.map((opt, i) => (
         <motion.button key={opt.id}
           className={`fys-icon-opt${selected === opt.id ? " fys-icon-opt--sel" : ""}`}
+          style={opt.bg ? { background: opt.bg } : undefined}
           onClick={() => onSelect(opt.id)}
           initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -133,7 +138,6 @@ function ColorOpts({ options, selected, onSelect }) {
   );
 }
 
-/* ─── BAR OPTIONS — HORIZONTAL ROW, centered like Maison21G ── */
 const BAR_HEIGHTS = [120, 170, 220];
 function BarOpts({ options, selected, onSelect, bgColor }) {
   return (
