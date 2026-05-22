@@ -220,7 +220,6 @@ const HorizontalScroll = () => {
                     title="K - Series"
                     frameBorder="0"
                     allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
                     style={{ pointerEvents: 'none' }}
                   />
                 </div>

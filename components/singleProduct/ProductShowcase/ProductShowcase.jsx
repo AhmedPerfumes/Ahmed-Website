@@ -134,7 +134,7 @@ export default function FamilySection({ data = {} }) {
         {/* Background Layer */}
         <AnimatePresence initial={false}>
           <motion.div key={currentBgImg} variants={backgroundVariants} initial="initial" animate="animate" exit="exit" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }}>
-              <Image src={currentBgImg} alt="bg" fill priority style={{ objectFit: "cover" }} />
+              <Image src={currentBgImg} alt="bg" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
           </motion.div>
         </AnimatePresence>
         
@@ -180,7 +180,7 @@ export default function FamilySection({ data = {} }) {
                         transition={{ duration: 0.6 }}
                         style={{ position: "absolute", inset: 0 }}
                       >
-                        <Image src={item.imgCenter} fill style={{ objectFit: "contain" }} alt="center" priority />
+                        <Image src={item.imgCenter} fill sizes="(max-width: 768px) 160px, 280px" style={{ objectFit: "contain" }} alt="center" priority />
                       </motion.div>
 
                       {/* LEFT IMAGE LAYER */}
@@ -190,7 +190,7 @@ export default function FamilySection({ data = {} }) {
                         transition={{ duration: 0.6 }}
                         style={{ position: "absolute", inset: 0 }}
                       >
-                        <Image src={item.imgLeft} fill style={{ objectFit: "contain" }} alt="left" />
+                        <Image src={item.imgLeft} fill sizes="(max-width: 768px) 160px, 280px" style={{ objectFit: "contain" }} alt="left" />
                       </motion.div>
 
                       {/* RIGHT IMAGE LAYER */}
@@ -200,7 +200,7 @@ export default function FamilySection({ data = {} }) {
                         transition={{ duration: 0.6 }}
                         style={{ position: "absolute", inset: 0 }}
                       >
-                        <Image src={item.imgRight} fill style={{ objectFit: "contain" }} alt="right" />
+                        <Image src={item.imgRight} fill sizes="(max-width: 768px) 160px, 280px" style={{ objectFit: "contain" }} alt="right" />
                       </motion.div>
 
                     </Link>
@@ -230,7 +230,7 @@ export default function FamilySection({ data = {} }) {
 
           <motion.div initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={currentLabel} transition={{ delay: 0.1 }} className="d-flex flex-column align-items-center">
             <div style={{ position: "relative", width: isMobile ? "150px" : "220px", height: "80px" }}>
-              <Image src={items[active].nameImg} alt={currentLabel} fill unoptimized style={{ objectFit: "contain" }} />
+              <Image src={items[active].nameImg} alt={currentLabel} fill unoptimized sizes="(max-width: 768px) 150px, 220px" style={{ objectFit: "contain" }} />
             </div>
           </motion.div>
           <motion.div initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }} className="d-flex flex-column align-items-center p-4">

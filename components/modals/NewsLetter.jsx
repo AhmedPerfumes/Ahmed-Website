@@ -69,13 +69,29 @@ export default function NewsLetter({popUp}) {
         const closeButton = modalElement.current.querySelector(".btn-close");
         const closeHandler = () => modalInstance.hide();
 
+        const handleHide = () => {
+            if (document.activeElement && modalElement.current.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
+        };
+
         window.addEventListener("scroll", handleScroll);
         closeButton.addEventListener("click", closeHandler);
+        
+        const modalRef = modalElement.current;
+        if (modalRef) {
+            modalRef.addEventListener("hide.bs.modal", handleHide);
+            modalRef.addEventListener("hidden.bs.modal", handleHide);
+        }
 
         // Cleanup function
         return () => {
             window.removeEventListener("scroll", handleScroll);
             closeButton.removeEventListener("click", closeHandler);
+            if (modalRef) {
+                modalRef.removeEventListener("hide.bs.modal", handleHide);
+                modalRef.removeEventListener("hidden.bs.modal", handleHide);
+            }
         };
     }, []); // This effect correctly runs only once on mount.
 

@@ -27,7 +27,7 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
         slidesPerView: 4,
         slidesPerGroup: 4,
         effect: "none",
-        loop: true,
+        loop: itemFamilyProds && itemFamilyProds.length > 4,
         modules: [Pagination, Navigation],
         pagination: {
             el: "#item_family_products .products-pagination",
