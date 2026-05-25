@@ -40,37 +40,37 @@ const RamadanBentoGrid = () => {
     const categories = [
         {
             title: t.categories.perfumes,
-            image: "/assets/images/ramadan/perfumes.jpeg",
+            image: "/assets/images/ramadan/perfumes-1.jpeg",
             gridArea: { xs: "auto", md: "1 / 1 / 3 / 3" }, // 2x2
             slug: "perfumes",
         },
         {
             title: t.categories.gift_sets,
-            image: "/assets/images/ramadan/gift-set.jpeg",
+            image: "/assets/images/ramadan/gift-set-1.jpeg",
             gridArea: { xs: "auto", md: "1 / 3 / 2 / 6" }, // 1x3
             slug: "gift-sets",
         },
         {
             title: t.categories.dakhoon,
-            image: "/assets/images/ramadan/bakhoor.jpeg",
+            image: "/assets/images/ramadan/bakhoor-1.jpeg",
             gridArea: { xs: "auto", md: "2 / 3 / 3 / 5" }, // 1x2
             slug: "dakhoon",
         },
         {
             title: t.categories.concentrated_parfum,
-            image: "/assets/images/ramadan/oil.jpeg",
+            image: "/assets/images/ramadan/oil-1.jpeg",
             gridArea: { xs: "auto", md: "2 / 5 / 4 / 6" }, // 2x1
             slug: "concentrated-parfum",
         },
         {
             title: t.categories.collection,
-            image: "/assets/images/ramadan/collections.jpeg",
+            image: "/assets/images/ramadan/collections-1.jpeg",
             gridArea: { xs: "auto", md: "3 / 1 / 4 / 3" }, // 1x2
             slug: "collections",
         },
         {
             title: t.categories.care_essentials,
-            image: "/assets/images/ramadan/care-essentials.png",
+            image: "/assets/images/ramadan/care-essentials-1.png",
             gridArea: { xs: "auto", md: "3 / 3 / 4 / 5" }, // 1x2
             slug: "care-essentials",
         }
