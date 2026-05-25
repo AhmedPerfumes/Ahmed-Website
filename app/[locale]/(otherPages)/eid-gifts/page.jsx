@@ -43,7 +43,7 @@ const RamadanGifting = () => {
 
         {/* Trial Section 1: Islamic Hero */}
         <IslamicHero />
-        <RamadanVideo/>
+        {/* <RamadanVideo/> */}
 
         {/* Ramadan Special Offers Section */}
         <RamadanSpecialOffer />
