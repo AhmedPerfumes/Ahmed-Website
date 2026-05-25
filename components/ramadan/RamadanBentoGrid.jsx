@@ -40,7 +40,7 @@ const RamadanBentoGrid = () => {
     const categories = [
         {
             title: t.categories.perfumes,
-            image: "/assets/images/ramadan/perfume.jpeg",
+            image: "/assets/images/ramadan/perfumes.jpeg",
             gridArea: { xs: "auto", md: "1 / 1 / 3 / 3" }, // 2x2
             slug: "perfumes",
         },
@@ -58,13 +58,13 @@ const RamadanBentoGrid = () => {
         },
         {
             title: t.categories.concentrated_parfum,
-            image: "/assets/images/ramadan/oil-2.jpeg",
+            image: "/assets/images/ramadan/oil.jpeg",
             gridArea: { xs: "auto", md: "2 / 5 / 4 / 6" }, // 2x1
             slug: "concentrated-parfum",
         },
         {
             title: t.categories.collection,
-            image: "/assets/images/ramadan/collections.png",
+            image: "/assets/images/ramadan/collections.jpeg",
             gridArea: { xs: "auto", md: "3 / 1 / 4 / 3" }, // 1x2
             slug: "collections",
         },
