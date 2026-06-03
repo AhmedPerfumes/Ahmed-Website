@@ -1,14 +1,15 @@
 "use client";
 import { Box, Container, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
+import Link from "next/link";
+import Image from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useLocale } from "next-intl";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import he from "he";
 
 const translations = {
     en: {
@@ -61,7 +62,7 @@ const RamadanVideoSlider = () => {
 
                 if (collectionsCategory) {
                     // Find Ramadan Collection (ID: 30)
-                    const ramadanCollection = collectionsCategory.productSubCategories?.find(sub => sub.id === 30);
+                    const ramadanCollection = collectionsCategory.productSubCategories?.find(sub => sub.id === 34);
 
                     if (ramadanCollection && ramadanCollection.products) {
                         const formattedSlides = ramadanCollection.products.map(product => {
@@ -80,7 +81,7 @@ const RamadanVideoSlider = () => {
                                 title: isRtl ? (product.product_name_ar || product.product_name) : product.product_name,
                                 subtitle: isRtl ? "مجموعة العيد" : "Eid Collection",
                                 description: cleanDescription,
-                                image: `https://admin.ahmedalmaghribi.com/public/storage/${product.image}`,
+                                image: `https://admin.ahmedalmaghribi.com/public/storage/${JSON.parse(product.images)[0]}`,
                                 link: `/shop/collections/ramadan-collection/${productSlug}`
                             };
                         });
@@ -270,7 +271,7 @@ const RamadanVideoSlider = () => {
                                             textShadow: "2px 2px 10px rgba(255,255,255,0.5)"
                                         }}
                                     >
-                                        {slide.title}
+                                        {he.decode(slide.title)}
                                     </Typography>
                                     <Typography
                                         variant="h2"
@@ -575,7 +576,7 @@ const RamadanVideoSlider = () => {
                 .swiper-button-next,
                 .swiper-button-prev {
                     color: #BF953F !important;
-                    background: rgba(255, 255, 255, 0.9);
+                    background: #BF953F !important;
                     backdrop-filter: blur(10px);
                     width: 50px;
                     height: 50px;
@@ -594,8 +595,8 @@ const RamadanVideoSlider = () => {
 
                 .swiper-button-next:hover,
                 .swiper-button-prev:hover {
-                    background: #BF953F;
-                    color: #FFFFFF !important;
+                    background: #bf953fab;
+                    color: #000000 !important;
                     border-color: #BF953F;
                     transform: scale(1.1);
                     box-shadow: 0 6px 16px rgba(191, 149, 63, 0.3);

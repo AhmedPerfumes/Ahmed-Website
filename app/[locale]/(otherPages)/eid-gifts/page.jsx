@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
 
 const RamadanGifting = () => {
   return (
-    <div className="page-wrapper min-vh-100 d-flex flex-column">
+    <div className="page-wrapper pt-0 min-vh-100 d-flex flex-column">
       {/* Navigation Header */}
       <Header14 />
 
@@ -43,7 +43,7 @@ const RamadanGifting = () => {
 
         {/* Trial Section 1: Islamic Hero */}
         <IslamicHero />
-        <RamadanVideo/>
+        {/* <RamadanVideo/> */}
 
         {/* Ramadan Special Offers Section */}
         <RamadanSpecialOffer />

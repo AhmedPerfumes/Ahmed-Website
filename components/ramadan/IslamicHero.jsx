@@ -69,7 +69,7 @@ const IslamicHero = () => {
                         height: "100%",
                         backgroundImage: `url('${isMobile ? "/assets/images/ramadan/eid-mobile.jpeg" : "/assets/images/ramadan/eid-banner.jpeg"}')`,
                         backgroundSize: "cover",
-                        backgroundPosition: "center",
+                        backgroundPosition: isMobile ? "center top" : "center",
                         backgroundRepeat: "no-repeat"
                     }}
                 />
