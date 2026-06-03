@@ -10,7 +10,7 @@ import { EffectFade, Navigation } from "swiper/modules";
 import "./carousel.css";
 import Badge from "./Badge";
 
-const Carousel = ({ images, activeIndex, setActiveIndex }) => {
+const Carousel = ({ images, activeIndex, setActiveIndex, product }) => {
     const swiperRef = useRef(null);
 
     useEffect(() => {
@@ -27,6 +27,48 @@ const Carousel = ({ images, activeIndex, setActiveIndex }) => {
             onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
             className="w-100 responsive-swiper position-relative"
         >
+            {/* Circular Sale Badge */}
+            {(() => {
+                const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
+                const parseUTC = (dt) => dt ? new Date(dt.replace(' ', 'T') + 'Z') : null;
+                const start = parseUTC(product?.discount?.start_date);
+                const end = parseUTC(product?.discount?.end_date);
+                const isActive = product?.discount && start && end && now >= start && now <= end;
+                if (!isActive) return null;
+                const { discount_type, value } = product.discount;
+                return (
+                    <div style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '16px',
+                        zIndex: 10,
+                        width: '56px',
+                        height: '56px',
+                        borderRadius: '50%',
+                        background: '#5a9a5a', // Elegant muted green
+                        color: '#ffffff',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(90,154,90,0.25)',
+                        textTransform: 'uppercase',
+                        fontWeight: 800,
+                        lineHeight: 1.1,
+                        textAlign: 'center',
+                    }}>
+                        {discount_type === 'percent' ? (
+                            <>
+                                <span style={{ fontSize: '15px' }}>{value}%</span>
+                                <span style={{ fontSize: '9px', opacity: 0.9 }}>OFF</span>
+                            </>
+                        ) : (
+                            <span style={{ fontSize: '12px' }}>Sale</span>
+                        )}
+                    </div>
+                );
+            })()}
+
             {images.map((image, index) => (
                 <SwiperSlide key={index}>
                     {/* Render the badge if its data exists for this image */}

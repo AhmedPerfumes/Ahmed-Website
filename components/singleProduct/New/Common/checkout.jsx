@@ -310,7 +310,9 @@ const Checkout = ({ product }) => {
                     {product?.price || "0.00"} د.إ
                 </p>
             </div> */}
-            <div className="product-single__price">{renderPrice(product, currency)}</div>
+
+        <div className="product-single__price">{renderPrice(product, currency)}</div>
+
            
             {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
             {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (

@@ -34,6 +34,7 @@ const GalleryBase = ({ images, product, activeIndex, setActiveIndex, onThumbnail
                     images={imagesWithBadges}
                     activeIndex={activeIndex}
                     setActiveIndex={setActiveIndex}
+                    product={product}
                 />
             </div>
 

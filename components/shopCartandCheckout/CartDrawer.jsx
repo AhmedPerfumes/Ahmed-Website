@@ -9,6 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 import { useUser } from "@/context/UserContext";
+import FreeGiftFeature from "../FreeGiftFeature";
 // import RamadanOffersModal from "../ramadan/RamadanOffersModal";
 
 export default function CartDrawer() {
@@ -172,6 +173,7 @@ export default function CartDrawer() {
 
   return (
     <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    
       <div className={`aside ${locale === 'ar' ? 'aside_left' : 'aside_right'} overflow-hidden cart-drawer`} id="cartDrawer">
         <div className="aside-header d-flex align-items-center">
           <h3 className="text-uppercase fs-6 mb-0">
@@ -341,6 +343,7 @@ export default function CartDrawer() {
               <p className="success mb-0">{t("CartDrawer.FreeShippingQualified")}</p>
             )}
           </div>
+            <FreeGiftFeature/>
 
           <hr className="cart-drawer-divider" />
           

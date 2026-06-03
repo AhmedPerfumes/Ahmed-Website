@@ -599,7 +599,11 @@ export default function Shop1({ search }) {
                         {elm.product_qty <= 0 ? (
                           <div className="product-label label--out-of-stock">{t("Out Of Stock")}</div>
                         ) : (
-                          elm.discount && <div className="product-label label--sale">{t("Sale")} {elm.discount.value}%</div>
+                          elm.discount && (
+                            <div className="product-label label--sale">
+                              {elm.discount.discount_type === "percent" ? `Sale ${elm.discount.value}%` : "Sale"}
+                            </div>
+                          )
                         )}
                       </SwiperSlide>
 

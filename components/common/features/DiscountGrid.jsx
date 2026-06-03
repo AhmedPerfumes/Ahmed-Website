@@ -442,7 +442,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                     ) : (
                       elm.discount && (
                         <div className="product-label label--sale">
-                          {t("Sale")} {elm.discount.value}%
+                          {elm.discount.discount_type === "percent" ? `Sale ${elm.discount.value}%` : "Sale"}
                         </div>
                       )
                     )}
