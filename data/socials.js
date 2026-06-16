@@ -23,4 +23,12 @@ export const socialLinks = [
     viewBox: "0 0 14 15",
     icon: "#icon_youtube",
   },
+  {
+    href: "https://ae.linkedin.com/company/ahmed-al-maghribi-perfumes",
+    className: "svg-icon svg-icon_linkedin",
+    width: 14,
+    height: 14,
+    viewBox: "0 0 24 24",
+    icon: "#icon_linkedin",
+  },
 ];

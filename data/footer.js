@@ -93,6 +93,17 @@ export const socialLinks = [
     ),
   },
 
+  {
+    href: "https://ae.linkedin.com/company/ahmed-al-maghribi-perfumes",
+    className: "svg-icon svg-icon_linkedin",
+    width: 14,
+    height: 14,
+    viewBox: "0 0 24 24",
+    icon: (
+      <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.27 19.5h-3.47v-10.5h3.47v10.5zm-1.73-11.97c-1.11 0-2.01-.9-2.01-2.01s.9-2.01 2.01-2.01 2.01.9 2.01 2.01-.9 2.01-2.01 2.01zm13.5 11.97h-3.47v-5.51c0-1.31-.02-3.01-1.83-3.01-1.84 0-2.12 1.43-2.12 2.91v5.61h-3.47v-10.5h3.33v1.44h.05c.46-.88 1.59-1.8 3.27-1.8 3.5 0 4.14 2.3 4.14 5.29v5.57z" />
+    ),
+  },
+
 ];
 
 export const paymentMethods = [

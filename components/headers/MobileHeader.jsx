@@ -39,6 +39,21 @@ export default function MobileHeader() {
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const searchInputRef = useRef(null);
+  const [currentCountryLink, setCurrentCountryLink] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const currentOrigin = window.location.origin;
+      const matchedOption = currencyOptions.find(option => 
+        option.link && (currentOrigin.includes(option.link) || option.link.includes(currentOrigin))
+      );
+      if (matchedOption) {
+        setCurrentCountryLink(matchedOption.link);
+      } else {
+        setCurrentCountryLink(currencyOptions[0].link);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (isSearchActive && searchInputRef.current) {
@@ -101,6 +116,10 @@ export default function MobileHeader() {
     effect: "fade",
     loop: true,
   };
+
+
+
+  
 
   const onSearch = (event) => {
     event.preventDefault();
@@ -401,62 +420,99 @@ export default function MobileHeader() {
                 </Link>
             )}
           </div> */}
-            <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
-              <Link href={`/${locale}/order-tracking`}>
-                <IoReorderTwoSharp size={20} />
-                <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-                  {t("Track Your Order")}
-                </span>
+            <div className="container mt-3">
+              <Link 
+                href={`/${locale}/store-locator`}
+                className="d-flex align-items-center justify-content-between p-3 rounded text-decoration-none"
+                style={{
+                  backgroundColor: '#fcfcfc',
+                  color: '#111',
+                  borderRadius: '8px',
+                  border: '1px solid #f0f0f0',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <div className="d-flex align-items-center gap-3">
+                  <div 
+                    className="d-flex align-items-center justify-content-center rounded-circle" 
+                    style={{ width: '36px', height: '36px', backgroundColor: 'rgba(255,193,7,0.1)' }}
+                  >
+                    <IoLocationOutline size={20} style={{ color: '#ffc107' }} />
+                  </div>
+                  <span className="text-uppercase fw-bold" style={{ fontSize: '12px', letterSpacing: '0.8px' }}>
+                    {t("Find a store")}
+                  </span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2.5">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
               </Link>
             </div>
-            <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
-              <Link href={`/${locale}/store-locator`}>
-                <IoLocationOutline size={20} />
-                <span className="d-inline-block ms-2 text-uppercase align-middle fw-medium">
-                  {t("Find a store")}
-                </span>
-              </Link>
-            </div>
-            <div className="d-flex">
-              <div className="container d-flex align-items-center">
-                <label className="me-2 text-secondary">{t("Language")}</label>
-                <select
-                  className="form-select form-select-sm bg-transparent border-0"
-                  aria-label="Default select example"
-                  name="store-language"
-                  value={locale}
-                  onChange={handleLangChange}
-                >
-                  {languageOptions.map((option, index) => (
-                    <option
-                      key={index}
-                      className="footer-select__option"
-                      value={option.value}
+            <div className="container mt-3 mb-3 border-bottom pb-3">
+              <div className="row g-2">
+                <div className="col-6">
+                  <div 
+                    className="d-flex flex-column p-2 border rounded" 
+                    style={{ borderColor: '#f0f0f0', borderRadius: '8px', backgroundColor: '#fcfcfc' }}
+                  >
+                    <span 
+                      className="text-uppercase fw-semibold text-muted text-start" 
+                      style={{ fontSize: '9px', letterSpacing: '0.5px', marginBottom: '2px', display: 'block' }}
                     >
-                      {option.text}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                      {t("Language")}
+                    </span>
+                    <select
+                      className="form-select form-select-sm border-0 bg-transparent p-0 shadow-none fw-semibold text-dark text-start"
+                      aria-label="Language selector"
+                      name="store-language"
+                      value={locale}
+                      onChange={handleLangChange}
+                      style={{ fontSize: '13px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
+                    >
+                      {languageOptions.map((option, index) => (
+                        <option
+                          key={index}
+                          className="text-dark bg-white"
+                          value={option.value}
+                        >
+                          {option.text}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-              <div className="container d-flex align-items-center">
-                <label className="me-2 text-secondary">{t("Country")}</label>
-                <select
-                  className="form-select form-select-sm bg-transparent border-0"
-                  aria-label="Default select example"
-                  name="store-language"
-                  onChange={(e) => window.open(e.target.value, "_self")}
-                >
-                  {currencyOptions.map((option, index) => (
-                    <option
-                      key={index}
-                      className="footer-select__option"
-                      value={option.link}
+                <div className="col-6">
+                  <div 
+                    className="d-flex flex-column p-2 border rounded" 
+                    style={{ borderColor: '#f0f0f0', borderRadius: '8px', backgroundColor: '#fcfcfc' }}
+                  >
+                    <span 
+                      className="text-uppercase fw-semibold text-muted text-start" 
+                      style={{ fontSize: '9px', letterSpacing: '0.5px', marginBottom: '2px', display: 'block' }}
                     >
-                      {t(option.text)}
-                    </option>
-                  ))}
-                </select>
+                      {t("Country")}
+                    </span>
+                    <select
+                      className="form-select form-select-sm border-0 bg-transparent p-0 shadow-none fw-semibold text-dark text-start"
+                      aria-label="Country selector"
+                      name="store-country"
+                      value={currentCountryLink}
+                      onChange={(e) => window.open(e.target.value, "_self")}
+                      style={{ fontSize: '13px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
+                    >
+                      {currencyOptions.map((option, index) => (
+                        <option
+                          key={index}
+                          className="text-dark bg-white"
+                          value={option.link}
+                        >
+                          {t(option.text)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
 
