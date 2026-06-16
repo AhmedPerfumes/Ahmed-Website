@@ -139,7 +139,7 @@ export default function MobileNav() {
                           }`}
                         style={{
                           textAlign: locale === 'ar' ? 'right' : 'left',
-                          fontSize: '0.95rem'
+                          fontSize: '0.825rem'
                         }}
                       >
                         {t(elm.name)}

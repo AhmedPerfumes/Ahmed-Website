@@ -420,98 +420,79 @@ export default function MobileHeader() {
                 </Link>
             )}
           </div> */}
-            <div className="container mt-3">
-              <Link 
-                href={`/${locale}/store-locator`}
-                className="d-flex align-items-center justify-content-between p-3 rounded text-decoration-none"
-                style={{
-                  backgroundColor: '#fcfcfc',
-                  color: '#111',
-                  borderRadius: '8px',
-                  border: '1px solid #f0f0f0',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <div className="d-flex align-items-center gap-3">
-                  <div 
-                    className="d-flex align-items-center justify-content-center rounded-circle" 
-                    style={{ width: '36px', height: '36px', backgroundColor: 'rgba(255,193,7,0.1)' }}
-                  >
-                    <IoLocationOutline size={20} style={{ color: '#ffc107' }} />
-                  </div>
-                  <span className="text-uppercase fw-bold" style={{ fontSize: '12px', letterSpacing: '0.8px' }}>
+            <div className="container mt-2 mb-2 pb-3 border-bottom">
+              <div className="d-flex align-items-center justify-content-between gap-2">
+                {/* Find a Store Button */}
+                <Link 
+                  href={`/${locale}/store-locator`}
+                  className="d-flex align-items-center justify-content-center p-2 rounded text-decoration-none border"
+                  style={{
+                    backgroundColor: '#fcfcfc',
+                    color: '#111',
+                    borderColor: '#f0f0f0',
+                    height: '42px',
+                    flex: '1 1 0px',
+                    minWidth: '0'
+                  }}
+                >
+                  <IoLocationOutline size={16} className="text-warning me-1 flex-shrink-0" />
+                  <span className="text-uppercase fw-bold text-truncate" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>
                     {t("Find a store")}
                   </span>
-                </div>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2.5">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </Link>
-            </div>
-            <div className="container mt-3 mb-3 border-bottom pb-3">
-              <div className="row g-2">
-                <div className="col-6">
-                  <div 
-                    className="d-flex flex-column p-2 border rounded" 
-                    style={{ borderColor: '#f0f0f0', borderRadius: '8px', backgroundColor: '#fcfcfc' }}
+                </Link>
+
+                {/* Language Selector */}
+                <div 
+                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded" 
+                  style={{ borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }}
+                >
+                  <span 
+                    className="text-uppercase fw-semibold text-muted text-start" 
+                    style={{ fontSize: '8px', letterSpacing: '0.5px', display: 'block', lineHeight: '1', marginBottom: '2px' }}
                   >
-                    <span 
-                      className="text-uppercase fw-semibold text-muted text-start" 
-                      style={{ fontSize: '9px', letterSpacing: '0.5px', marginBottom: '2px', display: 'block' }}
-                    >
-                      {t("Language")}
-                    </span>
-                    <select
-                      className="form-select form-select-sm border-0 bg-transparent p-0 shadow-none fw-semibold text-dark text-start"
-                      aria-label="Language selector"
-                      name="store-language"
-                      value={locale}
-                      onChange={handleLangChange}
-                      style={{ fontSize: '13px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
-                    >
-                      {languageOptions.map((option, index) => (
-                        <option
-                          key={index}
-                          className="text-dark bg-white"
-                          value={option.value}
-                        >
-                          {option.text}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                    {t("Language")}
+                  </span>
+                  <select
+                    className="form-select form-select-sm border-0 bg-transparent p-0 shadow-none fw-semibold text-dark text-start"
+                    aria-label="Language selector"
+                    name="store-language"
+                    value={locale}
+                    onChange={handleLangChange}
+                    style={{ fontSize: '11px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
+                  >
+                    {languageOptions.map((option, index) => (
+                      <option key={index} className="text-dark bg-white" value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
-                <div className="col-6">
-                  <div 
-                    className="d-flex flex-column p-2 border rounded" 
-                    style={{ borderColor: '#f0f0f0', borderRadius: '8px', backgroundColor: '#fcfcfc' }}
+                {/* Country Selector */}
+                <div 
+                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded" 
+                  style={{ borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }}
+                >
+                  <span 
+                    className="text-uppercase fw-semibold text-muted text-start" 
+                    style={{ fontSize: '8px', letterSpacing: '0.5px', display: 'block', lineHeight: '1', marginBottom: '2px' }}
                   >
-                    <span 
-                      className="text-uppercase fw-semibold text-muted text-start" 
-                      style={{ fontSize: '9px', letterSpacing: '0.5px', marginBottom: '2px', display: 'block' }}
-                    >
-                      {t("Country")}
-                    </span>
-                    <select
-                      className="form-select form-select-sm border-0 bg-transparent p-0 shadow-none fw-semibold text-dark text-start"
-                      aria-label="Country selector"
-                      name="store-country"
-                      value={currentCountryLink}
-                      onChange={(e) => window.open(e.target.value, "_self")}
-                      style={{ fontSize: '13px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
-                    >
-                      {currencyOptions.map((option, index) => (
-                        <option
-                          key={index}
-                          className="text-dark bg-white"
-                          value={option.link}
-                        >
-                          {t(option.text)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                    {t("Country")}
+                  </span>
+                  <select
+                    className="form-select form-select-sm border-0 bg-transparent p-0 shadow-none fw-semibold text-dark text-start"
+                    aria-label="Country selector"
+                    name="store-country"
+                    value={currentCountryLink}
+                    onChange={(e) => window.open(e.target.value, "_self")}
+                    style={{ fontSize: '11px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
+                  >
+                    {currencyOptions.map((option, index) => (
+                      <option key={index} className="text-dark bg-white" value={option.link}>
+                        {t(option.text)}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
