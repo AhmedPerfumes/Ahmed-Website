@@ -12,7 +12,157 @@ import "swiper/css";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Autoplay, Navigation } from "swiper/modules";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
+
+// ─── Standalone component — defined OUTSIDE Categories so React never remounts it ───
+function MobileVideoCard({ elm, t, isPlaying, onToggle, aspectRatio = "330 / 500" }) {
+  const videoRef = useRef(null);
+  const loadedRef = useRef(false);
+
+  const handleTap = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isPlaying) {
+      video.pause();
+      onToggle(null);
+    } else {
+      // Load the source first if preload=none (important for iOS)
+      if (!loadedRef.current) {
+        video.load();
+        loadedRef.current = true;
+      }
+      onToggle(elm.id);
+      video.play().catch(() => {});
+    }
+  };
+
+  // Pause externally when another card starts playing
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!isPlaying && !video.paused) {
+      video.pause();
+    }
+  }, [isPlaying]);
+
+  return (
+    <div
+      className="d-block mb-3 position-relative"
+      style={{ width: "100%", maxWidth: 330, aspectRatio, overflow: "hidden", cursor: "pointer" }}
+      onClick={handleTap}
+    >
+      {/* Thumbnail — fades out when video plays */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          transition: "opacity 0.35s ease",
+          opacity: isPlaying ? 0 : 1,
+          pointerEvents: "none",
+        }}
+      >
+        <Image
+          src={elm.imgSrc2}
+          alt={t(elm.altText)}
+          fill
+          style={{ objectFit: "cover" }}
+          sizes="(max-width: 576px) 50vw, (max-width: 768px) 33vw, 330px"
+          quality={75}
+        />
+      </div>
+
+      {/* Video — playsInline stops iOS fullscreen */}
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        preload="none"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+        }}
+      >
+        <source type="video/mp4" src={elm.videoSrc} />
+      </video>
+
+      {/* Play button overlay — shown when paused */}
+      {!isPlaying && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 2,
+            pointerEvents: "none",
+            background: "rgba(0,0,0,0.08)",
+          }}
+        >
+          <div
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.88)",
+              backdropFilter: "blur(8px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1D1B19">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
+      )}
+
+      {/* Pause badge — top-right when playing */}
+      {isPlaying && (
+        <div
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            zIndex: 2,
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.78)",
+              backdropFilter: "blur(6px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 1px 8px rgba(0,0,0,0.15)",
+            }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#1D1B19">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Categories({ section }) {
   const t = useTranslations();
@@ -21,11 +171,19 @@ export default function Categories({ section }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  // Track nav state — null = hidden (not needed), true/false = enabled/disabled
+  const [isMobile, setIsMobile] = useState(false);
+  const [playingId, setPlayingId] = useState(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const [navState, setNavState] = useState({ showPrev: false, showNext: false, hidden: false });
 
   const updateNavState = useCallback((swiper) => {
-    // If all slides fit without scrolling, hide nav entirely
     const isNavigable = swiper.slides.length > swiper.params.slidesPerView;
     if (!isNavigable) {
       setNavState({ showPrev: false, showNext: false, hidden: true });
@@ -65,40 +223,53 @@ export default function Categories({ section }) {
 
   const renderSlides = (categories) =>
     categories.map((elm, i) => (
-      <SwiperSlide key={i}>
+      <SwiperSlide key={elm.id ?? i}>
         {section !== "sectionTop" ? (
-          <Link
-            href={`/${locale}${elm.link}`}
-            className="d-block mb-3 position-relative"
-            style={{ width: "100%", maxWidth: 330, aspectRatio: "330 / 500" }}
-          >
-            <Image
-              src={elm.imgSrc2}
-              alt={t(elm.altText)}
-              fill
-              style={{ objectFit: "cover" }}
-              sizes="(max-width: 576px) 50vw, (max-width: 768px) 33vw, 330px"
-              quality={75}
+          elm.videoSrc && isMobile ? (
+            // Mobile: standalone component, tap-to-play, no Link wrapper
+            <MobileVideoCard
+              elm={elm}
+              t={t}
+              isPlaying={playingId === elm.id}
+              onToggle={setPlayingId}
+              aspectRatio="330 / 500"
             />
-            {elm.videoSrc && (
-              <video
-                muted
-                loop
-                preload="none"
-                onMouseOver={(e) => e.currentTarget.play()}
-                onMouseOut={(e) => e.currentTarget.pause()}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              >
-                <source type="video/mp4" src={elm.videoSrc} />
-              </video>
-            )}
-          </Link>
+          ) : (
+            // Desktop: Link wrapper with hover-to-play
+            <Link
+              href={`/${locale}${elm.link}`}
+              className="d-block mb-3 position-relative"
+              style={{ width: "100%", maxWidth: 330, aspectRatio: "330 / 500" }}
+            >
+              <Image
+                src={elm.imgSrc2}
+                alt={t(elm.altText)}
+                fill
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 576px) 50vw, (max-width: 768px) 33vw, 330px"
+                quality={75}
+              />
+              {elm.videoSrc && (
+                <video
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  onMouseOver={(e) => e.currentTarget.play()}
+                  onMouseOut={(e) => e.currentTarget.pause()}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                >
+                  <source type="video/mp4" src={elm.videoSrc} />
+                </video>
+              )}
+            </Link>
+          )
         ) : (
           <Link
             href={`/${locale}${elm.link}`}
@@ -179,7 +350,6 @@ export default function Categories({ section }) {
         <div className="cat-slider-wrap">
           <Swiper {...swiperOptions}>{renderSlides(data)}</Swiper>
 
-          {/* Bottom-right nav — only render when slider is navigable */}
           {!navState.hidden && (
             <div className="cat-nav-group">
               <button
@@ -189,7 +359,7 @@ export default function Categories({ section }) {
                 disabled={!navState.showPrev}
               >
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                  <path d="M8.5 2L4 6.5L8.5 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8.5 2L4 6.5L8.5 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               <button
@@ -199,7 +369,7 @@ export default function Categories({ section }) {
                 disabled={!navState.showNext}
               >
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                  <path d="M4.5 2L9 6.5L4.5 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M4.5 2L9 6.5L4.5 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </div>
@@ -210,7 +380,6 @@ export default function Categories({ section }) {
           .cat-slider-wrap {
             position: relative;
           }
-
           .cat-nav-group {
             display: flex;
             align-items: center;
@@ -218,14 +387,13 @@ export default function Categories({ section }) {
             justify-content: flex-end;
             margin-top: 18px;
           }
-
           .cat-nav-btn {
             width: 34px;
             height: 34px;
             border-radius: 50%;
             border: 1.5px solid rgba(29, 27, 25, 0.5);
             background: transparent;
-            color: #1D1B19;
+            color: #1d1b19;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -234,19 +402,16 @@ export default function Categories({ section }) {
             padding: 0;
             flex-shrink: 0;
           }
-
           .cat-nav-btn:hover:not(:disabled) {
-            background: #1D1B19;
+            background: #1d1b19;
             color: #fff;
-            border-color: #1D1B19;
+            border-color: #1d1b19;
           }
-
           .cat-nav-btn--faded {
             opacity: 0.2;
             cursor: not-allowed;
           }
-
-          [dir='rtl'] .cat-nav-group {
+          [dir="rtl"] .cat-nav-group {
             justify-content: flex-start;
           }
         `}</style>

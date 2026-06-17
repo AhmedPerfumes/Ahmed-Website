@@ -1,24 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 
-export default function Pagination2({ totalPages = 4 }) {
-  const [currentPage, setCurrentPage] = useState(1);
-
+export default function Pagination2({ totalPages = 4, currentPage = 1, onPageChange }) {
   const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    if (onPageChange) onPageChange(pageNumber);
   };
 
   const handlePrevClick = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1 && onPageChange) onPageChange(currentPage - 1);
   };
 
   const handleNextClick = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < totalPages && onPageChange) onPageChange(currentPage + 1);
   };
 
   return (

@@ -331,8 +331,8 @@ export const categories88 = [
     altText: "Rawdha By Ahmed",
     videoSrc: "/assets/videos/vlogs/gauhar-khan.mp4",
     imgSrc2: "/assets/videos/vlogs/thumbnails/gauhar-khan.jpg",
-    link: "/shop?q=rawdha",
-    btn: "/shop?q=rawdha"
+    link: "/shop/perfumes/oriental-fragrance/rawdha-by-ahmed-50ml",
+    btn: "/shop/perfumes/oriental-fragrance/rawdha-by-ahmed-50ml"
   },
   {
     id: 3,
@@ -372,15 +372,6 @@ export const categories88 = [
   },
   {
     id: 7,
-    imgSrc: "/assets/images/home/demo15/category-1.jpg",
-    altText: "Rawdha Oil",
-    videoSrc: "https://www.ahmedalmaghribi.co.in/wp-content/uploads/2025/04/Jannat.mp4",
-    imgSrc2: "/assets/videos/vlogs/thumbnails/jannat-zubair.png",
-    link: "/shop?q=rawdha",
-    btn: "/shop?q=rawdha"
-  },
-  {
-    id: 8,
     imgSrc: "/assets/images/home/demo15/category-1.jpg",
     altText: "Laathani",
     // subText: "Embrace unforgettable elegance",
