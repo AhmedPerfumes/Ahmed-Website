@@ -1,18 +1,24 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
-export default function Pagination2({ totalPages = 4, currentPage = 1, onPageChange }) {
+export default function Pagination2({ totalPages = 4 }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const handlePageClick = (pageNumber) => {
-    if (onPageChange) onPageChange(pageNumber);
+    setCurrentPage(pageNumber);
   };
 
   const handlePrevClick = () => {
-    if (currentPage > 1 && onPageChange) onPageChange(currentPage - 1);
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleNextClick = () => {
-    if (currentPage < totalPages && onPageChange) onPageChange(currentPage + 1);
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   return (
@@ -22,9 +28,8 @@ export default function Pagination2({ totalPages = 4, currentPage = 1, onPageCha
     >
       <Link
         href="#"
-        className={`btn-link d-inline-flex align-items-center ${
-          currentPage === 1 ? "disabled" : ""
-        }`}
+        className={`btn-link d-inline-flex align-items-center ${currentPage === 1 ? "disabled" : ""
+          }`}
         onClick={(e) => {
           e.preventDefault();
           handlePrevClick();
@@ -45,9 +50,8 @@ export default function Pagination2({ totalPages = 4, currentPage = 1, onPageCha
         {Array.from({ length: totalPages }, (_, index) => (
           <li key={index} className="page-item">
             <Link
-              className={`btn-link px-1 mx-2 ${
-                currentPage === index + 1 ? "btn-link_active" : ""
-              }`}
+              className={`btn-link px-1 mx-2 ${currentPage === index + 1 ? "btn-link_active" : ""
+                }`}
               href="#"
               onClick={(e) => {
                 e.preventDefault();
@@ -61,9 +65,8 @@ export default function Pagination2({ totalPages = 4, currentPage = 1, onPageCha
       </ul>
       <Link
         href="#"
-        className={`btn-link d-inline-flex align-items-center ${
-          currentPage === totalPages ? "disabled" : ""
-        }`}
+        className={`btn-link d-inline-flex align-items-center ${currentPage === totalPages ? "disabled" : ""
+          }`}
         onClick={(e) => {
           e.preventDefault();
           handleNextClick();

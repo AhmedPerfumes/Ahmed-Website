@@ -419,7 +419,7 @@ const HeaderSkeleton = () => {
                         <Link href="/">
                             <Image
                                 loading="eager"
-                                src="/assets/images/about/AhmedLogo.png"
+                                src="/assets/images/logo/Desktop.svg"
                                 width="100"
                                 height="100"
                                 alt="Ahmed Al Maghribi"
@@ -1035,7 +1035,7 @@ export default function Header14() {
                                 <Link href="/">
                                     <Image
                                         loading="lazy"
-                                        src="/assets/images/about/AhmedLogo.png"
+                                        src="/assets/images/logo/Desktop.svg"
                                         width="100"
                                         height="100"
                                         alt="Ahmed Al Maghribi"
@@ -1257,7 +1257,7 @@ export default function Header14() {
                         <div className="sticky-logo align-items-center">
                             <Link href="/">
                                 <Image
-                                    src="/assets/images/about/AhmedLogo.png"
+                                    src="/assets/images/logo/Desktop.svg"
                                     width={45}
                                     height={45}
                                     alt="Ahmed Al Maghribi"

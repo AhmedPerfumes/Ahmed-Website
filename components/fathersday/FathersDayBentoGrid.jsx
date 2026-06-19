@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 const translations = {
     en: {
         subtitle: "✦ EXPLORE BY CATEGORY ✦",
-        title: "Eid Essentials",
+        title: "Father's Day Essentials",
         categories: {
             perfumes: "Perfumes",
             concentrated_parfum: "Concentrated Parfum",
@@ -20,7 +20,7 @@ const translations = {
     },
     ar: {
         subtitle: "✦ استكشف حسب الفئة ✦",
-        title: "أساسيات العيد",
+        title: "أساسيات يوم الأب",
         categories: {
             perfumes: "عطور",
             concentrated_parfum: "العطورالزيتية",
@@ -32,7 +32,7 @@ const translations = {
     }
 };
 
-const RamadanBentoGrid = () => {
+const FathersDayBentoGrid = () => {
     const locale = useLocale();
     const isRtl = locale === "ar";
     const t = translations[locale] || translations.en;
@@ -46,13 +46,13 @@ const RamadanBentoGrid = () => {
         },
         {
             title: t.categories.gift_sets,
-            image: "/assets/images/fathersday/giftset.jpeg",
+            image: "/assets/images/fathersday/gift-set2.jpeg",
             gridArea: { xs: "auto", md: "1 / 3 / 2 / 6" }, // 1x3
             slug: "gift-sets",
         },
         {
             title: t.categories.dakhoon,
-            image: "/assets/images/fathersday/bakhoor.jpeg",
+            image: "/assets/images/fathersday/bakhoooor.jpeg",
             gridArea: { xs: "auto", md: "2 / 3 / 3 / 5" }, // 1x2
             slug: "dakhoon",
         },
@@ -64,13 +64,13 @@ const RamadanBentoGrid = () => {
         },
         {
             title: t.categories.collection,
-            image: "/assets/images/ramadan/collections-1.jpeg",
+            image: "/assets/images/fathersday/collections-1.jpeg",
             gridArea: { xs: "auto", md: "3 / 1 / 4 / 3" }, // 1x2
             slug: "collections",
         },
         {
             title: t.categories.care_essentials,
-            image: "/assets/images/ramadan/care-essentials-1.png",
+            image: "/assets/images/fathersday/care-essentials.jpeg",
             gridArea: { xs: "auto", md: "3 / 3 / 4 / 5" }, // 1x2
             slug: "care-essentials",
         }
@@ -243,4 +243,4 @@ const RamadanBentoGrid = () => {
     );
 };
 
-export default RamadanBentoGrid;
+export default FathersDayBentoGrid;

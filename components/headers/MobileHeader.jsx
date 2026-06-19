@@ -225,7 +225,7 @@ export default function MobileHeader() {
             >
               <a href="/">
                 <Image
-                  src="/assets/images/Ahmed-logo.svg"
+                  src="/assets/images/logo/Mobile.svg"
                   width={140}
                   height={50}
                   alt="Ahmed"
