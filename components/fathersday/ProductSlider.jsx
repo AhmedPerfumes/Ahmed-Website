@@ -33,16 +33,16 @@ const ProductSlider = () => {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        page: 1, 
+                    body: JSON.stringify({
+                        page: 1,
                         limit: 12
                     }),
                 });
-                
+
                 const result = await response.json();
-                const allProducts = (result.data || []).map((p) => ({ 
-                    ...p, 
-                    price: Number(p.price) 
+                const allProducts = (result.data || []).map((p) => ({
+                    ...p,
+                    price: Number(p.price)
                 }));
 
                 // Filter or sort to show premium fragrances suitable for fathers (woody, oud, amber, musk, oriental)
@@ -52,7 +52,7 @@ const ProductSlider = () => {
                     const nameB = b.product_name.toLowerCase();
                     const matchA = fathersKeywords.some(key => nameA.includes(key)) ? 1 : 0;
                     const matchB = fathersKeywords.some(key => nameB.includes(key)) ? 1 : 0;
-                    return matchB - matchA; 
+                    return matchB - matchA;
                 });
 
                 setProducts(curated);
@@ -66,6 +66,20 @@ const ProductSlider = () => {
     }, []);
 
     const clean = (s) => s?.toLowerCase().replace(/&amp;/g, "").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
+
+    const isSubcategory = (category, subcategory) => {
+        if (subcategory && subcategory.subcategory_name) {
+            return clean(subcategory.subcategory_name);
+        }
+        if (subcategory && typeof subcategory === 'string') {
+            return clean(subcategory);
+        }
+        const catClean = clean(category);
+        if (catClean === "gift-sets" || catClean === "hair-mist" || catClean === "extrait-de-parfum") {
+            return catClean;
+        }
+        return "online-exclusive";
+    };
 
     if (!loading && products.length === 0) {
         return null;
@@ -222,7 +236,7 @@ const ProductSlider = () => {
                                     >
                                         {/* Image Area */}
                                         <Box sx={{ position: "relative", width: "100%", aspectRatio: "1 / 1.15", overflow: "hidden", background: "#F9F6F0" }}>
-                                            <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`} style={{ display: "block", width: "100%", height: "100%" }}>
+                                            <Link href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`} style={{ display: "block", width: "100%", height: "100%" }}>
                                                 <Image
                                                     loading="lazy"
                                                     src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
@@ -274,8 +288,8 @@ const ProductSlider = () => {
                                                 }}
                                             >
                                                 {/* Absolute positioned background link to make the rest of the overlay clickable */}
-                                                <Link 
-                                                    href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`}
+                                                <Link
+                                                    href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`}
                                                     style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }}
                                                     aria-label={elm.product_name}
                                                 />
@@ -318,15 +332,15 @@ const ProductSlider = () => {
                                                                 }
                                                             }}
                                                         >
-                                                            {isAddedToCartProducts(elm.product_id) 
-                                                                ? (isArabic ? "في السلة" : "Added") 
+                                                            {isAddedToCartProducts(elm.product_id)
+                                                                ? (isArabic ? "في السلة" : "Added")
                                                                 : (isArabic ? "أضف إلى السلة" : "Add to Cart")
                                                             }
                                                         </Button>
                                                     ) : (
                                                         <Button
                                                             component={Link}
-                                                            href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`}
+                                                            href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`}
                                                             variant="contained"
                                                             sx={{
                                                                 background: "#FFFFFF",
@@ -389,13 +403,13 @@ const ProductSlider = () => {
                                                         WebkitBoxOrient: "vertical"
                                                     }}
                                                 >
-                                                    <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`} style={{ color: "inherit", textDecoration: "none" }}>
+                                                    <Link href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`} style={{ color: "inherit", textDecoration: "none" }}>
                                                         {t(he.decode(elm.product_name))}
                                                     </Link>
                                                 </Typography>
                                             </Box>
-
-                                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: { xs: 0.5, md: 1 }, pt: { xs: 1.5, md: 2 }, borderTop: "1px solid rgba(44, 36, 22, 0.08)" }}>
+                                                                         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: { xs: 0.5, md: 1 }, pt: { xs: 1.5, md: 2 }, borderTop: "1px solid rgba(44, 36, 22, 0.08)" }}>
+                                                {/* Left side: Price */}
                                                 <Box>
                                                     <Typography variant="caption" sx={{ color: "rgba(44, 36, 22, 0.6)", display: "block", fontSize: { xs: "0.5rem", md: "0.6rem" }, textTransform: "uppercase", letterSpacing: "1px" }}>
                                                         {isArabic ? "السعر" : "Price"}
@@ -405,29 +419,93 @@ const ProductSlider = () => {
                                                     </Box>
                                                 </Box>
 
-                                                <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`} passHref>
-                                                    <Button
-                                                        variant="text"
-                                                        sx={{
-                                                            color: "#2C2416",
-                                                            fontSize: { xs: "0.65rem", md: "0.75rem" },
-                                                            fontWeight: 700,
-                                                            letterSpacing: { xs: "0.5px", md: "1.5px" },
-                                                            textTransform: "uppercase",
-                                                            borderBottom: "1px solid #BF953F",
-                                                            borderRadius: 0,
-                                                            px: 0,
-                                                            py: 0.5,
-                                                            minWidth: 0,
-                                                            "&:hover": {
-                                                                color: "#BF953F",
-                                                                backgroundColor: "transparent"
-                                                             }
-                                                        }}
-                                                    >
-                                                        {isArabic ? "اكتشف" : "Discover"}
-                                                    </Button>
-                                                </Link>
+                                                {/* Right side: Action controls */}
+                                                <Box>
+                                                    {/* Desktop: Discover Link */}
+                                                    <Box sx={{ display: { xs: "none", md: "block" } }}>
+                                                        <Link href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`} passHref>
+                                                            <Button
+                                                                variant="text"
+                                                                sx={{
+                                                                    color: "#2C2416",
+                                                                    fontSize: "0.75rem",
+                                                                    fontWeight: 700,
+                                                                    letterSpacing: "1.5px",
+                                                                    textTransform: "uppercase",
+                                                                    borderBottom: "1px solid #BF953F",
+                                                                    borderRadius: 0,
+                                                                    px: 0,
+                                                                    py: 0.5,
+                                                                    minWidth: 0,
+                                                                    "&:hover": {
+                                                                        color: "#BF953F",
+                                                                        backgroundColor: "transparent"
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {isArabic ? "اكتشف" : "Discover"}
+                                                            </Button>
+                                                        </Link>
+                                                    </Box>
+
+                                                    {/* Mobile: Add to Cart Button */}
+                                                    <Box sx={{ display: { xs: "block", md: "none" } }}>
+                                                        {elm.product_qty > 0 ? (
+                                                            <Button
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    e.stopPropagation();
+                                                                    addProductToCart(elm);
+                                                                }}
+                                                                disabled={isAddedToCartProducts(elm.product_id)}
+                                                                variant="contained"
+                                                                sx={{
+                                                                    background: "linear-gradient(135deg, #BF953F 0%, #8B6914 100%)",
+                                                                    color: "#FFFFFF",
+                                                                    fontSize: "0.6rem",
+                                                                    fontWeight: 700,
+                                                                    px: 1.5,
+                                                                    py: 0.8,
+                                                                    borderRadius: "30px",
+                                                                    minWidth: "72px",
+                                                                    textTransform: "uppercase",
+                                                                    boxShadow: "0 4px 10px rgba(139, 105, 20, 0.2)",
+                                                                    "&.Mui-disabled": {
+                                                                        background: "rgba(44, 36, 22, 0.08)",
+                                                                        color: "rgba(44, 36, 22, 0.4)"
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {isAddedToCartProducts(elm.product_id)
+                                                                    ? (isArabic ? "في السلة" : "Added")
+                                                                    : (isArabic ? "أضف" : "Add")
+                                                                }
+                                                            </Button>
+                                                        ) : (
+                                                            <Button
+                                                                disabled
+                                                                variant="contained"
+                                                                sx={{
+                                                                    background: "rgba(220, 53, 69, 0.1)",
+                                                                    color: "#dc3545",
+                                                                    fontSize: "0.55rem",
+                                                                    fontWeight: 700,
+                                                                    px: 1,
+                                                                    py: 0.8,
+                                                                    borderRadius: "30px",
+                                                                    minWidth: "72px",
+                                                                    textTransform: "uppercase",
+                                                                    "&.Mui-disabled": {
+                                                                        color: "#dc3545",
+                                                                        opacity: 0.7
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {isArabic ? "نفذ" : "Sold"}
+                                                            </Button>
+                                                        )}
+                                                    </Box>
+                                                </Box>
                                             </Box>
                                         </Box>
                                     </Box>

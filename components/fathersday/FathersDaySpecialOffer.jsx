@@ -75,6 +75,20 @@ const FathersDaySpecialOffer = () => {
 
     const clean = (s) => s?.toLowerCase().replace(/&amp;/g, "").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
 
+    const isSubcategory = (category, subcategory) => {
+        if (subcategory && subcategory.subcategory_name) {
+            return clean(subcategory.subcategory_name);
+        }
+        if (subcategory && typeof subcategory === 'string') {
+            return clean(subcategory);
+        }
+        const catClean = clean(category);
+        if (catClean === "gift-sets" || catClean === "hair-mist" || catClean === "extrait-de-parfum") {
+            return catClean;
+        }
+        return "online-exclusive";
+    };
+
     if (!loading && products.length === 0) {
         return null;
     }
@@ -126,7 +140,7 @@ const FathersDaySpecialOffer = () => {
                                         <Swiper className="background-img" slidesPerView={1} navigation={false} modules={[Navigation]}>
                                             {JSON.parse(elm.images).map((img, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`}>
+                                                    <Link href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`}>
                                                         <Image
                                                             loading="lazy"
                                                             src={`${process.env.NEXT_PUBLIC_API_URL}storage/${img}`}
@@ -176,7 +190,7 @@ const FathersDaySpecialOffer = () => {
                                     <div className="pc__info position-relative">
                                         <p className="pc__category" style={{ fontSize: '0.65rem', marginBottom: '2px' }}>{t(elm.category_name)}</p>
                                         <h6 className="pc__title" style={{ fontSize: '0.85rem', marginBottom: '4px', lineHeight: 1.2 }}>
-                                            <Link href={`/${locale}/shop/${clean(elm.category_name)}/all/${clean(elm.product_name)}`}>
+                                            <Link href={`/${locale}/shop/${clean(elm.category_name)}/${isSubcategory(elm.category_name, elm.subcategory)}/${clean(elm.product_name)}`}>
                                                 {t(he.decode(elm.product_name))}
                                             </Link>
                                         </h6>
