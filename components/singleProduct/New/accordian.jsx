@@ -413,7 +413,7 @@ const ProductAccordion = ({ product }) => {
     // console.log(usageInfo)
 
     return (
-        <div className="accordion" id="productAccordion">
+        <div className="accordion" id="productAccordion" style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
 
         {product.is_collection == 1 && product.collection_items?.length > 0 && (
         <AccordionItem title={t('accordion.whatIsIncluded')} id="Zero" defaultOpen={true}>

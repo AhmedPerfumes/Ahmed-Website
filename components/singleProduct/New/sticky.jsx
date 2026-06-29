@@ -75,7 +75,7 @@ const Sticky = ({ image, product }) => {
     if (!show || !product) return null;
 
     return (
-        <div className="sticky-container d-flex align-items-center position-fixed start-50 translate-middle-x shadow rounded-pill border bg-white">
+        <div className="sticky-container d-flex align-items-center position-fixed start-50 translate-middle-x shadow rounded-pill border bg-white" >
             <Image
                 width={100}
                 height={100}
