@@ -2,23 +2,41 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-export default function Pagination2({ totalPages = 4 }) {
-  const [currentPage, setCurrentPage] = useState(1);
+/**
+ * Pagination2
+ *
+ * Can be used in two modes:
+ * 1. Controlled  — pass `currentPage` + `onPageChange` from the parent.
+ *    The parent owns the page state (e.g. DiscountGrid).
+ * 2. Uncontrolled — omit those props; the component manages its own state.
+ *    (e.g. Shop2, Shop3, Blog3)
+ */
+export default function Pagination2({
+  totalPages = 4,
+  currentPage: controlledPage,
+  onPageChange,
+}) {
+  // Internal fallback state (only used when no controlled props are supplied)
+  const [internalPage, setInternalPage] = useState(1);
 
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  // Decide whether we're controlled or uncontrolled
+  const isControlled = controlledPage !== undefined && onPageChange !== undefined;
+  const currentPage = isControlled ? controlledPage : internalPage;
 
-  const handlePrevClick = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+  const goTo = (pageNumber) => {
+    if (isControlled) {
+      onPageChange(pageNumber);
+    } else {
+      setInternalPage(pageNumber);
     }
   };
 
-  const handleNextClick = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+  const handlePrev = () => {
+    if (currentPage > 1) goTo(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) goTo(currentPage + 1);
   };
 
   return (
@@ -28,11 +46,12 @@ export default function Pagination2({ totalPages = 4 }) {
     >
       <Link
         href="#"
-        className={`btn-link d-inline-flex align-items-center ${currentPage === 1 ? "disabled" : ""
-          }`}
+        className={`btn-link d-inline-flex align-items-center ${
+          currentPage === 1 ? "disabled" : ""
+        }`}
         onClick={(e) => {
           e.preventDefault();
-          handlePrevClick();
+          handlePrev();
         }}
       >
         <svg
@@ -46,16 +65,18 @@ export default function Pagination2({ totalPages = 4 }) {
         </svg>
         <span className="fw-medium">PREV</span>
       </Link>
+
       <ul className="pagination mb-0">
         {Array.from({ length: totalPages }, (_, index) => (
           <li key={index} className="page-item">
             <Link
-              className={`btn-link px-1 mx-2 ${currentPage === index + 1 ? "btn-link_active" : ""
-                }`}
+              className={`btn-link px-1 mx-2 ${
+                currentPage === index + 1 ? "btn-link_active" : ""
+              }`}
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                handlePageClick(index + 1);
+                goTo(index + 1);
               }}
             >
               {index + 1}
@@ -63,13 +84,15 @@ export default function Pagination2({ totalPages = 4 }) {
           </li>
         ))}
       </ul>
+
       <Link
         href="#"
-        className={`btn-link d-inline-flex align-items-center ${currentPage === totalPages ? "disabled" : ""
-          }`}
+        className={`btn-link d-inline-flex align-items-center ${
+          currentPage === totalPages ? "disabled" : ""
+        }`}
         onClick={(e) => {
           e.preventDefault();
-          handleNextClick();
+          handleNext();
         }}
       >
         <span className="fw-medium me-1">NEXT</span>
