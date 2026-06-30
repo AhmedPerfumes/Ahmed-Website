@@ -29,34 +29,73 @@ const Carousel = ({ images, activeIndex, setActiveIndex, product }) => {
         >
             {/* Circular Sale Badge */}
             {(() => {
+                // Show Out of Stock badge first
+                if (Number(product?.product_qty) === 0) {
+                    return (
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: '16px',
+                                left: '16px',
+                                zIndex: 10,
+                                width: '70px',
+                                height: '70px',
+                                borderRadius: '50%',
+                                background: 'rgb(87 87 86)', // Gray
+                                color: '#ffffff',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                                textTransform: 'uppercase',
+                                fontWeight: 800,
+                                textAlign: 'center',
+                                lineHeight: 1.1,
+                                fontSize: '10px',
+                                padding: '6px',
+                            }}
+                        >
+                            Out of Stock
+                        </div>
+                    );
+                }
+
+                // Discount badge
                 const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
-                const parseUTC = (dt) => dt ? new Date(dt.replace(' ', 'T') + 'Z') : null;
+                const parseUTC = (dt) => (dt ? new Date(dt.replace(' ', 'T') + 'Z') : null);
+
                 const start = parseUTC(product?.discount?.start_date);
                 const end = parseUTC(product?.discount?.end_date);
+
                 const isActive = product?.discount && start && end && now >= start && now <= end;
+
                 if (!isActive) return null;
+
                 const { discount_type, value } = product.discount;
+
                 return (
-                    <div style={{
-                        position: 'absolute',
-                        top: '16px',
-                        left: '16px',
-                        zIndex: 10,
-                        width: '56px',
-                        height: '56px',
-                        borderRadius: '50%',
-                        background: '#5a9a5a', // Elegant muted green
-                        color: '#ffffff',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(90,154,90,0.25)',
-                        textTransform: 'uppercase',
-                        fontWeight: 800,
-                        lineHeight: 1.1,
-                        textAlign: 'center',
-                    }}>
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '16px',
+                            left: '16px',
+                            zIndex: 10,
+                            width: '56px',
+                            height: '56px',
+                            borderRadius: '50%',
+                            background: '#5a9a5a',
+                            color: '#ffffff',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 12px rgba(90,154,90,0.25)',
+                            textTransform: 'uppercase',
+                            fontWeight: 800,
+                            lineHeight: 1.1,
+                            textAlign: 'center',
+                        }}
+                    >
                         {discount_type === 'percent' ? (
                             <>
                                 <span style={{ fontSize: '15px' }}>{value}%</span>

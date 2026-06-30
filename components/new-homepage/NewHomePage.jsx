@@ -58,13 +58,13 @@ const NewHomePage = () => {
             <NewHero />
             <TabSlider />
             <ProductShowcase />
+            <FindYourScentEntry />
             <Section2 />
             <NewProductSlider />
             <GiftSetBanner />
             <NewGiftSection />
-            <FindYourScentEntry/>
             <HorizontalScroll />
-            <QualityBoutiqueSection/>
+            <QualityBoutiqueSection />
         </div>
     );
 };
