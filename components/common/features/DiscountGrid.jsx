@@ -19,6 +19,7 @@ import {
 } from "@/utils/shop";
 import { sortingOptions } from "@/data/products/productCategories";
 import ProductFilter from "../../shoplist/ProductFilter";
+import toast from 'react-hot-toast';
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
@@ -210,11 +211,30 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   };
 
   const updateQuantity = (id, delta) => {
+    const productData = rawProducts.find(p => p.product_id === id);
+    const stock = Number(productData?.product_qty) || 0;
+    const maxOrder = Number(productData?.maximum_order_quantity) || 0;
+    const limit = (maxOrder > 0) ? Math.min(maxOrder, stock) : stock;
+
     setCartProducts(prev => {
       return prev.map(p => {
         if (p.product_id === id) {
           const newQty = (p.quantity || 1) + delta;
-          return newQty > 0 ? { ...p, quantity: newQty } : null;
+
+          if (newQty <= 0) {
+            toast(t("Removed from cart"), { icon: '🗑️', duration: 2000, position: 'bottom-right' });
+            return null;
+          }
+
+          if (newQty > limit) {
+            const msg = (maxOrder > 0 && newQty > maxOrder)
+              ? `${t("Maximum allowed quantity is")} ${maxOrder}`
+              : `${t("Only")} ${stock} ${t("left in stock")}`;
+            toast.error(msg, { duration: 3000, position: 'bottom-right' });
+            return p;
+          }
+
+          return { ...p, quantity: newQty };
         }
         return p;
       }).filter(Boolean);
