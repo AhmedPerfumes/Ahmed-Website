@@ -402,7 +402,7 @@ const BOGOFeature = () => {
       {promotions.map((promo) => {
         const { campaign, name, selection_rule, free_products, buy_products, buy_quantity, get_quantity } = promo;
         if (!campaign) return null;
-        debugger
+        // debugger
 
         // Calculate eligibility
         const eligibleProducts = cartProducts.filter((item) => !item.is_gift && buy_products.some((b) => b.product_id === item.product_id));
