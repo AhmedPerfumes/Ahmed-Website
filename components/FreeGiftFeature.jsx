@@ -622,15 +622,15 @@ const FreeGiftFeature = ({ couponData }) => {
         }
 
         .foc-gift-select-btn--selected {
-          background: #edf6ed;
-          border-color: #6aaa6a;
-          color: #2d6a35;
+          background: #fdf2f2;
+          border-color: #ec5b5b;
+          color: #c0392b;
         }
 
         .foc-gift-select-btn--selected:hover {
-          background: #e0f0e0;
-          border-color: #5a9a5a;
-          color: #1e4e24;
+          background: #fde8e8;
+          border-color: #e53e3e;
+          color: #9b2c2c;
         }
 
         /* Modal Footer */
@@ -919,6 +919,55 @@ const FreeGiftFeature = ({ couponData }) => {
             </span>
             <span className="foc-choose-btn-arrow">›</span>
           </button>
+
+          {/* List selected products with clear Remove button */}
+          {giftsInCart.length > 0 && (
+            <div className="foc-selected-gifts-list" style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {giftsInCart.map((gift, idx) => (
+                <div key={idx} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  background: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #e8e2d9',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '14px' }}>🎁</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#4a3c22', textTransform: 'none' }}>
+                      {he.decode(gift.product_name)}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeGiftFromCart(gift.product_id, gift.campaign);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#c0392b',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      transition: 'all 0.15s ease',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#fdf2f2'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -956,11 +1005,19 @@ const FreeGiftFeature = ({ couponData }) => {
               <div className="foc-gifts-grid">
                 {activeThreshold.gifts.map((product, i) => {
                   const isSelected = giftsInCart.some(item => item.product_id === product.product_id);
+                  const isMaxedOut = giftsInCart.length >= giftLimit;
+                  const isSelectionDisabled = isMaxedOut && !isSelected;
+
                   return (
                     <div
                       key={i}
-                      className={`foc-gift-card ${isSelected ? 'foc-gift-card--selected' : ''}`}
-                      onClick={() => handleGiftSelect(product)}
+                      className={`foc-gift-card ${isSelected ? 'foc-gift-card--selected' : ''} ${isSelectionDisabled ? 'foc-gift-card--disabled' : ''}`}
+                      onClick={() => {
+                        if (!isSelectionDisabled) {
+                          handleGiftSelect(product);
+                        }
+                      }}
+                      style={isSelectionDisabled ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
                     >
                       {/* Image */}
                       <div className="foc-gift-card-img">
@@ -986,10 +1043,16 @@ const FreeGiftFeature = ({ couponData }) => {
                         <p className="foc-gift-card-name">{he.decode(product.product_name)}</p>
                         <button
                           className={`foc-gift-select-btn ${isSelected ? 'foc-gift-select-btn--selected' : ''}`}
-                          onClick={(e) => { e.stopPropagation(); handleGiftSelect(product); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!isSelectionDisabled) {
+                              handleGiftSelect(product);
+                            }
+                          }}
+                          disabled={isSelectionDisabled}
                           aria-label={isSelected ? `Remove ${he.decode(product.product_name)}` : `Select ${he.decode(product.product_name)} as free gift`}
                         >
-                          {isSelected ? '✓ Selected' : 'Select'}
+                          {isSelected ? 'Remove' : 'Select'}
                         </button>
                       </div>
                     </div>
