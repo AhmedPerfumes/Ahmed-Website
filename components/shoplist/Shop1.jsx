@@ -11,24 +11,25 @@ import he from 'he';
 import Slider from "rc-slider";
 import LabelIcon from "@/components/labels/LabelIcon";
 import ProductFilter from "./ProductFilter";
+import toast from 'react-hot-toast';
 
 import { useLocale, useTranslations } from 'next-intl';
 import { useMenu } from '@/context/MenuContext';
 import { useShopFilter } from "@/context/ShopFilterContext";
-import { 
-  removeSpecialCharactersAndAmp, 
-  sanitizeUrlParam, 
-  capitalizeEachWord, 
-  formatPrice 
+import {
+  removeSpecialCharactersAndAmp,
+  sanitizeUrlParam,
+  capitalizeEachWord,
+  formatPrice
 } from "@/utils/shop";
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-  
-  const isDiscountActive = elm?.discount && 
-    new Date(current_date_time) >= new Date(elm.discount.start_date) && 
+
+  const isDiscountActive = elm?.discount &&
+    new Date(current_date_time) >= new Date(elm.discount.start_date) &&
     new Date(current_date_time) <= new Date(elm.discount.end_date);
 
   if (isDiscountActive) {
@@ -40,7 +41,7 @@ const ProductPrice = ({ elm, currency }) => {
     }
     return (
       <>
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
         <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
       </>
     );
@@ -48,7 +49,7 @@ const ProductPrice = ({ elm, currency }) => {
     const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
     return (
       <>
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
         <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
       </>
     );
@@ -71,10 +72,10 @@ const ProductCardSkeleton = () => (
 export default function Shop1({ search }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
-  const { 
-    addProductToCart, 
+  const {
+    addProductToCart,
     cartProducts,
-    setCartProducts 
+    setCartProducts
   } = useContextElement();
 
   const {
@@ -92,7 +93,7 @@ export default function Shop1({ search }) {
 
   const [availableLabels, setAvailableLabels] = useState([]);
   const [availableTags, setAvailableTags] = useState([]);
-  
+
   const allViews = [2, 3, 4];
   const smallViews = [1, 2];
   const [availableViews, setAvailableViews] = useState(allViews);
@@ -113,7 +114,7 @@ export default function Shop1({ search }) {
 
   // Extract all unique subcategory names dynamically from active products
   const uniqueSubcategories = useMemo(() => {
-    const activeProducts = selectedCategories.length > 0 
+    const activeProducts = selectedCategories.length > 0
       ? products.filter(p => selectedCategories.includes(p.category_name))
       : products;
 
@@ -143,24 +144,24 @@ export default function Shop1({ search }) {
   const renderSectionHeader = (title, key) => {
     const isCollapsed = collapsedSections[key];
     return (
-      <div 
+      <div
         className="d-flex justify-content-between align-items-center cursor-pointer mb-3 select-none"
         onClick={() => toggleSection(key)}
         style={{ cursor: 'pointer', userSelect: 'none' }}
       >
-        <span 
-          className="text-uppercase fw-bold text-secondary mb-0 transition-colors" 
+        <span
+          className="text-uppercase fw-bold text-secondary mb-0 transition-colors"
           style={{ fontSize: '10px', letterSpacing: '1.5px', transition: 'color 0.2s ease' }}
         >
           {title}
         </span>
-        <svg 
+        <svg
           className="transition-transform duration-200 text-secondary"
-          style={{ 
-            transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)', 
+          style={{
+            transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s ease',
             opacity: 0.6
-          }} 
+          }}
           width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
         >
           <polyline points="2 4 5 7 8 4" />
@@ -291,13 +292,13 @@ export default function Shop1({ search }) {
         const { data = [] } = await res.json();
         const norm = data.map((p) => ({ ...p, price: Number(p.price) }));
         const calculatedMax = norm.length > 0 ? Math.ceil(Math.max(...norm.map(p => p.price))) : 1000;
-        
+
         setMaxPrice(calculatedMax);
         // Only reset price range if it's currently at default or was never set
         if (priceRange[0] === 0 && priceRange[1] === 500) {
           setPriceRange([0, calculatedMax]);
         }
-        
+
         setProducts(norm);
       } catch (e) {
         console.error("Error fetching products:", e);
@@ -340,11 +341,30 @@ export default function Shop1({ search }) {
   };
 
   const updateQuantity = (id, delta) => {
+    const productData = products.find(p => p.product_id === id);
+    const stock = Number(productData?.product_qty) || 0;
+    const maxOrder = Number(productData?.maximum_order_quantity) || 0;
+    const limit = (maxOrder > 0) ? Math.min(maxOrder, stock) : stock;
+
     setCartProducts(prev => {
       return prev.map(p => {
         if (p.product_id === id) {
           const newQty = (p.quantity || 1) + delta;
-          return newQty > 0 ? { ...p, quantity: newQty } : null;
+
+          if (newQty <= 0) {
+            toast(t("Removed from cart"), { icon: '🗑️', duration: 2000, position: 'bottom-right' });
+            return null;
+          }
+
+          if (newQty > limit) {
+            const msg = (maxOrder > 0 && newQty > maxOrder)
+              ? `${t("Maximum allowed quantity is")} ${maxOrder}`
+              : `${t("Only")} ${stock} ${t("left in stock")}`;
+            toast.error(msg, { duration: 3000, position: 'bottom-right' });
+            return p;
+          }
+
+          return { ...p, quantity: newQty };
         }
         return p;
       }).filter(Boolean);
@@ -364,7 +384,7 @@ export default function Shop1({ search }) {
   }
 
   const toggleFilter = (array, setArray, value) => {
-    setArray(prev => 
+    setArray(prev =>
       prev.includes(value) ? prev.filter(i => i !== value) : [...prev, value]
     );
   };
@@ -403,41 +423,41 @@ export default function Shop1({ search }) {
       <section className="gift-shop shop-main container" ref={gridRef}>
         <div className="shop-toolbar">
           <div className="breadcrumb mb-0">
-            <BreadCumb category={null} subcategory={null}/>
+            <BreadCumb category={null} subcategory={null} />
           </div>
           <div className="shop-acs d-flex align-items-center gap-3 position-relative" ref={ref}>
             <div className="search-field position-relative d-none d-md-block">
-              <input 
-                type="text" 
-                className="form-control border px-3 py-1" 
+              <input
+                type="text"
+                className="form-control border px-3 py-1"
                 placeholder={t("Search Products")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ 
-                  fontSize: '13px', 
-                  width: '200px', 
+                style={{
+                  fontSize: '13px',
+                  width: '200px',
                   backgroundColor: '#f8f9fa',
                   border: '1px solid #eee',
                   borderRadius: 0
                 }}
               />
-              <svg 
-                className="position-absolute top-50 translate-middle-y" 
-                style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }} 
+              <svg
+                className="position-absolute top-50 translate-middle-y"
+                style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }}
                 width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
               >
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
               </svg>
             </div>
 
-            <button 
+            <button
               className={`btn d-flex align-items-center text-uppercase fw-bold p-0 border-0 ${isDDActive ? 'text-dark' : 'text-secondary'}`}
               onClick={() => setIsDDActive(!isDDActive)}
               style={{ letterSpacing: '1px', fontSize: '14px' }}
               dir="ltr"
             >
               <svg className="me-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
               {t("Filter")}
               {(selectedLabels.length > 0 || selectedTags.length > 0 || selectedCategories.length > 0 || selectedSubcategories.length > 0 || promotionalOnly || stockAvailability !== 'all') && (
@@ -448,11 +468,11 @@ export default function Shop1({ search }) {
             </button>
 
             {isDDActive && (
-              <div 
-                className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster" 
-                style={{ 
-                  zIndex: 1000, 
-                  width: '350px', 
+              <div
+                className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster"
+                style={{
+                  zIndex: 1000,
+                  width: '350px',
                   [locale === 'ar' ? 'left' : 'right']: 0,
                   border: '1px solid #f0f0f0',
                   boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
@@ -507,20 +527,20 @@ export default function Shop1({ search }) {
         {/* Mobile Search Bar */}
         <div className="d-md-none mb-4">
           <div className="position-relative">
-            <input 
-              type="text" 
-              className="form-control border px-3 py-2 w-100" 
+            <input
+              type="text"
+              className="form-control border px-3 py-2 w-100"
               placeholder={t("Search Products")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ fontSize: '14px', backgroundColor: '#f8f9fa', border: '1px solid #eee', borderRadius: 0 }}
             />
-            <svg 
-              className="position-absolute top-50 translate-middle-y" 
-              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }} 
+            <svg
+              className="position-absolute top-50 translate-middle-y"
+              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }}
               width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             >
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
             </svg>
           </div>
         </div>
@@ -624,7 +644,7 @@ export default function Shop1({ search }) {
                       ) : elm.product_qty > 0 ? (
                         <button
                           className="btn btn-primary js-add-cart"
-                          onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
+                          onClick={() => addProductToCart({ ...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name })}
                         >
                           {t("Add To Cart")}
                         </button>
@@ -642,7 +662,7 @@ export default function Shop1({ search }) {
                     <div className="product-card__price d-flex">
                       <ProductPrice elm={elm} currency={currency} />
                     </div>
-                    
+
                     {getProductQuantity(elm.product_id) > 0 ? (
                       <div className="pc__qty-selector">
                         <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, -1)} aria-label={t("Decrease quantity")}>−</button>
@@ -652,7 +672,7 @@ export default function Shop1({ search }) {
                     ) : elm?.product_qty > 0 ? (
                       <button
                         className="pc__atc-mobile"
-                        onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
+                        onClick={() => addProductToCart({ ...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name })}
                       >
                         {t("Add To Cart")}
                       </button>

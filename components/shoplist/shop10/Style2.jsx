@@ -1,10 +1,10 @@
 "use client";
 
-import { 
-  removeSpecialCharactersAndAmp, 
-  sanitizeUrlParam, 
-  capitalizeEachWord, 
-  formatPrice 
+import {
+  removeSpecialCharactersAndAmp,
+  sanitizeUrlParam,
+  capitalizeEachWord,
+  formatPrice
 } from "@/utils/shop";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -13,17 +13,18 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from "he";
-import { useLocale, useTranslations} from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 import LabelIcon from "@/components/labels/LabelIcon";
+import toast from 'react-hot-toast';
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-  
-  const isDiscountActive = elm?.discount && 
-    new Date(current_date_time) >= new Date(elm.discount.start_date) && 
+
+  const isDiscountActive = elm?.discount &&
+    new Date(current_date_time) >= new Date(elm.discount.start_date) &&
     new Date(current_date_time) <= new Date(elm.discount.end_date);
 
   if (isDiscountActive) {
@@ -35,7 +36,7 @@ const ProductPrice = ({ elm, currency }) => {
     }
     return (
       <>
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
         <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
       </>
     );
@@ -43,7 +44,7 @@ const ProductPrice = ({ elm, currency }) => {
     const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
     return (
       <>
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
         <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
       </>
     );
@@ -66,8 +67,8 @@ const ProductCardSkeleton = () => (
 export default function Style2({ category, subcategory, products: initialProducts, selectedColView = 3 }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
-  const t=useTranslations();
-    const [products, setProducts] = useState(() => {
+  const t = useTranslations();
+  const [products, setProducts] = useState(() => {
     const list = [...initialProducts];
     const indexToPin = 1;
     const newLaunchIndex = list.findIndex(p => p.collection_name === 'New Launch');
@@ -98,10 +99,10 @@ export default function Style2({ category, subcategory, products: initialProduct
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ product_ids: productIds})
+          body: JSON.stringify({ product_ids: productIds })
         });
 
-        if(!response.ok) return;
+        if (!response.ok) return;
 
         const liveData = await response.json();
 
@@ -109,7 +110,7 @@ export default function Style2({ category, subcategory, products: initialProduct
           return prevProducts.map((prevProd) => {
             const liveMatch = liveData.find((l) => l.product_id === prevProd.product_id)
 
-            if(liveMatch) {
+            if (liveMatch) {
               return {
                 ...prevProd,
                 product_qty: liveMatch.product_qty,
@@ -132,7 +133,7 @@ export default function Style2({ category, subcategory, products: initialProduct
 
   const subcat = (() => {
     if (subcategory) return sanitizeUrlParam(subcategory);
-    
+
     const categorySlug = removeSpecialCharactersAndAmp(category);
     const categoryMap = {
       "gift-sets": "gift-sets",
@@ -144,13 +145,13 @@ export default function Style2({ category, subcategory, products: initialProduct
     return categoryMap[categorySlug] || "online-exclusive";
   })();
 
-  const { 
-    toggleWishlist, 
-    isAddedtoWishlist, 
-    addProductToCart, 
+  const {
+    toggleWishlist,
+    isAddedtoWishlist,
+    addProductToCart,
     isAddedToCartProducts,
     cartProducts,
-    setCartProducts 
+    setCartProducts
   } = useContextElement();
 
   const getProductQuantity = (id) => {
@@ -159,11 +160,34 @@ export default function Style2({ category, subcategory, products: initialProduct
   };
 
   const updateQuantity = (id, delta) => {
+    // Look up the latest stock & max-order from the live-hydrated products list
+    const productData = products.find(p => p.product_id === id);
+    const stock = Number(productData?.product_qty) || 0;
+    const maxOrder = Number(productData?.maximum_order_quantity) || 0;
+    // Effective ceiling: use max-order if set, otherwise fall back to stock
+    const limit = (maxOrder > 0) ? Math.min(maxOrder, stock) : stock;
+
     setCartProducts(prev => {
       return prev.map(p => {
         if (p.product_id === id) {
           const newQty = (p.quantity || 1) + delta;
-          return newQty > 0 ? { ...p, quantity: newQty } : null;
+
+          // Decrement past 1 → remove from cart
+          if (newQty <= 0) {
+            toast(t("Removed from cart"), { icon: '🗑️', duration: 2000, position: 'bottom-right' });
+            return null;
+          }
+
+          // Cap at the effective limit
+          if (newQty > limit) {
+            const msg = (maxOrder > 0 && newQty > maxOrder)
+              ? `${t("Maximum allowed quantity is")} ${maxOrder}`
+              : `${t("Only")} ${stock} ${t("left in stock")}`;
+            toast.error(msg, { duration: 3000, position: 'bottom-right' });
+            return p;
+          }
+
+          return { ...p, quantity: newQty };
         }
         return p;
       }).filter(Boolean);
@@ -190,57 +214,57 @@ export default function Style2({ category, subcategory, products: initialProduct
         const inCart = qty > 0;
 
         return (
-        <div key={elm.product_id} className="product-card-wrapper">
-          <div className={`product-card mb-0 mb-md-4 mb-xxl-5 ${i === 1 ? "h-100 featured-card" : ""}`}>
-            <div className={`pc__img-wrapper ${i === 1 ? "h-100" : ""}`}>
-              {i != 1 ? (
-                <Swiper
-                  slidesPerView={1}
-                  className="swiper-container background-img js-swiper-slider"
-                  modules={[Navigation]}
-                  id={`style-2${elm?.product_id.toString()}`}
-                  navigation={{
-                    prevEl: `#style-2${elm?.product_id.toString()} .pc__img-prev`,
-                    nextEl: `#style-2${elm?.product_id.toString()} .pc__img-next`,
-                  }}
-                >
-                  <SwiperSlide key={i} className="swiper-slide">
-                    <Link
-                      href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
-                        category
-                      )}/${subcat}/${removeSpecialCharactersAndAmp(
-                        elm.product_name
-                      )
-                        .split(" ")
-                        .join("-")
-                        .toLowerCase()}`}
-                    >
-                      {elm?.images &&
-                            <>
-                              {JSON.parse(elm.images)[0] && (
-                                <Image
-                                  loading={i < 4 ? "eager" : "lazy"}
-                                  priority={i < 2}
-                                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
-                                  width={480}
-                                  height={600}
-                                  alt={elm.product_name || "product image"}
-                                  className="pc__img"
-                                  sizes="(max-width: 768px) 50vw, 33vw"
-                                />
-                              )}
-                              {JSON.parse(elm.images)[1] && (
-                                <Image
-                                  loading="lazy"
-                                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
-                                  width={480}
-                                  height={600}
-                                  alt={`${elm.product_name || "product"} alternate view`}
-                                  className="pc__img pc__img-second"
-                                  sizes="(max-width: 768px) 50vw, 33vw"
-                                />
-                              )}
-                            </>
+          <div key={elm.product_id} className="product-card-wrapper">
+            <div className={`product-card mb-0 mb-md-4 mb-xxl-5 ${i === 1 ? "h-100 featured-card" : ""}`}>
+              <div className={`pc__img-wrapper ${i === 1 ? "h-100" : ""}`}>
+                {i != 1 ? (
+                  <Swiper
+                    slidesPerView={1}
+                    className="swiper-container background-img js-swiper-slider"
+                    modules={[Navigation]}
+                    id={`style-2${elm?.product_id.toString()}`}
+                    navigation={{
+                      prevEl: `#style-2${elm?.product_id.toString()} .pc__img-prev`,
+                      nextEl: `#style-2${elm?.product_id.toString()} .pc__img-next`,
+                    }}
+                  >
+                    <SwiperSlide key={i} className="swiper-slide">
+                      <Link
+                        href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
+                          category
+                        )}/${subcat}/${removeSpecialCharactersAndAmp(
+                          elm.product_name
+                        )
+                          .split(" ")
+                          .join("-")
+                          .toLowerCase()}`}
+                      >
+                        {elm?.images &&
+                          <>
+                            {JSON.parse(elm.images)[0] && (
+                              <Image
+                                loading={i < 4 ? "eager" : "lazy"}
+                                priority={i < 2}
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                                width={480}
+                                height={600}
+                                alt={elm.product_name || "product image"}
+                                className="pc__img"
+                                sizes="(max-width: 768px) 50vw, 33vw"
+                              />
+                            )}
+                            {JSON.parse(elm.images)[1] && (
+                              <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                                width={480}
+                                height={600}
+                                alt={`${elm.product_name || "product"} alternate view`}
+                                className="pc__img pc__img-second"
+                                sizes="(max-width: 768px) 50vw, 33vw"
+                              />
+                            )}
+                          </>
                         }
                       </Link>
                       {Array.isArray(elm.labels) && elm.labels.length > 0 && (
@@ -275,112 +299,112 @@ export default function Style2({ category, subcategory, products: initialProduct
                           </div>
                         )
                       )}
-                      </SwiperSlide>
+                    </SwiperSlide>
 
-                  {i != 1 ? (
-                    <>
-                      <span className="cursor-pointer pc__img-prev" aria-label={t("Previous Image")} role="button">
-                        <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>
-                      </span>
-                      <span className="cursor-pointer pc__img-next" aria-label={t("Next Image")} role="button">
-                        <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg>
-                      </span>
-                    </>
-                  ) : null}
-                </Swiper>
-              ) : (
-                <>
-                  <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}/${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
-                    <Image loading="lazy" src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`} width={800} height={1000} style={{ objectFit: 'cover', width: '100%', height: '100%' }} alt="featured product" />
-                  </Link>
-                  <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
-                    <h2 className="fs-30 fw-normal text-uppercase mb-0 text-white cat-title">{elm?.product_name && he.decode(elm?.product_name)}</h2>
-                    <p className="mb-4 text-white">{t("Exclusive Launch")}</p>
-                    <Link className="featured-explore-link" href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}/${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
-                      <span>{t("Explore")}</span>
+                    {i != 1 ? (
+                      <>
+                        <span className="cursor-pointer pc__img-prev" aria-label={t("Previous Image")} role="button">
+                          <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>
+                        </span>
+                        <span className="cursor-pointer pc__img-next" aria-label={t("Next Image")} role="button">
+                          <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg>
+                        </span>
+                      </>
+                    ) : null}
+                  </Swiper>
+                ) : (
+                  <>
+                    <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}/${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
+                      <Image loading="lazy" src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`} width={800} height={1000} style={{ objectFit: 'cover', width: '100%', height: '100%' }} alt="featured product" />
                     </Link>
+                    <div className="content_abs content_bottom content_left content_bottom-lg content_left-lg">
+                      <h2 className="fs-30 fw-normal text-uppercase mb-0 text-white cat-title">{elm?.product_name && he.decode(elm?.product_name)}</h2>
+                      <p className="mb-4 text-white">{t("Exclusive Launch")}</p>
+                      <Link className="featured-explore-link" href={`/${locale}/shop/${removeSpecialCharactersAndAmp(category)}/${subcat}/${removeSpecialCharactersAndAmp(elm.permalink?.key)?.toLowerCase()}`}>
+                        <span>{t("Explore")}</span>
+                      </Link>
+                    </div>
+                  </>
+                )}
+                {i != 1 && (
+                  <div className="product-card__actions">
+                    {inCart ? (
+                      <div className="pc__qty-selector--desktop">
+                        <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, -1)} aria-label={t("Decrease quantity")}>−</button>
+                        <span className="qty-value">{qty}</span>
+                        <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, 1)} aria-label={t("Increase quantity")}>+</button>
+                      </div>
+                    ) : elm?.product_qty > 0 ? (
+                      <button
+                        className="btn btn-primary js-add-cart"
+                        onClick={() => addProductToCart({ ...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' ')) })}
+                        aria-label={t("Add {name} to cart", { name: elm.product_name })}
+                      >
+                        {t("Add To Cart")}
+                      </button>
+                    ) : (
+                      <button className="btn btn-out-of-stock" disabled>
+                        {t("Out Of Stock")}
+                      </button>
+                    )}
                   </div>
-                </>
-              )}
-              {i != 1 && (
-                <div className="product-card__actions">
+                )}
+              </div>
+              {i != 1 ? (
+                <div className="pc__info position-relative">
+                  <h6 className="pc__title">
+                    <Link
+                      href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
+                        category
+                      )}/${subcat}/${removeSpecialCharactersAndAmp(
+                        elm?.product_name
+                      )
+                        ?.split(" ")
+                        .join("-")
+                        .toLowerCase()}`}
+                    >
+                      {elm?.product_name && t(he.decode(elm?.product_name))}
+                    </Link>
+                  </h6>
+                  <div className="product-card__price d-flex">
+                    <ProductPrice elm={elm} currency={currency} />
+                  </div>
+
                   {inCart ? (
-                    <div className="pc__qty-selector--desktop">
-                      <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, -1)} aria-label={t("Decrease quantity")}>−</button>
+                    <div className="pc__qty-selector">
+                      <button
+                        className="qty-btn"
+                        onClick={() => updateQuantity(elm.product_id, -1)}
+                        aria-label={t("Decrease quantity")}
+                      >
+                        −
+                      </button>
                       <span className="qty-value">{qty}</span>
-                      <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, 1)} aria-label={t("Increase quantity")}>+</button>
+                      <button
+                        className="qty-btn"
+                        onClick={() => updateQuantity(elm.product_id, 1)}
+                        aria-label={t("Increase quantity")}
+                      >
+                        +
+                      </button>
                     </div>
                   ) : elm?.product_qty > 0 ? (
                     <button
-                      className="btn btn-primary js-add-cart"
-                      onClick={() => addProductToCart({...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' '))})}
+                      className="pc__atc-mobile"
+                      onClick={() => addProductToCart({ ...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' ')) })}
                       aria-label={t("Add {name} to cart", { name: elm.product_name })}
                     >
                       {t("Add To Cart")}
                     </button>
                   ) : (
-                    <button className="btn btn-out-of-stock" disabled>
+                    <button className="pc__atc-mobile pc__atc-mobile--oos" disabled>
                       {t("Out Of Stock")}
                     </button>
                   )}
                 </div>
-              )}
+              ) : null}
             </div>
-            {i != 1 ? (
-              <div className="pc__info position-relative">
-                <h6 className="pc__title">
-                  <Link
-                    href={`/${locale}/shop/${removeSpecialCharactersAndAmp(
-                      category
-                    )}/${subcat}/${removeSpecialCharactersAndAmp(
-                      elm?.product_name
-                    )
-                      ?.split(" ")
-                      .join("-")
-                      .toLowerCase()}`}
-                  >
-                    {elm?.product_name && t(he.decode(elm?.product_name))}
-                  </Link>
-                </h6>
-                <div className="product-card__price d-flex">
-                  <ProductPrice elm={elm} currency={currency} />
-                </div>
-                
-                {inCart ? (
-                  <div className="pc__qty-selector">
-                    <button 
-                      className="qty-btn" 
-                      onClick={() => updateQuantity(elm.product_id, -1)}
-                      aria-label={t("Decrease quantity")}
-                    >
-                      −
-                    </button>
-                    <span className="qty-value">{qty}</span>
-                    <button 
-                      className="qty-btn" 
-                      onClick={() => updateQuantity(elm.product_id, 1)}
-                      aria-label={t("Increase quantity")}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : elm?.product_qty > 0 ? (
-                  <button
-                    className="pc__atc-mobile"
-                    onClick={() => addProductToCart({...elm, category_name: capitalizeEachWord(category.split('-').join(' ')), subcategory_name: capitalizeEachWord(subcat.split('-').join(' '))})}
-                    aria-label={t("Add {name} to cart", { name: elm.product_name })}
-                  >
-                    {t("Add To Cart")}
-                  </button>
-                ) : (
-                  <button className="pc__atc-mobile pc__atc-mobile--oos" disabled>
-                    {t("Out Of Stock")}
-                  </button>
-                )}
-              </div>
-            ) : null}
           </div>
-        </div>
         );
       })}
     </div>
