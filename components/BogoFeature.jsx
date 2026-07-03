@@ -402,7 +402,6 @@ const BOGOFeature = () => {
       {promotions.map((promo) => {
         const { campaign, name, selection_rule, free_products, buy_products, buy_quantity, get_quantity } = promo;
         if (!campaign) return null;
-        // debugger
 
         // Calculate eligibility
         const eligibleProducts = cartProducts.filter((item) => !item.is_gift && buy_products.some((b) => b.product_id === item.product_id));
@@ -498,9 +497,8 @@ const BOGOFeature = () => {
                                 giftsAllowed
                               )
                             }
-                            className={`pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside ${
-                              isSelected ? 'bg-gray-400' : 'bg-blue-500'
-                            }`}
+                            className={`pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside ${isSelected ? 'bg-gray-400' : 'bg-blue-500'
+                              }`}
                             aria-label={`${isSelected ? 'Already selected' : 'Select'} ${he.decode(product.product_name)} as free gift`}
                             disabled={isSelected}
                           >
