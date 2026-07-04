@@ -181,6 +181,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
         return raw.map(slide => {
             let prod = slide.product;
+            if (allProducts && allProducts.length > 0) {
+                const localProd = allProducts.find(p => 
+                    (prod && (p.id === prod.product_id || p.product_id === prod.product_id)) ||
+                    p.product_name?.toLowerCase() === slide.name.toLowerCase()
+                );
+                if (localProd) {
+                    prod = { ...localProd, ...prod };
+                }
+            }
             if (!prod && allProducts && allProducts.length > 0) {
                 prod = allProducts.find(p => 
                     p.product_name?.toLowerCase().includes(slide.name.toLowerCase()) || 
