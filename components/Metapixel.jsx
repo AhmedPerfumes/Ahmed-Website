@@ -30,12 +30,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { useContextElement } from "@/context/Context";
 
 export const FacebookPixelEvents = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const { cartProducts, totalPrice } = useContextElement();
     const [cartData, setCartData] = useState({ items: [], total: 0 });
 
+    // Keep cartData in sync with the real cart context
+    useEffect(() => {
+        setCartData({
+            items: (cartProducts || []).map((item) => ({
+                id: item.product_id?.toString(),
+            })),
+            total: totalPrice || 0,
+        });
+    }, [cartProducts, totalPrice]);
     useEffect(() => {
         const loadFacebookPixel = () => {
             if (!window.fbq) {
@@ -73,8 +84,8 @@ export const FacebookPixelEvents = () => {
         // Track PageView on route change
         fbq("track", "PageView");
 
-        // Track InitiateCheckout when user visits the checkout page
-        if (pathname.includes("en/shop/checkout")) {
+        // Track InitiateCheckout when user visits the checkout page (matches all locales)
+        if (pathname.includes("shop-checkout")) {
             fbq("track", "InitiateCheckout", {
                 content_ids: cartData.items.map((item) => item.id), // Pass actual product IDs
                 content_type: "product",
@@ -82,6 +93,9 @@ export const FacebookPixelEvents = () => {
                 currency: "AED",
             });
         }
+        // NOTE: The Purchase event is NOT tracked here.
+        // It is fired on the order confirmation pages (shop-order-complete & shop-order-payment-complete)
+        // to ensure it only triggers after a successful order, not on button click.
     }, [pathname, searchParams, cartData]);
 
     return null;

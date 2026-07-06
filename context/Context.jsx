@@ -458,6 +458,27 @@ export default function Context({ children }) {
       payload: product
     });
 
+    // ---- GA4 add_to_cart (TikTok listener auto-maps to ttq AddToCart) ----
+    try {
+      if (!product.is_gift) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "add_to_cart",
+          ecommerce: {
+            currency: "AED",
+            value: parseFloat((product.price || 0) * (product.quantity || 1)),
+            items: [{
+              item_id: product.product_id?.toString(),
+              item_name: product.product_name,
+              price: parseFloat(product.price || 0),
+              quantity: product.quantity || 1,
+              item_category: product.category_name || "",
+            }],
+          },
+        });
+      }
+    } catch (e) { /* tracking errors must never break cart */ }
+
     const imageUrl = buildToastImageUrl(product);
 
     toast.custom((toastObj) => (

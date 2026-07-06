@@ -99,18 +99,24 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
               quantity: item.qty,
             })),
           },
-        }); 
-
-        // ---- TikTok Pixel ----
-        window.ttq?.track("CompletePayment", {
-          contents: orderData.products.map((item) => ({
-            content_id: item.product_id?.toString(),
-            content_type: "product",
-            content_name: he.decode(item.product_name),
-          })),
-          value: parseFloat(orderData.total),
-          currency: currency?.code || "AED",
         });
+        // NOTE: TikTok Purchase is handled automatically by the dataLayer listener in layout.jsx
+        // which maps the 'purchase' GA4 event above to ttq.track("Purchase").
+
+        // ---- Meta (Facebook) Pixel Purchase ----
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "Purchase", {
+            content_ids: orderData.products.map((item) => item.product_id?.toString()),
+            content_type: "product",
+            contents: orderData.products.map((item) => ({
+              id: item.product_id?.toString(),
+              quantity: item.qty,
+            })),
+            value: parseFloat(orderData.total),
+            currency: currency?.code || "AED",
+            order_id: orderData.order_id,
+          });
+        }
       }
     }
     

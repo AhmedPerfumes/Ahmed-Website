@@ -209,7 +209,34 @@ export default function Checkout() {
     }
   }, [isOrderSummaryOpen]);
 
-  // HANDLERS
+  // ---- GA4 begin_checkout (fires once on mount) ----
+  // The TikTok listener in layout.jsx auto-maps this to ttq.track("InitiateCheckout")
+  const hasTrackedCheckout = useRef(false);
+  useEffect(() => {
+    if (hasTrackedCheckout.current) return;
+    if (!cartProducts || cartProducts.length === 0) return;
+    hasTrackedCheckout.current = true;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "begin_checkout",
+      ecommerce: {
+        currency: "AED",
+        value: parseFloat(totalPrice || 0),
+        items: cartProducts
+          .filter((item) => !item.is_gift)
+          .map((item) => ({
+            item_id: item.product_id?.toString(),
+            item_name: item.product_name,
+            price: parseFloat(item.price || 0),
+            quantity: item.quantity || 1,
+            item_category: item.category_name || "",
+          })),
+      },
+    });
+  }, [cartProducts]);
+
+
   const handleRadioChange = (event) => { setSelectedOption(event.target.value); };
 
   const handleChange = (event) => {
