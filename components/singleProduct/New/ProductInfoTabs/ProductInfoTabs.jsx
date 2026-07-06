@@ -43,7 +43,7 @@ const ProductInfoTabs = ({ product, category, subcategory }) => {
 
     if (!product) {
         return (
-            <div style={{ padding: '40px', textAlign: 'center', background: '#111', color: 'white', minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ padding: 'clamp(20px, 5vw, 40px)', textAlign: 'center', background: '#111', color: 'white', minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {/* 3. Use the t() function for the loading message */}
                 {t('loadingProductInfo')}
             </div>
@@ -54,7 +54,7 @@ const ProductInfoTabs = ({ product, category, subcategory }) => {
 
     return (
         <>
-            <div className="product-tabs-container container" style={{ padding: '0px 0px 100px 0px', fontFamily: "'Kanit-Regular', sans-serif"}} >
+            <div className="product-tabs-container container" style={{ padding: '0px 0px clamp(50px, 8vw, 100px) 0px', fontFamily: "'Kanit-Regular', sans-serif"}} >
                 <div className="tab-headers">
 
                     {hasFragranceNotes && (

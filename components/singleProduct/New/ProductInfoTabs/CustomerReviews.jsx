@@ -50,7 +50,7 @@ const ReviewSummary = ({ averageRating, reviewCount, distribution, onWriteClick,
                     </>
                 ) : (
                     <>
-                        <div className="display-4 font-weight-bold">{reviewCount > 0 ? averageRating.toFixed(1) : '0.0'}</div>
+                        <div className={`display-4 font-weight-bold ${styles.responsiveScore}`}>{reviewCount > 0 ? averageRating.toFixed(1) : '0.0'}</div>
                         <div className="mb-2"><StarRating rating={Math.round(averageRating)} size="1.2rem" /></div>
                         <div className="text-white">{t('basedOn', { count: reviewCount })}</div>
                     </>
@@ -88,7 +88,7 @@ const ReviewSummary = ({ averageRating, reviewCount, distribution, onWriteClick,
                     <Skeleton variant="text" width={180} height={100} className="mx-auto mx-md-0 bg-white" />
                 ) : (
                     <button
-                        className="btn btn-outline-light px-4 py-3 text-uppercase font-weight-bold"
+                        className={`btn btn-outline-light text-uppercase font-weight-bold ${styles.responsiveBtn}`}
                         style={{ letterSpacing: '1px', borderRadius: '0' }}
                         onClick={onWriteClick}
                     >
@@ -154,7 +154,7 @@ const ReviewList = ({ reviews, loading, t }) => {
                                 {hasMounted ? new Date(review.created_at).toLocaleDateString() : ''}
                             </small>
                         </div>
-                        <p style={{ lineHeight: '1.7', opacity: 0.9 }}>{review.comment}</p>
+                        <p className={styles.responsiveText} style={{ lineHeight: '1.7', opacity: 0.9 }}>{review.comment}</p>
                     </div>
                 </div>
             ))}
@@ -276,7 +276,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                 <button type="button" onClick={onClose} className={styles.closeButton}>&times;</button>
 
                 <div className={styles.modalBodyScrollable}>
-                    <h4 className={`text-center mb-4 ${styles.textGold}`} style={{ letterSpacing: '2px', textTransform: 'uppercase' }}>
+                    <h4 className={`text-center mb-4 ${styles.textGold} ${styles.responsiveTitle}`} style={{ letterSpacing: '2px', textTransform: 'uppercase' }}>
                         {t('writeReviewTitle')}
                     </h4>
 
