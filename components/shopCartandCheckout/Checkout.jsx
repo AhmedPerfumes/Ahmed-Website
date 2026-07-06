@@ -511,6 +511,49 @@ export default function Checkout() {
     setError(null);
     setSuccess(null);
 
+    // ---- Pixel: Fire AddPaymentInfo on first Place Order attempt only ----
+    // Correct event for "Place Order" click — NOT Purchase (Purchase fires on Thank You page).
+    // useRef guard ensures this fires exactly once per checkout session,
+    // even if user clicks multiple times due to validation errors or slow API.
+    try {
+      const hasTrackedPlaceOrder = typeof window.__placeOrderTracked !== "undefined";
+
+      if (!hasTrackedPlaceOrder && cartProducts && cartProducts.length > 0) {
+        window.__placeOrderTracked = true; // session-level guard (resets on page reload)
+
+        // GA4 add_payment_info (TikTok listener maps to AddPaymentInfo)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "add_payment_info",
+          ecommerce: {
+            currency: "AED",
+            value: parseFloat(totalPrice || 0),
+            payment_type: selectedOption || "cod",
+            items: cartProducts
+              .filter((item) => !item.is_gift)
+              .map((item) => ({
+                item_id: item.product_id?.toString(),
+                item_name: item.product_name,
+                price: parseFloat(item.price || 0),
+                quantity: item.quantity || 1,
+              })),
+          },
+        });
+
+        // Meta Pixel: AddPaymentInfo is the correct pre-purchase event
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "AddPaymentInfo", {
+            content_ids: cartProducts
+              .filter((item) => !item.is_gift)
+              .map((item) => item.product_id?.toString()),
+            content_type: "product",
+            value: parseFloat(totalPrice || 0),
+            currency: "AED",
+          });
+        }
+      }
+    } catch (e) { /* tracking errors must never block order submission */ }
+
     const billing = formData.billingAddress;
     const newErrors = {};
 

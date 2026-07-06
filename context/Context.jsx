@@ -459,6 +459,7 @@ export default function Context({ children }) {
     });
 
     // ---- GA4 add_to_cart (TikTok listener auto-maps to ttq AddToCart) ----
+    // ---- Meta (Facebook) Pixel AddToCart (explicit — autoConfig is disabled) ----
     try {
       if (!product.is_gift) {
         window.dataLayer = window.dataLayer || [];
@@ -476,6 +477,17 @@ export default function Context({ children }) {
             }],
           },
         });
+
+        // Explicit Meta Pixel AddToCart (needed because autoConfig is disabled)
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "AddToCart", {
+            content_ids: [product.product_id?.toString()],
+            content_name: product.product_name,
+            content_type: "product",
+            value: parseFloat((product.price || 0) * (product.quantity || 1)),
+            currency: "AED",
+          });
+        }
       }
     } catch (e) { /* tracking errors must never break cart */ }
 

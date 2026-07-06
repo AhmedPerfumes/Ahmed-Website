@@ -47,6 +47,7 @@ export const FacebookPixelEvents = () => {
             total: totalPrice || 0,
         });
     }, [cartProducts, totalPrice]);
+
     useEffect(() => {
         const loadFacebookPixel = () => {
             if (!window.fbq) {
@@ -74,7 +75,11 @@ export const FacebookPixelEvents = () => {
                     "https://connect.facebook.net/en_US/fbevents.js"
                 );
 
-                fbq("init", "235034997951707"); // Replace with your Pixel ID
+                // Disable Meta's automatic button-click detection.
+                // This prevents spurious 'Purchase' and 'SubscribedButtonClick' events
+                // from firing on form submits / add-to-cart buttons.
+                fbq("set", "autoConfig", false, "235034997951707");
+                fbq("init", "235034997951707");
                 fbq("track", "PageView");
             }
         };
@@ -84,19 +89,30 @@ export const FacebookPixelEvents = () => {
         // Track PageView on route change
         fbq("track", "PageView");
 
-        // Track InitiateCheckout when user visits the checkout page (matches all locales)
+        // Track InitiateCheckout ONCE when user visits the checkout page.
+        // Guard conditions:
+        //   1. Must be on the checkout path
+        //   2. Cart must have real items (not empty — avoids firing before localStorage loads)
+        //   3. sessionStorage flag prevents double-fire if cartData state update re-triggers this effect
         if (pathname.includes("shop-checkout")) {
-            fbq("track", "InitiateCheckout", {
-                content_ids: cartData.items.map((item) => item.id), // Pass actual product IDs
-                content_type: "product",
-                value: cartData.total, // Total cart value
-                currency: "AED",
-            });
+            if (cartData.items.length > 0 && !sessionStorage.getItem("__initCheckoutTracked")) {
+                sessionStorage.setItem("__initCheckoutTracked", "1");
+                fbq("track", "InitiateCheckout", {
+                    content_ids: cartData.items.map((item) => item.id),
+                    content_type: "product",
+                    value: cartData.total,
+                    currency: "AED",
+                });
+            }
+        } else {
+            // Clear the flag when user leaves checkout so it fires again on a new visit
+            sessionStorage.removeItem("__initCheckoutTracked");
         }
         // NOTE: The Purchase event is NOT tracked here.
         // It is fired on the order confirmation pages (shop-order-complete & shop-order-payment-complete)
         // to ensure it only triggers after a successful order, not on button click.
     }, [pathname, searchParams, cartData]);
+
 
     return null;
 };

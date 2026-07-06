@@ -2,7 +2,7 @@
 
 import { useContextElement } from "@/context/Context";
 import { useMenu } from '@/context/MenuContext';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import he from 'he';
 import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
@@ -18,18 +18,16 @@ export default function OrderCompleted() {
   const { isLoggedIn } = useUser();
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
+  const hasFiredPurchase = useRef(false); // prevents purchase event from firing more than once
+
   useEffect(() => {
     setShowDate(true);
     localStorage.setItem('cartList', []);
     setCartProducts([]);
-    // if(localStorage.getItem('orderData').length > 0) {
-    //   setOrderDetails(JSON.parse(atob(localStorage.getItem('orderData'))));
-    //   // localStorage.setItem('orderData', '');
-    // }
-    // console.log('...', localStorage.getItem('orderData').length);
 
-     // ✅ Fire GA4 purchase event only once when orderDetails is available
-    if (orderDetails && orderDetails.order_id) {
+     // ✅ Fire purchase events exactly once when orderDetails becomes available
+    if (orderDetails && orderDetails.order_id && !hasFiredPurchase.current) {
+      hasFiredPurchase.current = true; // lock — never fires again for this page visit
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "purchase",

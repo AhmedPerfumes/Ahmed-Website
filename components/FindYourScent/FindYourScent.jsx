@@ -293,6 +293,28 @@ export default function FindYourScent() {
         // ── Auto-save Scent DNA to localStorage ──
         saveDNA({ ...computed, recommendations: enriched }, newAnswers);
         setSavedDNA(loadDNA());
+
+        // ---- Tracking: Quiz Completed ----
+        try {
+          const profileTitle = computed.profile?.title || "Unknown";
+          const topProducts = enriched.slice(0, 3).map((r) => ({
+            product_id: r.product?.product_id?.toString(),
+            product_name: r.product?.product_name,
+          }));
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "fys_quiz_completed",
+            scent_profile: profileTitle,
+            top_recommendations: topProducts,
+            user_name: newAnswers.name || "anonymous",
+          });
+          if (typeof window.fbq === "function") {
+            window.fbq("trackCustom", "FYSQuizCompleted", {
+              scent_profile: profileTitle,
+              top_product: topProducts[0]?.product_name || "",
+            });
+          }
+        } catch (e) {}
       };
 
       setTimeout(() => finalize(), reducedMotion ? 200 : 2200);
@@ -331,13 +353,29 @@ export default function FindYourScent() {
     });
     setAnswers(savedDNA.answers || {});
     setPhase("results");
+
+    // ---- Tracking: Saved DNA Resumed ----
+    try {
+      const profileTitle = savedDNA.profile?.title || "Unknown";
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: "fys_dna_resumed", scent_profile: profileTitle });
+      if (typeof window.fbq === "function") window.fbq("trackCustom", "FYSDNAResumed", { scent_profile: profileTitle });
+    } catch (e) {}
   }, [savedDNA]);
 
   return (
     <section className="fys-section" aria-label="Find Your Scent">
       <div className="fys-container">
         <AnimatePresence mode="wait">
-          {phase === "intro" && <IntroScreen key="intro" onStart={() => { clearDNA(); setSavedDNA(null); setPhase("quiz"); }} savedDNA={savedDNA} onResumeDNA={handleResumeDNA} />}
+          {phase === "intro" && <IntroScreen key="intro" onStart={() => {
+            clearDNA(); setSavedDNA(null); setPhase("quiz");
+            // ---- Tracking: Quiz Started ----
+            try {
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({ event: "fys_quiz_started", source: "new" });
+              if (typeof window.fbq === "function") window.fbq("trackCustom", "FYSQuizStarted", { source: "new" });
+            } catch (e) {}
+          }} savedDNA={savedDNA} onResumeDNA={handleResumeDNA} />}
 
           {phase === "quiz" && currentQ && (
             <motion.div key={`q-${stepIdx}`}

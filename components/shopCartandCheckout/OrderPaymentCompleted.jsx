@@ -15,6 +15,8 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
   const [isVerifying, setIsVerifying] = useState(false);
 
   const isPollingRef = useRef(false);
+  const hasFiredPurchase = useRef(false); // prevents purchase event from firing more than once
+
 
   // 2. POLLING EFFECT: Check status if it's not final
   useEffect(() => {
@@ -80,49 +82,50 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
   //   setCartProducts([]);
   // }, []);
   useEffect(() => {
-    if (orderData?.payment_status === "completed") {
-      // Clear cart only after payment completed
-      
-      if (orderData?.payment_status === "completed") {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: "purchase",
-          ecommerce: {
-            transaction_id: orderData.order_id, // unique order ID
-            affiliation: "Ahmed Al Maghribi Perfumes Online",
-            value: parseFloat(orderData.total), // order total (after discounts, including shipping/tax)
-            currency: currency?.code || "AED",
-            items: orderData.products.map((item) => ({
-              item_id: item.product_id?.toString(), // or SKU if available
-              item_name: he.decode(item.product_name),
-              price: parseFloat(item.price),
-              quantity: item.qty,
-            })),
-          },
-        });
-        // NOTE: TikTok Purchase is handled automatically by the dataLayer listener in layout.jsx
-        // which maps the 'purchase' GA4 event above to ttq.track("Purchase").
+    if (orderData?.payment_status === "completed" && !hasFiredPurchase.current) {
+      hasFiredPurchase.current = true; // lock — never fires again even if orderData updates again
 
-        // ---- Meta (Facebook) Pixel Purchase ----
-        if (typeof window.fbq === "function") {
-          window.fbq("track", "Purchase", {
-            content_ids: orderData.products.map((item) => item.product_id?.toString()),
-            content_type: "product",
-            contents: orderData.products.map((item) => ({
-              id: item.product_id?.toString(),
-              quantity: item.qty,
-            })),
-            value: parseFloat(orderData.total),
-            currency: currency?.code || "AED",
-            order_id: orderData.order_id,
-          });
-        }
+      // Clear cart only after payment confirmed
+      localStorage.removeItem("cartList");
+      setCartProducts([]);
+
+      // ✅ GA4 purchase (TikTok listener maps to ttq.track("Purchase"))
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: orderData.order_id,
+          affiliation: "Ahmed Al Maghribi Perfumes Online",
+          value: parseFloat(orderData.total),
+          currency: currency?.code || "AED",
+          items: orderData.products.map((item) => ({
+            item_id: item.product_id?.toString(),
+            item_name: he.decode(item.product_name),
+            price: parseFloat(item.price),
+            quantity: item.qty,
+          })),
+        },
+      });
+      // NOTE: TikTok Purchase is handled automatically by the dataLayer listener in layout.jsx
+      // which maps the 'purchase' GA4 event above to ttq.track("Purchase").
+
+      // ---- Meta (Facebook) Pixel Purchase ----
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Purchase", {
+          content_ids: orderData.products.map((item) => item.product_id?.toString()),
+          content_type: "product",
+          contents: orderData.products.map((item) => ({
+            id: item.product_id?.toString(),
+            quantity: item.qty,
+          })),
+          value: parseFloat(orderData.total),
+          currency: currency?.code || "AED",
+          order_id: orderData.order_id,
+        });
       }
     }
-    
-    localStorage.removeItem("cartList");
-    setCartProducts([]);
   }, [orderData]);
+
 
 
   const subTotalPrice = (elm) => {
