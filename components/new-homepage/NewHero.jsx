@@ -276,7 +276,7 @@ const NewHero = () => {
                             <Image
                                 priority={i === 0}
                                 fetchPriority={i === 0 ? "high" : "auto"}
-                                quality={85}
+                                quality={65}
                                 sizes="100vw"
                                 loading={i === 0 ? "eager" : "lazy"}
                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
@@ -291,7 +291,7 @@ const NewHero = () => {
                                 <Image
                                     priority={i === 0}
                                     fetchPriority={i === 0 ? "high" : "auto"}
-                                    quality={85}
+                                    quality={60}
                                     sizes="100vw"
                                     loading={i === 0 ? "eager" : "lazy"}
                                     src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
@@ -305,7 +305,7 @@ const NewHero = () => {
                                 <Image
                                     priority={i === 0}
                                     fetchPriority={i === 0 ? "high" : "auto"}
-                                    quality={85}
+                                    quality={60}
                                     sizes="100vw"
                                     loading={i === 0 ? "eager" : "lazy"}
                                     src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}

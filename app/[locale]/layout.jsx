@@ -1,11 +1,8 @@
 // import Head from "next/head";
 import Script from "next/script";
 import Svgs from "@/components/common/Svgs";
-import "react-tooltip/dist/react-tooltip.css";
 import "../../public/assets/css/plugins/swiper.min.css";
 import "../../public/assets/sass/style.scss";
-import "rc-slider/assets/index.css";
-import "tippy.js/dist/tippy.css";
 import dynamic from 'next/dynamic';
 
 const LoginFormPopup = dynamic(() => import("@/components/common/LoginFormPopup"), { ssr: false });
@@ -68,16 +65,19 @@ export async function generateMetadata({ params: { locale } }) {
 // Import English font
 const englishFont = localFont({
   src: "../../public/assets/fonts/wulkan/WulkanDisplayRegular.ttf",
+  display: "swap",
 });
 
 // Import Arabic font
 const arabicFont = localFont({
   src: "../../public/assets/fonts/alexandria-arabic/static/Alexandria-Regular.ttf",
+  display: "swap",
 });
 
 // Import Lato Regular font as a secondary font
 const sofiaFont = localFont({
   src: "../../public/assets/fonts/kanit/Kanit-Regular.ttf",
+  display: "swap",
 });
 
 export default async function LocaleLayout({ children, params: { locale } }) {
@@ -96,6 +96,9 @@ export default async function LocaleLayout({ children, params: { locale } }) {
   // Fetch translation messages
   const messages = await getMessages();
   const GTM_ID = "GTM-M4B7GLV";
+
+  // Dynamic CSS imports deferred to client-side
+  const NonCriticalCSS = dynamic(() => import('@/components/common/NonCriticalCSS'), { ssr: false });
 
   let initialMenuData = null;
   try {
@@ -262,6 +265,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
       <IntlProviderClient locale={locale} messages={messages}>
         <Svgs />
+        <NonCriticalCSS />
         <MenuProvider initialData={initialMenuData}>
           <Context>
             <UserProvider>
