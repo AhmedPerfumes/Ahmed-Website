@@ -10,8 +10,6 @@ import "swiper/css";
 
 import { useContextElement } from "@/context/Context";
 import { useLocale, useTranslations } from "next-intl";
-import { Weight } from "lucide-react";
-import { ElevenMp } from "@mui/icons-material";
 import { useMenu } from "@/context/MenuContext";
 import Skeleton from "@mui/material/Skeleton";
 import LabelIcon from "@/components/labels/LabelIcon";
@@ -204,7 +202,7 @@ export default function PopularProducts() {
     `;
       slide.style.opacity = opacity;
       slide.style.zIndex = `${100 - Math.round(abs * 10)}`;
-      slide.style.willChange = "transform, opacity";
+      slide.style.willChange = abs < 0.5 ? "transform, opacity" : "auto";
     });
   };
 

@@ -16,9 +16,12 @@ export default function BotPenguinWidget() {
             document.body.appendChild(script);
         };
 
-        loadScript();
+        const timer = setTimeout(() => {
+            loadScript();
+        }, 5000);
 
         return () => {
+            clearTimeout(timer);
             // Cleanup BotPenguin elements on unmount
             const selectors = [
                 'botpenguin-root',

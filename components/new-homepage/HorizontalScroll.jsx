@@ -16,8 +16,10 @@ const HorizontalScroll = () => {
   const locale = useLocale();
   const t = useTranslations();
   const containerRef = useRef(null);
+  const videoSlideRef = useRef(null);
   const dotsRef = useRef([]);
   const [isMuted, setIsMuted] = useState(true);
+  const [showVideo, setShowVideo] = useState(false);
 
   // Send controls to YouTube player iframe
   const postCommand = (func, args = []) => {
@@ -39,6 +41,16 @@ const HorizontalScroll = () => {
     setIsMuted(nextMuted);
     postCommand(nextMuted ? "mute" : "unMute");
   };
+
+  useEffect(() => {
+    if (!videoSlideRef.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setShowVideo(true); },
+      { threshold: 0.1 }
+    );
+    obs.observe(videoSlideRef.current);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -213,15 +225,17 @@ const HorizontalScroll = () => {
                 <span className="hs-vid-corner hs-vid-corner--tr" />
                 <span className="hs-vid-corner hs-vid-corner--bl" />
                 <span className="hs-vid-corner hs-vid-corner--br" />
-                <div className="hs-vid-inner">
-                  <iframe
-                    id="k-series-yt-iframe"
-                    src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0&enablejsapi=1"
-                    title="K - Series"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    style={{ pointerEvents: 'none' }}
-                  />
+                <div className="hs-vid-inner" ref={videoSlideRef}>
+                  {showVideo && (
+                    <iframe
+                      id="k-series-yt-iframe"
+                      src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0&enablejsapi=1"
+                      title="K - Series"
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      style={{ pointerEvents: 'none' }}
+                    />
+                  )}
                 </div>
                 <button
                   type="button"
@@ -304,7 +318,7 @@ const HorizontalScroll = () => {
                       src="/assets/images/bakhoor-ahmed.jpg"
                       alt="Bakhoor Ahmed"
                       fill
-                      priority
+                      loading="lazy"
                       sizes="(max-width: 768px) 45vw, 25vw"
                       style={{ objectFit: "cover" }}
                     />
@@ -326,7 +340,7 @@ const HorizontalScroll = () => {
                       src="/assets/images/oud-kiflain.jpg"
                       alt="Oud Kiflain"
                       fill
-                      priority
+                      loading="lazy"
                       sizes="(max-width: 768px) 45vw, 20vw"
                       style={{ objectFit: "cover" }}
                     />

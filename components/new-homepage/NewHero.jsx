@@ -271,18 +271,50 @@ const NewHero = () => {
                         className="h-100 w-100 position-relative overflow-hidden"
                     >
                         {/* Background Image */}
-                        <Link href={`/${locale}/${elm.link || "#"}`} className="position-absolute top-0 start-0 w-100 h-100 d-block" style={{ zIndex: 0 }}>
+                        {/* Desktop Image */}
+                        <Link href={`/${locale}/${elm.link || "#"}`} className="d-none d-md-block position-absolute top-0 start-0 w-100 h-100" style={{ zIndex: 0 }}>
                             <Image
                                 priority={i === 0}
-                                quality={100}
-                                sizes="(max-width: 768px) 200vw, 100vw"
+                                fetchPriority={i === 0 ? "high" : "auto"}
+                                quality={85}
+                                sizes="100vw"
                                 loading={i === 0 ? "eager" : "lazy"}
-                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${isMobile && elm.mobile_image ? elm.mobile_image : elm.image}`}
-                                alt={elm.title || "Hero Image"}
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
+                                alt={elm.title || "Hero Image Desktop"}
                                 fill
                                 className="gsap-bg"
                             />
                         </Link>
+                        {/* Mobile Image */}
+                        {elm.mobile_image ? (
+                            <Link href={`/${locale}/${elm.link || "#"}`} className="d-block d-md-none position-absolute top-0 start-0 w-100 h-100" style={{ zIndex: 0 }}>
+                                <Image
+                                    priority={i === 0}
+                                    fetchPriority={i === 0 ? "high" : "auto"}
+                                    quality={85}
+                                    sizes="100vw"
+                                    loading={i === 0 ? "eager" : "lazy"}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
+                                    alt={elm.title || "Hero Image Mobile"}
+                                    fill
+                                    className="gsap-bg"
+                                />
+                            </Link>
+                        ) : (
+                            <Link href={`/${locale}/${elm.link || "#"}`} className="d-block d-md-none position-absolute top-0 start-0 w-100 h-100" style={{ zIndex: 0 }}>
+                                <Image
+                                    priority={i === 0}
+                                    fetchPriority={i === 0 ? "high" : "auto"}
+                                    quality={85}
+                                    sizes="100vw"
+                                    loading={i === 0 ? "eager" : "lazy"}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
+                                    alt={elm.title || "Hero Image Mobile"}
+                                    fill
+                                    className="gsap-bg"
+                                />
+                            </Link>
+                        )}
                         {/* Mobile Overlay for text readability */}
                         <div 
                             className="position-absolute top-0 start-0 w-100 h-100 d-block d-md-none gsap-overlay" 
@@ -591,7 +623,6 @@ const NewHero = () => {
                 .gsap-bg {
                     object-fit: cover !important;
                     object-position: center center !important;
-                    will-change: transform;
                 }
 
                 .unique-btn-modern {

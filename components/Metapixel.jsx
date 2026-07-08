@@ -68,20 +68,24 @@ export const FacebookPixelEvents = () => {
             }
         };
 
-        loadFacebookPixel();
+        const timer = setTimeout(() => {
+            loadFacebookPixel();
 
-        // Track PageView on route change
-        fbq("track", "PageView");
+            // Track PageView on route change
+            fbq("track", "PageView");
 
-        // Track InitiateCheckout when user visits the checkout page
-        if (pathname.includes("en/shop/checkout")) {
-            fbq("track", "InitiateCheckout", {
-                content_ids: cartData.items.map((item) => item.id), // Pass actual product IDs
-                content_type: "product",
-                value: cartData.total, // Total cart value
-                currency: "AED",
-            });
-        }
+            // Track InitiateCheckout when user visits the checkout page
+            if (pathname.includes("en/shop/checkout")) {
+                fbq("track", "InitiateCheckout", {
+                    content_ids: cartData.items.map((item) => item.id), // Pass actual product IDs
+                    content_type: "product",
+                    value: cartData.total, // Total cart value
+                    currency: "AED",
+                });
+            }
+        }, 5000);
+
+        return () => clearTimeout(timer);
     }, [pathname, searchParams, cartData]);
 
     return null;

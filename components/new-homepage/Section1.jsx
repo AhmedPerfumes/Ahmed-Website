@@ -21,7 +21,7 @@ const DakhoonSection = () => {
                     fill
                     sizes="100vw"
                     style={{ objectFit: 'cover' }}
-                    priority
+                    loading="lazy"
                 />
             </div>
 

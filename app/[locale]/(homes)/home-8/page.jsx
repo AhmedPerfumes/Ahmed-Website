@@ -1,9 +1,12 @@
 import Image from 'next/image';
 import BotPenguinWidget from '@/components/common/BotPenguinWidget';
-import Footer14 from '@/components/footers/Footer14';
+import dynamic from 'next/dynamic';
+
+const Footer14 = dynamic(() => import('@/components/footers/Footer14'));
+const MobileFooter2 = dynamic(() => import('@/components/footers/MobileFooter2'));
+
 import Header14 from '@/components/headers/Header14';
 import HomePage from '@/components/HomePage';
-import MobileFooter2 from '@/components/footers/MobileFooter2';
 import NewsLetter from '@/components/modals/NewsLetter';
 import React from 'react';
 import PopUp from '@/components/common/Popup';
@@ -41,7 +44,7 @@ export default function HomePage8() {
           fill
           sizes="100vw"
           style={{ objectFit: 'cover' }}
-          priority            // eager + high fetch priority
+          loading="lazy"            // lazy to prevent competing with LCP
         />
       </div>
 

@@ -3,23 +3,23 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const MenuContext = createContext();
 
-export function MenuProvider({ children }) {
-  const [categoriesSubCategories, setCategoriesSubCategories] = useState([]);
-  const [vatTax, setVatTax] = useState(0.00);
-  const [shippingServiceCharges, setshippingServiceCharges] = useState([]);
-  const [currency, setCurrency] = useState('د.إ');
-  const [homeSliders, setHomeSliders] = useState([]);
-  const [popUp, setPopUp] = useState([]);
-  const [shop_pop_up, setshop_pop_up] = useState([]);
-  const [saleSection, setSaleSection] = useState([]);
-  // const [dynamic_sections, setDynamicSections] = useState([]);
-  const [topHeader, setTopHeader] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function MenuProvider({ children, initialData }) {
+  const [categoriesSubCategories, setCategoriesSubCategories] = useState(initialData?.productCategories || []);
+  const [vatTax, setVatTax] = useState(initialData?.tax || 0.00);
+  const [shippingServiceCharges, setshippingServiceCharges] = useState(initialData?.shipping_service_charges || []);
+  const [currency, setCurrency] = useState(initialData?.currency || 'د.إ');
+  const [homeSliders, setHomeSliders] = useState(initialData?.home_sliders || []);
+  const [popUp, setPopUp] = useState(initialData?.pop_up || []);
+  const [shop_pop_up, setshop_pop_up] = useState(initialData?.shop_pop_up || []);
+  const [saleSection, setSaleSection] = useState(initialData?.sale_section || []);
+  const [topHeader, setTopHeader] = useState(initialData?.top_header || []);
+  const [isLoading, setIsLoading] = useState(initialData ? false : true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (initialData) return; // Skip fetching on client if server provided data
+    
     async function getCategoriesSubCategories() {
-
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategoriesTemp`, {
           method: 'POST',

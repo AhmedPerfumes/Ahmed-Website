@@ -12,9 +12,8 @@ import MobileNav from "./components/MobileNav";
 import Image from "next/image";
 import Link from "next/link";
 import User from "./components/User";
-import { Autoplay, EffectFade, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { slideData1000 } from "@/data/heroslides";
+
+
 import { useUser } from "../../context/UserContext";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoReorderTwoSharp } from "react-icons/io5";
@@ -106,16 +105,7 @@ export default function MobileHeader() {
     router.push(pathname, { locale: e.target.value });
   };
 
-  const swiperOptions = {
-    autoplay: {
-      delay: 5000,
-    },
-    modules: [Autoplay, Navigation, EffectFade],
-    pagination: false,
-    slidesPerView: 1,
-    effect: "fade",
-    loop: true,
-  };
+
 
 
 

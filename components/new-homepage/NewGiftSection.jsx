@@ -71,6 +71,9 @@ function GiftCard({ item, index, locale }) {
     const handleMouseEnter = () => {
         setIsHovered(true);
         if (videoRef.current) {
+            if (!videoRef.current.src) {
+                videoRef.current.src = item.video;
+            }
             videoRef.current.currentTime = 0;
             videoRef.current.play().catch(() => {});
         }
@@ -104,7 +107,6 @@ function GiftCard({ item, index, locale }) {
                 />
                 <video
                     ref={videoRef}
-                    src={item.video}
                     muted
                     playsInline
                     loop
@@ -218,7 +220,7 @@ const NewGiftSection = () => {
                         {/* Banners */}
                         <div className="gs-banners">
                             <Link href={`/${locale}/product-category/gift-sets`} className="gs-banner gs-banner--left">
-                                <Image src="/assets/images/campaigns/Azzo-Azzeez.jpg" alt="A Signature of Distinction" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+                                <Image src="/assets/images/campaigns/Azzo-Azzeez.jpg" alt="A Signature of Distinction" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} loading="lazy" />
                                 <div className="gs-banner__content">
                                     <span className="gs-banner__small">{t("A Signature of")}</span>
                                     <span className="gs-banner__big">{t("Distinction")}</span>
@@ -227,7 +229,7 @@ const NewGiftSection = () => {
                                 </div>
                             </Link>
                             <Link href={`/${locale}/product-category/gift-sets`} className="gs-banner gs-banner--right">
-                                <Image src="/assets/images/Antee-05-Giftset.jpg" alt="Beautifully Presented" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+                                <Image src="/assets/images/Antee-05-Giftset.jpg" alt="Beautifully Presented" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} loading="lazy" />
                                 <div className="gs-banner__content">
                                     <span className="gs-banner__small">{t("Beautifully")}</span>
                                     <span className="gs-banner__big">{t("Presented")}</span>

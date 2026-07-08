@@ -134,7 +134,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             try {
                 const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
                 const apiUrl = `${apiBase}api/new-product-sliders?lang=${locale}`;
-                console.log("Calling New Product Slider API:", apiUrl);
+
                 const res = await fetch(apiUrl);
                 const json = await res.json();
                 if (isMounted && json && !json.error && json.data?.length > 0) {

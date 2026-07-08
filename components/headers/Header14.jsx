@@ -6,10 +6,9 @@ import { openCart } from "@/utlis/openCart";
 import User from "./components/User";
 import UserLoggedIn from "./components/UserLoggedIn";
 import { currencyOptions, languageOptions2 } from "@/data/footer";
-import { slideData1000 } from "@/data/heroslides";
+
 import Image from "next/image";
-import { Autoplay, EffectFade, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 import { useRef, useState, useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { TbTruckDelivery } from "react-icons/tb";
@@ -679,14 +678,7 @@ export default function Header14() {
     if (isMenuLoading) return <HeaderSkeleton />;
     if (error) return <div>{error}</div>;
 
-    const swiperOptions = {
-        autoplay: { delay: 5000 },
-        modules: [Autoplay, Navigation, EffectFade],
-        pagination: false,
-        slidesPerView: 1,
-        effect: "fade",
-        loop: true,
-    };
+
 
     return (
         <>

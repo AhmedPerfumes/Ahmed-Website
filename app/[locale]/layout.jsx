@@ -6,22 +6,25 @@ import "../../public/assets/css/plugins/swiper.min.css";
 import "../../public/assets/sass/style.scss";
 import "rc-slider/assets/index.css";
 import "tippy.js/dist/tippy.css";
-import LoginFormPopup from "@/components/common/LoginFormPopup";
+import dynamic from 'next/dynamic';
+
+const LoginFormPopup = dynamic(() => import("@/components/common/LoginFormPopup"), { ssr: false });
+const CartDrawer = dynamic(() => import("@/components/shopCartandCheckout/CartDrawer"), { ssr: false });
+const SiteMap = dynamic(() => import("@/components/modals/SiteMap"), { ssr: false });
+const ShopFilter = dynamic(() => import("@/components/asides/ShopFilter"), { ssr: false });
+const SizeGuide = dynamic(() => import("@/components/modals/SizeGuide"), { ssr: false });
+const Delivery = dynamic(() => import("@/components/modals/Delivery"), { ssr: false });
+const CustomerLogin = dynamic(() => import("@/components/asides/CustomerLogin"), { ssr: false });
+const ProductDescription = dynamic(() => import("@/components/asides/ProductDescription"), { ssr: false });
+const ProductAdditionalInformation = dynamic(() => import("@/components/asides/ProductAdditionalInformation"), { ssr: false });
+const ProductReviews = dynamic(() => import("@/components/asides/ProductReviews"), { ssr: false });
+
 import ScrollTop from "@/components/common/ScrollTop";
 import Context from "@/context/Context";
 import { MenuProvider } from "@/context/MenuContext";
 import { UserProvider } from "@/context/UserContext";
-import CartDrawer from "@/components/shopCartandCheckout/CartDrawer";
-import SiteMap from "@/components/modals/SiteMap";
-// import NewsLetter from "@/components/modals/NewsLetter";
-import ShopFilter from "@/components/asides/ShopFilter";
+
 import MobileHeader from "@/components/headers/MobileHeader";
-import SizeGuide from "@/components/modals/SizeGuide";
-import Delivery from "@/components/modals/Delivery";
-import CustomerLogin from "@/components/asides/CustomerLogin";
-import ProductDescription from "@/components/asides/ProductDescription";
-import ProductAdditionalInformation from "@/components/asides/ProductAdditionalInformation";
-import ProductReviews from "@/components/asides/ProductReviews";
 import MobileFooter1 from "@/components/footers/MobileFooter1";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
@@ -30,7 +33,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
-import CountryMismatchPopup from '@/components/otherPages/CountryMismatchPopup';
+const CountryMismatchPopup = dynamic(() => import('@/components/otherPages/CountryMismatchPopup'), { ssr: false });
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
 import { Toaster } from "react-hot-toast";
 import IntlProviderClient from './IntlProviderClient';
@@ -94,6 +97,21 @@ export default async function LocaleLayout({ children, params: { locale } }) {
   const messages = await getMessages();
   const GTM_ID = "GTM-M4B7GLV";
 
+  let initialMenuData = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategoriesTemp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+      next: { revalidate: 60 } // Cache for 60 seconds
+    });
+    if (res.ok) {
+      initialMenuData = await res.json();
+    }
+  } catch (err) {
+    console.error("Failed to fetch menu data on server:", err);
+  }
+
   return (
     <div
       lang={locale}
@@ -101,7 +119,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
       className={selectedFont.className}
     >
 
-      <Script id="gtm-script" strategy="afterInteractive">
+      <Script id="gtm-script" strategy="lazyOnload">
         {`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -111,7 +129,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
         `}
       </Script>
 
-      <Script id="tiktok-pixel" strategy="afterInteractive">
+      <Script id="tiktok-pixel" strategy="lazyOnload">
         {`
           !function (w, d, t) {
             w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
@@ -121,7 +139,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
         `}
       </Script>
 
-      <Script id="tiktok-listener" strategy="afterInteractive">
+      <Script id="tiktok-listener" strategy="lazyOnload">
         {`
           (function(){
             // Ensure dataLayer exists
@@ -244,7 +262,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
       <IntlProviderClient locale={locale} messages={messages}>
         <Svgs />
-        <MenuProvider>
+        <MenuProvider initialData={initialMenuData}>
           <Context>
             <UserProvider>
               <FacebookPixelEvents />

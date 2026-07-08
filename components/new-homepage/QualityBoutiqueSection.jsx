@@ -274,6 +274,7 @@ const QualityBoutiqueSection = () => {
                                     src="/assets/images/home/demo8/Shop2.jpg"
                                     alt={t("A gracious invitation to experience our boutique")}
                                     fill
+                                    sizes="(max-width: 991px) 100vw, 50vw"
                                     style={{ objectFit: "cover" }}
                                 />
                             </div>

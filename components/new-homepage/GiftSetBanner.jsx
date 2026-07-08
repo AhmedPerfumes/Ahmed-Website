@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { PiGiftLight, PiSparkleLight, PiHeartLight } from "react-icons/pi";
 
 const GiftSetBanner = () => {
@@ -469,10 +470,13 @@ const GiftSetBanner = () => {
 
             {/* Background */}
             <div className="gsb-bg">
-                <img
+                <Image
                     src="/assets/images/home/demo8/avif/giftset-bnr.avif"
                     alt="Premium Gift Sets Collection"
                     loading="lazy"
+                    fill
+                    sizes="100vw"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
                 />
             </div>
 
@@ -482,7 +486,7 @@ const GiftSetBanner = () => {
 
                 {/* ── Logo ── */}
                 <div className="gsb-logo-wrap">
-                    <img src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" />
+                    <Image src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" width={120} height={80} style={{ objectFit: "contain" }} loading="lazy" />
                 </div>
 
                 {/* Corner ornaments */}
