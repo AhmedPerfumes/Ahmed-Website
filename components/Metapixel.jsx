@@ -30,11 +30,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { useContextElement } from "@/context/Context";
 
 export const FacebookPixelEvents = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const { cartProducts, totalPrice } = useContextElement();
     const [cartData, setCartData] = useState({ items: [], total: 0 });
+
+    // Keep cartData in sync with the real cart context
+    useEffect(() => {
+        setCartData({
+            items: (cartProducts || []).map((item) => ({
+                id: item.product_id?.toString(),
+            })),
+            total: totalPrice || 0,
+        });
+    }, [cartProducts, totalPrice]);
 
     useEffect(() => {
         const loadFacebookPixel = () => {
@@ -63,7 +75,11 @@ export const FacebookPixelEvents = () => {
                     "https://connect.facebook.net/en_US/fbevents.js"
                 );
 
-                fbq("init", "235034997951707"); // Replace with your Pixel ID
+                // Disable Meta's automatic button-click detection.
+                // This prevents spurious 'Purchase' and 'SubscribedButtonClick' events
+                // from firing on form submits / add-to-cart buttons.
+                fbq("set", "autoConfig", false, "235034997951707");
+                fbq("init", "235034997951707");
                 fbq("track", "PageView");
             }
         };
@@ -87,6 +103,7 @@ export const FacebookPixelEvents = () => {
 
         return () => clearTimeout(timer);
     }, [pathname, searchParams, cartData]);
+
 
     return null;
 };

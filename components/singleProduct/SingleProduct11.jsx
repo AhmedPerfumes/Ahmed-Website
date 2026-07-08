@@ -72,7 +72,31 @@ export default function SingleProduct11({ category, subcategory, product: initia
     };
 
     fetchLiveStatus();
+
+    // ---- GA4 view_item (TikTok listener auto-maps to ttq ViewContent) ----
+    try {
+      if (initialProduct?.product_id) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "view_item",
+          ecommerce: {
+            currency: "AED",
+            value: parseFloat(initialProduct.price || 0),
+            items: [{
+              item_id: initialProduct.product_id?.toString(),
+              item_name: initialProduct.product_name,
+              price: parseFloat(initialProduct.price || 0),
+              quantity: 1,
+              item_category: category || "",
+              item_category2: subcategory || "",
+            }],
+          },
+        });
+      }
+    } catch (e) { /* tracking errors must never break product page */ }
+
   }, [initialProduct?.product_id]);
+
 
   const isIncludeCard = () => {
     const item = cartProducts.filter((elm) => elm.product_id == displayProduct.product_id)[0];

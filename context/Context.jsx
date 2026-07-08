@@ -458,6 +458,39 @@ export default function Context({ children }) {
       payload: product
     });
 
+    // ---- GA4 add_to_cart (TikTok listener auto-maps to ttq AddToCart) ----
+    // ---- Meta (Facebook) Pixel AddToCart (explicit — autoConfig is disabled) ----
+    try {
+      if (!product.is_gift) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "add_to_cart",
+          ecommerce: {
+            currency: "AED",
+            value: parseFloat((product.price || 0) * (product.quantity || 1)),
+            items: [{
+              item_id: product.product_id?.toString(),
+              item_name: product.product_name,
+              price: parseFloat(product.price || 0),
+              quantity: product.quantity || 1,
+              item_category: product.category_name || "",
+            }],
+          },
+        });
+
+        // Explicit Meta Pixel AddToCart (needed because autoConfig is disabled)
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "AddToCart", {
+            content_ids: [product.product_id?.toString()],
+            content_name: product.product_name,
+            content_type: "product",
+            value: parseFloat((product.price || 0) * (product.quantity || 1)),
+            currency: "AED",
+          });
+        }
+      }
+    } catch (e) { /* tracking errors must never break cart */ }
+
     const imageUrl = buildToastImageUrl(product);
 
     toast.custom((toastObj) => (

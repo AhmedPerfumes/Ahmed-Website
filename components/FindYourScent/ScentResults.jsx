@@ -97,8 +97,27 @@ function RevealScreen({ userName, profile, scentProfile, onReveal }) {
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
+  const hasFiredReveal = useRef(false);
   const handleReveal = () => {
+    if (hasFiredReveal.current) return;
+    hasFiredReveal.current = true;
     setRevealing(true);
+
+    // ---- Tracking: Results Revealed ----
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "fys_results_revealed",
+        scent_profile: scentProfile?.title || profile?.title || "Unknown",
+        user_name: userName || "anonymous",
+      });
+      if (typeof window.fbq === "function") {
+        window.fbq("trackCustom", "FYSResultsRevealed", {
+          scent_profile: scentProfile?.title || profile?.title || "Unknown",
+        });
+      }
+    } catch (e) {}
+
     setTimeout(onReveal, 800);
   };
 
@@ -200,7 +219,7 @@ function PersonalityHero({ userName, profile, scentProfile }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 //  PRODUCT CARD
 // ═══════════════════════════════════════════════════════════════════════════════
-function ProductCard({ rec, rank, locale, isReversed }) {
+function ProductCard({ rec, rank, locale, isReversed, scentProfileTitle }) {
   const { addProductToCart } = useContextElement();
   const { product } = rec;
   const img = getImg(product);
@@ -282,12 +301,58 @@ function ProductCard({ rec, rank, locale, isReversed }) {
         <div className="fys-prod-row__footer">
           <p className="fys-prod-row__price">AED {parseFloat(product.price || 0).toFixed(0)}</p>
           <div className="fys-prod-row__actions">
-            <Link href={`/${locale}/shop/${cat}/${subcat}/${slug}`} className="fys-prod-row__btn fys-prod-row__btn--primary">
+            <Link
+              href={`/${locale}/shop/${cat}/${subcat}/${slug}`}
+              className="fys-prod-row__btn fys-prod-row__btn--primary"
+              onClick={() => {
+                // ---- Tracking: FYS Product Clicked (Discover) ----
+                try {
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: "fys_product_clicked",
+                    product_id: product.product_id?.toString(),
+                    product_name: product.product_name,
+                    match_rank: rank + 1,
+                    scent_profile: scentProfileTitle || "Unknown",
+                  });
+                  if (typeof window.fbq === "function") {
+                    window.fbq("trackCustom", "FYSProductClicked", {
+                      content_id: product.product_id?.toString(),
+                      content_name: product.product_name,
+                      match_rank: rank + 1,
+                    });
+                  }
+                } catch (e) {}
+              }}
+            >
               DISCOVER →
             </Link>
             <button
               className="fys-prod-row__btn fys-prod-row__btn--secondary"
-              onClick={() => addProductToCart({ ...product, qty: 1 })}
+              onClick={() => {
+                addProductToCart({ ...product, qty: 1 });
+                // ---- Tracking: FYS Add to Cart (tags this add as FYS-sourced) ----
+                try {
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: "fys_add_to_cart",
+                    product_id: product.product_id?.toString(),
+                    product_name: product.product_name,
+                    match_rank: rank + 1,
+                    value: parseFloat(product.price || 0),
+                    currency: "AED",
+                    scent_profile: scentProfileTitle || "Unknown",
+                  });
+                  if (typeof window.fbq === "function") {
+                    window.fbq("trackCustom", "FYSAddToCart", {
+                      content_id: product.product_id?.toString(),
+                      content_name: product.product_name,
+                      value: parseFloat(product.price || 0),
+                      currency: "AED",
+                    });
+                  }
+                } catch (e) {}
+              }}
             >
               ADD TO BAG
             </button>
@@ -350,6 +415,7 @@ export default function ScentResults({ recommendations = [], scentProfile, userN
                     rank={i}
                     locale={locale}
                     isReversed={i % 2 !== 0}
+                    scentProfileTitle={scentProfile?.title || profile?.title}
                   />
                 ))
               ) : (

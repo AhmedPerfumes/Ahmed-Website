@@ -209,7 +209,34 @@ export default function Checkout() {
     }
   }, [isOrderSummaryOpen]);
 
-  // HANDLERS
+  // ---- GA4 begin_checkout (fires once on mount) ----
+  // The TikTok listener in layout.jsx auto-maps this to ttq.track("InitiateCheckout")
+  const hasTrackedCheckout = useRef(false);
+  useEffect(() => {
+    if (hasTrackedCheckout.current) return;
+    if (!cartProducts || cartProducts.length === 0) return;
+    hasTrackedCheckout.current = true;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "begin_checkout",
+      ecommerce: {
+        currency: "AED",
+        value: parseFloat(totalPrice || 0),
+        items: cartProducts
+          .filter((item) => !item.is_gift)
+          .map((item) => ({
+            item_id: item.product_id?.toString(),
+            item_name: item.product_name,
+            price: parseFloat(item.price || 0),
+            quantity: item.quantity || 1,
+            item_category: item.category_name || "",
+          })),
+      },
+    });
+  }, [cartProducts]);
+
+
   const handleRadioChange = (event) => { setSelectedOption(event.target.value); };
 
   const handleChange = (event) => {
@@ -483,6 +510,49 @@ export default function Checkout() {
     setIsLoading(true);
     setError(null);
     setSuccess(null);
+
+    // ---- Pixel: Fire AddPaymentInfo on first Place Order attempt only ----
+    // Correct event for "Place Order" click — NOT Purchase (Purchase fires on Thank You page).
+    // useRef guard ensures this fires exactly once per checkout session,
+    // even if user clicks multiple times due to validation errors or slow API.
+    try {
+      const hasTrackedPlaceOrder = typeof window.__placeOrderTracked !== "undefined";
+
+      if (!hasTrackedPlaceOrder && cartProducts && cartProducts.length > 0) {
+        window.__placeOrderTracked = true; // session-level guard (resets on page reload)
+
+        // GA4 add_payment_info (TikTok listener maps to AddPaymentInfo)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "add_payment_info",
+          ecommerce: {
+            currency: "AED",
+            value: parseFloat(totalPrice || 0),
+            payment_type: selectedOption || "cod",
+            items: cartProducts
+              .filter((item) => !item.is_gift)
+              .map((item) => ({
+                item_id: item.product_id?.toString(),
+                item_name: item.product_name,
+                price: parseFloat(item.price || 0),
+                quantity: item.quantity || 1,
+              })),
+          },
+        });
+
+        // Meta Pixel: AddPaymentInfo is the correct pre-purchase event
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "AddPaymentInfo", {
+            content_ids: cartProducts
+              .filter((item) => !item.is_gift)
+              .map((item) => item.product_id?.toString()),
+            content_type: "product",
+            value: parseFloat(totalPrice || 0),
+            currency: "AED",
+          });
+        }
+      }
+    } catch (e) { /* tracking errors must never block order submission */ }
 
     const billing = formData.billingAddress;
     const newErrors = {};
