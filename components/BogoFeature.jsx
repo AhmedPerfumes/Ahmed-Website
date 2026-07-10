@@ -398,7 +398,7 @@ const BOGOFeature = () => {
   if (loading) return null;
 
   return (
-    <div className="my-4 px-4">
+    <div className="">
       {promotions.map((promo) => {
         const { campaign, name, selection_rule, free_products, buy_products, buy_quantity, get_quantity } = promo;
         if (!campaign) return null;

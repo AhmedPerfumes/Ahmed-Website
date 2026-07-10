@@ -17,7 +17,6 @@ import { useRef, useState, useCallback, useEffect } from "react";
 // ─── Standalone component — defined OUTSIDE Categories so React never remounts it ───
 function MobileVideoCard({ elm, t, isPlaying, onToggle, aspectRatio = "330 / 500" }) {
   const videoRef = useRef(null);
-  const loadedRef = useRef(false);
 
   const handleTap = (e) => {
     e.preventDefault();
@@ -29,11 +28,6 @@ function MobileVideoCard({ elm, t, isPlaying, onToggle, aspectRatio = "330 / 500
       video.pause();
       onToggle(null);
     } else {
-      // Load the source first if preload=none (important for iOS)
-      if (!loadedRef.current) {
-        video.load();
-        loadedRef.current = true;
-      }
       onToggle(elm.id);
       video.play().catch(() => {});
     }
@@ -78,10 +72,11 @@ function MobileVideoCard({ elm, t, isPlaying, onToggle, aspectRatio = "330 / 500
       {/* Video — playsInline stops iOS fullscreen */}
       <video
         ref={videoRef}
+        src={elm.videoSrc}
         muted
         loop
         playsInline
-        preload="none"
+        preload="metadata"
         style={{
           position: "absolute",
           inset: 0,
@@ -90,9 +85,7 @@ function MobileVideoCard({ elm, t, isPlaying, onToggle, aspectRatio = "330 / 500
           objectFit: "cover",
           zIndex: 0,
         }}
-      >
-        <source type="video/mp4" src={elm.videoSrc} />
-      </video>
+      />
 
       {/* Play button overlay — shown when paused */}
       {!isPlaying && (
@@ -251,10 +244,11 @@ export default function Categories({ section }) {
               />
               {elm.videoSrc && (
                 <video
+                  src={elm.videoSrc}
                   muted
                   loop
                   playsInline
-                  preload="none"
+                  preload="metadata"
                   onMouseOver={(e) => e.currentTarget.play()}
                   onMouseOut={(e) => e.currentTarget.pause()}
                   style={{
@@ -264,9 +258,7 @@ export default function Categories({ section }) {
                     height: "100%",
                     objectFit: "cover",
                   }}
-                >
-                  <source type="video/mp4" src={elm.videoSrc} />
-                </video>
+                />
               )}
             </Link>
           )

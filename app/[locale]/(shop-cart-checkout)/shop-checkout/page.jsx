@@ -21,7 +21,10 @@ export default function () {
       <main>
         <div className="mb-3 pb-3 mb-lg-4 pb-lg-4"></div>
         <section className="shop-checkout container mb-5 pb-5">
-          <h2 className="page-title">Shipping and Checkout</h2>
+          <div className="page-title-block">
+            <p className="page-title-block__eyebrow">Secure Checkout</p>
+            <h2 className="page-title">Complete Your Order</h2>
+          </div>
           <ChectoutSteps />
           <Checkout />
         </section>

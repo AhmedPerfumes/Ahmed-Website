@@ -6,52 +6,50 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
+const emptyAddr = (userData = {}) => ({
+  id: -1,
+  name: userData?.name || "",
+  email: userData?.email || "",
+  mobile: userData?.phone || "",
+  area: "",
+  building: "",
+  emirates: "",
+  isDefault: false,
+});
+
 export default function EditAddress() {
-  const [addresses, setAddresses] = useState([
-    {
-      id: -1,
-      name: "",
-      email: "",
-      mobile: "",
-      area: "",
-      building: "",
-      emirates: "",
-      isDefault: false,
-    },
-    {
-      id: -1,
-      name: "",
-      email: "",
-      mobile: "",
-      area: "",
-      building: "",
-      emirates: "",
-      isDefault: false,
-    },
-  ]);
-  const [show, setShow] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(0);
-  const [form, setForm] = useState(addresses[0]);
+  // Dynamic list — not locked to 2 slots
+  const [addresses, setAddresses] = useState([]);
+  const [userData, setUserData] = useState(null);
   const [customerId, setCustomerId] = useState(null);
 
-  // Fetch customer_id and addresses from localStorage / API
-useEffect(() => {
-  if (typeof window === "undefined") return;
+  // Modal state
+  const [show, setShow] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null); // null = add new
+  const [form, setForm] = useState(emptyAddr());
+  const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
-  const raw = localStorage.getItem("user");
-  let customer_id = null;
-  let userData = null;
+  // ─── Fetch addresses on mount ─────────────────────────────────────────────
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  if (raw) {
-    try {
-      userData = JSON.parse(atob(raw)); // 🔹 parse user object
-      customer_id = userData.id;
-    } catch {}
-  }
+    const raw = localStorage.getItem("user");
+    let customer_id = null;
+    let user = null;
 
-  setCustomerId(customer_id);
+    if (raw) {
+      try {
+        user = JSON.parse(atob(raw));
+        customer_id = user.id;
+      } catch {}
+    }
 
-  if (customer_id) {
+    setUserData(user);
+    setCustomerId(customer_id);
+
+    if (!customer_id) return;
+
     fetch(`${API_BASE}api/customerAddressDetails`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -60,93 +58,49 @@ useEffect(() => {
       .then((res) => res.json())
       .then((data) => {
         if (data.addresses && data.addresses.length) {
-          // 🔹 Step 1: parse API response
+          const stored = localStorage.getItem("address");
+          let defaultId = null;
+          if (stored) {
+            try { defaultId = JSON.parse(atob(stored))?.id; } catch {}
+          }
+
           const parsed = data.addresses.map((addr) => ({
             id: addr.id,
-            name: addr.name || userData?.name || "",
-            email: addr.email || userData?.email || "",
-            mobile: addr.phone || userData?.phone || "",
+            name: addr.name || user?.name || "",
+            email: addr.email || user?.email || "",
+            mobile: addr.phone || user?.phone || "",
             area: addr.city || "",
             building: addr.address || "",
             emirates: addr.state || "",
-            isDefault: addr.is_default === 1,
+            // prefer localStorage default, then DB is_default
+            isDefault: defaultId ? addr.id === defaultId : addr.is_default === 1,
           }));
 
-          // 🔹 Step 2: check localStorage for last default
-          const stored = localStorage.getItem("address");
-          if (stored) {
-            try {
-              const def = JSON.parse(atob(stored));
-              parsed.forEach((a) => {
-                a.isDefault = a.id === def.id;
-              });
-            } catch {}
-          }
-
-          // 🔹 Step 3: keep array of exactly 2
-          setAddresses([
-            parsed[0] || {
-              id: -1,
-              name: userData?.name || "",
-              email: userData?.email || "",
-              mobile: userData?.phone || "",
-              area: "",
-              building: "",
-              emirates: "",
-              isDefault: false,
-            },
-            parsed[1] || {
-              id: -1,
-              name: userData?.name || "",
-              email: userData?.email || "",
-              mobile: userData?.phone || "",
-              area: "",
-              building: "",
-              emirates: "",
-              isDefault: false,
-            },
-          ]);
+          setAddresses(parsed);
         } else {
-          // no API addresses → fallback with user info
-          setAddresses([
-            {
-              id: -1,
-              name: userData?.name || "",
-              email: userData?.email || "",
-              mobile: userData?.phone || "",
-              area: "",
-              building: "",
-              emirates: "",
-              isDefault: false,
-            },
-            {
-              id: -1,
-              name: userData?.name || "",
-              email: userData?.email || "",
-              mobile: userData?.phone || "",
-              area: "",
-              building: "",
-              emirates: "",
-              isDefault: false,
-            },
-          ]);
+          // No addresses yet — show an empty placeholder
+          setAddresses([]);
         }
       })
-      .catch(() => {
-        /* handle fetch errors */
-      });
-  }
-}, []);
+      .catch(() => {});
+  }, []);
 
-
-  const openModal = (idx) => {
+  // ─── Open modal ───────────────────────────────────────────────────────────
+  const openEdit = (idx) => {
     setEditingIndex(idx);
-    setForm(addresses[idx]);
+    setForm({ ...addresses[idx] });
+    setErrors({});
     setShow(true);
   };
 
-  const [errors, setErrors] = useState({}); // <-- added for inline validation
+  const openAddNew = () => {
+    setEditingIndex(null);
+    setForm(emptyAddr(userData));
+    setErrors({});
+    setShow(true);
+  };
 
+  // ─── Field change ─────────────────────────────────────────────────────────
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     if (name === "isDefault") {
@@ -156,199 +110,232 @@ useEffect(() => {
     }
   };
 
-  // inside save function where we update localStorage
-const save = async () => {
-  if (!customerId) return;
+  // ─── Save (create or update) ──────────────────────────────────────────────
+  const save = async () => {
+    if (!customerId) return;
 
-  // ✅ Validation inside save
-  const newErrors = {};
-  if (!form.area?.trim()) newErrors.area = "Area / Mantaqa is required";
-  if (!form.building?.trim()) newErrors.building = "Building / Villa / Apartment is required";
-  if (!form.emirates?.trim()) newErrors.emirates = "Emirate is required";
+    const newErrors = {};
+    if (!form.area?.trim())     newErrors.area     = "Area / Mantaqa is required";
+    if (!form.building?.trim()) newErrors.building = "Building / Villa / Apartment is required";
+    if (!form.emirates?.trim()) newErrors.emirates = "Emirate is required";
+    if (Object.keys(newErrors).length) { setErrors(newErrors); return; }
+    setErrors({});
 
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors); // show inline errors
-    return; // stop save
-  }
-  setErrors({}); // clear previous errors if valid
+    setSaving(true);
+    const token = localStorage.getItem("token");
 
-  const otherIndex = editingIndex === 0 ? 1 : 0;
+    try {
+      const resp = await fetch(`${API_BASE}api/customerAddressUpdate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: JSON.stringify({
+          address_id: form.id,   // -1 = create new, >0 = update existing
+          customer_id: customerId,
+          name: form.name,
+          email: form.email,
+          mobile: form.mobile,
+          address: form.building,
+          city: form.area,
+          state: form.emirates,
+          is_default: form.isDefault ? 1 : 0,
+        }),
+      });
 
-  setAddresses((prev) => {
-    const updated = [...prev];
-    updated[editingIndex] = { ...form };
+      const res = await resp.json();
 
-    if (form.isDefault) {
-      updated[otherIndex] = { ...updated[otherIndex], isDefault: false };
-    }
+      if (res?.message === "Unauthorized" || res?.error === "Unauthorized") {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/login_register";
+        return;
+      }
 
-    const defaultAddr = updated.find((addr) => addr.isDefault);
-    if (defaultAddr) {
-      localStorage.setItem(
-        "address",
-        btoa(
-          JSON.stringify({
-            id: defaultAddr.id,
-            name: defaultAddr.name,
-            email: defaultAddr.email,
-            phone: defaultAddr.mobile,
-            state: defaultAddr.emirates,
-            city: defaultAddr.area,
-            address: defaultAddr.building,
-            customer_id: customerId,
-            is_default: 1,
-          })
-        )
-      );
-    }
+      // Get the real DB id for newly created addresses
+      const savedId = res?.id ?? res?.addresses?.id ?? form.id;
 
-    return updated;
-  });
-
-  setShow(false);
-
-  const token = localStorage.getItem('token');
-
-  try {
-    const resp = await fetch(`${API_BASE}api/customerAddressUpdate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...(token && { Authorization: `Bearer ${token}` }) },
-      body: JSON.stringify({
-        address_id: form.id,
-        customer_id: customerId,
-        name: form.name,
-        email: form.email,
-        mobile: form.mobile,
-        address: form.building,
-        city: form.area,
-        state: form.emirates,
-        is_default: form.isDefault ? 1 : 0,
-      }),
-    });
-
-    const res = await resp.json();
-    if (res?.message || res?.error) {
-        if(res.error == 'Unauthorized' || res.message == 'Unauthorized') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = '/login_register';
+      setAddresses((prev) => {
+        let updated;
+        if (editingIndex === null) {
+          // Adding new address
+          updated = [...prev, { ...form, id: savedId }];
+        } else {
+          // Editing existing address
+          updated = prev.map((a, i) => (i === editingIndex ? { ...form, id: savedId } : a));
         }
-    }
-  } catch (e) {
-    // console.error("API update failed", e);
-  }
-};
 
+        // Unset isDefault on others if this one is default
+        if (form.isDefault) {
+          updated = updated.map((a, i) => {
+            const isThis = editingIndex === null ? i === updated.length - 1 : i === editingIndex;
+            return isThis ? a : { ...a, isDefault: false };
+          });
+        }
+
+        // Persist default to localStorage
+        const defaultAddr = updated.find((a) => a.isDefault);
+        if (defaultAddr) {
+          localStorage.setItem(
+            "address",
+            btoa(JSON.stringify({
+              id: defaultAddr.id,
+              name: defaultAddr.name,
+              email: defaultAddr.email,
+              phone: defaultAddr.mobile,
+              state: defaultAddr.emirates,
+              city: defaultAddr.area,
+              address: defaultAddr.building,
+              customer_id: customerId,
+              is_default: 1,
+            }))
+          );
+        }
+
+        return updated;
+      });
+
+      setShow(false);
+    } catch {
+      // silently fail
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <>
       <div className="col-lg-9">
         <p className="sub-menu__title border-bottom mb-4">
-          Your Default address will be used at checkout
+          Your default address will be used at checkout
         </p>
-        <div className="d-flex gap-3 flex-column " style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
-          {["Home Address", "Other Address"].map((label, idx) => (
-            <div
-              key={label}
-              className={`p-3 d-flex justify-content-between align-items-start rounded border ${
-                addresses[idx].isDefault ? "border-primary" : "border-light"
-              }`}
-            >
-              <div>
-                <h6 className="mb-1 fw-medium">{label}</h6>
-                <p className="mb-0 text-dark fw-bold">{addresses[idx].name}</p>
-                <p className="mb-0 text-dark small">
-                  {addresses[idx].email} | {addresses[idx].mobile}
-                </p>
-                <p className="mb-0 text-dark small">
-                  {addresses[idx].area}, {addresses[idx].building},{" "}
-                  {addresses[idx].emirates}
-                </p>
+
+        {addresses.length === 0 ? (
+          <p className="text-muted small mb-3">No saved addresses yet. Add one below.</p>
+        ) : (
+          <div className="d-flex gap-3 flex-column mb-4" style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
+            {addresses.map((addr, idx) => (
+              <div
+                key={addr.id ?? idx}
+                className={`p-3 d-flex justify-content-between align-items-start rounded border ${
+                  addr.isDefault ? "border-primary" : "border-light"
+                }`}
+              >
+                <div>
+                  <h6 className="mb-1 fw-medium">
+                    Address {idx + 1}
+                    {addr.isDefault && (
+                      <span className="badge bg-secondary ms-2" style={{ fontSize: "0.7rem" }}>
+                        Default
+                      </span>
+                    )}
+                  </h6>
+                  <p className="mb-0 text-dark fw-bold">{addr.name}</p>
+                  <p className="mb-0 text-dark small">
+                    {addr.email} | {addr.mobile}
+                  </p>
+                  <p className="mb-0 text-dark small">
+                    {[addr.area, addr.building, addr.emirates].filter(Boolean).join(", ")}
+                  </p>
+                </div>
+                <div className="text-end">
+                  <Link
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); openEdit(idx); }}
+                    className="fs-sm border-bottom"
+                  >
+                    Edit
+                  </Link>
+                </div>
               </div>
-              <div className="text-end">
-                {addresses[idx].isDefault && (
-                  <span className="badge bg-secondary mb-2">Default delivery address</span>
-                )}
-                <br />
-                <Link
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    openModal(idx);
-                  }}
-                  className="fs-sm border-bottom"
-                >
-                  Edit
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {/* Add New Address button */}
+        <button
+          type="button"
+          className="btn btn-outline-dark btn-sm"
+          onClick={openAddNew}
+        >
+          + Add New Address
+        </button>
       </div>
 
-      {/* Edit Modal */}
-      <Modal style={{ fontFamily: "'Kanit-Regular', sans-serif" }} show={show} onHide={() => setShow(false)} centered>
+      {/* Edit / Add Modal */}
+      <Modal
+        style={{ fontFamily: "'Kanit-Regular', sans-serif" }}
+        show={show}
+        onHide={() => setShow(false)}
+        centered
+      >
         <Modal.Header closeButton className="border-0 pb-0">
           <Modal.Title className="h6 fw-semibold">
-            Edit {editingIndex === 0 ? "Home" : "Other"} Address
+            {editingIndex === null ? "Add New Address" : `Edit Address ${editingIndex + 1}`}
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="pt-1">
           <Form>
             <Form.Group className="mb-3">
-  <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
-    Area / Mantaqa
-  </Form.Label>
-  <Form.Control
-    name="area"
-    value={form.area}
-    onChange={handleChange}
-    className="rounded-2 px-2 py-1"
-    isInvalid={!!errors.area}   // <-- added
-  />
-  <Form.Control.Feedback type="invalid">{errors.area}</Form.Control.Feedback>
-</Form.Group>
+              <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
+                Area / Mantaqa
+              </Form.Label>
+              <Form.Control
+                name="area"
+                value={form.area}
+                onChange={handleChange}
+                className="rounded-2 px-2 py-1"
+                isInvalid={!!errors.area}
+              />
+              <Form.Control.Feedback type="invalid">{errors.area}</Form.Control.Feedback>
+            </Form.Group>
 
-<Form.Group className="mb-3">
-  <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
-    Building / Villa / Apartment
-  </Form.Label>
-  <Form.Control
-    name="building"
-    value={form.building}
-    onChange={handleChange}
-    className="rounded-2 px-2 py-1"
-    isInvalid={!!errors.building}   // <-- added
-  />
-  <Form.Control.Feedback type="invalid">{errors.building}</Form.Control.Feedback>
-</Form.Group>
             <Form.Group className="mb-3">
-            <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
-              Emirates
-            </Form.Label>
-            <Form.Select
-              name="emirates"
-              value={form.emirates}
-              onChange={handleChange}
-              className="rounded-2 px-2 py-1"
-              required
-            >
-              <option value="">Select Emirate...</option>
-              <option value="Abu Dhabi">Abu Dhabi</option>
-              <option value="Ajman">Ajman</option>
-              <option value="Al Ain">Al Ain</option>
-              <option value="Dubai">Dubai</option>
-              <option value="Fujairah">Fujairah</option>
-              <option value="Ras Al Khaymah">Ras Al Khaymah</option>
-              <option value="Sharjah">Sharjah</option>
-              <option value="Umm Al Quwain">Umm Al Quwain</option>
-            </Form.Select>
-          </Form.Group>
+              <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
+                Building / Villa / Apartment
+              </Form.Label>
+              <Form.Control
+                name="building"
+                value={form.building}
+                onChange={handleChange}
+                className="rounded-2 px-2 py-1"
+                isInvalid={!!errors.building}
+              />
+              <Form.Control.Feedback type="invalid">{errors.building}</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="text-uppercase text-xs fw-medium text-secondary">
+                Emirates
+              </Form.Label>
+              <Form.Select
+                name="emirates"
+                value={form.emirates}
+                onChange={handleChange}
+                className="rounded-2 px-2 py-1"
+                isInvalid={!!errors.emirates}
+              >
+                <option value="">Select Emirate...</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Al Ain">Al Ain</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Fujairah">Fujairah</option>
+                <option value="Ras Al Khaymah">Ras Al Khaymah</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">{errors.emirates}</Form.Control.Feedback>
+            </Form.Group>
+
             <Form.Group className="mb-4">
               <Form.Check
                 type="checkbox"
                 name="isDefault"
-                label="Set as default"
+                label="Set as default delivery address"
                 checked={form.isDefault}
                 onChange={handleChange}
               />
@@ -357,15 +344,11 @@ const save = async () => {
         </Modal.Body>
 
         <Modal.Footer className="border-0 pt-0">
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            onClick={() => setShow(false)}
-          >
+          <Button variant="outline-secondary" size="sm" onClick={() => setShow(false)} disabled={saving}>
             Cancel
           </Button>
-          <Button variant="primary" size="sm" onClick={save}>
-            Save
+          <Button variant="primary" size="sm" onClick={save} disabled={saving}>
+            {saving ? "Saving…" : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>
