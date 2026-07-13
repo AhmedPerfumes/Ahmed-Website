@@ -372,11 +372,15 @@ export default function Checkout() {
       const userData = raw ? JSON.parse(atob(raw)) : {};
       const customer_id = userData.id;
 
+      // Determine address ID (if editing, use selectedAddressId, otherwise -1)
+      const isEditing = isEditingAddress;
+      const targetAddressId = isEditing ? selectedAddressId : -1;
+
       const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/customerAddressUpdate`, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...(token && { Authorization: `Bearer ${token}` }) },
         body: JSON.stringify({
-          address_id: -1, // -1 = create new address (handled by backend)
+          address_id: targetAddressId,
           customer_id,
           name: userData.name || "",
           email: userData.email || "",
@@ -384,25 +388,37 @@ export default function Checkout() {
           address: newAddressForm.building,
           city: newAddressForm.area,
           state: newAddressForm.emirates,
-          is_default: 0,
+          is_default: isEditing ? (savedAddresses.find(a => a.id === targetAddressId)?.isDefault ? 1 : 0) : 0,
         }),
       });
       const res = await resp.json();
-      // Backend returns the real new DB id in res.id
-      const newId = res?.id || res?.addresses?.id || Date.now();
-      const newAddr = {
-        id: newId,
-        name: userData.name || "",
-        email: userData.email || "",
-        mobile: userData.phone || "",
-        area: newAddressForm.area,
-        building: newAddressForm.building,
-        emirates: newAddressForm.emirates,
-        isDefault: false,
-      };
-      setSavedAddresses((prev) => [...prev, newAddr]);
-      selectSavedAddress(newAddr);
-      setIsAddingNewAddress(false);
+      
+      if (isEditing) {
+        setSavedAddresses((prev) =>
+          prev.map((a) =>
+            a.id === selectedAddressId
+              ? { ...a, area: newAddressForm.area, building: newAddressForm.building, emirates: newAddressForm.emirates }
+              : a
+          )
+        );
+        selectSavedAddress({ id: selectedAddressId, area: newAddressForm.area, building: newAddressForm.building, emirates: newAddressForm.emirates, name: userData.name || "", email: userData.email || "", mobile: userData.phone || "" });
+        setIsEditingAddress(false);
+      } else {
+        const newId = res?.id || res?.addresses?.id || Date.now();
+        const newAddr = {
+          id: newId,
+          name: userData.name || "",
+          email: userData.email || "",
+          mobile: userData.phone || "",
+          area: newAddressForm.area,
+          building: newAddressForm.building,
+          emirates: newAddressForm.emirates,
+          isDefault: false,
+        };
+        setSavedAddresses((prev) => [...prev, newAddr]);
+        selectSavedAddress(newAddr);
+        setIsAddingNewAddress(false);
+      }
       setNewAddressForm({ area: "", building: "", emirates: "" });
       setShowAddressPanel(false);
     } catch (e) {
@@ -1016,27 +1032,29 @@ export default function Checkout() {
                               <div className="checkout-addr-tile__header">
                                 <span className={`checkout-addr-tile__radio ${isSelected ? "checkout-addr-tile__radio--selected" : ""}`}></span>
                                 <span className="checkout-addr-tile__type">
-                                  {addr.isDefault ? "Primary" : "Saved"}
+                                  {addr.isDefault ? "" : "Saved"}
                                 </span>
                               </div>
 
-                              {isSelected && !isEditingAddress && (
+                              {isSelected && (
                                 <button type="button" className="checkout-addr-tile__edit" title="Edit this address"
-                                  onClick={(e) => { e.stopPropagation(); setIsEditingAddress(true); setAddressSaveError(null); }}>
-                                  <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                  onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    setIsEditingAddress(true); 
+                                    setAddressSaveError(null); 
+                                    setNewAddressForm({
+                                      area: addr.area || "",
+                                      building: addr.building || "",
+                                      emirates: addr.emirates || ""
+                                    });
+                                  }}>
+                                  Edit
                                 </button>
                               )}
-                              {isEditingThis && (
-                                <div className="checkout-addr-tile__actions">
-                                  <button type="button" className="checkout-addr-tile__save-btn" onClick={(e) => { e.stopPropagation(); updateAddress(); }} disabled={addressSaving}>
-                                    {addressSaving ? "Saving…" : "Save"}
-                                  </button>
-                                  <button type="button" className="checkout-addr-tile__cancel-btn" onClick={(e) => { e.stopPropagation(); setIsEditingAddress(false); setAddressSaveError(null); }}>
-                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" fill="none" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                                  </button>
-                                </div>
-                              )}
                               <div className="checkout-addr-tile__body">
+                                <p className="checkout-addr-tile__name" style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a1a", marginBottom: "4px" }}>
+                                  {addr.name || "—"} <span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#777" }}>({addr.email || "—"})</span>
+                                </p>
                                 <p className="checkout-addr-tile__line">
                                   <span className="checkout-addr-tile__line--street">{addr.building || "—"}</span>, {addr.area || "—"}{addr.emirates ? `, ${addr.emirates}` : ""}, <span className="checkout-addr-tile__line--country">UAE</span>
                                 </p>
@@ -1077,18 +1095,21 @@ export default function Checkout() {
                     </div>
                   )}
 
-                <h4>Billing Details</h4>
-                <div className="row">
+                  {/* ── Guest Checkout Form ── */}
+                  {!isLoggedIn && (
+                    <>
+                      <h4>Billing Details</h4>
+                      <div className="row">
                   <div className="col-md-6">
                     <div className="form-floating my-3">
-                      <input type="text" className="form-control" id="checkout_first_name" placeholder="First Name" readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.first_name" value={formData.billingAddress.first_name} onChange={handleChange} required />
+                      <input type="text" className="form-control" id="checkout_first_name" placeholder=" " readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.first_name" value={formData.billingAddress.first_name} onChange={handleChange} required />
                       <label htmlFor="checkout_first_name">First Name</label>
                       {fieldErrors.first_name && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.first_name} </div> )}
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-floating my-3">
-                      <input type="text" className="form-control" id="checkout_last_name" placeholder="Last Name" readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.last_name" value={formData.billingAddress.last_name} onChange={handleChange} />
+                      <input type="text" className="form-control" id="checkout_last_name" placeholder=" " readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.last_name" value={formData.billingAddress.last_name} onChange={handleChange} />
                       <label htmlFor="checkout_last_name">Last Name</label>
                     </div>
                   </div>
@@ -1105,14 +1126,14 @@ export default function Checkout() {
                   {/* Area and Building — side by side */}
                   <div className="col-md-6">
                     <div className="form-floating mt-3 mb-3">
-                      <input type="text" className="form-control" id="checkout_street_address" placeholder="Area / Mantaqa *" readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.area" value={formData.billingAddress.area} onChange={handleChange} required />
+                      <input type="text" className="form-control" id="checkout_street_address" placeholder=" " readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.area" value={formData.billingAddress.area} onChange={handleChange} required />
                       <label htmlFor="checkout_company_name"> Area / Mantaqa * </label>
                       {fieldErrors.area && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.area} </div> )}
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-floating mt-3 mb-3">
-                      <input type="text" className="form-control" id="checkout_street_address_2" placeholder="Building / Villa / Apartment" name="billingAddress.building" readOnly={isLoggedIn && !isEditingAddress} value={formData.billingAddress.building} onChange={handleChange} required />
+                      <input type="text" className="form-control" id="checkout_street_address_2" placeholder=" " name="billingAddress.building" readOnly={isLoggedIn && !isEditingAddress} value={formData.billingAddress.building} onChange={handleChange} required />
                       <label htmlFor="checkout_company_name"> Building / Villa / Apartment </label>
                       {fieldErrors.building && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.building} </div> )}
                     </div>
@@ -1143,14 +1164,14 @@ export default function Checkout() {
                   {/* Email + Mobile — side by side */}
                   <div className="col-md-6">
                     <div className="form-floating my-3">
-                      <input type="email" className="form-control" id="billingAddress.email" placeholder="Your Mail *" name="billingAddress.email" readOnly={isLoggedIn && !isEditingAddress} value={formData.billingAddress.email} onChange={handleChange} required />
+                      <input type="email" className="form-control" id="billingAddress.email" placeholder=" " name="billingAddress.email" readOnly={isLoggedIn && !isEditingAddress} value={formData.billingAddress.email} onChange={handleChange} required />
                       <label htmlFor="checkout_email">Email Address *</label>
                     </div>
                   </div>
 
                   <div className="col-md-6">
                     <div className="form-floating my-3">
-                      <input type="tel" className="form-control" id="checkout_billing_mobile" placeholder="Eg. 0500000000 *" name="billingAddress.mobile" readOnly={isLoggedIn && !isEditingAddress} value={formData.billingAddress.mobile} onChange={handleChange} required />
+                      <input type="tel" className="form-control" id="checkout_billing_mobile" placeholder=" " name="billingAddress.mobile" readOnly={isLoggedIn && !isEditingAddress} value={formData.billingAddress.mobile} onChange={handleChange} required />
                       <label htmlFor="checkout_phone"> Mobile Number* </label>
                     </div>
                   </div>
@@ -1163,7 +1184,7 @@ export default function Checkout() {
                         {!isOTPVerified && ( 
                           <>
                             <div className="form-floating my-3">
-                              <input type="number" className="form-control" id="billing_otp" placeholder="Eg. 1234 *" name="otp" value={formData.otp} onChange={handleChange} />
+                              <input type="number" className="form-control" id="billing_otp" placeholder=" " name="otp" value={formData.otp} onChange={handleChange} />
                               <label htmlFor="billing_otp"> OTP (Eg. 1234)* </label>
                             </div>
                             <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={verifyOTP} >
@@ -1177,17 +1198,22 @@ export default function Checkout() {
                   )}
 
                   <div className="col-md-12">
-                    {!isLoggedIn && (
-                      <div className="form-check mt-3">
-                        <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="create_account" onClick={(prev) => setCreateAccount(!createAccount)} name="create_account" />
-                        <label className="form-check-label" htmlFor="create_account" > CREATE AN ACCOUNT? </label>
-                      </div>
-                    )}
-                    <div className="form-check mb-3">
-                      <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="ship_different_address" onClick={handleCheckboxChange} name="shipping" />
-                      <label className="form-check-label" htmlFor="ship_different_address" > SHIP TO A DIFFERENT ADDRESS? </label>
+                    <div className="form-check mt-3 mb-3">
+                      <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="create_account" onClick={(prev) => setCreateAccount(!createAccount)} name="create_account" />
+                      <label className="form-check-label" htmlFor="create_account" > CREATE AN ACCOUNT? </label>
                     </div>
                   </div>
+                </div>
+              </>
+            )}
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="form-check mb-3 mt-3">
+                  <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="ship_different_address" onClick={handleCheckboxChange} name="shipping" />
+                  <label className="form-check-label" htmlFor="ship_different_address" > SHIP TO A DIFFERENT ADDRESS? </label>
+                </div>
+              </div>
                   {formData.shippingAdd && (
                     <div className="accordion mt-3" id="shippingAddressAccordion" >
                       <div className="accordion-item">
@@ -1197,26 +1223,26 @@ export default function Checkout() {
                             <div className="row">
                               <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                  <input type="text" className="form-control" id="shipping_first_name" placeholder="First Name" name="shippingAddress.first_name" value={ formData.shippingAddress.first_name } onChange={handleChange} required />
+                                  <input type="text" className="form-control" id="shipping_first_name" placeholder=" " name="shippingAddress.first_name" value={ formData.shippingAddress.first_name } onChange={handleChange} required />
                                   <label htmlFor="shipping_first_name"> First Name </label>
                                 </div>
                               </div>
                               <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                  <input type="text" className="form-control" id="shipping_last_name" placeholder="Last Name" name="shippingAddress.last_name" value={formData.shippingAddress.last_name} onChange={handleChange} required />
+                                  <input type="text" className="form-control" id="shipping_last_name" placeholder=" " name="shippingAddress.last_name" value={formData.shippingAddress.last_name} onChange={handleChange} required />
                                   <label htmlFor="shipping_last_name"> Last Name </label>
                                 </div>
                               </div>
                               {/* Shipping: Area + Building side by side */}
                               <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                  <input type="text" className="form-control" id="shipping_area" placeholder="Area / Mantaqa" name="shippingAddress.area" value={formData.shippingAddress.area} onChange={handleChange} required />
+                                  <input type="text" className="form-control" id="shipping_area" placeholder=" " name="shippingAddress.area" value={formData.shippingAddress.area} onChange={handleChange} required />
                                   <label htmlFor="shipping_area"> Area / Mantaqa * </label>
                                 </div>
                               </div>
                               <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                  <input type="text" className="form-control" id="shipping_building" placeholder="Building / Villa / Apartment" name="shippingAddress.building" value={ formData.shippingAddress.building } onChange={handleChange} required />
+                                  <input type="text" className="form-control" id="shipping_building" placeholder=" " name="shippingAddress.building" value={ formData.shippingAddress.building } onChange={handleChange} required />
                                   <label htmlFor="shipping_building"> Building / Villa / Apartment </label>
                                 </div>
                               </div>
@@ -1232,14 +1258,14 @@ export default function Checkout() {
                               </div>
                               <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                  <input type="tel" className="form-control" id="shipping_mobile" placeholder="Eg. 0500000000" name="shippingAddress.mobile" value={formData.shippingAddress.mobile} onChange={handleChange} required />
+                                  <input type="tel" className="form-control" id="shipping_mobile" placeholder=" " name="shippingAddress.mobile" value={formData.shippingAddress.mobile} onChange={handleChange} required />
                                   <label htmlFor="shipping_mobile"> Mobile Number* </label>
                                 </div>
                               </div>
                               {/* Email full width */}
                               <div className="col-md-12">
                                 <div className="form-floating my-3">
-                                  <input type="email" className="form-control" id="shipping_email" placeholder="Your Mail" name="shippingAddress.email" value={formData.shippingAddress.email} onChange={handleChange} required />
+                                  <input type="email" className="form-control" id="shipping_email" placeholder=" " name="shippingAddress.email" value={formData.shippingAddress.email} onChange={handleChange} required />
                                   <label htmlFor="shipping_email"> Email Address * </label>
                                 </div>
                               </div>
@@ -1251,7 +1277,7 @@ export default function Checkout() {
                                       {!isOTPVerified && (
                                         <>
                                           <div className="form-floating my-3">
-                                            <input type="number" className="form-control" id="shipping_otp" placeholder="Eg. 1234"  name="otp" value={formData.otp} onChange={handleChange} />
+                                            <input type="number" className="form-control" id="shipping_otp" placeholder=" "  name="otp" value={formData.otp} onChange={handleChange} />
                                             <label htmlFor="shipping_otp"> OTP (Eg. 1234)* </label>
                                           </div>
                                           <button className="btn btn-primary w-100 text-uppercase" type="button" disabled={isSendOTPLoading} onClick={verifyOTP} >
@@ -1271,10 +1297,10 @@ export default function Checkout() {
                   )}
                 </div>
 
-                {createAccount && (
+              {createAccount && (
                   <div className="col-md-12">
                     <div className="form-floating my-3">
-                      <input type="password" className="form-control" id="password" placeholder="Password *" name="password" value={formData.password} onChange={handleChange} required />
+                      <input type="password" className="form-control" id="password" placeholder=" " name="password" value={formData.password} onChange={handleChange} required />
                       <label htmlFor="checkout_email">Password *</label>
                     </div>
                   </div>
@@ -1423,572 +1449,6 @@ export default function Checkout() {
                   )}
                 </div>
 
-                  <style jsx>{` 
-                    .coupon-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 999; }
-                    .coupon-modal { background: #fff; border-radius: 12px; width: 500px; max-width: 90%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); overflow:  hidden; font-family: "Inter", sans-serif; }
-                    .coupon-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid #f0f0f0; }
-                    .coupon-header h3 { margin: 0; font-size: 20px; font-weight: 600; color: #222; }
-                    .coupon-subheader { padding: 10px 18px; border-bottom: 1px solid #f0f0f0; }
-                    .coupon-subheader h3 { margin: 0; font-size: 16px; font-weight: 600; color: #a67b30; background: #fffaf2ff; }
-                    .close-btn { background: none; border: none; font-size: 20px; color: #666; cursor: pointer; }
-                    .coupon-body { display: flex; flex-direction: column; gap: 12px; padding: 16px; }
-                    .coupon-ticket { display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff; padding: 14px 16px; position: relative; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); overflow: hidden; }
-                    .coupon-ticket::before, .coupon-ticket::after { content: ""; position: absolute; top: 50%; width: 20px; height: 20px; background: #f5f5f5; border: 1.5px solid #dbdbdb; border-radius: 50%; transform: translateY(-50%); z-index: 2; }
-                    .coupon-ticket::before { left: -10px; }
-                    .coupon-ticket::after { right: -10px; }
-                    .coupon-left { display: flex; flex-direction: column; gap: 4px; }
-                    .coupon-title { font-size: 14px; font-weight: 600; color: #222; }
-                    .coupon-desc { font-size: 12px; color: #555; }
-                    .coupon-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; } 
-                    .coupon-code { background: #f0fdf4; color: #198754; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
-                    .apply-btn { background: none; border: none; color: #a67b30; font-size: 12px; font-weight: 600; cursor: pointer; padding: 0; text-transform: uppercase; }
-                    .apply-btn:hover { text-decoration: underline; }
-                    .coupon-ticket.expired { opacity: 0.6; }
-                    .coupon-loading, .coupon-empty { text-align: center; padding: 30px; color: #777; font-size: 13px; }
-                    .coupon-action-btn { width: 100%; padding: 12px; background-color: #222; color: #fff; border: 1px solid #222; border-radius: 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: 8px; }
-                    .coupon-action-btn:hover { background-color: #000; border-color: #000; }
-                    .coupon-action-btn.remove { background-color: transparent; color: #dc3545; border: 1px solid #dc3545; }
-                    .coupon-action-btn.remove:hover { background-color: #dc3545; color: #fff; }
-
-                    /* Premium Coupon Input Styles */
-                    .premium-coupon-container {
-                      background: #fdfcfa;
-                      border: 1px solid #e9e3d5;
-                      border-radius: 8px;
-                      padding: 1.25rem;
-                      margin-top: 1rem;
-                      margin-bottom: 1.5rem;
-                    }
-                    .premium-coupon-header {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      margin-bottom: 0.875rem;
-                    }
-                    .premium-coupon-title {
-                      font-size: 0.8125rem;
-                      font-weight: 700;
-                      color: #222;
-                      letter-spacing: 0.03em;
-                      text-transform: uppercase;
-                    }
-                    .premium-coupon-view-btn {
-                      background: none;
-                      border: none;
-                      color: #a67b30;
-                      font-size: 0.75rem;
-                      font-weight: 700;
-                      text-transform: uppercase;
-                      letter-spacing: 0.05em;
-                      display: flex;
-                      align-items: center;
-                      gap: 4px;
-                      cursor: pointer;
-                      padding: 0;
-                    }
-                    .premium-coupon-view-btn:hover {
-                      text-decoration: underline;
-                    }
-                    .premium-coupon-input-group {
-                      display: flex;
-                      gap: 8px;
-                      position: relative;
-                    }
-                    .premium-coupon-input {
-                      flex: 1;
-                      border: 1px solid #e5e5e5;
-                      border-radius: 6px;
-                      padding: 0.625rem 1rem;
-                      font-size: 0.875rem;
-                      color: #222;
-                      background: #fff;
-                      transition: all 0.2s ease;
-                      text-transform: uppercase;
-                      height: 42px;
-                    }
-                    .premium-coupon-input:focus {
-                      border-color: #a67b30;
-                      outline: none;
-                      box-shadow: 0 0 0 2px rgba(166, 123, 48, 0.1);
-                    }
-                    .premium-coupon-input:disabled {
-                      background: #f5f5f5;
-                      color: #666;
-                      border-color: #ddd;
-                    }
-                    .premium-coupon-apply-btn {
-                      background: #222;
-                      color: #fff;
-                      border: none;
-                      border-radius: 6px;
-                      padding: 0 1.25rem;
-                      font-size: 0.8125rem;
-                      font-weight: 700;
-                      cursor: pointer;
-                      transition: background 0.2s;
-                      text-transform: uppercase;
-                      letter-spacing: 0.05em;
-                      height: 42px;
-                    }
-                    .premium-coupon-apply-btn:hover {
-                      background: #000;
-                    }
-                    .premium-coupon-remove-btn {
-                      background: #fdfcfa;
-                      color: #dc3545;
-                      border: 1px solid #dc3545;
-                      border-radius: 6px;
-                      padding: 0 1.25rem;
-                      font-size: 0.8125rem;
-                      font-weight: 700;
-                      cursor: pointer;
-                      transition: all 0.2s;
-                      text-transform: uppercase;
-                      letter-spacing: 0.05em;
-                      height: 42px;
-                    }
-                    .premium-coupon-remove-btn:hover {
-                      background: #dc3545;
-                      color: #fff;
-                    }
-                    .premium-coupon-msg {
-                      font-size: 0.75rem;
-                      margin-bottom: 0.625rem;
-                      font-weight: 600;
-                      letter-spacing: 0.02em;
-                    }
-                    .premium-coupon-msg.error {
-                      color: #dc3545;
-                    }
-                    .premium-coupon-msg.success {
-                      color: #2e7d32;
-                    }
-                    /* Collapsible Order Summary Premium Styles */
-                    .checkout-summary-toggle-bar {
-                      display: flex;
-                      align-items: center;
-                      justify-content: space-between;
-                      padding: 1rem 1.25rem;
-                      background-color: #FCFAF6;
-                      border: none;
-                      border-bottom: 1px solid transparent;
-                      cursor: pointer;
-                      user-select: none;
-                      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    }
-
-                    .checkout-summary-toggle-bar[aria-expanded="true"] {
-                      border-bottom: 1px solid #F1ECE0;
-                      background-color: #ffffff;
-                    }
-
-                    .checkout-summary-toggle-bar:hover {
-                      background-color: #FAF6EE;
-                    }
-
-                    .toggle-left {
-                      display: flex;
-                      align-items: center;
-                      gap: 0.625rem;
-                    }
-
-                    .summary-bag-icon {
-                      color: #bca172;
-                      flex-shrink: 0;
-                      transition: transform 0.3s ease;
-                    }
-
-                    .checkout-summary-toggle-bar:hover .summary-bag-icon {
-                      transform: translateY(-1px);
-                    }
-
-                    .toggle-text {
-                      font-size: 0.75rem;
-                      font-weight: 500;
-                      color: #222;
-                      letter-spacing: 0.08em;
-                      text-transform: uppercase;
-                      font-family: "Inter", sans-serif;
-                    }
-
-                    .toggle-text-desktop {
-                      display: none;
-                    }
-
-                    .toggle-text-mobile {
-                      display: inline;
-                    }
-
-                    .toggle-chevron {
-                      color: #bca172;
-                      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    }
-
-                    .toggle-chevron.rotated {
-                      transform: rotate(180deg);
-                    }
-
-                    .toggle-right {
-                      display: flex;
-                      align-items: center;
-                      gap: 0.5rem;
-                    }
-
-                    .summary-total-price {
-                      font-size: 0.9375rem;
-                      font-weight: 600;
-                      color: #111;
-                      letter-spacing: 0.02em;
-                      font-family: "Inter", sans-serif;
-                    }
-
-                    .checkout-summary-collapsible-content {
-                      overflow: hidden;
-                      max-height: 0;
-                      opacity: 0;
-                      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-                      padding: 0 1.25rem;
-                    }
-
-                    .checkout-summary-collapsible-content.expanded {
-                      max-height: 2000px;
-                      opacity: 1;
-                      padding: 0.5rem 1.25rem 1.25rem 1.25rem;
-                    }
-
-                    @media (max-width: 1199.98px) {
-                      .checkout__totals {
-                        position: sticky !important;
-                        top: 64px !important;
-                        z-index: 99 !important;
-                        background: #ffffff !important;
-                        border: 1px solid #efeae0 !important;
-                        border-radius: 12px !important;
-                        padding: 0 !important;
-                        margin-bottom: 1.5rem !important;
-                        box-shadow: 0 10px 30px rgba(166, 123, 48, 0.08) !important;
-                        overflow: hidden;
-                        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-                      }
-
-                      .checkout__totals.is-open {
-                        position: static !important;
-                      }
-                    }
-
-
-
-                    /* ══ Address Tile Row — horizontal card selector ══ */
-                    .checkout-addr-section {
-                      margin: 0 0 2rem 0;
-                      padding: 1.5rem;
-                      background: #fdfcfa !important;
-                      border: 1px solid #e9e3d5 !important;
-                      border-radius: 8px !important;
-                      text-transform: none !important;
-                    }
-                    .checkout-addr-section * {
-                      text-transform: none !important;
-                    }
-                    .checkout-addr-section-label {
-                      font-size: 0.75rem !important;
-                      font-weight: 700 !important;
-                      color: #a67b30 !important;
-                      letter-spacing: 0.05em !important;
-                      text-transform: uppercase !important;
-                      margin-bottom: 1.25rem !important;
-                      display: flex;
-                      align-items: center;
-                      justify-content: space-between;
-                      width: 100%;
-                    }
-                    .checkout-addr-success {
-                      color: #2e7d32 !important;
-                      font-size: 0.75rem !important;
-                      font-weight: 600 !important;
-                    }
-                    .checkout-addr-error {
-                      color: #cf1e1e !important;
-                      font-size: 0.75rem !important;
-                      font-weight: 600 !important;
-                    }
-                    .checkout-addr-row {
-                      display: flex !important;
-                      flex-direction: row !important;
-                      gap: 16px !important;
-                      overflow-x: auto !important;
-                      padding: 4px 4px 12px 4px !important;
-                      scrollbar-width: thin !important;
-                      scrollbar-color: #a67b30 transparent !important;
-                      align-items: stretch !important;
-                    }
-                    .checkout-addr-row::-webkit-scrollbar {
-                      height: 6px !important;
-                    }
-                    .checkout-addr-row::-webkit-scrollbar-thumb {
-                      background: #a67b30 !important;
-                      border-radius: 3px !important;
-                    }
-                    .checkout-addr-row::-webkit-scrollbar-track {
-                      background: #f1ebd9 !important;
-                    }
-                    .checkout-addr-tile {
-                      position: relative !important;
-                      flex: 0 0 250px !important;
-                      min-height: 165px !important;
-                      border: 1px solid #e2ddd4 !important;
-                      border-radius: 8px !important;
-                      padding: 1.25rem 1rem 1rem !important;
-                      background: #ffffff !important;
-                      cursor: pointer !important;
-                      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                      text-align: left !important;
-                      display: flex !important;
-                      flex-direction: column !important;
-                      justify-content: space-between !important;
-                      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02) !important;
-                    }
-                    .checkout-addr-tile:hover {
-                      border-color: #a67b30 !important;
-                      transform: translateY(-2px) !important;
-                      box-shadow: 0 4px 12px rgba(166, 123, 48, 0.08) !important;
-                    }
-                    .checkout-addr-tile--selected {
-                      border-color: #a67b30 !important;
-                      border-width: 2px !important;
-                      background: #fffbf4 !important;
-                      box-shadow: 0 4px 15px rgba(166, 123, 48, 0.12) !important;
-                    }
-                    .checkout-addr-tile__header {
-                      display: flex !important;
-                      align-items: center !important;
-                      gap: 8px !important;
-                      margin-bottom: 8px !important;
-                      font-size: 0.75rem !important;
-                      font-weight: 700 !important;
-                      color: #888 !important;
-                      letter-spacing: 0.03em !important;
-                      text-transform: uppercase !important;
-                    }
-                    .checkout-addr-tile--selected .checkout-addr-tile__header {
-                      color: #a67b30 !important;
-                    }
-                    .checkout-addr-tile__radio {
-                      width: 14px !important;
-                      height: 14px !important;
-                      border-radius: 50% !important;
-                      border: 1.5px solid #ccc !important;
-                      display: inline-block !important;
-                      position: relative !important;
-                    }
-                    .checkout-addr-tile__radio--selected {
-                      border-color: #a67b30 !important;
-                    }
-                    .checkout-addr-tile__radio--selected::after {
-                      content: "" !important;
-                      position: absolute !important;
-                      top: 2.5px !important;
-                      left: 2.5px !important;
-                      width: 6px !important;
-                      height: 6px !important;
-                      border-radius: 50% !important;
-                      background: #a67b30 !important;
-                    }
-                    .checkout-addr-tile__body {
-                      flex-grow: 1 !important;
-                      display: flex !important;
-                      flex-direction: column !important;
-                      gap: 3px !important;
-                      margin-bottom: 8px !important;
-                      padding-right: 15px !important;
-                    }
-                    .checkout-addr-tile__line {
-                      font-size: 0.785rem !important;
-                      color: #555 !important;
-                      line-height: 1.45 !important;
-                      margin: 0 !important;
-                      text-transform: none !important;
-                    }
-                    .checkout-addr-tile__line b {
-                      color: #222 !important;
-                      font-weight: 600 !important;
-                    }
-                    .checkout-addr-tile__footer {
-                      display: flex !important;
-                      align-items: center !important;
-                      justify-content: space-between !important;
-                      margin-top: auto !important;
-                    }
-                    .checkout-addr-tile__check {
-                      display: inline-flex !important;
-                      align-items: center !important;
-                      justify-content: center !important;
-                      width: 18px !important;
-                      height: 18px !important;
-                      background: #a67b30 !important;
-                      color: #fff !important;
-                      border-radius: 50% !important;
-                      font-size: 11px !important;
-                      font-weight: bold !important;
-                    }
-                    .checkout-addr-tile__default {
-                      display: inline-block !important;
-                      font-size: 0.625rem !important;
-                      background: #bca172 !important;
-                      color: #fff !important;
-                      border-radius: 4px !important;
-                      padding: 2px 6px !important;
-                      font-weight: 700 !important;
-                      text-transform: uppercase !important;
-                      letter-spacing: 0.05em !important;
-                    }
-                    .checkout-addr-tile__edit {
-                      position: absolute !important;
-                      top: 12px !important;
-                      right: 12px !important;
-                      background: #faf7f0 !important;
-                      border: 1px solid #e9e2d3 !important;
-                      width: 28px !important;
-                      height: 28px !important;
-                      border-radius: 50% !important;
-                      display: flex !important;
-                      align-items: center !important;
-                      justify-content: center !important;
-                      cursor: pointer !important;
-                      font-size: 12px !important;
-                      transition: all 0.2s ease !important;
-                      padding: 0 !important;
-                    }
-                    .checkout-addr-tile__edit:hover {
-                      background: #a67b30 !important;
-                      color: #fff !important;
-                      border-color: #a67b30 !important;
-                    }
-                    .checkout-addr-tile__actions {
-                      position: absolute !important;
-                      top: 10px !important;
-                      right: 10px !important;
-                      display: flex !important;
-                      gap: 6px !important;
-                      z-index: 10 !important;
-                    }
-                    .checkout-addr-tile__save-btn {
-                      background: #2e7d32 !important;
-                      color: #fff !important;
-                      border: none !important;
-                      border-radius: 4px !important;
-                      padding: 4px 10px !important;
-                      font-size: 0.6875rem !important;
-                      font-weight: 700 !important;
-                      cursor: pointer !important;
-                      display: flex !important;
-                      align-items: center !important;
-                      gap: 4px !important;
-                      box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2) !important;
-                      transition: background 0.2s !important;
-                    }
-                    .checkout-addr-tile__save-btn:hover {
-                      background: #1b5e20 !important;
-                    }
-                    .checkout-addr-tile__cancel-btn {
-                      background: #fff !important;
-                      color: #555 !important;
-                      border: 1px solid #ccc !important;
-                      border-radius: 4px !important;
-                      padding: 4px 8px !important;
-                      font-size: 0.6875rem !important;
-                      cursor: pointer !important;
-                      transition: all 0.2s !important;
-                    }
-                    .checkout-addr-tile__cancel-btn:hover {
-                      background: #f5f5f5 !important;
-                      border-color: #999 !important;
-                    }
-                    .checkout-addr-tile--add {
-                      flex: 0 0 200px !important;
-                      display: flex !important;
-                      flex-direction: column !important;
-                      align-items: center !important;
-                      justify-content: center !important;
-                      gap: 8px !important;
-                      border: 1.5px dashed #a67b30 !important;
-                      color: #a67b30 !important;
-                      background: transparent !important;
-                      transition: all 0.25s ease !important;
-                    }
-                    .checkout-addr-tile--add:hover {
-                      background: #fffbf4 !important;
-                      border-style: solid !important;
-                      transform: translateY(-2px) !important;
-                    }
-                    .checkout-addr-tile__plus {
-                      font-size: 24px !important;
-                      font-weight: 300 !important;
-                      line-height: 1 !important;
-                    }
-                    .checkout-addr-new-form {
-                      flex: 0 0 280px !important;
-                      border: 1px solid #a67b30 !important;
-                      border-radius: 8px !important;
-                      padding: 1rem !important;
-                      background: #ffffff !important;
-                      display: flex !important;
-                      flex-direction: column !important;
-                      gap: 8px !important;
-                      box-shadow: 0 4px 15px rgba(166, 123, 48, 0.08) !important;
-                    }
-                    .checkout-addr-new-form__header {
-                      display: flex !important;
-                      justify-content: space-between !important;
-                      align-items: center !important;
-                      font-size: 0.75rem !important;
-                      font-weight: 700 !important;
-                      color: #a67b30 !important;
-                      text-transform: uppercase !important;
-                      letter-spacing: 0.05em !important;
-                      margin-bottom: 4px !important;
-                    }
-                     .checkout-addr-new-form__header button {
-                      background: none !important;
-                      border: none !important;
-                      font-size: 16px !important;
-                      cursor: pointer !important;
-                    }
-                    .checkout-addr-new-form__header button:hover {
-                      color: #222 !important;
-                    }
-                    .checkout-addr-new-form .form-control {
-                      font-size: 0.75rem !important;
-                      padding: 8px 12px !important;
-                      height: auto !important;
-                      border: 1px solid #ddd !important;
-                      border-radius: 4px !important;
-                      color: #222 !important;
-                      background-color: #fff !important;
-                    }
-                    .checkout-addr-new-form .form-control:focus {
-                      border-color: #a67b30 !important;
-                      box-shadow: none !important;
-                      color: #222 !important;
-                      background-color: #fff !important;
-                    }
-                    .checkout-addr-new-form select.form-control {
-                      padding: 8px 12px !important;
-                      color: #222 !important;
-                      background-color: #fff !important;
-                    }
-                    .checkout-addr-new-form select.form-control option {
-                      color: #222 !important;
-                      background-color: #fff !important;
-                    }
-                    .checkout-addr-new-form .form-floating {
-                      position: relative !important;
-                    }
-                    .checkout-addr-new-form .form-floating label {
-                      font-size: 0.6875rem !important;
-                      padding: 8px 12px !important;
-                    }
-                  `}</style>
 
                   <div className="checkout__payment-methods">
                     {!hasPreBookItem && <div className={`form-check premium-payment-card ${selectedOption === "cod" ? "active" : ""}`}>
@@ -2075,8 +1535,8 @@ export default function Checkout() {
         </>
       )}
 
-      {/* ── Add New Address Modal ──────────────────────────────────────── */}
-      {isAddingNewAddress && (
+      {/* ── Address Modal (Add / Edit) ──────────────────────────────────────── */}
+      {(isAddingNewAddress || isEditingAddress) && (
         <div
           style={{
             position: "fixed", inset: 0, zIndex: 9999,
@@ -2084,7 +1544,7 @@ export default function Checkout() {
             display: "flex", alignItems: "center", justifyContent: "center",
             padding: "16px",
           }}
-          onClick={() => { setIsAddingNewAddress(false); setAddressSaveError(null); }}
+          onClick={() => { setIsAddingNewAddress(false); setIsEditingAddress(false); setAddressSaveError(null); }}
         >
           <div
             style={{
@@ -2101,11 +1561,11 @@ export default function Checkout() {
             {/* Header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
               <h5 style={{ margin: 0, fontSize: "16px", fontWeight: 600, color: "#1a1a1a" }}>
-                Add New Address
+                {isEditingAddress ? "Edit Address" : "Add New Address"}
               </h5>
               <button
                 type="button"
-                onClick={() => { setIsAddingNewAddress(false); setAddressSaveError(null); setNewAddressForm({ area: "", building: "", emirates: "" }); }}
+                onClick={() => { setIsAddingNewAddress(false); setIsEditingAddress(false); setAddressSaveError(null); setNewAddressForm({ area: "", building: "", emirates: "" }); }}
                 style={{ background: "none", border: "none", fontSize: "18px", cursor: "pointer", color: "#666", lineHeight: 1, padding: "2px 6px" }}
               >
                 ✕
@@ -2118,7 +1578,7 @@ export default function Checkout() {
                 type="text"
                 className="form-control"
                 id="modal_new_addr_area"
-                placeholder="Area"
+                placeholder=" "
                 name="area"
                 value={newAddressForm.area}
                 onChange={handleNewAddressChange}
@@ -2132,7 +1592,7 @@ export default function Checkout() {
                 type="text"
                 className="form-control"
                 id="modal_new_addr_building"
-                placeholder="Building"
+                placeholder=" "
                 name="building"
                 value={newAddressForm.building}
                 onChange={handleNewAddressChange}
