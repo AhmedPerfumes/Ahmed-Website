@@ -109,30 +109,32 @@ export default function Checkout() {
     }
   }, [cartProducts, promotionsContext, setCartProducts, setCouponDataContext]);
 
-  // Pre-fill form for logged-in users
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE 1 — Instant localStorage pre-fill (zero network latency)
+  // Reads `user` and `address` from localStorage and populates the form
+  // immediately. This is the reliable fallback that always works, even on
+  // slow/offline mobile connections with no API response yet.
+  // ─────────────────────────────────────────────────────────────────────────
   useEffect(() => {
-    if (isLoggedIn) {
-      const userStr = localStorage.getItem("user");
-      let firstName = "";
-      let lastName = "";
-      let email = "";
-      let mobile = "";
-      let area = "";
-      let building = "";
-      let emirates = "";
+    if (!isLoggedIn) return;
+    let firstName = "", lastName = "", email = "", mobile = "",
+        area = "", building = "", emirates = "";
 
+    try {
+      const userStr = localStorage.getItem("user");
       if (userStr) {
         const user = JSON.parse(atob(userStr));
         email = user.email || "";
         mobile = user.phone || user.mobile || "";
-
         if (user.name) {
           const [f, ...lArr] = user.name.split(" ");
           firstName = f || "";
           lastName = lArr.join(" ") || "";
         }
       }
+    } catch {}
 
+    try {
       const addrStr = localStorage.getItem("address");
       if (addrStr) {
         const addr = JSON.parse(atob(addrStr));
@@ -140,15 +142,25 @@ export default function Checkout() {
         building = addr.address || "";
         emirates = addr.state || "";
       }
+    } catch {}
 
-      setFormData((prev) => ({ 
-        ...prev, 
-        billingAddress: { ...prev.billingAddress, first_name: firstName, last_name: lastName, email, mobile, area, building, emirates, }, 
-        shippingAddress: { ...prev.shippingAddress, first_name: firstName, last_name: lastName, email, mobile, area, building, emirates, },}));
-    }
+    // Always set — localStorage is the ground truth for the instant fill.
+    // The API phase below will overwrite with fresher data when it arrives.
+    setFormData((prev) => ({
+      ...prev,
+      billingAddress:  { ...prev.billingAddress,  first_name: firstName, last_name: lastName, email, mobile, area, building, emirates },
+      shippingAddress: { ...prev.shippingAddress, first_name: firstName, last_name: lastName, email, mobile, area, building, emirates },
+    }));
   }, [isLoggedIn]);
 
-  // Fetch all saved addresses for logged-in users
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE 2 — API enrichment (fetches all saved addresses)
+  // Runs after Phase 1. When the API responds:
+  //   1. Displays all saved address tiles so user can switch between them.
+  //   2. Writes the default/first address back to localStorage so the NEXT
+  //      visit is also instant (keeps localStorage always up to date).
+  //   3. Overwrites form fields with the authoritative API data.
+  // ─────────────────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!isLoggedIn) return;
     const raw = localStorage.getItem("user");
@@ -178,9 +190,54 @@ export default function Checkout() {
             isDefault: addr.is_default === 1,
           }));
           setSavedAddresses(parsed);
-          // auto-select default or first
+
+          // Pick the default (or first) address
           const def = parsed.find((a) => a.isDefault) || parsed[0];
-          if (def) setSelectedAddressId(def.id);
+          if (def) {
+            setSelectedAddressId(def.id);
+
+            // ── Write back to localStorage so next visit is instant (Phase 1) ──
+            try {
+              localStorage.setItem("address", btoa(JSON.stringify({
+                id: def.id,
+                city: def.area,
+                address: def.building,
+                state: def.emirates,
+                name: def.name,
+                email: def.email,
+                phone: def.mobile,
+                customer_id: userData.id,
+                is_default: 1,
+              })));
+            } catch {}
+
+            // ── Overwrite form with authoritative API data ──
+            const [firstName = "", ...lastArr] = (def.name || "").split(" ");
+            const lastName = lastArr.join(" ");
+            setFormData((prev) => ({
+              ...prev,
+              billingAddress: {
+                ...prev.billingAddress,
+                first_name: firstName || prev.billingAddress.first_name,
+                last_name: lastName || prev.billingAddress.last_name,
+                email: def.email || prev.billingAddress.email,
+                mobile: def.mobile || prev.billingAddress.mobile,
+                area: def.area || prev.billingAddress.area,
+                building: def.building || prev.billingAddress.building,
+                emirates: def.emirates || prev.billingAddress.emirates,
+              },
+              shippingAddress: {
+                ...prev.shippingAddress,
+                first_name: firstName || prev.shippingAddress.first_name,
+                last_name: lastName || prev.shippingAddress.last_name,
+                email: def.email || prev.shippingAddress.email,
+                mobile: def.mobile || prev.shippingAddress.mobile,
+                area: def.area || prev.shippingAddress.area,
+                building: def.building || prev.shippingAddress.building,
+                emirates: def.emirates || prev.shippingAddress.emirates,
+              },
+            }));
+          }
         }
       })
       .catch(() => {});
