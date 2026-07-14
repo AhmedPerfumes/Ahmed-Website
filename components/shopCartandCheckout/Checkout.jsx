@@ -1198,9 +1198,14 @@ export default function Checkout() {
                   )}
 
                   <div className="col-md-12">
-                    <div className="form-check mt-3 mb-3">
-                      <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="create_account" onClick={(prev) => setCreateAccount(!createAccount)} name="create_account" />
-                      <label className="form-check-label" htmlFor="create_account" > CREATE AN ACCOUNT? </label>
+                    <div className="form-check mt-3 mb-3 d-flex align-items-center flex-wrap gap-4 p-0">
+                      <div className="d-flex align-items-center">
+                        <input className="form-check-input form-check-input_fill m-0 me-2" type="checkbox" defaultValue="" id="create_account" onClick={(prev) => setCreateAccount(!createAccount)} name="create_account" />
+                        <label className="form-check-label mb-0" htmlFor="create_account" style={{ cursor: "pointer" }} > CREATE AN ACCOUNT? </label>
+                      </div>
+                      <Link href={`/${locale}/login_register`} className="text-decoration-underline" style={{ fontSize: "0.9rem", color: "#666" }}>
+                        ALREADY HAVE AN ACCOUNT?
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -1209,9 +1214,9 @@ export default function Checkout() {
 
             <div className="row">
               <div className="col-md-12">
-                <div className="form-check mb-3 mt-3">
-                  <input className="form-check-input form-check-input_fill" type="checkbox" defaultValue="" id="ship_different_address" onClick={handleCheckboxChange} name="shipping" />
-                  <label className="form-check-label" htmlFor="ship_different_address" > SHIP TO A DIFFERENT ADDRESS? </label>
+                <div className="form-check mb-3 mt-3 d-flex align-items-center p-0">
+                  <input className="form-check-input form-check-input_fill m-0 me-2" type="checkbox" defaultValue="" id="ship_different_address" onClick={handleCheckboxChange} name="shipping" />
+                  <label className="form-check-label mb-0" htmlFor="ship_different_address" style={{ cursor: "pointer" }}> SHIP TO A DIFFERENT ADDRESS? </label>
                 </div>
               </div>
                   {formData.shippingAdd && (
@@ -1403,50 +1408,13 @@ export default function Checkout() {
                         disabled={!!couponData}
                       />
                       {!couponData ? ( 
-                        <button className="premium-coupon-apply-btn" onClick={(e) => { e.preventDefault(); applyCoupon(); }}>Apply</button> 
+                        <button className="premium-coupon-apply-btn" onClick={(e) => { e.preventDefault(); applyCoupon(e); }}>Apply</button> 
                       ) : ( 
-                        <button className="premium-coupon-remove-btn" onClick={(e) => { e.preventDefault(); removeCoupon(); }}>Remove</button> 
+                        <button className="premium-coupon-remove-btn" onClick={(e) => { e.preventDefault(); removeCoupon(e); }}>Remove</button> 
                       )}
                     </div>
                   
-                  {showCouponModal && ( 
-                    <div className="coupon-modal-overlay" onClick={() => setShowCouponModal(false)} >
-                      <div className="coupon-modal" onClick={(e) => e.stopPropagation()} >
-                        <div className="coupon-header">
-                          <h3>Available Offers</h3>
-                          <button className="close-btn" onClick={() => setShowCouponModal(false)} > &times; </button>
-                        </div>
-                        <div className="coupon-subheader border-bottom"> <h3>Coupon Offers</h3> </div>
-                        {couponLoading ? ( <div className="coupon-loading">Loading…</div> ) : coupons.length === 0 ? ( <div className="coupon-empty"> You have no coupons yet. </div> ) : ( 
-                          <div className="coupon-body"> 
-                            {coupons.map((c, idx) => {
-                              const expired = isExpired(c.end_date);
-                              return ( 
-                                <div key={c.id || `coupon-${idx}`} className={`coupon-ticket ${ expired ? "expired" : "" }`} >
-                                  <div className="coupon-left">
-                                    <div className="coupon-title"> {c.title || "Special Offer"} </div>
-                                    <div className="coupon-desc"> <h5> {c.description || (c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`)} </h5> </div>
-                                    <div className="coupon-validity"> {expired ? `Expired: ${c.end_date?.slice(0, 10)}` : `Valid until: ${c.end_date?.slice(0, 10)}`}</div>
-                                  </div>
-                                  <div className="coupon-right"> 
-                                    <div className={`coupon-code-box ${copiedId === (c.id || `coupon-${idx}`) ? "copied" : "" }`} onClick={() => !expired && handleCopy(c.code, c.id || `coupon-${idx}`)}>
-                                      <span className="coupon-code"> {c.code} </span>
-                                    </div>
-                                    {!expired && ( 
-                                      <button className={`apply-btn ${copiedId === (c.id || `coupon-${idx}`) ? "applied" : "" }`} onClick={() => handleSelectCoupon(c.code, c.id || `coupon-${idx}` )}>
-                                        {copiedId === (c.id || `coupon-${idx}`) ? "Applied!" : "Click to Apply"} 
-                                      </button>
-                                    )}
-                                    {expired && ( <div className="coupon-expired-badge"> Expired </div> )}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+
                 </div>
 
 
@@ -1640,6 +1608,45 @@ export default function Checkout() {
                 {addressSaving ? "Saving…" : "Save Address"}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showCouponModal && ( 
+        <div className="coupon-modal-overlay" onClick={() => setShowCouponModal(false)} >
+          <div className="coupon-modal" onClick={(e) => e.stopPropagation()} >
+            <div className="coupon-header">
+              <h3>Available Offers</h3>
+              <button className="close-btn" onClick={() => setShowCouponModal(false)} > &times; </button>
+            </div>
+            <div className="coupon-subheader border-bottom"> <h3>Coupon Offers</h3> </div>
+            {couponLoading ? ( <div className="coupon-loading">Loading…</div> ) : coupons.length === 0 ? ( <div className="coupon-empty"> You have no coupons yet. </div> ) : ( 
+              <div className="coupon-body"> 
+                {coupons.map((c, idx) => {
+                  const expired = isExpired(c.end_date);
+                  return ( 
+                    <div key={c.id || `coupon-${idx}`} className={`coupon-ticket ${ expired ? "expired" : "" }`} >
+                      <div className="coupon-left">
+                        <div className="coupon-title"> {c.title || "Special Offer"} </div>
+                        <div className="coupon-desc"> <h5> {c.description || (c.coupon_type === "percent" ? `${c.value}% OFF` : `AED${c.value} OFF`)} </h5> </div>
+                        <div className="coupon-validity"> {expired ? `Expired: ${c.end_date?.slice(0, 10)}` : `Valid until: ${c.end_date?.slice(0, 10)}`}</div>
+                      </div>
+                      <div className="coupon-right"> 
+                        <div className={`coupon-code-box ${copiedId === (c.id || `coupon-${idx}`) ? "copied" : "" }`} onClick={() => !expired && handleCopy(c.code, c.id || `coupon-${idx}`)}>
+                          <span className="coupon-code"> {c.code} </span>
+                        </div>
+                        {!expired && ( 
+                          <button className={`apply-btn ${copiedId === (c.id || `coupon-${idx}`) ? "applied" : "" }`} onClick={() => handleSelectCoupon(c.code, c.id || `coupon-${idx}` )}>
+                            {copiedId === (c.id || `coupon-${idx}`) ? "Copied!" : "Click to Copy"} 
+                          </button>
+                        )}
+                        {expired && ( <div className="coupon-expired-badge"> Expired </div> )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}

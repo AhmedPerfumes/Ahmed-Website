@@ -251,7 +251,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             };
           })();
         `}
-        </Script>
+      </Script>
 
       <noscript>
         <iframe
