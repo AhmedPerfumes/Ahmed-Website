@@ -75,6 +75,7 @@ export default function Checkout() {
   const { isLoggedIn } = useUser();
   const hasCleaned = useRef(false);
   const hasFetchedRef = useRef(false);
+  const hasUserSelectedRef = useRef(false); // Issue #1 fix: true once user manually picks an address
   const searchParams = useSearchParams();
   const disablePlaceOrder = isLoading || (!isLoggedIn && !isOTPVerified) || (isLoggedIn && formData.shippingAdd && !isOTPVerified); 
 
@@ -189,14 +190,20 @@ export default function Checkout() {
             emirates: addr.state || "",
             isDefault: addr.is_default === 1,
           }));
-          setSavedAddresses(parsed);
+          // Ensure only one address is marked as default (first wins)
+          let foundDefault = false;
+          const parsedSingle = parsed.map((a) => {
+            if (a.isDefault && !foundDefault) { foundDefault = true; return a; }
+            return { ...a, isDefault: false };
+          });
+          setSavedAddresses(parsedSingle);
 
           // Pick the default (or first) address
-          const def = parsed.find((a) => a.isDefault) || parsed[0];
+          const def = parsedSingle.find((a) => a.isDefault) || parsedSingle[0];
           if (def) {
-            setSelectedAddressId(def.id);
-
-            // ── Write back to localStorage so next visit is instant (Phase 1) ──
+            // ── Issue #2 fix: ALWAYS sync localStorage with the real DB default ──
+            // localStorage.address must only ever reflect the true default, not
+            // whatever address was clicked during a previous checkout session.
             try {
               localStorage.setItem("address", btoa(JSON.stringify({
                 id: def.id,
@@ -211,32 +218,37 @@ export default function Checkout() {
               })));
             } catch {}
 
-            // ── Overwrite form with authoritative API data ──
-            const [firstName = "", ...lastArr] = (def.name || "").split(" ");
-            const lastName = lastArr.join(" ");
-            setFormData((prev) => ({
-              ...prev,
-              billingAddress: {
-                ...prev.billingAddress,
-                first_name: firstName || prev.billingAddress.first_name,
-                last_name: lastName || prev.billingAddress.last_name,
-                email: def.email || prev.billingAddress.email,
-                mobile: def.mobile || prev.billingAddress.mobile,
-                area: def.area || prev.billingAddress.area,
-                building: def.building || prev.billingAddress.building,
-                emirates: def.emirates || prev.billingAddress.emirates,
-              },
-              shippingAddress: {
-                ...prev.shippingAddress,
-                first_name: firstName || prev.shippingAddress.first_name,
-                last_name: lastName || prev.shippingAddress.last_name,
-                email: def.email || prev.shippingAddress.email,
-                mobile: def.mobile || prev.shippingAddress.mobile,
-                area: def.area || prev.shippingAddress.area,
-                building: def.building || prev.shippingAddress.building,
-                emirates: def.emirates || prev.shippingAddress.emirates,
-              },
-            }));
+            // ── Issue #1 fix: only set form/selection if user hasn't manually picked ──
+            // If the API response arrives AFTER the user has already clicked a tile,
+            // we must NOT overwrite their choice.
+            if (!hasUserSelectedRef.current) {
+              setSelectedAddressId(def.id);
+              const [firstName = "", ...lastArr] = (def.name || "").split(" ");
+              const lastName = lastArr.join(" ");
+              setFormData((prev) => ({
+                ...prev,
+                billingAddress: {
+                  ...prev.billingAddress,
+                  first_name: firstName || prev.billingAddress.first_name,
+                  last_name: lastName || prev.billingAddress.last_name,
+                  email: def.email || prev.billingAddress.email,
+                  mobile: def.mobile || prev.billingAddress.mobile,
+                  area: def.area || prev.billingAddress.area,
+                  building: def.building || prev.billingAddress.building,
+                  emirates: def.emirates || prev.billingAddress.emirates,
+                },
+                shippingAddress: {
+                  ...prev.shippingAddress,
+                  first_name: firstName || prev.shippingAddress.first_name,
+                  last_name: lastName || prev.shippingAddress.last_name,
+                  email: def.email || prev.shippingAddress.email,
+                  mobile: def.mobile || prev.shippingAddress.mobile,
+                  area: def.area || prev.shippingAddress.area,
+                  building: def.building || prev.shippingAddress.building,
+                  emirates: def.emirates || prev.shippingAddress.emirates,
+                },
+              }));
+            }
           }
         }
       })
@@ -394,20 +406,19 @@ export default function Checkout() {
   };
 
   const selectSavedAddress = (addr) => {
+    // Issue #1 fix: mark that user has made a manual selection.
+    // This prevents Phase 2 (API response) from overwriting what the user clicked.
+    hasUserSelectedRef.current = true;
     setSelectedAddressId(addr.id);
     setFormData((prev) => ({
       ...prev,
       billingAddress: { ...prev.billingAddress, area: addr.area, building: addr.building, emirates: addr.emirates },
       shippingAddress: { ...prev.shippingAddress, area: addr.area, building: addr.building, emirates: addr.emirates },
     }));
-    // Update localStorage default
-    const raw = localStorage.getItem("user");
-    const userData = raw ? JSON.parse(atob(raw)) : {};
-    localStorage.setItem("address", btoa(JSON.stringify({
-      id: addr.id, city: addr.area, address: addr.building, state: addr.emirates,
-      name: addr.name, email: addr.email, phone: addr.mobile,
-      customer_id: userData.id, is_default: 1,
-    })));
+    // Issue #2 fix: do NOT write to localStorage here.
+    // localStorage.address must only reflect the real DB default (managed by
+    // Phase 2 and the dashboard save). Writing here was causing the wrong address
+    // to flash on the next checkout visit.
     setShowAddressPanel(false);
   };
 
@@ -417,6 +428,11 @@ export default function Checkout() {
   };
 
   const saveNewAddress = async () => {
+    // 2-address limit: only Home and Other allowed
+    if (!isEditingAddress && savedAddresses.length >= 2) {
+      setAddressSaveError("You can only save 2 addresses: Home and Other.");
+      return;
+    }
     if (!newAddressForm.area.trim() || !newAddressForm.building.trim() || !newAddressForm.emirates.trim()) {
       setAddressSaveError("All fields (Area, Building, Emirate) are required.");
       return;
@@ -1077,7 +1093,7 @@ export default function Checkout() {
                       </div>
 
                       <div className="checkout-addr-row">
-                        {savedAddresses.map((addr) => {
+                        {savedAddresses.map((addr, idx) => {
                           const isSelected = selectedAddressId === addr.id;
                           const isEditingThis = isEditingAddress && isSelected;
                           return (
@@ -1089,7 +1105,7 @@ export default function Checkout() {
                               <div className="checkout-addr-tile__header">
                                 <span className={`checkout-addr-tile__radio ${isSelected ? "checkout-addr-tile__radio--selected" : ""}`}></span>
                                 <span className="checkout-addr-tile__type">
-                                  {addr.isDefault ? "" : "Saved"}
+                                  {idx === 0 ? "Home" : "Other"}
                                 </span>
                               </div>
 
@@ -1133,20 +1149,41 @@ export default function Checkout() {
                         })}
                       </div>
 
-                      {/* + Add address inline link */}
-                      <div style={{ marginTop: "10px", paddingLeft: "4px" }}>
-                        <button
-                          type="button"
-                          onClick={() => { setIsAddingNewAddress(true); setAddressSaveError(null); }}
+                      {/* + Add address & Manage Addresses row */}
+                      <div style={{ marginTop: "10px", paddingLeft: "4px", display: "flex", alignItems: "center", gap: "18px", flexWrap: "wrap" }}>
+                        {/* Only show Add New if user has fewer than 2 addresses (Home + Other limit) */}
+                        {savedAddresses.length < 2 && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => { setIsAddingNewAddress(true); setAddressSaveError(null); }}
+                              style={{
+                                background: "none", border: "none", padding: 0,
+                                color: "#a67b30", fontSize: "0.85rem", fontWeight: 600,
+                                cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px"
+                              }}
+                            >
+                              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                              Add New Address
+                            </button>
+                            {/* Divider dot */}
+                            <span style={{ color: "#ccc", fontSize: "1rem", lineHeight: 1 }}>·</span>
+                          </>
+                        )}
+
+                        <Link
+                          href={`/${locale}/account_edit_address`}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{
-                            background: "none", border: "none", padding: 0,
-                            color: "#a67b30", fontSize: "0.85rem", fontWeight: 600,
-                            cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px"
+                            color: "#555", fontSize: "0.85rem", fontWeight: 500,
+                            display: "inline-flex", alignItems: "center", gap: "6px",
+                            textDecoration: "none",
                           }}
                         >
-                          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                          Add New Address
-                        </button>
+                          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          Manage Addresses
+                        </Link>
                       </div>
 
                     </div>
