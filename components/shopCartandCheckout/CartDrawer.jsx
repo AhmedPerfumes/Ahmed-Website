@@ -390,7 +390,7 @@ export default function CartDrawer() {
                           <span style={{ color: "#D4AF37", fontSize: "16px", marginRight: "8px" }}>✨</span>
                           <strong style={{ fontWeight: "600", color: "#D4AF37" }}>Offer Unlocked!</strong>
                           <div style={{ fontSize: "13px", color: "#666", marginTop: "2px" }}>Buy 3, Get 1 Free applied at checkout.</div>
-                          <p style={{ marginTop: "2px", fontSize: "13px", color: "#666" }}>
+                          <p className="text-center">
                             {t("The Discount on your Products will be ")}
                             <strong style={{ color: "#D4AF37", fontWeight: "600" }}>{t("Removed")}</strong>
                           </p>
@@ -453,13 +453,13 @@ export default function CartDrawer() {
           </div>
 
           {cartProducts.length ? (
-            <div className="d-flex gap-2">
-              <Link href={`/${locale}/shop-cart`} className="btn btn-light flex-grow-1">
+            <div className="d-flex flex-row flex-md-column gap-2 gap-md-0">
+              <Link href={`/${locale}/shop-cart`} className="btn btn-light flex-grow-1 mt-md-3">
                 {t("View Cart")}
               </Link>
               <Link
                 href={`/${locale}/shop-checkout`}
-                className="btn btn-primary flex-grow-1"
+                className="btn btn-primary flex-grow-1 mt-md-3"
               >
                 {t("Checkout")}
               </Link>
