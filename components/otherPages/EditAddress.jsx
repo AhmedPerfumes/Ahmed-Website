@@ -58,12 +58,6 @@ export default function EditAddress() {
       .then((res) => res.json())
       .then((data) => {
         if (data.addresses && data.addresses.length) {
-          const stored = localStorage.getItem("address");
-          let defaultId = null;
-          if (stored) {
-            try { defaultId = JSON.parse(atob(stored))?.id; } catch {}
-          }
-
           const parsed = data.addresses.map((addr) => ({
             id: addr.id,
             name: addr.name || user?.name || "",
@@ -72,11 +66,18 @@ export default function EditAddress() {
             area: addr.city || "",
             building: addr.address || "",
             emirates: addr.state || "",
-            // prefer localStorage default, then DB is_default
-            isDefault: defaultId ? addr.id === defaultId : addr.is_default === 1,
+            // Trust the DB is_default — backend now ensures only one is 1
+            isDefault: addr.is_default === 1,
           }));
 
-          setAddresses(parsed);
+          // Safety guard: ensure only one isDefault=true (first wins)
+          let foundDefault = false;
+          const parsedSingle = parsed.map((a) => {
+            if (a.isDefault && !foundDefault) { foundDefault = true; return a; }
+            return { ...a, isDefault: false };
+          });
+
+          setAddresses(parsedSingle);
         } else {
           // No addresses yet — show an empty placeholder
           setAddresses([]);
@@ -94,6 +95,7 @@ export default function EditAddress() {
   };
 
   const openAddNew = () => {
+    if (addresses.length >= 2) return; // Enforce Home + Other limit
     setEditingIndex(null);
     setForm(emptyAddr(userData));
     setErrors({});
@@ -110,7 +112,45 @@ export default function EditAddress() {
     }
   };
 
-  // ─── Save (create or update) ──────────────────────────────────────────────
+  // ─── Delete address ───────────────────────────────────────────────────────
+  const deleteAddress = async (addr, idx) => {
+    if (!window.confirm(`Delete this address? This cannot be undone.`)) return;
+
+    const token = localStorage.getItem("token");
+    try {
+      const resp = await fetch(`${API_BASE}api/customerAddressDelete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: JSON.stringify({
+          address_id: addr.id,
+          customer_id: customerId,
+        }),
+      });
+
+      const res = await resp.json();
+      if (!resp.ok) { alert(res.message || "Failed to delete address."); return; }
+
+      // Remove from local state
+      setAddresses((prev) => prev.filter((_, i) => i !== idx));
+
+      // If the deleted address was stored as the default in localStorage, clear it
+      try {
+        const stored = localStorage.getItem("address");
+        if (stored) {
+          const parsed = JSON.parse(atob(stored));
+          if (parsed?.id === addr.id) {
+            localStorage.removeItem("address");
+          }
+        }
+      } catch {}
+    } catch {
+      alert("Failed to delete address. Please try again.");
+    }
+  };
+
   const save = async () => {
     if (!customerId) return;
 
@@ -156,6 +196,30 @@ export default function EditAddress() {
       // Get the real DB id for newly created addresses
       const savedId = res?.id ?? res?.addresses?.id ?? form.id;
 
+      // ── Option 2: Immediately sync localStorage when default changes ──────
+      // Write the new default address to localStorage RIGHT NOW (before
+      // setAddresses runs), using the confirmed savedId from the API response.
+      // This guarantees that the checkout page's Phase 1 (instant localStorage
+      // pre-fill) reads the correct address on the very next visit.
+      if (form.isDefault) {
+        try {
+          localStorage.setItem(
+            "address",
+            btoa(JSON.stringify({
+              id: savedId,
+              name: form.name,
+              email: form.email,
+              phone: form.mobile,
+              state: form.emirates,
+              city: form.area,
+              address: form.building,
+              customer_id: customerId,
+              is_default: 1,
+            }))
+          );
+        } catch {}
+      }
+
       setAddresses((prev) => {
         let updated;
         if (editingIndex === null) {
@@ -172,25 +236,6 @@ export default function EditAddress() {
             const isThis = editingIndex === null ? i === updated.length - 1 : i === editingIndex;
             return isThis ? a : { ...a, isDefault: false };
           });
-        }
-
-        // Persist default to localStorage
-        const defaultAddr = updated.find((a) => a.isDefault);
-        if (defaultAddr) {
-          localStorage.setItem(
-            "address",
-            btoa(JSON.stringify({
-              id: defaultAddr.id,
-              name: defaultAddr.name,
-              email: defaultAddr.email,
-              phone: defaultAddr.mobile,
-              state: defaultAddr.emirates,
-              city: defaultAddr.area,
-              address: defaultAddr.building,
-              customer_id: customerId,
-              is_default: 1,
-            }))
-          );
         }
 
         return updated;
@@ -225,10 +270,10 @@ export default function EditAddress() {
               >
                 <div>
                   <h6 className="mb-1 fw-medium">
-                    Address {idx + 1}
+                    {idx === 0 ? "Home" : "Other"}
                     {addr.isDefault && (
                       <span className="badge bg-secondary ms-2" style={{ fontSize: "0.7rem" }}>
-                        Default
+                        Primary
                       </span>
                     )}
                   </h6>
@@ -240,7 +285,7 @@ export default function EditAddress() {
                     {[addr.area, addr.building, addr.emirates].filter(Boolean).join(", ")}
                   </p>
                 </div>
-                <div className="text-end">
+                <div className="d-flex gap-3 align-items-center">
                   <Link
                     href="#"
                     onClick={(e) => { e.preventDefault(); openEdit(idx); }}
@@ -248,20 +293,29 @@ export default function EditAddress() {
                   >
                     Edit
                   </Link>
+                  <Link
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); deleteAddress(addr, idx); }}
+                    className="fs-sm border-bottom text-danger"
+                  >
+                    Delete
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Add New Address button */}
-        <button
-          type="button"
-          className="btn btn-outline-dark btn-sm"
-          onClick={openAddNew}
-        >
-          + Add New Address
-        </button>
+        {/* Add New Address button — only shown when fewer than 2 addresses exist */}
+        {addresses.length < 2 && (
+          <button
+            type="button"
+            className="btn btn-outline-dark btn-sm"
+            onClick={openAddNew}
+          >
+            + Add New Address
+          </button>
+        )}
       </div>
 
       {/* Edit / Add Modal */}
