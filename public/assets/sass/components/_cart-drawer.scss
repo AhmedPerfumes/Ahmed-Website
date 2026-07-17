@@ -1,35 +1,34 @@
 .cart-drawer {
-  padding-bottom: 22.5rem;
+  // padding-bottom removed for dynamic flex layout
 }
 
 .cart-drawer-items-list {
-  max-height: 27rem;
+  // max-height removed; flex-grow in JSX handles sizing
   overflow-y: auto;
-  height: 100%;
-}
-
-@media (min-width: 660px) and (max-width: 770px) {
-  .cart-drawer-items-list {
-    max-height: 20rem;
-    overflow-y: auto;
-    height: 100%;
-  }
+  height: auto;
 }
 
 .cart-drawer-item {
-  max-height: 7.5rem;
+  max-height: 50rem;
   overflow: hidden;
+  margin-bottom: 0.75rem;
 
   &._removed {
     max-height: 0;
+    margin-bottom: 0;
     transition: all 0.32s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 }
 
 .cart-drawer-item__img {
-  width: 7.5rem;
-  height: 7.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
   object-fit: cover;
+
+  @include media-breakpoint-up(sm) {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
 }
 
 .cart-drawer-item__info {
@@ -81,7 +80,7 @@
 .qty-control__increase { right: 0; }
 
 .cart-drawer-divider {
-  margin: 1.25rem 0;
+  margin: 0.75rem 0;
   color: $border-color;
   opacity: 1;
 
