@@ -1,6 +1,6 @@
-.cart-drawer {
-  // padding-bottom removed for dynamic flex layout
-}
+// .cart-drawer {
+//   // padding-bottom removed for dynamic flex layout
+// }
 
 .cart-drawer-items-list {
   // max-height removed; flex-grow in JSX handles sizing
@@ -61,7 +61,7 @@
   width: 100%;
   background-color: $body-bg;
   outline: none;
-  -moz-appearance: textfield;
+  // -moz-appearance: textfield;
 }
 
 .qty-control__reduce,
@@ -75,9 +75,13 @@
   -ms-user-select: none;
 }
 
-.qty-control__reduce { left: 0; }
+.qty-control__reduce {
+  left: 0;
+}
 
-.qty-control__increase { right: 0; }
+.qty-control__increase {
+  right: 0;
+}
 
 .cart-drawer-divider {
   margin: 0.75rem 0;

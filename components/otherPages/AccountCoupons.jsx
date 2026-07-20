@@ -5,6 +5,11 @@ export default function MyCoupons() {
   const [coupons, setCoupons] = useState([]);
   const [copiedId, setCopiedId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -45,7 +50,18 @@ export default function MyCoupons() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setCoupons(json.data || []);
+        const data = json.data || [];
+
+        const sortedData = data.sort((a, b) => {
+          const getWeight = (c) => {
+            if (c.status === 'Active' || c.active) return 1;
+            if (c.status === 'Expired') return 2;
+            return 3;
+          };
+          return getWeight(a) - getWeight(b);
+        });
+
+        setCoupons(sortedData);
       })
       .catch(() => setCoupons([]))
       .finally(() => setLoading(false));
@@ -76,26 +92,25 @@ export default function MyCoupons() {
   };
 
   return (
-    <div style={{ maxWidth: 520, margin: "40px auto", padding: 12 }}>
-      <h2
-        style={{
-          textAlign: "center",
-          fontWeight: 600,
-          marginBottom: 30,
-          fontSize: 23,
-        }}
-      >
-        My Coupons
-      </h2>
+    <div style={{ maxWidth: 520, margin: "15px auto", padding: 12 }}>
+      <div style={{ textAlign: "center", marginBottom: 24 }}>
+        <p style={{ color: "#6B7280", fontSize: "14px", margin: 0 }}>
+          Manage and apply your available discount codes
+        </p>
+      </div>
 
       {loading ? (
-        <div style={{ textAlign: "center", padding: 40 }}>Loading…</div>
+        <div className="d-flex flex-column gap-3">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="dashboard-skeleton" style={{ height: 110, borderRadius: 20, width: '100%' }}></div>
+          ))}
+        </div>
       ) : coupons.length === 0 ? (
         <div style={{ textAlign: "center", color: "#888", padding: 30 }}>
           You have no coupons yet.
         </div>
       ) : (
-        <div className="d-flex flex-column gap-3">
+        <div className="d-flex flex-column gap-3 coupons-scroll-container">
           {coupons.map((c, idx) => {
             const expired = isExpired(c.validTo);
             const redeemed = isRedeemed(c.status);
@@ -107,7 +122,7 @@ export default function MyCoupons() {
             return (
               <div
                 key={c.couponCode}
-                className="coupon-card position-relative"
+                className={`coupon-card position-relative stagger-item ${mounted ? 'is-visible' : ''}`}
                 style={{
                   background: bg,
                   borderRadius: 20,
@@ -117,7 +132,17 @@ export default function MyCoupons() {
                   alignItems: "stretch",
                   overflow: "hidden",
                   position: "relative",
+                  '--index': idx,
+                  cursor: expired || redeemed ? "not-allowed" : "pointer",
+                  transition: "transform 0.2s ease",
+                  transform: copiedId === c.couponCode ? "scale(0.96)" : "scale(1)",
                 }}
+                onClick={() =>
+                  !expired &&
+                  !redeemed &&
+                  handleCopy(c.couponCode, c.couponCode)
+                }
+                onMouseLeave={() => setCopiedId(null)}
               >
                 {/* Main info */}
                 <div
@@ -172,19 +197,10 @@ export default function MyCoupons() {
                     justifyContent: "center",
                     minWidth: 120,
                     position: "relative",
-                    cursor:
-                      expired || redeemed ? "not-allowed" : "pointer",
                     userSelect: "none",
                   }}
-                  className={`coupon-code-area${
-                    expired || redeemed ? " disabled" : ""
-                  }${copiedId === c.couponCode ? " copied" : ""}`}
-                  onClick={() =>
-                    !expired &&
-                    !redeemed &&
-                    handleCopy(c.couponCode, c.couponCode)
-                  }
-                  onMouseLeave={() => setCopiedId(null)}
+                  className={`coupon-code-area${expired || redeemed ? " disabled" : ""
+                    }${copiedId === c.couponCode ? " copied" : ""}`}
                 >
                   <span
                     className="coupon-code-text"
@@ -199,9 +215,8 @@ export default function MyCoupons() {
                       color: copiedId === c.couponCode ? color : "#fff",
                       padding: "4px 14px",
                       borderRadius: 18,
-                      border: `2px dashed ${
-                        copiedId === c.couponCode ? color : "#fff"
-                      }`,
+                      border: `2px dashed ${copiedId === c.couponCode ? color : "#fff"
+                        }`,
                       transition: ".13s",
                     }}
                   >
@@ -223,9 +238,8 @@ export default function MyCoupons() {
                   </span>
                   {!expired && !redeemed && (
                     <span
-                      className={`copy-hint${
-                        copiedId === c.couponCode ? " copied" : ""
-                      }`}
+                      className={`copy-hint${copiedId === c.couponCode ? " copied" : ""
+                        }`}
                     >
                       {copiedId === c.couponCode
                         ? "Copied!"
