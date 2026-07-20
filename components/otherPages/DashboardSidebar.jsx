@@ -35,7 +35,6 @@ export default function DashboardSidebar() {
   const router = useRouter();
 
   const [couponCount, setCouponCount] = useState(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -81,15 +80,11 @@ export default function DashboardSidebar() {
         if (result?.data !== undefined) setCouponCount(result.data);
       } catch (err) {
         console.error("Error fetching coupon count:", err);
-      } finally {
-        setCheckingAuth(false);
       }
     };
 
     fetchCouponCount();
   }, [router]);
-
-  if (checkingAuth) return null;
 
   const handleLogout = (e) => {
     e.preventDefault();
