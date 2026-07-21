@@ -29,6 +29,12 @@ export default function EditAddress() {
   const [form, setForm] = useState(emptyAddr());
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // ─── Fetch addresses on mount ─────────────────────────────────────────────
   useEffect(() => {
@@ -48,8 +54,12 @@ export default function EditAddress() {
     setUserData(user);
     setCustomerId(customer_id);
 
-    if (!customer_id) return;
+    if (!customer_id) {
+      setLoading(false);
+      return;
+    }
 
+    setLoading(true);
     fetch(`${API_BASE}api/customerAddressDetails`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -83,7 +93,10 @@ export default function EditAddress() {
           setAddresses([]);
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   // ─── Open modal ───────────────────────────────────────────────────────────
@@ -257,49 +270,60 @@ export default function EditAddress() {
           Your default address will be used at checkout
         </p>
 
-        {addresses.length === 0 ? (
+        {loading ? (
+          <div className="d-flex gap-4 flex-column mb-4" style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="dashboard-skeleton" style={{ height: 140, borderRadius: 12, width: '100%' }}></div>
+            ))}
+          </div>
+        ) : addresses.length === 0 ? (
           <p className="text-muted small mb-3">No saved addresses yet. Add one below.</p>
         ) : (
-          <div className="d-flex gap-3 flex-column mb-4" style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
+          <div className="d-flex gap-4 flex-column mb-4" style={{ fontFamily: "'Kanit-Regular', sans-serif" }}>
             {addresses.map((addr, idx) => (
               <div
                 key={addr.id ?? idx}
-                className={`p-3 d-flex justify-content-between align-items-start rounded border ${
-                  addr.isDefault ? "border-primary" : "border-light"
+                className={`p-4 d-flex justify-content-between align-items-start rounded border stagger-item ${mounted ? 'is-visible' : ''} ${
+                  addr.isDefault ? "border-primary shadow-sm" : "border-light"
                 }`}
+                style={{ '--index': idx, transition: 'all 0.3s var(--ease-out-premium)' }}
               >
                 <div>
-                  <h6 className="mb-1 fw-medium">
-                    {idx === 0 ? "Home" : "Other"}
-                    {addr.isDefault && (
-                      <span className="badge bg-secondary ms-2" style={{ fontSize: "0.7rem" }}>
-                        Primary
-                      </span>
-                    )}
-                  </h6>
-                  <p className="mb-0 text-dark fw-bold">{addr.name}</p>
-                  <p className="mb-0 text-dark small">
-                    {addr.email} | {addr.mobile}
+                  <h6 className="mb-2 fw-medium text-secondary small text-uppercase letter-spacing-1">{idx === 0 ? "Home Address" : "Other Address"}</h6>
+                  <p className="mb-1 text-dark fw-bold fs-17">{addr.name || <span className="text-muted fw-normal">Name not set</span>}</p>
+                  <p className="mb-1 text-dark small">
+                    {addr.email} {addr.email && addr.mobile && '|'} {addr.mobile}
                   </p>
                   <p className="mb-0 text-dark small">
-                    {[addr.area, addr.building, addr.emirates].filter(Boolean).join(", ")}
+                    {addr.area} {addr.area && addr.building && ','} {addr.building}
+                    {addr.emirates && <>, {addr.emirates}</>}
                   </p>
                 </div>
-                <div className="d-flex gap-3 align-items-center">
-                  <Link
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); openEdit(idx); }}
-                    className="fs-sm border-bottom"
-                  >
-                    Edit
-                  </Link>
-                  <Link
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); deleteAddress(addr, idx); }}
-                    className="fs-sm border-bottom text-danger"
-                  >
-                    Delete
-                  </Link>
+                <div className="text-end">
+                  {addr.isDefault && (
+                    <span className="badge-pop mb-2 d-inline-block">
+                      <span className="badge bg-dark fw-normal px-2 py-1" style={{ borderRadius: '4px', fontSize: '11px' }}>DEFAULT</span>
+                    </span>
+                  )}
+                  <br />
+                  <div className="d-flex justify-content-end gap-3 mt-1">
+                    <Link
+                      href="#"
+                      onClick={(e) => { e.preventDefault(); openEdit(idx); }}
+                      className="fs-sm border-bottom border-dark text-dark fw-medium"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      Edit
+                    </Link>
+                    <Link
+                      href="#"
+                      onClick={(e) => { e.preventDefault(); deleteAddress(addr, idx); }}
+                      className="fs-sm border-bottom border-danger text-danger fw-medium"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      Delete
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
@@ -307,7 +331,7 @@ export default function EditAddress() {
         )}
 
         {/* Add New Address button — only shown when fewer than 2 addresses exist */}
-        {addresses.length < 2 && (
+        {!loading && addresses.length < 2 && (
           <button
             type="button"
             className="btn btn-outline-dark btn-sm"

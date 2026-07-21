@@ -35,7 +35,6 @@ export default function DashboardSidebar() {
   const router = useRouter();
 
   const [couponCount, setCouponCount] = useState(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -81,15 +80,11 @@ export default function DashboardSidebar() {
         if (result?.data !== undefined) setCouponCount(result.data);
       } catch (err) {
         console.error("Error fetching coupon count:", err);
-      } finally {
-        setCheckingAuth(false);
       }
     };
 
     fetchCouponCount();
   }, [router]);
-
-  if (checkingAuth) return null;
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -99,39 +94,82 @@ export default function DashboardSidebar() {
   };
 
   return (
-    <div className="col-lg-3 account-nav p-4" role="navigation" aria-label="Dashboard Sidebar">
-      <ul className="account-nav">
-        {dashboardMenuItems.map((elm) => {
-          const active = elm.title !== "Logout" && isActive(pathname, elm.href);
-          const isCouponMenu = elm.title === "My Coupons";
+    <>
+      <div className="col-lg-3 account-nav p-4 desktop-sidebar" role="navigation" aria-label="Dashboard Sidebar">
+        <ul className="account-nav">
+          {dashboardMenuItems.map((elm) => {
+            const active = elm.title !== "Logout" && isActive(pathname, elm.href);
+            const isCouponMenu = elm.title === "My Coupons";
+
+            return (
+              <li key={elm.id} className="dashboard-sidebar-item">
+                {elm.title === "Logout" ? (
+                  <a href="#" onClick={handleLogout} className="menu-link menu-link_us-s">
+                    Logout
+                  </a>
+                ) : (
+                  <Link
+                    href={elm.href}
+                    className={`menu-link menu-link_us-s ${active ? "menu-link_active" : ""}`}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {elm.title}
+                    {isCouponMenu && couponCount !== null && (
+                    <span
+                      className="badge rounded-pill bg-danger ms-2"
+                      style={{ fontSize: "0.75rem", minWidth: "1.5rem", textAlign: "center" }}
+                    >
+                      {couponCount}
+                    </span>
+                    )}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      {/* Mobile Bottom Nav */}
+      <div className="dashboard-bottom-nav">
+        {dashboardMenuItems.filter(item => item.title !== "Account Overview").map((item) => {
+          const active = isActive(pathname, item.href);
+          const isCouponMenu = item.title === "My Coupons";
+          const isLogout = item.title === "Logout";
+
+          if (isLogout) {
+            return (
+              <div 
+                key={item.id} 
+                onClick={handleLogout} 
+                className="nav-item-mobile"
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="icon-wrapper">
+                  <svg width="20" height="20" fill="currentColor">
+                    <use href={item.icon} />
+                  </svg>
+                </div>
+                <span>{item.shortTitle}</span>
+              </div>
+            );
+          }
 
           return (
-            <li key={elm.id}>
-              {elm.title === "Logout" ? (
-                <a href="#" onClick={handleLogout} className="menu-link menu-link_us-s">
-                  Logout
-                </a>
-              ) : (
-                <Link
-                  href={elm.href}
-                  className={`menu-link menu-link_us-s ${active ? "menu-link_active" : ""}`}
-                  aria-current={active ? "page" : undefined}
-                >
-                  {elm.title}
-                  {isCouponMenu && couponCount !== null && (
-                  <span
-  className="badge rounded-pill bg-danger ms-2"
-  style={{ fontSize: "0.75rem", minWidth: "1.5rem", textAlign: "center" }}
->
-  {couponCount}
-</span>
-                  )}
-                </Link>
-              )}
-            </li>
+            <Link key={item.id} href={item.href} className={`nav-item-mobile ${active ? 'active' : ''}`}>
+              <div className="icon-wrapper">
+                <svg width="20" height="20" fill="currentColor">
+                  <use href={item.icon} />
+                </svg>
+                {isCouponMenu && couponCount !== null && (
+                  <div className="badge-mobile">{couponCount}</div>
+                )}
+              </div>
+              <span>{item.shortTitle}</span>
+            </Link>
           );
         })}
-      </ul>
-    </div>
+      </div>
+    </>
   );
 }

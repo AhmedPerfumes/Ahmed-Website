@@ -40,6 +40,12 @@ export default function MyDetails() {
     customer_mobile: "",
   });
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const raw = localStorage.getItem("user");
@@ -264,56 +270,51 @@ setSaveLoading(false);
   ];
 
   return (
-    <div style={{ maxWidth: 520, margin: "60px auto", fontFamily: "'Kanit-Regular', sans-serif" }}>
-      <h2 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-4" style={{ letterSpacing: ".02em" }}>
-        MY DETAILS
-      </h2>
-      <div>
-        {FIELDS.map((f) => (
-          <div key={f.key} className="d-flex align-items-center py-3" style={{ borderBottom: "1px solid #ececec" }}>
-            <div style={{ flex: 2 }}>
-              <div style={{ textTransform: "uppercase", fontSize: 17 }}>{f.label}</div>
-              <div style={{ fontSize: 16, fontWeight: 400, marginTop: 1 }}>
+    <div className="w-100" style={{ maxWidth: 600, margin: "0 auto", fontFamily: "'Kanit-Regular', sans-serif" }}>
+      <div className="mt-2">
+        {FIELDS.map((f, index) => (
+          <div 
+            key={f.key} 
+            className={`d-flex align-items-center py-4 stagger-item ${mounted ? 'is-visible' : ''}`} 
+            style={{ borderBottom: "1px solid #f0f0f0", '--index': index }}
+          >
+            <div style={{ flex: 1 }}>
+              <div style={{ textTransform: "uppercase", fontSize: 11, letterSpacing: '1.5px', color: '#888', fontWeight: 700, marginBottom: 6 }}>{f.label}</div>
+              <div style={{ fontSize: 15, fontWeight: 400 }}>
                 {edit[f.key] ? (
                   f.key === "password" ? (
-                    <>
-                      <Form.Control type="password" placeholder="New password" className="mb-2"
+                    <div className="d-flex flex-column gap-2 pe-3">
+                      <Form.Control type="password" placeholder="New password" size="sm" className="rounded-1"
                         value={values.new_password} onChange={(e) => handleChange("new_password", e.target.value)} autoFocus />
-                      <Form.Control type="password" placeholder="Confirm new password"
+                      <Form.Control type="password" placeholder="Confirm new password" size="sm" className="rounded-1"
                         value={values.confirm_password} onChange={(e) => handleChange("confirm_password", e.target.value)} />
-                      <div className="mt-1">
-                        <Button size="sm" variant="link" onClick={() => cancelEdit("password")} style={{ textDecoration: "underline" }}>
-                          Cancel
-                        </Button>
-                      </div>
-                    </>
+                    </div>
                   ) : (
-                    <>
-                      <Form.Control value={values[f.key]} onChange={(e) => handleChange(f.key, e.target.value)} autoFocus />
+                    <div className="pe-3">
+                      <Form.Control size="sm" className="rounded-1" value={values[f.key]} onChange={(e) => handleChange(f.key, e.target.value)} autoFocus />
                       {fieldErrors[f.key] && (
-                        <div className="text-danger mt-1" style={{ fontSize: 14 }}>
+                        <div className="text-danger mt-1" style={{ fontSize: 13 }}>
                           {fieldErrors[f.key]}
                         </div>
                       )}
-                      <div className="mt-1">
-                        <Button size="sm" variant="link" onClick={() => cancelEdit(f.key)} style={{ textDecoration: "underline" }}>
-                          Cancel
-                        </Button>
-                      </div>
-                    </>
+                    </div>
                   )
                 ) : f.key === "password" ? (
-                  <span>••••••••</span>
+                  <span className="text-secondary">••••••••</span>
                 ) : loading ? (
-                  <span className="text-muted">Loading…</span>
+                  <div className="dashboard-skeleton rect" style={{ width: '60%', height: '18px' }}></div>
                 ) : (
-                  values[f.key]
+                  <span className="text-dark">{values[f.key] || <span className="text-muted fst-italic small">Not set</span>}</span>
                 )}
               </div>
             </div>
-            <div style={{ flex: 1, textAlign: "right" }}>
-              {!edit[f.key] && (
-                <Button size="sm" variant="link" onClick={() => startEdit(f.key)} style={{ textDecoration: "underline" }}>
+            <div className="ps-2" style={{ textAlign: "right", minWidth: 80 }}>
+              {edit[f.key] ? (
+                 <Button size="sm" variant="link" className="p-0 text-dark fw-medium text-decoration-underline" onClick={() => cancelEdit(f.key)}>
+                    Cancel
+                 </Button>
+              ) : (
+                <Button size="sm" variant="link" className="p-0 text-dark fw-medium text-decoration-underline" onClick={() => startEdit(f.key)}>
                   Edit
                 </Button>
               )}
@@ -322,8 +323,13 @@ setSaveLoading(false);
         ))}
       </div>
 
-      <div className="text-center mt-4">
-        <Button disabled={!isEdited} onClick={handleShowSave}>
+      <div className="text-center mt-5">
+        <Button 
+          variant="dark" 
+          disabled={!isEdited} 
+          onClick={handleShowSave}
+          className="px-5 py-2 rounded-pill fw-bold text-uppercase letter-spacing-1 fs-14"
+        >
           Save Changes
         </Button>
       </div>

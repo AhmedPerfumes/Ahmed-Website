@@ -174,7 +174,7 @@ export default function CartDrawer() {
   return (
     <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
 
-      <div className={`aside ${locale === 'ar' ? 'aside_left' : 'aside_right'} overflow-hidden cart-drawer`} id="cartDrawer">
+      <div className={`aside ${locale === 'ar' ? 'aside_left' : 'aside_right'} overflow-hidden cart-drawer d-flex flex-column`} id="cartDrawer">
         <div className="aside-header d-flex align-items-center">
           <h3 className="text-uppercase fs-6 mb-0">
             {t("SHOPPING BAG")} (
@@ -190,7 +190,7 @@ export default function CartDrawer() {
         </div>
         <h6 style={{ color: "red" }}>{error && error}</h6>
         {cartProducts.length ? (
-          <div className="aside-content cart-drawer-items-list">
+          <div className="aside-content cart-drawer-items-list flex-grow-1">
             {cartProducts.map((elm, i) => (
               <React.Fragment key={i}>
                 <div className="cart-drawer-item d-flex position-relative">
@@ -321,7 +321,7 @@ export default function CartDrawer() {
           </div>
         )}
 
-        <div className="cart-drawer-actions position-absolute start-0 bottom-0 w-100">
+        <div className="cart-drawer-actions w-100 mt-auto">
           <div className="free-shipping-progress mt-2">
             {totalPrice < freeShippingThreshold ? (
               <div>
@@ -360,8 +360,8 @@ export default function CartDrawer() {
               const itemsNeeded = 4 - regularQuantity;
 
               return (
-                <div className="bogo-progress-container mt-3">
-                  <hr className="cart-drawer-divider" style={{ marginBottom: "16px", borderColor: "#EAEAEA" }} />
+                <div className="bogo-progress-container mt-2">
+                  <hr className="cart-drawer-divider" style={{ marginBottom: "12px", borderColor: "#EAEAEA" }} />
                   <div style={{
                     backgroundColor: isBogoQualified ? "#FCFBF7" : "#FFFFFF",
                     border: `1px solid ${isBogoQualified ? "#D4AF37" : "#EAEAEA"}`,
@@ -381,7 +381,7 @@ export default function CartDrawer() {
                     }}>
                       <div style={{ overflow: "hidden", minHeight: 0 }}>
                         <div style={{
-                          padding: isBogoQualified ? "16px" : "0px 16px",
+                          padding: isBogoQualified ? "8px 12px" : "0px 12px",
                           transition: "all 0.5s ease-in-out",
                           opacity: isBogoQualified ? 1 : 0,
                           transform: isBogoQualified ? "translateY(0)" : "translateY(-10px)",
@@ -390,6 +390,10 @@ export default function CartDrawer() {
                           <span style={{ color: "#D4AF37", fontSize: "16px", marginRight: "8px" }}>✨</span>
                           <strong style={{ fontWeight: "600", color: "#D4AF37" }}>Offer Unlocked!</strong>
                           <div style={{ fontSize: "13px", color: "#666", marginTop: "2px" }}>Buy 3, Get 1 Free applied at checkout.</div>
+                          <p className="text-center">
+                            {t("The Discount on your Products will be ")}
+                            <strong style={{ color: "#D4AF37", fontWeight: "600" }}>{t("Removed")}</strong>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -401,12 +405,12 @@ export default function CartDrawer() {
                     }}>
                       <div style={{ overflow: "hidden", minHeight: 0 }}>
                         <div style={{
-                          padding: !isBogoQualified ? "16px" : "0px 16px",
+                          padding: !isBogoQualified ? "10px 12px" : "0px 12px",
                           transition: "all 0.5s ease-in-out",
                           opacity: !isBogoQualified ? 1 : 0,
                           transform: !isBogoQualified ? "translateY(0)" : "translateY(10px)",
                         }}>
-                          <div className="mb-3" style={{ letterSpacing: "0.2px" }}>
+                          <div className="mb-2" style={{ letterSpacing: "0.2px" }}>
                             <strong style={{ fontWeight: "600", textTransform: "uppercase", fontSize: "13px", letterSpacing: "1px", color: "#2C2C2C" }}>Buy 3 Get 1 Free</strong>
                             <div style={{ fontSize: "13px", color: "#666", marginTop: "4px" }}>
                               Add <strong style={{ color: "#D4AF37", fontWeight: "600" }}>{itemsNeeded > 0 ? itemsNeeded : 1}</strong> more product{itemsNeeded > 1 ? 's' : ''} to claim your gift
@@ -443,23 +447,23 @@ export default function CartDrawer() {
 
           <hr className="cart-drawer-divider" />
 
-          <div className="d-flex justify-content-between">
-            <h6 className="fs-base fw-medium">{t("SUBTOTAL")}:</h6>
+          <div className="d-flex justify-content-between mb-2">
+            <h6 className="fs-base fw-medium mb-0">{t("SUBTOTAL")}:</h6>
             <span className="cart-subtotal fw-medium">{totalPrice.toFixed(2)}{currency.symbol}</span>
           </div>
 
           {cartProducts.length ? (
-            <>
-              <Link href={`/${locale}/shop-cart`} className="btn btn-light mt-3 d-block">
+            <div className="d-flex flex-row flex-md-column gap-2 gap-md-0">
+              <Link href={`/${locale}/shop-cart`} className="btn btn-light flex-grow-1 mt-md-3">
                 {t("View Cart")}
               </Link>
               <Link
                 href={`/${locale}/shop-checkout`}
-                className="btn btn-primary mt-3 d-block"
+                className="btn btn-primary flex-grow-1 mt-md-3"
               >
                 {t("Checkout")}
               </Link>
-            </>
+            </div>
           ) : (
             <Link href={`/${locale}/shop`} className="btn btn-light mt-3 d-block">
               {t("Exploreshop")}
