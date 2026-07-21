@@ -1220,7 +1220,7 @@ export default function Checkout() {
                   {/* Area and Building — side by side */}
                   <div className="col-md-6">
                     <div className="form-floating mt-3 mb-3">
-                      <input type="text" className="form-control" id="checkout_street_address" placeholder=" " readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.area" value={formData.billingAddress.area} onChange={handleChange} required />
+                      <input type="text" className="form-control" id="checkout_street_address" placeholder=" " readOnly={isLoggedIn && !isEditingAddress} name="billingAddress.area" value={formData.billingAddress.area} onChange={handleChange} maxLength={15} required />
                       <label htmlFor="checkout_company_name"> Area / Mantaqa * </label>
                       {fieldErrors.area && ( <div style={{ color: "red", fontSize: "0.85rem" }}> {fieldErrors.area} </div> )}
                     </div>
@@ -1335,7 +1335,7 @@ export default function Checkout() {
                               {/* Shipping: Area + Building side by side */}
                               <div className="col-md-6">
                                 <div className="form-floating my-3">
-                                  <input type="text" className="form-control" id="shipping_area" placeholder=" " name="shippingAddress.area" value={formData.shippingAddress.area} onChange={handleChange} required />
+                                  <input type="text" className="form-control" id="shipping_area" placeholder=" " name="shippingAddress.area" value={formData.shippingAddress.area} onChange={handleChange} maxLength={15} required />
                                   <label htmlFor="shipping_area"> Area / Mantaqa * </label>
                                 </div>
                               </div>
@@ -1644,6 +1644,7 @@ export default function Checkout() {
                 name="area"
                 value={newAddressForm.area}
                 onChange={handleNewAddressChange}
+                maxLength={15}
               />
               <label htmlFor="modal_new_addr_area">Area / Mantaqa *</label>
             </div>
