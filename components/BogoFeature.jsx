@@ -231,7 +231,9 @@ const BOGOFeature = () => {
           let remaining = giftsAllowed;
           for (const candidate of sortedCandidates) {
             if (remaining <= 0) break;
-            const freeQty = Math.min(candidate.qty, remaining, get_quantity);
+            // Give as many free units as possible from this (cheapest) candidate
+            // before moving to the next more-expensive candidate.
+            const freeQty = Math.min(candidate.qty, remaining);
             if (freeQty > 0) {
               desiredFree.push({ product_id: candidate.product_id, free_qty: freeQty });
               remaining -= freeQty;
