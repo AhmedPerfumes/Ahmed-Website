@@ -15,7 +15,7 @@ export default function AccountOrders() {
   const [data, setData] = useState([]);
   const [orderSummaries, setOrderSummaries] = useState({});
   const [loading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 4 });
   const [pageCount, setPageCount] = useState(0);
   const [activeStatus, setActiveStatus] = useState("all");
 
@@ -55,6 +55,7 @@ export default function AccountOrders() {
       orderBy: "created_at",
       orderDir: "desc",
       customer_id: String(CUSTOMER_ID),
+      with_products: "1",
     });
 
     try {
@@ -63,21 +64,11 @@ export default function AccountOrders() {
       setData(json.data);
       setPageCount(Math.ceil(json.total / pagination.pageSize));
 
-      // Fetch brief summaries (products) for each order
+      // Map products eagerly loaded from backend
       const summaryResults = {};
-      await Promise.all(
-        json.data.map(async (order) => {
-          try {
-            const detailRes = await fetch(`${BASE}api/customerOrderDetails`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ order_id: order.id }),
-            });
-            const detailJson = await detailRes.json();
-            summaryResults[order.id] = detailJson.order_products || [];
-          } catch (e) { }
-        })
-      );
+      (json.data || []).forEach(order => {
+        summaryResults[order.id] = order.products || [];
+      });
       setOrderSummaries(summaryResults);
     } catch (e) {
       console.error("Fetch error", e);
