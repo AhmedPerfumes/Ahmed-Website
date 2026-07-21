@@ -6,6 +6,10 @@ import { useState } from "react";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import BusinessIcon from "@mui/icons-material/Business";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import HandshakeIcon from "@mui/icons-material/Handshake";
 
 const CONTACT_EMAIL = "corporate@ahmedalmaghribi.com";
 const CONTACT_PHONE = "+971 55 864 7854";
@@ -32,7 +36,7 @@ const translations = {
         occasions: [
             "Ramadan & Eid",
             "UAE National Day",
-            "Diwali & Christmas",
+            "Teacher's Day and Children's Day",
             "Women's Day",
             "Mother's Day",
             "Father's Day",
@@ -48,10 +52,10 @@ const translations = {
         success: "Your inquiry has been received! Our corporate gifting team will be in touch within 24 hours.",
         why_title: "Why Ahmed Al Maghribi?",
         why_items: [
-            { icon: "🎁", title: "Custom Branding", desc: "Personalized packaging with your company logo, custom messages, and occasion-based designs" },
-            { icon: "🚀", title: "Reliable Delivery", desc: "Bulk delivery across the UAE within 3–5 business days, on time every time" },
-            { icon: "💎", title: "Authentic Quality", desc: "Premium perfumes, concentrated oils, bakhoor, candles, and chocolates crafted to the highest standards" },
-            { icon: "🤝", title: "Dedicated Support", desc: "A dedicated corporate account manager assigned to every client from inquiry to delivery" },
+            { icon: <CardGiftcardIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "Custom Branding", desc: "Personalized packaging with your company logo, custom messages, and occasion-based designs" },
+            { icon: <LocalShippingIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "Reliable Delivery", desc: "Bulk delivery across the UAE within 3–5 business days, on time every time" },
+            { icon: <WorkspacePremiumIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "Authentic Quality", desc: "Premium perfumes, concentrated oils, bakhoor, candles, and chocolates crafted to the highest standards" },
+            { icon: <HandshakeIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "Dedicated Support", desc: "A dedicated corporate account manager assigned to every client from inquiry to delivery" },
         ],
     },
     ar: {
@@ -90,41 +94,46 @@ const translations = {
         success: "تم استلام استفسارك! سيتواصل معك فريق الهدايا المؤسسية خلال ٢٤ ساعة.",
         why_title: "لماذا أحمد المغربي؟",
         why_items: [
-            { icon: "🎁", title: "علامة تجارية مخصصة", desc: "تغليف مخصص بشعار شركتك ورسائل مخصصة وتصاميم حسب المناسبة" },
-            { icon: "🚀", title: "توصيل موثوق", desc: "توصيل بالجملة في جميع أنحاء الإمارات خلال ٣–٥ أيام عمل، في الموعد دائماً" },
-            { icon: "💎", title: "جودة أصيلة", desc: "عطور فاخرة وزيوت مركزة وبخور وشموع وشوكولاتة مصنوعة وفق أعلى المعايير" },
-            { icon: "🤝", title: "دعم متخصص", desc: "مدير حساب مؤسسي مخصص لكل عميل من الاستفسار حتى التسليم" },
+            { icon: <CardGiftcardIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "علامة تجارية مخصصة", desc: "تغليف مخصص بشعار شركتك ورسائل مخصصة وتصاميم حسب المناسبة" },
+            { icon: <LocalShippingIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "توصيل موثوق", desc: "توصيل بالجملة في جميع أنحاء الإمارات خلال ٣–٥ أيام عمل، في الموعد دائماً" },
+            { icon: <WorkspacePremiumIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "جودة أصيلة", desc: "عطور فاخرة وزيوت مركزة وبخور وشموع وشوكولاتة مصنوعة وفق أعلى المعايير" },
+            { icon: <HandshakeIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "دعم متخصص", desc: "مدير حساب مؤسسي مخصص لكل عميل من الاستفسار حتى التسليم" },
         ],
     },
 };
 
 const inputSx = {
     "& .MuiOutlinedInput-root": {
-        color: "#FFFFFF",
-        background: "rgba(255,255,255,0.04)",
-        borderRadius: "12px",
-        "& fieldset": { borderColor: "rgba(191,149,63,0.25)" },
-        "&:hover fieldset": { borderColor: "rgba(191,149,63,0.6)" },
-        "&.Mui-focused fieldset": { borderColor: "#BF953F" },
+        color: "#1A1A1A",
+        background: "rgba(0,0,0,0.02)",
+        borderRadius: "8px",
+        fontFamily: "'Montserrat', sans-serif",
+        "& fieldset": { borderColor: "transparent" },
+        "&:hover fieldset": { borderColor: "rgba(0,0,0,0.1)" },
+        "&.Mui-focused fieldset": { borderColor: "#A88132" },
     },
     "& .MuiInputLabel-root": {
-        color: "rgba(255,255,255,0.5)",
-        "&.Mui-focused": { color: "#BF953F" },
+        color: "rgba(0,0,0,0.5)",
+        fontFamily: "'Montserrat', sans-serif",
+        fontWeight: 400,
+        "&.Mui-focused": { color: "#A88132" },
     },
-    "& .MuiSelect-icon": { color: "rgba(255,255,255,0.5)" },
+    "& .MuiSelect-icon": { color: "rgba(0,0,0,0.5)" },
 };
 
 const menuProps = {
     PaperProps: {
         sx: {
-            background: "#1a1208",
-            border: "1px solid rgba(191,149,63,0.2)",
-            borderRadius: "12px",
+            background: "#FFFFFF",
+            border: "1px solid rgba(0,0,0,0.05)",
+            borderRadius: "8px",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
             "& .MuiMenuItem-root": {
-                color: "#fff",
+                color: "#1A1A1A",
                 fontSize: "0.9rem",
-                "&:hover": { background: "rgba(191,149,63,0.1)" },
-                "&.Mui-selected": { background: "rgba(191,149,63,0.15)" },
+                fontFamily: "'Montserrat', sans-serif",
+                "&:hover": { background: "rgba(0,0,0,0.02)" },
+                "&.Mui-selected": { background: "rgba(168,129,50,0.1)" },
             },
         },
     },
@@ -161,18 +170,11 @@ const CorporateContact = () => {
             dir={isRtl ? "rtl" : "ltr"}
             sx={{
                 py: { xs: 8, md: 14 },
-                background: "linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%)",
+                backgroundColor: "#FAF8F5",
                 position: "relative",
                 overflow: "hidden",
             }}
         >
-            {/* BG glow */}
-            <Box sx={{
-                position: "absolute", top: "10%", [isRtl ? "left" : "right"]: "-5%",
-                width: "500px", height: "500px",
-                background: "radial-gradient(circle, rgba(191,149,63,0.1) 0%, transparent 70%)",
-                filter: "blur(80px)", pointerEvents: "none",
-            }} />
 
             <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
                 <Grid container spacing={{ xs: 4, md: 8 }} alignItems="flex-start">
@@ -186,14 +188,13 @@ const CorporateContact = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Box sx={{ mb: { xs: 1, md: 2 } }}>
-                                <Box sx={{ width: "60px", height: "2px", background: "linear-gradient(90deg, #BF953F, transparent)", mb: 2 }} />
-                                <Typography variant="overline" sx={{ color: "#BF953F", letterSpacing: "0.3em", fontWeight: 600, fontSize: "0.78rem", display: "block", mb: 1.5 }}>
+                                <Typography variant="overline" sx={{ color: "#A88132", letterSpacing: "0.2em", fontWeight: 500, fontSize: "0.75rem", display: "block", mb: 2, fontFamily: "'Montserrat', sans-serif" }}>
                                     {t.eyebrow}
                                 </Typography>
-                                <Typography variant="h2" sx={{ color: "#FFFFFF", fontSize: { xs: "1.8rem", md: "2.8rem" }, fontWeight: 700, fontFamily: "'Playfair Display', serif", mb: 2, lineHeight: 1.15 }}>
+                                <Typography variant="h2" sx={{ color: "#1A1A1A", fontSize: { xs: "2rem", md: "3rem" }, fontWeight: 400, fontFamily: "'Playfair Display', serif", mb: 2, lineHeight: 1.15 }}>
                                     {t.title}
                                 </Typography>
-                                <Typography sx={{ color: "rgba(255,255,255,0.55)", fontSize: { xs: "0.88rem", md: "1rem" }, lineHeight: 1.8, fontWeight: 300, mb: 4 }}>
+                                <Typography sx={{ color: "#4A4A4A", fontSize: { xs: "0.85rem", md: "1.05rem" }, lineHeight: 1.8, fontWeight: 300, mb: 4, fontFamily: "'Montserrat', sans-serif" }}>
                                     {t.subtitle}
                                 </Typography>
                             </Box>
@@ -201,16 +202,17 @@ const CorporateContact = () => {
                             {/* Contact info card */}
                             <Box
                                 sx={{
-                                    background: "rgba(191,149,63,0.07)",
-                                    border: "1px solid rgba(191,149,63,0.25)",
-                                    borderRadius: "20px",
+                                    backgroundColor: "#FFFFFF",
+                                    border: "1px solid rgba(0,0,0,0.03)",
+                                    boxShadow: "0 10px 30px rgba(0,0,0,0.02)",
+                                    borderRadius: "16px",
                                     p: { xs: 3, md: 3.5 },
                                     mb: 4,
                                 }}
                             >
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
-                                    <BusinessIcon sx={{ color: "#BF953F", fontSize: "1.2rem" }} />
-                                    <Typography sx={{ color: "#BF953F", fontWeight: 700, fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                                    <BusinessIcon sx={{ color: "#A88132", fontSize: "1.2rem" }} />
+                                    <Typography sx={{ color: "#A88132", fontWeight: 600, fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.15em", fontFamily: "'Montserrat', sans-serif" }}>
                                         {t.dept_title}
                                     </Typography>
                                 </Box>
@@ -223,15 +225,15 @@ const CorporateContact = () => {
                                         display: "flex", alignItems: "center", gap: 2, mb: 2.5,
                                         textDecoration: "none", color: "inherit",
                                         transition: "all 0.2s",
-                                        "&:hover .contact-text": { color: "#BF953F" },
+                                        "&:hover .contact-text": { color: "#A88132" },
                                     }}
                                 >
-                                    <Box sx={{ width: 40, height: 40, borderRadius: "10px", background: "rgba(191,149,63,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                        <EmailIcon sx={{ color: "#BF953F", fontSize: "1.1rem" }} />
+                                    <Box sx={{ width: 40, height: 40, borderRadius: "10px", backgroundColor: "rgba(168,129,50,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                        <EmailIcon sx={{ color: "#A88132", fontSize: "1.1rem" }} />
                                     </Box>
                                     <Box>
-                                        <Typography sx={{ color: "rgba(255,255,255,0.4)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Email</Typography>
-                                        <Typography className="contact-text" sx={{ color: "#FFFFFF", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s" }}>
+                                        <Typography sx={{ color: "rgba(0,0,0,0.5)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif" }}>Email</Typography>
+                                        <Typography className="contact-text" sx={{ color: "#1A1A1A", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s", fontFamily: "'Montserrat', sans-serif" }}>
                                             {CONTACT_EMAIL}
                                         </Typography>
                                     </Box>
@@ -245,15 +247,15 @@ const CorporateContact = () => {
                                         display: "flex", alignItems: "center", gap: 2, mb: 2.5,
                                         textDecoration: "none", color: "inherit",
                                         transition: "all 0.2s",
-                                        "&:hover .contact-text": { color: "#BF953F" },
+                                        "&:hover .contact-text": { color: "#A88132" },
                                     }}
                                 >
-                                    <Box sx={{ width: 40, height: 40, borderRadius: "10px", background: "rgba(191,149,63,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                        <PhoneIcon sx={{ color: "#BF953F", fontSize: "1.1rem" }} />
+                                    <Box sx={{ width: 40, height: 40, borderRadius: "10px", backgroundColor: "rgba(168,129,50,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                        <PhoneIcon sx={{ color: "#A88132", fontSize: "1.1rem" }} />
                                     </Box>
                                     <Box>
-                                        <Typography sx={{ color: "rgba(255,255,255,0.4)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Phone</Typography>
-                                        <Typography className="contact-text" sx={{ color: "#FFFFFF", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s" }}>
+                                        <Typography sx={{ color: "rgba(0,0,0,0.5)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif" }}>Phone</Typography>
+                                        <Typography className="contact-text" sx={{ color: "#1A1A1A", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s", fontFamily: "'Montserrat', sans-serif" }}>
                                             {CONTACT_PHONE}
                                         </Typography>
                                     </Box>
@@ -277,12 +279,12 @@ const CorporateContact = () => {
                                             borderRadius: "50px",
                                             py: 1.5,
                                             px: 3,
-                                            fontWeight: 700,
+                                            fontWeight: 600,
                                             fontSize: "0.9rem",
                                             letterSpacing: "0.05em",
-                                            boxShadow: "0 8px 24px rgba(37,211,102,0.35)",
+                                            fontFamily: "'Montserrat', sans-serif",
                                             transition: "all 0.3s ease",
-                                            "&:hover": { background: "#1da851", boxShadow: "0 12px 32px rgba(37,211,102,0.5)" },
+                                            "&:hover": { background: "#1da851" },
                                         }}
                                     >
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -291,29 +293,46 @@ const CorporateContact = () => {
                                 </motion.div>
                             </Box>
 
-                            {/* Why Us */}
-                            <Typography sx={{ color: "#BF953F", fontWeight: 700, fontSize: "0.95rem", textTransform: "uppercase", letterSpacing: "0.12em", mb: 2.5, fontFamily: "'Playfair Display', serif" }}>
-                                {t.why_title}
-                            </Typography>
-                            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                                {t.why_items.map((item, i) => (
-                                    <motion.div key={i} initial={{ opacity: 0, x: isRtl ? 20 : -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }}>
-                                        <Box sx={{
-                                            display: "flex", gap: 2, alignItems: "flex-start",
-                                            background: "rgba(255,255,255,0.025)",
-                                            border: "1px solid rgba(191,149,63,0.12)",
-                                            borderRadius: "14px", p: 2,
-                                            transition: "all 0.3s ease",
-                                            "&:hover": { background: "rgba(191,149,63,0.06)", border: "1px solid rgba(191,149,63,0.3)" },
-                                        }}>
-                                            <Box sx={{ fontSize: "1.5rem", lineHeight: 1, flexShrink: 0, mt: "2px" }}>{item.icon}</Box>
-                                            <Box>
-                                                <Typography sx={{ color: "#FFFFFF", fontWeight: 700, fontSize: "0.9rem", mb: 0.3 }}>{item.title}</Typography>
-                                                <Typography sx={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem", lineHeight: 1.6 }}>{item.desc}</Typography>
-                                            </Box>
+                            {/* Credibility Statement — replaces generic icon cards */}
+                            <Box sx={{ 
+                                mt: 5,
+                                pt: 5, 
+                                borderTop: "1px solid rgba(0,0,0,0.08)" 
+                            }}>
+                                <Typography sx={{
+                                    color: "#1A1A1A",
+                                    fontSize: { xs: "1.3rem", md: "1.6rem" },
+                                    fontFamily: "'Playfair Display', serif",
+                                    fontWeight: 400,
+                                    fontStyle: "italic",
+                                    lineHeight: 1.5,
+                                    mb: 4
+                                }}>
+                                    {isRtl
+                                        ? "موثوق به من قِبل أمازون وإعمار وطيران الإمارات وأكثر من ١٢٠ شريكاً مؤسسياً في الإمارات."
+                                        : "Trusted by Amazon, Emaar, Emirates Airline, and over 120 corporate partners across the UAE."
+                                    }
+                                </Typography>
+                                <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                                    {(isRtl ? [
+                                        "تسليم بالجملة في جميع أنحاء الإمارات خلال ٣–٥ أيام عمل",
+                                        "تغليف مخصص بشعار شركتك",
+                                        "مدير حساب مخصص لكل عميل",
+                                        "عطور فاخرة مصنوعة وفق أعلى المعايير",
+                                    ] : [
+                                        "Bulk delivery across the UAE within 3–5 business days",
+                                        "Custom packaging with your company logo",
+                                        "A dedicated account manager for every client",
+                                        "Premium quality perfumes, attars, oils & bakhoor",
+                                    ]).map((item, i) => (
+                                        <Box key={i} sx={{ display: "flex", gap: 3, alignItems: "baseline", py: 2, borderBottom: "1px solid rgba(0,0,0,0.05)", "&:last-child": { borderBottom: "none" } }}>
+                                            <Box sx={{ width: "4px", height: "4px", borderRadius: "50%", backgroundColor: "#A88132", flexShrink: 0, mt: "6px" }} />
+                                            <Typography sx={{ color: "#333333", fontSize: "0.9rem", fontFamily: "'Montserrat', sans-serif", fontWeight: 400, lineHeight: 1.6 }}>
+                                                {item}
+                                            </Typography>
                                         </Box>
-                                    </motion.div>
-                                ))}
+                                    ))}
+                                </Box>
                             </Box>
                         </motion.div>
                     </Grid>
@@ -330,21 +349,13 @@ const CorporateContact = () => {
                                 component="form"
                                 onSubmit={handleSubmit}
                                 sx={{
-                                    background: "rgba(255,255,255,0.025)",
-                                    border: "1px solid rgba(191,149,63,0.2)",
-                                    borderRadius: "28px",
+                                    backgroundColor: "#FFFFFF",
+                                    border: "1px solid rgba(0,0,0,0.05)",
+                                    borderRadius: "16px",
                                     p: { xs: 3, md: 5 },
-                                    backdropFilter: "blur(20px)",
-                                    boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+                                    boxShadow: "0 20px 60px rgba(0,0,0,0.04)",
                                     position: "relative",
                                     overflow: "hidden",
-                                    "&::before": {
-                                        content: '""',
-                                        position: "absolute",
-                                        top: 0, left: 0, right: 0,
-                                        height: "3px",
-                                        background: "linear-gradient(90deg, transparent, #BF953F 30%, #FCF6BA 50%, #BF953F 70%, transparent)",
-                                    },
                                 }}
                             >
                                 <Grid container spacing={2.5}>
@@ -396,20 +407,18 @@ const CorporateContact = () => {
                                                 type="submit"
                                                 fullWidth
                                                 sx={{
-                                                    background: "linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #BF953F 100%)",
-                                                    backgroundSize: "200% auto",
-                                                    color: "#1a0a00",
+                                                    backgroundColor: "#A88132",
+                                                    color: "#FFFFFF",
                                                     py: 2,
-                                                    fontSize: { xs: "0.88rem", md: "1rem" },
-                                                    fontWeight: 800,
+                                                    fontSize: { xs: "0.85rem", md: "0.95rem" },
+                                                    fontWeight: 600,
                                                     borderRadius: "50px",
                                                     textTransform: "uppercase",
                                                     letterSpacing: "0.1em",
-                                                    boxShadow: "0 8px 30px rgba(191,149,63,0.4)",
-                                                    transition: "all 0.4s ease",
+                                                    fontFamily: "'Montserrat', sans-serif",
+                                                    transition: "all 0.3s ease",
                                                     "&:hover": {
-                                                        backgroundPosition: "right center",
-                                                        boxShadow: "0 15px 45px rgba(191,149,63,0.6)",
+                                                        backgroundColor: "#8C6A29",
                                                     },
                                                 }}
                                             >
@@ -425,7 +434,7 @@ const CorporateContact = () => {
             </Container>
 
             <Snackbar open={snackOpen} autoHideDuration={6000} onClose={() => setSnackOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-                <Alert severity="success" onClose={() => setSnackOpen(false)} sx={{ background: "linear-gradient(135deg, #BF953F, #FCF6BA)", color: "#1a0a00", fontWeight: 700, borderRadius: "12px" }}>
+                <Alert severity="success" onClose={() => setSnackOpen(false)} sx={{ backgroundColor: "#FFFFFF", color: "#A88132", fontWeight: 500, borderRadius: "12px", border: "1px solid rgba(0,0,0,0.05)", boxShadow: "0 10px 40px rgba(0,0,0,0.08)", fontFamily: "'Montserrat', sans-serif" }}>
                     {t.success}
                 </Alert>
             </Snackbar>

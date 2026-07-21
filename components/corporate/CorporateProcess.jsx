@@ -5,9 +5,8 @@ import { useLocale } from "next-intl";
 
 const translations = {
     en: {
-        eyebrow: "✦ HOW IT WORKS ✦",
-        title: "Our Corporate Gifting Process",
-        subtitle: "From inquiry to delivery — a seamless, white-glove experience",
+        label: "THE PROCESS",
+        title: "From Inquiry to Delivery",
         steps: [
             {
                 number: "01",
@@ -32,9 +31,8 @@ const translations = {
         ],
     },
     ar: {
-        eyebrow: "✦ كيف يعمل ✦",
-        title: "عملية الهدايا المؤسسية لدينا",
-        subtitle: "من الاستفسار إلى التسليم — تجربة سلسة وفاخرة",
+        label: "العملية",
+        title: "من الاستفسار إلى التسليم",
         steps: [
             {
                 number: "٠١",
@@ -70,131 +68,127 @@ const CorporateProcess = () => {
             component="section"
             dir={isRtl ? "rtl" : "ltr"}
             sx={{
-                py: { xs: 8, md: 14 },
-                background: "linear-gradient(180deg, #111111 0%, #0d0d0d 100%)",
+                backgroundColor: "#FAF8F5",
                 position: "relative",
                 overflow: "hidden",
             }}
         >
-            {/* Decorative horizontal gold line */}
-            <Box
-                sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "10%",
-                    right: "10%",
-                    height: "1px",
-                    background: "linear-gradient(90deg, transparent, rgba(191,149,63,0.3), transparent)",
-                    display: { xs: "none", md: "block" },
-                    pointerEvents: "none",
-                }}
-            />
+            <Container maxWidth="xl">
 
-            <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-                {/* Header */}
-                <Box sx={{ textAlign: "center", mb: { xs: 5, md: 9 } }}>
-                    <Box sx={{
-                        width: "80px", height: "2px",
-                        background: "linear-gradient(90deg, transparent, #BF953F, transparent)",
-                        margin: "0 auto 20px",
-                    }} />
-                    <Typography variant="overline" sx={{
-                        color: "#BF953F", letterSpacing: "0.3em",
-                        fontWeight: 600, fontSize: { xs: "0.65rem", md: "0.8rem" },
-                        display: "block", mb: 2,
+                {/* Top header strip */}
+                <Box sx={{
+                    display: "flex",
+                    alignItems: { xs: "flex-start", md: "center" },
+                    justifyContent: "space-between",
+                    py: { xs: 6, md: 8 },
+                    borderBottom: "1px solid rgba(0,0,0,0.07)",
+                    flexDirection: { xs: "column", md: "row" },
+                    gap: 3,
+                }}>
+                    <Typography sx={{
+                        color: "#A88132",
+                        letterSpacing: "0.3em",
+                        fontWeight: 500,
+                        fontSize: "0.7rem",
+                        fontFamily: "'Montserrat', sans-serif",
+                        textTransform: "uppercase",
                     }}>
-                        {t.eyebrow}
+                        {t.label}
                     </Typography>
-                    <Typography variant="h2" sx={{
-                        color: "#FFFFFF", fontSize: { xs: "2rem", md: "3.5rem" },
-                        fontWeight: 700, fontFamily: "'Playfair Display', serif", mb: 2,
+
+                    <Typography sx={{
+                        color: "#1A1A1A",
+                        fontSize: { xs: "2rem", md: "2.8rem" },
+                        fontWeight: 400,
+                        fontFamily: "'Playfair Display', serif",
+                        letterSpacing: "0.01em",
+                        lineHeight: 1.2,
+                        textAlign: { xs: "left", md: "center" },
                     }}>
                         {t.title}
                     </Typography>
-                    <Typography sx={{
-                        color: "rgba(255,255,255,0.5)",
-                        fontSize: { xs: "0.88rem", md: "1rem" },
-                        maxWidth: "500px", mx: "auto", lineHeight: 1.7, fontWeight: 300,
-                    }}>
-                        {t.subtitle}
-                    </Typography>
+
+                    {/* Decorative gold line — desktop only */}
+                    <Box sx={{
+                        width: "60px",
+                        height: "1px",
+                        backgroundColor: "#A88132",
+                        display: { xs: "none", md: "block" },
+                        flexShrink: 0,
+                    }} />
                 </Box>
 
-                {/* Steps */}
+                {/* Steps — horizontal editorial strip */}
                 <Box sx={{
                     display: "grid",
-                    gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
-                    gap: { xs: 3, md: 4 },
-                    position: "relative",
+                    gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
+                    borderBottom: "1px solid rgba(0,0,0,0.07)",
                 }}>
                     {t.steps.map((step, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 40 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.15 }}
+                            transition={{ duration: 0.6, delay: i * 0.12 }}
+                            style={{ height: "100%" }}
                         >
-                            <Box
-                                sx={{
-                                    background: "rgba(255,255,255,0.03)",
-                                    border: "1px solid rgba(191,149,63,0.15)",
-                                    borderRadius: "24px",
-                                    p: { xs: 3, md: 4 },
-                                    height: "100%",
-                                    position: "relative",
-                                    overflow: "hidden",
-                                    transition: "all 0.4s ease",
-                                    "&:hover": {
-                                        background: "rgba(191,149,63,0.06)",
-                                        border: "1px solid rgba(191,149,63,0.4)",
-                                        transform: "translateY(-8px)",
-                                        boxShadow: "0 20px 60px rgba(191,149,63,0.15)",
-                                    },
-                                    "&::before": {
-                                        content: '""',
-                                        position: "absolute",
-                                        top: 0,
-                                        left: 0,
-                                        right: 0,
-                                        height: "3px",
-                                        background: "linear-gradient(90deg, #BF953F, #FCF6BA, #BF953F)",
-                                        opacity: 0.7,
-                                    },
-                                }}
-                            >
-                                {/* Big Number */}
+                            <Box sx={{
+                                py: { xs: 5, md: 8 },
+                                px: { xs: 0, md: 5 },
+                                borderRight: {
+                                    xs: "none",
+                                    md: !isRtl && i < 3 ? "1px solid rgba(0,0,0,0.07)" : "none"
+                                },
+                                borderLeft: {
+                                    xs: "none",
+                                    md: isRtl && i > 0 ? "1px solid rgba(0,0,0,0.07)" : "none"
+                                },
+                                borderTop: { xs: "1px solid rgba(0,0,0,0.07)", md: "none" },
+                                height: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                            }}>
+                                {/* Step number */}
                                 <Typography sx={{
-                                    fontSize: { xs: "3.5rem", md: "4.5rem" },
-                                    fontWeight: 900,
-                                    color: "rgba(191,149,63,0.12)",
+                                    color: "rgba(168,129,50,0.25)",
                                     fontFamily: "'Playfair Display', serif",
+                                    fontSize: { xs: "3rem", md: "4rem" },
+                                    fontWeight: 400,
                                     lineHeight: 1,
-                                    mb: 2,
+                                    mb: 5,
                                     letterSpacing: "-0.02em",
                                 }}>
                                     {step.number}
                                 </Typography>
 
-                                {/* Gold accent bar */}
-                                <Box sx={{
-                                    width: "40px", height: "3px",
-                                    background: "linear-gradient(90deg, #BF953F, #FCF6BA)",
-                                    borderRadius: "2px", mb: 2.5,
-                                }} />
-
-                                <Typography variant="h5" sx={{
-                                    color: "#FFFFFF", fontWeight: 700,
-                                    fontSize: { xs: "1.1rem", md: "1.3rem" },
+                                {/* Step title */}
+                                <Typography sx={{
+                                    color: "#1A1A1A",
                                     fontFamily: "'Playfair Display', serif",
-                                    mb: 1.5,
+                                    fontSize: { xs: "1.4rem", md: "1.6rem" },
+                                    fontWeight: 400,
+                                    mb: 2.5,
+                                    lineHeight: 1.2,
                                 }}>
                                     {step.title}
                                 </Typography>
+
+                                {/* Thin gold accent bar */}
+                                <Box sx={{
+                                    width: "30px",
+                                    height: "1px",
+                                    backgroundColor: "#A88132",
+                                    mb: 2.5,
+                                }} />
+
+                                {/* Description */}
                                 <Typography sx={{
-                                    color: "rgba(255,255,255,0.55)",
-                                    fontSize: { xs: "0.82rem", md: "0.92rem" },
-                                    lineHeight: 1.7, fontWeight: 300,
+                                    color: "#555555",
+                                    fontSize: "0.9rem",
+                                    lineHeight: 1.8,
+                                    fontFamily: "'Montserrat', sans-serif",
+                                    fontWeight: 400,
                                 }}>
                                     {step.desc}
                                 </Typography>
@@ -202,6 +196,7 @@ const CorporateProcess = () => {
                         </motion.div>
                     ))}
                 </Box>
+
             </Container>
         </Box>
     );

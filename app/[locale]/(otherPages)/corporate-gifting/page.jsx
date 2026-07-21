@@ -1,9 +1,11 @@
 import CorporateHero from "@/components/corporate/CorporateHero";
-import CorporateMarquee from "@/components/corporate/CorporateMarquee";
+import CorporatePartnersSlider from "@/components/corporate/CorporatePartnersSlider";
 import CorporateGiftSets from "@/components/corporate/CorporateGiftSets";
 import CorporateBranding from "@/components/corporate/CorporateBranding";
 import CorporateProcess from "@/components/corporate/CorporateProcess";
 import CorporateContact from "@/components/corporate/CorporateContact";
+import CorporateWedding from "@/components/corporate/CorporateWedding";
+import CorporateCollections from "@/components/corporate/CorporateCollections";
 
 export const metadata = {
     title: "Corporate Gifting | Ahmed Al Maghribi Perfumes",
@@ -25,11 +27,17 @@ const CorporateGiftingPage = () => {
             {/* 1. Hero — headline + description + stats */}
             <CorporateHero />
 
-            {/* 2. Partner marquee — Amazon, Danube, Emaar, ENBD, Emirates, DIB, DAMAC, ADCB */}
-            <CorporateMarquee />
+            {/* 2. Partner slider — Amazon, Danube, Emaar, ENBD, Emirates, DIB, DAMAC, ADCB */}
+            <CorporatePartnersSlider />
 
             {/* 3. Gift sets gallery — product photos from Corporate Gift Sets folder */}
-            <CorporateGiftSets />
+            {/* <CorporateGiftSets /> */}
+
+            {/* 3.5. Dedicated Wedding Section */}
+            <CorporateWedding />
+
+            {/* 3.6. Collections — Specialized collections with content */}
+            <CorporateCollections />
 
             {/* 4. Occasions table + Customized Branding features */}
             <CorporateBranding />

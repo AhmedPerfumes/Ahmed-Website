@@ -181,8 +181,8 @@ const GiftSetCard = ({ set, index, isRtl }) => {
                     height: { xs: "280px", md: "420px" },
                     cursor: "pointer",
                     boxShadow: hovered
-                        ? "0 30px 80px rgba(191,149,63,0.3), 0 0 0 2px rgba(191,149,63,0.6)"
-                        : "0 10px 40px rgba(0,0,0,0.4)",
+                        ? "0 20px 40px rgba(0,0,0,0.12)"
+                        : "0 4px 20px rgba(0,0,0,0.04)",
                     transition: "all 0.5s cubic-bezier(0.4,0,0.2,1)",
                     transform: hovered ? "translateY(-10px)" : "translateY(0)",
                 }}
@@ -205,8 +205,8 @@ const GiftSetCard = ({ set, index, isRtl }) => {
                         position: "absolute",
                         inset: 0,
                         background: hovered
-                            ? "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)"
-                            : "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)",
+                            ? "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%)"
+                            : "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)",
                         transition: "background 0.5s ease",
                     }}
                 />
@@ -254,7 +254,7 @@ const GiftSetCard = ({ set, index, isRtl }) => {
                         sx={{
                             width: hovered ? "60px" : "40px",
                             height: "2px",
-                            background: "linear-gradient(90deg, #BF953F, #FCF6BA)",
+                            background: "#A88132",
                             mb: 1.5,
                             transition: "width 0.4s ease",
                             borderRadius: "2px",
@@ -265,12 +265,11 @@ const GiftSetCard = ({ set, index, isRtl }) => {
                         variant="h5"
                         sx={{
                             color: "#FFFFFF",
-                            fontWeight: 700,
-                            fontSize: { xs: "1rem", md: "1.25rem" },
+                            fontWeight: 400,
+                            fontSize: { xs: "1.1rem", md: "1.35rem" },
                             fontFamily: "'Playfair Display', serif",
                             mb: 1,
-                            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
-                            letterSpacing: "0.02em",
+                            letterSpacing: "0.01em",
                         }}
                     >
                         {set.name}
@@ -286,9 +285,10 @@ const GiftSetCard = ({ set, index, isRtl }) => {
                         <Typography
                             sx={{
                                 color: "rgba(255,255,255,0.85)",
-                                fontSize: { xs: "0.75rem", md: "0.88rem" },
+                                fontSize: { xs: "0.75rem", md: "0.85rem" },
                                 lineHeight: 1.6,
                                 fontWeight: 300,
+                                fontFamily: "'Montserrat', sans-serif",
                             }}
                         >
                             {set.description}
@@ -312,46 +312,23 @@ const CorporateGiftSets = () => {
             dir={isRtl ? "rtl" : "ltr"}
             sx={{
                 py: { xs: 8, md: 14 },
-                background: "linear-gradient(180deg, #0f0f0f 0%, #111111 50%, #0f0f0f 100%)",
+                backgroundColor: "#FAF8F5",
                 position: "relative",
                 overflow: "hidden",
             }}
         >
-            {/* Decorative BG element */}
-            <Box
-                sx={{
-                    position: "absolute",
-                    top: "20%",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "800px",
-                    height: "800px",
-                    background: "radial-gradient(circle, rgba(191,149,63,0.06) 0%, transparent 70%)",
-                    filter: "blur(100px)",
-                    pointerEvents: "none",
-                }}
-            />
-
             <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-                {/* Header */}
-                <Box sx={{ textAlign: "center", mb: { xs: 5, md: 8 } }}>
-                    <Box
-                        sx={{
-                            width: "100px",
-                            height: "2px",
-                            background: "linear-gradient(90deg, transparent, #BF953F, transparent)",
-                            margin: "0 auto 20px",
-                        }}
-                    />
+                <Box sx={{ textAlign: "center", mb: { xs: 6, md: 8 } }}>
                     <Typography
                         variant="overline"
                         sx={{
-                            color: "#BF953F",
-                            letterSpacing: "0.3em",
-                            fontWeight: 600,
-                            fontSize: { xs: "0.65rem", md: "0.8rem" },
+                            color: "#A88132",
+                            letterSpacing: "0.2em",
+                            fontWeight: 500,
+                            fontSize: { xs: "0.7rem", md: "0.85rem" },
                             display: "block",
                             mb: 2,
+                            fontFamily: "'Montserrat', sans-serif",
                         }}
                     >
                         {t.eyebrow}
@@ -359,9 +336,9 @@ const CorporateGiftSets = () => {
                     <Typography
                         variant="h2"
                         sx={{
-                            color: "#FFFFFF",
+                            color: "#1A1A1A",
                             fontSize: { xs: "2rem", md: "3.5rem" },
-                            fontWeight: 700,
+                            fontWeight: 400,
                             fontFamily: "'Playfair Display', serif",
                             mb: 2,
                         }}
@@ -370,12 +347,13 @@ const CorporateGiftSets = () => {
                     </Typography>
                     <Typography
                         sx={{
-                            color: "rgba(255,255,255,0.5)",
+                            color: "#4A4A4A",
                             fontSize: { xs: "0.85rem", md: "1.05rem" },
                             maxWidth: "600px",
                             mx: "auto",
                             lineHeight: 1.7,
                             fontWeight: 300,
+                            fontFamily: "'Montserrat', sans-serif",
                         }}
                     >
                         {t.subtitle}
