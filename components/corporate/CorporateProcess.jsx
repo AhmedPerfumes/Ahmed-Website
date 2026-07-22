@@ -80,16 +80,16 @@ const CorporateProcess = () => {
                     display: "flex",
                     alignItems: { xs: "flex-start", md: "center" },
                     justifyContent: "space-between",
-                    py: { xs: 6, md: 8 },
+                    py: { xs: 4, sm: 6, md: 8 },
                     borderBottom: "1px solid rgba(0,0,0,0.07)",
                     flexDirection: { xs: "column", md: "row" },
-                    gap: 3,
+                    gap: { xs: 1.5, md: 3 },
                 }}>
                     <Typography sx={{
                         color: "#A88132",
                         letterSpacing: "0.3em",
                         fontWeight: 500,
-                        fontSize: "0.7rem",
+                        fontSize: { xs: "0.68rem", md: "0.7rem" },
                         fontFamily: "'Montserrat', sans-serif",
                         textTransform: "uppercase",
                     }}>
@@ -98,7 +98,7 @@ const CorporateProcess = () => {
 
                     <Typography sx={{
                         color: "#1A1A1A",
-                        fontSize: { xs: "2rem", md: "2.8rem" },
+                        fontSize: { xs: "1.6rem", sm: "2rem", md: "2.8rem" },
                         fontWeight: 400,
                         fontFamily: "'Playfair Display', serif",
                         letterSpacing: "0.01em",
@@ -118,10 +118,10 @@ const CorporateProcess = () => {
                     }} />
                 </Box>
 
-                {/* Steps — horizontal editorial strip */}
+                {/* Steps — 2x2 grid on mobile, 4-column strip on desktop */}
                 <Box sx={{
                     display: "grid",
-                    gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
+                    gridTemplateColumns: { xs: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
                     borderBottom: "1px solid rgba(0,0,0,0.07)",
                 }}>
                     {t.steps.map((step, i) => (
@@ -130,21 +130,24 @@ const CorporateProcess = () => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.12 }}
+                            transition={{ duration: 0.6, delay: i * 0.1 }}
                             style={{ height: "100%" }}
                         >
                             <Box sx={{
-                                py: { xs: 5, md: 8 },
-                                px: { xs: 0, md: 5 },
+                                py: { xs: 3.5, sm: 5, md: 8 },
+                                px: { xs: 2, sm: 3, md: 5 },
                                 borderRight: {
-                                    xs: "none",
+                                    xs: i % 2 === 0 ? (!isRtl ? "1px solid rgba(0,0,0,0.07)" : "none") : (!isRtl ? "none" : "1px solid rgba(0,0,0,0.07)"),
                                     md: !isRtl && i < 3 ? "1px solid rgba(0,0,0,0.07)" : "none"
                                 },
                                 borderLeft: {
-                                    xs: "none",
+                                    xs: i % 2 === 1 ? (!isRtl ? "none" : "1px solid rgba(0,0,0,0.07)") : (!isRtl ? "1px solid rgba(0,0,0,0.07)" : "none"),
                                     md: isRtl && i > 0 ? "1px solid rgba(0,0,0,0.07)" : "none"
                                 },
-                                borderTop: { xs: "1px solid rgba(0,0,0,0.07)", md: "none" },
+                                borderTop: {
+                                    xs: i >= 2 ? "1px solid rgba(0,0,0,0.07)" : "none",
+                                    md: "none"
+                                },
                                 height: "100%",
                                 display: "flex",
                                 flexDirection: "column",
@@ -153,10 +156,10 @@ const CorporateProcess = () => {
                                 <Typography sx={{
                                     color: "rgba(168,129,50,0.25)",
                                     fontFamily: "'Playfair Display', serif",
-                                    fontSize: { xs: "3rem", md: "4rem" },
+                                    fontSize: { xs: "2.2rem", sm: "3rem", md: "4rem" },
                                     fontWeight: 400,
                                     lineHeight: 1,
-                                    mb: 5,
+                                    mb: { xs: 2, md: 5 },
                                     letterSpacing: "-0.02em",
                                 }}>
                                     {step.number}
@@ -166,27 +169,27 @@ const CorporateProcess = () => {
                                 <Typography sx={{
                                     color: "#1A1A1A",
                                     fontFamily: "'Playfair Display', serif",
-                                    fontSize: { xs: "1.4rem", md: "1.6rem" },
+                                    fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.6rem" },
                                     fontWeight: 400,
-                                    mb: 2.5,
-                                    lineHeight: 1.2,
+                                    mb: { xs: 1.5, md: 2.5 },
+                                    lineHeight: 1.25,
                                 }}>
                                     {step.title}
                                 </Typography>
 
                                 {/* Thin gold accent bar */}
                                 <Box sx={{
-                                    width: "30px",
+                                    width: "24px",
                                     height: "1px",
                                     backgroundColor: "#A88132",
-                                    mb: 2.5,
+                                    mb: { xs: 1.5, md: 2.5 },
                                 }} />
 
                                 {/* Description */}
                                 <Typography sx={{
                                     color: "#555555",
-                                    fontSize: "0.9rem",
-                                    lineHeight: 1.8,
+                                    fontSize: { xs: "0.8rem", sm: "0.85rem", md: "0.9rem" },
+                                    lineHeight: { xs: 1.5, md: 1.8 },
                                     fontFamily: "'Montserrat', sans-serif",
                                     fontWeight: 400,
                                 }}>

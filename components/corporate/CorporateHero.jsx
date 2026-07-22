@@ -1,5 +1,5 @@
 "use client";
-import { Box, Container, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Container, Typography, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import Image from "next/image";
@@ -9,9 +9,6 @@ const translations = {
         eyebrow: "AHMED AL MAGHRIBI PERFUMES",
         title_part1: "Corporate",
         title_part2: "Gifting",
-        // p1: "At Ahmed Al Maghribi Perfumes, we transform the art of gifting into an unforgettable experience. Every fragrance is more than a present—it is a graceful expression of gratitude, respect, and appreciation.",
-        // p2: "Whether honoring valued clients, recognizing dedicated employees, welcoming distinguished guests, celebrating festive occasions, or commemorating corporate milestones, our bespoke gifting collections leave a lasting impression through the timeless language of scent.",
-        // p3: "From luxury fragrance boxes to elegant, customized gift sets, each creation reflects sophistication, craftsmanship, and the warmth of meaningful connections.",
         quote: "Where every fragrance celebrates excellence, every gift inspires appreciation, and every relationship blossoms into a lasting legacy.",
         cta_primary: "Request a Consultation",
     },
@@ -31,7 +28,6 @@ const CorporateHero = () => {
     const locale = useLocale();
     const isRtl = locale === "ar";
     const t = translations[locale] || translations.en;
-    const theme = useTheme();
 
     const handleScroll = () => {
         const contactSection = document.getElementById("corporate-inquiry");
@@ -49,38 +45,53 @@ const CorporateHero = () => {
                 position: "relative",
                 display: "flex",
                 alignItems: "center",
-                pt: { xs: 15, md: 0 },
+                backgroundColor: "#0D0C0A",
+                pt: { xs: 14, md: 0 },
                 pb: { xs: 10, md: 0 },
                 color: "#FFFFFF",
                 overflow: "hidden"
             }}
         >
-            {/* Background Image */}
-            <Box sx={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }}>
+            {/* ── Background Image ── */}
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 1,
+                }}
+            >
                 <Image
-                    src="/assets/Corporate Gift Sets/giftset4.jpeg"
+                    src="/assets/Corporate Gift Sets/banner.jpeg"
                     alt="Corporate Gifting Ahmed Al Maghribi"
                     fill
-                    style={{ objectFit: "cover", objectPosition: "right" }}
+                    style={{ objectFit: "cover", objectPosition: isRtl ? "left center" : "right center" }}
                     priority
                     sizes="100vw"
                 />
             </Box>
 
-            {/* Gradient Overlay for Text Readability */}
-            <Box sx={{
-                position: "absolute",
-                top: 0, left: 0, right: 0, bottom: 0,
-                zIndex: 2,
-                background: isRtl
-                    ? "linear-gradient(270deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.1) 100%)"
-                    : "linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.1) 100%)",
-                "@media (max-width: 900px)": {
-                    background: "linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 100%)",
-                }
-            }} />
+            {/* ── Gradient Overlay: ONLY on Left Side (for Text Readability), 100% Transparent on Right ── */}
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 2,
+                    background: isRtl
+                        ? "linear-gradient(270deg, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.7) 45%, rgba(13,12,10,0.2) 70%, transparent 95%)"
+                        : "linear-gradient(90deg, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.7) 45%, rgba(13,12,10,0.2) 70%, transparent 95%)",
+                    "@media (max-width: 900px)": {
+                        background: "linear-gradient(0deg, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.7) 55%, rgba(13,12,10,0.15) 100%)",
+                    }
+                }}
+            />
 
-            {/* Content Container */}
+            {/* ── Content Container (Left Side) ── */}
             <Container maxWidth="xl" sx={{ position: "relative", zIndex: 5 }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -88,7 +99,7 @@ const CorporateHero = () => {
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <Box sx={{
-                        maxWidth: { xs: "100%", md: "750px" },
+                        maxWidth: { xs: "100%", md: "620px" },
                         textAlign: { xs: "center", md: isRtl ? "right" : "left" },
                         ml: { xs: 0, md: isRtl ? "auto" : 0 },
                         mr: { xs: 0, md: isRtl ? 0 : "auto" },
@@ -97,7 +108,7 @@ const CorporateHero = () => {
                         <Typography
                             variant="overline"
                             sx={{
-                                color: "#D4AF37", // Brighter gold for dark background
+                                color: "#D4AF37",
                                 letterSpacing: "0.25em",
                                 fontWeight: 500,
                                 fontSize: { xs: "0.75rem", md: "0.85rem" },
@@ -109,7 +120,7 @@ const CorporateHero = () => {
                             {t.eyebrow}
                         </Typography>
 
-                        {/* Huge Corporate Gifting Title */}
+                        {/* Title */}
                         <Typography
                             component="h1"
                             sx={{
@@ -121,7 +132,7 @@ const CorporateHero = () => {
                                 mb: 4,
                                 letterSpacing: "0.02em",
                                 fontFamily: "'Playfair Display', serif",
-                                textShadow: "0 4px 20px rgba(0,0,0,0.4)"
+                                textShadow: "0 4px 20px rgba(0,0,0,0.5)"
                             }}
                         >
                             {t.title_part1}{" "}
@@ -133,17 +144,19 @@ const CorporateHero = () => {
                             </Box>
                         </Typography>
 
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, mb: 5 }}>
-                            <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.95rem", md: "1.1rem" }, lineHeight: 1.7, fontWeight: 300, fontFamily: "'Montserrat', sans-serif" }}>
-                                {t.p1}
-                            </Typography>
-                            <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.95rem", md: "1.1rem" }, lineHeight: 1.7, fontWeight: 300, fontFamily: "'Montserrat', sans-serif" }}>
-                                {t.p2}
-                            </Typography>
-                            <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.95rem", md: "1.1rem" }, lineHeight: 1.7, fontWeight: 300, fontFamily: "'Montserrat', sans-serif" }}>
-                                {t.p3}
-                            </Typography>
-                        </Box>
+                        {t.p1 && (
+                            <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, mb: 5 }}>
+                                <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.95rem", md: "1.1rem" }, lineHeight: 1.7, fontWeight: 300, fontFamily: "'Montserrat', sans-serif" }}>
+                                    {t.p1}
+                                </Typography>
+                                <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.95rem", md: "1.1rem" }, lineHeight: 1.7, fontWeight: 300, fontFamily: "'Montserrat', sans-serif" }}>
+                                    {t.p2}
+                                </Typography>
+                                <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: { xs: "0.95rem", md: "1.1rem" }, lineHeight: 1.7, fontWeight: 300, fontFamily: "'Montserrat', sans-serif" }}>
+                                    {t.p3}
+                                </Typography>
+                            </Box>
+                        )}
 
                         {/* Emphasized Quote */}
                         <Box sx={{

@@ -5,16 +5,16 @@ import Image from "next/image";
 
 const collections = [
     {
-        id: "fathers-day",
-        titleEn: "Father's Day Collection",
-        titleAr: "مجموعة عيد الأب",
-        desc1En: "A father's love is steadfast, his guidance everlasting, and his presence unforgettable.",
-        desc1Ar: "حب الأب ثابت، وتوجيهاته خالدة، وحضوره لا يُنسى.",
-        desc2En: "This Father's Day, honour the man whose strength inspires and whose love never fades with the timeless elegance of Ahmed Al Maghribi Perfumes.",
-        desc2Ar: "في عيد الأب هذا، كرم الرجل الذي تلهم قوته وحبه الذي لا يتلاشى مع الأناقة الخالدة لعطور أحمد المغربي.",
-        poemEn: "A lasting aroma, a lasting embrace,\nA father's love, beyond time and space.\nEvery fragrance tells a story true,\nOf cherished moments shared with you.",
-        poemAr: "رائحة تدوم، عناق يدوم،\nحب الأب يتجاوز الزمان والمكان.\nكل عطر يروي قصة حقيقية،\nعن لحظات غالية شاركناها معك.",
-        image: "/assets/Corporate Gift Sets/corporate gift set 000122222.jpg.jpeg",
+        id: "womens-day",
+        titleEn: "Women's Day Collection",
+        titleAr: "مجموعة يوم المرأة",
+        desc1En: "Celebrating the strength, grace, and elegance of every woman.",
+        desc1Ar: "احتفال بقوة ونعمة وأناقة كل امرأة.",
+        desc2En: "This Women's Day, honour the inspiring women in your life with the timeless elegance of Ahmed Al Maghribi Perfumes. A gift that reflects her beauty, resilience, and unyielding spirit.",
+        desc2Ar: "في يوم المرأة، كرم النساء الملهمات في حياتك مع الأناقة الخالدة لعطور أحمد المغربي. هدية تعكس جمالها ومرونتها وروحها التي لا تلين.",
+        poemEn: "A lasting aroma, a lasting grace,\nHer strength and beauty time cannot erase.\nEvery fragrance tells a story true,\nOf the endless wonder that is you.",
+        poemAr: "رائحة تدوم، نعمة تدوم،\nقوتها وجمالها لا يمحوه الزمان.\nكل عطر يروي قصة حقيقية،\nعن العجب الذي لا ينتهي وهو أنت.",
+        image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
         bg: "#FFFFFF",
     },
     {
@@ -31,16 +31,16 @@ const collections = [
         bg: "#FAF8F5",
     },
     {
-        id: "hajj-umrah",
-        titleEn: "Hajj & Umrah Collection",
-        titleAr: "مجموعة الحج والعمرة",
-        desc1En: "A Journey of Faith. A Gift of Blessings.",
-        desc1Ar: "رحلة الإيمان. هدية البركات.",
-        desc2En: "Featuring our signature perfumes and premium attars, elegantly presented in bespoke gift boxes, each collection is a meaningful keepsake for pilgrims, loved ones, and guests.",
-        desc2Ar: "تضم عطورنا المميزة والأدهان الفاخرة، معروضة بأناقة في صناديق هدايا مخصصة، كل مجموعة تعد تذكاراً قيماً للحجاج والأحباء والضيوف.",
-        poemEn: "From Makkah's light to Madinah's grace,\nMay peace and mercy your heart embrace.\nWith every aroma, memories remain,\nA sacred journey lived again",
-        poemAr: "من نور مكة إلى فضل المدينة،\nعسى أن يغمر السلام والرحمة قلبك.\nمع كل عطر، تبقى الذكريات،\nرحلة مقدسة تعاش من جديد",
-        image: "/assets/Corporate Gift Sets/corporate gift set beige color.jpg.jpeg",
+        id: "fathers-day",
+        titleEn: "Father's Day Collection",
+        titleAr: "مجموعة عيد الأب",
+        desc1En: "A father's love is steadfast, his guidance everlasting, and his presence unforgettable.",
+        desc1Ar: "حب الأب ثابت، وتوجيهاته خالدة، وحضوره لا يُنسى.",
+        desc2En: "This Father's Day, honour the man whose strength inspires and whose love never fades with the timeless elegance of Ahmed Al Maghribi Perfumes.",
+        desc2Ar: "في عيد الأب هذا، كرم الرجل الذي تلهم قوته وحبه الذي لا يتلاشى مع الأناقة الخالدة لعطور أحمد المغربي.",
+        poemEn: "A lasting aroma, a lasting embrace,\nA father's love, beyond time and space.\nEvery fragrance tells a story true,\nOf cherished moments shared with you.",
+        poemAr: "رائحة تدوم، عناق يدوم،\nحب الأب يتجاوز الزمان والمكان.\nكل عطر يروي قصة حقيقية،\nعن لحظات غالية شاركناها معك.",
+        image: "/assets/Corporate Gift Sets/Fathers.jpeg",
         bg: "#FFFFFF",
     },
     {
@@ -53,7 +53,7 @@ const collections = [
         desc2Ar: "في يوم المعلم، كرم المرشدين الذين يبنون العقول ويلامسون القلوب بأناقة عطور أحمد المغربي الخالدة - هدية تعكس الاحترام والتقدير والامتنان الصادق.",
         poemEn: "They teach with wisdom, lead with grace,\nLeaving hope in every place.\nTheir words inspire, their lessons stay,\nLighting countless hearts each day\n\nHonouring Every Teacher. Celebrating Every Lesson.\nA Lasting Aroma for a Lasting Inspiration.",
         poemAr: "يعلمون بحكمة، ويقودون بنعمة،\nيتركون الأمل في كل مكان.\nتلهم كلماتهم، وتبقى دروسهم،\nتضيء قلوباً لا حصر لها كل يوم\n\nتكريم لكل معلم. احتفال بكل درس.\nرائحة تدوم لإلهام يدوم.",
-        image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
+        image: "/assets/Corporate Gift Sets/Diiwali.jpeg",
         bg: "#FAF8F5",
     },
     {
@@ -68,6 +68,19 @@ const collections = [
         poemAr: "قلوب صغيرة، أحلام كبيرة،\nأكثر إشراقاً من أشعة الشمس الدافئة.\nكل ابتسامة كنز ثمين،\nكل عناق فرح لا يقاس.",
         image: "/assets/Corporate Gift Sets/corporate gift set black square 01.jpg.jpeg",
         bg: "#FFFFFF",
+    },
+    {
+        id: "national-day",
+        titleEn: "National Day Collection",
+        titleAr: "مجموعة اليوم الوطني",
+        desc1En: "A Gift of Pride. A Fragrance of Unity.",
+        desc1Ar: "هدية الفخر. عطر الوحدة.",
+        desc2En: "Wrapped in the vibrant Red, Green, White, and Black of the UAE National Flag, the Ahmed Al Maghribi National Day Collection celebrates the spirit of a nation built on unity, vision, and excellence. Celebrate the occasion with beautifully customized gift sets, crafted to honour employees, clients, partners, and loved ones with the timeless elegance of Ahmed Al Maghribi Perfumes.",
+        desc2Ar: "مغلفة بألوان علم الإمارات الزاهية الأحمر والأخضر والأبيض والأسود، تحتفل مجموعة اليوم الوطني من أحمد المغربي بروح أمة بُنيت على الوحدة والرؤية والتميز. احتفل بهذه المناسبة مع أطقم هدايا مخصصة بشكل جميل، صُممت لتكريم الموظفين والعملاء والشركاء والأحباء بالأناقة الخالدة لعطور أحمد المغربي.",
+        poemEn: "A lasting fragrance, a nation's pride,\nWith hope and dreams forever our guide.\nIn every bottle, a story unfolds,\nOf treasured memories more precious than gold.",
+        poemAr: "عطر يدوم، فخر أمة،\nمع الأمل والأحلام دليلنا الدائم.\nفي كل زجاجة، تتكشف قصة،\nعن ذكريات غالية أثمن من الذهب.",
+        image: "/assets/Corporate Gift Sets/national.jpeg",
+        bg: "#FAF8F5",
     },
 ];
 
@@ -86,16 +99,16 @@ const CorporateCollections = () => {
         >
             {/* Section Header */}
             <Container maxWidth="xl">
-                <Box sx={{ textAlign: "center", pt: { xs: 10, md: 16 }, pb: { xs: 8, md: 12 } }}>
+                <Box sx={{ textAlign: "center", pt: { xs: 8, sm: 10, md: 16 }, pb: { xs: 6, sm: 8, md: 12 } }}>
                     <Typography
                         variant="overline"
                         sx={{
                             color: "#A88132",
                             letterSpacing: "0.2em",
                             fontWeight: 500,
-                            fontSize: "0.75rem",
+                            fontSize: { xs: "0.7rem", md: "0.75rem" },
                             display: "block",
-                            mb: 2,
+                            mb: 1.5,
                             fontFamily: "'Montserrat', sans-serif",
                         }}
                     >
@@ -105,10 +118,10 @@ const CorporateCollections = () => {
                         variant="h2"
                         sx={{
                             color: "#1A1A1A",
-                            fontSize: { xs: "2.5rem", md: "3.5rem" },
+                            fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3.5rem" },
                             fontWeight: 400,
                             fontFamily: "'Playfair Display', serif",
-                            mb: 3,
+                            mb: 2.5,
                         }}
                     >
                         {isRtl ? "مجموعاتنا المخصصة" : "Our Bespoke Collections"}
@@ -116,10 +129,10 @@ const CorporateCollections = () => {
                     <Box sx={{ width: "40px", height: "2px", backgroundColor: "#A88132", mx: "auto", mb: 2 }} />
                     <Typography sx={{
                         color: "#999999",
-                        fontSize: "0.85rem",
+                        fontSize: { xs: "0.78rem", md: "0.85rem" },
                         fontFamily: "'Montserrat', sans-serif",
                         fontWeight: 400,
-                        mt: 2,
+                        mt: 1.5,
                         letterSpacing: "0.05em",
                     }}>
                         {isRtl ? "تمرير للأسفل لاستكشاف المجموعات" : "Scroll to explore each collection"}
@@ -134,32 +147,36 @@ const CorporateCollections = () => {
                         key={item.id}
                         sx={{
                             position: "sticky",
-                            top: `${STACK_TOP_BASE + index * STACK_OFFSET}px`,
+                            top: {
+                                xs: `${55 + index * 8}px`,
+                                sm: `${70 + index * 12}px`,
+                                md: `${STACK_TOP_BASE + index * STACK_OFFSET}px`,
+                            },
                             zIndex: index + 1,
-                            mb: index < collections.length - 1 ? { xs: 4, md: 6 } : 0,
+                            mb: index < collections.length - 1 ? { xs: 3, sm: 4, md: 6 } : 0,
                         }}
                     >
-                        <Container maxWidth="xl">
+                        <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
                             {/* Card */}
                             <Box
                                 sx={{
                                     backgroundColor: item.bg,
-                                    borderRadius: "20px",
+                                    borderRadius: { xs: "16px", sm: "20px", md: "24px" },
                                     overflow: "hidden",
-                                    boxShadow: `0 ${8 + index * 3}px ${40 + index * 20}px rgba(0,0,0,${0.05 + index * 0.015})`,
+                                    boxShadow: `0 ${6 + index * 2}px ${30 + index * 15}px rgba(0,0,0,${0.04 + index * 0.01})`,
                                     display: "flex",
                                     flexDirection: { xs: "column", md: "row" },
-                                    minHeight: { xs: "auto", md: "70vh" },
-                                    border: "1px solid rgba(0,0,0,0.04)",
+                                    minHeight: { xs: "auto", md: "65vh", lg: "70vh" },
+                                    border: "1px solid rgba(0,0,0,0.05)",
                                 }}
                             >
                                 {/* Image */}
                                 <Box
                                     sx={{
                                         width: { xs: "100%", md: "45%" },
-                                        order: { xs: 0, md: 0 },
                                         position: "relative",
-                                        minHeight: { xs: "260px", md: "auto" },
+                                        minHeight: { xs: "200px", sm: "260px", md: "auto" },
+                                        height: { xs: "220px", sm: "280px", md: "auto" },
                                         flexShrink: 0,
                                     }}
                                 >
@@ -167,25 +184,26 @@ const CorporateCollections = () => {
                                         src={item.image}
                                         alt={isRtl ? item.titleAr : item.titleEn}
                                         fill
-                                        style={{ objectFit: "cover" }}
+                                        style={{ objectFit: "cover", objectPosition: "center" }}
                                         sizes="(max-width: 900px) 100vw, 45vw"
                                     />
                                     {/* Counter badge */}
                                     <Box sx={{
                                         position: "absolute",
-                                        top: 24,
-                                        left: 24,
-                                        backgroundColor: "rgba(255,255,255,0.92)",
+                                        top: { xs: 14, md: 24 },
+                                        [isRtl ? "right" : "left"]: { xs: 14, md: 24 },
+                                        backgroundColor: "rgba(255,255,255,0.94)",
                                         backdropFilter: "blur(10px)",
-                                        px: 2,
-                                        py: 0.8,
+                                        px: { xs: 1.5, md: 2 },
+                                        py: { xs: 0.5, md: 0.8 },
                                         borderRadius: "30px",
+                                        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                                     }}>
                                         <Typography sx={{
                                             color: "#A88132",
                                             fontFamily: "'Playfair Display', serif",
-                                            fontSize: "0.85rem",
-                                            fontWeight: 400,
+                                            fontSize: { xs: "0.75rem", md: "0.85rem" },
+                                            fontWeight: 500,
                                         }}>
                                             {String(index + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}
                                         </Typography>
@@ -196,11 +214,10 @@ const CorporateCollections = () => {
                                 <Box
                                     sx={{
                                         flex: 1,
-                                        p: { xs: 4, md: 7, lg: 9 },
+                                        p: { xs: 3, sm: 5, md: 7, lg: 9 },
                                         display: "flex",
                                         flexDirection: "column",
                                         justifyContent: "center",
-                                        order: { xs: 1, md: 1 },
                                         textAlign: isRtl ? "right" : "left",
                                     }}
                                 >
@@ -208,21 +225,21 @@ const CorporateCollections = () => {
                                         variant="h3"
                                         sx={{
                                             color: "#1A1A1A",
-                                            fontSize: { xs: "1.8rem", md: "2.5rem" },
+                                            fontSize: { xs: "1.4rem", sm: "1.8rem", md: "2.4rem" },
                                             fontWeight: 400,
                                             fontFamily: "'Playfair Display', serif",
-                                            mb: 4,
-                                            lineHeight: 1.2,
+                                            mb: { xs: 2, md: 3.5 },
+                                            lineHeight: 1.25,
                                         }}
                                     >
                                         {isRtl ? item.titleAr : item.titleEn}
                                     </Typography>
 
-                                    <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, mb: 5 }}>
+                                    <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1.5, md: 2.5 }, mb: { xs: 3, md: 4.5 } }}>
                                         <Typography sx={{
                                             color: "#333333",
-                                            fontSize: { xs: "0.95rem", md: "1.05rem" },
-                                            lineHeight: 1.8,
+                                            fontSize: { xs: "0.88rem", sm: "0.95rem", md: "1.05rem" },
+                                            lineHeight: 1.7,
                                             fontWeight: 400,
                                             fontFamily: "'Montserrat', sans-serif",
                                         }}>
@@ -230,8 +247,8 @@ const CorporateCollections = () => {
                                         </Typography>
                                         <Typography sx={{
                                             color: "#555555",
-                                            fontSize: { xs: "0.9rem", md: "1rem" },
-                                            lineHeight: 1.8,
+                                            fontSize: { xs: "0.84rem", sm: "0.9rem", md: "1rem" },
+                                            lineHeight: 1.7,
                                             fontWeight: 300,
                                             fontFamily: "'Montserrat', sans-serif",
                                         }}>
@@ -241,15 +258,15 @@ const CorporateCollections = () => {
 
                                     {/* Poem */}
                                     <Box sx={{
-                                        pl: isRtl ? 0 : 3,
-                                        pr: isRtl ? 3 : 0,
-                                        borderLeft: isRtl ? "none" : "2px solid rgba(168,129,50,0.3)",
-                                        borderRight: isRtl ? "2px solid rgba(168,129,50,0.3)" : "none",
+                                        pl: isRtl ? 0 : { xs: 2, md: 3 },
+                                        pr: isRtl ? { xs: 2, md: 3 } : 0,
+                                        borderLeft: isRtl ? "none" : "2px solid rgba(168,129,50,0.4)",
+                                        borderRight: isRtl ? "2px solid rgba(168,129,50,0.4)" : "none",
                                     }}>
                                         <Typography sx={{
                                             color: "#2A2A2A",
-                                            fontSize: { xs: "0.95rem", md: "1.05rem" },
-                                            lineHeight: 2,
+                                            fontSize: { xs: "0.85rem", sm: "0.95rem", md: "1.05rem" },
+                                            lineHeight: 1.8,
                                             fontWeight: 400,
                                             fontStyle: "italic",
                                             fontFamily: "'Playfair Display', serif",
@@ -266,7 +283,7 @@ const CorporateCollections = () => {
             </Box>
 
             {/* Bottom padding */}
-            <Box sx={{ height: { xs: "60px", md: "120px" } }} />
+            <Box sx={{ height: { xs: "40px", sm: "60px", md: "120px" } }} />
         </Box>
     );
 };

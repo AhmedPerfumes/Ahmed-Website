@@ -1,5 +1,6 @@
 import CorporateHero from "@/components/corporate/CorporateHero";
 import CorporatePartnersSlider from "@/components/corporate/CorporatePartnersSlider";
+import CorporateMarquee from "@/components/corporate/CorporateMarquee";
 import CorporateGiftSets from "@/components/corporate/CorporateGiftSets";
 import CorporateBranding from "@/components/corporate/CorporateBranding";
 import CorporateProcess from "@/components/corporate/CorporateProcess";
@@ -27,13 +28,13 @@ const CorporateGiftingPage = () => {
             {/* 1. Hero — headline + description + stats */}
             <CorporateHero />
 
-            {/* 2. Partner slider — Amazon, Danube, Emaar, ENBD, Emirates, DIB, DAMAC, ADCB */}
+            {/* 2. Partner slider — Travel, Hajj & Umrah, Bank, Diwali */}
             <CorporatePartnersSlider />
 
-            {/* 3. Gift sets gallery — product photos from Corporate Gift Sets folder */}
-            {/* <CorporateGiftSets /> */}
+            {/* 2.5. Company logos continuous marquee */}
+            <CorporateMarquee />
 
-            {/* 3.5. Dedicated Wedding Section */}
+            {/* 3. Dedicated Wedding Section */}
             <CorporateWedding />
 
             {/* 3.6. Collections — Specialized collections with content */}

@@ -1,11 +1,11 @@
 "use client";
-import { Box, Container, Typography, Grid, Button } from "@mui/material";
-import { motion } from "framer-motion";
+import { Box, Container, Typography, Button } from "@mui/material";
 import { useLocale } from "next-intl";
 import Image from "next/image";
-import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import MosqueIcon from "@mui/icons-material/Mosque";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import CelebrationIcon from "@mui/icons-material/Celebration";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -13,37 +13,50 @@ import "swiper/css/navigation";
 
 const translations = {
     en: {
-        eyebrow: "TRUSTED PARTNERS",
+        eyebrow: "CURATED COLLABORATIONS",
         cta: "Partner With Us",
         slides: [
             {
                 id: "airline",
                 title: "Travel Collection",
-                subtitle: "Luxury Travel Packs for Airlines, Hotels & the Travel Industry. Crafted for airlines, luxury hotels, travel companies, and hospitality partners, the Ahmed Al Maghribi Travel Collection is designed to elevate every voyage with elegance, comfort, and unforgettable aromas.",
+                badge: "For Every Journey",
+                eyebrow: "WHERE JOURNEYS BECOME MEMORIES",
+                subtitle: "Crafted for airlines, luxury hotels, travel companies, and hospitality partners, the Ahmed Al Maghribi Travel Collection is designed to elevate every voyage with elegance, comfort, and unforgettable aromas.",
                 image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
                 icon: <FlightTakeoffIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                partners: [],
-                poem: "Fly with grace, arrive in style,\nCarry a fragrance every mile.\nFrom sky to shore, from dawn till night,\nA scent that makes each journey bright.\n\nPack the aroma, carry the cheer,\nCreating memories far and near.\nWhere every voyage finds its art,\nA lasting fragrance, a lasting heart."
+                poem: "Fly with grace, arrive in style — carry a fragrance every mile. From sky to shore, from dawn till night, a scent that makes each journey bright.",
             },
             {
-                id: "airline",
-                title: "Travel Collection",
-                subtitle: "Luxury Travel Packs for Airlines, Hotels & the Travel Industry. Crafted for airlines, luxury hotels, travel companies, and hospitality partners, the Ahmed Al Maghribi Travel Collection is designed to elevate every voyage with elegance, comfort, and unforgettable aromas.",
-                image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
-                icon: <FlightTakeoffIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                partners: [],
-                poem: "Fly with grace, arrive in style,\nCarry a fragrance every mile.\nFrom sky to shore, from dawn till night,\nA scent that makes each journey bright.\n\nPack the aroma, carry the cheer,\nCreating memories far and near.\nWhere every voyage finds its art,\nA lasting fragrance, a lasting heart."
+                id: "hajj-umrah",
+                title: "Hajj & Umrah Collection",
+                badge: "For your Sacred Journey",
+                eyebrow: "WHERE FAITH MEETS GRACE",
+                subtitle: "A Journey of Faith. A Gift of Blessings. Featuring our signature perfumes and premium attars, elegantly presented in bespoke gift boxes — a meaningful keepsake for pilgrims, loved ones, and guests.",
+                image: "/assets/Corporate Gift Sets/corporate gift set beige color.jpg.jpeg",
+                icon: <MosqueIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
+                poem: "From Makkah's light to Madinah's grace, may peace and mercy your heart embrace. With every aroma, memories remain — a sacred journey lived again.",
+            },
+            {
+                id: "bank",
+                title: "Bank Collection",
+                badge: "For Valued Partnerships",
+                eyebrow: "WHERE TRUST BUILDS LEGACY",
+                subtitle: "Prestige gifting for the financial sector. Curated for banks, investment firms, and financial institutions, each set is a statement of distinction — perfectly crafted to honour clients, partners, and leadership.",
+                image: "/assets/Corporate Gift Sets/corporate gift set black square 01.jpg.jpeg",
+                icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
+                poem: "Where trust is built and legacies grow, a fragrance speaks what words cannot show. A gift of prestige, a bond of gold — a story of excellence yet to be told.",
             },
             {
                 id: "diwali",
                 title: "Diwali Collection",
-                subtitle: "Illuminate Every Bond with the Essence of Diwali. As countless lamps brighten every home, may every fragrance awaken joy, prosperity, and togetherness. This Diwali, celebrate the festival of lights with the timeless elegance of Ahmed Al Maghribi Perfumes. Our luxurious fragrance collections are thoughtfully curated to express gratitude, strengthen relationships, and create unforgettable moments with clients, employees, family, and friends. Each exquisite perfume is a symbol of warmth, success, and new beginnings—wrapped in festive elegance and crafted to leave a lasting impression long after the celebrations have ended.",
-                image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
-                icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                partners: [],
-                poem: "This Diwali, gift more than a fragrance—\ngift a blessing, a memory, and an experience that lingers beautifully."
-            }
-        ]
+                badge: "For your Festive Celebration",
+                eyebrow: "WHERE LIGHT INSPIRES JOY",
+                subtitle: "Illuminate Every Bond with the Essence of Diwali. Thoughtfully curated to express gratitude and create unforgettable moments with clients, employees, and friends — each perfume a symbol of warmth and new beginnings.",
+                image: "/assets/Corporate Gift Sets/Diiwali.jpeg",
+                icon: <CelebrationIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
+                poem: "As lamps light the sky and hearts glow bright, may this fragrance carry Diwali's light. A gift of joy, a memory divine — where every bond and blessing intertwine.",
+            },
+        ],
     },
     ar: {
         eyebrow: "شركاء موثوقون",
@@ -51,33 +64,46 @@ const translations = {
         slides: [
             {
                 id: "airline",
-                title: "مجموعة سفر أحمد المغربي",
-                subtitle: "باقات سفر فاخرة لشركات الطيران والفنادق وقطاع السفر. صُممت مجموعة سفر أحمد المغربي لترتقي بكل رحلة بالأناقة والراحة والعطور التي لا تُنسى.",
+                title: "مجموعة السفر",
+                badge: "لكل رحلة",
+                eyebrow: "حيث تصبح الرحلات ذكريات",
+                subtitle: "صُممت مجموعة سفر أحمد المغربي لشركات الطيران والفنادق الفاخرة وشركاء الضيافة، لترتقي بكل رحلة بالأناقة والراحة والعطور التي لا تُنسى.",
                 image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
                 icon: <FlightTakeoffIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                partners: [],
-                poem: "سافر برقي، وصِل بأناقة،\nاحمل عطراً في كل ميل.\nمن السماء إلى الشاطئ، من الفجر حتى الليل،\nرائحة تجعل كل رحلة مشرقة.\n\nاحزم العطر، احمل البهجة،\nنصنع ذكريات قريبة وبعيدة.\nحيث تجد كل رحلة فنها،\nرائحة تدوم، وقلب يدوم."
+                poem: "سافر برقي وصِل بأناقة — احمل عطراً في كل ميل. من السماء إلى الشاطئ، من الفجر حتى الليل، رائحة تجعل كل رحلة مشرقة.",
             },
             {
-                id: "national-day",
-                title: "مجموعة اليوم الوطني الإماراتي الخاصة",
-                subtitle: "هدية الفخر. عطر الوحدة. مغلفة بألوان علم الإمارات الزاهية الأحمر والأخضر والأبيض والأسود، تحتفل مجموعة اليوم الوطني من أحمد المغربي بروح أمة بُنيت على الوحدة والرؤية والتميز. احتفل بهذه المناسبة مع أطقم هدايا مخصصة بشكل جميل، صُممت لتكريم الموظفين والعملاء والشركاء والأحباء بالأناقة الخالدة لعطور أحمد المغربي.",
-                image: "/assets/Corporate Gift Sets/national.jpeg",
-                icon: <BusinessCenterIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                partners: [],
-                poem: "عطر يدوم، فخر أمة،\nمع الأمل والأحلام دليلنا الدائم.\nفي كل زجاجة، تتكشف قصة،\nعن ذكريات غالية أثمن من الذهب."
+                id: "hajj-umrah",
+                title: "مجموعة الحج والعمرة",
+                badge: "لرحلتك المقدسة",
+                eyebrow: "حيث يلتقي الإيمان بالرقي",
+                subtitle: "رحلة الإيمان. هدية البركات. تضم عطورنا المميزة والأدهان الفاخرة، معروضة بأناقة في صناديق هدايا مخصصة — تذكار قيم للحجاج والأحباء والضيوف.",
+                image: "/assets/Corporate Gift Sets/corporate gift set beige color.jpg.jpeg",
+                icon: <MosqueIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
+                poem: "من نور مكة إلى فضل المدينة، عسى أن يغمر السلام والرحمة قلبك. مع كل عطر تبقى الذكريات — رحلة مقدسة تعاش من جديد.",
+            },
+            {
+                id: "bank",
+                title: "مجموعة البنوك",
+                badge: "للشراكات القيمة",
+                eyebrow: "حيث تبني الثقة الإرث",
+                subtitle: "هدايا راقية للقطاع المالي. منسقة للبنوك وشركات الاستثمار والمؤسسات المالية، كل طقم تعبير عن التميز — مصمم لتكريم العملاء والشركاء والقيادات.",
+                image: "/assets/Corporate Gift Sets/corporate gift set black square 01.jpg.jpeg",
+                icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
+                poem: "حيث يُبنى الثقة وتنمو الإرث، يتحدث عطر بما لا تستطيع الكلمات التعبير عنه. هدية من الرقي، وعهد من الذهب — قصة تميز لم تُكتب بعد.",
             },
             {
                 id: "diwali",
-                title: "مجموعة عطور ديوالي",
-                subtitle: "أضئ كل رابط بجوهر ديوالي. كما تضيء المصابيح التي لا تعد ولا تحصى كل منزل، نتمنى أن يوقظ كل عطر الفرح والازدهار والعمل الجماعي. احتفل بمهرجان الأضواء في ديوالي مع الأناقة الخالدة لعطور أحمد المغربي. مجموعات العطور الفاخرة لدينا منسقة بعناية للتعبير عن الامتنان وتعزيز العلاقات وخلق لحظات لا تُنسى مع العملاء والموظفين والعائلة والأصدقاء. كل عطر رائع هو رمز للدفء والنجاح والبدايات الجديدة - مغلف بأناقة احتفالية ومصمم ليترك انطباعاً يدوم طويلاً بعد انتهاء الاحتفالات.",
+                title: "مجموعة ديوالي",
+                badge: "لاحتفالاتك المبهجة",
+                eyebrow: "حيث يلهم النور الفرح",
+                subtitle: "أضئ كل رابط بجوهر ديوالي. منسقة بعناية للتعبير عن الامتنان وخلق لحظات لا تُنسى مع العملاء والموظفين والأصدقاء — كل عطر رمز للدفء والبدايات الجديدة.",
                 image: "/assets/Corporate Gift Sets/Diwali.jpeg",
-                icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                partners: [],
-                poem: "في ديوالي هذا، أهدِ أكثر من مجرد عطر -\nأهدِ بركة وذكرى وتجربة تدوم بجمال."
-            }
-        ]
-    }
+                icon: <CelebrationIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
+                poem: "كما تضيء المصابيح السماء وتتوهج القلوب، فليحمل هذا العطر نور ديوالي. هدية من الفرح وذكرى إلهية — حيث تتشابك كل الروابط والبركات.",
+            },
+        ],
+    },
 };
 
 const CorporatePartnersSlider = () => {
@@ -86,10 +112,8 @@ const CorporatePartnersSlider = () => {
     const t = translations[locale] || translations.en;
 
     const handleScroll = () => {
-        const contactSection = document.getElementById("corporate-inquiry");
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: "smooth" });
-        }
+        const el = document.getElementById("corporate-inquiry");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
     };
 
     return (
@@ -98,214 +122,281 @@ const CorporatePartnersSlider = () => {
             dir={isRtl ? "rtl" : "ltr"}
             sx={{
                 py: { xs: 8, md: 14 },
-                backgroundColor: "#FAF8F5", // Slight contrast from pure white sections
+                backgroundColor: "#FAF8F5",
                 position: "relative",
-                overflow: "hidden",
             }}
         >
+            {/* ── Section Header ── */}
             <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-
-                {/* Section Header */}
                 <Box sx={{ textAlign: "center", mb: { xs: 6, md: 10 } }}>
-                    <Typography variant="overline" sx={{ color: "#A88132", letterSpacing: "0.2em", fontWeight: 500, fontSize: "0.75rem", display: "block", mb: 2, fontFamily: "'Montserrat', sans-serif" }}>
+                    <Typography
+                        variant="overline"
+                        sx={{
+                            color: "#A88132",
+                            letterSpacing: "0.2em",
+                            fontWeight: 500,
+                            fontSize: "0.75rem",
+                            display: "block",
+                            mb: 2,
+                            fontFamily: "'Montserrat', sans-serif",
+                        }}
+                    >
                         {t.eyebrow}
                     </Typography>
-                    <Typography variant="h2" sx={{ color: "#1A1A1A", fontSize: { xs: "2rem", md: "3rem" }, fontWeight: 400, fontFamily: "'Playfair Display', serif", mb: 2 }}>
-                        {isRtl ? "مجموعات الشركاء" : "Partner Collections"}
+                    <Typography
+                        variant="h2"
+                        sx={{
+                            color: "#1A1A1A",
+                            fontSize: { xs: "2rem", md: "3rem" },
+                            fontWeight: 400,
+                            fontFamily: "'Playfair Display', serif",
+                            mb: 2,
+                        }}
+                    >
+                        {isRtl ? "مجموعات الشركاء" : "Signature Partner Collections"}
                     </Typography>
                     <Box sx={{ width: "40px", height: "2px", backgroundColor: "#A88132", mx: "auto" }} />
                 </Box>
+            </Container>
 
-                <Box sx={{
-                    borderRadius: "20px",
-                    overflow: "hidden",
-                    backgroundColor: "#FFFFFF",
-                    boxShadow: "0 20px 60px rgba(0,0,0,0.04)",
-                    position: "relative",
-                    "& .swiper-button-next, & .swiper-button-prev": {
-                        color: "#FFFFFF",
-                        width: "50px",
-                        height: "50px",
-                        backgroundColor: "#A88132",
-                        borderRadius: "50%",
-                        boxShadow: "0 8px 25px rgba(168,129,50,0.4)",
-                        transition: "all 0.3s ease",
-                        "&::after": {
-                            fontSize: "1.2rem",
-                            fontWeight: 900
+            {/* ── Slider Card ── */}
+            <Box sx={{ px: { xs: 1.5, sm: 3, md: 4 }, maxWidth: "1440px", mx: "auto", width: "100%" }}>
+                <Box
+                    sx={{
+                        borderRadius: { xs: "16px", sm: "20px", md: "24px" },
+                        overflow: "hidden",
+                        backgroundColor: "#FFFFFF",
+                        boxShadow: "0 24px 80px rgba(0,0,0,0.08)",
+                        position: "relative",
+                        /* Swiper nav buttons */
+                        "& .swiper-button-next, & .swiper-button-prev": {
+                            color: "#FFFFFF",
+                            width: { xs: "36px", md: "44px" },
+                            height: { xs: "36px", md: "44px" },
+                            backgroundColor: "rgba(168,129,50,0.9)",
+                            borderRadius: "50%",
+                            boxShadow: "0 6px 20px rgba(168,129,50,0.35)",
+                            transition: "all 0.3s ease",
+                            zIndex: 10,
+                            "&::after": { fontSize: { xs: "0.85rem", md: "1rem" }, fontWeight: 900 },
+                            "&:hover": { backgroundColor: "#8C6A29", transform: "scale(1.1)" },
                         },
-                        "&:hover": {
-                            backgroundColor: "#8C6A29",
-                            transform: "scale(1.1)",
-                        }
-                    },
-                    "& .swiper-button-next": {
-                        right: { xs: "10px", md: "24px" }
-                    },
-                    "& .swiper-button-prev": {
-                        left: { xs: "10px", md: "24px" }
-                    }
-                }}>
+                        "& .swiper-button-next": { right: { xs: "8px", sm: "14px", md: "20px" } },
+                        "& .swiper-button-prev": { left: { xs: "8px", sm: "14px", md: "20px" } },
+                        "& .swiper-slide": { padding: 0, margin: 0 },
+                    }}
+                >
                     <Swiper
                         modules={[Autoplay, Navigation]}
-                        navigation={true}
-                        speed={1000}
+                        navigation
+                        speed={900}
                         spaceBetween={0}
-                        autoplay={{
-                            delay: 4000,
-                            disableOnInteraction: false,
-                        }}
-                        loop={true}
+                        autoplay={{ delay: 5000, disableOnInteraction: false }}
+                        loop
                         dir={isRtl ? "rtl" : "ltr"}
                         key={isRtl ? "rtl" : "ltr"}
                         style={{ width: "100%" }}
                     >
                         {t.slides.map((slide, index) => (
-                            <SwiperSlide key={index}>
-                                <Grid container>
-
-                                    {/* Image Column */}
-                                    <Grid item xs={12} md={6}>
+                            <SwiperSlide key={slide.id}>
+                                {/* ── Two-column flex layout ── */}
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: { xs: "column", md: "row" },
+                                        alignItems: "stretch",
+                                        minHeight: { xs: "auto", md: "560px" },
+                                    }}
+                                >
+                                    {/* ── Image ── */}
+                                    <Box
+                                        sx={{
+                                            position: "relative",
+                                            width: { xs: "100%", md: "48%" },
+                                            minHeight: { xs: "240px", sm: "320px", md: "560px" },
+                                            height: { xs: "250px", sm: "340px", md: "auto" },
+                                            flexShrink: 0,
+                                            alignSelf: "stretch",
+                                        }}
+                                    >
+                                        <Image
+                                            src={slide.image}
+                                            alt={slide.title}
+                                            fill
+                                            style={{ objectFit: "cover", objectPosition: "center" }}
+                                            sizes="(max-width: 900px) 100vw, 48vw"
+                                            priority={index === 0}
+                                        />
+                                        {/* Badge */}
                                         <Box
                                             sx={{
-                                                position: "relative",
-                                                height: "100%",
-                                                minHeight: { xs: "350px", md: "600px" },
-                                                "&::before": {
-                                                    content: '""',
-                                                    position: "absolute",
-                                                    top: 0, left: 0, right: 0, bottom: 0,
-                                                    backgroundColor: "rgba(0,0,0,0.03)",
-                                                    zIndex: 1,
-                                                }
+                                                position: "absolute",
+                                                top: { xs: 16, md: 24 },
+                                                [isRtl ? "right" : "left"]: { xs: 16, md: 24 },
+                                                backgroundColor: "rgba(255,255,255,0.96)",
+                                                backdropFilter: "blur(12px)",
+                                                px: { xs: 2, md: 2.5 },
+                                                py: { xs: 0.8, md: 1.2 },
+                                                borderRadius: "30px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: 1,
+                                                boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
+                                                zIndex: 2,
                                             }}
                                         >
-                                            <Image
-                                                src={slide.image}
-                                                alt={slide.title}
-                                                fill
-                                                style={{ objectFit: "cover" }}
-                                                sizes="(max-width: 900px) 100vw, 50vw"
-                                                priority={index === 0}
-                                            />
-
-                                            {/* Floating Badge */}
-                                            <Box sx={{
-                                                position: "absolute",
-                                                top: 30,
-                                                [isRtl ? "right" : "left"]: 30,
-                                                backgroundColor: "rgba(255,255,255,0.95)",
-                                                backdropFilter: "blur(10px)",
-                                                px: 2.5, py: 1.5,
-                                                borderRadius: "30px",
-                                                display: "flex", alignItems: "center", gap: 1.5,
-                                                boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-                                                zIndex: 2,
-                                            }}>
-                                                {slide.icon}
-                                                <Typography sx={{ color: "#1A1A1A", fontWeight: 600, fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif", mt: "2px" }}>
-                                                    {slide.title}
-                                                </Typography>
-                                            </Box>
+                                            {slide.icon}
+                                            <Typography
+                                                sx={{
+                                                    color: "#1A1A1A",
+                                                    fontWeight: 600,
+                                                    fontSize: { xs: "0.68rem", md: "0.72rem" },
+                                                    textTransform: "uppercase",
+                                                    letterSpacing: "0.1em",
+                                                    fontFamily: "'Montserrat', sans-serif",
+                                                    lineHeight: 1,
+                                                }}
+                                            >
+                                                {slide.badge || slide.title}
+                                            </Typography>
                                         </Box>
-                                    </Grid>
 
-                                    {/* Text Column */}
-                                    <Grid item xs={12} md={6}>
-                                        <Box sx={{
-                                            p: { xs: 4, md: 8, lg: 10 },
+                                        {/* Slide counter */}
+                                        <Box
+                                            sx={{
+                                                position: "absolute",
+                                                bottom: { xs: 16, md: 24 },
+                                                [isRtl ? "left" : "right"]: { xs: 16, md: 24 },
+                                                backgroundColor: "rgba(168,129,50,0.9)",
+                                                px: 1.6,
+                                                py: 0.5,
+                                                borderRadius: "20px",
+                                                zIndex: 2,
+                                            }}
+                                        >
+                                            <Typography sx={{ color: "#FFFFFF", fontSize: { xs: "0.68rem", md: "0.72rem" }, fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}>
+                                                {String(index + 1).padStart(2, "0")} / {String(t.slides.length).padStart(2, "0")}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+
+                                    {/* ── Text ── */}
+                                    <Box
+                                        sx={{
+                                            flex: 1,
                                             display: "flex",
                                             flexDirection: "column",
                                             justifyContent: "center",
-                                            height: "100%"
-                                        }}>
-                                            <Typography variant="overline" sx={{ color: "#A88132", letterSpacing: "0.2em", fontWeight: 500, fontSize: "0.75rem", display: "block", mb: 2, fontFamily: "'Montserrat', sans-serif" }}>
-                                                {t.eyebrow}
-                                            </Typography>
+                                            p: { xs: 3, sm: 5, md: 7, lg: 9 },
+                                            textAlign: isRtl ? "right" : "left",
+                                        }}
+                                    >
+                                        {/* Eyebrow */}
+                                        <Typography
+                                            variant="overline"
+                                            sx={{
+                                                color: "#A88132",
+                                                letterSpacing: "0.2em",
+                                                fontWeight: 500,
+                                                fontSize: { xs: "0.68rem", md: "0.72rem" },
+                                                display: "block",
+                                                mb: 1.5,
+                                                fontFamily: "'Montserrat', sans-serif",
+                                            }}
+                                        >
+                                            {slide.eyebrow || t.eyebrow}
+                                        </Typography>
 
-                                            <Typography variant="h2" sx={{ color: "#1A1A1A", fontSize: { xs: "2.2rem", md: "3.2rem" }, fontWeight: 400, fontFamily: "'Playfair Display', serif", mb: 3, lineHeight: 1.15 }}>
-                                                {slide.title}
-                                            </Typography>
+                                        {/* Title */}
+                                        <Typography
+                                            variant="h2"
+                                            sx={{
+                                                color: "#1A1A1A",
+                                                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.8rem" },
+                                                fontWeight: 400,
+                                                fontFamily: "'Playfair Display', serif",
+                                                mb: { xs: 2, md: 3 },
+                                                lineHeight: 1.2,
+                                            }}
+                                        >
+                                            {slide.title}
+                                        </Typography>
 
-                                            <Typography sx={{ color: "#4A4A4A", fontSize: { xs: "0.95rem", md: "1.05rem" }, lineHeight: 1.8, fontWeight: 300, mb: 5, fontFamily: "'Montserrat', sans-serif" }}>
-                                                {slide.subtitle}
-                                            </Typography>
+                                        {/* Subtitle */}
+                                        <Typography
+                                            sx={{
+                                                color: "#4A4A4A",
+                                                fontSize: { xs: "0.85rem", sm: "0.95rem", md: "1rem" },
+                                                lineHeight: 1.75,
+                                                fontWeight: 300,
+                                                mb: { xs: 2.5, md: 4 },
+                                                fontFamily: "'Montserrat', sans-serif",
+                                            }}
+                                        >
+                                            {slide.subtitle}
+                                        </Typography>
 
-                                            {slide.poem && (
-                                                <Box sx={{
-                                                    mb: 6,
-                                                    pl: isRtl ? 0 : 3,
-                                                    pr: isRtl ? 3 : 0,
+                                        {/* Poem — single paragraph, gold left border */}
+                                        {slide.poem && (
+                                            <Box
+                                                sx={{
+                                                    mb: { xs: 3.5, md: 5 },
+                                                    pl: isRtl ? 0 : { xs: 2, md: 3 },
+                                                    pr: isRtl ? { xs: 2, md: 3 } : 0,
                                                     borderLeft: isRtl ? "none" : "3px solid #A88132",
-                                                    borderRight: isRtl ? "3px solid #A88132" : "none"
-                                                }}>
-                                                    <Typography sx={{
-                                                        color: "#1A1A1A",
-                                                        fontSize: { xs: "0.95rem", md: "1.05rem" },
+                                                    borderRight: isRtl ? "3px solid #A88132" : "none",
+                                                }}
+                                            >
+                                                <Typography
+                                                    sx={{
+                                                        color: "#2A2A2A",
+                                                        fontSize: { xs: "0.85rem", sm: "0.95rem", md: "1rem" },
                                                         lineHeight: 1.8,
                                                         fontWeight: 400,
                                                         fontStyle: "italic",
                                                         fontFamily: "'Playfair Display', serif",
-                                                        whiteSpace: "pre-line"
-                                                    }}>
-                                                        {slide.poem}
-                                                    </Typography>
-                                                </Box>
-                                            )}
-
-                                            {slide.partners && slide.partners.length > 0 && (
-                                                <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, mb: 6 }}>
-                                                    {slide.partners.map((partner, idx) => (
-                                                        <Box key={idx} sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                                                            <Box sx={{
-                                                                width: "24px", height: "24px",
-                                                                borderRadius: "50%",
-                                                                backgroundColor: "rgba(168,129,50,0.1)",
-                                                                display: "flex", alignItems: "center", justifyContent: "center",
-                                                                flexShrink: 0
-                                                            }}>
-                                                                <Box sx={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#A88132" }} />
-                                                            </Box>
-                                                            <Typography sx={{ color: "#1A1A1A", fontWeight: 500, fontSize: "1rem", fontFamily: "'Montserrat', sans-serif" }}>
-                                                                {partner}
-                                                            </Typography>
-                                                        </Box>
-                                                    ))}
-                                                </Box>
-                                            )}
-
-                                            <Box>
-                                                <Button
-                                                    onClick={handleScroll}
-                                                    sx={{
-                                                        backgroundColor: "#A88132",
-                                                        color: "#FFFFFF",
-                                                        py: 1.8,
-                                                        px: 4,
-                                                        fontSize: "0.85rem",
-                                                        fontWeight: 600,
-                                                        borderRadius: "50px",
-                                                        textTransform: "uppercase",
-                                                        letterSpacing: "0.15em",
-                                                        fontFamily: "'Montserrat', sans-serif",
-                                                        transition: "all 0.3s ease",
-                                                        "&:hover": {
-                                                            backgroundColor: "#8C6A29",
-                                                        },
                                                     }}
                                                 >
-                                                    {t.cta}
-                                                </Button>
+                                                    {slide.poem}
+                                                </Typography>
                                             </Box>
-                                        </Box>
-                                    </Grid>
+                                        )}
 
-                                </Grid>
+                                        {/* CTA */}
+                                        <Box>
+                                            <Button
+                                                onClick={handleScroll}
+                                                sx={{
+                                                    backgroundColor: "#A88132",
+                                                    color: "#FFFFFF",
+                                                    py: { xs: 1.4, md: 1.6 },
+                                                    px: { xs: 3, md: 4 },
+                                                    fontSize: { xs: "0.78rem", md: "0.8rem" },
+                                                    fontWeight: 600,
+                                                    borderRadius: "50px",
+                                                    textTransform: "uppercase",
+                                                    letterSpacing: "0.15em",
+                                                    fontFamily: "'Montserrat', sans-serif",
+                                                    boxShadow: "0 8px 24px rgba(168,129,50,0.3)",
+                                                    width: { xs: "100%", sm: "auto" },
+                                                    transition: "all 0.3s ease",
+                                                    "&:hover": {
+                                                        backgroundColor: "#8C6A29",
+                                                        transform: "translateY(-2px)",
+                                                        boxShadow: "0 12px 32px rgba(168,129,50,0.4)",
+                                                    },
+                                                }}
+                                            >
+                                                {t.cta}
+                                            </Button>
+                                        </Box>
+                                    </Box>
+                                </Box>
                             </SwiperSlide>
                         ))}
                     </Swiper>
                 </Box>
-            </Container>
+            </Box>
         </Box>
     );
 };

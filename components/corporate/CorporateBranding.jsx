@@ -2,7 +2,6 @@
 import { Box, Container, Typography, Grid } from "@mui/material";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
-import Image from "next/image";
 
 const translations = {
     en: {
@@ -22,16 +21,16 @@ const translations = {
             eyebrow: "GIFTING SOLUTIONS & OCCASIONS",
             title: "The Right Gift for Every Moment",
             solutions: [
-                "Corporate gift sets & Executive gifts",
-                "Employee welcome kits",
-                "Event & conference giveaways",
-                "Government & institutional gifts",
+                "Corporate Gift Sets & Executive Gifts",
+                "Employee Welcome & Appreciation Kits",
+                "Event & Conference Giveaways",
+                "Government & Institutional Gifts",
             ],
-            occasions: [
+            occasionsList: [
                 "Ramadan, Eid Al Fitr & Eid Al Adha",
-                "UAE National Day",
-                "Teacher's Day & Children's Day",
-                "Women's Day, Mother's Day & Father's Day",
+                "Christmas & Festive Holidays",
+                "Annual Corporate Events",
+                "Graduations & Milestones",
             ],
         },
     },
@@ -53,15 +52,15 @@ const translations = {
             title: "الهدية المناسبة لكل لحظة",
             solutions: [
                 "أطقم هدايا مؤسسية وتنفيذية",
-                "أطقم ترحيب بالموظفين",
+                "أطقم ترحيب وتقدير الموظفين",
                 "هدايا المؤتمرات والفعاليات",
                 "هدايا حكومية ومؤسسية",
             ],
-            occasions: [
-                "رمضان وعيد الفطر والأضحى",
-                "اليوم الوطني الإماراتي",
-                "يوم المعلم ويوم الطفل",
-                "يوم المرأة ويوم الأم ويوم الأب",
+            occasionsList: [
+                "رمضان وعيد الفطر وعيد الأضحى",
+                "عيد الميلاد والمواسم الاحتفالية",
+                "الفعاليات والمؤتمرات السنوية",
+                "حفلات التخرج والإنجازات",
             ],
         },
     },
@@ -73,137 +72,132 @@ const CorporateBranding = () => {
     const t = translations[locale] || translations.en;
 
     return (
-        <>
-            {/* ══════ OCCASIONS & SOLUTIONS (Editorial Tag Style) ══════ */}
-            <Box
-                component="section"
-                id="gifting-solutions"
-                dir={isRtl ? "rtl" : "ltr"}
-                sx={{
-                    py: { xs: 10, md: 18 },
-                    backgroundColor: "#FAF8F5",
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-            >
-                <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-                    <Grid container spacing={{ xs: 8, md: 14 }} alignItems="center">
-                        {/* Image Content */}
-                        <Grid item xs={12} md={6} sx={{ order: { xs: 1, md: 1 } }}>
-                            <motion.div
-                                initial={{ opacity: 0, x: isRtl ? 40 : -40 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        <Box
+            component="section"
+            id="gifting-solutions"
+            dir={isRtl ? "rtl" : "ltr"}
+            sx={{
+                py: { xs: 8, sm: 10, md: 16 },
+                backgroundColor: "#FAF8F5",
+                position: "relative",
+            }}
+        >
+            <Container maxWidth="xl">
+                {/* ── Section Header ── */}
+                <Box sx={{ textAlign: "center", mb: { xs: 6, md: 10 } }}>
+                    <Typography
+                        variant="overline"
+                        sx={{
+                            color: "#A88132",
+                            letterSpacing: "0.25em",
+                            fontWeight: 500,
+                            fontSize: { xs: "0.7rem", md: "0.78rem" },
+                            display: "block",
+                            mb: 2,
+                            fontFamily: "'Montserrat', sans-serif",
+                        }}
+                    >
+                        {t.occasions.eyebrow}
+                    </Typography>
+                    <Typography
+                        variant="h2"
+                        sx={{
+                            color: "#1A1A1A",
+                            fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3.5rem" },
+                            fontWeight: 400,
+                            fontFamily: "'Playfair Display', serif",
+                            mb: 2.5,
+                            lineHeight: 1.2,
+                        }}
+                    >
+                        {t.occasions.title}
+                    </Typography>
+                    <Box sx={{ width: "40px", height: "2px", backgroundColor: "#A88132", mx: "auto" }} />
+                </Box>
+
+                {/* ── Two-Column Premium Cards Layout (Symmetrical 2x2 Grid on Both Sides) ── */}
+                <Grid container spacing={{ xs: 3, md: 5 }} alignItems="stretch">
+
+                    {/* Left Column: Gifting Solutions */}
+                    <Grid item xs={12} md={6}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 25 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7 }}
+                            style={{ height: "100%" }}
+                        >
+                            <Box
+                                sx={{
+                                    backgroundColor: "#FFFFFF",
+                                    borderRadius: { xs: "16px", md: "24px" },
+                                    p: { xs: 3.5, sm: 5, md: 6 },
+                                    height: "100%",
+                                    boxShadow: "0 16px 45px rgba(0,0,0,0.03)",
+                                    border: "1px solid rgba(168,129,50,0.14)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                }}
                             >
-                                <Box
-                                    sx={{
-                                        position: "relative",
-                                        borderRadius: "4px",
-                                        overflow: "hidden",
-                                        boxShadow: "0 30px 70px rgba(0,0,0,0.07)",
-                                        "&::before": {
-                                            content: '""',
-                                            display: "block",
-                                            paddingTop: "125%",
-                                        }
-                                    }}
-                                >
-                                    <Image
-                                        src="/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg"
-                                        alt="Corporate Occasions"
-                                        fill
-                                        style={{ objectFit: "cover" }}
-                                        sizes="(max-width: 900px) 100vw, 50vw"
-                                    />
-                                </Box>
-                            </motion.div>
-                        </Grid>
-
-                        {/* Text Content */}
-                        <Grid item xs={12} md={6} sx={{ order: { xs: 2, md: 2 } }}>
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, delay: 0.15 }}
-                            >
-                                <Typography
-                                    variant="overline"
-                                    sx={{
-                                        color: "#A88132",
-                                        letterSpacing: "0.25em",
-                                        fontWeight: 500,
-                                        fontSize: "0.72rem",
-                                        display: "block",
-                                        mb: 2,
-                                        fontFamily: "'Montserrat', sans-serif",
-                                    }}
-                                >
-                                    {t.occasions.eyebrow}
-                                </Typography>
-
-                                <Box sx={{ width: "40px", height: "1px", backgroundColor: "#A88132", mb: 3, opacity: 0.6 }} />
-
-                                <Typography
-                                    variant="h2"
-                                    sx={{
-                                        color: "#1A1A1A",
-                                        fontSize: { xs: "2.5rem", md: "3.8rem" },
-                                        fontWeight: 400,
-                                        fontFamily: "'Playfair Display', serif",
-                                        mb: 6,
-                                        lineHeight: 1.15,
-                                        letterSpacing: "0.01em",
-                                    }}
-                                >
-                                    {t.occasions.title}
-                                </Typography>
-
-                                {/* Solutions — Editorial numbered prose */}
-                                <Box sx={{ mb: 6 }}>
-                                    <Typography sx={{
-                                        color: "#A88132",
-                                        fontWeight: 600,
-                                        mb: 3,
-                                        fontSize: "0.72rem",
-                                        textTransform: "uppercase",
-                                        letterSpacing: "0.2em",
-                                        fontFamily: "'Montserrat', sans-serif",
-                                        borderBottom: "1px solid rgba(168,129,50,0.2)",
-                                        pb: 1.5
-                                    }}>
+                                <Box>
+                                    <Typography
+                                        component="div"
+                                        sx={{
+                                            color: "#A88132",
+                                            fontWeight: 600,
+                                            mb: 3.5,
+                                            fontSize: "0.75rem",
+                                            textTransform: "uppercase",
+                                            letterSpacing: "0.2em",
+                                            fontFamily: "'Montserrat', sans-serif",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1.5,
+                                        }}
+                                    >
+                                        <Box sx={{ width: "20px", height: "2px", backgroundColor: "#A88132" }} />
                                         {isRtl ? "حلول الهدايا" : "Gifting Solutions"}
                                     </Typography>
-                                    <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
+
+                                    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" }, gap: 2.5 }}>
                                         {t.occasions.solutions.map((item, i) => (
                                             <Box
                                                 key={i}
                                                 sx={{
-                                                    display: "flex",
-                                                    alignItems: "baseline",
-                                                    gap: 3,
-                                                    py: 2,
-                                                    borderBottom: "1px solid rgba(0,0,0,0.05)",
-                                                    "&:last-child": { borderBottom: "none" }
+                                                    p: { xs: 2.5, md: 3 },
+                                                    borderRadius: "14px",
+                                                    backgroundColor: "#FAF8F5",
+                                                    border: "1px solid rgba(0,0,0,0.04)",
+                                                    transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                                                    "&:hover": {
+                                                        transform: "translateY(-3px)",
+                                                        borderColor: "rgba(168,129,50,0.35)",
+                                                        boxShadow: "0 12px 28px rgba(168,129,50,0.08)",
+                                                        backgroundColor: "#FFFFFF",
+                                                    },
                                                 }}
                                             >
-                                                <Typography sx={{
-                                                    color: "rgba(168,129,50,0.5)",
-                                                    fontFamily: "'Playfair Display', serif",
-                                                    fontSize: "0.85rem",
-                                                    flexShrink: 0,
-                                                    minWidth: "24px"
-                                                }}>
+                                                <Typography
+                                                    sx={{
+                                                        color: "#A88132",
+                                                        fontFamily: "'Playfair Display', serif",
+                                                        fontSize: "1.2rem",
+                                                        fontWeight: 600,
+                                                        mb: 1,
+                                                    }}
+                                                >
                                                     {String(i + 1).padStart(2, "0")}
                                                 </Typography>
-                                                <Typography sx={{
-                                                    color: "#2A2A2A",
-                                                    fontSize: "0.95rem",
-                                                    fontFamily: "'Montserrat', sans-serif",
-                                                    fontWeight: 400,
-                                                    lineHeight: 1.5
-                                                }}>
+                                                <Typography
+                                                    sx={{
+                                                        color: "#1A1A1A",
+                                                        fontSize: { xs: "0.9rem", md: "0.95rem" },
+                                                        fontFamily: "'Montserrat', sans-serif",
+                                                        fontWeight: 500,
+                                                        lineHeight: 1.5,
+                                                    }}
+                                                >
                                                     {item}
                                                 </Typography>
                                             </Box>
@@ -211,180 +205,148 @@ const CorporateBranding = () => {
                                     </Box>
                                 </Box>
 
-                                {/* Occasions — Inline tag cloud */}
-                                <Box>
-                                    <Typography sx={{
-                                        color: "#A88132",
-                                        fontWeight: 600,
-                                        mb: 3,
-                                        fontSize: "0.72rem",
-                                        textTransform: "uppercase",
-                                        letterSpacing: "0.2em",
-                                        fontFamily: "'Montserrat', sans-serif",
-                                        borderBottom: "1px solid rgba(168,129,50,0.2)",
-                                        pb: 1.5
-                                    }}>
-                                        {isRtl ? "المناسبات المثالية" : "Ideal Occasions"}
-                                    </Typography>
-                                    <Typography sx={{
-                                        color: "#2A2A2A",
-                                        fontSize: { xs: "1rem", md: "1.1rem" },
-                                        lineHeight: 2.2,
-                                        fontFamily: "'Playfair Display', serif",
-                                        fontWeight: 400,
-                                        fontStyle: "italic",
-                                        letterSpacing: "0.01em"
-                                    }}>
-                                        {t.occasions.occasions.join("  ·  ")}
-                                    </Typography>
-                                </Box>
-
-                            </motion.div>
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Box>
-
-            {/* ══════ CUSTOMIZED BRANDING — Numbered Editorial List ══════ */}
-            <Box
-                component="section"
-                id="custom-branding"
-                dir={isRtl ? "rtl" : "ltr"}
-                sx={{
-                    py: { xs: 10, md: 18 },
-                    backgroundColor: "#FFFFFF",
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-            >
-                <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-                    <Grid container spacing={{ xs: 8, md: 14 }} alignItems="center">
-
-                        {/* Text & Numbered List */}
-                        <Grid item xs={12} md={6}>
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <Typography
-                                    variant="h2"
-                                    sx={{
-                                        color: "#1A1A1A",
-                                        fontSize: { xs: "2.5rem", md: "3.5rem" },
-                                        fontWeight: 400,
-                                        fontFamily: "'Playfair Display', serif",
-                                        mb: 4,
-                                        lineHeight: 1.15,
-                                        whiteSpace: "pre-line"
-                                    }}
-                                >
-                                    {t.branding.title}
-                                </Typography>
-
-                                <Typography sx={{
-                                    color: "#666666",
-                                    fontSize: "1rem",
-                                    lineHeight: 1.8,
-                                    fontWeight: 400,
-                                    mb: 8,
-                                    maxWidth: "480px",
-                                    fontFamily: "'Montserrat', sans-serif"
-                                }}>
-                                    {t.branding.subtitle}
-                                </Typography>
-
-                                {/* Numbered prose feature list */}
-                                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                                    {t.branding.features.map((feature, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.5, delay: i * 0.07 }}
-                                        >
-                                            <Box sx={{
-                                                display: "flex",
-                                                gap: { xs: 3, md: 5 },
-                                                alignItems: "baseline",
-                                                py: { xs: 2.5, md: 3 },
-                                                borderTop: "1px solid rgba(0,0,0,0.07)",
-                                                "&:last-child": { borderBottom: "1px solid rgba(0,0,0,0.07)" }
-                                            }}>
-                                                <Typography sx={{
-                                                    color: "rgba(168,129,50,0.4)",
-                                                    fontFamily: "'Playfair Display', serif",
-                                                    fontSize: { xs: "0.85rem", md: "0.9rem" },
-                                                    flexShrink: 0,
-                                                    letterSpacing: "0.05em"
-                                                }}>
-                                                    {feature.number}
-                                                </Typography>
-                                                <Box>
-                                                    <Typography sx={{
-                                                        color: "#1A1A1A",
-                                                        fontWeight: 600,
-                                                        fontSize: { xs: "0.95rem", md: "1rem" },
-                                                        mb: 0.5,
-                                                        fontFamily: "'Montserrat', sans-serif",
-                                                        letterSpacing: "0.02em"
-                                                    }}>
-                                                        {feature.title}
-                                                    </Typography>
-                                                    <Typography sx={{
-                                                        color: "#777777",
-                                                        fontSize: "0.88rem",
-                                                        lineHeight: 1.6,
-                                                        fontFamily: "'Montserrat', sans-serif",
-                                                        fontWeight: 300
-                                                    }}>
-                                                        {feature.desc}
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
-                                        </motion.div>
-                                    ))}
-                                </Box>
-                            </motion.div>
-                        </Grid>
-
-                        {/* Image */}
-                        <Grid item xs={12} md={6}>
-                            <motion.div
-                                initial={{ opacity: 0, x: isRtl ? -40 : 40 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                            >
+                                {/* Footer Quote inside Solutions Card */}
                                 <Box
                                     sx={{
-                                        position: "relative",
-                                        borderRadius: "4px",
-                                        overflow: "hidden",
-                                        boxShadow: "0 30px 70px rgba(0,0,0,0.07)",
-                                        "&::before": {
-                                            content: '""',
-                                            display: "block",
-                                            paddingTop: "135%",
-                                        }
+                                        mt: 4,
+                                        pt: 3,
+                                        borderTop: "1px solid rgba(0,0,0,0.06)",
                                     }}
                                 >
-                                    <Image
-                                        src="/assets/Corporate Gift Sets/corporate gift set black square 01.jpg.jpeg"
-                                        alt="Custom Branding"
-                                        fill
-                                        style={{ objectFit: "cover" }}
-                                        sizes="(max-width: 900px) 100vw, 50vw"
-                                    />
+                                    <Typography
+                                        sx={{
+                                            color: "#666666",
+                                            fontSize: "0.82rem",
+                                            fontFamily: "'Montserrat', sans-serif",
+                                            fontWeight: 400,
+                                        }}
+                                    >
+                                        {isRtl
+                                            ? "أطقم هدايا مخصصة تلبي متطلبات وتطلعات مؤسستك."
+                                            : "Tailored gift collections designed to match your organization's exact stature."
+                                        }
+                                    </Typography>
                                 </Box>
-                            </motion.div>
-                        </Grid>
+                            </Box>
+                        </motion.div>
                     </Grid>
-                </Container>
-            </Box>
-        </>
+
+                    {/* Right Column: Ideal Occasions (Identical 2x2 Grid Layout) */}
+                    <Grid item xs={12} md={6}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 25 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, delay: 0.15 }}
+                            style={{ height: "100%" }}
+                        >
+                            <Box
+                                sx={{
+                                    backgroundColor: "#FFFFFF",
+                                    borderRadius: { xs: "16px", md: "24px" },
+                                    p: { xs: 3.5, sm: 5, md: 6 },
+                                    height: "100%",
+                                    boxShadow: "0 16px 45px rgba(0,0,0,0.03)",
+                                    border: "1px solid rgba(168,129,50,0.14)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <Box>
+                                    <Typography
+                                        component="div"
+                                        sx={{
+                                            color: "#A88132",
+                                            fontWeight: 600,
+                                            mb: 3.5,
+                                            fontSize: "0.75rem",
+                                            textTransform: "uppercase",
+                                            letterSpacing: "0.2em",
+                                            fontFamily: "'Montserrat', sans-serif",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1.5,
+                                        }}
+                                    >
+                                        <Box sx={{ width: "20px", height: "2px", backgroundColor: "#A88132" }} />
+                                        {isRtl ? "المناسبات المثالية" : "Ideal Occasions"}
+                                    </Typography>
+
+                                    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" }, gap: 2.5 }}>
+                                        {t.occasions.occasionsList.map((item, i) => (
+                                            <Box
+                                                key={i}
+                                                sx={{
+                                                    p: { xs: 2.5, md: 3 },
+                                                    borderRadius: "14px",
+                                                    backgroundColor: "#FAF8F5",
+                                                    border: "1px solid rgba(0,0,0,0.04)",
+                                                    transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                                                    "&:hover": {
+                                                        transform: "translateY(-3px)",
+                                                        borderColor: "rgba(168,129,50,0.35)",
+                                                        boxShadow: "0 12px 28px rgba(168,129,50,0.08)",
+                                                        backgroundColor: "#FFFFFF",
+                                                    },
+                                                }}
+                                            >
+                                                <Typography
+                                                    sx={{
+                                                        color: "#A88132",
+                                                        fontFamily: "'Playfair Display', serif",
+                                                        fontSize: "1.2rem",
+                                                        fontWeight: 600,
+                                                        mb: 1,
+                                                    }}
+                                                >
+                                                    {String(i + 1).padStart(2, "0")}
+                                                </Typography>
+                                                <Typography
+                                                    sx={{
+                                                        color: "#1A1A1A",
+                                                        fontSize: { xs: "0.9rem", md: "0.95rem" },
+                                                        fontFamily: "'Montserrat', sans-serif",
+                                                        fontWeight: 500,
+                                                        lineHeight: 1.5,
+                                                    }}
+                                                >
+                                                    {item}
+                                                </Typography>
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                </Box>
+
+                                {/* Footer Quote inside Occasions Card */}
+                                <Box
+                                    sx={{
+                                        mt: 4,
+                                        pt: 3,
+                                        borderTop: "1px solid rgba(0,0,0,0.06)",
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            color: "#666666",
+                                            fontSize: "0.82rem",
+                                            fontFamily: "'Montserrat', sans-serif",
+                                            fontWeight: 400,
+                                        }}
+                                    >
+                                        {isRtl
+                                            ? "مصممة بعناية لتترك انطباعاً راقياً في كل مناسبة واحتفال."
+                                            : "Thoughtfully crafted to leave a timeless impression across every milestone and celebration."
+                                        }
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </motion.div>
+                    </Grid>
+
+                </Grid>
+            </Container>
+        </Box>
     );
 };
 

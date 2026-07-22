@@ -294,46 +294,7 @@ const CorporateContact = () => {
                             </Box>
 
                             {/* Credibility Statement — replaces generic icon cards */}
-                            <Box sx={{ 
-                                mt: 5,
-                                pt: 5, 
-                                borderTop: "1px solid rgba(0,0,0,0.08)" 
-                            }}>
-                                <Typography sx={{
-                                    color: "#1A1A1A",
-                                    fontSize: { xs: "1.3rem", md: "1.6rem" },
-                                    fontFamily: "'Playfair Display', serif",
-                                    fontWeight: 400,
-                                    fontStyle: "italic",
-                                    lineHeight: 1.5,
-                                    mb: 4
-                                }}>
-                                    {isRtl
-                                        ? "موثوق به من قِبل أمازون وإعمار وطيران الإمارات وأكثر من ١٢٠ شريكاً مؤسسياً في الإمارات."
-                                        : "Trusted by Amazon, Emaar, Emirates Airline, and over 120 corporate partners across the UAE."
-                                    }
-                                </Typography>
-                                <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
-                                    {(isRtl ? [
-                                        "تسليم بالجملة في جميع أنحاء الإمارات خلال ٣–٥ أيام عمل",
-                                        "تغليف مخصص بشعار شركتك",
-                                        "مدير حساب مخصص لكل عميل",
-                                        "عطور فاخرة مصنوعة وفق أعلى المعايير",
-                                    ] : [
-                                        "Bulk delivery across the UAE within 3–5 business days",
-                                        "Custom packaging with your company logo",
-                                        "A dedicated account manager for every client",
-                                        "Premium quality perfumes, attars, oils & bakhoor",
-                                    ]).map((item, i) => (
-                                        <Box key={i} sx={{ display: "flex", gap: 3, alignItems: "baseline", py: 2, borderBottom: "1px solid rgba(0,0,0,0.05)", "&:last-child": { borderBottom: "none" } }}>
-                                            <Box sx={{ width: "4px", height: "4px", borderRadius: "50%", backgroundColor: "#A88132", flexShrink: 0, mt: "6px" }} />
-                                            <Typography sx={{ color: "#333333", fontSize: "0.9rem", fontFamily: "'Montserrat', sans-serif", fontWeight: 400, lineHeight: 1.6 }}>
-                                                {item}
-                                            </Typography>
-                                        </Box>
-                                    ))}
-                                </Box>
-                            </Box>
+                           
                         </motion.div>
                     </Grid>
 
