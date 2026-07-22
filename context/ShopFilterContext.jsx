@@ -17,6 +17,14 @@ export function ShopFilterProvider({ children }) {
   const [selectedLabels, setSelectedLabels] = useState([]); // array of label_name strings
   const [selectedTags, setSelectedTags] = useState([]);     // array of tag strings
 
+  // Additional states for preserving filter and scroll on back navigation
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('popularity');
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [lastSearchQuery, setLastSearchQuery] = useState(null);
+
   return (
     <ShopFilterContext.Provider
       value={{
@@ -32,6 +40,18 @@ export function ShopFilterProvider({ children }) {
         setSelectedLabels,
         selectedTags,
         setSelectedTags,
+        searchTerm,
+        setSearchTerm,
+        sortOption,
+        setSortOption,
+        selectedCategories,
+        setSelectedCategories,
+        selectedSubcategories,
+        setSelectedSubcategories,
+        maxPrice,
+        setMaxPrice,
+        lastSearchQuery,
+        setLastSearchQuery,
       }}
     >
       {children}
