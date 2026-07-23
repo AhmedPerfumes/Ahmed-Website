@@ -22,6 +22,7 @@ import {
   capitalizeEachWord,
   formatPrice
 } from "@/utils/shop";
+import { Skeleton } from "@mui/material";
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
@@ -59,11 +60,13 @@ const ProductPrice = ({ elm, currency }) => {
 
 const ProductCardSkeleton = () => (
   <div className="product-card-wrapper">
-    <div className="product-card">
-      <div className="pc__img-wrapper" style={{ background: '#f0f0f0' }}></div>
-      <div className="pc__info" style={{ padding: '15px 10px' }}>
-        <div className="skeleton-bar" style={{ height: '14px', width: '70%', background: '#eee', margin: '0 auto 8px', borderRadius: '4px' }}></div>
-        <div className="skeleton-bar" style={{ height: '12px', width: '40%', background: '#f5f5f5', margin: '0 auto', borderRadius: '4px' }}></div>
+    <div className="product-card mb-3 mb-md-4 mb-xxl-5">
+      <div className="pc__img-wrapper">
+        <Skeleton variant="rectangular" width="100%" height={"100%"} sx={{ aspectRatio: '480/600' }} />
+      </div>
+      <div className="pc__info" style={{ padding: '15px 10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Skeleton variant="text" width="70%" height={24} sx={{ mb: 1 }} />
+        <Skeleton variant="text" width="40%" height={20} />
       </div>
     </div>
   </div>
@@ -89,6 +92,20 @@ export default function Shop1({ search }) {
     setSelectedLabels,
     selectedTags,
     setSelectedTags,
+    searchTerm,
+    setSearchTerm,
+    sortOption,
+    setSortOption,
+    selectedCategories,
+    setSelectedCategories,
+    selectedSubcategories,
+    setSelectedSubcategories,
+    maxPrice,
+    setMaxPrice,
+    rawProducts: products,
+    setRawProducts: setProducts,
+    lastSearchQuery,
+    setLastSearchQuery,
   } = useShopFilter();
 
   const [availableLabels, setAvailableLabels] = useState([]);
@@ -100,11 +117,7 @@ export default function Shop1({ search }) {
   const [selectedColView, setSelectedColView] = useState(3);
   const t = useTranslations();
 
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [sortOption, setSortOption] = useState('popularity');
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
 
   // Extract all unique category names dynamically from active products
   const uniqueCategories = useMemo(() => {
@@ -169,9 +182,7 @@ export default function Shop1({ search }) {
       </div>
     );
   };
-  const [maxPrice, setMaxPrice] = useState(1000);
   const [isDDActive, setIsDDActive] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const ref = useRef(null);
   const gridRef = useRef(null);
 
@@ -261,6 +272,12 @@ export default function Shop1({ search }) {
   }, [products, priceRange, stockAvailability, promotionalOnly, selectedLabels, selectedCategories, selectedSubcategories, selectedTags, sortOption, searchTerm, t]);
 
   useEffect(() => {
+    // If we already have products and the search query hasn't changed, 
+    // don't fetch again to preserve scroll position and state
+    if (products.length > 0 && search === lastSearchQuery) {
+      return;
+    }
+
     const fetchAll = async () => {
       setLoading(true);
       try {
@@ -300,6 +317,7 @@ export default function Shop1({ search }) {
         }
 
         setProducts(norm);
+        setLastSearchQuery(search);
       } catch (e) {
         console.error("Error fetching products:", e);
       } finally {
@@ -307,7 +325,7 @@ export default function Shop1({ search }) {
       }
     };
     fetchAll();
-  }, [search, setPriceRange]);
+  }, [search, setPriceRange, products.length, lastSearchQuery, setProducts, setMaxPrice, setLastSearchQuery]);
 
   useEffect(() => {
     const updateViews = () => {

@@ -13,8 +13,8 @@
   "QATAR": "QATAR",
   "INDIA": "INDIA",
   "PopularProducts": {
-    "subTitle": "Explore Our Collection",
-    "title": "Explore by Category",
+    "subTitle": "Our most coveted fragrances",
+    "title": "The Curated Bestsellers",
     "all": "All",
     "perfumes": "Perfumes",
     "dakhoon": "Dakhoon",
@@ -25,7 +25,7 @@
     "sale": "Sale {value}%",
     "addToCart": "Add To Cart",
     "exploreProduct": "Explore Product",
-    "viewFullCollection": "View Full Collection >"
+    "viewFullCollection": "View Full Category"
   },
   "+971 67420602 / 67422496 / 67446076": "+971 67420602 / 67422496 / 67446076",
   "The founder's signature collection": "The founder's signature collection.",

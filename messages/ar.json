@@ -13,8 +13,8 @@
   "QATAR": "قطر",
   "INDIA": "الهند",
   "PopularProducts": {
-    "subTitle": "استكشف مجموعتنا",
-    "title": "استكشف حسب الفئة",
+    "subTitle": "عطورنا الأكثر طلبًا",
+    "title": "أفضل المبيعات المختارة",
     "all": "الكل",
     "perfumes": "العطور",
     "dakhoon": "دخون",
@@ -25,7 +25,7 @@
     "sale": "خصم {value}%",
     "addToCart": "أضف إلى السلة",
     "exploreProduct": "استكشف المنتج",
-    "viewFullCollection": "عرض المجموعة الكاملة >"
+    "viewFullCollection": "عرض الفئة الكاملة"
   },
   "+971 67420602 / 67422496 / 67446076": "+۹۷۱ ٦۷٤۲۰٦۰۲ / ٦۷٤۲۲٤۹٦ / ٦۷٤٤٦۰۷٦",
   "The founder's signature collection": "مجموعة توقيع المؤسس.",
