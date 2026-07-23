@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useLocale } from "next-intl";
 
 const companyLogos = [
+    { id: 0, src: "/assets/Corporate Gift Sets/company.jpeg", alt: "Corporate Partner" },
     { id: 1, src: "/assets/Corporate Gift Sets/company1.png", alt: "Corporate Partner 1" },
     { id: 2, src: "/assets/Corporate Gift Sets/company2.png", alt: "Corporate Partner 2" },
     { id: 3, src: "/assets/Corporate Gift Sets/company3.png", alt: "Corporate Partner 3" },
@@ -11,6 +12,12 @@ const companyLogos = [
     { id: 6, src: "/assets/Corporate Gift Sets/company6.png", alt: "Corporate Partner 6" },
     { id: 7, src: "/assets/Corporate Gift Sets/company7.png", alt: "Corporate Partner 7" },
     { id: 8, src: "/assets/Corporate Gift Sets/company8.png", alt: "Corporate Partner 8" },
+    { id: 9, src: "/assets/Corporate Gift Sets/company9.png", alt: "Corporate Partner 9" },
+    { id: 10, src: "/assets/Corporate Gift Sets/company10.png", alt: "Corporate Partner 10" },
+    { id: 11, src: "/assets/Corporate Gift Sets/company11.png", alt: "Corporate Partner 11" },
+    { id: 12, src: "/assets/Corporate Gift Sets/company12.png", alt: "Corporate Partner 12" },
+    { id: 13, src: "/assets/Corporate Gift Sets/company13.png", alt: "Corporate Partner 13" },
+    { id: 14, src: "/assets/Corporate Gift Sets/kn logo.png", alt: "Corporate Partner KN" },
 ];
 
 const LogoCard = ({ logo }) => (
