@@ -41,7 +41,7 @@ const translations = {
                 title: "Our Corporate Alliances",
                 badge: "For Valued Partnerships",
                 eyebrow: "WHERE TRUST BUILDS LEGACY",
-                subtitle: "Prestige gifting for the banking, real estate, and automotive sectors. Each collection is thoughtfully curated to honour valued clients, trusted partners, and visionary leaders, turning every gift into a refined expression of appreciation and distinction. Where trust secures futures, foundations shape legacies, and ambition drives progress. A gift of prestige, crafted to celebrate partnerships that move industries forward.",
+                subtitle: "Prestige gifting for the banking, real estate, and automotive sectors. Each collection is thoughtfully curated to honour valued clients, trusted partners, and visionary leaders, turning every gift into a refined expression of appreciation and distinction.",
                 image: "/assets/Corporate Gift Sets/Banking.jpeg",
                 icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
                 poem: "Where trust is built and legacies grow, a fragrance speaks what words cannot show. A gift of prestige, a bond of gold, a story of excellence yet to be told.",
