@@ -124,7 +124,7 @@ const CorporateCollections = () => {
                             mb: 2.5,
                         }}
                     >
-                        {isRtl ? "مجموعاتنا المخصصة" : "Our Bespoke Collections"}
+                        {isRtl ? "مجموعاتنا المخصصة" : "Celebrations"}
                     </Typography>
                     <Box sx={{ width: "40px", height: "2px", backgroundColor: "#A88132", mx: "auto", mb: 2 }} />
                     <Typography sx={{

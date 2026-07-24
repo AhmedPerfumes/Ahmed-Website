@@ -1,5 +1,6 @@
 import CorporateHero from "@/components/corporate/CorporateHero";
 import CorporatePartnersSlider from "@/components/corporate/CorporatePartnersSlider";
+import CorporateFestiveSlider from "@/components/corporate/CorporateFestiveSlider";
 import CorporateMarquee from "@/components/corporate/CorporateMarquee";
 import CorporateGiftSets from "@/components/corporate/CorporateGiftSets";
 import CorporateBranding from "@/components/corporate/CorporateBranding";
@@ -28,8 +29,17 @@ const CorporateGiftingPage = () => {
             {/* 1. Hero — headline + description + stats */}
             <CorporateHero />
 
-            {/* 2. Partner slider — Travel, Hajj & Umrah, Bank, Diwali */}
+          
+
+            {/* 2.2. Festive slider — Ramadan, Eid Al Fitr, Eid Al Adha, Diwali, Christmas */}
+            <CorporateFestiveSlider />
+              {/* 2. Partner slider — Travel, Hajj & Umrah, Bank */}
             <CorporatePartnersSlider />
+
+
+
+
+            
 
             {/* 2.5. Company logos continuous marquee */}
             <CorporateMarquee />
@@ -41,7 +51,7 @@ const CorporateGiftingPage = () => {
             <CorporateCollections />
 
             {/* 4. Occasions table + Customized Branding features */}
-            <CorporateBranding />
+            {/* <CorporateBranding /> */}
 
             {/* 5. How it works — 4 step process */}
             <CorporateProcess />

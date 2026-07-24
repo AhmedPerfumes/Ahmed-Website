@@ -22,7 +22,7 @@ const translations = {
                 badge: "For Every Journey",
                 eyebrow: "WHERE JOURNEYS BECOME MEMORIES",
                 subtitle: "Crafted for airlines, luxury hotels, travel companies, and hospitality partners, the Ahmed Al Maghribi Travel Collection is designed to elevate every voyage with elegance, comfort, and unforgettable aromas.",
-                image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
+                image: "/assets/Corporate Gift Sets/Airline.jpeg",
                 icon: <FlightTakeoffIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
                 poem: "Fly with grace, arrive in style — carry a fragrance every mile. From sky to shore, from dawn till night, a scent that makes each journey bright.",
             },
@@ -38,23 +38,13 @@ const translations = {
             },
             {
                 id: "bank",
-                title: "Bank Collection",
+                title: "Our Corporate Alliances",
                 badge: "For Valued Partnerships",
                 eyebrow: "WHERE TRUST BUILDS LEGACY",
                 subtitle: "Prestige gifting for the financial sector. Curated for banks, investment firms, and financial institutions, each set is a statement of distinction — perfectly crafted to honour clients, partners, and leadership.",
                 image: "/assets/Corporate Gift Sets/corporate gift set black square 01.jpg.jpeg",
                 icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
                 poem: "Where trust is built and legacies grow, a fragrance speaks what words cannot show. A gift of prestige, a bond of gold — a story of excellence yet to be told.",
-            },
-            {
-                id: "diwali",
-                title: "Diwali Collection",
-                badge: "For your Festive Celebration",
-                eyebrow: "WHERE LIGHT INSPIRES JOY",
-                subtitle: "Illuminate Every Bond with the Essence of Diwali. Thoughtfully curated to express gratitude and create unforgettable moments with clients, employees, and friends — each perfume a symbol of warmth and new beginnings.",
-                image: "/assets/Corporate Gift Sets/Diiwali.jpeg",
-                icon: <CelebrationIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                poem: "As lamps light the sky and hearts glow bright, may this fragrance carry Diwali's light. A gift of joy, a memory divine — where every bond and blessing intertwine.",
             },
         ],
     },
@@ -92,16 +82,6 @@ const translations = {
                 icon: <AccountBalanceIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
                 poem: "حيث يُبنى الثقة وتنمو الإرث، يتحدث عطر بما لا تستطيع الكلمات التعبير عنه. هدية من الرقي، وعهد من الذهب — قصة تميز لم تُكتب بعد.",
             },
-            {
-                id: "diwali",
-                title: "مجموعة ديوالي",
-                badge: "لاحتفالاتك المبهجة",
-                eyebrow: "حيث يلهم النور الفرح",
-                subtitle: "أضئ كل رابط بجوهر ديوالي. منسقة بعناية للتعبير عن الامتنان وخلق لحظات لا تُنسى مع العملاء والموظفين والأصدقاء — كل عطر رمز للدفء والبدايات الجديدة.",
-                image: "/assets/Corporate Gift Sets/Diwali.jpeg",
-                icon: <CelebrationIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
-                poem: "كما تضيء المصابيح السماء وتتوهج القلوب، فليحمل هذا العطر نور ديوالي. هدية من الفرح وذكرى إلهية — حيث تتشابك كل الروابط والبركات.",
-            },
         ],
     },
 };
@@ -121,23 +101,23 @@ const CorporatePartnersSlider = () => {
             component="section"
             dir={isRtl ? "rtl" : "ltr"}
             sx={{
-                py: { xs: 8, md: 14 },
+                py: { xs: 4, md: 8 },
                 backgroundColor: "#FAF8F5",
                 position: "relative",
             }}
         >
             {/* ── Section Header ── */}
             <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-                <Box sx={{ textAlign: "center", mb: { xs: 6, md: 10 } }}>
+                <Box sx={{ textAlign: "center", mb: { xs: 3, md: 6 } }}>
                     <Typography
                         variant="overline"
                         sx={{
                             color: "#A88132",
                             letterSpacing: "0.2em",
                             fontWeight: 500,
-                            fontSize: "0.75rem",
+                            fontSize: { xs: "0.68rem", md: "0.75rem" },
                             display: "block",
-                            mb: 2,
+                            mb: 1,
                             fontFamily: "'Montserrat', sans-serif",
                         }}
                     >
@@ -147,10 +127,10 @@ const CorporatePartnersSlider = () => {
                         variant="h2"
                         sx={{
                             color: "#1A1A1A",
-                            fontSize: { xs: "2rem", md: "3rem" },
+                            fontSize: { xs: "1.75rem", md: "3rem" },
                             fontWeight: 400,
                             fontFamily: "'Playfair Display', serif",
-                            mb: 2,
+                            mb: 1.5,
                         }}
                     >
                         {isRtl ? "مجموعات الشركاء" : "Signature Partner Collections"}
@@ -171,18 +151,18 @@ const CorporatePartnersSlider = () => {
                         /* Swiper nav buttons */
                         "& .swiper-button-next, & .swiper-button-prev": {
                             color: "#FFFFFF",
-                            width: { xs: "36px", md: "44px" },
-                            height: { xs: "36px", md: "44px" },
+                            width: { xs: "32px", sm: "38px", md: "44px" },
+                            height: { xs: "32px", sm: "38px", md: "44px" },
                             backgroundColor: "rgba(168,129,50,0.9)",
                             borderRadius: "50%",
                             boxShadow: "0 6px 20px rgba(168,129,50,0.35)",
                             transition: "all 0.3s ease",
                             zIndex: 10,
-                            "&::after": { fontSize: { xs: "0.85rem", md: "1rem" }, fontWeight: 900 },
+                            "&::after": { fontSize: { xs: "0.75rem", md: "1rem" }, fontWeight: 900 },
                             "&:hover": { backgroundColor: "#8C6A29", transform: "scale(1.1)" },
                         },
-                        "& .swiper-button-next": { right: { xs: "8px", sm: "14px", md: "20px" } },
-                        "& .swiper-button-prev": { left: { xs: "8px", sm: "14px", md: "20px" } },
+                        "& .swiper-button-next": { right: { xs: "6px", sm: "14px", md: "20px" } },
+                        "& .swiper-button-prev": { left: { xs: "6px", sm: "14px", md: "20px" } },
                         "& .swiper-slide": { padding: 0, margin: 0 },
                     }}
                 >
@@ -205,16 +185,16 @@ const CorporatePartnersSlider = () => {
                                         display: "flex",
                                         flexDirection: { xs: "column", md: "row" },
                                         alignItems: "stretch",
-                                        minHeight: { xs: "auto", md: "560px" },
+                                        minHeight: { xs: "auto", md: "520px" },
                                     }}
                                 >
                                     {/* ── Image ── */}
                                     <Box
                                         sx={{
                                             position: "relative",
-                                            width: { xs: "100%", md: "48%" },
-                                            minHeight: { xs: "240px", sm: "320px", md: "560px" },
-                                            height: { xs: "250px", sm: "340px", md: "auto" },
+                                            width: { xs: "100%", md: "48%", lg: "50%" },
+                                            minHeight: { xs: "280px", sm: "360px", md: "100%" },
+                                            height: { xs: "280px", sm: "360px", md: "auto" },
                                             flexShrink: 0,
                                             alignSelf: "stretch",
                                         }}
@@ -224,23 +204,23 @@ const CorporatePartnersSlider = () => {
                                             alt={slide.title}
                                             fill
                                             style={{ objectFit: "cover", objectPosition: "center" }}
-                                            sizes="(max-width: 900px) 100vw, 48vw"
+                                            sizes="(max-width: 900px) 100vw, 50vw"
                                             priority={index === 0}
                                         />
                                         {/* Badge */}
                                         <Box
                                             sx={{
                                                 position: "absolute",
-                                                top: { xs: 16, md: 24 },
-                                                [isRtl ? "right" : "left"]: { xs: 16, md: 24 },
+                                                top: { xs: 12, md: 24 },
+                                                [isRtl ? "right" : "left"]: { xs: 12, md: 24 },
                                                 backgroundColor: "rgba(255,255,255,0.96)",
                                                 backdropFilter: "blur(12px)",
-                                                px: { xs: 2, md: 2.5 },
-                                                py: { xs: 0.8, md: 1.2 },
+                                                px: { xs: 1.5, md: 2.5 },
+                                                py: { xs: 0.6, md: 1.2 },
                                                 borderRadius: "30px",
                                                 display: "flex",
                                                 alignItems: "center",
-                                                gap: 1,
+                                                gap: 0.8,
                                                 boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
                                                 zIndex: 2,
                                             }}
@@ -250,7 +230,7 @@ const CorporatePartnersSlider = () => {
                                                 sx={{
                                                     color: "#1A1A1A",
                                                     fontWeight: 600,
-                                                    fontSize: { xs: "0.68rem", md: "0.72rem" },
+                                                    fontSize: { xs: "0.62rem", md: "0.72rem" },
                                                     textTransform: "uppercase",
                                                     letterSpacing: "0.1em",
                                                     fontFamily: "'Montserrat', sans-serif",
@@ -265,16 +245,16 @@ const CorporatePartnersSlider = () => {
                                         <Box
                                             sx={{
                                                 position: "absolute",
-                                                bottom: { xs: 16, md: 24 },
-                                                [isRtl ? "left" : "right"]: { xs: 16, md: 24 },
+                                                bottom: { xs: 12, md: 24 },
+                                                [isRtl ? "left" : "right"]: { xs: 12, md: 24 },
                                                 backgroundColor: "rgba(168,129,50,0.9)",
-                                                px: 1.6,
-                                                py: 0.5,
+                                                px: 1.4,
+                                                py: 0.4,
                                                 borderRadius: "20px",
                                                 zIndex: 2,
                                             }}
                                         >
-                                            <Typography sx={{ color: "#FFFFFF", fontSize: { xs: "0.68rem", md: "0.72rem" }, fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}>
+                                            <Typography sx={{ color: "#FFFFFF", fontSize: { xs: "0.62rem", md: "0.72rem" }, fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}>
                                                 {String(index + 1).padStart(2, "0")} / {String(t.slides.length).padStart(2, "0")}
                                             </Typography>
                                         </Box>
@@ -287,7 +267,7 @@ const CorporatePartnersSlider = () => {
                                             display: "flex",
                                             flexDirection: "column",
                                             justifyContent: "center",
-                                            p: { xs: 3, sm: 5, md: 7, lg: 9 },
+                                            p: { xs: 3, sm: 4, md: 6, lg: 7 },
                                             textAlign: isRtl ? "right" : "left",
                                         }}
                                     >

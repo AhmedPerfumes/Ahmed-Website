@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useLocale } from "next-intl";
 
 const companyLogos = [
@@ -65,12 +65,41 @@ const CorporateMarquee = () => {
             component="section"
             dir={isRtl ? "rtl" : "ltr"}
             sx={{
-                py: { xs: 5, md: 7 },
+                py: { xs: 3, md: 5 },
                 backgroundColor: "#FAF8F5",
                 overflow: "hidden",
                 position: "relative",
             }}
         >
+            {/* ── Section Title ── */}
+            <Box sx={{ textAlign: "center", mb: { xs: 2, md: 3 } }}>
+                <Typography
+                    variant="overline"
+                    sx={{
+                        color: "#A88132",
+                        letterSpacing: "0.2em",
+                        fontWeight: 500,
+                        fontSize: { xs: "0.68rem", md: "0.75rem" },
+                        display: "block",
+                        mb: 0.5,
+                        fontFamily: "'Montserrat', sans-serif",
+                    }}
+                >
+                    {isRtl ? "الشركات والمؤسسات" : "TRUSTED BY LEADING ORGANIZATIONS"}
+                </Typography>
+                <Typography
+                    variant="h4"
+                    sx={{
+                        color: "#1A1A1A",
+                        fontSize: { xs: "1.2rem", md: "1.6rem" },
+                        fontWeight: 400,
+                        fontFamily: "'Playfair Display', serif",
+                    }}
+                >
+                    {isRtl ? "شركاؤنا في النجاح" : "Our Esteemed Corporate Partners"}
+                </Typography>
+            </Box>
+
             {/* ── Marquee track ── */}
             <Box
                 sx={{
@@ -82,7 +111,7 @@ const CorporateMarquee = () => {
                         position: "absolute",
                         top: 0,
                         bottom: 0,
-                        width: { xs: "60px", md: "140px" },
+                        width: { xs: "50px", md: "120px" },
                         zIndex: 2,
                         pointerEvents: "none",
                     },
@@ -109,7 +138,7 @@ const CorporateMarquee = () => {
                         "&:hover": {
                             animationPlayState: "paused",
                         },
-                        py: "10px",
+                        py: "5px",
                     }}
                 >
                     {allLogos.map((logo, i) => (

@@ -64,7 +64,7 @@ const CorporateHero = () => {
                 }}
             >
                 <Image
-                    src="/assets/Corporate Gift Sets/banner.jpeg"
+                    src="/assets/Corporate Gift Sets/Banner.jpeg"
                     alt="Corporate Gifting Ahmed Al Maghribi"
                     fill
                     style={{ objectFit: "cover", objectPosition: isRtl ? "left center" : "right center" }}
@@ -73,7 +73,7 @@ const CorporateHero = () => {
                 />
             </Box>
 
-            {/* ── Gradient Overlay: ONLY on Left Side (for Text Readability), 100% Transparent on Right ── */}
+            {/* ── Gradient Overlay: ONLY on Left Text Side (Fades completely transparent before right image) ── */}
             <Box
                 sx={{
                     position: "absolute",
@@ -83,10 +83,10 @@ const CorporateHero = () => {
                     bottom: 0,
                     zIndex: 2,
                     background: isRtl
-                        ? "linear-gradient(270deg, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.7) 45%, rgba(13,12,10,0.2) 70%, transparent 95%)"
-                        : "linear-gradient(90deg, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.7) 45%, rgba(13,12,10,0.2) 70%, transparent 95%)",
+                        ? "linear-gradient(270deg, rgba(13,12,10,0.95) 0%, rgba(13,12,10,0.85) 30%, rgba(13,12,10,0.4) 45%, transparent 55%)"
+                        : "linear-gradient(90deg, rgba(13,12,10,0.95) 0%, rgba(13,12,10,0.85) 30%, rgba(13,12,10,0.4) 45%, transparent 55%)",
                     "@media (max-width: 900px)": {
-                        background: "linear-gradient(0deg, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.7) 55%, rgba(13,12,10,0.15) 100%)",
+                        background: "linear-gradient(0deg, rgba(13,12,10,0.95) 0%, rgba(13,12,10,0.7) 60%, transparent 100%)",
                     }
                 }}
             />
