@@ -79,7 +79,7 @@ const collections = [
         desc2Ar: "مغلفة بألوان علم الإمارات الزاهية الأحمر والأخضر والأبيض والأسود، تحتفل مجموعة اليوم الوطني من أحمد المغربي بروح أمة بُنيت على الوحدة والرؤية والتميز. احتفل بهذه المناسبة مع أطقم هدايا مخصصة بشكل جميل، صُممت لتكريم الموظفين والعملاء والشركاء والأحباء بالأناقة الخالدة لعطور أحمد المغربي.",
         poemEn: "A lasting fragrance, a nation's pride,\nWith hope and dreams forever our guide.\nIn every bottle, a story unfolds,\nOf treasured memories more precious than gold.",
         poemAr: "عطر يدوم، فخر أمة،\nمع الأمل والأحلام دليلنا الدائم.\nفي كل زجاجة، تتكشف قصة،\nعن ذكريات غالية أثمن من الذهب.",
-        image: "/assets/Corporate Gift Sets/national.jpeg",
+        image: "/assets/Corporate Gift Sets/NationalDay.jpeg",
         bg: "#FAF8F5",
     },
 ];
