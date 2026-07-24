@@ -10,7 +10,7 @@ const translations = {
         eyebrow: "Where Every Knot Blossoms into Forever",
         title: "Our Wedding Customized Collection",
         p1: "Every knot is tied with love. Every promise is wrapped in trust. Every wedding is the beginning of a beautiful forever.",
-        p2: "Celebrate your special day with the Ahmed Al Maghribi Wedding Customized Collection—luxurious fragrance gift sets crafted to make every moment unforgettable and every celebration blossom with elegance.",
+        p2: "Celebrate your special day with the Ahmed Al Maghribi Wedding Customized Collection, luxurious fragrance gift sets crafted to make every moment unforgettable and every celebration blossom with elegance.",
         poem: "Two hearts, one soul, one beautiful way,\nTogether forever from this special day.\nA knot of love, a dream come true,\nA lifetime begins with \"Me and You.\"",
         cta: "Request a Consultation",
     },

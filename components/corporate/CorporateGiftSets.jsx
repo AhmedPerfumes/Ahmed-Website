@@ -9,7 +9,7 @@ const translations = {
     en: {
         eyebrow: "PREMIUM GIFTS FOR EVERY OCCASION",
         title: "Signature Gift Sets",
-        subtitle: "Each gift is thoughtfully designed with premium perfumes, concentrated oils, bakhoor, candles, chocolates, and elegant accessories — beautifully presented to reflect appreciation, refinement, and care.",
+        subtitle: "Each gift is thoughtfully designed with premium perfumes, concentrated oils, bakhoor, candles, chocolates, and elegant accessories, beautifully presented to reflect appreciation, refinement, and care.",
         badge_new: "New",
         badge_popular: "Popular",
         badge_hajj: "Hajj & Umrah",
@@ -85,7 +85,7 @@ const translations = {
     ar: {
         eyebrow: "هدايا فاخرة لكل مناسبة",
         title: "أطقم الهدايا المميزة",
-        subtitle: "كل هدية مصممة بعناية بعطور فاخرة وزيوت مركزة وبخور وشموع وشوكولاتة وإكسسوارات أنيقة — مُقدَّمة بشكل جميل يعكس التقدير والرقي والاهتمام.",
+        subtitle: "كل هدية مصممة بعناية بعطور فاخرة وزيوت مركزة وبخور وشموع وشوكولاتة وإكسسوارات أنيقة، مُقدَّمة بشكل جميل يعكس التقدير والرقي والاهتمام.",
         badge_new: "جديد",
         badge_popular: "الأكثر طلباً",
         badge_hajj: "حج وعمرة",

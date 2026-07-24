@@ -7,7 +7,7 @@ const translations = {
     en: {
         branding: {
             title: "A Gift That Speaks\nYour Brand's Language",
-            subtitle: "Create a gift experience that reflects your company's identity and values — from elegant packaging to bespoke product selection.",
+            subtitle: "Create a gift experience that reflects your company's identity and values, from elegant packaging to bespoke product selection.",
             features: [
                 { number: "01", title: "Personalized Packaging", desc: "Custom-designed boxes and wrapping that reflect your brand identity." },
                 { number: "02", title: "Logo Placement", desc: "Your mark, elegantly embossed or printed on every piece." },
@@ -37,7 +37,7 @@ const translations = {
     ar: {
         branding: {
             title: "هدية تتحدث\nبلغة علامتك التجارية",
-            subtitle: "أنشئ تجربة هدايا تعكس هوية شركتك وقيمها — من التغليف الأنيق إلى اختيار المنتجات المصممة خصيصًا.",
+            subtitle: "أنشئ تجربة هدايا تعكس هوية شركتك وقيمها  من التغليف الأنيق إلى اختيار المنتجات المصممة خصيصًا.",
             features: [
                 { number: "٠١", title: "تغليف مخصص", desc: "صناديق وتغليف مصمم خصيصاً يعكس هوية علامتك التجارية." },
                 { number: "٠٢", title: "وضع الشعار", desc: "شعار شركتك، منقوش بأناقة على كل قطعة." },

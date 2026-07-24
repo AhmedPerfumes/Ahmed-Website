@@ -12,7 +12,7 @@ import ChurchIcon from "@mui/icons-material/Church";
 const translations = {
     en: {
         eyebrow: "FESTIVE CELEBRATIONS",
-        heading: "Festive & Holiday Collections",
+        heading: "Our Festive Collections",
         cta: "Inquire For Festive Gifting",
         tabs: [
             {
@@ -50,10 +50,10 @@ const translations = {
                 title: "Diwali",
                 badge: "Festive Celebration",
                 eyebrow: "WHERE LIGHT INSPIRES JOY",
-                subtitle: "Illuminate Every Bond with the Essence of Diwali. Thoughtfully curated to express gratitude and create unforgettable moments with clients, employees, and friends — each perfume a symbol of warmth and new beginnings.",
+                subtitle: "Illuminate Every Bond with the Essence of Diwali. Thoughtfully curated to express gratitude and create unforgettable moments with clients, employees, and friends. Each perfume is a symbol of warmth and new beginnings.",
                 image: "/assets/Corporate Gift Sets/Diwali.jpeg",
                 icon: <CelebrationIcon sx={{ fontSize: "1.2rem" }} />,
-                poem: "As lamps light the sky and hearts glow bright, may this fragrance carry Diwali's light. A gift of joy, a memory divine — where every bond and blessing intertwine.",
+                poem: "As lamps light the sky and hearts glow bright, may this fragrance carry Diwali's light. A gift of joy, a memory divine, where every bond and blessing intertwine.",
             },
             {
                 id: "christmas",
@@ -107,10 +107,10 @@ const translations = {
                 title: "ديوالي",
                 badge: "لاحتفالاتك المبهجة",
                 eyebrow: "حيث يلهم النور الفرح",
-                subtitle: "أضئ كل رابط بجوهر ديوالي. منسقة بعناية للتعبير عن الامتنان وخلق لحظات لا تُنسى مع العملاء والموظفين والأصدقاء — كل عطر رمز للدفء والبدايات الجديدة.",
+                subtitle: "أضئ كل رابط بجوهر ديوالي. منسقة بعناية للتعبير عن الامتنان وخلق لحظات لا تُنسى مع العملاء والموظفين والأصدقاء. كل عطر رمز للدفء والبدايات الجديدة.",
                 image: "/assets/Corporate Gift Sets/Diwali.jpeg",
                 icon: <CelebrationIcon sx={{ fontSize: "1.2rem" }} />,
-                poem: "كما تضيء المصابيح السماء وتتوهج القلوب، فليحمل هذا العطر نور ديوالي. هدية من الفرح وذكرى إلهية — حيث تتشابك كل الروابط والبركات.",
+                poem: "كما تضيء المصابيح السماء وتتوهج القلوب، فليحمل هذا العطر نور ديوالي. هدية من الفرح وذكرى إلهية، حيث تتشابك كل الروابط والبركات.",
             },
             {
                 id: "christmas",
