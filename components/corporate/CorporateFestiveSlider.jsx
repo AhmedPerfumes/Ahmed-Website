@@ -61,7 +61,7 @@ const translations = {
                 badge: "Season's Greetings",
                 eyebrow: "WHERE WARMTH BRINGS TOGETHER",
                 subtitle: "The most beautiful moments are those shared with faith, family, and heartfelt giving. From Ramadan's peace to Eid's delight, every gift shines with warmth and light.",
-                image: "/assets/Corporate Gift Sets/giftset4.jpeg",
+                image: "/assets/Corporate Gift Sets/christmas.jpeg",
                 icon: <ChurchIcon sx={{ fontSize: "1.2rem" }} />,
                 poem: "Under winter lights and festive cheer, wrap love for those you hold so dear. Golden memories, timeless grace, bringing warmth to every space.",
             },
