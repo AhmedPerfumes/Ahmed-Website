@@ -64,7 +64,7 @@ const CorporateHero = () => {
                 }}
             >
                 <Image
-                    src="/assets/Corporate Gift Sets/Banner.jpeg"
+                    src="/assets/Corporate Gift Sets/banner.jpeg"
                     alt="Corporate Gifting Ahmed Al Maghribi"
                     fill
                     style={{ objectFit: "cover", objectPosition: isRtl ? "left center" : "right center" }}
