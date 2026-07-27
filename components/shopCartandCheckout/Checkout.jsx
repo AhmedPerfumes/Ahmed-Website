@@ -180,16 +180,25 @@ export default function Checkout() {
         if (data.addresses && data.addresses.length) {
           const raw2 = localStorage.getItem("user");
           const userData = raw2 ? JSON.parse(atob(raw2)) : {};
-          const parsed = data.addresses.map((addr) => ({
-            id: addr.id,
-            name: addr.name || userData?.name || "",
-            email: addr.email || userData?.email || "",
-            mobile: addr.phone || userData?.phone || "",
-            area: addr.city || "",
-            building: addr.address || "",
-            emirates: addr.state || "",
-            isDefault: addr.is_default === 1,
-          }));
+          const parsed = data.addresses.map((addr) => {
+            // Extract building part if address starts with area
+            let buildingVal = addr.address || "";
+            const areaVal = addr.area || addr.city || "";
+            if (areaVal && buildingVal.startsWith(areaVal)) {
+              buildingVal = buildingVal.substring(areaVal.length).trim();
+            }
+
+            return {
+              id: addr.id,
+              name: addr.name || userData?.name || "",
+              email: addr.email || userData?.email || "",
+              mobile: addr.phone || userData?.phone || "",
+              area: areaVal,
+              building: buildingVal,
+              emirates: addr.state || "",
+              isDefault: addr.is_default === 1,
+            };
+          });
           // Ensure only one address is marked as default (first wins)
           let foundDefault = false;
           const parsedSingle = parsed.map((a) => {
@@ -375,8 +384,10 @@ export default function Checkout() {
             name: billing.first_name + " " + billing.last_name,
             email: billing.email,
             mobile: billing.mobile,
-            address: billing.building,
-            city: billing.area,
+            country: "AE",
+            address: `${billing.area} ${billing.building}`,
+            area: billing.area,
+            city: billing.emirates,
             state: billing.emirates,
             is_default: 1,
           }),
@@ -458,8 +469,10 @@ export default function Checkout() {
           name: userData.name || "",
           email: userData.email || "",
           mobile: userData.phone || "",
-          address: newAddressForm.building,
-          city: newAddressForm.area,
+          country: "AE",
+          address: `${newAddressForm.area} ${newAddressForm.building}`,
+          area: newAddressForm.area,
+          city: newAddressForm.emirates,
           state: newAddressForm.emirates,
           is_default: isEditing ? (savedAddresses.find(a => a.id === targetAddressId)?.isDefault ? 1 : 0) : 0,
         }),
