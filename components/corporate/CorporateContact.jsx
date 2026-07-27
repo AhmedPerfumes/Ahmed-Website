@@ -12,8 +12,8 @@ import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 
 const CONTACT_EMAIL = "corporate@ahmedalmaghribi.com";
-const CONTACT_PHONE = "+971 55 864 7854";
-const CONTACT_WHATSAPP = "971558647854";
+const CONTACT_PHONE = "+971 56 501 0399";
+const CONTACT_WHATSAPP = "971565010399";
 
 const translations = {
     en: {
