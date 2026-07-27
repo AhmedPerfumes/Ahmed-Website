@@ -120,6 +120,8 @@ export default function EditAddress() {
     const { name, value, checked } = e.target;
     if (name === "isDefault") {
       setForm((f) => ({ ...f, isDefault: checked }));
+    } else if (name === "area") {
+      setForm((f) => ({ ...f, area: value.slice(0, 15) }));
     } else {
       setForm((f) => ({ ...f, [name]: value }));
     }
@@ -367,6 +369,7 @@ export default function EditAddress() {
                 name="area"
                 value={form.area}
                 onChange={handleChange}
+                maxLength={15}
                 className="rounded-2 px-2 py-1"
                 isInvalid={!!errors.area}
               />
