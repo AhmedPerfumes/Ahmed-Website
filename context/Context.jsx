@@ -65,12 +65,15 @@ const cartReducer = (state, action) => {
     case 'REMOVE_GIFT':
       return {
         ...state,
-        products: state.products.filter(
-          (p) =>
-            !p.is_gift ||
-            (action.payload.productId && p.product_id !== action.payload.productId) ||
-            (action.payload.campaign && p.campaign !== action.payload.campaign)
-        ),
+        products: state.products.filter((p) => {
+          if (!p.is_gift) return true;
+          // If no specific parameters passed, remove all gifts
+          if (!action.payload?.productId && !action.payload?.campaign) return false;
+          // If parameters passed, remove matching gift
+          const matchId = action.payload.productId ? p.product_id === action.payload.productId : true;
+          const matchCampaign = action.payload.campaign ? p.campaign === action.payload.campaign : true;
+          return !(matchId && matchCampaign);
+        }),
         isProcessing: false,
       };
     case 'REMOVE_PRODUCT':

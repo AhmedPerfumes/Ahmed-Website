@@ -111,13 +111,21 @@ const FreeGiftFeature = ({ couponData }) => {
       const giftLimit = activeThreshold.gift_limit || 1;
       const giftsInCart = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
 
-      // Auto-add if there's only one product available and limit is 1
+      // Auto-add if there's only one product option available in activeThreshold AND limit is 1
       if (activeThreshold.gifts.length === 1 && giftLimit === 1) {
         const singleGift = activeThreshold.gifts[0];
         const isAlreadyInCart = giftsInCart.some(item => item.product_id === singleGift.product_id);
         if (!isAlreadyInCart) {
-          handleGiftSelect(singleGift);
+          addProductToCart({ ...singleGift, quantity: 1, is_gift: true, campaign: singleGift.campaign, type: 'foc' });
         }
+      }
+
+      // If gifts in cart exceed current giftLimit, trim excess gifts
+      if (giftsInCart.length > giftLimit) {
+        const excessGifts = giftsInCart.slice(giftLimit);
+        excessGifts.forEach((gift) => {
+          removeGiftFromCart(gift.product_id, gift.campaign);
+        });
       }
 
       // Ensure all gifts in cart are valid for current threshold
@@ -128,7 +136,7 @@ const FreeGiftFeature = ({ couponData }) => {
         }
       });
     }
-  }, [activeThreshold, cartProducts, removeGiftFromCart, loading]);
+  }, [activeThreshold, cartProducts, loading]);
 
   // Close modal on Escape key
   useEffect(() => {
