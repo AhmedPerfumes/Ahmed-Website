@@ -48,7 +48,7 @@ export default function EditAddress() {
       try {
         user = JSON.parse(atob(raw));
         customer_id = user.id;
-      } catch {}
+      } catch { }
     }
 
     setUserData(user);
@@ -68,17 +68,24 @@ export default function EditAddress() {
       .then((res) => res.json())
       .then((data) => {
         if (data.addresses && data.addresses.length) {
-          const parsed = data.addresses.map((addr) => ({
-            id: addr.id,
-            name: addr.name || user?.name || "",
-            email: addr.email || user?.email || "",
-            mobile: addr.phone || user?.phone || "",
-            area: addr.city || "",
-            building: addr.address || "",
-            emirates: addr.state || "",
-            // Trust the DB is_default — backend now ensures only one is 1
-            isDefault: addr.is_default === 1,
-          }));
+          const parsed = data.addresses.map((addr) => {
+            let buildingVal = addr.address || "";
+            const areaVal = addr.area || addr.city || "";
+            if (areaVal && buildingVal.startsWith(areaVal)) {
+              buildingVal = buildingVal.substring(areaVal.length).trim();
+            }
+
+            return {
+              id: addr.id,
+              name: addr.name || user?.name || "",
+              email: addr.email || user?.email || "",
+              mobile: addr.phone || user?.phone || "",
+              area: areaVal,
+              building: buildingVal,
+              emirates: addr.state || "",
+              isDefault: addr.is_default === 1,
+            };
+          });
 
           // Safety guard: ensure only one isDefault=true (first wins)
           let foundDefault = false;
@@ -93,7 +100,7 @@ export default function EditAddress() {
           setAddresses([]);
         }
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => {
         setLoading(false);
       });
@@ -160,7 +167,7 @@ export default function EditAddress() {
             localStorage.removeItem("address");
           }
         }
-      } catch {}
+      } catch { }
     } catch {
       alert("Failed to delete address. Please try again.");
     }
@@ -170,7 +177,7 @@ export default function EditAddress() {
     if (!customerId) return;
 
     const newErrors = {};
-    if (!form.area?.trim())     newErrors.area     = "Area / Mantaqa is required";
+    if (!form.area?.trim()) newErrors.area = "Area / Mantaqa is required";
     if (!form.building?.trim()) newErrors.building = "Building / Villa / Apartment is required";
     if (!form.emirates?.trim()) newErrors.emirates = "Emirate is required";
     if (Object.keys(newErrors).length) { setErrors(newErrors); return; }
@@ -227,14 +234,16 @@ export default function EditAddress() {
               name: form.name,
               email: form.email,
               phone: form.mobile,
+              country: "AE",
               state: form.emirates,
-              city: form.area,
-              address: form.building,
+              city: form.emirates,
+              area: form.area,
+              address: `${form.area} ${form.building}`,
               customer_id: customerId,
               is_default: 1,
             }))
           );
-        } catch {}
+        } catch { }
       }
 
       setAddresses((prev) => {
@@ -287,9 +296,8 @@ export default function EditAddress() {
             {addresses.map((addr, idx) => (
               <div
                 key={addr.id ?? idx}
-                className={`p-4 d-flex justify-content-between align-items-start rounded border stagger-item ${mounted ? 'is-visible' : ''} ${
-                  addr.isDefault ? "border-primary shadow-sm" : "border-light"
-                }`}
+                className={`p-4 d-flex justify-content-between align-items-start rounded border stagger-item ${mounted ? 'is-visible' : ''} ${addr.isDefault ? "border-primary shadow-sm" : "border-light"
+                  }`}
                 style={{ '--index': idx, transition: 'all 0.3s var(--ease-out-premium)' }}
               >
                 <div>

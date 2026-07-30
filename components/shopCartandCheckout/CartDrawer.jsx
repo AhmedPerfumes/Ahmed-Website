@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 import { useUser } from "@/context/UserContext";
-import FreeGiftFeature from "../FreeGiftFeature";
+// import FreeGiftFeature from "../FreeGiftFeature";
 // import RamadanOffersModal from "../ramadan/RamadanOffersModal";
 
 export default function CartDrawer() {
@@ -343,7 +343,7 @@ export default function CartDrawer() {
               <p className="success mb-0">{t("CartDrawer.FreeShippingQualified")}</p>
             )}
           </div>
-          <FreeGiftFeature />
+          {/* <FreeGiftFeature /> */}
 
           {
             (() => {

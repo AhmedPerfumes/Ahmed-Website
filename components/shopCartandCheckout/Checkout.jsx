@@ -84,7 +84,18 @@ export default function Checkout() {
     if (hasPreBookItem) { setSelectedOption("paytabs"); }
   }, [hasPreBookItem]);
 
+  // Capture removeGiftFromCart in a ref so it can be called on unmount without re-subscribing to renders
+  const removeGiftFromCartRef = useRef(removeGiftFromCart);
+  useEffect(() => {
+    removeGiftFromCartRef.current = removeGiftFromCart;
+  });
 
+  // Clean up FOC gifts when leaving checkout — runs ONLY on unmount (empty deps [])
+  useEffect(() => {
+    return () => {
+      removeGiftFromCartRef.current();
+    };
+  }, []);
 
   useEffect(() => {
     if (hasCleaned.current) return;

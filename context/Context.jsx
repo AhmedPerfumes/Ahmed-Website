@@ -406,11 +406,13 @@ export default function Context({ children }) {
     }
 
     // --- DYNAMIC MAX QUANTITY LOGIC ---
-    const MAX_LIMIT = product.is_gift_card
-      ? 10 // or any safe cap
-      : (product.maximum_order_quantity && product.maximum_order_quantity > 0
-          ? product.maximum_order_quantity
-          : product.product_qty);
+    const MAX_LIMIT = product.is_gift
+      ? 999
+      : (product.is_gift_card
+          ? 10 // or any safe cap
+          : (product.maximum_order_quantity && product.maximum_order_quantity > 0
+              ? product.maximum_order_quantity
+              : (product.product_qty ?? 999)));
 
     const existingItemIndex = cartProducts.findIndex((p) => {
       // 🚨 Gift cards should NEVER merge
@@ -444,7 +446,7 @@ export default function Context({ children }) {
     product.quantity =  product.quantity || 1;
 
     // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
-    if (product.quantity > MAX_LIMIT) {
+    if (!product.is_gift && product.quantity > MAX_LIMIT) {
       triggerToast({
         name: "Maximum Quantity Reached",
         message: `You cannot add more than ${MAX_LIMIT} of this product.`,
