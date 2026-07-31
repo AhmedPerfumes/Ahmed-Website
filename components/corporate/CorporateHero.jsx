@@ -52,7 +52,7 @@ const CorporateHero = () => {
                 overflow: "hidden"
             }}
         >
-            {/* ── Background Image ── */}
+            {/* ── Background Image (Desktop) ── */}
             <Box
                 sx={{
                     position: "absolute",
@@ -61,13 +61,36 @@ const CorporateHero = () => {
                     right: 0,
                     bottom: 0,
                     zIndex: 1,
+                    display: { xs: "none", md: "block" }
                 }}
             >
                 <Image
                     src="/assets/Corporate Gift Sets/banner.jpeg"
-                    alt="Corporate Gifting Ahmed Al Maghribi"
+                    alt="Corporate Gifting Ahmed Al Maghribi Desktop"
                     fill
                     style={{ objectFit: "cover", objectPosition: isRtl ? "left center" : "right center" }}
+                    priority
+                    sizes="100vw"
+                />
+            </Box>
+
+            {/* ── Background Image (Mobile) ── */}
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 1,
+                    display: { xs: "block", md: "none" }
+                }}
+            >
+                <Image
+                    src="/assets/Corporate Gift Sets/mobilebanner.jpeg"
+                    alt="Corporate Gifting Ahmed Al Maghribi Mobile"
+                    fill
+                    style={{ objectFit: "cover", objectPosition: "center center" }}
                     priority
                     sizes="100vw"
                 />
@@ -108,7 +131,7 @@ const CorporateHero = () => {
                         <Typography
                             variant="overline"
                             sx={{
-                                color: "#D4AF37",
+                                color: "#fed1a5",
                                 letterSpacing: "0.25em",
                                 fontWeight: 500,
                                 fontSize: { xs: "0.75rem", md: "0.85rem" },
@@ -138,7 +161,7 @@ const CorporateHero = () => {
                             {t.title_part1}{" "}
                             <Box
                                 component="span"
-                                sx={{ color: "#D4AF37" }}
+                                sx={{ color: "#fed1a5" }}
                             >
                                 {t.title_part2}
                             </Box>
@@ -160,14 +183,14 @@ const CorporateHero = () => {
 
                         {/* Emphasized Quote */}
                         <Box sx={{
-                            borderLeft: isRtl ? "none" : "3px solid #D4AF37",
-                            borderRight: isRtl ? "3px solid #D4AF37" : "none",
+                            borderLeft: isRtl ? "none" : "3px solid #fed1a5",
+                            borderRight: isRtl ? "3px solid #fed1a5" : "none",
                             pl: isRtl ? 0 : 3,
                             pr: isRtl ? 3 : 0,
                             mb: 6
                         }}>
                             <Typography sx={{
-                                color: "#FFFFFF",
+                                color: "#fde8cc",
                                 fontSize: { xs: "1.1rem", md: "1.3rem" },
                                 lineHeight: 1.6,
                                 fontWeight: 400,
@@ -182,8 +205,8 @@ const CorporateHero = () => {
                         <Button
                             onClick={handleScroll}
                             sx={{
-                                backgroundColor: "#D4AF37",
-                                color: "#1A1A1A",
+                                backgroundColor: "#fed1a5",
+                                color: "#2C1810",
                                 py: { xs: 1.8, md: 2 },
                                 px: { xs: 4, md: 5 },
                                 fontSize: "0.85rem",
@@ -194,9 +217,9 @@ const CorporateHero = () => {
                                 fontFamily: "'Montserrat', sans-serif",
                                 transition: "all 0.3s ease",
                                 "&:hover": {
-                                    backgroundColor: "#FFFFFF",
+                                    backgroundColor: "#e8b882",
                                     transform: "translateY(-2px)",
-                                    boxShadow: "0 10px 20px rgba(255,255,255,0.2)"
+                                    boxShadow: "0 10px 25px rgba(254,209,165,0.35)"
                                 },
                             }}
                         >

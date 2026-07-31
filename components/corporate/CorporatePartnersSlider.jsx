@@ -22,7 +22,7 @@ const translations = {
                 badge: "For Every Journey",
                 eyebrow: "WHERE JOURNEYS BECOME MEMORIES",
                 subtitle: "Crafted for airlines, luxury hotels, travel companies, and hospitality partners, the Ahmed Al Maghribi Travel Collection is designed to elevate every voyage with elegance, comfort, and unforgettable aromas.",
-                image: "/assets/Corporate Gift Sets/Airlines.jpeg",
+                image: "/assets/Corporate Gift Sets/travel.jpeg",
                 icon: <FlightTakeoffIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
                 poem: "Fly with grace, arrive in style, carry a fragrance every mile. From sky to shore, from dawn till night, a scent that makes each journey bright.",
             },

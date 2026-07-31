@@ -8,6 +8,10 @@ import CorporateProcess from "@/components/corporate/CorporateProcess";
 import CorporateContact from "@/components/corporate/CorporateContact";
 import CorporateWedding from "@/components/corporate/CorporateWedding";
 import CorporateCollections from "@/components/corporate/CorporateCollections";
+import Header14 from "@/components/headers/Header14";
+import Footer14 from "@/components/footers/FooterWithoutTrans";
+import MobileFooter2 from "@/components/footers/MobileFooter2";
+
 
 export const metadata = {
     title: "Corporate Gifting | Ahmed Al Maghribi Perfumes",
@@ -26,6 +30,9 @@ export const metadata = {
 const CorporateGiftingPage = () => {
     return (
         <main>
+            <div className="page-wrapper pt-0 min-vh-100 d-flex flex-column">
+                <Header14/>
+
             {/* 1. Hero — headline + description + stats */}
             <CorporateHero />
 
@@ -58,6 +65,21 @@ const CorporateGiftingPage = () => {
 
             {/* 6. Corporate inquiry form + contact details */}
             <CorporateContact />
+
+             <footer>
+                    {/* Desktop Footer */}
+                    <section className="d-none d-lg-block border-top">
+                      <Footer14 />
+                    </section>
+            
+                    {/* Mobile Footer */}
+                    <section className="d-block d-lg-none bg-dark pt-5 pb-4">
+                      <div className="container">
+                        <MobileFooter2   />
+                      </div>
+                    </section>
+                  </footer>
+            </div>
         </main>
     );
 };

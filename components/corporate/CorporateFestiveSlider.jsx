@@ -21,7 +21,7 @@ const translations = {
                 badge: "Holy Month Blessings",
                 eyebrow: "WHERE FAITH MEETS WARMTH",
                 subtitle: "The most beautiful moments are those shared with faith, family, and heartfelt giving. From Ramadan's peace to Eid's delight, every gift shines with warmth and light.",
-                image: "/assets/Corporate Gift Sets/corporate gift set beige color.jpg.jpeg",
+                image: "/assets/Corporate Gift Sets/ramadankareem.jpeg",
                 icon: <NightlightIcon sx={{ fontSize: "1.2rem" }} />,
                 poem: "In peaceful nights and blessed days, carry warmth in sacred ways. A token of faith, a gesture pure, scents that make quiet joy endure.",
             },
