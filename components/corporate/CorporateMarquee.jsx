@@ -17,7 +17,7 @@ const companyLogos = [
     { id: 11, src: "/assets/Corporate Gift Sets/company11.png", alt: "Corporate Partner 11" },
     { id: 12, src: "/assets/Corporate Gift Sets/company12.png", alt: "Corporate Partner 12" },
     { id: 13, src: "/assets/Corporate Gift Sets/company13.png", alt: "Corporate Partner 13" },
-    { id: 14, src: "/assets/Corporate Gift Sets/company14.jpeg", alt: "Corporate Partner 14" },
+    // { id: 14, src: "/assets/Corporate Gift Sets/company14.jpeg", alt: "Corporate Partner 14" },
     { id: 15, src: "/assets/Corporate Gift Sets/company15.jpeg", alt: "Corporate Partner 15" },
     { id: 16, src: "/assets/Corporate Gift Sets/company16.jpeg", alt: "Corporate Partner 16" },
     { id: 17, src: "/assets/Corporate Gift Sets/company17.jpeg", alt: "Corporate Partner 17" },

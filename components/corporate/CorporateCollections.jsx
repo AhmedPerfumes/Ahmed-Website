@@ -66,7 +66,7 @@ const collections = [
         desc2Ar: "احتفل ببراءة الطفولة والحب والرعاية الفائقة والفضول والخيال الذي لا حدود له مع العطور المبهجة من أحمد المغربي.",
         poemEn: "Tiny hearts, big dreams,\nBrighter than the sun's warm beams.\nEvery smile, a precious treasure,\nEvery hug, a joy beyond measure.",
         poemAr: "قلوب صغيرة، أحلام كبيرة،\nأكثر إشراقاً من أشعة الشمس الدافئة.\nكل ابتسامة كنز ثمين،\nكل عناق فرح لا يقاس.",
-        image: "/assets/Corporate Gift Sets/corporate gift set black square 01.jpg.jpeg",
+        image: "/assets/Corporate Gift Sets/childrensday.jpeg",
         bg: "#FFFFFF",
     },
     {
