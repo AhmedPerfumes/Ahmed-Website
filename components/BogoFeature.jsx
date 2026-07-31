@@ -62,9 +62,9 @@ const BOGOFeature = () => {
       );
       if (!hasBOGOChanges) return;
 
-      // Remove old-style BOGO gifts AND restore BOGO flags
+      // Remove old-style BOGO gifts and FOC gifts AND restore BOGO flags
       const cleanedCart = currentCart
-        .filter((item) => !(item.is_gift && item.type === 'bogo')) // Remove old-style gifts
+        .filter((item) => !item.is_gift) // Remove all gift items on checkout unmount
         .map((item) => {
           if (item.bogo_free_qty || item._original_discount || item.bogo_campaign) {
             const { bogo_free_qty, bogo_campaign, _original_discount, ...rest } = item;

@@ -170,7 +170,7 @@ export default function NewsLetter({popUp}) {
 
                                     <div className="d-flex justify-content-center mt-2">
                                         <a href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark w-100 text-center justify-content-center">
-                                            {t("Shop Now")}
+                                            {t("Enquire Now")}
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M5 12h14M12 5l7 7-7 7" />
                                             </svg>

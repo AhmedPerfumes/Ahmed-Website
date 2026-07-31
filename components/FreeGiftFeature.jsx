@@ -173,7 +173,17 @@ const FreeGiftFeature = ({ couponData }) => {
     return thresholds.find((threshold) => nonCollectionTotalPrice < parseFloat(threshold.min));
   };
 
-  // Hide Free Gift if all products are from Collections
+  // Hide Free Gift if all products are from Collections (and clean up any existing FOC gifts)
+  useEffect(() => {
+    if (!loading && nonCollectionProducts.length === 0) {
+      cartProducts.forEach((item) => {
+        if (item.is_gift && item.type === 'foc') {
+          removeGiftFromCart(item.product_id, item.campaign);
+        }
+      });
+    }
+  }, [nonCollectionProducts.length, loading]);
+
   if (nonCollectionProducts.length === 0) return null;
   if (loading) return <></>;
 

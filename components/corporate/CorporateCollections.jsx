@@ -27,7 +27,7 @@ const collections = [
         desc2Ar: "لشخص تحبه وتعتز به ولا يمكنك تخيل الحياة بدونه... هدية تتحدث عندما تعجز الكلمات.",
         poemEn: "A lasting fragrance, a love so bright,\nHer endless warmth, her guiding light.\nThrough every season, through every breeze,\nHer love remains with effortless ease\n\nA Lasting Aroma. A Lasting Bond.\nFor the One You Love Beyond Words.",
         poemAr: "عطر يدوم، حب مشرق،\nدفئها الذي لا ينتهي، ونورها الهادي.\nعبر كل الفصول، وعبر كل نسيم،\nيبقى حبها بكل سهولة ويُسر\n\nرائحة تدوم. رابط يدوم.\nلمن تحبها بصدق يفوق الكلمات.",
-        image: "/assets/Corporate Gift Sets/corporate gift set heart shape 01.jpg.jpeg",
+        image: "/assets/Corporate Gift Sets/mothersday.jpeg",
         bg: "#FAF8F5",
     },
     {
@@ -40,7 +40,7 @@ const collections = [
         desc2Ar: "في عيد الأب هذا، كرم الرجل الذي تلهم قوته وحبه الذي لا يتلاشى مع الأناقة الخالدة لعطور أحمد المغربي.",
         poemEn: "A lasting aroma, a lasting embrace,\nA father's love, beyond time and space.\nEvery fragrance tells a story true,\nOf cherished moments shared with you.",
         poemAr: "رائحة تدوم، عناق يدوم،\nحب الأب يتجاوز الزمان والمكان.\nكل عطر يروي قصة حقيقية،\nعن لحظات غالية شاركناها معك.",
-        image: "/assets/Corporate Gift Sets/Fathers.jpeg",
+        image: "/assets/Corporate Gift Sets/fathersday.jpeg",
         bg: "#FFFFFF",
     },
     {
@@ -53,7 +53,7 @@ const collections = [
         desc2Ar: "في يوم المعلم، كرم المرشدين الذين يبنون العقول ويلامسون القلوب بأناقة عطور أحمد المغربي الخالدة, هدية تعكس الاحترام والتقدير والامتنان الصادق.",
         poemEn: "They teach with wisdom, lead with grace,\nLeaving hope in every place.\nTheir words inspire, their lessons stay,\nLighting countless hearts each day\n\nHonouring Every Teacher. Celebrating Every Lesson.\nA Lasting Aroma for a Lasting Inspiration.",
         poemAr: "يعلمون بحكمة، ويقودون بنعمة،\nيتركون الأمل في كل مكان.\nتلهم كلماتهم، وتبقى دروسهم،\nتضيء قلوباً لا حصر لها كل يوم\n\nتكريم لكل معلم. احتفال بكل درس.\nرائحة تدوم لإلهام يدوم.",
-        image: "/assets/Corporate Gift Sets/Diiwali.jpeg",
+        image: "/assets/Corporate Gift Sets/teachersday.jpeg",
         bg: "#FAF8F5",
     },
     {

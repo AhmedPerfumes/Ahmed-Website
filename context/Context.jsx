@@ -525,11 +525,10 @@ export default function Context({ children }) {
   };
 
   const removeGiftFromCart = (productId = null, campaign = null) => {
-    if (state.isProcessing) {
-      // console.log('Skipping removeGiftFromCart: processing in progress', { productId, campaign });
+    // Only block specific gift removal if processing, allow full cleanup calls
+    if (state.isProcessing && (productId || campaign)) {
       return;
     }
-    // console.log('removeGiftFromCart:', { productId, campaign });
     dispatch({ type: 'SET_PROCESSING', payload: true });
     dispatch({ type: 'REMOVE_GIFT', payload: { productId, campaign } });
   };

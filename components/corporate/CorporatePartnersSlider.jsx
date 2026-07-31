@@ -32,7 +32,7 @@ const translations = {
                 badge: "For your Sacred Journey",
                 eyebrow: "WHERE FAITH MEETS GRACE",
                 subtitle: "A Journey of Faith. A Gift of Blessings. Featuring our signature perfumes and premium attars, elegantly presented in bespoke gift boxes, a meaningful keepsake for pilgrims, loved ones, and guests.",
-                image: "/assets/Corporate Gift Sets/corporate gift set beige color.jpg.jpeg",
+                image: "/assets/Corporate Gift Sets/hajjumrah.jpeg",
                 icon: <MosqueIcon sx={{ fontSize: "1.2rem", color: "#A88132" }} />,
                 poem: "From Makkah's light to Madinah's grace, may peace and mercy your heart embrace. With every aroma, memories remain, a sacred journey lived again.",
             },
