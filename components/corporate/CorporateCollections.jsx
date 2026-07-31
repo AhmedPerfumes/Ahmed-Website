@@ -14,7 +14,7 @@ const collections = [
         desc2Ar: "في يوم المرأة، كرم النساء الملهمات في حياتك مع الأناقة الخالدة لعطور أحمد المغربي. هدية تعكس جمالها ومرونتها وروحها التي لا تلين.",
         poemEn: "A lasting aroma, a lasting grace,\nHer strength and beauty time cannot erase.\nEvery fragrance tells a story true,\nOf the endless wonder that is you.",
         poemAr: "رائحة تدوم، نعمة تدوم،\nقوتها وجمالها لا يمحوه الزمان.\nكل عطر يروي قصة حقيقية،\nعن العجب الذي لا ينتهي وهو أنت.",
-        image: "/assets/Corporate Gift Sets/corporate gift set 05.jpg.jpeg",
+        image: "/assets/Corporate Gift Sets/womensday.jpeg",
         bg: "#FFFFFF",
     },
     {
