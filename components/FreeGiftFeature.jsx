@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './FreeGiftFeature.css';
 import Image from 'next/image';
 import { useContextElement } from '@/context/Context';
@@ -10,7 +11,12 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
   const [thresholds, setThresholds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const hasAutoPoppedRef = useRef(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { isLoggedIn } = useUser();
 
@@ -314,7 +320,7 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
       )}
 
       {/* ── GIFT PICKER MODAL ── */}
-      {isModalOpen && activeThreshold && (
+      {isModalOpen && activeThreshold && mounted && createPortal(
         <div
           className="foc-overlay"
           onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false); }}
@@ -420,7 +426,8 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
