@@ -1098,7 +1098,6 @@ export default function Checkout() {
     <>
       {cartProducts.length ? (
         <>
-          <FreeGiftFeature couponData={couponData} />
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">
@@ -1432,6 +1431,7 @@ export default function Checkout() {
 
               <div className="checkout__totals-wrapper">
                 <div className="sticky-content">
+                  <FreeGiftFeature couponData={couponData} autoPopup={true} />
                   <div className={`checkout__totals ${isOrderSummaryOpen ? "is-open" : ""}`}>
                     {/* Collapsible Header/Toggle Bar */}
                     <div 

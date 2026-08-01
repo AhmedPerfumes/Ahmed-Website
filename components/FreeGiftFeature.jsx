@@ -5,11 +5,12 @@ import { useContextElement } from '@/context/Context';
 import he from 'he';
 import { useUser } from "@/context/UserContext";
 
-const FreeGiftFeature = ({ couponData }) => {
+const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
   const { cartProducts, totalPrice, addProductToCart, setCartProducts, promotionsContext, removeGiftFromCart } = useContextElement();
   const [thresholds, setThresholds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const hasAutoPoppedRef = useRef(false);
 
   const { isLoggedIn } = useUser();
 
@@ -84,6 +85,30 @@ const FreeGiftFeature = ({ couponData }) => {
       fetchThresholds(false);
     }
   }, [isModalOpen, fetchThresholds]);
+
+  // Reset auto-popup ref if active threshold changes
+  useEffect(() => {
+    if (activeThreshold?.id) {
+      hasAutoPoppedRef.current = false;
+    }
+  }, [activeThreshold?.id]);
+
+  // Auto-open modal on load if autoPopup is enabled, eligible, and user hasn't selected free gift(s) yet
+  useEffect(() => {
+    if (!autoPopup || loading || !activeThreshold) return;
+
+    // Skip auto popup if single gift is automatically added
+    const isSingleAutoAdded = activeThreshold.gifts?.length === 1 && (activeThreshold.gift_limit || 1) === 1;
+    if (isSingleAutoAdded) return;
+
+    const giftLimit = activeThreshold.gift_limit || 1;
+    const giftsInCart = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
+
+    if (giftsInCart.length < giftLimit && !hasAutoPoppedRef.current) {
+      setIsModalOpen(true);
+      hasAutoPoppedRef.current = true;
+    }
+  }, [activeThreshold, autoPopup, loading, cartProducts]);
 
   // Handle gift selection with toggle and swap behavior
   const handleGiftSelect = (product) => {
