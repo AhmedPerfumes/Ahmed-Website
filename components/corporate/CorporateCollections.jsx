@@ -205,7 +205,9 @@ const CorporateCollections = () => {
                                             fontSize: { xs: "0.75rem", md: "0.85rem" },
                                             fontWeight: 500,
                                         }}>
-                                            {String(index + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}
+                                            {isRtl
+                                                ? `${String(index + 1).padStart(2, "0").replace(/\d/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d])} / ${String(collections.length).padStart(2, "0").replace(/\d/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d])}`
+                                                : `${String(index + 1).padStart(2, "0")} / ${String(collections.length).padStart(2, "0")}`}
                                         </Typography>
                                     </Box>
                                 </Box>

@@ -350,7 +350,7 @@ const CorporateFestiveSlider = () => {
                                     lineHeight: 1.25,
                                 }}
                             >
-                                {activeTab.title} Collection
+                                {isRtl ? `مجموعة ${activeTab.title}` : `${activeTab.title} Collection`}
                             </Typography>
 
                             <Typography

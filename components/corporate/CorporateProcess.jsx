@@ -89,7 +89,7 @@ const CorporateProcess = () => {
                         color: "#A88132",
                         letterSpacing: "0.3em",
                         fontWeight: 500,
-                        fontSize: { xs: "0.68rem", md: "0.7rem" },
+                        fontSize: isRtl ? { xs: "0.85rem", md: "0.95rem" } : { xs: "0.68rem", md: "0.7rem" },
                         fontFamily: "'Montserrat', sans-serif",
                         textTransform: "uppercase",
                     }}>
@@ -98,11 +98,11 @@ const CorporateProcess = () => {
 
                     <Typography sx={{
                         color: "#1A1A1A",
-                        fontSize: { xs: "1.6rem", sm: "2rem", md: "2.8rem" },
-                        fontWeight: 400,
-                        fontFamily: "'Playfair Display', serif",
+                        fontSize: isRtl ? { xs: "1.8rem", sm: "2.3rem", md: "3.2rem" } : { xs: "1.6rem", sm: "2rem", md: "2.8rem" },
+                        fontWeight: isRtl ? 600 : 400,
+                        fontFamily: isRtl ? "'Cairo', 'Tajawal', sans-serif" : "'Playfair Display', serif",
                         letterSpacing: "0.01em",
-                        lineHeight: 1.2,
+                        lineHeight: 1.25,
                         textAlign: { xs: "left", md: "center" },
                     }}>
                         {t.title}
@@ -154,13 +154,13 @@ const CorporateProcess = () => {
                             }}>
                                 {/* Step number */}
                                 <Typography sx={{
-                                    color: "rgba(168,129,50,0.25)",
-                                    fontFamily: "'Playfair Display', serif",
-                                    fontSize: { xs: "2.2rem", sm: "3rem", md: "4rem" },
-                                    fontWeight: 400,
+                                    color: isRtl ? "rgba(168,129,50,0.9)" : "rgba(168,129,50,0.45)",
+                                    fontFamily: isRtl ? "'Cairo', 'Montserrat', sans-serif" : "'Playfair Display', serif",
+                                    fontSize: isRtl ? { xs: "3.2rem", sm: "4.5rem", md: "5.8rem" } : { xs: "2.5rem", sm: "3.4rem", md: "4.5rem" },
+                                    fontWeight: isRtl ? 700 : 500,
                                     lineHeight: 1,
-                                    mb: { xs: 2, md: 5 },
-                                    letterSpacing: "-0.02em",
+                                    mb: { xs: 2, md: 4 },
+                                    letterSpacing: isRtl ? "0" : "-0.02em",
                                 }}>
                                     {step.number}
                                 </Typography>
@@ -168,9 +168,9 @@ const CorporateProcess = () => {
                                 {/* Step title */}
                                 <Typography sx={{
                                     color: "#1A1A1A",
-                                    fontFamily: "'Playfair Display', serif",
-                                    fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.6rem" },
-                                    fontWeight: 400,
+                                    fontFamily: isRtl ? "'Cairo', 'Tajawal', sans-serif" : "'Playfair Display', serif",
+                                    fontSize: isRtl ? { xs: "1.3rem", sm: "1.5rem", md: "1.85rem" } : { xs: "1.1rem", sm: "1.3rem", md: "1.6rem" },
+                                    fontWeight: isRtl ? 600 : 400,
                                     mb: { xs: 1.5, md: 2.5 },
                                     lineHeight: 1.25,
                                 }}>
@@ -188,7 +188,7 @@ const CorporateProcess = () => {
                                 {/* Description */}
                                 <Typography sx={{
                                     color: "#555555",
-                                    fontSize: { xs: "0.8rem", sm: "0.85rem", md: "0.9rem" },
+                                    fontSize: isRtl ? { xs: "0.95rem", sm: "1.02rem", md: "1.1rem" } : { xs: "0.8rem", sm: "0.85rem", md: "0.9rem" },
                                     lineHeight: { xs: 1.5, md: 1.8 },
                                     fontFamily: "'Montserrat', sans-serif",
                                     fontWeight: 400,

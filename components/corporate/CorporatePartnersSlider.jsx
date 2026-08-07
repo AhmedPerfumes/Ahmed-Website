@@ -256,7 +256,9 @@ const CorporatePartnersSlider = () => {
                                             }}
                                         >
                                             <Typography sx={{ color: "#FFFFFF", fontSize: { xs: "0.62rem", md: "0.72rem" }, fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}>
-                                                {String(index + 1).padStart(2, "0")} / {String(t.slides.length).padStart(2, "0")}
+                                                {isRtl
+                                                    ? `${String(index + 1).padStart(2, "0").replace(/\d/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d])} / ${String(t.slides.length).padStart(2, "0").replace(/\d/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d])}`
+                                                    : `${String(index + 1).padStart(2, "0")} / ${String(t.slides.length).padStart(2, "0")}`}
                                             </Typography>
                                         </Box>
                                     </Box>

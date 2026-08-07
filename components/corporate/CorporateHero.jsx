@@ -65,7 +65,11 @@ const CorporateHero = () => {
                     src="/assets/Corporate Gift Sets/banner.jpeg"
                     alt="Corporate Gifting Ahmed Al Maghribi Desktop"
                     fill
-                    style={{ objectFit: "cover", objectPosition: isRtl ? "left center" : "right center" }}
+                    style={{
+                        objectFit: "cover",
+                        objectPosition: isRtl ? "left center" : "right center",
+                        transform: isRtl ? "scaleX(-1)" : "none"
+                    }}
                     priority
                     sizes="100vw"
                 />
@@ -87,7 +91,11 @@ const CorporateHero = () => {
                     src="/assets/Corporate Gift Sets/mobilebanner.jpeg"
                     alt="Corporate Gifting Ahmed Al Maghribi Mobile"
                     fill
-                    style={{ objectFit: "cover", objectPosition: "center center" }}
+                    style={{
+                        objectFit: "cover",
+                        objectPosition: "center center",
+                        transform: isRtl ? "scaleX(-1)" : "none"
+                    }}
                     priority
                     sizes="100vw"
                 />
