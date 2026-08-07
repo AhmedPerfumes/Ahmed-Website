@@ -49,6 +49,7 @@ const translations = {
         budgets: ["Under AED 5,000", "AED 5,000–15,000", "AED 15,000–50,000", "AED 50,000–100,000", "AED 100,000+"],
         submit: "Send Inquiry",
         whatsapp: "WhatsApp Us",
+        wa_text: "Hello, I am interested in corporate gifting from Ahmed Al Maghribi.",
         success: "Your inquiry has been received! Our corporate gifting team will be in touch within 24 hours.",
         why_title: "Why Ahmed Al Maghribi?",
         why_items: [
@@ -59,19 +60,19 @@ const translations = {
         ],
     },
     ar: {
-        eyebrow: "استفسار مؤسسي",
-        title: "لنصنع شيئاً لا يُنسى",
+        eyebrow: "استفسارات الشركات",
+        title: "لنصنع معاً شيئاً لا يُنسى",
         subtitle:
-            "دعنا نساعدك في إنشاء تجربة هدايا مدروسة لعملائك وموظفيك وشركائك أو ضيوف فعالياتك.",
-        dept_title: "قسم الهدايا المؤسسية",
+            "دعنا نساعدك على ابتكار تجربة إهداء مدروسة لعملائك وموظفيك وشركائك أو ضيوف فعاليتك.",
+        dept_title: "قسم هدايا الشركات",
         fields: {
             name: "الاسم",
             company: "اسم الشركة",
             email: "البريد الإلكتروني",
             phone: "الهاتف",
-            occasion: "المناسبة / المتطلب",
+            occasion: "المناسبة / المتطلبات",
             quantity: "الكمية",
-            budget: "نطاق الميزانية (درهم)",
+            budget: "نطاق الميزانية (درهم إماراتي)",
             message: "الرسالة",
         },
         quantities: ["١٠–٥٠", "٥٠–١٠٠", "١٠٠–٣٠٠", "٣٠٠–٥٠٠", "٥٠٠–١٠٠٠", "أكثر من ١٠٠٠"],
@@ -90,8 +91,9 @@ const translations = {
         ],
         budgets: ["أقل من ٥٠٠٠ درهم", "٥٠٠٠–١٥٠٠٠ درهم", "١٥٠٠٠–٥٠٠٠٠ درهم", "٥٠٠٠٠–١٠٠٠٠٠ درهم", "أكثر من ١٠٠٠٠٠ درهم"],
         submit: "إرسال الاستفسار",
-        whatsapp: "تواصل عبر واتساب",
-        success: "تم استلام استفسارك! سيتواصل معك فريق الهدايا المؤسسية خلال ٢٤ ساعة.",
+        whatsapp: "تواصل معنا عبر واتساب",
+        wa_text: "مرحباً بك أود تقديم طلب لشراء هدايا شركات مخصصة من أحمد المغربي",
+        success: "تم استلام استفسارك! سيتواصل معك فريق هدايا الشركات لدينا خلال 24 ساعة.",
         why_title: "لماذا أحمد المغربي؟",
         why_items: [
             { icon: <CardGiftcardIcon sx={{ color: "#A88132", fontSize: "1.8rem" }} />, title: "علامة تجارية مخصصة", desc: "تغليف مخصص بشعار شركتك ورسائل مخصصة وتصاميم حسب المناسبة" },
@@ -288,7 +290,7 @@ const CorporateContact = () => {
                                 {/* <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                                     <Box
                                         component="a"
-                                        href={`https://wa.me/${CONTACT_WHATSAPP}?text=Hello%2C%20I%20am%20interested%20in%20corporate%20gifting%20from%20Ahmed%20Al%20Maghribi.`}
+                                        href={`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(t.wa_text || 'Hello, I am interested in corporate gifting from Ahmed Al Maghribi.')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         sx={{

@@ -91,7 +91,7 @@ const CorporateMarquee = () => {
                         fontFamily: "'Montserrat', sans-serif",
                     }}
                 >
-                    {isRtl ? "الشركات والمؤسسات" : "TRUSTED BY LEADING ORGANIZATIONS"}
+                    {isRtl ? "موثوق بنا من قبل مؤسسات رائدة" : "TRUSTED BY LEADING ORGANIZATIONS"}
                 </Typography>
                 <Typography
                     variant="h4"
@@ -102,7 +102,7 @@ const CorporateMarquee = () => {
                         fontFamily: "'Playfair Display', serif",
                     }}
                 >
-                    {isRtl ? "شركاؤنا في النجاح" : "Our Esteemed Corporate Partners"}
+                    {isRtl ? "شركاؤنا المؤسسيون الموقرون" : "Our Esteemed Corporate Partners"}
                 </Typography>
             </Box>
 

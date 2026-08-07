@@ -6,15 +6,15 @@ import Image from "next/image";
 const collections = [
     {
         id: "womens-day",
-        titleEn: "Women's Day Collection",
-        titleAr: "مجموعة يوم المرأة",
-        desc1En: "Celebrating the strength, grace, and elegance of every woman.",
-        desc1Ar: "احتفال بقوة ونعمة وأناقة كل امرأة.",
-        desc2En: "This Women's Day, honour the inspiring women in your life with the timeless elegance of Ahmed Al Maghribi Perfumes. A gift that reflects her beauty, resilience, and unyielding spirit.",
-        desc2Ar: "في يوم المرأة، كرم النساء الملهمات في حياتك مع الأناقة الخالدة لعطور أحمد المغربي. هدية تعكس جمالها ومرونتها وروحها التي لا تلين.",
-        poemEn: "A lasting aroma, a lasting grace,\nHer strength and beauty time cannot erase.\nEvery fragrance tells a story true,\nOf the endless wonder that is you.",
-        poemAr: "رائحة تدوم، نعمة تدوم،\nقوتها وجمالها لا يمحوه الزمان.\nكل عطر يروي قصة حقيقية،\nعن العجب الذي لا ينتهي وهو أنت.",
-        image: "/assets/Corporate Gift Sets/womensday.jpeg",
+        titleEn: "Emirati Women's Day Collection",
+        titleAr: "مجموعة يوم المرأة الإماراتية",
+        desc1En: "We Emerge Stronger and Better",
+        desc1Ar: "نتسامى قوةً ورفعة",
+        desc2En: "Celebrating the strength, ambition, and enduring contributions of Emirati women who inspire progress and shape the UAE’s future. Honour her achievements with a distinguished fragrance gift from Ahmed Al Maghribi Perfumes — a timeless expression of elegance and lasting impact.",
+        desc2Ar: "احتفاءً بقوة وطموح وإسهامات المرأة الإماراتية الخالدة التي تلهم التقدم وتصنع مستقبل الإمارات. كرّم إنجازاتها بهدية عطرية متميزة من عطور أحمد المغربي — تعبيرٌ خالد عن الأناقة والأثر الباقي.",
+        poemEn: "She rises with purpose, with vision and pride,\nHer strength and ambition a nation’s guide.\nHer legacy inspires a future made better,\nWe Emerge Stronger and Better — together.",
+        poemAr: "تنهض برؤية، بعزمٍ وفخار،\nقوتها وطموحها نبرة الاستمرار.\nإرثها يلهم المستقبل نحو غدٍ أفضل،\nنتسامى قوةً ورفعةً — يداً بيد معاً.",
+        image: "/assets/Corporate Gift Sets/emriates-womens-day.jpeg",
         bg: "#FFFFFF",
     },
     {
@@ -22,11 +22,11 @@ const collections = [
         titleEn: "Mother's Day Collection",
         titleAr: "مجموعة عيد الأم",
         desc1En: "A mother's love is life's sweetest perfume, pure, endless, and unforgettable.",
-        desc1Ar: "حب الأم هو أجمل عطر في الحياة, نقي ولا نهاية له ولا يُنسى.",
+        desc1Ar: "حب الأم هو أعذب عطر في الحياة؛ نقي، لا ينتهي ولا يُنسى.",
         desc2En: "For someone you love, cherish, and simply cannot imagine life without... A gift that speaks when words fall silent.",
-        desc2Ar: "لشخص تحبه وتعتز به ولا يمكنك تخيل الحياة بدونه... هدية تتحدث عندما تعجز الكلمات.",
+        desc2Ar: "لمن تحبها وتعتز بها، ولا تتخيل الحياة من دونها... هدية تتحدث حين تصمت الكلمات.",
         poemEn: "A lasting fragrance, a love so bright,\nHer endless warmth, her guiding light.\nThrough every season, through every breeze,\nHer love remains with effortless ease\n\nA Lasting Aroma. A Lasting Bond.\nFor the One You Love Beyond Words.",
-        poemAr: "عطر يدوم، حب مشرق،\nدفئها الذي لا ينتهي، ونورها الهادي.\nعبر كل الفصول، وعبر كل نسيم،\nيبقى حبها بكل سهولة ويُسر\n\nرائحة تدوم. رابط يدوم.\nلمن تحبها بصدق يفوق الكلمات.",
+        poemAr: "عبيرٌ يدوم، وحبٌ يضيء،\nدفؤها الأبدي ونورها الذي يهدي الطريق.\nمع كل فصل، ومع كل نسمة،\nيبقى حبها في سكينة وانسياب.\n\nعبير يدوم. ورابطة لا تزول.\nلمن تحبها بما يفوق الكلمات.",
         image: "/assets/Corporate Gift Sets/mothersday.jpeg",
         bg: "#FAF8F5",
     },
@@ -35,11 +35,11 @@ const collections = [
         titleEn: "Father's Day Collection",
         titleAr: "مجموعة عيد الأب",
         desc1En: "A father's love is steadfast, his guidance everlasting, and his presence unforgettable.",
-        desc1Ar: "حب الأب ثابت، وتوجيهاته خالدة، وحضوره لا يُنسى.",
+        desc1Ar: "حب الأب راسخ، وإرشاده دائم، وحضوره لا يُنسى.",
         desc2En: "This Father's Day, honour the man whose strength inspires and whose love never fades with the timeless elegance of Ahmed Al Maghribi Perfumes.",
-        desc2Ar: "في عيد الأب هذا، كرم الرجل الذي تلهم قوته وحبه الذي لا يتلاشى مع الأناقة الخالدة لعطور أحمد المغربي.",
+        desc2Ar: "في عيد الأب هذا، كرّم الرجل الذي تلهمك قوته ولا يخبو حبه، بأناقة عطور أحمد المغربي الخالدة.",
         poemEn: "A lasting aroma, a lasting embrace,\nA father's love, beyond time and space.\nEvery fragrance tells a story true,\nOf cherished moments shared with you.",
-        poemAr: "رائحة تدوم، عناق يدوم،\nحب الأب يتجاوز الزمان والمكان.\nكل عطر يروي قصة حقيقية،\nعن لحظات غالية شاركناها معك.",
+        poemAr: "عبيرٌ يدوم، وعناقٌ يبقى،\nحب الأب يتجاوز الزمان والمكان.\nكل عطر يروي قصة صادقة،\nعن لحظات عزيزة جمعتنا بك.",
         image: "/assets/Corporate Gift Sets/fathersday.jpeg",
         bg: "#FFFFFF",
     },
@@ -48,11 +48,11 @@ const collections = [
         titleEn: "Teacher's Day Collection",
         titleAr: "مجموعة يوم المعلم",
         desc1En: "A Fragrance of Gratitude for Every Guiding Heart",
-        desc1Ar: "عطر الامتنان لكل قلب مرشد",
+        desc1Ar: "عبير امتنان لكل قلبٍ مُرشد",
         desc2En: "This Teacher's Day, honour the mentors who shape minds and touch lives with the timeless elegance of Ahmed Al Maghribi Perfumes, a gift that reflects respect, appreciation, and heartfelt gratitude.",
-        desc2Ar: "في يوم المعلم، كرم المرشدين الذين يبنون العقول ويلامسون القلوب بأناقة عطور أحمد المغربي الخالدة, هدية تعكس الاحترام والتقدير والامتنان الصادق.",
+        desc2Ar: "في يوم المعلم هذا، كرّم المعلّمين الذين يصنعون العقول ويلامسون الحياة بأناقة عطور أحمد المغربي الخالدة، هدية تعكس الاحترام والتقدير والامتنان الصادق.",
         poemEn: "They teach with wisdom, lead with grace,\nLeaving hope in every place.\nTheir words inspire, their lessons stay,\nLighting countless hearts each day\n\nHonouring Every Teacher. Celebrating Every Lesson.\nA Lasting Aroma for a Lasting Inspiration.",
-        poemAr: "يعلمون بحكمة، ويقودون بنعمة،\nيتركون الأمل في كل مكان.\nتلهم كلماتهم، وتبقى دروسهم،\nتضيء قلوباً لا حصر لها كل يوم\n\nتكريم لكل معلم. احتفال بكل درس.\nرائحة تدوم لإلهام يدوم.",
+        poemAr: "يعلّمون بحكمة، ويقودون برقي،\nويزرعون الأمل في كل مكان.\nكلماتهم تلهم، ودروسهم تبقى،\nفتضيء قلوباً لا حصر لها كل يوم.\n\nتكريماً لكل معلم. واحتفاءً بكل درس.\nعبير يدوم لإلهام لا ينتهي.",
         image: "/assets/Corporate Gift Sets/teachersday.jpeg",
         bg: "#FAF8F5",
     },
@@ -61,11 +61,11 @@ const collections = [
         titleEn: "Children's Day Collection",
         titleAr: "مجموعة يوم الطفل",
         desc1En: "A child's smile is the purest joy, their laughter the sweetest melody, and their dreams the brightest light.",
-        desc1Ar: "ابتسامة الطفل هي أنقى فرح، وضحكاته أجمل لحن، وأحلامه أسطع نور.",
+        desc1Ar: "ابتسامة الطفل أنقى فرح، وضحكته أعذب لحن، وأحلامه أسطع نور.",
         desc2En: "Celebrate the innocence, love, tender care, curiosity, and boundless imagination of childhood with the delightful fragrances of Ahmed Al Maghribi Perfumes.",
-        desc2Ar: "احتفل ببراءة الطفولة والحب والرعاية الفائقة والفضول والخيال الذي لا حدود له مع العطور المبهجة من أحمد المغربي.",
+        desc2Ar: "احتفل ببراءة الطفولة وحبها ورعايتها الرقيقة وفضولها وخيالها اللامحدود، مع عطور أحمد المغربي المبهجة.",
         poemEn: "Tiny hearts, big dreams,\nBrighter than the sun's warm beams.\nEvery smile, a precious treasure,\nEvery hug, a joy beyond measure.",
-        poemAr: "قلوب صغيرة، أحلام كبيرة،\nأكثر إشراقاً من أشعة الشمس الدافئة.\nكل ابتسامة كنز ثمين،\nكل عناق فرح لا يقاس.",
+        poemAr: "قلوب صغيرة، وأحلام كبيرة،\nأسطع من أشعة الشمس الدافئة.\nكل ابتسامة كنز ثمين،\nوكل عناق فرحة لا تُقدّر.",
         image: "/assets/Corporate Gift Sets/childrensday.jpeg",
         bg: "#FFFFFF",
     },
@@ -74,11 +74,11 @@ const collections = [
         titleEn: "National Day Collection",
         titleAr: "مجموعة اليوم الوطني",
         desc1En: "A Gift of Pride. A Fragrance of Unity.",
-        desc1Ar: "هدية الفخر. عطر الوحدة.",
+        desc1Ar: "هدية فخر. وعبير وحدة.",
         desc2En: "Wrapped in the vibrant Red, Green, White, and Black of the UAE National Flag, the Ahmed Al Maghribi National Day Collection celebrates the spirit of a nation built on unity, vision, and excellence. Celebrate the occasion with beautifully customized gift sets, crafted to honour employees, clients, partners, and loved ones with the timeless elegance of Ahmed Al Maghribi Perfumes.",
-        desc2Ar: "مغلفة بألوان علم الإمارات الزاهية الأحمر والأخضر والأبيض والأسود، تحتفل مجموعة اليوم الوطني من أحمد المغربي بروح أمة بُنيت على الوحدة والرؤية والتميز. احتفل بهذه المناسبة مع أطقم هدايا مخصصة بشكل جميل، صُممت لتكريم الموظفين والعملاء والشركاء والأحباء بالأناقة الخالدة لعطور أحمد المغربي.",
+        desc2Ar: "متوشحة بألوان علم دولة الإمارات النابضة: الأحمر والأخضر والأبيض والأسود، تحتفي مجموعة اليوم الوطني من أحمد المغربي بروح وطن بُني على الوحدة والرؤية والتميّز. احتفل بالمناسبة مع أطقم هدايا مصممة بعناية، صُنعت لتكريم الموظفين والعملاء والشركاء والأحبّة بأناقة عطور أحمد المغربي الخالدة.",
         poemEn: "A lasting fragrance, a nation's pride,\nWith hope and dreams forever our guide.\nIn every bottle, a story unfolds,\nOf treasured memories more precious than gold.",
-        poemAr: "عطر يدوم، فخر أمة،\nمع الأمل والأحلام دليلنا الدائم.\nفي كل زجاجة، تتكشف قصة،\nعن ذكريات غالية أثمن من الذهب.",
+        poemAr: "عبيرٌ يدوم، وفخر وطن،\nوالأمل والأحلام دليلنا إلى الأبد.\nفي كل زجاجة قصة تتكشف،\nعن ذكريات غالية أثمن من الذهب.",
         image: "/assets/Corporate Gift Sets/NationalDay.jpeg",
         bg: "#FAF8F5",
     },
@@ -112,7 +112,7 @@ const CorporateCollections = () => {
                             fontFamily: "'Montserrat', sans-serif",
                         }}
                     >
-                        {isRtl ? "توزيعات حصرية" : "EXCLUSIVE CURATIONS"}
+                        {isRtl ? "تشكيلات حصرية" : "EXCLUSIVE CURATIONS"}
                     </Typography>
                     <Typography
                         variant="h2"
@@ -124,7 +124,7 @@ const CorporateCollections = () => {
                             mb: 2.5,
                         }}
                     >
-                        {isRtl ? "مجموعاتنا المخصصة" : "Celebrations"}
+                        {isRtl ? "الاحتفالات" : "Celebrations"}
                     </Typography>
                     <Box sx={{ width: "40px", height: "2px", backgroundColor: "#A88132", mx: "auto", mb: 2 }} />
                     <Typography sx={{
@@ -135,7 +135,7 @@ const CorporateCollections = () => {
                         mt: 1.5,
                         letterSpacing: "0.05em",
                     }}>
-                        {isRtl ? "تمرير للأسفل لاستكشاف المجموعات" : "Scroll to explore each collection"}
+                        {isRtl ? "مرر لاستكشاف كل مجموعة" : "Scroll to explore each collection"}
                     </Typography>
                 </Box>
             </Container>
