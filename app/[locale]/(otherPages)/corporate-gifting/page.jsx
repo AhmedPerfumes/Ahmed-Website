@@ -9,7 +9,7 @@ import CorporateContact from "@/components/corporate/CorporateContact";
 import CorporateWedding from "@/components/corporate/CorporateWedding";
 import CorporateCollections from "@/components/corporate/CorporateCollections";
 import Header14 from "@/components/headers/Header14";
-import Footer14 from "@/components/footers/FooterWithoutTrans";
+import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
 
 
