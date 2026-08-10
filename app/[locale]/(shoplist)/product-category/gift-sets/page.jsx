@@ -93,7 +93,7 @@ async function getCategorySubCategory(categoryName) {
     // console.log(category);
     try {
       const data = await getCategorySubCategory(category);
-      const description= locale === 'ar' ? data.description_ar : data.description_en;
+      const description = locale === 'ar' ? data.description_ar : (data.description || data.description_en);
       // console.log(data);
       return data && (
       <>
@@ -109,7 +109,7 @@ async function getCategorySubCategory(categoryName) {
           <Shop10 products={ data.products }/>
           
           
-          <CollapsibleDescription description={description}  />
+          <CollapsibleDescription description={description}locale={locale}  />
         </main>
 
         <section className=" d-none d-lg-block" style={{ height: "100%" }}>
