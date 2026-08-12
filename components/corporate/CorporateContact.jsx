@@ -13,6 +13,7 @@ import HandshakeIcon from "@mui/icons-material/Handshake";
 
 const CONTACT_EMAIL = "corporate@ahmedalmaghribi.com";
 const CONTACT_PHONE = "+971 56 501 0399";
+const CONTACT_PHONE_AR = "+٩٧١ ٥٦ ٥٠١ ٠٣٩٩";
 const CONTACT_WHATSAPP = "971565010399";
 
 const translations = {
@@ -257,8 +258,10 @@ const CorporateContact = () => {
                                         <EmailIcon sx={{ color: "#A88132", fontSize: "1.1rem" }} />
                                     </Box>
                                     <Box>
-                                        <Typography sx={{ color: "rgba(0,0,0,0.5)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif" }}>Email</Typography>
-                                        <Typography className="contact-text" sx={{ color: "#1A1A1A", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s", fontFamily: "'Montserrat', sans-serif" }}>
+                                        <Typography sx={{ color: "rgba(0,0,0,0.5)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif" }}>
+                                            {t.fields.email}
+                                        </Typography>
+                                        <Typography className="contact-text" sx={{ color: "#1A1A1A", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s", fontFamily: "'Montserrat', sans-serif", textAlign: isRtl ? "right" : "left" }}>
                                             {CONTACT_EMAIL}
                                         </Typography>
                                     </Box>
@@ -279,9 +282,11 @@ const CorporateContact = () => {
                                         <PhoneIcon sx={{ color: "#A88132", fontSize: "1.1rem" }} />
                                     </Box>
                                     <Box>
-                                        <Typography sx={{ color: "rgba(0,0,0,0.5)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif" }}>Phone</Typography>
-                                        <Typography className="contact-text" sx={{ color: "#1A1A1A", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s", fontFamily: "'Montserrat', sans-serif" }}>
-                                            {CONTACT_PHONE}
+                                        <Typography sx={{ color: "rgba(0,0,0,0.5)", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "'Montserrat', sans-serif" }}>
+                                            {t.fields.phone}
+                                        </Typography>
+                                        <Typography className="contact-text" dir="ltr" sx={{ color: "#1A1A1A", fontSize: { xs: "0.85rem", md: "0.95rem" }, fontWeight: 500, transition: "color 0.2s", fontFamily: "'Montserrat', sans-serif", textAlign: isRtl ? "right" : "left" }}>
+                                            {isRtl ? CONTACT_PHONE_AR : CONTACT_PHONE}
                                         </Typography>
                                     </Box>
                                 </Box>
