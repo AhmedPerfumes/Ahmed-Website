@@ -6,7 +6,7 @@ import { useContextElement } from '@/context/Context';
 import he from 'he';
 import { useUser } from "@/context/UserContext";
 
-const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
+const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, onForcedClose, onEligibilityChange }) => {
   const { cartProducts, totalPrice, addProductToCart, setCartProducts, promotionsContext, removeGiftFromCart } = useContextElement();
   const [thresholds, setThresholds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -139,6 +139,9 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
 
   const handleConfirmSelection = () => {
     setIsModalOpen(false);
+    if (forcedOpen && onForcedClose) {
+      onForcedClose();
+    }
   };
 
   // Synchronize with cartProducts
@@ -182,10 +185,31 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
     }
   }, [activeThreshold, cartProducts, loading, thresholds]);
 
-  // Close modal on Escape key
+  // Report eligibility status to parent so the order gate can use it
+  useEffect(() => {
+    if (!onEligibilityChange) return;
+    if (loading) return;
+    const giftsInCartNow = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
+    const giftLimitNow = activeThreshold?.gift_limit || 1;
+    // Single auto-added gift requires no user action
+    const isSingleAutoAdded =
+      activeThreshold?.gifts?.length === 1 && giftLimitNow === 1;
+    const isEligible = !!activeThreshold && !isSingleAutoAdded;
+    const giftsNeeded = isEligible ? Math.max(0, giftLimitNow - giftsInCartNow.length) : 0;
+    onEligibilityChange({ isEligible, giftsNeeded });
+  }, [activeThreshold, cartProducts, loading, onEligibilityChange]);
+
+  // Sync forcedOpen → open the modal imperatively from parent
+  useEffect(() => {
+    if (forcedOpen) {
+      setIsModalOpen(true);
+    }
+  }, [forcedOpen]);
+
+  // Close modal on Escape key (disabled in mandatory/forced mode)
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setIsModalOpen(false);
+      if (e.key === 'Escape' && !forcedOpen) setIsModalOpen(false);
     };
     if (isModalOpen) {
       document.addEventListener('keydown', handleKeyDown);
@@ -197,7 +221,7 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, forcedOpen]);
 
   // Calculate next threshold info
   const getNextThreshold = () => {
@@ -323,7 +347,7 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
       {isModalOpen && activeThreshold && mounted && createPortal(
         <div
           className="foc-overlay"
-          onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false); }}
+          onClick={(e) => { if (e.target === e.currentTarget && !forcedOpen) setIsModalOpen(false); }}
           role="dialog"
           aria-modal="true"
           aria-label="Choose your free gift"
@@ -339,13 +363,15 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
                   </span>
                 </p>
               </div>
-              <button
-                className="foc-modal-close"
-                onClick={() => setIsModalOpen(false)}
-                aria-label="Close gift picker"
-              >
-                ✕
-              </button>
+              {!forcedOpen && (
+                <button
+                  className="foc-modal-close"
+                  onClick={() => setIsModalOpen(false)}
+                  aria-label="Close gift picker"
+                >
+                  ✕
+                </button>
+              )}
             </div>
 
             {/* Body – Gift Grid */}
@@ -410,6 +436,11 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
 
             {/* Footer */}
             <div className="foc-modal-footer">
+              {forcedOpen && giftsInCart.length < giftLimit && (
+                <p className="foc-footer-hint" style={{ color: '#e53e3e', fontWeight: '600', marginBottom: '8px' }}>
+                  ⚠️ Please select your free {giftLimit > 1 ? `${giftLimit} gifts` : 'gift'} to continue placing your order.
+                </p>
+              )}
               <button
                 className="foc-confirm-btn"
                 onClick={handleConfirmSelection}
@@ -419,7 +450,7 @@ const FreeGiftFeature = ({ couponData, autoPopup = false }) => {
                 <span>Confirm Selection</span>
                 {giftsInCart.length > 0 && <span className="foc-confirm-icon">✓</span>}
               </button>
-              {giftsInCart.length < giftLimit && (
+              {!forcedOpen && giftsInCart.length < giftLimit && (
                 <p className="foc-footer-hint">
                   {giftLimit - giftsInCart.length} more {giftLimit - giftsInCart.length === 1 ? 'gift' : 'gifts'} remaining to select
                 </p>
