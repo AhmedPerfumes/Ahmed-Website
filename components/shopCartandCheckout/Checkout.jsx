@@ -65,6 +65,9 @@ export default function Checkout() {
   const [addressSaving, setAddressSaving] = useState(false);
   const [addressSaveError, setAddressSaveError] = useState(null);
   const [newAddressForm, setNewAddressForm] = useState({ area: "", building: "", emirates: "" });
+  const [forceFocGiftPopup, setForceFocGiftPopup] = useState(false);
+  // { isEligible: bool, giftsNeeded: number } — reported by FreeGiftFeature
+  const [focGiftEligibility, setFocGiftEligibility] = useState({ isEligible: false, giftsNeeded: 0 });
 
   // CONTEXT & HOOKS
   const t = useTranslations("Tabby")
@@ -860,6 +863,21 @@ export default function Checkout() {
       setFieldErrors({}); 
     }
 
+    // ── Free Gift Gate ────────────────────────────────────────────────
+    // Block the order if the user is eligible for a free gift (multi-choice)
+    // but hasn't selected one yet. focGiftEligibility is reported live by
+    // FreeGiftFeature via the onEligibilityChange callback.
+    if (focGiftEligibility.isEligible && focGiftEligibility.giftsNeeded > 0) {
+      setForceFocGiftPopup(true);
+      setIsLoading(false);
+      toast.warn(
+        "🎁 You have a free gift available! Please select it before placing your order.",
+        { position: "bottom-right", autoClose: 6000, hideProgressBar: false, closeOnClick: false, pauseOnHover: true, draggable: true }
+      );
+      return;
+    }
+    // ── End Free Gift Gate ────────────────────────────────────────────
+
     const shippingPrice = freeShippingFlag ? 0.0 : parseFloat(shippingServiceCharges[0].price);
     const shippingPriceVat = (shippingPrice / 100) * vatTax.percentage;
     const finalPrice = parseFloat((!freeShippingFlag ? parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : 0.0) : 0 + totalPrice + parseFloat(shippingServiceCharges[1].price) + (selectedOption === "cod" ? parseFloat(shippingServiceCharges[2].price) : 0.0)).toFixed(2));
@@ -1431,7 +1449,13 @@ export default function Checkout() {
 
               <div className="checkout__totals-wrapper">
                 <div className="sticky-content">
-                  <FreeGiftFeature couponData={couponData} autoPopup={true} />
+                  <FreeGiftFeature
+                    couponData={couponData}
+                    autoPopup={true}
+                    forcedOpen={forceFocGiftPopup}
+                    onForcedClose={() => setForceFocGiftPopup(false)}
+                    onEligibilityChange={setFocGiftEligibility}
+                  />
                   <div className={`checkout__totals ${isOrderSummaryOpen ? "is-open" : ""}`}>
                     {/* Collapsible Header/Toggle Bar */}
                     <div 

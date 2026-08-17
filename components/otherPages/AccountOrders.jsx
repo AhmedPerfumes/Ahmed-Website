@@ -56,6 +56,7 @@ export default function AccountOrders() {
       orderDir: "desc",
       customer_id: String(CUSTOMER_ID),
       with_products: "1",
+      ...(activeStatus !== "all" && { status: activeStatus }),
     });
 
     try {
@@ -78,7 +79,7 @@ export default function AccountOrders() {
 
   useEffect(() => {
     fetchOrders();
-  }, [CUSTOMER_ID, pagination.pageIndex, pagination.pageSize]);
+  }, [CUSTOMER_ID, pagination.pageIndex, pagination.pageSize, activeStatus]);
 
   const openDetails = async (order) => {
     setSelectedOrder(order);
@@ -99,9 +100,7 @@ export default function AccountOrders() {
     setModalLoading(false);
   };
 
-  const filteredData = activeStatus === "all"
-    ? data
-    : data.filter(order => order.status.value === activeStatus);
+  const filteredData = data;
 
   const StatusBadge = ({ status }) => {
     const val = status?.value;
@@ -147,7 +146,10 @@ export default function AccountOrders() {
             <button
               key={tab.key}
               className={`filter-tab ${activeStatus === tab.key ? 'active' : ''}`}
-              onClick={() => setActiveStatus(tab.key)}
+              onClick={() => {
+                setActiveStatus(tab.key);
+                setPagination(prev => ({ ...prev, pageIndex: 0 }));
+              }}
             >
               {tab.label}
             </button>
