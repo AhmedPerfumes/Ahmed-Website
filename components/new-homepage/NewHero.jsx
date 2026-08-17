@@ -358,7 +358,7 @@ const NewHero = () => {
                                                         opacity: 0.85,
                                                     }}
                                                 >
-                                                    {t(elm.season)}
+                                                    {locale === 'en' ? elm.season : elm.season_ar}
                                                 </span>
                                             </div>
                                         </div>
@@ -382,7 +382,7 @@ const NewHero = () => {
                                                         '"Playfair Display", serif',
                                                 }}
                                             >
-                                                {t(elm.title)}
+                                                {locale === 'en' ? elm.title : elm.title_ar}
                                             </h1>
                                         </div>
                                     )}
@@ -404,7 +404,7 @@ const NewHero = () => {
                                                     marginLeft: "2%",
                                                 }}
                                             >
-                                                {t(elm.sub_title)}
+                                                {locale === 'en' ? elm.sub_title : elm.sub_title_ar}
                                             </h2>
                                         </div>
                                     )}
