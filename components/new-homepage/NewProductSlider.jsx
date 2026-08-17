@@ -9,11 +9,39 @@ import gsap from "gsap";
 import { useContextElement } from "@/context/Context";
 import { useMenu } from "@/context/MenuContext";
 import { formatPrice } from "@/utils/shop";
-import { allProducts } from "@/data/products";
+import Skeleton from "@mui/material/Skeleton";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-fade";
+
+const clean = (s = "") =>
+  String(s || "")
+    .replace(/&amp;/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .join("-")
+    .toLowerCase();
+
+const decodeHtml = (s = "") => String(s || "").replace(/&amp;/g, "&");
+
+const isSubcat = (cat, sub) =>
+  sub
+    ? clean(sub.subcategory_name || sub)
+    : ["gift-sets", "hair-mist", "extrait-de-parfum"].includes(clean(cat))
+      ? clean(cat)
+      : "online-exclusive";
+
+const THEME_PALETTES = [
+    { bg: "#F9F6F0", accent: "rgba(197, 160, 89, 1)", glow: "rgba(197, 160, 89, 0.15)", roman: "I" },
+    { bg: "#F4EFEA", accent: "#8a59c5", glow: "rgba(138, 89, 197, 0.1)", roman: "II" },
+    { bg: "rgba(253, 251, 247, 1)", accent: "rgba(230, 57, 70, 1)", glow: "rgba(230, 57, 70, 0.1)", roman: "III" },
+    { bg: "#F8F1F2", accent: "#ffb7c5", glow: "rgba(255, 183, 197, 0.15)", roman: "IV" },
+    { bg: "#FCF9F2", accent: "#d4af37", glow: "rgba(212, 175, 55, 0.15)", roman: "V" },
+    { bg: "rgba(242, 245, 248, 1)", accent: "#598ac5", glow: "rgba(89, 138, 197, 0.15)", roman: "VI" }
+];
 
 const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
@@ -53,70 +81,7 @@ const ProductPrice = ({ elm, currency }) => {
   );
 };
 
-const SLIDES_DATA = [
-    {
-        id: 0,
-        name: "Zumar",
-        tagline: "SILLAGE OF POWER",
-        subtitle: "A symphony of rare oriental notes, crafted for those who embrace silent power.",
-        noteImg: "/assets/images/best-sellers/notes/zumar@2x.jpg",
-        productImg: "/assets/images/best-sellers/zumar@2x.jpg",
-        link: "/shop/perfumes/oriental-fragrance/zumar",
-        theme: { bg: "#F9F6F0", accent: "rgba(197, 160, 89, 1)", glow: "rgba(197, 160, 89, 0.15)", roman: "I" }
-    },
-    {
-        id: 1,
-        name: "Bin Shaikh",
-        tagline: "ROYAL HERITAGE",
-        subtitle: "Concocted in the traditions of royalty, a lavish blend that speaks of legacy.",
-        noteImg: "/assets/images/best-sellers/notes/binshaikh@2x.jpg",
-        productImg: "/assets/images/best-sellers/bin-shaikh@2x.jpg",
-        link: "/shop/perfumes/oriental-fragrance/bin-shaikh",
-        theme: { bg: "#F4EFEA", accent: "#8a59c5", glow: "rgba(138, 89, 197, 0.1)", roman: "II" }
-    },
-    {
-        id: 2,
-        name: "Ignite Oud",
-        tagline: "FIERY INSTINCT",
-        subtitle: "A bold, fiery fragrance designed to set your senses ablaze with deep oud trails.",
-        noteImg: "/assets/images/best-sellers/notes/ignite-oud@2x.jpg",
-        productImg: "/assets/images/best-sellers/ignite-oud@2x.jpg",
-        link: "/shop/perfumes/occidental-fragrance/ignite-oud",
-        theme: { bg: "rgba(253, 251, 247, 1)", accent: "rgba(230, 57, 70, 1)", glow: "rgba(230, 57, 70, 0.1)", roman: "III" }
-    },
-    {
-        id: 3,
-        name: "Marj",
-        tagline: "PURE AFFECTION",
-        subtitle: "The very essence of sheer elegance and romantic affection, captured in a bottle.",
-        noteImg: "/assets/images/best-sellers/notes/marj@2x.jpg",
-        productImg: "/assets/images/best-sellers/marj@2x.jpg",
-        link: "/shop/perfumes/oriental-fragrance/marj",
-        theme: { bg: "#F8F1F2", accent: "#ffb7c5", glow: "rgba(255, 183, 197, 0.15)", roman: "IV" }
-    },
-    {
-        id: 4,
-        name: "Oud & Roses",
-        tagline: "FLORAL OUD",
-        subtitle: "Like a lush spring garden at dawn, where fresh roses meet prehistoric oud.",
-        noteImg: "/assets/images/best-sellers/notes/oud-and-rose@2x.jpg",
-        productImg: "/assets/images/best-sellers/oud-and-roses@2x.jpg",
-        link: "/shop/perfumes/occidental-fragrance/oud-roses",
-        theme: { bg: "#FCF9F2", accent: "#d4af37", glow: "rgba(212, 175, 55, 0.15)", roman: "V" }
-    },
-    {
-        id: 5,
-        name: "Kaaf",
-        tagline: "SECRET CHARM",
-        subtitle: "A secret charm, enticing and mysterious, crafted to leave a lasting impression.",
-        noteImg: "/assets/images/best-sellers/notes/kaaf@2x.jpg",
-        productImg: "/assets/images/best-sellers/kaaf@2x.jpg",
-        link: "/shop/perfumes/oriental-fragrance/kaaf",
-        theme: { bg: "rgba(242, 245, 248, 1)", accent: "#598ac5", glow: "rgba(89, 138, 197, 0.15)", roman: "VI" }
-    }
-];
-
-const MasterPerfumerGallery = ({ prodSlide }) => {
+const MasterPerfumerGallery = () => {
     const locale = useLocale();
     const t = useTranslations();
     const swiperRef = useRef(null);
@@ -124,126 +89,136 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
     const cursorRef = useRef(null);
     const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
     const { currency } = useMenu();
-    const [liveStatuses, setLiveStatuses] = useState({});
     const [activeIndex, setActiveIndex] = useState(0);
-    const [fetchedSlides, setFetchedSlides] = useState([]);
+    const [slides, setSlides] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let isMounted = true;
-        const fetchDynamicSlides = async () => {
+        const fetchSlides = async () => {
+            setLoading(true);
             try {
                 const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
-                const apiUrl = `${apiBase}api/new-product-sliders?lang=${locale}`;
-
-                const res = await fetch(apiUrl);
-                const json = await res.json();
-                if (isMounted && json && !json.error && json.data?.length > 0) {
-                    const mapped = json.data.map((item) => ({
-                        id: item.id,
-                        name: item.name,
-                        tagline: item.category || "LUXURY CREATION",
-                        subtitle: item.desc || "",
-                        noteImg: item.noteImg || "/assets/images/best-sellers/notes/zumar@2x.jpg",
-                        productImg: item.productImg || "/assets/images/best-sellers/zumar@2x.jpg",
-                        link: item.link || "/shop",
-                        theme: {
-                            bg: item.theme?.bg || "#FDFBF7",
-                            accent: item.theme?.accent || "#c5a059",
-                            glow: item.theme?.glow || "rgba(197, 160, 89, 0.15)",
-                            roman: item.theme?.roman || "I"
-                        },
-                        product: item.product // Store the full product object for Add to Cart
-                    }));
-                    setFetchedSlides(mapped);
-                }
-            } catch (err) {
-                console.error("Failed to fetch dynamic new product sliders:", err);
-            }
-        };
-        fetchDynamicSlides();
-        return () => { isMounted = false; };
-    }, [locale]);
-
-    const baseSlides = useMemo(() => {
-        const raw = fetchedSlides.length > 0 ? fetchedSlides : (prodSlide === "bestSellers" ? SLIDES_DATA : [
-            {
-                id: -1,
-                name: "Maria Oud",
-                tagline: "ARABIAN NIGHTS",
-                subtitle: "A heritage of exotic scents, bringing the rich history of Arabia to the modern day.",
-                noteImg: "/assets/images/dakhoon/oud-mtr/maria-horizontal.jpg",
-                productImg: "/assets/images/dakhoon/oud-mtr/maria-1080.jpg",
-                link: "/shop/dakhoon/oud-maattar/oud-mtr-asaateen",
-                theme: { bg: "#FAF3EB", accent: "#c5a059", glow: "rgba(197, 160, 89, 0.15)", roman: "O" }
-            },
-            ...SLIDES_DATA.slice(1)
-        ]);
-
-        return raw.map(slide => {
-            let prod = slide.product;
-            if (!prod && allProducts && allProducts.length > 0) {
-                prod = allProducts.find(p => 
-                    p.product_name?.toLowerCase().includes(slide.name.toLowerCase()) || 
-                    slide.name.toLowerCase().includes(p.product_name?.toLowerCase())
-                );
-            }
-            return { ...slide, product: prod };
-        });
-    }, [prodSlide, fetchedSlides]);
-
-    useEffect(() => {
-        const productIds = baseSlides
-            .map(s => s.product?.product_id)
-            .filter(Boolean);
-
-        if (productIds.length === 0) return;
-
-        const fetchLiveStatus = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products/live-status`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ product_ids: productIds })
-                });
-                const data = await response.json();
-
-                const mappedData = {};
-                if (Array.isArray(data)) {
-                    data.forEach(item => {
-                        if (item && item.product_id) {
-                            mappedData[item.product_id] = item;
+                
+                // 1. Try dedicated slider endpoint first
+                let mapped = [];
+                try {
+                    const res = await fetch(`${apiBase}api/new-product-sliders?lang=${locale}`);
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json && !json.error && Array.isArray(json.data) && json.data.length > 0) {
+                            mapped = json.data.map((item, idx) => ({
+                                id: item.id || item.product_id || idx,
+                                name: (locale === "ar" && item.name_ar) ? item.name_ar : (item.name || item.product_name || ""),
+                                tagline: item.category || item.category_name || t("Signature Creation"),
+                                subtitle: (locale === "ar" && item.desc_ar) ? item.desc_ar : (item.desc || item.description || ""),
+                                noteImg: item.noteImg || (item.image ? (item.image.startsWith("http") ? item.image : `${apiBase}storage/${item.image}`) : "/assets/images/AhmedLogo.png"),
+                                productImg: item.productImg || (item.image ? (item.image.startsWith("http") ? item.image : `${apiBase}storage/${item.image}`) : "/assets/images/AhmedLogo.png"),
+                                link: item.link || "/shop",
+                                theme: {
+                                    bg: item.theme?.bg || THEME_PALETTES[idx % THEME_PALETTES.length].bg,
+                                    accent: item.theme?.accent || THEME_PALETTES[idx % THEME_PALETTES.length].accent,
+                                    glow: item.theme?.glow || THEME_PALETTES[idx % THEME_PALETTES.length].glow,
+                                    roman: item.theme?.roman || THEME_PALETTES[idx % THEME_PALETTES.length].roman
+                                },
+                                product: item.product || item
+                            }));
                         }
-                    });
-                } else if (data && typeof data === 'object') {
-                    Object.assign(mappedData, data);
+                    }
+                } catch {
+                    mapped = [];
                 }
 
-                setLiveStatuses(prev => ({ ...prev, ...mappedData }));
+                // 2. If no dedicated slider data, fetch from getBestSelling
+                if (mapped.length === 0) {
+                    const res = await fetch(`${apiBase}api/getBestSelling`);
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json && typeof json === "object") {
+                            let rawProducts = [];
+                            if (Array.isArray(json.all) && json.all.length > 0) {
+                                rawProducts = json.all;
+                            } else {
+                                Object.values(json).forEach((categoryItems) => {
+                                    if (Array.isArray(categoryItems)) {
+                                        rawProducts.push(...categoryItems);
+                                    }
+                                });
+                            }
+
+                            // Deduplicate and filter in-stock products
+                            const seen = new Set();
+                            const uniqueProducts = [];
+                            for (const p of rawProducts) {
+                                if (p && p.product_id && !seen.has(p.product_id) && Number(p.product_qty) > 0) {
+                                    seen.add(p.product_id);
+                                    uniqueProducts.push(p);
+                                }
+                            }
+
+                            // Take top 6 best-selling products
+                            const topProducts = uniqueProducts.slice(0, 6);
+
+                            mapped = topProducts.map((p, idx) => {
+                                let imgs = [];
+                                try {
+                                    if (Array.isArray(p.images)) {
+                                        imgs = p.images;
+                                    } else if (typeof p.images === "string") {
+                                        imgs = JSON.parse(p.images);
+                                    }
+                                } catch {
+                                    imgs = [];
+                                }
+
+                                const resolveImg = (img) => {
+                                    if (!img) return "/assets/images/AhmedLogo.png";
+                                    if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("/")) return img;
+                                    return `${apiBase}storage/${img}`;
+                                };
+
+                                const primaryImg = resolveImg(imgs[0] || p.image);
+                                const secondaryImg = resolveImg(imgs[1] || imgs[0] || p.image);
+                                const theme = THEME_PALETTES[idx % THEME_PALETTES.length];
+                                const categoryClean = clean(p.category_name || "perfumes");
+                                const subcategoryClean = isSubcat(p.category_name, p.subcategory);
+                                const productClean = clean(p.product_name);
+                                const link = `/shop/${categoryClean}/${subcategoryClean}/${productClean}`;
+
+                                const displayName = (locale === "ar" && p.product_name_ar) ? p.product_name_ar : decodeHtml(p.product_name);
+                                const displayDesc = (locale === "ar" && p.description_ar) ? p.description_ar : (p.description || "");
+
+                                return {
+                                    id: p.product_id,
+                                    name: displayName,
+                                    tagline: p.collection_name || p.category_name || t("Signature Creation"),
+                                    subtitle: displayDesc,
+                                    productImg: primaryImg,
+                                    noteImg: secondaryImg,
+                                    link,
+                                    theme,
+                                    product: p
+                                };
+                            });
+                        }
+                    }
+                }
+
+                if (isMounted) {
+                    setSlides(mapped);
+                }
             } catch (err) {
-                console.error("Failed to fetch live statuses for slider products:", err);
+                console.error("Failed to fetch product slider data:", err);
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         };
 
-        fetchLiveStatus();
-    }, [baseSlides]);
-
-    const slides = useMemo(() => {
-        return baseSlides.map(slide => {
-            if (!slide.product) return slide;
-            const liveData = liveStatuses[slide.product.product_id];
-            const updatedProduct = liveData ? { ...slide.product, ...liveData } : slide.product;
-            return { ...slide, product: updatedProduct };
-        }).filter(slide => {
-            if (slide.product) {
-                if (Number(slide.product.product_qty) <= 0) {
-                    return false;
-                }
-            }
-            return true;
-        });
-    }, [baseSlides, liveStatuses]);
+        fetchSlides();
+        return () => { isMounted = false; };
+    }, [locale, t]);
 
     const getProductQuantity = (id) => {
         if (!id) return 0;
@@ -277,8 +252,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
             }).filter(Boolean);
         });
     };
-
-
 
     const handleMouseMove = (e) => {
         if (!containerRef.current) return;
@@ -314,7 +287,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         const prevSlide = swiper.slides[swiper.previousIndex];
 
         // Accessibility check
-        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         // Animate out the old text aggressively so it clears the space
         if (prevSlide && swiper.activeIndex !== swiper.previousIndex) {
@@ -350,13 +323,12 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
         if (containerRef.current && slides[index]) {
             gsap.to(containerRef.current, {
-                backgroundColor: slides[index].theme.bg,
+                backgroundColor: slides[index]?.theme?.bg || "#FDFBF7",
                 duration: 1.0,
                 ease: "sine.inOut"
             });
         }
 
-        // Delay entry to 0.4s so old text is gone and cross-fade is 60% complete
         if (tagline) {
             gsap.fromTo(tagline, 
                 { opacity: 0, x: prefersReducedMotion ? 0 : -15 }, 
@@ -400,12 +372,28 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
         }
     };
 
+    if (loading) {
+        return (
+            <div className="master-gallery-wrapper" style={{ minHeight: "70vh", padding: "60px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <Skeleton variant="text" width={180} height={28} sx={{ bgcolor: "rgba(0,0,0,0.06)", mb: 2 }} />
+                <Skeleton variant="text" width={320} height={50} sx={{ bgcolor: "rgba(0,0,0,0.06)", mb: 4 }} />
+                <Skeleton variant="rectangular" width="85%" height={400} sx={{ bgcolor: "rgba(0,0,0,0.04)", borderRadius: "16px" }} />
+            </div>
+        );
+    }
+
+    if (!slides || slides.length === 0) {
+        return null;
+    }
+
+    const currentThemeBg = slides[activeIndex]?.theme?.bg || "#FDFBF7";
+
     return (
         <div
             ref={containerRef}
             className="master-gallery-wrapper"
             onMouseMove={handleMouseMove}
-            style={{ backgroundColor: slides[activeIndex].theme.bg, transition: "background-color 1s ease" }}
+            style={{ backgroundColor: currentThemeBg, transition: "background-color 1s ease" }}
         >
             <div className="best-sellers-header-section">
                 <div className="best-sellers-header-wrap">
@@ -542,15 +530,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) { .master-cursor-wrap { display: none; } }
 
-                .master-flashlight {
-                    width: 400px;
-                    height: 400px;
-                    border-radius: 50%;
-                    background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
-                    border: 1px solid transparent;
-                    transition: border-color 1s ease;
-                }
-
                 .master-swiper { width: 100%; height: 100%; }
                 .master-slide { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: auto; min-height: 75vh; }
                 
@@ -634,7 +613,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 }
                 @media (max-width: 480px) { .master-desc { font-size: 0.82rem; } }
 
-                /* Large Background Kinetic Typography */
                 .kinetic-bg-text {
                     position: absolute;
                     font-family: 'Playfair Display', serif;
@@ -653,7 +631,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) { .kinetic-bg-text { font-size: 20vw; top: 30%; } }
 
-                /* Visual Column — Dual Photo Layout */
                 .master-visual-col {
                     position: relative;
                     perspective: 3000px;
@@ -765,7 +742,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     width: 100%; height: 100%; object-fit: cover;
                 }
 
-                /* Modern Fractional Pagination */
                 .modern-pagination {
                     position: absolute;
                     left: 80px;
@@ -838,7 +814,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 
                 @media (max-width: 991px) { .fraction .line { width: 20px; } }
 
-                /* Master Button */
                 .master-btn {
                     padding: 22px 55px;
                     background: transparent;
@@ -856,6 +831,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     z-index: 1;
                     overflow: hidden;
                     will-change: transform;
+                    display: inline-block;
+                    text-decoration: none;
                 }
 
                 .master-btn:active {
@@ -874,9 +851,15 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
 
                 @media (max-width: 991px) { 
                     .master-btn { 
-                        padding: 15px 35px; 
+                        padding: 14px 32px; 
                         letter-spacing: 3px; 
                         font-size: 0.7rem; 
+                    } 
+                }
+                @media (max-width: 480px) { 
+                    .master-btn { 
+                        padding: 12px 28px; 
+                        font-size: 0.68rem; 
                     } 
                 }
                 .master-btn::before {
@@ -946,14 +929,11 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                     pointer-events: auto;
                     visibility: visible;
                     opacity: 1;
-                    padding-top: 10px; /* Reduced to match the more even gap structure */
+                    padding-top: 10px;
                 }
                 
                 @media (max-width: 991px) { .global-cta-btn-container { padding-top: 12px; padding-bottom: 25px; } }
                 @media (max-width: 480px) { .global-cta-btn-container { padding-top: 10px; padding-bottom: 20px; } }
-                @media (max-width: 991px) { .master-btn { padding: 14px 32px; letter-spacing: 3px; font-size: 0.7rem; } }
-                @media (max-width: 480px) { .master-btn { padding: 12px 28px; font-size: 0.68rem; } }
-                @media (max-width: 991px) { .global-cta-wrap { padding-bottom: 0px; } }
 
                 .price-anim-wrap {
                     display: block;
@@ -1073,7 +1053,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 effect="fade"
                 fadeEffect={{ crossFade: true }}
                 speed={1400}
-                loop={true}
+                loop={slides.length > 1}
                 autoplay={{
                     delay: 5000,
                     disableOnInteraction: false
@@ -1085,7 +1065,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 onSlideChange={onSlideChange}
                 className="master-swiper"
             >
-                {slides.map((slide, index) => (
+                {slides.map((slide) => (
                     <SwiperSlide key={slide.id} className="master-slide">
                         <div className="kinetic-bg-text d-none d-lg-block">{slide.name}</div>
                         <div className="master-grid">
@@ -1095,7 +1075,7 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                                 </span>
                                 <div className="master-title-wrap">
                                     <div className="stagger-row">
-                                        <span>{t(slide.name)}</span>
+                                        <span>{slide.name}</span>
                                     </div>
                                 </div>
                                 {slide.product && (
@@ -1103,29 +1083,35 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                                         <ProductPrice elm={slide.product} currency={currency} />
                                     </div>
                                 )}
-                                <p className="master-desc">
-                                    {t(slide.subtitle)}
-                                </p>
+                                {slide.subtitle && (
+                                    <p className="master-desc">
+                                        {slide.subtitle}
+                                    </p>
+                                )}
                             </div>
 
                             <div className="master-visual-col">
                                 <div className="primary-photo">
-                                    <Image
-                                        src={slide.productImg}
-                                        alt={slide.name}
-                                        fill
-                                        sizes="(max-width: 991px) 70vw, 40vw"
-                                        style={{ objectFit: "cover" }}
-                                    />
+                                    <Link href={`/${locale}${slide.link}`}>
+                                        <Image
+                                            src={slide.productImg}
+                                            alt={slide.name}
+                                            fill
+                                            sizes="(max-width: 991px) 70vw, 40vw"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </Link>
                                 </div>
                                 <div className="secondary-photo">
-                                    <Image
-                                        src={slide.noteImg}
-                                        alt={slide.name + " notes"}
-                                        fill
-                                        sizes="(max-width: 991px) 50vw, 25vw"
-                                        style={{ objectFit: "cover" }}
-                                    />
+                                    <Link href={`/${locale}${slide.link}`}>
+                                        <Image
+                                            src={slide.noteImg}
+                                            alt={slide.name}
+                                            fill
+                                            sizes="(max-width: 991px) 50vw, 25vw"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -1137,19 +1123,21 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                 <div className="global-cta-grid">
                     <div className="global-cta-text-col">
                         <span className="master-tagline" style={{ display: 'block' }}>
-                            {slides[activeIndex]?.tagline || "TAGLINE"}
+                            {slides[activeIndex]?.tagline}
                         </span>
                         <div className="master-title-wrap">
                             <div className="stagger-row">
-                                <span>{t(slides[activeIndex]?.name || "TITLE")}</span>
+                                <span>{slides[activeIndex]?.name}</span>
                             </div>
                         </div>
                         {slides[activeIndex]?.product && (
                             <ProductPrice elm={slides[activeIndex].product} currency={currency} />
                         )}
-                        <p className="master-desc">
-                            {t(slides[activeIndex]?.subtitle || "DESC")}
-                        </p>
+                        {slides[activeIndex]?.subtitle && (
+                            <p className="master-desc">
+                                {slides[activeIndex].subtitle}
+                            </p>
+                        )}
                         <div className="global-cta-btn-container">
                             {slides[activeIndex]?.product && getProductQuantity(slides[activeIndex].product.product_id) > 0 ? (
                                 <div className="slider-qty-selector">
@@ -1190,9 +1178,8 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                                         const activeSlide = slides[activeIndex];
                                         if (activeSlide?.product) {
                                             addProductToCart(activeSlide.product);
-                                        } else {
-                                            // Fallback if no product is linked
-                                            window.location.href = `/${locale}${activeSlide?.link || "/shop"}`;
+                                        } else if (activeSlide?.link) {
+                                            window.location.href = `/${locale}${activeSlide.link}`;
                                         }
                                     }}
                                 >
@@ -1201,7 +1188,6 @@ const MasterPerfumerGallery = ({ prodSlide }) => {
                             )}
                         </div>
                     </div>
-                    {/* Dynamic layout matching block to mimic primary photo constraints exactly on mobile */}
                     <div className="global-cta-dummy-visual">
                         <div className="global-cta-dummy-ratio d-block d-lg-none"></div>
                     </div>
