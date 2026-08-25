@@ -6,11 +6,11 @@ import { useLocale } from "next-intl";
 import { Box, Container, Typography, Collapse } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
-export default function CollapsibleDescription({ description }) {
+export default function CollapsibleDescription({ description, title: customTitle }) {
     const [expanded, setExpanded] = useState(false);
     const locale = useLocale();
     const isRtl = locale === "ar";
-    const title = isRtl ? "عن هذه المجموعة" : "About this Collection";
+    const title = customTitle || (isRtl ? "عن هذه المجموعة" : "About this Collection");
 
     // If there's no description, don't render anything
     if (!description) {

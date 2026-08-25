@@ -110,9 +110,10 @@ const HorizontalScroll = () => {
       const sectionHeight = el.offsetHeight || window.innerHeight * 6;
       const scrollableDistance = sectionHeight - window.innerHeight;
       
-      const numSlidesToTransition = panels.length - 1; // 3 slides
-      const BUFFER_START = scrollableDistance * 0.12; // 12% delay before first slide
-      const BUFFER_END = scrollableDistance * 0.02;   // 2% stick time after last slide completes (almost no dead scroll)
+      const numSlidesToTransition = panels.length - 1;
+      const isLaptop = typeof window !== "undefined" && window.innerWidth >= 992 && window.innerWidth <= 1536;
+      const BUFFER_START = scrollableDistance * (isLaptop ? 0.10 : 0.12);
+      const BUFFER_END = scrollableDistance * (isLaptop ? 0.16 : 0.12); // Generous stick time for last slide so it doesn't unpin prematurely
       const SLIDE_DISTANCE = (scrollableDistance - BUFFER_START - BUFFER_END) / numSlidesToTransition;
 
       [...panels].slice(1).forEach((panel, i) => {
@@ -172,8 +173,9 @@ const HorizontalScroll = () => {
     const sectionHeight = container.offsetHeight || window.innerHeight * 6;
     const scrollableDistance = sectionHeight - window.innerHeight;
     const numSlidesToTransition = TOTAL_PANELS - 1;
-    const BUFFER_START = scrollableDistance * 0.12;
-    const BUFFER_END = scrollableDistance * 0.1;
+    const isLaptop = typeof window !== "undefined" && window.innerWidth >= 992 && window.innerWidth <= 1536;
+    const BUFFER_START = scrollableDistance * (isLaptop ? 0.10 : 0.12);
+    const BUFFER_END = scrollableDistance * (isLaptop ? 0.16 : 0.12);
     const SLIDE_DISTANCE = (scrollableDistance - BUFFER_START - BUFFER_END) / numSlidesToTransition;
 
     const offset = i === 0 ? 0 : BUFFER_START + i * SLIDE_DISTANCE;

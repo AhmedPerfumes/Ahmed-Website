@@ -34,25 +34,61 @@ const headerStyles = `
     letter-spacing: 0.08em;
     text-transform: uppercase;
     border: none;
-    padding: 4px 28px 4px 8px;
+    padding: 4px 18px 4px 4px;
     color: #555;
     background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='none' stroke='%23555555' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 4px center !important;
+    background-size: 8px 5px !important;
     transition: color 0.25s ease;
     cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
-.heeader-top__right .form-select:hover { color: #111; }
+.heeader-top__right .form-select:hover { 
+    color: #111;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='none' stroke='%23111111' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/%3E%3C/svg%3E") !important;
+}
 .heeader-top__right .form-select:focus { box-shadow: none; outline: none; }
+[dir="rtl"] .heeader-top__right .form-select {
+    background-position: left 4px center !important;
+    padding: 4px 4px 4px 18px;
+}
 
 /* Logo */
-.logo a { display: flex; align-items: center; transition: opacity 0.3s ease; }
+.logo a { display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; }
 .logo a:hover { opacity: 0.8; }
+.logo img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    transition: width 0.3s ease, height 0.3s ease;
+}
 
 /* Header Tools Icons */
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 0 !important;
+}
 .header-tools__item {
+    margin-right: 0 !important;
+    padding: 3px 3px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: color 0.25s ease, transform 0.25s ease;
 }
 .header-tools__item:hover {
     color: #a67b30;
+}
+.header-tools__item svg {
+    width: 18px;
+    height: 18px;
+    display: block;
 }
 
 /* ─── Search ─── */
@@ -177,7 +213,8 @@ const headerStyles = `
     gap: 0;
 }
 .navigation__list > li > a,
-.navigation__list > li > .menu-link {
+.navigation__list > li > .menu-link,
+.navigation__list > li > .navigation__link {
     position: relative;
     padding: 12px 18px;
     font-size: 13px;
@@ -188,12 +225,14 @@ const headerStyles = `
     transition: color 0.3s ease;
 }
 .navigation__list > li > a:hover,
-.navigation__list > li > .menu-link:hover {
+.navigation__list > li > .menu-link:hover,
+.navigation__list > li > .navigation__link:hover {
     color: #a67b30;
 }
 /* Animated underline on hover */
 .navigation__list > li > a::after,
-.navigation__list > li > .menu-link::after {
+.navigation__list > li > .menu-link::after,
+.navigation__list > li > .navigation__link::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -206,26 +245,10 @@ const headerStyles = `
 }
 .navigation__list > li > a:hover::after,
 .navigation__list > li > .menu-link:hover::after,
-.navigation__list > li.active > a::after {
+.navigation__list > li > .navigation__link:hover::after,
+.navigation__list > li.active > a::after,
+.navigation__list > li.active > .navigation__link::after {
     width: 60%;
-}
-
-/* Laptop Responsive fixes to avoid overlap with sticky logo */
-@media (max-width: 1550px) {
-    .navigation__list > li > a,
-    .navigation__list > li > .menu-link {
-        padding: 12px 8px;
-        font-size: 11px;
-        letter-spacing: 0.02em;
-    }
-}
-@media (max-width: 1200px) {
-    .navigation__list > li > a,
-    .navigation__list > li > .menu-link {
-        padding: 12px 4px;
-        font-size: 10px;
-        letter-spacing: 0;
-    }
 }
 
 /* ─── Natively Sticky Header Bottom (appears on scroll) ─── */
@@ -271,6 +294,13 @@ const headerStyles = `
     inset-inline-start: 1.5rem;
 }
 
+.sticky-logo img {
+    width: 45px;
+    height: auto;
+    object-fit: contain;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
 .sticky-actions {
     display: flex;
     align-items: center;
@@ -290,8 +320,6 @@ const headerStyles = `
     pointer-events: auto;
 }
 
-
-
 .sticky-actions .header-tools__item {
     font-size: 18px;
     color: #333;
@@ -301,6 +329,292 @@ const headerStyles = `
 
 .sticky-actions .header-tools__item:hover {
     color: #a67b30;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LAPTOP COMPACT STYLING & TYPOGRAPHY ADJUSTMENTS (992px to 1536px)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 992px) and (max-width: 1536px) {
+    /* Compact announcement marquee */
+    .header-marquee-bar {
+        height: 2.1rem !important;
+    }
+    .marquee-track a {
+        font-size: 11px !important;
+        letter-spacing: 0.04em !important;
+    }
+
+    /* Compact middle header */
+    .header-middle .container-fluid {
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.35rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+    .header-middle .logo img {
+        width: 76px !important;
+        height: 76px !important;
+    }
+    .heeader-top__right .form-select {
+        font-size: 11px !important;
+        padding: 2px 14px 2px 2px !important;
+        letter-spacing: 0.04em !important;
+        background-position: right 2px center !important;
+        background-size: 7px 4.5px !important;
+    }
+    [dir="rtl"] .heeader-top__right .form-select {
+        padding: 2px 2px 2px 14px !important;
+        background-position: left 2px center !important;
+    }
+    .search-minimal form {
+        width: 175px !important;
+    }
+    .search-minimal .form-control {
+        font-size: 11.5px !important;
+        padding: 4px 28px 4px 2px !important;
+    }
+    .search-minimal .form-control::placeholder {
+        font-size: 10.5px !important;
+    }
+    .header-tools {
+        gap: 8px !important;
+    }
+    .header-tools__item {
+        padding: 2px 3px !important;
+        margin-right: 0 !important;
+    }
+
+    /* Compact bottom navigation & typography */
+    .header-bottom-wrapper .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .header-bottom .navigation {
+        padding: 0 !important;
+    }
+    .navigation__list > li > a,
+    .navigation__list > li > .menu-link,
+    .navigation__list > li > .navigation__link {
+        padding: 8px 10px !important;
+        font-size: 11.5px !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.4 !important;
+    }
+    .navigation__list > li > a::after,
+    .navigation__list > li > .menu-link::after,
+    .navigation__list > li > .navigation__link::after {
+        height: 1.5px !important;
+    }
+
+    /* Compact sticky bar when scrolled */
+    .sticky-logo {
+        inset-inline-start: 1rem !important;
+    }
+    .sticky-logo img {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .sticky-actions {
+        inset-inline-end: 1rem !important;
+        gap: 11px !important;
+    }
+    .sticky-actions .header-tools__item svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    /* Compact Mega Menu Dropdown on Laptops */
+    .mega-menu {
+        padding: 1.25rem 0 1.5rem !important;
+    }
+    .mega-menu .container {
+        max-width: 1100px !important;
+        gap: 1.5rem !important;
+    }
+    .sub-menu__title {
+        font-size: 11.5px !important;
+        letter-spacing: 0.06em !important;
+        margin-bottom: 0.75rem !important;
+        padding-bottom: 0.35rem !important;
+    }
+    .sub-menu__list .menu-link {
+        font-size: 11px !important;
+        padding: 3px 0 !important;
+    }
+    .sub-menu__item {
+        margin-bottom: 0.25rem !important;
+    }
+    .mega-menu__media {
+        max-width: 16rem !important;
+        flex: 1.5 0 0 !important;
+    }
+    .mega-menu__img {
+        max-height: 180px !important;
+        width: auto !important;
+        max-width: 100% !important;
+        object-fit: cover !important;
+        border-radius: 6px;
+    }
+}
+
+/* Mid-size laptops (≤1366px e.g. standard 13", 14" laptops) */
+@media (max-width: 1366px) {
+    .navigation__list > li > a,
+    .navigation__list > li > .menu-link,
+    .navigation__list > li > .navigation__link {
+        padding: 7px 7px !important;
+        font-size: 11px !important;
+        letter-spacing: 0.02em !important;
+    }
+    .header-middle .logo img {
+        width: 72px !important;
+        height: 72px !important;
+    }
+    .search-minimal form {
+        width: 165px !important;
+    }
+    .marquee-container {
+        width: 55% !important;
+    }
+
+    /* Mega menu for mid-size laptops */
+    .mega-menu {
+        padding: 1rem 0 1.25rem !important;
+    }
+    .mega-menu .container {
+        max-width: 960px !important;
+        gap: 1rem !important;
+    }
+    .sub-menu__title {
+        font-size: 11px !important;
+    }
+    .sub-menu__list .menu-link {
+        font-size: 10.5px !important;
+    }
+    .mega-menu__media {
+        max-width: 14rem !important;
+        flex: 1.2 0 0 !important;
+    }
+    .mega-menu__img {
+        max-height: 155px !important;
+    }
+}
+
+/* Smaller laptops & Landscape Tablets (≤1200px) */
+@media (max-width: 1200px) {
+    .header-middle .container-fluid {
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .header-middle .logo img {
+        width: 66px !important;
+        height: 66px !important;
+    }
+    .navigation__list > li > a,
+    .navigation__list > li > .menu-link,
+    .navigation__list > li > .navigation__link {
+        padding: 6px 5px !important;
+        font-size: 10.5px !important;
+        letter-spacing: 0.01em !important;
+    }
+    .header-bottom-wrapper .container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    .sticky-logo {
+        inset-inline-start: 0.75rem !important;
+    }
+    .sticky-actions {
+        inset-inline-end: 0.75rem !important;
+    }
+    .search-minimal form {
+        width: 145px !important;
+    }
+    .header-tools {
+        gap: 6px !important;
+    }
+    .header-tools__item {
+        padding: 2px 2px !important;
+        margin-right: 0 !important;
+    }
+    .marquee-container {
+        width: 65% !important;
+    }
+
+    /* Mega menu for smaller laptops */
+    .mega-menu {
+        padding: 0.85rem 0 1rem !important;
+    }
+    .mega-menu .container {
+        max-width: 850px !important;
+    }
+    .sub-menu__title {
+        font-size: 10.5px !important;
+    }
+    .sub-menu__list .menu-link {
+        font-size: 10px !important;
+    }
+    .mega-menu__media {
+        max-width: 12rem !important;
+    }
+    .mega-menu__img {
+        max-height: 135px !important;
+    }
+}
+
+/* Compact laptops (≤1050px) */
+@media (max-width: 1050px) {
+    .navigation__list > li > a,
+    .navigation__list > li > .menu-link,
+    .navigation__list > li > .navigation__link {
+        padding: 5px 3px !important;
+        font-size: 10px !important;
+        letter-spacing: 0 !important;
+    }
+    .search-minimal form {
+        width: 135px !important;
+    }
+    .header-tools {
+        gap: 4px !important;
+    }
+    .header-tools__item {
+        padding: 1px 2px !important;
+        margin-right: 0 !important;
+    }
+    .header-middle .logo img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    .marquee-container {
+        width: 75% !important;
+    }
+    .sticky-logo img {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    /* Mega menu for compact laptops */
+    .mega-menu {
+        padding: 0.75rem 0 0.85rem !important;
+    }
+    .mega-menu .container {
+        max-width: 750px !important;
+    }
+    .sub-menu__title {
+        font-size: 10px !important;
+    }
+    .sub-menu__list .menu-link {
+        font-size: 9.5px !important;
+    }
+    .mega-menu__media {
+        max-width: 10.5rem !important;
+    }
+    .mega-menu__img {
+        max-height: 115px !important;
+    }
 }
 
 @media (max-width: 991px) {
@@ -737,9 +1051,8 @@ export default function Header14() {
                                     >
                                         <Link
                                             href={`/${locale}/${elm.color}`}
-                                            className="text-white text-decoration-none text-uppercase fw-bold mx-5"
+                                            className="text-white text-decoration-none text-uppercase fw-bold mx-5 marquee-link"
                                             style={{
-                                                fontSize: "12px",
                                                 whiteSpace: "nowrap",
                                             }}
                                         >
@@ -1036,7 +1349,7 @@ export default function Header14() {
                             </div>
 
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
-                                <div className="d-none d-lg-flex search-minimal me-4">
+                                <div className="d-none d-lg-flex search-minimal me-2 me-xl-3">
                                     <form
                                         onSubmit={onSearch}
                                         className="position-relative"
@@ -1208,24 +1521,27 @@ export default function Header14() {
                                     className="header-tools__item"
                                     href={`/${locale}/order-tracking`}
                                     title={t("Track Order") || "Track Order"}
+                                    aria-label="Track Order"
                                 >
-                                    <TbTruckDelivery size={24} strokeWidth={1.5} />
+                                    <TbTruckDelivery size={20} strokeWidth={1.5} />
                                 </Link>
                                 <Link
                                     className="header-tools__item"
                                     href={`/${locale}/store-locator`}
                                     title={t("Store Locator") || "Store Locator"}
+                                    aria-label="Store Locator"
                                 >
-                                    <IoLocationOutline size={20} />
+                                    <IoLocationOutline size={18} />
                                 </Link>
                                 <a
                                     onClick={() => openCart()}
                                     className="header-tools__item header-tools__cart js-open-aside"
+                                    aria-label="Cart"
                                 >
                                     <svg
                                         className="d-block"
-                                        width="20"
-                                        height="20"
+                                        width="18"
+                                        height="18"
                                         viewBox="0 0 20 20"
                                         fill="none"
                                     >
@@ -1267,15 +1583,16 @@ export default function Header14() {
                         </nav>
 
                         <div className="sticky-actions d-flex align-items-center gap-3">
-                            <Link href={`/${locale}/order-tracking`} className="header-tools__item d-none d-md-flex align-items-center justify-content-center" title={t("Track Order") || "Track Order"}>
-                                <TbTruckDelivery size={24} strokeWidth={1.5} />
+                            <Link href={`/${locale}/order-tracking`} className="header-tools__item d-none d-md-flex align-items-center justify-content-center" title={t("Track Order") || "Track Order"} aria-label="Track Order">
+                                <TbTruckDelivery size={20} strokeWidth={1.5} />
                             </Link>
                             <a
                                 onClick={() => openCart()}
                                 className="header-tools__item header-tools__cart js-open-aside position-relative d-flex align-items-center justify-content-center"
                                 style={{ cursor: 'pointer' }}
+                                aria-label="Cart"
                             >
-                                <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <svg className="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none">
                                     <use href="#icon_cart" />
                                 </svg>
                                 <span className="cart-amount d-block position-absolute js-cart-items-count" style={{ top: '-6px', right: '-8px' }}>

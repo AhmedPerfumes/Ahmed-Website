@@ -180,6 +180,104 @@ const QualityBoutiqueSection = () => {
 
                 /* ── Decorations Removed ── */
 
+                /* ═══════════════════════════════════════════════════════════════════
+                   QUALITY BOUTIQUE - LAPTOP COMPACT STYLING (992px to 1536px)
+                   ═══════════════════════════════════════════════════════════════════ */
+
+                @media (min-width: 992px) and (max-width: 1536px) {
+                    .qb-section {
+                        padding: 50px 0 !important;
+                    }
+                    .qb-container {
+                        max-width: 1240px !important;
+                        padding: 0 20px !important;
+                    }
+                    .qb-frame {
+                        padding: 15px 0 !important;
+                        gap: 60px !important;
+                    }
+                    .qb-block {
+                        gap: 40px !important;
+                    }
+                    .qb-text-content {
+                        gap: 12px !important;
+                    }
+                    .qb-tagline {
+                        font-size: 0.62rem !important;
+                        letter-spacing: 3.5px !important;
+                    }
+                    .qb-title {
+                        font-size: clamp(1.6rem, 2.5vw, 2.2rem) !important;
+                        line-height: 1.15 !important;
+                    }
+                    .qb-description {
+                        font-size: 0.85rem !important;
+                        line-height: 1.55 !important;
+                    }
+                    .qb-cta-wrap {
+                        margin-top: 6px !important;
+                    }
+                    .qb-cta {
+                        padding: 10px 24px !important;
+                        font-size: 0.68rem !important;
+                        letter-spacing: 1.5px !important;
+                        gap: 8px !important;
+                    }
+                    .qb-feat-item {
+                        gap: 8px !important;
+                    }
+                    .qb-feat-item span {
+                        font-size: 0.7rem !important;
+                    }
+                    .qb-focus-corner {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+
+                /* Mid-size laptops (≤1366px) */
+                @media (min-width: 992px) and (max-width: 1366px) {
+                    .qb-section {
+                        padding: 40px 0 !important;
+                    }
+                    .qb-frame {
+                        gap: 45px !important;
+                    }
+                    .qb-block {
+                        gap: 35px !important;
+                    }
+                    .qb-title {
+                        font-size: clamp(1.45rem, 2.2vw, 1.9rem) !important;
+                    }
+                    .qb-description {
+                        font-size: 0.8rem !important;
+                        line-height: 1.5 !important;
+                    }
+                }
+
+                /* Smaller laptops (≤1200px) */
+                @media (min-width: 992px) and (max-width: 1200px) {
+                    .qb-section {
+                        padding: 35px 0 !important;
+                    }
+                    .qb-frame {
+                        gap: 35px !important;
+                    }
+                    .qb-block {
+                        gap: 28px !important;
+                    }
+                    .qb-title {
+                        font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+                    }
+                    .qb-description {
+                        font-size: 0.78rem !important;
+                    }
+                    .qb-cta {
+                        padding: 8px 20px !important;
+                        font-size: 0.64rem !important;
+                    }
+                }
+
                 /* RTL Specifics */
                 [dir='rtl'] .qb-tagline { 
                     letter-spacing: 0 !important;
@@ -201,6 +299,15 @@ const QualityBoutiqueSection = () => {
                 [dir='rtl'] .qb-feat-item span {
                     letter-spacing: 0 !important;
                     font-size: 0.85rem;
+                }
+                @media (min-width: 992px) and (max-width: 1536px) {
+                    [dir='rtl'] .qb-title {
+                        font-size: clamp(1.5rem, 2.6vw, 2.2rem) !important;
+                    }
+                    [dir='rtl'] .qb-description {
+                        font-size: 0.92rem !important;
+                        line-height: 1.6 !important;
+                    }
                 }
             `}</style>
 

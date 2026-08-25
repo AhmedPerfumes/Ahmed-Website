@@ -899,9 +899,9 @@ const MasterPerfumerGallery = () => {
                 .global-cta-text-col {
                     display: flex;
                     flex-direction: column;
-                    justify-content: flex-end;
+                    justify-content: center;
                     height: 100%;
-                    gap: 20px;
+                    gap: 10px;
                     pointer-events: none;
                     visibility: hidden;
                 }
@@ -1044,6 +1044,219 @@ const MasterPerfumerGallery = () => {
                     .slider-qty-selector .qty-value {
                         font-size: 0.75rem;
                         letter-spacing: 1px;
+                    }
+                }
+
+                /* ═══════════════════════════════════════════════════════════════════
+                   NEW PRODUCT SLIDER (BEST SELLERS) - LAPTOP COMPACT STYLING
+                   (992px to 1536px)
+                   ═══════════════════════════════════════════════════════════════════ */
+
+                @media (min-width: 992px) and (max-width: 1536px) {
+                    .best-sellers-header-section {
+                        padding: 24px 0 6px 0 !important;
+                    }
+                    .best-sellers-tagline {
+                        font-size: 0.65rem !important;
+                        letter-spacing: 3.5px !important;
+                    }
+                    .best-sellers-heading {
+                        font-size: clamp(1.8rem, 2.8vw, 2.2rem) !important;
+                    }
+                    .best-sellers-desc {
+                        font-size: 0.85rem !important;
+                        max-width: 400px !important;
+                        margin-top: 3px !important;
+                    }
+                    .best-sellers-line {
+                        width: 32px !important;
+                        margin-top: 6px !important;
+                    }
+
+                    .master-gallery-section {
+                        min-height: auto !important;
+                        height: auto !important;
+                        padding-bottom: 25px !important;
+                    }
+                    .master-slide {
+                        min-height: 480px !important;
+                        height: auto !important;
+                    }
+
+                    .master-grid, .global-cta-grid {
+                        max-width: 1200px !important;
+                        padding: 0 30px !important;
+                    }
+
+                    .master-text-col, .global-cta-text-col {
+                        gap: 6px !important;
+                        justify-content: center !important;
+                    }
+
+                    .master-tagline {
+                        font-size: 0.7rem !important;
+                        letter-spacing: 5px !important;
+                    }
+
+                    .master-title-wrap {
+                        padding-bottom: 4px !important;
+                    }
+                    .stagger-row span {
+                        font-size: clamp(2.2rem, 3.8vw, 3.4rem) !important;
+                        letter-spacing: -0.5px !important;
+                    }
+
+                    .product-price-wrap {
+                        font-size: 1.15rem !important;
+                        margin-top: 2px !important;
+                    }
+                    .product-price-wrap .price-old {
+                        font-size: 0.88rem !important;
+                    }
+
+                    .master-desc {
+                        font-size: 0.88rem !important;
+                        line-height: 1.5 !important;
+                        max-width: 380px !important;
+                        margin-top: 6px !important;
+                    }
+
+                    .global-cta-btn-container {
+                        padding-top: 8px !important;
+                    }
+
+                    .master-btn {
+                        padding: 12px 34px !important;
+                        font-size: 0.7rem !important;
+                        letter-spacing: 3.5px !important;
+                    }
+
+                    .slider-qty-selector {
+                        min-width: 170px !important;
+                        height: 44px !important;
+                    }
+                    .slider-qty-selector .qty-btn {
+                        width: 40px !important;
+                    }
+                    .slider-qty-selector .qty-value {
+                        font-size: 0.78rem !important;
+                    }
+
+                    /* Images with Desktop-like Overlapping Layering */
+                    .master-visual-col {
+                        padding-bottom: 10px !important;
+                    }
+                    .primary-photo {
+                        right: 0% !important;
+                        left: auto !important;
+                        width: 64% !important;
+                        max-height: 55vh !important;
+                        border-radius: 16px !important;
+                    }
+                    .secondary-photo {
+                        left: 18% !important;
+                        right: auto !important;
+                        bottom: 10% !important;
+                        width: 36% !important;
+                        aspect-ratio: 1/1 !important;
+                        border-radius: 6px !important;
+                        box-shadow: 0 16px 36px rgba(0,0,0,0.14) !important;
+                        z-index: 10 !important;
+                    }
+
+                    /* Pagination - placed safely in bottom corner */
+                    .modern-pagination {
+                        left: 40px !important;
+                        bottom: 20px !important;
+                        gap: 18px !important;
+                    }
+                    .fraction {
+                        font-size: 0.82rem !important;
+                        gap: 8px !important;
+                    }
+                    .fraction .line {
+                        width: 20px !important;
+                    }
+                    .modern-pagination .nav-btn svg {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+
+                    /* RTL */
+                    [dir="rtl"] .modern-pagination {
+                        left: auto !important;
+                        right: 40px !important;
+                    }
+                    [dir="rtl"] .primary-photo {
+                        right: auto !important;
+                        left: 0% !important;
+                    }
+                    [dir="rtl"] .secondary-photo {
+                        left: auto !important;
+                        right: 18% !important;
+                    }
+                }
+
+                /* Mid-size laptops (≤1366px) */
+                @media (min-width: 992px) and (max-width: 1366px) {
+                    .master-slide {
+                        min-height: 450px !important;
+                    }
+                    .stagger-row span {
+                        font-size: clamp(2rem, 3.4vw, 2.8rem) !important;
+                    }
+                    .primary-photo {
+                        width: 60% !important;
+                        max-height: 50vh !important;
+                    }
+                    .secondary-photo {
+                        width: 34% !important;
+                        left: 20% !important;
+                        bottom: 10% !important;
+                    }
+                    [dir="rtl"] .secondary-photo {
+                        left: auto !important;
+                        right: 20% !important;
+                    }
+                    .master-btn {
+                        padding: 10px 28px !important;
+                        font-size: 0.68rem !important;
+                    }
+                    .slider-qty-selector {
+                        min-width: 155px !important;
+                        height: 40px !important;
+                    }
+                }
+
+                /* Smaller laptops (≤1200px) */
+                @media (min-width: 992px) and (max-width: 1200px) {
+                    .master-slide {
+                        min-height: 420px !important;
+                    }
+                    .stagger-row span {
+                        font-size: clamp(1.8rem, 3vw, 2.4rem) !important;
+                    }
+                    .master-desc {
+                        font-size: 0.82rem !important;
+                        max-width: 320px !important;
+                    }
+                    .primary-photo {
+                        width: 58% !important;
+                        max-height: 46vh !important;
+                    }
+                    .secondary-photo {
+                        width: 32% !important;
+                        left: 22% !important;
+                        bottom: 8% !important;
+                    }
+                    [dir="rtl"] .secondary-photo {
+                        left: auto !important;
+                        right: 22% !important;
+                    }
+                    .master-btn {
+                        padding: 9px 24px !important;
+                        font-size: 0.66rem !important;
+                        letter-spacing: 2.5px !important;
                     }
                 }
             `}</style>

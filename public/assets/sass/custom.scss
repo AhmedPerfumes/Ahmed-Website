@@ -103,6 +103,112 @@
   box-shadow: 0 24px 60px rgba(0,0,0,0.15);
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   NEWSLETTER POPUP - LAPTOP COMPACT STYLING (992px to 1536px)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 992px) and (max-width: 1536px) {
+  .newsletter-popup {
+    width: 44rem !important;
+    max-width: 88vw !important;
+
+    .modal-content {
+      border-radius: 12px !important;
+    }
+
+    .newsletter-popup__bg img {
+      max-height: 400px !important;
+      min-height: 300px !important;
+      object-fit: cover !important;
+    }
+
+    .block-newsletter {
+      padding: 1.5rem 1.25rem !important;
+
+      .section-title {
+        font-size: 1.35rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      p {
+        font-size: 0.82rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      div {
+        font-size: 0.78rem !important;
+        margin-bottom: 0.75rem !important;
+      }
+
+      .bs-cta {
+        padding: 9px 20px !important;
+        font-size: 0.72rem !important;
+        letter-spacing: 1.5px !important;
+      }
+    }
+
+    .btn-close {
+      right: 0.6rem !important;
+      top: 0.6rem !important;
+      transform: scale(0.85);
+    }
+  }
+}
+
+/* Mid-size laptops (≤1366px) */
+@media (min-width: 992px) and (max-width: 1366px) {
+  .newsletter-popup {
+    width: 41rem !important;
+
+    .newsletter-popup__bg img {
+      max-height: 360px !important;
+      min-height: 280px !important;
+    }
+
+    .block-newsletter {
+      padding: 1.25rem 1rem !important;
+
+      .section-title {
+        font-size: 1.22rem !important;
+      }
+
+      p {
+        font-size: 0.78rem !important;
+      }
+    }
+  }
+}
+
+/* Smaller laptops (≤1200px) */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .newsletter-popup {
+    width: 38rem !important;
+
+    .newsletter-popup__bg img {
+      max-height: 330px !important;
+      min-height: 260px !important;
+    }
+
+    .block-newsletter {
+      padding: 1rem 0.85rem !important;
+
+      .section-title {
+        font-size: 1.15rem !important;
+      }
+
+      p {
+        font-size: 0.75rem !important;
+      }
+
+      .bs-cta {
+        padding: 8px 16px !important;
+        font-size: 0.68rem !important;
+      }
+    }
+  }
+}
+
 
 .item-zoom {
   display: flex;
@@ -999,7 +1105,7 @@ footer {
   justify-content: center;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 991px) {
   .gs-grid { display: none; }
 }
 
@@ -1013,7 +1119,7 @@ footer {
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 991px) {
   .gs-swiper { display: block; }
 }
 
@@ -1068,7 +1174,7 @@ footer {
   flex-direction: column;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 991px) {
   .gs-card {
     max-width: 100%;
     min-width: unset;
@@ -1466,6 +1572,216 @@ footer {
   }
 
   .gs-feature__text p { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GIFT SETS SECTION - LAPTOP COMPACT STYLING & FIT (992px to 1536px)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 992px) and (max-width: 1536px) {
+  .gs-section {
+    padding: 45px 0 35px;
+    top: 60px;
+  }
+  .gs-header {
+    max-width: 620px;
+    margin-bottom: 20px;
+  }
+  .gs-header__tagline {
+    font-size: 0.6rem;
+    letter-spacing: 3.5px;
+    margin-bottom: 10px;
+  }
+  .gs-header__title {
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .gs-header__subtitle {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    max-width: 480px;
+  }
+
+  /* Cards Grid */
+  .gs-grid-container {
+    max-width: 1240px;
+    padding: 0 20px;
+  }
+  .gs-grid {
+    gap: 12px;
+  }
+  .gs-card {
+    min-width: 150px;
+    max-width: 220px;
+  }
+  .gs-card__media {
+    aspect-ratio: 4/5;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+  .gs-card__title {
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .gs-card__desc {
+    font-size: 0.76rem;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .gs-card__link {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    gap: 5px;
+  }
+
+  /* Bottom Section & Divider */
+  .gs-bottom-section {
+    padding-bottom: 45px;
+  }
+  .gs-divider {
+    padding: 30px 20px 25px;
+    max-width: 600px;
+  }
+  .gs-divider__text {
+    font-size: 0.58rem;
+    letter-spacing: 3.5px;
+  }
+
+  /* Elevated Box, Banners & Features */
+  .gs-elevated-box {
+    max-width: 1200px;
+    padding: 0 20px;
+  }
+  .gs-banners {
+    gap: 16px;
+    padding: 16px 16px 0;
+  }
+  .gs-banner {
+    aspect-ratio: 16/9;
+  }
+  .gs-banner--left .gs-banner__content {
+    bottom: 20px;
+    left: 20px;
+    max-width: 260px;
+  }
+  .gs-banner--right .gs-banner__content {
+    bottom: 20px;
+    right: 20px;
+    max-width: 260px;
+  }
+  .gs-banner__small {
+    font-size: 0.58rem;
+    letter-spacing: 2px;
+  }
+  .gs-banner__big {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    letter-spacing: 1px;
+  }
+  .gs-banner__desc {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    margin: 2px 0 8px;
+  }
+  .gs-banner__btn {
+    padding: 8px 18px;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+  }
+
+  /* Features Row */
+  .gs-features {
+    margin-top: 16px;
+  }
+  .gs-feature-item {
+    padding: 20px 12px;
+    gap: 10px;
+  }
+  .gs-feature__icon {
+    width: 38px;
+    height: 38px;
+  }
+  .gs-feature__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  .gs-feature__text h4 {
+    font-size: 0.66rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+  }
+  .gs-feature__text p {
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+}
+
+/* Mid-size laptops (≤1366px) */
+@media (min-width: 992px) and (max-width: 1366px) {
+  .gs-section {
+    padding: 38px 0 28px;
+    top: 55px;
+  }
+  .gs-grid {
+    gap: 10px;
+  }
+  .gs-card {
+    min-width: 140px;
+    max-width: 200px;
+  }
+  .gs-card__title {
+    font-size: 0.78rem;
+  }
+  .gs-card__desc {
+    font-size: 0.72rem;
+  }
+  .gs-feature-item {
+    padding: 16px 8px;
+    gap: 8px;
+  }
+  .gs-feature__text h4 {
+    font-size: 0.62rem;
+  }
+  .gs-feature__text p {
+    font-size: 0.68rem;
+  }
+}
+
+/* Smaller laptops (≤1200px) */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .gs-section {
+    padding: 32px 0 24px;
+    top: 50px;
+  }
+  .gs-grid {
+    gap: 8px;
+  }
+  .gs-card {
+    min-width: 130px;
+    max-width: 185px;
+  }
+  .gs-card__title {
+    font-size: 0.74rem;
+    letter-spacing: 0.5px;
+  }
+  .gs-card__desc {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+  .gs-card__link {
+    font-size: 0.68rem;
+  }
+  .gs-feature-item {
+    padding: 14px 6px;
+  }
+  .gs-feature__text h4 {
+    font-size: 0.58rem;
+    letter-spacing: 0.5px;
+  }
+  .gs-feature__text p {
+    font-size: 0.64rem;
+  }
 }
 
 /* ==========================================================================
@@ -2337,6 +2653,231 @@ footer {
 [dir='rtl'] .hs-counter {
   letter-spacing: 0;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   HORIZONTAL SCROLL - LAPTOP COMPACT STYLING & FIT (992px to 1536px)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 992px) and (max-width: 1536px) {
+  .hs-section {
+    height: 520vh !important;
+  }
+  .hs-panel {
+    padding-top: 65px !important;
+    padding-bottom: 55px !important;
+  }
+
+  /* Slide 1 & 3: Categories Panel (Iconic Indulgence / Luxury Delight) */
+  .hs-categories-panel {
+    padding-top: 60px !important;
+    padding-bottom: 50px !important;
+    justify-content: center !important;
+  }
+  .hs-cat-header {
+    padding: 0 20px 10px !important;
+    max-width: 580px !important;
+  }
+  .hs-cat-header__tagline {
+    font-size: 0.6rem !important;
+    letter-spacing: 3.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .hs-cat-header__title {
+    font-size: clamp(1.5rem, 2.4vw, 2rem) !important;
+    letter-spacing: 2px !important;
+    margin: 0 0 4px !important;
+  }
+  .hs-cat-header__subtitle {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    max-width: 420px !important;
+  }
+  .hs-categories-inner {
+    padding: 0 20px !important;
+    max-width: 1200px !important;
+  }
+  .hs-categories-inner .category-carousel .swiper-slide a.d-block {
+    margin-bottom: 6px !important;
+  }
+  .hs-categories-inner .category-carousel .swiper-slide img {
+    max-height: 190px !important;
+    object-fit: cover !important;
+  }
+  .hs-categories-inner .category-carousel .text-center .menu-link {
+    font-size: 0.78rem !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 1px !important;
+  }
+  .hs-categories-inner .category-carousel .btn-videos {
+    font-size: 0.7rem !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  /* Slide 2: Video Panel (K-Series) */
+  .hs-video-panel {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    justify-content: center !important;
+  }
+  .hs-vid-header {
+    padding: 0 20px 6px !important;
+  }
+  .hs-vid-eyebrow {
+    font-size: 0.58rem !important;
+    letter-spacing: 3.5px !important;
+    margin-bottom: 2px !important;
+  }
+  .hs-vid-title {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem) !important;
+    letter-spacing: 2px !important;
+    margin: 0 0 2px !important;
+  }
+  .hs-vid-sub {
+    font-size: 0.76rem !important;
+  }
+  .hs-vid-wrap {
+    width: 84vw !important;
+    max-width: min(1020px, calc((100vh - 190px) * 1.777)) !important;
+  }
+  .hs-vid-badge {
+    padding-top: 6px !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 3px !important;
+  }
+
+  /* Slide 4: Dakhoon Panel */
+  .hs-dakhoon-panel .dk-content {
+    padding-top: 65px !important;
+  }
+  .hs-dakhoon-panel .dk-logo-wrap {
+    top: 30px !important;
+  }
+  .hs-dakhoon-panel .dk-tagline {
+    font-size: 0.58rem !important;
+    letter-spacing: 3px !important;
+    margin-bottom: 6px !important;
+  }
+  .hs-dakhoon-panel .dk-heading {
+    font-size: clamp(1.5rem, 2.4vw, 2rem) !important;
+    margin-bottom: 6px !important;
+  }
+  .hs-dakhoon-panel .dk-accent {
+    margin-bottom: 8px !important;
+  }
+  .hs-dakhoon-panel .dk-description {
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+    max-width: 320px !important;
+    margin-bottom: 12px !important;
+  }
+  .hs-dakhoon-panel .dk-cta {
+    padding: 8px 22px !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* Slide 5: Essence Panel */
+  .hs-essence-inner {
+    padding: 0 5vw !important;
+  }
+  .hs-essence-label {
+    font-size: 0.58rem !important;
+    letter-spacing: 3.5px !important;
+    margin-bottom: 8px !important;
+  }
+  .hs-essence-title {
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem) !important;
+    margin-bottom: 0.8rem !important;
+  }
+  .hs-essence-desc {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+    max-width: 300px !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .hs-essence-btn {
+    padding: 8px 24px !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 2.5px !important;
+  }
+  .hs-essence-cards {
+    height: 48vh !important;
+  }
+  .hs-essence-card--1 {
+    width: 19vw !important;
+    max-width: 200px !important;
+  }
+  .hs-essence-card--2 {
+    width: 15vw !important;
+    max-width: 160px !important;
+  }
+  .hs-essence-card__media {
+    margin-bottom: 6px !important;
+  }
+  .hs-essence-card__name {
+    font-size: 0.76rem !important;
+    margin-bottom: 3px !important;
+  }
+  .hs-essence-card__cta {
+    font-size: 0.62rem !important;
+  }
+
+  /* Global Navigation */
+  .hs-nav {
+    bottom: 2.2vh !important;
+    gap: 6px !important;
+  }
+  .hs-nav-inner {
+    padding: 6px 16px !important;
+    gap: 12px !important;
+  }
+  .hs-counter {
+    font-size: 0.76rem !important;
+  }
+  .hs-dot {
+    width: 18px !important;
+    height: 2px !important;
+  }
+  .hs-dot.active {
+    width: 36px !important;
+  }
+  .hs-scroll-hint {
+    font-size: 0.52rem !important;
+    gap: 3px !important;
+  }
+  .hs-hint-line {
+    height: 14px !important;
+  }
+}
+
+/* Mid-size laptops (≤1366px) */
+@media (min-width: 992px) and (max-width: 1366px) {
+  .hs-categories-inner .category-carousel .swiper-slide img {
+    max-height: 170px !important;
+  }
+  .hs-vid-wrap {
+    width: 84vw !important;
+    max-width: min(960px, calc((100vh - 180px) * 1.777)) !important;
+  }
+  .hs-essence-cards {
+    height: 44vh !important;
+  }
+}
+
+/* Smaller laptops (≤1200px) */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .hs-categories-inner .category-carousel .swiper-slide img {
+    max-height: 155px !important;
+  }
+  .hs-vid-wrap {
+    width: 84vw !important;
+    max-width: min(900px, calc((100vh - 170px) * 1.777)) !important;
+  }
+  .hs-essence-cards {
+    height: 40vh !important;
+  }
+}
+
 /* ==========================================================================
    DAKHOON HERO SECTION (dk-*)
    ========================================================================== */
