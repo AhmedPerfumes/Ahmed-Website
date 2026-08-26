@@ -1,134 +1,33 @@
 'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 
-const MenuContext = createContext();
+const MenuContext = createContext({
+  categoriesSubCategories: [],
+  isLoading: false,
+  error: null,
+  vatTax: 0.0,
+  shippingServiceCharges: [],
+  currency: 'د.إ',
+  homeSliders: [],
+  popUp: [],
+  topHeader: [],
+});
 
 export function MenuProvider({ children, initialData }) {
-  const [categoriesSubCategories, setCategoriesSubCategories] = useState(initialData?.productCategories || []);
-  const [vatTax, setVatTax] = useState(initialData?.tax || 0.00);
-  const [shippingServiceCharges, setshippingServiceCharges] = useState(initialData?.shipping_service_charges || []);
-  const [currency, setCurrency] = useState(initialData?.currency || 'د.إ');
-  const [homeSliders, setHomeSliders] = useState(initialData?.home_sliders || []);
-  const [popUp, setPopUp] = useState(initialData?.pop_up || []);
-  const [shop_pop_up, setshop_pop_up] = useState(initialData?.shop_pop_up || []);
-  const [saleSection, setSaleSection] = useState(initialData?.sale_section || []);
-  const [topHeader, setTopHeader] = useState(initialData?.top_header || []);
-  const [isLoading, setIsLoading] = useState(initialData ? false : true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (initialData) return; // Skip fetching on client if server provided data
-    
-    async function getCategoriesSubCategories() {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategoriesTemp`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({}), // Add any data you want to send in the body, if needed
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to submit the data. Please try again.');
-        }
-
-        // Handle response if necessary
-        const data = await response.json();
-        if (data && data.productCategories.length > 0) {
-          setError(null);
-          setCategoriesSubCategories(data.productCategories);
-        } else {
-          setCategoriesSubCategories(null);
-          setError(data);
-        }
-
-        if (data && data.tax) {
-          setError(null);
-          setVatTax(data.tax);
-        } else {
-          setVatTax(null);
-          setError(data);
-        }
-
-        if (data && data.shipping_service_charges) {
-          setError(null);
-          setshippingServiceCharges(data.shipping_service_charges);
-        } else {
-          setshippingServiceCharges(null);
-          setError(data);
-        }
-
-        if (data && data.currency) {
-          setError(null);
-          setCurrency(data.currency);
-        } else {
-          setCurrency(null);
-          setError(data);
-        }
-
-        if (data && data.home_sliders) {
-          setError(null);
-          setHomeSliders(data.home_sliders);
-        } else {
-          setHomeSliders(null);
-          setError(data);
-        }
-        // if(data && data.dynamic_sections) {
-        //   setError(null);
-        //   setDynamicSections(data.dynamic_sections);
-        // } else {
-        //   setDynamicSections(null);
-        //   setError(data);
-        // }
-
-
-        if (data && data.pop_up) {
-          setError(null);
-          setPopUp(data.pop_up);
-        } else {
-          setPopUp(null);
-          setError(data);
-        }
-        if (data && data.shop_pop_up) {
-          setError(null);
-          setshop_pop_up(data.shop_pop_up);
-        } else {
-          setshop_pop_up(null);
-          setError(data);
-        }
-        if (data && data.sale_section) {
-          setError(null);
-          setSaleSection(data.sale_section);
-        } else {
-          setSaleSection(null);
-          setError(data);
-        }
-        if (data && data.top_header) {
-          setError(null);
-          setTopHeader(data.top_header);
-        }
-        else {
-          setTopHeader(null);
-          setError(data);
-        }
-        // console.log(data);
-      } catch (error) {
-        // Capture the error message to display to the user
-        setError(error.message);
-        setIsLoading(false);
-        // console.error(error);
-      } finally {
-        setError(null);
-        setIsLoading(false);
-      }
-    }
-
-    getCategoriesSubCategories();
-  }, []);
+  const value = useMemo(() => ({
+    categoriesSubCategories: initialData?.productCategories || [],
+    vatTax: initialData?.tax ?? 0.0,
+    shippingServiceCharges: initialData?.shipping_service_charges || [],
+    currency: initialData?.currency || 'د.إ',
+    homeSliders: initialData?.home_sliders || [],
+    popUp: initialData?.pop_up || [],
+    topHeader: initialData?.top_header || [],
+    isLoading: !initialData,
+    error: null,
+  }), [initialData]);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, popUp, shop_pop_up, topHeader, saleSection }}>
+    <MenuContext.Provider value={value}>
       {children}
     </MenuContext.Provider>
   );

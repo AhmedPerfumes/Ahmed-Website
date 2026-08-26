@@ -19,6 +19,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { renderPrice } from "@/utlis/priceRenderer";
 import Skeleton from "@mui/material/Skeleton";
+<<<<<<< Updated upstream
 
 const headerStyles = `
 /* ─── Core Header ─── */
@@ -667,6 +668,9 @@ const marqueeStyles = `
     font-weight: 700;
 }
 `;
+=======
+import "./Header14.css";
+>>>>>>> Stashed changes
 
 const HeaderSkeleton = () => {
     const t = useTranslations();
@@ -997,9 +1001,6 @@ export default function Header14() {
     return (
         <>
         {/* <HeaderSkeleton /> */}
-            <style>
-                {headerStyles} {marqueeStyles}
-            </style>
             <header
                 id="header"
                 className="header bg-white"
