@@ -305,8 +305,10 @@ export default function PopularProducts() {
               watchOverflow={false}
               breakpoints={{
                 0: { slidesPerView: 1.65, spaceBetween: 14 },
-                768: { slidesPerView: 3, spaceBetween: 36 },
-                1200: { slidesPerView: 5, spaceBetween: 56 },
+                768: { slidesPerView: 3, spaceBetween: 24 },
+                992: { slidesPerView: 3.8, spaceBetween: 30 },
+                1200: { slidesPerView: 4.8, spaceBetween: 36 },
+                1537: { slidesPerView: 5, spaceBetween: 56 },
               }}
               onSlideChange={(s) => setActiveIndex(s.realIndex)}
               style={{ overflow: "visible" }}

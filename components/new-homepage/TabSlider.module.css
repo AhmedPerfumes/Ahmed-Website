@@ -394,3 +394,206 @@
   gap: 16px;
   position: relative;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   TAB SLIDER - LAPTOP COMPACT STYLING & SCALING (992px to 1536px)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 992px) and (max-width: 1536px) {
+  .section {
+    min-height: auto;
+    padding: 35px 0 45px 0;
+  }
+
+  .headerWrapper {
+    margin-bottom: 20px;
+  }
+
+  .subTagline {
+    font-size: 0.72rem !important;
+    letter-spacing: 3.5px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .subTaglineLine {
+    width: 28px;
+  }
+
+  .mainTitle {
+    font-size: clamp(1.8rem, 2.8vw, 2.4rem) !important;
+    letter-spacing: 1px !important;
+  }
+
+  .modernDivider {
+    margin-top: 12px !important;
+    margin-bottom: 16px !important;
+    max-width: 180px !important;
+  }
+
+  .scrollTabs {
+    gap: 20px !important;
+    padding: 0 10px 4px !important;
+  }
+
+  .tabButton {
+    font-size: 0.75rem !important;
+    letter-spacing: 1px !important;
+    padding: 5px 0 !important;
+  }
+
+  .sliderContainer {
+    margin: 15px 0 20px 0 !important;
+  }
+
+  .sliderContainer :global(.swiper-slide) {
+    transform: scale(0.8);
+  }
+
+  .sliderContainer :global(.swiper-slide-active) {
+    transform: scale(1.06) translateY(-8px) !important;
+  }
+
+  .sliderContainer :global(.pc__img) {
+    max-height: 250px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  .sliderContainer :global(.product-card-wrapper .pc__qty-selector--desktop) {
+    height: 38px !important;
+  }
+
+  .sliderContainer :global(.product-card-wrapper .product-card__actions .js-add-cart),
+  .sliderContainer :global(.product-card-wrapper .product-card__actions .btn-out-of-stock) {
+    height: 38px !important;
+    font-size: 0.76rem !important;
+  }
+
+  .infoBlock {
+    margin-top: 5px !important;
+  }
+
+  .categoryLabelWrapper {
+    margin-bottom: 6px !important;
+  }
+
+  .categoryLabel {
+    font-size: 0.65rem !important;
+    letter-spacing: 3.5px !important;
+  }
+
+  .productName {
+    font-size: clamp(1.25rem, 2.2vw, 1.65rem) !important;
+    margin-bottom: 6px !important;
+  }
+
+  .productPrice {
+    font-size: 1.15rem !important;
+    margin-bottom: 16px !important;
+    gap: 12px !important;
+  }
+
+  .collectionButton {
+    padding: 10px 26px !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 2px !important;
+    gap: 8px !important;
+  }
+}
+
+/* Mid-size laptops (≤1366px e.g. standard 13", 14" laptops) */
+@media (min-width: 992px) and (max-width: 1366px) {
+  .section {
+    padding: 30px 0 40px 0;
+  }
+
+  .mainTitle {
+    font-size: clamp(1.65rem, 2.4vw, 2.1rem) !important;
+  }
+
+  .scrollTabs {
+    gap: 16px !important;
+  }
+
+  .tabButton {
+    font-size: 0.72rem !important;
+  }
+
+  .sliderContainer :global(.pc__img) {
+    max-height: 230px !important;
+  }
+
+  .productName {
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem) !important;
+  }
+
+  .productPrice {
+    font-size: 1.05rem !important;
+    margin-bottom: 14px !important;
+  }
+
+  .collectionButton {
+    padding: 8px 22px !important;
+    font-size: 0.68rem !important;
+  }
+}
+
+/* Smaller laptops & Landscape Tablets (≤1200px) */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .section {
+    padding: 25px 0 35px 0;
+  }
+
+  .mainTitle {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem) !important;
+  }
+
+  .scrollTabs {
+    gap: 14px !important;
+  }
+
+  .tabButton {
+    font-size: 0.7rem !important;
+  }
+
+  .sliderContainer :global(.pc__img) {
+    max-height: 210px !important;
+  }
+
+  .productName {
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem) !important;
+  }
+
+  .productPrice {
+    font-size: 1rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  .collectionButton {
+    padding: 8px 20px !important;
+    font-size: 0.65rem !important;
+  }
+}
+
+/* Compact laptops (≤1050px) */
+@media (min-width: 992px) and (max-width: 1050px) {
+  .mainTitle {
+    font-size: clamp(1.4rem, 2vw, 1.75rem) !important;
+  }
+
+  .sliderContainer :global(.pc__img) {
+    max-height: 190px !important;
+  }
+
+  .scrollTabs {
+    gap: 12px !important;
+  }
+
+  .tabButton {
+    font-size: 0.68rem !important;
+  }
+
+  .productName {
+    font-size: clamp(1rem, 1.4vw, 1.25rem) !important;
+  }
+}

@@ -7,6 +7,7 @@ import React from "react";
 import { allProducts } from "@/data/products";
 import MobileFooterWithoutTrans2 from "@/components/footers/MobileFooterWithoutTrans2";
 import { headers } from 'next/headers';
+import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription";
 
 export const metadata = {
   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -77,6 +78,7 @@ const ProductDetailsPage16 = async({ params }) => {
           <div className="mb-md-1 pb-md-3"></div>
           <SingleProductWithoutTrans category={ categoryName } subcategory={ subCategoryName } product={ data } />
           <RelatedSliderWithoutTrans relatedProds={ data.related_prods }/>
+          <CollapsibleDescription description={data.seo_content} title="About this Product" />
         </main>
         <section className="d-none d-lg-block" style={{ height: "100%" }}>
           <FooterWithoutTrans />

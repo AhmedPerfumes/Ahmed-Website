@@ -102,14 +102,22 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
   let initialMenuData = null;
   try {
+    const origin = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/productCategoriesTemp`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': origin,
+        'Referer': `${origin}/`,
+      },
       body: JSON.stringify({}),
-      next: { revalidate: 60 } // Cache for 60 seconds
+      next: { revalidate: 604800 } // Cache for 7 days
     });
     if (res.ok) {
       initialMenuData = await res.json();
+      console.log("🚀 ~ LocaleLayout ~ initialMenuData:", initialMenuData)
+    } else {
+      console.error(`Menu API failed with status ${res.status}: ${res.statusText}`);
     }
   } catch (err) {
     console.error("Failed to fetch menu data on server:", err);

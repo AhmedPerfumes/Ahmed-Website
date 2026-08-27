@@ -120,10 +120,10 @@ export default function NewsLetter({popUp}) {
                                             <Image
                                                 width={550}
                                                 height={650}
-                                                style={{ height: "fit-content", minHeight: "400px", objectFit: "cover" }}
+                                                style={{ height: "fit-content", objectFit: "cover" }}
                                                 loading="lazy"
                                                 src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
-                                                className="w-100 d-block"
+                                                className="w-100 d-block newsletter-popup-img"
                                                 alt="image"
                                             />
                                        

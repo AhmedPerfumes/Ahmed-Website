@@ -19,340 +19,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { renderPrice } from "@/utlis/priceRenderer";
 import Skeleton from "@mui/material/Skeleton";
-
-const headerStyles = `
-/* ─── Core Header ─── */
-.header { position: relative; z-index: 1040; background-color: white; }
-
-/* ─── Middle Row ─── */
-.header-middle { border-bottom: 1px solid rgba(0,0,0,0.06); }
-.header-middle .container-fluid { padding-top: 0.6rem; padding-bottom: 0.6rem; }
-
-/* Select Dropdowns */
-.heeader-top__right .form-select {
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border: none;
-    padding: 4px 28px 4px 8px;
-    color: #555;
-    background-color: transparent;
-    transition: color 0.25s ease;
-    cursor: pointer;
-}
-.heeader-top__right .form-select:hover { color: #111; }
-.heeader-top__right .form-select:focus { box-shadow: none; outline: none; }
-
-/* Logo */
-.logo a { display: flex; align-items: center; transition: opacity 0.3s ease; }
-.logo a:hover { opacity: 0.8; }
-
-/* Header Tools Icons */
-.header-tools__item {
-    transition: color 0.25s ease, transform 0.25s ease;
-}
-.header-tools__item:hover {
-    color: #a67b30;
-}
-
-/* ─── Search ─── */
-.search-popup {
-    position: absolute;
-    top: 133%;
-    left: 0;
-    width: 100%;
-    padding-top: 1rem;
-    padding-bottom: 2.45rem;
-    border-top: 1px solid #e4e4e4;
-    background-color: #ffffff;
-    box-shadow: 0 0.625rem 1.5625rem 0 rgba(0, 0, 0, 0.05);
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    z-index: 1200;
-}
-.js-content_visible .search-popup { opacity: 1; transform: translateY(0); pointer-events: auto; }
-.js-content_hidden .search-popup { opacity: 0; transform: translateY(-50px); pointer-events: none; }
-.search-minimal { margin-left: auto; }
-[dir="rtl"] .search-minimal { margin-left: 0; }
-.search-minimal form { width: 220px; }
-.search-minimal .form-control {
-    border: 1px solid #e8e8e8;
-    border-bottom: 1.5px solid #222;
-    border-radius: 0;
-    padding: 9px 40px 9px 14px;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    box-shadow: none;
-    outline: none;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    background-color: #fafafa;
-}
-.search-minimal .form-control::placeholder { color: #999; font-weight: 500; text-transform: uppercase; font-size: 11px; letter-spacing: 0.12em; }
-.search-minimal .form-control:focus { border-color: #ddd; border-bottom-color: #a67b30; background-color: #fff; }
-.search-minimal .search-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #555; pointer-events: none; transition: color 0.3s ease; }
-.search-minimal .form-control:focus ~ .search-icon { color: #a67b30; }
-.search-popup__close { position: absolute; top: 10px; right: 12px; background: transparent; border: none; font-size: 20px; cursor: pointer; color: #333; z-index: 5; }
-.search-popup__close:hover { color: #000; }
-.search-popup__results {
-    max-height: 450px;
-    overflow-y: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1);
-    margin-top: 15px;
-}
-.search-results__footer {
-    padding: 12px;
-    background-color: #fcfcfc;
-    border-top: 1px solid #eee;
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-}
-.view-all-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #111;
-    color: #fff !important;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-.view-all-btn:hover {
-    background-color: #a67b30;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-.suggestion-item {
-    transition: background 0.2s ease;
-    border-bottom: 1px solid #f0f0f0;
-    padding: 12px 20px;
-}
-.suggestion-item:last-child { border-bottom: none; }
-.suggestion-item:hover { background-color: #f9f9f9; }
-.suggestion-image {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #eee;
-}
-.suggestion-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #111;
-    margin-bottom: 2px;
-    display: block;
-}
-.suggestion-price {
-    font-size: 13px;
-    color: #a67b30;
-    font-weight: 600;
-}
-.search-suggestion-title {
-    padding: 15px 20px 5px;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #999;
-    letter-spacing: 1px;
-}
-
-/* ─── Bottom Navigation ─── */
-.header-bottom {
-    border-top: 1px solid rgba(0,0,0,0.04);
-    background: #fff;
-    transition: all 0.1s ease;
-}
-.header-bottom .navigation {
-    padding: 0 !important;
-}
-.header-bottom .navigation__list {
-    gap: 0;
-}
-.navigation__list > li > a,
-.navigation__list > li > .menu-link {
-    position: relative;
-    padding: 12px 18px;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #333;
-    transition: color 0.3s ease;
-}
-.navigation__list > li > a:hover,
-.navigation__list > li > .menu-link:hover {
-    color: #a67b30;
-}
-/* Animated underline on hover */
-.navigation__list > li > a::after,
-.navigation__list > li > .menu-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: #a67b30;
-    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.navigation__list > li > a:hover::after,
-.navigation__list > li > .menu-link:hover::after,
-.navigation__list > li.active > a::after {
-    width: 60%;
-}
-
-/* Laptop Responsive fixes to avoid overlap with sticky logo */
-@media (max-width: 1550px) {
-    .navigation__list > li > a,
-    .navigation__list > li > .menu-link {
-        padding: 12px 8px;
-        font-size: 11px;
-        letter-spacing: 0.02em;
-    }
-}
-@media (max-width: 1200px) {
-    .navigation__list > li > a,
-    .navigation__list > li > .menu-link {
-        padding: 12px 4px;
-        font-size: 10px;
-        letter-spacing: 0;
-    }
-}
-
-/* ─── Natively Sticky Header Bottom (appears on scroll) ─── */
-.header-bottom-wrapper {
-    position: sticky;
-    top: -1px;
-    z-index: 1001;
-    background: #fff;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-    transition: background-color 0.1s ease, backdrop-filter 0.1s ease, box-shadow 0.1s ease;
-    will-change: background-color, backdrop-filter, box-shadow;
-}
-
-.header-bottom-wrapper.is-stuck {
-    background: #ffffff;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-.header-bottom {
-    background: transparent;
-    border-top: none;
-}
-
-.header-bottom-wrapper .container {
-    max-width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-
-.sticky-logo {
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.1s ease;
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    inset-inline-start: 1.5rem;
-}
-
-.sticky-actions {
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.1s ease;
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    inset-inline-end: 1.5rem;
-    justify-content: flex-end;
-}
-
-.header-bottom-wrapper.is-stuck .sticky-logo,
-.header-bottom-wrapper.is-stuck .sticky-actions {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-
-
-.sticky-actions .header-tools__item {
-    font-size: 18px;
-    color: #333;
-    transition: color 0.3s ease;
-    white-space: nowrap;
-}
-
-.sticky-actions .header-tools__item:hover {
-    color: #a67b30;
-}
-
-@media (max-width: 991px) {
-    .header-bottom-wrapper { display: none; }
-}
-`;
-
-const marqueeStyles = `
-    @keyframes marquee-ltr {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-    }
-    @keyframes marquee-rtl {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-    }
-    .marquee-container {
-    overflow: hidden; 
-    white-space: nowrap;
-    width: 40%; /* Suggestion: Use 100% or your specific width (e.g. 40%) */
-    height: 100%;
-    margin: 0 auto;
-    position: relative;
-    }
-    .marquee-track {
-    display: flex;
-    align-items: center;
-    width: fit-content; /* Crucial: Calculates exact width of all items */
-    will-change: transform;
-    font-family: "Kanit-Regular";
-    }
-    .marquee-track:hover {
-    animation-play-state: paused;
-    }
-    .suggestion-price-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-}
-
-.price-old {
-    text-decoration: line-through;
-    color: #999;
-    font-weight: 400;
-}
-
-.price-new {
-    color: #a67b30; /* Your gold theme color */
-    font-weight: 700;
-}
-`;
+import "./Header14.css";
 
 const HeaderSkeleton = () => {
     const t = useTranslations();
@@ -683,9 +350,6 @@ export default function Header14() {
     return (
         <>
         {/* <HeaderSkeleton /> */}
-            <style>
-                {headerStyles} {marqueeStyles}
-            </style>
             <header
                 id="header"
                 className="header bg-white"
@@ -737,9 +401,8 @@ export default function Header14() {
                                     >
                                         <Link
                                             href={`/${locale}/${elm.color}`}
-                                            className="text-white text-decoration-none text-uppercase fw-bold mx-5"
+                                            className="text-white text-decoration-none text-uppercase fw-bold mx-5 marquee-link"
                                             style={{
-                                                fontSize: "12px",
                                                 whiteSpace: "nowrap",
                                             }}
                                         >
@@ -1036,7 +699,7 @@ export default function Header14() {
                             </div>
 
                             <div className="header-tools d-flex align-items-center flex-1 justify-content-end me-2">
-                                <div className="d-none d-lg-flex search-minimal me-4">
+                                <div className="d-none d-lg-flex search-minimal me-2 me-xl-3">
                                     <form
                                         onSubmit={onSearch}
                                         className="position-relative"
@@ -1208,24 +871,27 @@ export default function Header14() {
                                     className="header-tools__item"
                                     href={`/${locale}/order-tracking`}
                                     title={t("Track Order") || "Track Order"}
+                                    aria-label="Track Order"
                                 >
-                                    <TbTruckDelivery size={24} strokeWidth={1.5} />
+                                    <TbTruckDelivery size={20} strokeWidth={1.5} />
                                 </Link>
                                 <Link
                                     className="header-tools__item"
                                     href={`/${locale}/store-locator`}
                                     title={t("Store Locator") || "Store Locator"}
+                                    aria-label="Store Locator"
                                 >
-                                    <IoLocationOutline size={20} />
+                                    <IoLocationOutline size={18} />
                                 </Link>
                                 <a
                                     onClick={() => openCart()}
                                     className="header-tools__item header-tools__cart js-open-aside"
+                                    aria-label="Cart"
                                 >
                                     <svg
                                         className="d-block"
-                                        width="20"
-                                        height="20"
+                                        width="18"
+                                        height="18"
                                         viewBox="0 0 20 20"
                                         fill="none"
                                     >
@@ -1267,15 +933,16 @@ export default function Header14() {
                         </nav>
 
                         <div className="sticky-actions d-flex align-items-center gap-3">
-                            <Link href={`/${locale}/order-tracking`} className="header-tools__item d-none d-md-flex align-items-center justify-content-center" title={t("Track Order") || "Track Order"}>
-                                <TbTruckDelivery size={24} strokeWidth={1.5} />
+                            <Link href={`/${locale}/order-tracking`} className="header-tools__item d-none d-md-flex align-items-center justify-content-center" title={t("Track Order") || "Track Order"} aria-label="Track Order">
+                                <TbTruckDelivery size={20} strokeWidth={1.5} />
                             </Link>
                             <a
                                 onClick={() => openCart()}
                                 className="header-tools__item header-tools__cart js-open-aside position-relative d-flex align-items-center justify-content-center"
                                 style={{ cursor: 'pointer' }}
+                                aria-label="Cart"
                             >
-                                <svg className="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <svg className="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none">
                                     <use href="#icon_cart" />
                                 </svg>
                                 <span className="cart-amount d-block position-absolute js-cart-items-count" style={{ top: '-6px', right: '-8px' }}>

@@ -23,7 +23,7 @@ const HeroSkeleton = () => {
     
     return (
         <div
-            className="position-relative w-100 vh-100 overflow-hidden"
+            className="new-hero-wrapper position-relative w-100 vh-100 overflow-hidden"
             style={{
                 background:
                     "linear-gradient(135deg, #f8f8f8 0%, #efefef 40%, #f5f5f5 100%)",
@@ -358,7 +358,7 @@ const NewHero = () => {
                                                         opacity: 0.85,
                                                     }}
                                                 >
-                                                    {t(elm.season)}
+                                                    {locale === 'en' ? elm.season : elm.season_ar}
                                                 </span>
                                             </div>
                                         </div>
@@ -382,7 +382,7 @@ const NewHero = () => {
                                                         '"Playfair Display", serif',
                                                 }}
                                             >
-                                                {t(elm.title)}
+                                                {locale === 'en' ? elm.title : elm.title_ar}
                                             </h1>
                                         </div>
                                     )}
@@ -404,7 +404,7 @@ const NewHero = () => {
                                                     marginLeft: "2%",
                                                 }}
                                             >
-                                                {t(elm.sub_title)}
+                                                {locale === 'en' ? elm.sub_title : elm.sub_title_ar}
                                             </h2>
                                         </div>
                                     )}
@@ -672,6 +672,202 @@ const NewHero = () => {
                     h2.gsap-text {
                         margin-left: 0 !important;
                         margin-right: 0 !important;
+                    }
+                }
+
+                /* ═══════════════════════════════════════════════════════════════════
+                   HERO SECTION - LAPTOP COMPACT STYLING & SCALING (992px to 1536px)
+                   ═══════════════════════════════════════════════════════════════════ */
+
+                @media (min-width: 992px) and (max-width: 1536px) {
+                    /* Compact hero container height on laptops */
+                    .new-hero-wrapper {
+                        height: 80vh !important;
+                        min-height: 520px !important;
+                        max-height: 640px !important;
+                    }
+
+                    /* Season typography & spacing */
+                    .new-hero-wrapper .mb-4 {
+                        margin-bottom: 0.75rem !important;
+                    }
+                    .new-hero-wrapper .gsap-text span[style*="letterSpacing"],
+                    .new-hero-wrapper .gsap-text span[style*="letter-spacing"] {
+                        letter-spacing: 3px !important;
+                        font-size: 0.7rem !important;
+                    }
+
+                    /* Main Title (h1) */
+                    h1.gsap-text {
+                        font-size: clamp(2rem, 3.8vw, 3.2rem) !important;
+                        line-height: 1.08 !important;
+                        letter-spacing: 0.5px !important;
+                        margin-bottom: -0.25rem !important;
+                    }
+
+                    /* Subtitle (h2) */
+                    h2.gsap-text {
+                        font-size: clamp(1.1rem, 2vw, 1.6rem) !important;
+                        line-height: 1.15 !important;
+                        letter-spacing: 1.5px !important;
+                    }
+                    .new-hero-wrapper .mb-5 {
+                        margin-bottom: 1.25rem !important;
+                    }
+
+                    /* CTA Button */
+                    .new-hero-wrapper .mt-4 {
+                        margin-top: 1rem !important;
+                    }
+                    .unique-btn-modern {
+                        padding: 0.65rem 2rem !important;
+                        border-radius: 40px !important;
+                    }
+                    .btn-text-content {
+                        font-size: 0.75rem !important;
+                        letter-spacing: 2px !important;
+                    }
+                    .btn-icon-content {
+                        width: 14px !important;
+                        height: 14px !important;
+                        margin-left: 0.5rem !important;
+                    }
+
+                    /* Thumbnails strip */
+                    .hero-thumb-strip {
+                        right: 20px !important;
+                        gap: 8px !important;
+                    }
+                    .hero-thumb-item {
+                        gap: 4px !important;
+                    }
+                    .thumb-img-wrap {
+                        width: 40px !important;
+                        height: 54px !important;
+                        border-radius: 5px !important;
+                    }
+                    .thumb-number {
+                        font-size: 0.55rem !important;
+                    }
+
+                    /* Slide Counter */
+                    .hero-slide-counter {
+                        bottom: 25px !important;
+                        left: 30px !important;
+                    }
+                    .counter-current {
+                        font-size: 1.8rem !important;
+                    }
+                    .counter-sep,
+                    .counter-total {
+                        font-size: 0.75rem !important;
+                    }
+
+                    /* RTL adaptations for laptops */
+                    [dir='rtl'] .hero-slide-counter {
+                        left: auto !important;
+                        right: 30px !important;
+                    }
+                    [dir='rtl'] .hero-thumb-strip {
+                        right: auto !important;
+                        left: 20px !important;
+                    }
+                    [dir='rtl'] h1.gsap-text {
+                        font-size: clamp(2rem, 3.8vw, 3.2rem) !important;
+                        line-height: 1.15 !important;
+                    }
+                    [dir='rtl'] h2.gsap-text {
+                        font-size: clamp(1.1rem, 2vw, 1.6rem) !important;
+                        line-height: 1.25 !important;
+                    }
+                }
+
+                /* Mid-size laptops (≤1366px e.g. standard 13", 14" laptops) */
+                @media (min-width: 992px) and (max-width: 1366px) {
+                    .new-hero-wrapper {
+                        height: 78vh !important;
+                        min-height: 490px !important;
+                        max-height: 590px !important;
+                    }
+                    h1.gsap-text {
+                        font-size: clamp(1.85rem, 3.3vw, 2.8rem) !important;
+                    }
+                    h2.gsap-text {
+                        font-size: clamp(1rem, 1.8vw, 1.4rem) !important;
+                        letter-spacing: 1px !important;
+                    }
+                    .unique-btn-modern {
+                        padding: 0.58rem 1.75rem !important;
+                    }
+                    .btn-text-content {
+                        font-size: 0.72rem !important;
+                        letter-spacing: 1.5px !important;
+                    }
+                    .thumb-img-wrap {
+                        width: 36px !important;
+                        height: 48px !important;
+                    }
+                    .counter-current {
+                        font-size: 1.6rem !important;
+                    }
+                }
+
+                /* Smaller laptops & Landscape Tablets (≤1200px) */
+                @media (min-width: 992px) and (max-width: 1200px) {
+                    .new-hero-wrapper {
+                        height: 75vh !important;
+                        min-height: 460px !important;
+                        max-height: 540px !important;
+                    }
+                    h1.gsap-text {
+                        font-size: clamp(1.7rem, 3vw, 2.4rem) !important;
+                    }
+                    h2.gsap-text {
+                        font-size: clamp(0.95rem, 1.6vw, 1.25rem) !important;
+                    }
+                    .unique-btn-modern {
+                        padding: 0.52rem 1.5rem !important;
+                    }
+                    .btn-text-content {
+                        font-size: 0.7rem !important;
+                    }
+                    .hero-thumb-strip {
+                        right: 15px !important;
+                        gap: 6px !important;
+                    }
+                    .thumb-img-wrap {
+                        width: 32px !important;
+                        height: 44px !important;
+                    }
+                    .hero-slide-counter {
+                        bottom: 20px !important;
+                        left: 25px !important;
+                    }
+                    .counter-current {
+                        font-size: 1.4rem !important;
+                    }
+                }
+
+                /* Compact laptops (≤1050px) */
+                @media (min-width: 992px) and (max-width: 1050px) {
+                    .new-hero-wrapper {
+                        height: 72vh !important;
+                        min-height: 430px !important;
+                        max-height: 500px !important;
+                    }
+                    h1.gsap-text {
+                        font-size: clamp(1.5rem, 2.6vw, 2.1rem) !important;
+                    }
+                    h2.gsap-text {
+                        font-size: clamp(0.88rem, 1.4vw, 1.1rem) !important;
+                    }
+                    .thumb-img-wrap {
+                        width: 30px !important;
+                        height: 40px !important;
+                    }
+                    .hero-slide-counter {
+                        bottom: 15px !important;
+                        left: 20px !important;
                     }
                 }
 
