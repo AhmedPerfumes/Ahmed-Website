@@ -170,7 +170,7 @@ export default function LoginRegister() {
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`, {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -222,7 +222,8 @@ export default function LoginRegister() {
       formData.append("voucher", decodedCoupon);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signin`, {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
+        origin: process.env.NEXT_PUBLIC_DEFAULT_ORIGIN,
         body: formData,
       });
 

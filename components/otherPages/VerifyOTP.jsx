@@ -92,7 +92,7 @@ export default function VerifyOTP() {
       const formData = new FormData(e.currentTarget);
       const res = await fetch(`${baseUrl}api/verifyOTP`, {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
         body: formData,
       });
 

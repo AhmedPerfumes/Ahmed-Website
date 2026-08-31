@@ -46,7 +46,7 @@ export default function ResetPasswordOTP() {
       if (user) {
         router.replace("/account_dashboard");
       }
-    } catch {}
+    } catch { }
   }, [router]);
 
   // Autofocus based on step
@@ -92,43 +92,43 @@ export default function ResetPasswordOTP() {
 
   // Step 1 & resend: Send OTP
   const handleSendOTP = async (e) => {
-  if (e?.preventDefault) e.preventDefault();
-  setMessage(null);
-  setError(null);
-  setMobileError(null);
+    if (e?.preventDefault) e.preventDefault();
+    setMessage(null);
+    setError(null);
+    setMobileError(null);
 
-  // ✅ Block before API if invalid
-  if (!isValidUAEMobile) {
-    setMobileError("Please enter a valid UAE mobile number starting with 05 (10 digits total).");
-    return; // stop here
-  }
-
-  setLoading(true);
-  try {
-    const res = await fetch(`${baseUrl}api/sendOTP`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mobile: mobile.trim(), flag: "fpassword" }),
-    });
-    const data = await res.json();
-
-    if (res.ok && data.message?.toLowerCase().includes("otp sent")) {
-      // ✅ Only go to step 2 if OTP actually sent
-      setMobileError(null);
-      setMessage(data.message || "OTP sent successfully.");
-      setStep(2);
-      bumpStepKey();
-      startResendTimer();
-    } else {
-      // stay in Step 1
-      setMobileError(data.message || "Failed to send OTP.");
+    // ✅ Block before API if invalid
+    if (!isValidUAEMobile) {
+      setMobileError("Please enter a valid UAE mobile number starting with 05 (10 digits total).");
+      return; // stop here
     }
-  } catch {
-    setMobileError("Something went wrong. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${baseUrl}api/sendOTP`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobile: mobile.trim(), flag: "fpassword" }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.message?.toLowerCase().includes("otp sent")) {
+        // ✅ Only go to step 2 if OTP actually sent
+        setMobileError(null);
+        setMessage(data.message || "OTP sent successfully.");
+        setStep(2);
+        bumpStepKey();
+        startResendTimer();
+      } else {
+        // stay in Step 1
+        setMobileError(data.message || "Failed to send OTP.");
+      }
+    } catch {
+      setMobileError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   // Step 2: Verify OTP
@@ -142,7 +142,7 @@ export default function ResetPasswordOTP() {
     try {
       const res = await fetch(`${baseUrl}api/verifyOTP`, {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mobile: mobile.trim(),
@@ -198,7 +198,7 @@ export default function ResetPasswordOTP() {
 
       const res = await fetch(`${baseUrl}api/customerUpdate`, {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
         headers,
         body: JSON.stringify({
           customer_id: customerId,
