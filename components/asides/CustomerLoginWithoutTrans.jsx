@@ -3,6 +3,7 @@
 import { closeModalUserlogin } from "@/utlis/aside";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { setAccessToken } from '@/lib/apiClient';
 // import { useRouter } from 'next/navigation';
 // import { useLocale } from "next-intl";
 
@@ -104,6 +105,7 @@ export default function CustomerLogin() {
       const formData = new FormData(event.currentTarget)
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signin`, {
         method: 'POST',
+        credentials: 'include',
         body: formData,
       })
  
@@ -119,7 +121,7 @@ export default function CustomerLogin() {
       } else {
         setSuccess(data.message);
         setError(null);
-        localStorage.setItem('token', data.access_token);
+        setAccessToken(data.access_token);
         localStorage.setItem('user', btoa(JSON.stringify(data.data)));
         setTimeout(() => window.location.href='/', 1000);
       }

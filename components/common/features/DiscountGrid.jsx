@@ -12,10 +12,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import { useShopFilter } from "@/context/ShopFilterContext";
 import Link from "next/link";
-import { 
-  removeSpecialCharactersAndAmp, 
+import {
+  removeSpecialCharactersAndAmp,
   sanitizeUrlParam,
-  formatPrice 
+  formatPrice
 } from "@/utils/shop";
 import { sortingOptions } from "@/data/products/productCategories";
 import ProductFilter from "../../shoplist/ProductFilter";
@@ -25,9 +25,9 @@ const ProductPrice = ({ elm, currency }) => {
   const currentUTC = new Date();
   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-  
-  const isDiscountActive = elm?.discount && 
-    new Date(current_date_time) >= new Date(elm.discount.start_date) && 
+
+  const isDiscountActive = elm?.discount &&
+    new Date(current_date_time) >= new Date(elm.discount.start_date) &&
     new Date(current_date_time) <= new Date(elm.discount.end_date);
 
   if (isDiscountActive) {
@@ -39,7 +39,7 @@ const ProductPrice = ({ elm, currency }) => {
     }
     return (
       <>
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
         <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
       </>
     );
@@ -47,7 +47,7 @@ const ProductPrice = ({ elm, currency }) => {
     const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
     return (
       <>
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
+        <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
         <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
       </>
     );
@@ -69,8 +69,8 @@ const ProductCardSkeleton = () => (
 
 function DiscountGrid({ title, onlyDiscounted = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
-  const { 
-    rawProducts, 
+  const {
+    rawProducts,
     setRawProducts,
     stockAvailability,
     setStockAvailability,
@@ -79,12 +79,12 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     selectedTags,
     setSelectedTags
   } = useShopFilter();
-  
+
   const locale = useLocale();
-  const { 
-    addProductToCart, 
+  const {
+    addProductToCart,
     cartProducts,
-    setCartProducts 
+    setCartProducts
   } = useContextElement();
 
   const [loading, setLoading] = useState(true);
@@ -113,7 +113,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
   }, [rawProducts]);
 
   const uniqueSubcategories = useMemo(() => {
-    const activeProducts = selectedLabels.length > 0 
+    const activeProducts = selectedLabels.length > 0
       ? rawProducts.filter(p => selectedLabels.includes(p.category_name))
       : rawProducts;
 
@@ -177,12 +177,12 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
         const data = result.data || [];
         const norm = data.map((p) => ({ ...p, price: Number(p.price) }));
         setRawProducts(norm);
-        
+
         const calculatedMax = norm.length > 0 ? Math.ceil(Math.max(...norm.map(p => p.price))) : 1000;
         setMaxPrice(calculatedMax);
         setPriceRange([0, calculatedMax]);
       } catch (error) {
-        console.error("Failed to fetch all products", error);
+        // console.error("Failed to fetch all products", error);
       } finally {
         setLoading(false);
       }
@@ -193,7 +193,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
 
   const isSubcategoryFunc = (category, subcategory) => {
     if (subcategory) return sanitizeUrlParam(subcategory.subcategory_name);
-    
+
     const categorySlug = removeSpecialCharactersAndAmp(category).split(" ").join("-").toLowerCase();
     const categoryMap = {
       "gift-sets": "gift-sets",
@@ -265,7 +265,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
 
       // 2. Stock Filter
       if (stockAvailability === "in_stock" && p.product_qty <= 0) return false;
-      
+
       // 3. Price Filter
       if (p.price < low || p.price > high) return false;
 
@@ -293,7 +293,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
 
       return true;
     });
-    
+
     return sortItems(filtered, sortOption);
   }, [rawProducts, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
 
@@ -306,17 +306,17 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     <section className="container py-4" ref={gridRef}>
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
         <h2 className="section-title fw-normal mb-0 text-uppercase h4 text-center text-md-start w-100">{title}</h2>
-        
+
         <div className="shop-acs d-flex align-items-center justify-content-end gap-2 gap-md-3 position-relative w-100 w-md-auto" ref={ref}>
           <div className="search-field position-relative flex-grow-1 flex-md-grow-0">
-            <input 
-              type="text" 
-              className="form-control border px-3 py-1" 
+            <input
+              type="text"
+              className="form-control border px-3 py-1"
               placeholder={t("Search Products")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ 
-                fontSize: '13px', 
+              style={{
+                fontSize: '13px',
                 width: '100%',
                 maxWidth: '180px',
                 backgroundColor: '#f8f9fa',
@@ -324,23 +324,23 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
                 borderRadius: 0
               }}
             />
-            <svg 
-              className="position-absolute top-50 translate-middle-y" 
-              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }} 
+            <svg
+              className="position-absolute top-50 translate-middle-y"
+              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }}
               width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             >
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
             </svg>
           </div>
 
-          <button 
+          <button
             className={`btn d-flex align-items-center text-uppercase fw-bold p-0 border-0 ${isDDActive ? 'text-dark' : 'text-secondary'}`}
             onClick={() => setIsDDActive(!isDDActive)}
             style={{ letterSpacing: '1px', fontSize: '13px', whiteSpace: 'nowrap' }}
             dir="ltr"
           >
             <svg className="me-1 me-md-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
             <span className="d-none d-xs-inline">{t("Filter")}</span>
             {(selectedLabels.length > 0 || selectedTags.length > 0 || selectedSubcategories.length > 0 || stockAvailability !== 'all' || priceRange[0] !== 0 || priceRange[1] !== maxPrice) && (
@@ -351,11 +351,11 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
           </button>
 
           {isDDActive && (
-            <div 
-              className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster" 
-              style={{ 
-                zIndex: 1000, 
-                width: '320px', 
+            <div
+              className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster"
+              style={{
+                zIndex: 1000,
+                width: '320px',
                 maxWidth: 'calc(100vw - 30px)',
                 maxHeight: '80vh',
                 overflowY: 'auto',
@@ -406,141 +406,141 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
 
       <div className={`products-grid row row-cols-2 row-cols-md-${selectedColView === 2 ? 2 : 3} row-cols-lg-${selectedColView}`}>
         {loading || isMenuLoading ? (
-            Array.from({ length: 12 }).map((_, i) => (
-              <ProductCardSkeleton key={i} />
-            ))
-          ) : (
-            currentProducts.map((elm, i) => (
-          <div key={elm.product_id || i} className="product-card-wrapper">
-            <div className="product-card mb-3 mb-md-4 mb-xxl-5">
-              <div className="pc__img-wrapper">
-                <Swiper 
-                  className="swiper swiper-container background-img js-swiper-slider" 
-                  slidesPerView={1} 
-                >
-                  <SwiperSlide className="swiper-slide">
+          Array.from({ length: 12 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))
+        ) : (
+          currentProducts.map((elm, i) => (
+            <div key={elm.product_id || i} className="product-card-wrapper">
+              <div className="product-card mb-3 mb-md-4 mb-xxl-5">
+                <div className="pc__img-wrapper">
+                  <Swiper
+                    className="swiper swiper-container background-img js-swiper-slider"
+                    slidesPerView={1}
+                  >
+                    <SwiperSlide className="swiper-slide">
+                      <Link
+                        href={`/${locale}/shop/${sanitizeUrlParam(elm.category_name)}/${isSubcategoryFunc(elm.category_name, elm.subcategory)}/${sanitizeUrlParam(elm.product_name)}`}
+                      >
+                        {elm?.images && (
+                          <>
+                            {JSON.parse(elm.images)[0] && (
+                              <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                                width={480}
+                                height={600}
+                                alt={elm.product_name}
+                                className="pc__img"
+                                sizes="(max-width: 768px) 50vw, 33vw"
+                              />
+                            )}
+                            {JSON.parse(elm.images)[1] && (
+                              <Image
+                                loading="lazy"
+                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                                width={480}
+                                height={600}
+                                alt={elm.product_name}
+                                className="pc__img pc__img-second"
+                                sizes="(max-width: 768px) 50vw, 33vw"
+                              />
+                            )}
+                          </>
+                        )}
+                      </Link>
+                      {elm.label_name && (
+                        <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
+                          {elm.label_name}
+                        </div>
+                      )}
+
+                      {elm.product_qty <= 0 ? (
+                        <div className="product-label label--out-of-stock">
+                          {t("Out Of Stock")}
+                        </div>
+                      ) : (
+                        elm.discount && (
+                          <div className="product-label label--sale">
+                            {elm.discount.discount_type === "percent" ? `Sale ${elm.discount.value}%` : "Sale"}
+                          </div>
+                        )
+                      )}
+                    </SwiperSlide>
+                  </Swiper>
+                  <div className="product-card__actions">
+                    {getProductQuantity(elm.product_id) > 0 ? (
+                      <div className="pc__qty-selector--desktop">
+                        <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, -1)} aria-label={t("Decrease quantity")}>−</button>
+                        <span className="qty-value">{getProductQuantity(elm.product_id)}</span>
+                        <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, 1)} aria-label={t("Increase quantity")}>+</button>
+                      </div>
+                    ) : elm.product_qty > 0 ? (
+                      <button
+                        className="btn btn-primary js-add-cart"
+                        onClick={() => addProductToCart({ ...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name })}
+                        title={t("Add To Cart")}
+                      >
+                        {t("Add To Cart")}
+                      </button>
+                    ) : (
+                      <button className="btn btn-out-of-stock" disabled>
+                        {t("Out Of Stock")}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="pc__info position-relative">
+                  <p className="pc__category">{t(elm.category_name)}</p>
+                  <h6 className="pc__title">
                     <Link
                       href={`/${locale}/shop/${sanitizeUrlParam(elm.category_name)}/${isSubcategoryFunc(elm.category_name, elm.subcategory)}/${sanitizeUrlParam(elm.product_name)}`}
                     >
-                      {elm?.images && (
-                        <>
-                          {JSON.parse(elm.images)[0] && (
-                            <Image
-                              loading="lazy"
-                              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
-                              width={480}
-                              height={600}
-                              alt={elm.product_name}
-                              className="pc__img"
-                              sizes="(max-width: 768px) 50vw, 33vw"
-                            />
-                          )}
-                          {JSON.parse(elm.images)[1] && (
-                            <Image
-                              loading="lazy"
-                              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
-                              width={480}
-                              height={600}
-                              alt={elm.product_name}
-                              className="pc__img pc__img-second"
-                              sizes="(max-width: 768px) 50vw, 33vw"
-                            />
-                          )}
-                        </>
-                      )}
+                      {t(he.decode(elm.product_name))}
                     </Link>
-                    {elm.label_name && (
-                      <div style={{ backgroundColor: elm.label_color }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                        {elm.label_name}
-                      </div>
-                    )}
+                  </h6>
 
-                    {elm.product_qty <= 0 ? (
-                      <div className="product-label label--out-of-stock">
-                        {t("Out Of Stock")}
-                      </div>
-                    ) : (
-                      elm.discount && (
-                        <div className="product-label label--sale">
-                          {elm.discount.discount_type === "percent" ? `Sale ${elm.discount.value}%` : "Sale"}
-                        </div>
-                      )
-                    )}
-                  </SwiperSlide>
-                </Swiper>
-                <div className="product-card__actions">
+                  <div className="product-card__price d-flex">
+                    <ProductPrice elm={elm} currency={currency} />
+                  </div>
+
                   {getProductQuantity(elm.product_id) > 0 ? (
-                    <div className="pc__qty-selector--desktop">
-                      <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, -1)} aria-label={t("Decrease quantity")}>−</button>
+                    <div className="pc__qty-selector">
+                      <button
+                        className="qty-btn"
+                        onClick={() => updateQuantity(elm.product_id, -1)}
+                        aria-label={t("Decrease quantity")}
+                      >
+                        −
+                      </button>
                       <span className="qty-value">{getProductQuantity(elm.product_id)}</span>
-                      <button className="qty-btn" onClick={() => updateQuantity(elm.product_id, 1)} aria-label={t("Increase quantity")}>+</button>
+                      <button
+                        className="qty-btn"
+                        onClick={() => updateQuantity(elm.product_id, 1)}
+                        aria-label={t("Increase quantity")}
+                      >
+                        +
+                      </button>
                     </div>
-                  ) : elm.product_qty > 0 ? (
+                  ) : elm?.product_qty > 0 ? (
                     <button
-                      className="btn btn-primary js-add-cart"
-                      onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
-                      title={t("Add To Cart")}
+                      className="pc__atc-mobile"
+                      onClick={() => addProductToCart({ ...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name })}
+                      aria-label={t("Add {name} to cart", { name: elm.product_name })}
                     >
                       {t("Add To Cart")}
                     </button>
                   ) : (
-                    <button className="btn btn-out-of-stock" disabled>
+                    <button className="pc__atc-mobile pc__atc-mobile--oos" disabled>
                       {t("Out Of Stock")}
                     </button>
                   )}
                 </div>
               </div>
-
-              <div className="pc__info position-relative">
-                <p className="pc__category">{t(elm.category_name)}</p>
-                <h6 className="pc__title">
-                  <Link
-                    href={`/${locale}/shop/${sanitizeUrlParam(elm.category_name)}/${isSubcategoryFunc(elm.category_name, elm.subcategory)}/${sanitizeUrlParam(elm.product_name)}`}
-                  >
-                    {t(he.decode(elm.product_name))}
-                  </Link>
-                </h6>
-
-                <div className="product-card__price d-flex">
-                  <ProductPrice elm={elm} currency={currency} />
-                </div>
-
-                {getProductQuantity(elm.product_id) > 0 ? (
-                  <div className="pc__qty-selector">
-                    <button 
-                      className="qty-btn" 
-                      onClick={() => updateQuantity(elm.product_id, -1)}
-                      aria-label={t("Decrease quantity")}
-                    >
-                      −
-                    </button>
-                    <span className="qty-value">{getProductQuantity(elm.product_id)}</span>
-                    <button 
-                      className="qty-btn" 
-                      onClick={() => updateQuantity(elm.product_id, 1)}
-                      aria-label={t("Increase quantity")}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : elm?.product_qty > 0 ? (
-                  <button
-                    className="pc__atc-mobile"
-                    onClick={() => addProductToCart({...elm, category_name: elm.category_name, subcategory_name: elm.subcategory?.subcategory_name})}
-                    aria-label={t("Add {name} to cart", { name: elm.product_name })}
-                  >
-                    {t("Add To Cart")}
-                  </button>
-                ) : (
-                  <button className="pc__atc-mobile pc__atc-mobile--oos" disabled>
-                    {t("Out Of Stock")}
-                  </button>
-                )}
-              </div>
             </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
       </div>
 
 
@@ -552,14 +552,16 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
       )}
 
       {totalPages > 1 && (
-        <Pagination2 
-          totalPages={totalPages} 
-          currentPage={page} 
-          onPageChange={(p) => {
-            setPage(p);
-            gridRef.current?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        />
+        <div className="container-fluid px-0 px-sm-3">
+          <Pagination2
+            totalPages={totalPages}
+            currentPage={page}
+            onPageChange={(p) => {
+              setPage(p);
+              gridRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
+        </div>
       )}
     </section>
   );

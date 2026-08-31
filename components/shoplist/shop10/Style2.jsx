@@ -124,7 +124,7 @@ export default function Style2({ category, subcategory, products: initialProduct
           });
         });
       } catch (error) {
-        console.error("Failed to hydrate live product data", error);
+        // console.error("Failed to hydrate live product data", error);
       }
     };
 

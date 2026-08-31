@@ -21,7 +21,7 @@ export default function MyCoupons() {
       try {
         user = JSON.parse(atob(raw)); // decode base64 JSON
       } catch (e) {
-        console.error("Failed to decode user:", e);
+        // console.error("Failed to decode user:", e);
       }
     }
 

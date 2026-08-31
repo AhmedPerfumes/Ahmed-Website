@@ -182,7 +182,7 @@ const CorporateContact = () => {
             setSnackOpen(true);
             setForm({ name: "", company: "", email: "", phone: "", occasion: "", quantity: "", budget: "", message: "" });
         } catch (error) {
-            console.error("Error submitting form:", error);
+            // console.error("Error submitting form:", error);
             setSnackOpen(true);
         } finally {
             setSubmitting(false);

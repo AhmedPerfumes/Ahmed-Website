@@ -1,8 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 import { dashboardMenuItems } from "@/data/menu";
+
+
+import { useLocale } from "next-intl";
 
 const LOCALES = ["en", "ar"];
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -33,65 +37,22 @@ function isActive(currentPathname, itemHref) {
 export default function DashboardSidebar() {
   const pathname = usePathname() || "/";
   const router = useRouter();
-
-  const [couponCount, setCouponCount] = useState(null);
+  const locale = useLocale();
+  const { logout, isLoggedIn, authLoading, couponCount } = useUser();
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // const token = localStorage.getItem("token");
-    const encryptedUser = localStorage.getItem("user");
-
-    if (!encryptedUser) {
-      router.replace("/login_register");
-      return;
+    if (!authLoading && !isLoggedIn) {
+      router.replace(`/${locale}/login_register`);
     }
+  }, [authLoading, isLoggedIn, router, locale]);
 
-    let user = null;
-    try {
-      // decode Base64 user data
-      const decodedText = atob(encryptedUser);
-      user = JSON.parse(decodedText);
-    } catch (error) {
-      console.error("Failed to decode user:", error);
-      router.replace("/login_register");
-      return;
-    }
 
-    // Fetch coupon count
-    const fetchCouponCount = async () => {
-      try {
-       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/Count`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            salesType: "EComm",
-            company: "UAE",
-            mobileNo: user.phone,
-            email: user.email,
-          }),
-        }
-      );
-        const result = await response.json();
-        if (result?.data !== undefined) setCouponCount(result.data);
-      } catch (err) {
-        console.error("Error fetching coupon count:", err);
-      }
-    };
-
-    fetchCouponCount();
-  }, [router]);
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    router.replace("/login_register");
+  const handleLogout = async (e) => {
+    if (e) e.preventDefault();
+    await logout();
+    router.replace(`/${locale}/login_register`);
   };
+
 
   return (
     <>

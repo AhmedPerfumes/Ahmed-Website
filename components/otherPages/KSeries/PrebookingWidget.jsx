@@ -33,7 +33,7 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
     const [selectedSeries, setSelectedSeries] = useState([]);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const[phone,setPhone]=useState('')
+    const [phone, setPhone] = useState('')
 
     const handleClose = () => {
         if (setShowModal) setShowModal(false);
@@ -63,7 +63,7 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
     // Placeholder function for form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         // Basic validation: must select at least one series
         if (selectedSeries.length === 0) {
             toast.warn("Please select at least one interested series.");
@@ -92,20 +92,20 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
             const result = await response.json();
 
             if (response.ok) {
-                console.log(result.message);
+                // console.log(result.message);
                 toast.success(result.message);
                 handleClose();
             } else {
-                console.error('Submission Error:', result.message, result.errors);
+                // console.error('Submission Error:', result.message, result.errors);
                 toast.error(`Error: ${result.message || 'Please check the console for details.'}`);
             }
         } catch (error) {
-            console.error('Network Error:', error);
+            // console.error('Network Error:', error);
             toast.error('A network error occurred. Please try again.');
         }
 
         // console.log({ name, email, interestedSeries: selectedSeries });
-        
+
         // Your form submission logic here (API call, validation)
         // console.log("Prebooking form submitted with multiple selections!");
         // handleClose();
@@ -115,12 +115,12 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
         // Hide the bubble after 3 seconds of initial show (since showBubble is initialized to true)
         const initialHideTimer = setTimeout(() => {
             setShowBubble(false);
-        }, 3000); 
+        }, 3000);
 
         // Set up the recurring interval (Total cycle time: 10000ms or 10s)
         const intervalId = setInterval(() => {
             // Show the bubble
-            setShowBubble(true); 
+            setShowBubble(true);
 
             // Set a timer to hide it again after 3 seconds
             const hideTimer = setTimeout(() => {
@@ -128,8 +128,8 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
             }, 3000);
 
             // Cleanup the short timer (though setInterval takes care of the long one)
-            return () => clearTimeout(hideTimer); 
-            
+            return () => clearTimeout(hideTimer);
+
         }, 10000); // 10000ms cycle (3s shown + 7s hidden)
 
         // Cleanup function for the component unmount
@@ -152,7 +152,7 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                 {/* --- Dialogue Bubble --- */}
                 <AnimatePresence>
                     {showBubble && (
-                        <motion.div 
+                        <motion.div
                             className={styles.dialogueBubble}
                             variants={bubbleVariants}
                             initial="hidden"
@@ -177,46 +177,46 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                     <Modal.Title className={styles.modalTitle}>K-Series Pre-Book</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
-                    <p className="text-center" style={{color: "#f7e7ce "}}>Register your interest now to be the first to order and receive exclusive offers!</p>
+                    <p className="text-center" style={{ color: "#f7e7ce " }}>Register your interest now to be the first to order and receive exclusive offers!</p>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formName">
                             <Form.Label>Your Name</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                placeholder="Enter name" 
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                required 
+                                required
                             />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control 
-                                type="email" 
-                                placeholder="Enter email" 
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                required 
+                                required
                             />
                         </Form.Group>
-                         <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Group className="mb-3" controlId="formEmail">
                             <Form.Label>Phone Number</Form.Label>
-                            <Form.Control 
-                                type="tel" 
-                                placeholder="Enter your Phone Number " 
+                            <Form.Control
+                                type="tel"
+                                placeholder="Enter your Phone Number "
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
-                                required 
+                                required
                             />
                         </Form.Group>
-                        
+
                         <Form.Group className="mb-4" controlId="formSeriesInterest">
                             <Form.Label>Interested Series (Select all that apply)</Form.Label>
                             <Row>
                                 {SERIES_OPTIONS.map(option => (
                                     <Col xs={12} key={option.value}>
-                                        <Form.Check 
+                                        <Form.Check
                                             type="checkbox"
                                             id={`series-${option.value}`}
                                             label={option.label}
@@ -237,18 +237,18 @@ export default function PrebookingWidget({ showModal, setShowModal }) {
                 </Modal.Body>
             </Modal>
             {/* Toast container (dark theme) */}
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop={true}
-            closeOnClick={true}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            transition={Bounce}
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={true}
+                closeOnClick={true}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce}
             />
         </>
     );

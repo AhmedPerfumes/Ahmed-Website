@@ -38,7 +38,7 @@ const RamadanCountdown = ({ targetLink, isHomePage, isCheckout }) => {
                     setEndDate(new Date(rawEndDate));
                 }
             } catch (err) {
-                console.error("RamadanCountdown: failed to fetch end date", err);
+                // console.error("RamadanCountdown: failed to fetch end date", err);
             } finally {
                 setFetched(true);
             }

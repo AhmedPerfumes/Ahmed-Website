@@ -43,7 +43,7 @@ const NewsArticle = () => {
         setTotalPages(result.last_page || Math.ceil(result.total / articlesPerPage));
       } catch (err) {
         setError('Failed to fetch articles. Please try again later.');
-        console.error(err);
+        // console.error(err);
       } finally {
         setLoading(false);
       }
@@ -104,15 +104,15 @@ const NewsArticle = () => {
       <section className="news-page container">
         {loading && <p className="loading-text">Loading articles...</p>}
         {error && <p className="error-text">{error}</p>}
-        
+
         {!loading && !error && (
           <div className="news-grid">
             {articles.map((article) => (
-              <a 
-                key={article.id} 
-                href={extractUrl(article.content)} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                key={article.id}
+                href={extractUrl(article.content)}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="news-card"
               >
                 <div className="news-card__image-wrapper">

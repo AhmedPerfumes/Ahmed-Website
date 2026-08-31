@@ -28,23 +28,23 @@ const FathersDaySpecialOffer = () => {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/allProducts`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        page: 1, 
-                        limit: 6, 
-                        discount_name: "Test" 
+                    body: JSON.stringify({
+                        page: 1,
+                        limit: 6,
+                        discount_name: "Test"
                     }),
                 });
-                
+
                 const result = await response.json();
-                
-                const allProducts = (result.data || []).map((p) => ({ 
-                    ...p, 
-                    price: Number(p.price) 
+
+                const allProducts = (result.data || []).map((p) => ({
+                    ...p,
+                    price: Number(p.price)
                 }));
 
                 setProducts(allProducts);
             } catch (error) {
-                console.error("Failed to fetch products", error);
+                // console.error("Failed to fetch products", error);
             } finally {
                 setLoading(false);
             }

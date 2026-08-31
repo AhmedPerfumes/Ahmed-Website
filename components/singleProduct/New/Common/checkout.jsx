@@ -132,7 +132,7 @@ const Checkout = ({ product }) => {
         const qty = Number(quantity);
         const stock = Number(product.product_qty);
         const maxOrder = Number(maxOrderQty);
-        
+
         const limit = (maxOrder && maxOrder > 0) ? maxOrder : stock;
 
         const isValid = qty <= stock && qty <= limit;
@@ -229,17 +229,17 @@ const Checkout = ({ product }) => {
         const currentUTC = new Date();
         const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
         const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-        
+
         let finalPrice = elm?.price;
 
         if (elm?.discount) {
-            if ( new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+            if (new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
                 finalPrice = (elm.price - (elm.price / 100) * elm.discount.value).toFixed(2);
             }
         } else if (elm?.sale_price) {
             finalPrice = (elm.price - (elm.price / 100) * elm.sale_price).toFixed(2);
         }
-        
+
         return finalPrice;
     };
 
@@ -268,7 +268,7 @@ const Checkout = ({ product }) => {
                         merchantCode: "APM",
                     });
                 } catch (err) {
-                    console.error("Tabby Widget Error:", err);
+                    // console.error("Tabby Widget Error:", err);
                 }
             } else {
                 // If script exists but global isn't ready, retry briefly
@@ -296,7 +296,7 @@ const Checkout = ({ product }) => {
             renderTabbyWidget();
         }
 
-    // Dependency array
+        // Dependency array
     }, [currentQuantity, locale, cartProducts]);
 
     return (
@@ -311,9 +311,9 @@ const Checkout = ({ product }) => {
                 </p>
             </div> */}
 
-        <div className="product-single__price">{renderPrice(product, currency)}</div>
+            <div className="product-single__price">{renderPrice(product, currency)}</div>
 
-           
+
             {/* CHANGED: Condition now checks for a non-empty 'tags' array */}
             {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
                 <div className="w-100 mb-3">
@@ -360,21 +360,21 @@ const Checkout = ({ product }) => {
                             transition={{ duration: 0.2 }}
                             style={{ overflow: "hidden" }}
                         >
-                            <div 
-                                className="alert alert-danger d-flex align-items-center py-2 px-3 mb-0" 
+                            <div
+                                className="alert alert-danger d-flex align-items-center py-2 px-3 mb-0"
                                 role="alert"
                                 style={{ fontSize: "0.9rem", borderRadius: "8px" }}
                             >
                                 {/* Warning Icon */}
-                                <svg 
-                                    xmlns="http://www.w3.org/2000/svg" 
-                                    width="16" 
-                                    height="16" 
-                                    fill="currentColor" 
-                                    className="bi bi-exclamation-circle-fill me-2 flex-shrink-0" 
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    className="bi bi-exclamation-circle-fill me-2 flex-shrink-0"
                                     viewBox="0 0 16 16"
                                 >
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                                 </svg>
                                 {/* Error Text */}
                                 <div>{error}</div>
@@ -386,7 +386,7 @@ const Checkout = ({ product }) => {
                 {product.product_qty > 0 ? (
                     <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>
                         {/* Left Pill (Add to Cart → Already Added) */}
-                        <motion.button 
+                        <motion.button
                             layout
                             type="button"
                             id="product-detail-top"
@@ -417,8 +417,8 @@ const Checkout = ({ product }) => {
                                         aria-label="Decrease quantity"
                                         onClick={() => {
                                             const currentQty = isIncludeCard()?.quantity ?? 1;
-                                            if(currentQty > 1) {
-                                                setQuantityCartItem(product.product_id, currentQty - 1, product?.maximum_order_quantity )
+                                            if (currentQty > 1) {
+                                                setQuantityCartItem(product.product_id, currentQty - 1, product?.maximum_order_quantity)
                                             } else {
                                                 removeProduct(product.product_id)
                                             }
@@ -435,7 +435,7 @@ const Checkout = ({ product }) => {
 
                                     <button
                                         aria-label="Increase quantity"
-                                        onClick={() => setQuantityCartItem(product.product_id, (isIncludeCard() ?.quantity ?? 1) + 1 , product?.maximum_order_quantity )}
+                                        onClick={() => setQuantityCartItem(product.product_id, (isIncludeCard()?.quantity ?? 1) + 1, product?.maximum_order_quantity)}
                                         className="btn btn-sm rounded-circle border-0 d-flex align-items-center justify-content-center"
                                         style={{ width: 34, height: 34, background: "rgba(255,255,255,0.12)", color: "#fff", }}
                                     >
@@ -458,7 +458,7 @@ const Checkout = ({ product }) => {
                 )}
 
                 <div className="my-3" id="TabbyPromo"></div>
-                <TamaraWidget className="mt-3" inlineType="5" inlineVariant='outlined'/>
+                <TamaraWidget className="mt-3" inlineType="5" inlineVariant='outlined' />
             </div>
         </div>
     );

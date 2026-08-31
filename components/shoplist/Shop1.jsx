@@ -210,7 +210,7 @@ export default function Shop1({ search }) {
         setAvailableLabels(Array.isArray(json.labels) ? json.labels : []);
         setAvailableTags(Array.isArray(json.tags) ? json.tags : []);
       } catch (err) {
-        console.error("Error fetching filters:", err);
+        // // console.error("Error fetching filters:", err);
       }
     };
     fetchFilters();
@@ -319,7 +319,7 @@ export default function Shop1({ search }) {
         setProducts(norm);
         setLastSearchQuery(search);
       } catch (e) {
-        console.error("Error fetching products:", e);
+        // // // console.error("Error fetching products:", e);
       } finally {
         setLoading(false);
       }

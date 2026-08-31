@@ -18,9 +18,8 @@ function PillButton({ active, onClick, children }) {
     <button
       type="button"
       onClick={onClick}
-      className={`btn btn-sm rounded-pill me-2 mb-2 ${
-        active ? "btn-primary text-white" : "btn-outline-secondary"
-      }`}
+      className={`btn btn-sm rounded-pill me-2 mb-2 ${active ? "btn-primary text-white" : "btn-outline-secondary"
+        }`}
       style={{ cursor: "pointer" }}
     >
       {children}
@@ -78,11 +77,11 @@ export default function FilterAll({ products = [] }) {
 
         const labels = Array.isArray(json.labels)
           ? json.labels
-              .filter((l) => l && typeof l === "object" && l.label_name)
-              .map((l) => ({
-                label_name: l.label_name,
-                label_color: l.label_color,
-              }))
+            .filter((l) => l && typeof l === "object" && l.label_name)
+            .map((l) => ({
+              label_name: l.label_name,
+              label_color: l.label_color,
+            }))
           : [];
 
         const tags = Array.isArray(json.tags)
@@ -109,7 +108,7 @@ export default function FilterAll({ products = [] }) {
 
         setAvailableLabels(lbls);
         setAvailableTags(Array.from(ts));
-        // console.error("Error fetching filters:", err);
+        // // console.error("Error fetching filters:", err);
       }
     };
     fetchFilters();
@@ -336,7 +335,7 @@ export default function FilterAll({ products = [] }) {
       </div>
 
       {/* Size (Tags) */}
-      <div className="mb-3 border-bottom pb-2 overflow-scroll "style={{height:"12rem"}}>
+      <div className="mb-3 border-bottom pb-2 overflow-scroll " style={{ height: "12rem" }}>
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           onClick={() => toggleSection("caps")}

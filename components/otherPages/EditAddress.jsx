@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Modal, Button, Form } from "react-bootstrap";
+import { apiClient } from "@/lib/apiClient";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
@@ -54,16 +55,10 @@ export default function EditAddress() {
     setUserData(user);
     setCustomerId(customer_id);
 
-    if (!customer_id) {
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
-    fetch(`${API_BASE}api/customerAddressDetails`, {
+    apiClient(`api/customerAddressDetails`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer_id }),
+      body: JSON.stringify({}),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -96,7 +91,6 @@ export default function EditAddress() {
 
           setAddresses(parsedSingle);
         } else {
-          // No addresses yet — show an empty placeholder
           setAddresses([]);
         }
       })
@@ -105,6 +99,7 @@ export default function EditAddress() {
         setLoading(false);
       });
   }, []);
+
 
   // ─── Open modal ───────────────────────────────────────────────────────────
   const openEdit = (idx) => {
@@ -187,15 +182,10 @@ export default function EditAddress() {
     const token = localStorage.getItem("token");
 
     try {
-      const resp = await fetch(`${API_BASE}api/customerAddressUpdate`, {
+      const resp = await apiClient(`api/customerAddressUpdate`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: JSON.stringify({
           address_id: form.id,   // -1 = create new, >0 = update existing
-          customer_id: customerId,
           name: form.name,
           email: form.email,
           mobile: form.mobile,
@@ -209,6 +199,7 @@ export default function EditAddress() {
       });
 
       const res = await resp.json();
+
 
       if (res?.message === "Unauthorized" || res?.error === "Unauthorized") {
         localStorage.removeItem("token");

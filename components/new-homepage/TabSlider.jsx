@@ -121,7 +121,7 @@ export default function PopularProducts() {
       const data = await res.json();
       setApiData(data || {});
     } catch (err) {
-      console.error("API error:", err);
+      // console.error("API error:", err);
       setApiData({});
     } finally {
       setLoading(false);
@@ -318,7 +318,7 @@ export default function PopularProducts() {
                 try {
                   imgs = item.images ? JSON.parse(item.images) : [];
                 } catch {
-                  console.warn("Failed to parse product images for", item.product_id);
+                  // console.warn("Failed to parse product images for", item.product_id);
                 }
 
                 const isActive = activeProduct?.product_id === item.product_id;
