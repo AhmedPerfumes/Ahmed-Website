@@ -10,7 +10,18 @@ export default function MobileNav() {
   const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
+  const { categoriesSubCategories, isLoading: isMenuLoading, error, homeSliders } = useMenu();
   const [openCategoryIndex, setOpenCategoryIndex] = useState(null);
+
+  const isSaleLink = (link) => {
+    if (!link) return false;
+    const s = String(link).toLowerCase();
+    return s === "sale" || s === "/sale" || s.includes("/sale");
+  };
+
+  const saleBanner = Array.isArray(homeSliders)
+    ? homeSliders.find((s) => isSaleLink(s.link))
+    : null;
 
   const isMenuActive = (menu) => menu.split("/")[3] === pathname.split("/")[4];
   const isActiveParentMenu = (menu) => menu.split("/")[2] === pathname.split("/")[3];
@@ -56,8 +67,6 @@ export default function MobileNav() {
     const mobileDropdown = document.querySelector(".navigation");
     if (mobileDropdown) mobileDropdown.style.paddingRight = "";
   }, [pathname]);
-
-  const { categoriesSubCategories, isLoading: isMenuLoading, error } = useMenu();
 
   if (isMenuLoading) return <div></div>;
   if (error) return <div>{error}</div>;
@@ -134,8 +143,8 @@ export default function MobileNav() {
                             : `/${locale}/product-category/gift-sets`
                         }
                         className={`menu-link d-block py-1 text-secondary ${isMenuActive(`/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`)
-                            ? "menu-active text-dark fw-medium"
-                            : ""
+                          ? "menu-active text-dark fw-medium"
+                          : ""
                           }`}
                         style={{
                           textAlign: locale === 'ar' ? 'right' : 'left',
@@ -152,15 +161,17 @@ export default function MobileNav() {
           </li>
         );
       })}
-      <li key="export" className="navigation__item border-bottom py-2">
-        <Link
-          href={`/${locale}/sale`}
-          className={`navigation__link d-block text-start ${isActiveExportMenu(`/sale`) ? "menu-active fw-bold" : ""}`}
-          style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
-        >
-          {t("Sale")}
-        </Link>
-      </li>
+      {saleBanner && (
+        <li key="sale" className="navigation__item border-bottom py-2">
+          <Link
+            href={`/${locale}/${saleBanner.link || "sale"}`}
+            className={`navigation__link d-block text-start ${isActiveExportMenu(`/sale`) ? "menu-active fw-bold" : ""}`}
+            style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
+          >
+            {t("Sale")}
+          </Link>
+        </li>
+      )}
 
       <li key="export" className="navigation__item border-bottom py-2">
         <Link

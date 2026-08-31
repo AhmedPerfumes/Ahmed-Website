@@ -7,6 +7,7 @@ import {
   Badge,
 } from "react-bootstrap";
 import { useMenu } from "@/context/MenuContext";
+import { apiClient } from "@/lib/apiClient";
 
 const IMG_BASE = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,40 +31,23 @@ export default function AccountOrders() {
   const [modalDetails, setModalDetails] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  // Auth state
-  const [CUSTOMER_ID, setCustomerId] = useState(null);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const raw = localStorage.getItem("user");
-    if (raw) {
-      try {
-        const u = JSON.parse(atob(raw));
-        setCustomerId(u.id);
-      } catch (e) {
-        console.error("Auth error", e);
-      }
-    }
-  }, []);
-
   const fetchOrders = async () => {
-    if (!CUSTOMER_ID) return;
     setLoading(true);
-    const BASE = process.env.NEXT_PUBLIC_API_URL;
     const params = new URLSearchParams({
       page: String(pagination.pageIndex + 1),
       pageSize: String(pagination.pageSize),
       orderBy: "created_at",
       orderDir: "desc",
-      customer_id: String(CUSTOMER_ID),
       with_products: "1",
       ...(activeStatus !== "all" && { status: activeStatus }),
     });
 
     try {
-      const res = await fetch(`${BASE}api/customerOrders?${params}`);
+      const res = await apiClient(`api/customerOrders?${params}`);
+      if (!res.ok) throw new Error("Failed to fetch orders");
       const json = await res.json();
-      setData(json.data);
-      setPageCount(Math.ceil(json.total / pagination.pageSize));
+      setData(json.data || []);
+      setPageCount(Math.ceil((json.total || 0) / pagination.pageSize));
 
       // Map products eagerly loaded from backend
       const summaryResults = {};
@@ -72,33 +56,35 @@ export default function AccountOrders() {
       });
       setOrderSummaries(summaryResults);
     } catch (e) {
-      console.error("Fetch error", e);
+      // console.error("Fetch error", e);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchOrders();
-  }, [CUSTOMER_ID, pagination.pageIndex, pagination.pageSize, activeStatus]);
+  }, [pagination.pageIndex, pagination.pageSize, activeStatus]);
 
   const openDetails = async (order) => {
     setSelectedOrder(order);
     setShowModal(true);
     setModalLoading(true);
     try {
-      const BASE = process.env.NEXT_PUBLIC_API_URL;
-      const resp = await fetch(`${BASE}api/customerOrderDetails`, {
+      const resp = await apiClient(`api/customerOrderDetails`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ order_id: order.id }),
       });
       const json = await resp.json();
       setModalDetails(json);
+      if (json.order) {
+        setSelectedOrder(json.order);
+      }
     } catch (e) {
       setModalDetails(null);
     }
     setModalLoading(false);
   };
+
 
   const filteredData = data;
 
@@ -297,7 +283,7 @@ export default function AccountOrders() {
 
                   <div className="item-list">
                     {modalDetails.order_products.map((item, idx) => {
-                      console.log("Order Item:", item);
+                      // console.log("Order Item:", item);
                       return (
                         <div key={idx} className="order-item">
                           <img className="item-img" src={item.product_image ? `${IMG_BASE}storage/${item.product_image}` : "/no-img.png"} alt="" />
@@ -313,30 +299,66 @@ export default function AccountOrders() {
                 </div>
                 <div className="col-md-5">
                   <div className="summary-card">
-                    <h6 className="mb-4" style={{ fontWeight: 800, fontSize: '18px', letterSpacing: '-0.02em' }}>Order Summary</h6>
-                    <div className="summary-row">
-                      <span>Subtotal</span>
-                      <span>{Number(selectedOrder?.sub_total).toFixed(currency.decimals)} {currency.symbol}</span>
-                    </div>
-                    <div className="summary-row">
-                      <span>Shipping</span>
-                      <span>{Number(selectedOrder?.shipping_cost || 0).toFixed(currency.decimals)} {currency.symbol}</span>
-                    </div>
-                    {selectedOrder?.tax_amount > 0 && (
-                      <div className="summary-row">
-                        <span>VAT</span>
-                        <span>{Number(selectedOrder?.tax_amount).toFixed(currency.decimals)} {currency.symbol}</span>
-                      </div>
-                    )}
-                    <div className="summary-total">
-                      <span>Total </span>
-                      <span>{Number(selectedOrder?.amount).toFixed(currency.decimals)} {currency.symbol}</span>
-                    </div>
+                    <h6 className="mb-3" style={{ fontWeight: 800, fontSize: '16px', letterSpacing: '-0.02em' }}>Order Summary</h6>
+
+                    {(() => {
+                      const currentOrder = modalDetails?.order || selectedOrder;
+                      const subTotal = Number(currentOrder?.sub_total || 0);
+                      const shippingCost = Number(currentOrder?.shipping_amount || 0) + Number(currentOrder?.shipping_amount_vat || 0);
+                      const serviceFee = Number(currentOrder?.service_amount || 0) + Number(currentOrder?.service_amount_vat || 0);
+                      const codCharge = Number(currentOrder?.cod_charge || 0) + Number(currentOrder?.cod_charge_vat || 0);
+                      const discountAmount = Number(currentOrder?.discount_amount || 0);
+                      const totalAmount = Number(currentOrder?.amount || 0);
+                      const totalVat = Number(currentOrder?.tax_amount || 0);
+                      const isCod = currentOrder?.payment_channel === "cod" || codCharge > 0;
+
+                      return (
+                        <table className="checkout-totals w-100">
+                          <tbody>
+                            <tr>
+                              <th>SUBTOTAL</th>
+                              <td>{subTotal.toFixed(currency.decimals || 2)} {currency.symbol}</td>
+                            </tr>
+                            <tr>
+                              <th>SHIPPING</th>
+                              <td>{shippingCost <= 0 ? "You Got Free Shipping" : `Shipping Cost: ${shippingCost.toFixed(currency.decimals || 2)} ${currency.symbol}`}</td>
+                            </tr>
+                            <tr>
+                              <th>SERVICE FEE</th>
+                              <td>{serviceFee.toFixed(currency.decimals || 2)} {currency.symbol}</td>
+                            </tr>
+                            {isCod && (
+                              <tr>
+                                <th>COD CHARGES</th>
+                                <td>{codCharge.toFixed(currency.decimals || 2)} {currency.symbol}</td>
+                              </tr>
+                            )}
+                            {discountAmount > 0 && (
+                              <tr>
+                                <th>DISCOUNT</th>
+                                <td>-{discountAmount.toFixed(currency.decimals || 2)} {currency.symbol}</td>
+                              </tr>
+                            )}
+                            <tr>
+                              <th>TOTAL</th>
+                              <td>
+                                {totalAmount.toFixed(currency.decimals || 2)} {currency.symbol} (includes {totalVat.toFixed(currency.decimals || 2)} {currency.symbol} VAT)
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      );
+                    })()}
 
                     <div className="address-section">
                       <div className="address-title">Payment Method</div>
                       <p className="address-text mb-0">
-                        {selectedOrder?.payment_channel ? ({ cod: "Cash on Delivery", paytabs: "PayTabs" }[selectedOrder.payment_channel] || selectedOrder.payment_channel) : "—"}
+                        {(() => {
+                          const currentOrder = modalDetails?.order || selectedOrder;
+                          return currentOrder?.payment_channel
+                            ? ({ cod: "Cash on Delivery", paytabs: "PayTabs", tamara: "Tamara" }[currentOrder.payment_channel] || currentOrder.payment_channel)
+                            : "—";
+                        })()}
                       </p>
                     </div>
 

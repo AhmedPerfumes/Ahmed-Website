@@ -142,6 +142,7 @@ export default function ResetPasswordOTP() {
     try {
       const res = await fetch(`${baseUrl}api/verifyOTP`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mobile: mobile.trim(),
@@ -160,11 +161,9 @@ export default function ResetPasswordOTP() {
         setTimeout(() => {
           setMessage(null);
           setShowOtpSuccessIcon(false);
+          setStep(3);
+          bumpStepKey();
         }, 1800);
-         localStorage.setItem("token", data.access_token);
-
-        setStep(3);
-        bumpStepKey();
       } else {
         setError(data.message || "Invalid Mobile Number or OTP");
       }
@@ -199,6 +198,7 @@ export default function ResetPasswordOTP() {
 
       const res = await fetch(`${baseUrl}api/customerUpdate`, {
         method: "POST",
+        credentials: "include",
         headers,
         body: JSON.stringify({
           customer_id: customerId,

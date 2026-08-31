@@ -21,7 +21,7 @@ const slidesData = [
     id: "present",
     image: "/assets/images/kseries/Present_2025.jpg",
     title: "The Alchemy Lab",
-    subtitle:"2025",
+    subtitle: "2025",
     description: "“The Alchemy Lab” symbolizes Mr. Kafeel Ahmed’s creative evolution - Blending science, soul, and scent into a work of living art.",
     themeClass: "theme-present",
   },
@@ -63,23 +63,23 @@ const ProductCard = ({ data, onClick }) => {
 };
 
 export default function KSeriesProductCards() {
-    const locale = useLocale();
-    const router = useRouter();
-    const handleCardClick = (productData) => {
+  const locale = useLocale();
+  const router = useRouter();
+  const handleCardClick = (productData) => {
     let routeSegment;
     switch (productData.id) {
-        case 'past':
-            routeSegment = '2000';
-            break;
-        case 'present':
-            routeSegment = '2025';
-            break;
-        case 'future':
-            routeSegment = '2050';
-            break;
-        default:
-            console.error("Unknown product ID:", productData.id);
-            return; // Exit if ID is unexpected
+      case 'past':
+        routeSegment = '2000';
+        break;
+      case 'present':
+        routeSegment = '2025';
+        break;
+      case 'future':
+        routeSegment = '2050';
+        break;
+      default:
+        // console.error("Unknown product ID:", productData.id);
+        return; // Exit if ID is unexpected
     }
     // Construct the path: /en/K-Series/[routeSegment]
     const path = `/${locale}/k-series/${routeSegment}`;
@@ -88,21 +88,21 @@ export default function KSeriesProductCards() {
     router.push(path);
   };
   return (
-        <section id="k-series-product-cards" className={styles.productCardsSection}>
-        <div className={styles.header}>
-            <h2 className={styles.mainTitle}>
-            Legacy Crafted <span className={styles.goldText}>Through Time.</span>
-            </h2>
-            <p className={styles.subText}>
-            Explore the iconic scents that define the K-Series - The founders signature collection.
-            </p>
-        </div>
+    <section id="k-series-product-cards" className={styles.productCardsSection}>
+      <div className={styles.header}>
+        <h2 className={styles.mainTitle}>
+          Legacy Crafted <span className={styles.goldText}>Through Time.</span>
+        </h2>
+        <p className={styles.subText}>
+          Explore the iconic scents that define the K-Series - The founders signature collection.
+        </p>
+      </div>
 
-        <div className={styles.cardsContainer}>
-            {slidesData.map((slide) => (
-            <ProductCard key={slide.id} data={slide} onClick={handleCardClick}/>
-            ))}
-        </div>
-        </section>
+      <div className={styles.cardsContainer}>
+        {slidesData.map((slide) => (
+          <ProductCard key={slide.id} data={slide} onClick={handleCardClick} />
+        ))}
+      </div>
+    </section>
   );
 }

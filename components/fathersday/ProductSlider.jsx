@@ -57,7 +57,7 @@ const ProductSlider = () => {
 
                 setProducts(curated);
             } catch (error) {
-                console.error("Failed to fetch products for slider", error);
+                // console.error("Failed to fetch products for slider", error);
             } finally {
                 setLoading(false);
             }
@@ -408,7 +408,7 @@ const ProductSlider = () => {
                                                     </Link>
                                                 </Typography>
                                             </Box>
-                                                                         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: { xs: 0.5, md: 1 }, pt: { xs: 1.5, md: 2 }, borderTop: "1px solid rgba(44, 36, 22, 0.08)" }}>
+                                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: { xs: 0.5, md: 1 }, pt: { xs: 1.5, md: 2 }, borderTop: "1px solid rgba(44, 36, 22, 0.08)" }}>
                                                 {/* Left side: Price */}
                                                 <Box>
                                                     <Typography variant="caption" sx={{ color: "rgba(44, 36, 22, 0.6)", display: "block", fontSize: { xs: "0.5rem", md: "0.6rem" }, textTransform: "uppercase", letterSpacing: "1px" }}>

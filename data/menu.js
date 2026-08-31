@@ -23,12 +23,14 @@ export const homePages = [
   { id: 22, title: "Home 22", href: "/home-22" },
 ];
 
+import { clearStoredTokens } from "@/lib/apiClient";
+
 export const handleLogout = (e) => {
-  e.preventDefault();
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  if (e) e.preventDefault();
+  clearStoredTokens();
   window.location.href = "/";
 };
+
 
 export const shopList = [
   {
@@ -265,9 +267,17 @@ export const dashboardMenuItems = [
   },
   {
     id: 6,
+    href: "/account_devices",
+    title: "Active Devices",
+    shortTitle: "Devices",
+    icon: "#icon_shield",
+  },
+  {
+    id: 7,
     href: "/login_register",
     title: "Logout",
     shortTitle: "Logout",
     icon: "#icon_logout",
   },
 ];
+

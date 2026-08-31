@@ -31,7 +31,7 @@ export default function TamaraPaymentRedirect() {
         setOrderDetails(json);
         setPaymentStatus(status);
       } catch (err) {
-        console.error("Failed to fetch order details:", err);
+        // console.error("Failed to fetch order details:", err);
         setApiError(err.message || "Something went wrong.");
         setPaymentStatus("failed");
       } finally {
@@ -84,7 +84,7 @@ export default function TamaraPaymentRedirect() {
       {orderDetails && orderDetails.order_id ? (
         <div className="order-complete">
           <div className="order-complete__message">
-            {paymentStatus=== 'success' && (
+            {paymentStatus === 'success' && (
               <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
                 <circle cx="40" cy="40" r="40" fill="#B9A16B" />
                 <path
@@ -142,28 +142,28 @@ export default function TamaraPaymentRedirect() {
                     <tbody>
                       <tr>
                         <th>SUBTOTAL</th>
-                        <td>{orderDetails.sub_total}{ currency.symbol }</td>
+                        <td>{orderDetails.sub_total}{currency.symbol}</td>
                       </tr>
                       <tr>
                         <th>SHIPPING</th>
-                        <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${ (orderDetails.shipping_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2) }${ currency.symbol }`}</td>
+                        <td>{orderDetails.shipping_amount <= 0 ? 'You Got Free Shipping' : `Shipping Cost: ${(orderDetails.shipping_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2)}${currency.symbol}`}</td>
                       </tr>
                       <tr>
-                        
+
                         <th>SERVICE FEE</th>
-                        <td>{ (orderDetails.service_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2) }{ currency.symbol }</td>
+                        <td>{(orderDetails.service_amount * (1 + orderDetails.vat_amount / 100)).toFixed(2)}{currency.symbol}</td>
                       </tr>
 
-                      { orderDetails.payment_method === "cod" && (
+                      {orderDetails.payment_method === "cod" && (
                         <tr>
-                            <th>COD CHARGES</th>
-                            <td>{ (orderDetails.cod_charge * (1 + orderDetails.vat_amount / 100)).toFixed(2) }{ currency.symbol }</td> 
+                          <th>COD CHARGES</th>
+                          <td>{(orderDetails.cod_charge * (1 + orderDetails.vat_amount / 100)).toFixed(2)}{currency.symbol}</td>
                         </tr>
                       )}
-                      
+
                       <tr>
                         <th>TOTAL</th>
-                        <td>{orderDetails.total}{ currency.symbol } (includes { orderDetails.tax_amount }{ currency.symbol } VAT)
+                        <td>{orderDetails.total}{currency.symbol} (includes {orderDetails.tax_amount}{currency.symbol} VAT)
                         </td>
                       </tr>
                     </tbody>

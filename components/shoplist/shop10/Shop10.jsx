@@ -81,7 +81,7 @@ export default function Shop10({ subCategories, products }) {
 
   // Extract all unique subcategory names dynamically from active products
   const uniqueSubcategories = useMemo(() => {
-    const activeProducts = selectedCategories.length > 0 
+    const activeProducts = selectedCategories.length > 0
       ? allProducts.filter(p => selectedCategories.includes(p.category_name))
       : allProducts;
 
@@ -111,24 +111,24 @@ export default function Shop10({ subCategories, products }) {
   const renderSectionHeader = (title, key) => {
     const isCollapsed = collapsedSections[key];
     return (
-      <div 
+      <div
         className="d-flex justify-content-between align-items-center cursor-pointer mb-3 select-none"
         onClick={() => toggleSection(key)}
         style={{ cursor: 'pointer', userSelect: 'none' }}
       >
-        <span 
-          className="text-uppercase fw-bold text-secondary mb-0 transition-colors" 
+        <span
+          className="text-uppercase fw-bold text-secondary mb-0 transition-colors"
           style={{ fontSize: '10px', letterSpacing: '1.5px', transition: 'color 0.2s ease' }}
         >
           {title}
         </span>
-        <svg 
+        <svg
           className="transition-transform duration-200 text-secondary"
-          style={{ 
-            transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)', 
+          style={{
+            transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s ease',
             opacity: 0.6
-          }} 
+          }}
           width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
         >
           <polyline points="2 4 5 7 8 4" />
@@ -146,7 +146,7 @@ export default function Shop10({ subCategories, products }) {
         setAvailableLabels(Array.isArray(json.labels) ? json.labels : []);
         setAvailableTags(Array.isArray(json.tags) ? json.tags : []);
       } catch (err) {
-        console.error("Error fetching filters:", err);
+        // // console.error("Error fetching filters:", err);
       }
     };
     fetchFilters();
@@ -187,7 +187,7 @@ export default function Shop10({ subCategories, products }) {
   }, [products, subCategories, setPriceRange]);
 
   const toggleFilter = (array, setArray, value) => {
-    setArray(prev => 
+    setArray(prev =>
       prev.includes(value) ? prev.filter(i => i !== value) : [...prev, value]
     );
   };
@@ -303,38 +303,38 @@ export default function Shop10({ subCategories, products }) {
         <div className="shop-acs d-flex align-items-center gap-3 position-relative" ref={ref}>
           {/* Search bar (Desktop) */}
           <div className="search-field position-relative d-none d-md-block">
-            <input 
-              type="text" 
-              className="form-control border px-3 py-1" 
+            <input
+              type="text"
+              className="form-control border px-3 py-1"
               placeholder={t("Search Products")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ 
-                fontSize: '13px', 
-                width: '200px', 
+              style={{
+                fontSize: '13px',
+                width: '200px',
                 backgroundColor: '#f8f9fa',
                 border: '1px solid #eee',
                 borderRadius: 0
               }}
             />
-            <svg 
-              className="position-absolute top-50 translate-middle-y" 
-              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }} 
+            <svg
+              className="position-absolute top-50 translate-middle-y"
+              style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }}
               width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             >
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
             </svg>
           </div>
 
           {/* Filter button */}
-          <button 
+          <button
             className={`btn d-flex align-items-center text-uppercase fw-bold p-0 border-0 ${isDDActive ? 'text-dark' : 'text-secondary'}`}
             onClick={() => setIsDDActive(!isDDActive)}
             style={{ letterSpacing: '1px', fontSize: '14px' }}
             dir="ltr"
           >
             <svg className="me-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M2 5h16M4 10h12M7 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
             {t("Filter")}
             {(selectedLabels.length > 0 || selectedTags.length > 0 || selectedCategories.length > 0 || selectedSubcategories.length > 0 || promotionalOnly || stockAvailability !== 'all') && (
@@ -345,11 +345,11 @@ export default function Shop10({ subCategories, products }) {
           </button>
 
           {isDDActive && (
-            <div 
-              className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster" 
-              style={{ 
-                zIndex: 1000, 
-                width: '350px', 
+            <div
+              className="filter-popup position-absolute top-100 mt-3 p-4 bg-white shadow-xl rounded-4 animate__animated animate__fadeInUp animate__faster"
+              style={{
+                zIndex: 1000,
+                width: '350px',
                 [locale === 'ar' ? 'left' : 'right']: 0,
                 border: '1px solid #f0f0f0',
                 boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
@@ -357,7 +357,7 @@ export default function Shop10({ subCategories, products }) {
                 overflowY: 'auto'
               }}
             >
-               <ProductFilter
+              <ProductFilter
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 sortOption={sortOption}
@@ -404,20 +404,20 @@ export default function Shop10({ subCategories, products }) {
       {/* Mobile Search Bar */}
       <div className="d-md-none mb-4 mt-3">
         <div className="position-relative">
-          <input 
-            type="text" 
-            className="form-control border px-3 py-2 w-100" 
+          <input
+            type="text"
+            className="form-control border px-3 py-2 w-100"
             placeholder={t("Search Products")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ fontSize: '14px', backgroundColor: '#f8f9fa', border: '1px solid #eee', borderRadius: 0 }}
           />
-          <svg 
-            className="position-absolute top-50 translate-middle-y" 
-            style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }} 
+          <svg
+            className="position-absolute top-50 translate-middle-y"
+            style={{ [locale === 'ar' ? 'left' : 'right']: '12px', opacity: 0.4 }}
             width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
           >
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
           </svg>
         </div>
       </div>

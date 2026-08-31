@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import {NextIntlClientProvider} from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 
 export default function IntlProviderClient({
   children,
@@ -17,9 +17,9 @@ export default function IntlProviderClient({
           return;
         }
 
-        console.error(error);
+        // console.error(error);
       }}
-      getMessageFallback={({key}) => key}
+      getMessageFallback={({ key }) => key}
     >
       {children}
     </NextIntlClientProvider>

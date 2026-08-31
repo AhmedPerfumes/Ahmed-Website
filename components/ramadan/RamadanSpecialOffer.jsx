@@ -28,24 +28,24 @@ const RamadanSpecialOffer = () => {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     // Added discount_name: "TEST" to the payload
-                    body: JSON.stringify({ 
-                        page: 1, 
-                        limit: 6, 
-                        discount_name: "Test" 
+                    body: JSON.stringify({
+                        page: 1,
+                        limit: 6,
+                        discount_name: "Test"
                     }),
                 });
-                
+
                 const result = await response.json();
-                
+
                 // The API now returns only the products associated with the "TEST" discount
-                const allProducts = (result.data || []).map((p) => ({ 
-                    ...p, 
-                    price: Number(p.price) 
+                const allProducts = (result.data || []).map((p) => ({
+                    ...p,
+                    price: Number(p.price)
                 }));
 
                 setProducts(allProducts);
             } catch (error) {
-                console.error("Failed to fetch products", error);
+                // console.error("Failed to fetch products", error);
             } finally {
                 setLoading(false);
             }

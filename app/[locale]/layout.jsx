@@ -115,12 +115,12 @@ export default async function LocaleLayout({ children, params: { locale } }) {
     });
     if (res.ok) {
       initialMenuData = await res.json();
-      console.log("🚀 ~ LocaleLayout ~ initialMenuData:", initialMenuData)
+      // console.log("🚀 ~ LocaleLayout ~ initialMenuData:", initialMenuData)
     } else {
-      console.error(`Menu API failed with status ${res.status}: ${res.statusText}`);
+      // console.error(`Menu API failed with status ${res.status}: ${res.statusText}`);
     }
   } catch (err) {
-    console.error("Failed to fetch menu data on server:", err);
+    // console.error("Failed to fetch menu data on server:", err);
   }
 
   return (

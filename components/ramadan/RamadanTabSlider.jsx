@@ -85,7 +85,7 @@ export default function RamadanTabSlider() {
                 const data = await res.json();
                 setApiData(data || {});
             } catch (err) {
-                console.error("API error:", err);
+                // console.error("API error:", err);
                 setApiData({});
             }
         }

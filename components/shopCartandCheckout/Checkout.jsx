@@ -17,6 +17,7 @@ import { data } from "jquery";
 import { useSearchParams } from "next/navigation";
 import { toast } from 'react-toastify';
 import TamaraWidget from "@/components/TamaraWidget";
+import { setAccessToken, apiClient } from "@/lib/apiClient";
 // import { bogoProducts } from "@/components/BogoFeature";
 
 const countries = [ "Abu Dhabi", "Ajman", "Al Ain", "Dubai", "Fujairah", "Ras Al Khaymah", "Sharjah", "Umm Al Quwain", ];
@@ -184,10 +185,9 @@ export default function Checkout() {
     try { customer_id = JSON.parse(atob(raw)).id; } catch {}
     if (!customer_id) return;
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}api/customerAddressDetails`, {
+    apiClient("api/customerAddressDetails", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer_id }),
+      body: JSON.stringify({  }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -305,7 +305,7 @@ export default function Checkout() {
         setCoupons(transformedData);
         setCouponDataContext(transformedData); // This context is used by FreeGiftFeature
       } catch (err) {
-        console.error("Failed to fetch coupons:", err);
+        // console.error("Failed to fetch coupons:", err);
         setCoupons([]);
       } finally { setCouponLoading(false); }
     };
@@ -423,7 +423,7 @@ export default function Checkout() {
       setIsEditingAddress(false);
       setTimeout(() => setAddressUpdateSuccess(null), 3000);
     } catch (e) {
-      console.error("Failed to update address", e);
+      // // console.error("Failed to update address", e);
       setAddressSaveError("Failed to update. Please try again.");
     } finally {
       setAddressSaving(false);
@@ -900,24 +900,15 @@ export default function Checkout() {
     } = formData;
 
     const additionalFields = {...cleanFormData, products: mapProductsFromFormData(cartProducts), payment_method: selectedOption, shippingPrice, shippingPriceVat, servicePrice, servicePriceVat, vatTax: vatTax.percentage, totalPrice, finalPrice, customer_id: isLoggedIn && userJson ? userJson.id : null, locale, couponCode, codPrice, codPriceVat, couponData, };
-    const token = localStorage.getItem('token');
-    // console.log('additionalFields', additionalFields);return;
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/storeOrder`,
-        {
-          method: "POST",
-          body: JSON.stringify(additionalFields),
-          headers: { "content-type": "application/json", ...(token && { Authorization: `Bearer ${token}` })},
-        }
-      );
+      const response = await apiClient("api/storeOrder", {
+        method: "POST",
+        body: JSON.stringify(additionalFields),
+      });
 
       if (response.status === 401) {
-        // Clear all authentication-related items
         if (localStorage.getItem('user')) {
           localStorage.removeItem('user');
-        }
-        if (localStorage.getItem('token')) {
-          localStorage.removeItem('token');
         }
 
         // If they were a guest user verified via OTP, they need to re-verify
@@ -1063,6 +1054,7 @@ export default function Checkout() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`,
         {
           method: "POST",
+          credentials: "include",
           body: JSON.stringify({ mobile: targetMobile, otp: formData.otp, flag: "checkout", }),
           headers: { "Content-Type": "application/json" },
         }
@@ -1079,7 +1071,7 @@ export default function Checkout() {
         setIsOTPVerified(true);
         setIsDisabled(false);
         setOTPError(null);
-        localStorage.setItem("token", data.access_token);
+        setAccessToken(data.access_token);
       } else {
         if (data["mobile"]) setOTPError(data["mobile"]);
         if (data["otp"]) setOTPError(data["otp"]);
@@ -1837,7 +1829,7 @@ export default function Checkout() {
   //         throw new Error(`HTTP error! Status: ${response.status}`);
   //       }
   //       const data = await response.json();
-  //       console.log(data, "data")
+  //       // console.log(data, "data")
   //       console.log(response, "response")
 
   //       const transformedData = transformCouponData(data);

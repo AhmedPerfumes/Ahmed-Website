@@ -38,8 +38,8 @@ const MobileAnimation = () => {
   };
 
   const skipAnimation = () => {
-    console.log("Skip button clicked");
-    
+    // console.log("Skip button clicked");
+
     const nextSection = document.getElementById("main2");
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
