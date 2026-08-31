@@ -33,6 +33,13 @@ const nextConfig = {
           },
         ],
       },
+      // Preconnect to admin image CDN for faster first-image load on EWD quiz
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Link', value: '<https://admin.ahmedalmaghribi.com>; rel=preconnect; crossorigin' },
+        ],
+      },
     ];
   },
 };
