@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { setAccessToken as storeAccessToken, setAuthTokens } from "@/lib/apiClient";
 
 export default function VerifyOTP() {
   const router = useRouter();
@@ -89,6 +90,9 @@ export default function VerifyOTP() {
 
     try {
       const formData = new FormData(e.currentTarget);
+      formData.append("mobile", mobile.trim());
+      formData.append("flag", "signup");
+
       const res = await fetch(`${baseUrl}api/verifyOTP`, {
         method: "POST",
         body: formData,
@@ -96,11 +100,11 @@ export default function VerifyOTP() {
 
       const data = await res.json();
 
-      if (res.ok && data.message?.toLowerCase().includes("customer")) {
+      if (res.ok && (data.message?.toLowerCase().includes("customer") || data.message?.toLowerCase().includes("verified") || data.access_token)) {
         setAccessToken(data.access_token || null);
-        setMessage(data.message);
+        setMessage(data.message || "OTP Verified Successfully");
         setShowOtpSuccessIcon(true);
-        localStorage.setItem("token", data.access_token);
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
 
         setTimeout(() => {

@@ -76,7 +76,7 @@ const BOGOFeature = () => {
           return item;
         });
 
-      console.log('000 Cleanup on unmount: removing BOGO flags, restoring discounts');
+      // console.log('000 Cleanup on unmount: removing BOGO flags, restoring discounts');
       setCartProducts(cleanedCart);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -91,7 +91,7 @@ const BOGOFeature = () => {
       const cleaned = cartProducts.filter(
         (item) => !(item.is_gift && item.type === 'bogo')
       );
-      console.log('000 Cleaned old-style BOGO gift items from cart');
+      // console.log('000 Cleaned old-style BOGO gift items from cart');
       setCartProducts(cleaned);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -180,14 +180,14 @@ const BOGOFeature = () => {
         const giftSets = Math.floor(totalQuantity / buy_quantity);
         const giftsAllowed = giftSets * get_quantity;
 
-        console.log(`000 Campaign ${campaign}: totalQty=${totalQuantity}, buyQty=${buy_quantity}, giftsAllowed=${giftsAllowed}`);
+        // console.log(`000 Campaign ${campaign}: totalQty=${totalQuantity}, buyQty=${buy_quantity}, giftsAllowed=${giftsAllowed}`);
 
         // ─── BOGO DOESN'T QUALIFY ────────────────────────────────────
         if (giftsAllowed === 0) {
           qualifyingIndices.forEach((idx) => {
             const item = updatedCart[idx];
             if (item.bogo_campaign === campaign && (item.bogo_free_qty || item._original_discount)) {
-              console.log(`000 Removing BOGO from ${item.product_id} (no longer qualifies)`);
+              // console.log(`000 Removing BOGO from ${item.product_id} (no longer qualifies)`);
               const { bogo_free_qty, bogo_campaign, _original_discount, ...rest } = item;
               updatedCart[idx] = {
                 ...rest,
@@ -276,7 +276,7 @@ const BOGOFeature = () => {
             const needsFreeQtyUpdate = desiredFreeQty !== currentFreeQty || item.bogo_campaign !== campaign;
 
             if (needsDiscountRemoval || needsFreeQtyUpdate) {
-              console.log(`000 BOGO active: updating product ${item.product_id} (freeQty=${desiredFreeQty}, removeDiscount=${needsDiscountRemoval})`);
+              // console.log(`000 BOGO active: updating product ${item.product_id} (freeQty=${desiredFreeQty}, removeDiscount=${needsDiscountRemoval})`);
               updatedCart[idx] = {
                 ...item,
                 bogo_campaign: campaign,
@@ -293,7 +293,7 @@ const BOGOFeature = () => {
           } else if (item.bogo_campaign === campaign) {
             // ── BOGO not active (no selection yet or cleared): restore ──
             if (currentFreeQty > 0 || item._original_discount) {
-              console.log(`000 BOGO inactive: restoring product ${item.product_id}`);
+              // console.log(`000 BOGO inactive: restoring product ${item.product_id}`);
               const { bogo_free_qty, bogo_campaign, _original_discount, ...rest } = item;
               updatedCart[idx] = {
                 ...rest,
@@ -306,7 +306,7 @@ const BOGOFeature = () => {
       });
 
       if (cartChanged) {
-        console.log('000 Updating cart with BOGO changes');
+        // console.log('000 Updating cart with BOGO changes');
         setCartProducts(updatedCart);
       }
     }, 150);
@@ -417,7 +417,7 @@ const BOGOFeature = () => {
         const freeProduct = eligibleProducts.find(
           (item) => item.bogo_campaign === campaign && item.bogo_free_qty > 0
         );
-        console.log(freeProduct, "freeeeeeeeeeeeeeeeee");
+        // console.log(freeProduct, "freeeeeeeeeeeeeeeeee");
 
         // Get candidate products from free_products that are in the cart
         const purchasedProductIds = eligibleProducts.map((p) => p.product_id);

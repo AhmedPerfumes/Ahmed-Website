@@ -26,7 +26,7 @@ export default function Contact() {
         message: formData.get("message"),
       };
 
-      console.log("Form submitted:", formValues);
+      // console.log("Form submitted:", formValues);
 
       // Clear the form fields by resetting the form using the ref
       formRef.current.reset(); // This will clear all form fields

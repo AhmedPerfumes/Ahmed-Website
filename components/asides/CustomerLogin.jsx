@@ -3,6 +3,7 @@
 import { closeModalUserlogin } from "@/utlis/aside";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { setAccessToken, setAuthTokens } from "@/lib/apiClient";
 // import { useRouter } from 'next/navigation';
 import { useLocale } from "next-intl";
 
@@ -25,23 +26,32 @@ export default function CustomerLogin() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [mobile, setMobile] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const savedMobile = localStorage.getItem("remembered_mobile");
+    if (savedMobile) {
+      setMobile(savedMobile);
+      setRememberMe(true);
+    }
+  }, []);
 
   const validateMobile = (event) => {
     const { value } = event.currentTarget;
     setMobile(value);
   };
- 
+
   async function onRegister(event) {
     event.preventDefault();
     setIsLoading(true);
-    if(mobile == '') {
+    if (mobile == '') {
       setError('Mobile Number is Required');
       setSuccess(null);
       setIsLoading(false);
       return;
     }
     const regex = /^\d{10}$/;
-    if(!regex.test(mobile)) {
+    if (!regex.test(mobile)) {
       setError('Invalid Mobile Number');
       setSuccess(null);
       setIsLoading(false);
@@ -49,27 +59,27 @@ export default function CustomerLogin() {
     }
     setError(null);
     setSuccess(null);
- 
+
     try {
       const formData = new FormData(event.currentTarget)
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signup`, {
         method: 'POST',
         body: formData,
       })
- 
+
       if (!response.ok) {
         throw new Error('Failed to submit the data. Please try again.');
       }
- 
+
       // Handle response if necessary
       const data = await response.json();
-      if(data.message.split(' ')[0] != 'OTP') {
+      if (data.message.split(' ')[0] != 'OTP') {
         setError(data.message);
         setSuccess(null);
       } else {
         setSuccess(data.message);
         setError(null);
-        setTimeout(() => window.location.href=`/${locale}/verify-otp`, 1000);
+        setTimeout(() => window.location.href = `/${locale}/verify-otp`, 1000);
       }
       // console.log(data);
     } catch (error) {
@@ -84,14 +94,14 @@ export default function CustomerLogin() {
   async function onLogin(event) {
     event.preventDefault();
     setIsLoading(true);
-    if(mobile == '') {
+    if (mobile == '') {
       setError('Mobile Number is Required');
       setSuccess(null);
       setIsLoading(false);
       return;
     }
     const regex = /^\d{10}$/;
-    if(!regex.test(mobile)) {
+    if (!regex.test(mobile)) {
       setError('Invalid Mobile Number');
       setSuccess(null);
       setIsLoading(false);
@@ -99,29 +109,36 @@ export default function CustomerLogin() {
     }
     setError(null);
     setSuccess(null);
- 
+
     try {
       const formData = new FormData(event.currentTarget)
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signin`, {
         method: 'POST',
         body: formData,
       })
- 
+
       if (!response.ok) {
         throw new Error('Failed to submit the data. Please try again.');
       }
- 
+
       // Handle response if necessary
       const data = await response.json();
-      if(data.message.split(' ')[0] != 'Login') {
+      if (data.message.split(' ')[0] != 'Login') {
         setError(data.message);
         setSuccess(null);
       } else {
+        // Save or remove remembered mobile number
+        if (rememberMe) {
+          localStorage.setItem("remembered_mobile", mobile);
+        } else {
+          localStorage.removeItem("remembered_mobile");
+        }
+
         setSuccess(data.message);
         setError(null);
-        localStorage.setItem('token', data.access_token);
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
         localStorage.setItem('user', btoa(JSON.stringify(data.data)));
-        setTimeout(() => window.location.href='/', 1000);
+        setTimeout(() => window.location.href = '/', 1000);
       }
       // console.log(data);
     } catch (error) {
@@ -149,16 +166,17 @@ export default function CustomerLogin() {
           </div>
           {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
           <form onSubmit={onLogin} className="aside-content">
-            <div className="form-floating mb-3">
+            <div className="form-label-fixed mb-3">
+              <label className="form-label">Mobile Number (Eg. 0500000000)*</label>
               <input
                 name="mobile"
                 type="number"
                 className="form-control form-control_gray"
                 placeholder="Mobile Number"
+                value={mobile}
                 onChange={validateMobile}
                 required
               />
-              <label>Mobile Number (Eg. 0500000000)*</label>
             </div>
             <div className="pb-3" />
             <div className="form-label-fixed mb-3">
@@ -167,7 +185,7 @@ export default function CustomerLogin() {
                 name="password"
                 className="form-control form-control_gray"
                 type="password"
-                placeholder="********"
+                placeholder="******"
                 required
               />
             </div>
@@ -177,7 +195,8 @@ export default function CustomerLogin() {
                   name="remember"
                   className="form-check-input form-check-input_fill"
                   type="checkbox"
-                  defaultValue
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                 />
                 <label className="form-check-label text-secondary">
                   Remember me
@@ -190,7 +209,7 @@ export default function CustomerLogin() {
             <button
               className="btn btn-primary w-100 text-uppercase"
               disabled={isLoading}
-              >
+            >
               {isLoading ? 'Loading...' : 'Login'}
             </button>
             <div className="customer-option mt-4 text-center">
@@ -265,7 +284,7 @@ export default function CustomerLogin() {
             <button
               className="btn btn-primary w-100 text-uppercase"
               disabled={isLoading}
-              >
+            >
               {isLoading ? 'Loading...' : 'Register'}
             </button>
             <div className="customer-option mt-4 text-center">

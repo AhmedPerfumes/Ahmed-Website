@@ -8,9 +8,9 @@ import { useMenu } from "../../context/MenuContext";
 
 const BannerSkeleton = ({ isMobile }) => {
     return (
-        <div 
-            className="w-100 skeleton-shimmer" 
-            style={{ 
+        <div
+            className="w-100 skeleton-shimmer"
+            style={{
                 position: "relative",
                 aspectRatio: "21 / 11",
                 width: "100%",
@@ -36,7 +36,7 @@ function CityWalk() {
     const locale = useLocale();
     const t = useTranslations();
     const { homeSliders, homeMobileSliders, isLoading } = useMenu();
-    
+
     const isSaleLink = (link) => {
         if (!link) return false;
         const s = String(link).toLowerCase();
@@ -151,7 +151,7 @@ function CityWalk() {
 
             {/* Product Grid */}
             <div className="">
-                <DiscountGrid title={saleDesktop?.title || t("Sale Products")} onlyDiscounted={true}/>
+                <DiscountGrid title={saleDesktop?.title || t("")} onlyDiscounted={true} />
             </div>
         </div>
     );

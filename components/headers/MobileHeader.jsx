@@ -22,10 +22,12 @@ import { useRouter, usePathname } from "../../i18n/routing";
 import { useMenu } from "@/context/MenuContext";
 export default function MobileHeader() {
   const { topHeader } = useMenu();
+  const { logout } = useUser();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations();
+
 
   //  const pathname = usePathname();
 
@@ -43,7 +45,7 @@ export default function MobileHeader() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const currentOrigin = window.location.origin;
-      const matchedOption = currencyOptions.find(option => 
+      const matchedOption = currencyOptions.find(option =>
         option.link && (currentOrigin.includes(option.link) || option.link.includes(currentOrigin))
       );
       if (matchedOption) {
@@ -77,7 +79,7 @@ export default function MobileHeader() {
           setSearchSuggestions(result.data);
         }
       } catch (err) {
-        console.error("Mobile search error:", err);
+        // console.error("Mobile search error:", err);
       } finally {
         setIsSearching(false);
       }
@@ -92,12 +94,12 @@ export default function MobileHeader() {
     setSearchKeyWord(event.target.value);
   };
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/";
+  const handleLogout = async (e) => {
+    if (e) e.preventDefault();
+    await logout();
+    router.push("/");
   };
+
 
 
   const handleLangChange = (e) => {
@@ -109,7 +111,7 @@ export default function MobileHeader() {
 
 
 
-  
+
 
   const onSearch = (event) => {
     event.preventDefault();
@@ -413,7 +415,7 @@ export default function MobileHeader() {
             <div className="container mt-2 mb-2 pb-3 border-bottom">
               <div className="d-flex align-items-center justify-content-between gap-2">
                 {/* Find a Store Button */}
-                <Link 
+                <Link
                   href={`/${locale}/store-locator`}
                   className="d-flex align-items-center justify-content-center p-2 rounded text-decoration-none border"
                   style={{
@@ -432,12 +434,12 @@ export default function MobileHeader() {
                 </Link>
 
                 {/* Language Selector */}
-                <div 
-                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded" 
+                <div
+                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded"
                   style={{ borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }}
                 >
-                  <span 
-                    className="text-uppercase fw-semibold text-muted text-start" 
+                  <span
+                    className="text-uppercase fw-semibold text-muted text-start"
                     style={{ fontSize: '8px', letterSpacing: '0.5px', display: 'block', lineHeight: '1', marginBottom: '2px' }}
                   >
                     {t("Language")}
@@ -459,12 +461,12 @@ export default function MobileHeader() {
                 </div>
 
                 {/* Country Selector */}
-                <div 
-                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded" 
+                <div
+                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded"
                   style={{ borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }}
                 >
-                  <span 
-                    className="text-uppercase fw-semibold text-muted text-start" 
+                  <span
+                    className="text-uppercase fw-semibold text-muted text-start"
                     style={{ fontSize: '8px', letterSpacing: '0.5px', display: 'block', lineHeight: '1', marginBottom: '2px' }}
                   >
                     {t("Country")}

@@ -14,12 +14,24 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { useLocale, useTranslations } from "next-intl";
+import { useMenu } from "@/context/MenuContext";
 
 export default function Nav({ categoriesSubCategories }) {
   // console.log('000000000', categoriesSubCategories);
   const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
+  const { homeSliders } = useMenu();
+
+  const isSaleLink = (link) => {
+    if (!link) return false;
+    const s = String(link).toLowerCase();
+    return s === "sale" || s === "/sale" || s.includes("/sale");
+  };
+
+  const saleBanner = Array.isArray(homeSliders)
+    ? homeSliders.find((s) => isSaleLink(s.link))
+    : null;
   const isMenuActive = (menu) => {
     return menu.split("/")[3] == pathname.split("/")[4];
   };
@@ -147,16 +159,17 @@ export default function Nav({ categoriesSubCategories }) {
       </li>
     );
   });
-  categoriesSubCategoriesBody.push(
-    <li key="sale" className="navigation__item">
-      <Link href={`/${locale}/sale`} className={`navigation__link
-          ${isActiveExportMenu(`/sale`) ? "menu-active" : ""}
-          `}>
-        {t("Sale")}
-      </Link>
-    </li>
-
-  );
+  if (saleBanner) {
+    categoriesSubCategoriesBody.push(
+      <li key="sale" className="navigation__item">
+        <Link href={`/${locale}/${saleBanner.link || "sale"}`} className={`navigation__link
+            ${isActiveExportMenu(`/sale`) ? "menu-active" : ""}
+            `}>
+          {t("Sale")}
+        </Link>
+      </li>
+    );
+  }
 
   categoriesSubCategoriesBody.push(
     <li key="export" className="navigation__item">

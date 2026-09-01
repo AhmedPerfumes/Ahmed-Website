@@ -16,23 +16,23 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 
 const clean = (s = "") =>
-  String(s || "")
-    .replace(/&amp;/g, "")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, " ")
-    .trim()
-    .split(" ")
-    .join("-")
-    .toLowerCase();
+    String(s || "")
+        .replace(/&amp;/g, "")
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .split(" ")
+        .join("-")
+        .toLowerCase();
 
 const decodeHtml = (s = "") => String(s || "").replace(/&amp;/g, "&");
 
 const isSubcat = (cat, sub) =>
-  sub
-    ? clean(sub.subcategory_name || sub)
-    : ["gift-sets", "hair-mist", "extrait-de-parfum"].includes(clean(cat))
-      ? clean(cat)
-      : "online-exclusive";
+    sub
+        ? clean(sub.subcategory_name || sub)
+        : ["gift-sets", "hair-mist", "extrait-de-parfum"].includes(clean(cat))
+            ? clean(cat)
+            : "online-exclusive";
 
 const THEME_PALETTES = [
     { bg: "#F9F6F0", accent: "rgba(197, 160, 89, 1)", glow: "rgba(197, 160, 89, 0.15)", roman: "I" },
@@ -44,41 +44,41 @@ const THEME_PALETTES = [
 ];
 
 const ProductPrice = ({ elm, currency }) => {
-  const currentUTC = new Date();
-  const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
-  const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-  
-  const isDiscountActive = elm?.discount && 
-    new Date(current_date_time) >= new Date(elm.discount.start_date) && 
-    new Date(current_date_time) <= new Date(elm.discount.end_date);
+    const currentUTC = new Date();
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
+    const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
 
-  if (isDiscountActive) {
-    let discountedPrice = elm.price;
-    if (elm.discount.discount_type === "percent") {
-      discountedPrice = elm.price - (elm.price / 100 * elm.discount.value);
-    } else if (elm.discount.discount_type === "amount") {
-      discountedPrice = elm.price - elm.discount.value;
+    const isDiscountActive = elm?.discount &&
+        new Date(current_date_time) >= new Date(elm.discount.start_date) &&
+        new Date(current_date_time) <= new Date(elm.discount.end_date);
+
+    if (isDiscountActive) {
+        let discountedPrice = elm.price;
+        if (elm.discount.discount_type === "percent") {
+            discountedPrice = elm.price - (elm.price / 100 * elm.discount.value);
+        } else if (elm.discount.discount_type === "amount") {
+            discountedPrice = elm.price - elm.discount.value;
+        }
+        return (
+            <div className="product-price-wrap d-flex align-items-center gap-2">
+                <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
+                <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
+            </div>
+        );
+    } else if (elm?.sale_price) {
+        const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
+        return (
+            <div className="product-price-wrap d-flex align-items-center gap-2">
+                <span className="money price price-old">{formatPrice(elm.price, currency)}</span>
+                <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
+            </div>
+        );
     }
     return (
-      <div className="product-price-wrap d-flex align-items-center gap-2">
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
-        <span className="money price price-sale"> {formatPrice(discountedPrice, currency)}</span>
-      </div>
+        <div className="product-price-wrap d-flex align-items-center gap-2">
+            <span className="money price">{formatPrice(elm.price, currency)}</span>
+        </div>
     );
-  } else if (elm?.sale_price) {
-    const salePrice = elm.price - (elm.price / 100 * elm.sale_price);
-    return (
-      <div className="product-price-wrap d-flex align-items-center gap-2">
-        <span className="money price price-old">{formatPrice(elm.price, currency)}</span> 
-        <span className="money price price-sale"> {formatPrice(salePrice, currency)}</span>
-      </div>
-    );
-  }
-  return (
-    <div className="product-price-wrap d-flex align-items-center gap-2">
-      <span className="money price">{formatPrice(elm.price, currency)}</span>
-    </div>
-  );
 };
 
 const MasterPerfumerGallery = () => {
@@ -99,7 +99,7 @@ const MasterPerfumerGallery = () => {
             setLoading(true);
             try {
                 const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
-                
+
                 // 1. Try dedicated slider endpoint first
                 let mapped = [];
                 try {
@@ -208,7 +208,7 @@ const MasterPerfumerGallery = () => {
                     setSlides(mapped);
                 }
             } catch (err) {
-                console.error("Failed to fetch product slider data:", err);
+                // console.error("Failed to fetch product slider data:", err);
             } finally {
                 if (isMounted) {
                     setLoading(false);
@@ -330,8 +330,8 @@ const MasterPerfumerGallery = () => {
         }
 
         if (tagline) {
-            gsap.fromTo(tagline, 
-                { opacity: 0, x: prefersReducedMotion ? 0 : -15 }, 
+            gsap.fromTo(tagline,
+                { opacity: 0, x: prefersReducedMotion ? 0 : -15 },
                 { opacity: 1, x: 0, duration: 1.0, delay: 0.4, ease: "power2.out" }
             );
         }
@@ -351,8 +351,8 @@ const MasterPerfumerGallery = () => {
         }
 
         if (subtitle) {
-            gsap.fromTo(subtitle, 
-                { opacity: 0, y: prefersReducedMotion ? 0 : 20 }, 
+            gsap.fromTo(subtitle,
+                { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
                 { opacity: 1, y: 0, duration: 1.0, delay: 0.7, ease: "power3.out" }
             );
         }
@@ -410,7 +410,7 @@ const MasterPerfumerGallery = () => {
 
             <section className="master-gallery-section">
 
-            <style jsx global>{`
+                <style jsx global>{`
                 .master-gallery-wrapper {
                     position: relative;
                     width: 100%;
@@ -1261,175 +1261,175 @@ const MasterPerfumerGallery = () => {
                 }
             `}</style>
 
-            <Swiper
-                modules={[Autoplay, Navigation, Pagination, EffectFade]}
-                effect="fade"
-                fadeEffect={{ crossFade: true }}
-                speed={1400}
-                loop={slides.length > 1}
-                autoplay={{
-                    delay: 5000,
-                    disableOnInteraction: false
-                }}
-                onInit={(swiper) => {
-                    swiperRef.current = swiper;
-                    onSlideChange(swiper);
-                }}
-                onSlideChange={onSlideChange}
-                className="master-swiper"
-            >
-                {slides.map((slide) => (
-                    <SwiperSlide key={slide.id} className="master-slide">
-                        <div className="kinetic-bg-text d-none d-lg-block">{slide.name}</div>
-                        <div className="master-grid">
-                            <div className="master-text-col">
-                                <span className="master-tagline" style={{ "--accent-color": slide.theme.accent }}>
-                                    {slide.tagline}
-                                </span>
-                                <div className="master-title-wrap">
-                                    <div className="stagger-row">
-                                        <span>{slide.name}</span>
-                                    </div>
-                                </div>
-                                {slide.product && (
-                                    <div className="price-anim-wrap">
-                                        <ProductPrice elm={slide.product} currency={currency} />
-                                    </div>
-                                )}
-                                {slide.subtitle && (
-                                    <p className="master-desc">
-                                        {slide.subtitle}
-                                    </p>
-                                )}
-                            </div>
-
-                            <div className="master-visual-col">
-                                <div className="primary-photo">
-                                    <Link href={`/${locale}${slide.link}`}>
-                                        <Image
-                                            src={slide.productImg}
-                                            alt={slide.name}
-                                            fill
-                                            sizes="(max-width: 991px) 70vw, 40vw"
-                                            style={{ objectFit: "cover" }}
-                                        />
-                                    </Link>
-                                </div>
-                                <div className="secondary-photo">
-                                    <Link href={`/${locale}${slide.link}`}>
-                                        <Image
-                                            src={slide.noteImg}
-                                            alt={slide.name}
-                                            fill
-                                            sizes="(max-width: 991px) 50vw, 25vw"
-                                            style={{ objectFit: "cover" }}
-                                        />
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-
-            <div className="global-cta-wrap">
-                <div className="global-cta-grid">
-                    <div className="global-cta-text-col">
-                        <span className="master-tagline" style={{ display: 'block' }}>
-                            {slides[activeIndex]?.tagline}
-                        </span>
-                        <div className="master-title-wrap">
-                            <div className="stagger-row">
-                                <span>{slides[activeIndex]?.name}</span>
-                            </div>
-                        </div>
-                        {slides[activeIndex]?.product && (
-                            <ProductPrice elm={slides[activeIndex].product} currency={currency} />
-                        )}
-                        {slides[activeIndex]?.subtitle && (
-                            <p className="master-desc">
-                                {slides[activeIndex].subtitle}
-                            </p>
-                        )}
-                        <div className="global-cta-btn-container">
-                            {slides[activeIndex]?.product && getProductQuantity(slides[activeIndex].product.product_id) > 0 ? (
-                                <div className="slider-qty-selector">
-                                    <button 
-                                        className="qty-btn dec-btn" 
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            handleDecrement(slides[activeIndex].product.product_id);
-                                        }}
-                                        aria-label="Decrease quantity"
-                                    >
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </button>
-                                    <span className="qty-value font-weight-bold">
-                                        {getProductQuantity(slides[activeIndex].product.product_id)}
+                <Swiper
+                    modules={[Autoplay, Navigation, Pagination, EffectFade]}
+                    effect="fade"
+                    fadeEffect={{ crossFade: true }}
+                    speed={1400}
+                    loop={slides.length > 1}
+                    autoplay={{
+                        delay: 5000,
+                        disableOnInteraction: false
+                    }}
+                    onInit={(swiper) => {
+                        swiperRef.current = swiper;
+                        onSlideChange(swiper);
+                    }}
+                    onSlideChange={onSlideChange}
+                    className="master-swiper"
+                >
+                    {slides.map((slide) => (
+                        <SwiperSlide key={slide.id} className="master-slide">
+                            <div className="kinetic-bg-text d-none d-lg-block">{slide.name}</div>
+                            <div className="master-grid">
+                                <div className="master-text-col">
+                                    <span className="master-tagline" style={{ "--accent-color": slide.theme.accent }}>
+                                        {slide.tagline}
                                     </span>
-                                    <button 
-                                        className="qty-btn inc-btn" 
+                                    <div className="master-title-wrap">
+                                        <div className="stagger-row">
+                                            <span>{slide.name}</span>
+                                        </div>
+                                    </div>
+                                    {slide.product && (
+                                        <div className="price-anim-wrap">
+                                            <ProductPrice elm={slide.product} currency={currency} />
+                                        </div>
+                                    )}
+                                    {slide.subtitle && (
+                                        <p className="master-desc">
+                                            {slide.subtitle}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="master-visual-col">
+                                    <div className="primary-photo">
+                                        <Link href={`/${locale}${slide.link}`}>
+                                            <Image
+                                                src={slide.productImg}
+                                                alt={slide.name}
+                                                fill
+                                                sizes="(max-width: 991px) 70vw, 40vw"
+                                                style={{ objectFit: "cover" }}
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div className="secondary-photo">
+                                        <Link href={`/${locale}${slide.link}`}>
+                                            <Image
+                                                src={slide.noteImg}
+                                                alt={slide.name}
+                                                fill
+                                                sizes="(max-width: 991px) 50vw, 25vw"
+                                                style={{ objectFit: "cover" }}
+                                            />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+                <div className="global-cta-wrap">
+                    <div className="global-cta-grid">
+                        <div className="global-cta-text-col">
+                            <span className="master-tagline" style={{ display: 'block' }}>
+                                {slides[activeIndex]?.tagline}
+                            </span>
+                            <div className="master-title-wrap">
+                                <div className="stagger-row">
+                                    <span>{slides[activeIndex]?.name}</span>
+                                </div>
+                            </div>
+                            {slides[activeIndex]?.product && (
+                                <ProductPrice elm={slides[activeIndex].product} currency={currency} />
+                            )}
+                            {slides[activeIndex]?.subtitle && (
+                                <p className="master-desc">
+                                    {slides[activeIndex].subtitle}
+                                </p>
+                            )}
+                            <div className="global-cta-btn-container">
+                                {slides[activeIndex]?.product && getProductQuantity(slides[activeIndex].product.product_id) > 0 ? (
+                                    <div className="slider-qty-selector">
+                                        <button
+                                            className="qty-btn dec-btn"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleDecrement(slides[activeIndex].product.product_id);
+                                            }}
+                                            aria-label="Decrease quantity"
+                                        >
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <line x1="5" y1="12" x2="19" y2="12" />
+                                            </svg>
+                                        </button>
+                                        <span className="qty-value font-weight-bold">
+                                            {getProductQuantity(slides[activeIndex].product.product_id)}
+                                        </span>
+                                        <button
+                                            className="qty-btn inc-btn"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleIncrement(slides[activeIndex].product);
+                                            }}
+                                            aria-label="Increase quantity"
+                                        >
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <line x1="12" y1="5" x2="12" y2="19" />
+                                                <line x1="5" y1="12" x2="19" y2="12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <button
+                                        className="master-btn"
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            handleIncrement(slides[activeIndex].product);
+                                            const activeSlide = slides[activeIndex];
+                                            if (activeSlide?.product) {
+                                                addProductToCart(activeSlide.product);
+                                            } else if (activeSlide?.link) {
+                                                window.location.href = `/${locale}${activeSlide.link}`;
+                                            }
                                         }}
-                                        aria-label="Increase quantity"
                                     >
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
+                                        {slides[activeIndex]?.product ? t("Add To Cart") : t("Discover the Note")}
                                     </button>
-                                </div>
-                            ) : (
-                                <button
-                                    className="master-btn"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        const activeSlide = slides[activeIndex];
-                                        if (activeSlide?.product) {
-                                            addProductToCart(activeSlide.product);
-                                        } else if (activeSlide?.link) {
-                                            window.location.href = `/${locale}${activeSlide.link}`;
-                                        }
-                                    }}
-                                >
-                                    {slides[activeIndex]?.product ? t("Add To Cart") : t("Discover the Note")}
-                                </button>
-                            )}
+                                )}
+                            </div>
+                        </div>
+                        <div className="global-cta-dummy-visual">
+                            <div className="global-cta-dummy-ratio d-block d-lg-none"></div>
                         </div>
                     </div>
-                    <div className="global-cta-dummy-visual">
-                        <div className="global-cta-dummy-ratio d-block d-lg-none"></div>
+                </div>
+
+                <div className="modern-pagination">
+                    <button className="nav-btn prev-btn" onClick={() => swiperRef.current?.slidePrev()} aria-label={t("Previous Slide")}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+
+                    <div className="fraction" aria-live="polite">
+                        <span className="current">
+                            {String(activeIndex + 1).padStart(2, '0')}
+                        </span>
+                        <span className="line"></span>
+                        <span className="total">
+                            {String(slides.length).padStart(2, '0')}
+                        </span>
                     </div>
+
+                    <button className="nav-btn next-btn" onClick={() => swiperRef.current?.slideNext()} aria-label={t("Next Slide")}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
-            </div>
-
-            <div className="modern-pagination">
-                <button className="nav-btn prev-btn" onClick={() => swiperRef.current?.slidePrev()} aria-label={t("Previous Slide")}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                </button>
-
-                <div className="fraction" aria-live="polite">
-                    <span className="current">
-                        {String(activeIndex + 1).padStart(2, '0')}
-                    </span>
-                    <span className="line"></span>
-                    <span className="total">
-                        {String(slides.length).padStart(2, '0')}
-                    </span>
-                </div>
-
-                <button className="nav-btn next-btn" onClick={() => swiperRef.current?.slideNext()} aria-label={t("Next Slide")}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
             </section>
         </div>
     );

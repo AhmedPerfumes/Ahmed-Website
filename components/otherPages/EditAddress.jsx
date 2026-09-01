@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Modal, Button, Form } from "react-bootstrap";
+import { apiClient } from "@/lib/apiClient";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
@@ -54,16 +55,10 @@ export default function EditAddress() {
     setUserData(user);
     setCustomerId(customer_id);
 
-    if (!customer_id) {
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
-    fetch(`${API_BASE}api/customerAddressDetails`, {
+    apiClient(`api/customerAddressDetails`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer_id }),
+      body: JSON.stringify({}),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -96,7 +91,6 @@ export default function EditAddress() {
 
           setAddresses(parsedSingle);
         } else {
-          // No addresses yet — show an empty placeholder
           setAddresses([]);
         }
       })
@@ -105,6 +99,7 @@ export default function EditAddress() {
         setLoading(false);
       });
   }, []);
+
 
   // ─── Open modal ───────────────────────────────────────────────────────────
   const openEdit = (idx) => {
@@ -138,17 +133,11 @@ export default function EditAddress() {
   const deleteAddress = async (addr, idx) => {
     if (!window.confirm(`Delete this address? This cannot be undone.`)) return;
 
-    const token = localStorage.getItem("token");
     try {
-      const resp = await fetch(`${API_BASE}api/customerAddressDelete`, {
+      const resp = await apiClient('api/customerAddressDelete', {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: JSON.stringify({
           address_id: addr.id,
-          customer_id: customerId,
         }),
       });
 
@@ -158,13 +147,18 @@ export default function EditAddress() {
       // Remove from local state
       setAddresses((prev) => prev.filter((_, i) => i !== idx));
 
-      // If the deleted address was stored as the default in localStorage, clear it
+      // If the deleted address was stored as the default in localStorage, update/clear it
       try {
         const stored = localStorage.getItem("address");
         if (stored) {
           const parsed = JSON.parse(atob(stored));
           if (parsed?.id === addr.id) {
-            localStorage.removeItem("address");
+            if (res.addresses && res.addresses.length > 0) {
+              const defaultAddr = res.addresses.find((a) => a.is_default) || res.addresses[0];
+              localStorage.setItem("address", btoa(JSON.stringify(defaultAddr)));
+            } else {
+              localStorage.removeItem("address");
+            }
           }
         }
       } catch { }
@@ -187,15 +181,10 @@ export default function EditAddress() {
     const token = localStorage.getItem("token");
 
     try {
-      const resp = await fetch(`${API_BASE}api/customerAddressUpdate`, {
+      const resp = await apiClient(`api/customerAddressUpdate`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: JSON.stringify({
           address_id: form.id,   // -1 = create new, >0 = update existing
-          customer_id: customerId,
           name: form.name,
           email: form.email,
           mobile: form.mobile,
@@ -209,6 +198,7 @@ export default function EditAddress() {
       });
 
       const res = await resp.json();
+
 
       if (res?.message === "Unauthorized" || res?.error === "Unauthorized") {
         localStorage.removeItem("token");

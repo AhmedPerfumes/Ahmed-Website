@@ -39,7 +39,7 @@ export default function DiscountedProductsSlider({
         const result = await response.json();
         setProducts(result.data || []);
       } catch (error) {
-        console.error("Failed to fetch all products", error);
+        // console.error("Failed to fetch all products", error);
       } finally {
         setLoading(false);
       }
@@ -161,7 +161,7 @@ export default function DiscountedProductsSlider({
         {filteredProducts.map((elm, i) => (
           <SwiperSlide key={i} className="swiper-slide product-card">
             <div className="pc__img-wrapper">
-            <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+              <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                 {JSON.parse(elm.images)[0] && (
                   <Image
                     loading="lazy"
@@ -227,13 +227,13 @@ export default function DiscountedProductsSlider({
 
             <div className="pc__info position-relative">
               <h6 className="pc__title">
-              <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
+                <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>
                   {elm?.product_name && he.decode(elm.product_name)}
                 </Link>
               </h6>
               <div className="product-card__price d-flex">
                 {/* {price(elm)} */}
-                { renderPrice(elm, currency) }
+                {renderPrice(elm, currency)}
               </div>
             </div>
           </SwiperSlide>

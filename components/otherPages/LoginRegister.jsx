@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useUser } from "@/context/UserContext";
+import { setAuthTokens, setAccessToken } from "@/lib/apiClient";
 
 export default function LoginRegister() {
   const locale = useLocale();
@@ -27,22 +28,28 @@ export default function LoginRegister() {
 
   const [decodedCoupon, setDecodedCoupon] = useState(null);
   const [mobile, setMobile] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
 
-  const { setIsLoggedIn } = useUser();
+  const { setIsLoggedIn, setUser, isLoggedIn } = useUser();
 
   useEffect(() => {
     setHasMounted(true);
+    const savedMobile = localStorage.getItem("remembered_mobile");
+    if (savedMobile) {
+      setMobile(savedMobile);
+      setRememberMe(true);
+    }
   }, []);
 
   // Redirect if already logged in
   useEffect(() => {
     if (!hasMounted) return;
     const token = localStorage.getItem("user");
-    if (token) {
+    if (isLoggedIn && token) {
       router.replace(`/${locale}/account_dashboard`);
     }
-  }, [hasMounted, router, locale]);
+  }, [hasMounted, isLoggedIn, router, locale]);
 
   // Capture & decode voucher from URL (?q=Base64Code)
   useEffect(() => {
@@ -54,7 +61,7 @@ export default function LoginRegister() {
         setDecodedCoupon(decoded);
         sessionStorage.setItem("voucher_coupon_code", decoded);
       } catch (e) {
-        console.error("Failed to decode voucher:", e);
+        // console.error("Failed to decode voucher:", e);
       }
     }
   }, [hasMounted, searchParams]);
@@ -85,7 +92,7 @@ export default function LoginRegister() {
         body: JSON.stringify({ coupon_code: couponCode }),
       });
     } catch (error) {
-      console.error("Error applying coupon:", error);
+      // console.error("Error applying coupon:", error);
     } finally {
       sessionStorage.removeItem("voucher_coupon_code");
     }
@@ -173,8 +180,9 @@ export default function LoginRegister() {
         setError(data.message || "Invalid OTP");
       } else {
         setSuccess("Account verified successfully.");
-        localStorage.setItem("token", data.access_token);
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
+        setUser(data.data);
         setIsLoggedIn(true);
 
         // Apply coupon
@@ -210,7 +218,7 @@ export default function LoginRegister() {
 
     try {
       const formData = new FormData(event.currentTarget);
-        formData.append("voucher", decodedCoupon);
+      formData.append("voucher", decodedCoupon);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signin`, {
         method: "POST",
         body: formData,
@@ -224,16 +232,24 @@ export default function LoginRegister() {
         setError(data.message);
       } else {
         setSuccess(data.message);
-        localStorage.setItem("token", data.access_token);
-        localStorage.setItem("user", btoa(JSON.stringify(data.data)));
 
-        const defaultAddr = data.data.addresses.find((addr) => addr.is_default);
+        // Save or remove remembered mobile number
+        if (rememberMe) {
+          localStorage.setItem("remembered_mobile", mobile);
+        } else {
+          localStorage.removeItem("remembered_mobile");
+        }
+
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
+        localStorage.setItem("user", btoa(JSON.stringify(data.data)));
+        const defaultAddr = data?.data?.addresses?.find((addr) => addr.is_default);
         if (defaultAddr) {
           localStorage.setItem(
             "address",
             btoa(JSON.stringify({ ...defaultAddr, is_default: 1 }))
           );
         }
+        setUser(data.data);
         setIsLoggedIn(true);
 
         // Apply coupon
@@ -282,7 +298,15 @@ export default function LoginRegister() {
 
           <form onSubmit={onLogin} className="needs-validation">
             <div className="form-floating mb-3">
-              <input name="mobile" type="number" className="form-control form-control_gray" placeholder="Mobile Number *" onChange={validateMobile} required />
+              <input
+                name="mobile"
+                type="number"
+                className="form-control form-control_gray"
+                placeholder="Mobile Number *"
+                value={mobile}
+                onChange={validateMobile}
+                required
+              />
               <label>Mobile Number (Eg. 0500000000)*</label>
             </div>
 
@@ -297,8 +321,17 @@ export default function LoginRegister() {
 
             <div className="d-flex align-items-center mb-3 pb-2">
               <div className="form-check mb-0">
-                <input name="remember" className="form-check-input form-check-input_fill" type="checkbox" />
-                <label className="form-check-label text-secondary">Remember me</label>
+                <input
+                  id="rememberMeCheckbox"
+                  name="remember"
+                  className="form-check-input form-check-input_fill"
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                <label htmlFor="rememberMeCheckbox" className="form-check-label text-secondary" style={{ cursor: "pointer" }}>
+                  Remember me
+                </label>
               </div>
               <Link href="/reset_password" className="btn-text ms-auto">Lost password?</Link>
             </div>

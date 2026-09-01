@@ -48,11 +48,11 @@ const HeaderSkeleton = () => {
             {/* Top Bar Skeleton */}
             <div className="bg-black" style={{ height: "2.5rem" }}>
                 <div className="container h-100 d-flex align-items-center justify-content-center">
-                    <Skeleton 
-                        variant="text" 
-                        width={300} 
-                        height={20} 
-                        sx={{ bgcolor: "rgba(255,255,255,0.2)" }} 
+                    <Skeleton
+                        variant="text"
+                        width={300}
+                        height={20}
+                        sx={{ bgcolor: "rgba(255,255,255,0.2)" }}
                     />
                 </div>
             </div>
@@ -67,7 +67,7 @@ const HeaderSkeleton = () => {
                                 <option key={index} value={option.link} >
                                     {t(option.text)}
                                 </option>
-                                )
+                            )
                             )}
                         </select>
                         <select className="form-select form-select-sm bg-transparent text-dark border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: "pointer", outline: "none", }} >
@@ -75,7 +75,7 @@ const HeaderSkeleton = () => {
                                 <option key={index} value={option.value} >
                                     {option.text}
                                 </option>
-                                )
+                            )
                             )}
                         </select>
                     </div>
@@ -106,14 +106,14 @@ const HeaderSkeleton = () => {
 
             {/* Bottom Bar Skeleton */}
             <div className="header-bottom border-top d-none d-lg-block">
-                <div className="container d-flex justify-content-center py-2" style={{"gap": "5.5rem"}}>
+                <div className="container d-flex justify-content-center py-2" style={{ "gap": "5.5rem" }}>
                     {[...Array(8)].map((_, i) => (
-                        <Skeleton 
-                            key={i} 
-                            variant="text" 
-                            width={70} 
-                            height={30} 
-                            sx={{ bgcolor: "rgba(0,0,0,0.05)" }} 
+                        <Skeleton
+                            key={i}
+                            variant="text"
+                            width={70}
+                            height={30}
+                            sx={{ bgcolor: "rgba(0,0,0,0.05)" }}
                         />
                     ))}
                 </div>
@@ -127,15 +127,14 @@ export default function Header14() {
     const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname();
-    const { isLoggedIn } = useUser();
+    const { isLoggedIn, logout, couponCount } = useUser();
+
 
     const [scrollState, setScrollState] = useState("visible");
     const [isScrolled, setIsScrolled] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isHeaderOpen, setIsHeaderOpen] = useState(false);
     const [searchKeyWord, setSearchKeyWord] = useState("");
-    const [couponCount, setCouponCount] = useState(0);
-    const [checkingAuth, setCheckingAuth] = useState(true);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
 
@@ -164,55 +163,13 @@ export default function Header14() {
             href: "/account_loyalty",
             label: locale === "ar" ? "نقاط الولاء" : "Loyalty Points",
         },
+        {
+            href: "/account_devices",
+            label: locale === "ar" ? "الأجهزة النشطة" : "Active Devices",
+        },
     ];
 
     const isActive = (href) => pathname === href || pathname.startsWith(href);
-
-    // --- Fetch coupon count if logged in ---
-    useEffect(() => {
-        if (!isLoggedIn) return setCheckingAuth(false);
-
-        const rawUser = localStorage.getItem("user");
-        if (!rawUser) return setCheckingAuth(false);
-
-        let user = null;
-        try {
-            user = JSON.parse(atob(rawUser));
-        } catch (err) {
-            console.error("Failed to decode user from localStorage", err);
-            return setCheckingAuth(false);
-        }
-
-        if (!user?.phone || !user?.email) return setCheckingAuth(false);
-
-        const fetchCouponCount = async () => {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/Count`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            salesType: "EComm",
-                            company: "UAE",
-                            mobileNo: user.phone,
-                            email: user.email,
-                        }),
-                    }
-                );
-                const result = await response.json();
-                if (result?.data !== undefined) setCouponCount(result.data);
-            } catch (err) {
-                console.error("Error fetching coupon count:", err);
-            } finally {
-                setCheckingAuth(false);
-            }
-        };
-
-        fetchCouponCount();
-    }, [isLoggedIn, router]);
 
     useEffect(() => {
         const fetchSuggestions = async () => {
@@ -232,7 +189,7 @@ export default function Header14() {
                     setSearchSuggestions(result.data);
                 }
             } catch (err) {
-                console.error("Search suggestion error:", err);
+                // console.error("Search suggestion error:", err);
             } finally {
                 setIsSearching(false);
             }
@@ -304,15 +261,12 @@ export default function Header14() {
     }
 
     // --- Logout ---
-    const handleLogout = (e) => {
-        e.preventDefault();
-        if (typeof window !== "undefined") {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-        }
-        router.replace("/login_register");
-        setTimeout(() => window.location.reload(), 50);
+    const handleLogout = async (e) => {
+        if (e) e.preventDefault();
+        await logout();
+        router.replace(`/login_register`);
     };
+
 
     // --- Language change ---
     const handleLangChange = (e) => {
@@ -349,7 +303,7 @@ export default function Header14() {
 
     return (
         <>
-        {/* <HeaderSkeleton /> */}
+            {/* <HeaderSkeleton /> */}
             <header
                 id="header"
                 className="header bg-white"
@@ -428,9 +382,8 @@ export default function Header14() {
                 {/* Search Popup */}
                 <div
                     ref={containerRef}
-                    className={`header-tools__item hover-container ${
-                        isPopupOpen ? "js-content_visible" : "js-content_hidden"
-                    }`}
+                    className={`header-tools__item hover-container ${isPopupOpen ? "js-content_visible" : "js-content_hidden"
+                        }`}
                 >
                     <div className="search-popup js-hidden-content">
                         <button
@@ -543,12 +496,12 @@ export default function Header14() {
                                                                     }}
                                                                 />
                                                                 <div className="flex-grow-1">
-    <span className="suggestion-name">{item.name}</span>
-    <div className="suggestion-price-wrapper">
-    {/* Pass the item (product) and the global currency context */}
-    {renderPrice(item, currency)}
-</div>
-</div>
+                                                                    <span className="suggestion-name">{item.name}</span>
+                                                                    <div className="suggestion-price-wrapper">
+                                                                        {/* Pass the item (product) and the global currency context */}
+                                                                        {renderPrice(item, currency)}
+                                                                    </div>
+                                                                </div>
                                                                 <div className="text-secondary">
                                                                     <svg
                                                                         width="12"
@@ -567,14 +520,14 @@ export default function Header14() {
                                                 )}
                                             </ul>
                                             <div className="search-results__footer">
-            <Link
-                href={`/${locale}/shop?q=${searchKeyWord}`}
-                className="view-all-btn"
-                onClick={() => setIsPopupOpen(false)}
-            >
-                {t("View All Results")} ({searchSuggestions.length}+)
-            </Link>
-        </div>
+                                                <Link
+                                                    href={`/${locale}/shop?q=${searchKeyWord}`}
+                                                    className="view-all-btn"
+                                                    onClick={() => setIsPopupOpen(false)}
+                                                >
+                                                    {t("View All Results")} ({searchSuggestions.length}+)
+                                                </Link>
+                                            </div>
                                         </div>
                                     )}
 
@@ -803,7 +756,7 @@ export default function Header14() {
                                                                         "coupon"
                                                                     ) &&
                                                                     couponCount >
-                                                                        0 && (
+                                                                    0 && (
                                                                         <span
                                                                             className="badge rounded-pill bg-danger ms-2"
                                                                             style={{
@@ -815,12 +768,12 @@ export default function Header14() {
                                                                                     "center",
                                                                                 marginRight:
                                                                                     locale ===
-                                                                                    "ar"
+                                                                                        "ar"
                                                                                         ? "0.5rem"
                                                                                         : "0",
                                                                                 marginLeft:
                                                                                     locale ===
-                                                                                    "ar"
+                                                                                        "ar"
                                                                                         ? "0"
                                                                                         : "0.5rem",
                                                                             }}

@@ -48,23 +48,23 @@ export default function Cart() {
       cleanContainer();
       if (document.getElementById("TabbyPromo") && window.TabbyPromo && typeof window.TabbyPromo === 'function') {
         try {
-           new window.TabbyPromo({
+          new window.TabbyPromo({
             selector: '#TabbyPromo',
-            currency: 'AED', 
+            currency: 'AED',
             price: finalTotal, // Using the dynamic total calculated above
-            lang: locale, 
+            lang: locale,
             source: 'cart', // Changed to 'cart' since this is the cart page
             publicKey: process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY,
             merchantCode: 'APM'
           });
         } catch (err) {
-          console.error("Tabby Widget Init Error:", err);
+          // console.error("Tabby Widget Init Error:", err);
         }
       }
     };
 
     let script = document.getElementById(scriptId);
-    
+
     if (!script) {
       script = document.createElement("script");
       script.src = scriptSrc;
@@ -203,14 +203,14 @@ export default function Cart() {
 
 
   const removeItem = (id, uniqueKey = null) => {
-  setCartProducts((prev) =>
-    prev.filter((elm) =>
-      uniqueKey
-        ? elm.unique_key !== uniqueKey
-        : elm.product_id !== id
-    )
-  );
-};
+    setCartProducts((prev) =>
+      prev.filter((elm) =>
+        uniqueKey
+          ? elm.unique_key !== uniqueKey
+          : elm.product_id !== id
+      )
+    );
+  };
 
   // Step 2: Create a handler function
   const handleCheckboxChange = (event) => {
@@ -263,7 +263,7 @@ export default function Cart() {
     return <div><Pagination1 /></div>;
   }
   if (isMenuError) {
-    return <div>{ isMenuError }</div>;
+    return <div>{isMenuError}</div>;
   }
 
   const currentUTC = new Date(); // Current UTC time
@@ -273,23 +273,23 @@ export default function Cart() {
   // Define non-collection product total (excluding collections and discounted items)
 
   const subTotalPrice = (elm) => {
-    if(elm?.discount) {
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        if(elm.discount.discount_type == "percent") {
-          return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
-        } else if(elm.discount.discount_type == "amount") {
-          return <span className="shopping-cart__subtotal">{((elm.price - elm.discount.value) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+    if (elm?.discount) {
+      if (new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        if (elm.discount.discount_type == "percent") {
+          return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{currency.symbol}</span>;
+        } else if (elm.discount.discount_type == "amount") {
+          return <span className="shopping-cart__subtotal">{((elm.price - elm.discount.value) * elm.quantity).toFixed(2)}{currency.symbol}</span>;
         }
         // return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.discount.value)) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
       } else {
-        return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+        return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{currency.symbol}</span>;
       }
     }
     // else if(elm?.sale_price) {
     //   return <span className="shopping-cart__subtotal">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     // }
     else {
-      return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
+      return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(2)}{currency.symbol}</span>;
     }
   };
 
@@ -340,7 +340,7 @@ export default function Cart() {
   //   //       <span className="money price price-old">{currency.symbol}{elm?.price}</span>
   //   //     </>
   //   //   );
-      
+
   //   // }
   //   else {
   //     return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
@@ -424,7 +424,7 @@ export default function Cart() {
                     </td>
                     <td>
                       {/* { price(elm) } */}
-                      { renderPrice(elm, currency) }
+                      {renderPrice(elm, currency)}
                     </td>
                     <td>
                       {!elm.is_gift && !elm.is_gift_card ? <div className="qty-control position-relative">
@@ -454,9 +454,9 @@ export default function Cart() {
                       </div> : <span>1</span>}
                     </td>
                     <td>
-                      
-                        { subTotalPrice(elm) }
-                      
+
+                      {subTotalPrice(elm)}
+
                     </td>
                     <td>
                       <a
@@ -522,7 +522,7 @@ export default function Cart() {
                 <tbody>
                   <tr>
                     <th>Subtotal</th>
-                    <td>{totalPrice.toFixed(2)}{ currency.symbol }</td>
+                    <td>{totalPrice.toFixed(2)}{currency.symbol}</td>
                   </tr>
                   <tr>
                     <th>Shipping</th>
@@ -549,11 +549,11 @@ export default function Cart() {
                             You Got Free Shipping
                           </label>
                         </div> :
-                        <div className="form-check">
-                          <label className="form-check-label" htmlFor="flat_rate">
-                            Shipping Cost: { shippingServiceCharges[0].price }{ currency.symbol }
-                          </label>
-                        </div>
+                          <div className="form-check">
+                            <label className="form-check-label" htmlFor="flat_rate">
+                              Shipping Cost: {shippingServiceCharges[0].price}{currency.symbol}
+                            </label>
+                          </div>
                       }
                       {/* <div className="form-check">
                         <input
@@ -580,14 +580,14 @@ export default function Cart() {
                   </tr>
                   <tr>
                     <th>SERVICE FEE</th>
-                    <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
+                    <td>{shippingServiceCharges[1].price}{currency.symbol}</td>
                   </tr>
                   <tr>
                     <th>Total</th>
                     <td>
                       {!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
-                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}{ currency.symbol } (includes { !freeShippingFlag ? (
+                        (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}{currency.symbol} (includes {!freeShippingFlag ? (
                           (
                             (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -597,19 +597,19 @@ export default function Cart() {
                             0 +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(2)) }{ currency.symbol } VAT)
+                          ).toFixed(2))}{currency.symbol} VAT)
                     </td>
                   </tr>
                 </tbody>
               </table>
-                {/* <tamara-widget type="tamara-summary" lang="en" amount={!freeShippingFlag ?
+              {/* <tamara-widget type="tamara-summary" lang="en" amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
-                {/* <TamaraWidget amount={!freeShippingFlag ?
+              {/* <TamaraWidget amount={!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)} inlineType='2' inlineVariant='outlined'/> */}
-                <div className="my-3" id="TabbyPromo"></div>
-                <TamaraWidget inlineType="5" inlineVariant='outlined'/>
+              <div className="my-3" id="TabbyPromo"></div>
+              <TamaraWidget inlineType="5" inlineVariant='outlined' />
             </div>
             <div className="mobile_fixed-btn_wrapper">
               <div className="button-wrapper container">

@@ -254,7 +254,7 @@ const ReviewFormModal = ({ show, onClose, productId, onReviewSubmitted, t }) => 
                 setErrors(result.errors || { form: result.message || 'Something went wrong.' });
             }
         } catch (err) {
-            console.error(err);
+            // console.error(err);
             setErrors({ form: 'Network error. Please try again later.' });
         }
         finally { setIsSubmitting(false); }

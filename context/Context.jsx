@@ -37,7 +37,7 @@ const cartReducer = (state, action) => {
       if (existingProduct) {
         updatedProducts = state.products.map((p) =>
           p.product_id === action.payload.product_id &&
-          p.campaign === action.payload.campaign
+            p.campaign === action.payload.campaign
             ? { ...p, quantity: (p.quantity || 0) + (action.payload.quantity || 1) }
             : p
         );
@@ -77,15 +77,15 @@ const cartReducer = (state, action) => {
         isProcessing: false,
       };
     case 'REMOVE_PRODUCT':
-  return {
-    ...state,
-    products: state.products.filter((p) =>
-      p.unique_key
-        ? p.unique_key !== action.payload.uniqueKey
-        : p.product_id !== action.payload.productId
-    ),
-    isProcessing: false,
-  };
+      return {
+        ...state,
+        products: state.products.filter((p) =>
+          p.unique_key
+            ? p.unique_key !== action.payload.uniqueKey
+            : p.product_id !== action.payload.productId
+        ),
+        isProcessing: false,
+      };
     case 'SET_PRODUCTS':
     case 'UPDATE_CART':
       // Ensure payload is an array
@@ -183,18 +183,18 @@ export default function Context({ children }) {
       if (paidQty <= 0) return accumuLator;
 
       if (product?.discount) {
-        console.log('discountC', product?.discount);
+        // console.log('discountC', product?.discount);
         let discounted = basePrice;
         if (
           new Date(current_date_time) >= new Date(product.discount.start_date) &&
           new Date(current_date_time) <= new Date(product.discount.end_date)
         ) {
           if (product.discount.discount_type === 'percent') {
-              discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
-              // return accumuLator + product.quantity * discount_price;
+            discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
+            // return accumuLator + product.quantity * discount_price;
           } else if (product.discount.discount_type === 'amount') {
-              discounted = Number(product.discount.final_price || 0);
-              // return accumuLator + product.quantity * discount_price;
+            discounted = Number(product.discount.final_price || 0);
+            // return accumuLator + product.quantity * discount_price;
           }
           return accumuLator + paidQty * Number(discounted.toFixed(2));
         }
@@ -218,9 +218,8 @@ export default function Context({ children }) {
 
       // 3) Customer/global coupon (apply across all products)
       // if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
-      if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
-      {
-        console.log('customer couponC', product, isCustomerCouponActive, couponDataContext);
+      if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id))) {
+        // console.log('customer couponC', product, isCustomerCouponActive, couponDataContext);
         const value = Number(couponDataContext?.value || 0);
         let discounted = basePrice; // fallback if no discount
 
@@ -244,7 +243,7 @@ export default function Context({ children }) {
     }, 0);
 
     setTotalPrice(subtotal);
-    
+
     const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
     setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
   }, [state.products, couponDataContext, shippingServiceCharges]);
@@ -257,7 +256,7 @@ export default function Context({ children }) {
   // }
   // }, [state.toastMeta]);
 
-   // helper to build toast image
+  // helper to build toast image
   const buildToastImageUrl = (product) => {
     const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/?$/, "/");
 
@@ -280,7 +279,7 @@ export default function Context({ children }) {
           if (/^https?:\/\//i.test(first)) return first;
           return `${base}storage/${String(first).replace(/^\/+/, "")}`;
         }
-      } catch {}
+      } catch { }
     }
 
     return "/placeholder.png";
@@ -409,10 +408,10 @@ export default function Context({ children }) {
     const MAX_LIMIT = product.is_gift
       ? 999
       : (product.is_gift_card
-          ? 10 // or any safe cap
-          : (product.maximum_order_quantity && product.maximum_order_quantity > 0
-              ? product.maximum_order_quantity
-              : (product.product_qty ?? 999)));
+        ? 10 // or any safe cap
+        : (product.maximum_order_quantity && product.maximum_order_quantity > 0
+          ? product.maximum_order_quantity
+          : (product.product_qty ?? 999)));
 
     const existingItemIndex = cartProducts.findIndex((p) => {
       // 🚨 Gift cards should NEVER merge
@@ -443,7 +442,7 @@ export default function Context({ children }) {
     }
 
     // New product, set initial quantity = 1
-    product.quantity =  product.quantity || 1;
+    product.quantity = product.quantity || 1;
 
     // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
     if (!product.is_gift && product.quantity > MAX_LIMIT) {
@@ -504,8 +503,8 @@ export default function Context({ children }) {
         <div className="toast-details">
           <p className="toast-title">{removeSpecialCharactersAndAmp(product.product_name)}</p>
           <div className="toast-actions">
-            <button 
-              className="view-cart-btn" 
+            <button
+              className="view-cart-btn"
               onClick={() => {
                 document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
                 document.getElementById("cartDrawer")?.classList.add("aside_visible");
@@ -534,15 +533,15 @@ export default function Context({ children }) {
   };
 
   const removeProduct = (productId, uniqueKey = null) => {
-  if (state.isProcessing) return;
+    if (state.isProcessing) return;
 
-  dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
 
-  dispatch({
-    type: 'REMOVE_PRODUCT',
-    payload: { productId, uniqueKey },
-  });
-};
+    dispatch({
+      type: 'REMOVE_PRODUCT',
+      payload: { productId, uniqueKey },
+    });
+  };
 
   const setCartProducts = (productsOrFn) => {
     let newProducts = [];
@@ -592,8 +591,8 @@ export default function Context({ children }) {
             <div className="toast-details">
               <p className="toast-title">{productName}</p>
               <div className="toast-actions">
-                <button 
-                  className="view-cart-btn" 
+                <button
+                  className="view-cart-btn"
                   onClick={() => {
                     document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
                     document.getElementById("cartDrawer")?.classList.add("aside_visible");

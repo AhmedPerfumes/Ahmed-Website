@@ -3,6 +3,7 @@
 import { closeModalUserlogin } from "@/utlis/aside";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { setAccessToken, setAuthTokens } from '@/lib/apiClient';
 // import { useRouter } from 'next/navigation';
 // import { useLocale } from "next-intl";
 
@@ -119,7 +120,7 @@ export default function CustomerLogin() {
       } else {
         setSuccess(data.message);
         setError(null);
-        localStorage.setItem('token', data.access_token);
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
         localStorage.setItem('user', btoa(JSON.stringify(data.data)));
         setTimeout(() => window.location.href='/', 1000);
       }
