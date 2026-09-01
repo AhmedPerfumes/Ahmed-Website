@@ -42,14 +42,7 @@ export default function CompleteOrderSlider({ products: propProducts }) {
       try {
         const timestamp = Date.now();
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}api/complete-order-products?_t=${timestamp}`,
-          {
-            cache: "no-store",
-            headers: {
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              Pragma: "no-cache",
-            },
-          }
+          `${process.env.NEXT_PUBLIC_API_URL}api/complete-order-products?_t=${timestamp}`
         );
 
         if (!res.ok) throw new Error("Failed to fetch complete order products");
@@ -235,7 +228,7 @@ export default function CompleteOrderSlider({ products: propProducts }) {
             ? arr[0]
             : `${process.env.NEXT_PUBLIC_API_URL}storage/${arr[0].replace(/^\/+/, "")}`;
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     return "/assets/images/placeholder.png";
@@ -323,16 +316,15 @@ export default function CompleteOrderSlider({ products: propProducts }) {
               locale === "ar" && elm.product_name_ar
                 ? elm.product_name_ar
                 : elm.product_name
-                ? he.decode(elm.product_name)
-                : "Product";
+                  ? he.decode(elm.product_name)
+                  : "Product";
             const imageUrl = getProductImage(elm);
 
             return (
               <SwiperSlide key={elm.product_id || elm.id}>
                 <div
-                  className={`complete-order-card position-relative p-2 rounded-3 d-flex flex-column justify-content-between text-center ${
-                    isAdded ? "is-selected shadow-sm" : ""
-                  } ${isOutOfStock ? "is-out-of-stock" : ""}`}
+                  className={`complete-order-card position-relative p-2 rounded-3 d-flex flex-column justify-content-between text-center ${isAdded ? "is-selected shadow-sm" : ""
+                    } ${isOutOfStock ? "is-out-of-stock" : ""}`}
                   style={{
                     backgroundColor: isAdded ? "#FAFAF8" : "#FFFFFF",
                     border: isAdded ? "1.5px solid #111111" : "1px solid #EAE7E2",
