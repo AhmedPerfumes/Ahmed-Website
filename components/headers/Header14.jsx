@@ -264,7 +264,7 @@ export default function Header14() {
     const handleLogout = async (e) => {
         if (e) e.preventDefault();
         await logout();
-        router.replace(`/${locale}/login_register`);
+        router.replace(`/login_register`);
     };
 
 
