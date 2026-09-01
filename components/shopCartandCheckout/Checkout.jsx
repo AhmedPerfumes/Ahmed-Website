@@ -17,6 +17,7 @@ import { data } from "jquery";
 import { useSearchParams } from "next/navigation";
 import { toast } from 'react-toastify';
 import TamaraWidget from "@/components/TamaraWidget";
+import CompleteOrderSlider from "@/components/singleProduct/New/CompleteOrderSlider";
 // import { bogoProducts } from "@/components/BogoFeature";
 
 const countries = [ "Abu Dhabi", "Ajman", "Al Ain", "Dubai", "Fujairah", "Ras Al Khaymah", "Sharjah", "Umm Al Quwain", ];
@@ -1559,6 +1560,9 @@ export default function Checkout() {
 
                 </div>
 
+
+                  {/* Complete Your Order Slider on Checkout */}
+                  <CompleteOrderSlider />
 
                   <div className="checkout__payment-methods">
                     {!hasPreBookItem && <div className={`form-check premium-payment-card ${selectedOption === "cod" ? "active" : ""}`}>

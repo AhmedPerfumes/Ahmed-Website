@@ -20,50 +20,59 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
 
   const { isLoggedIn } = useUser();
 
-  // Filter products that count towards the threshold (exclude gifts, buy_x_get_y products, and discounted products)
-  const nonCollectionProducts = cartProducts.filter(
-    (item) =>
-      !item.is_gift &&
-      !item.discount &&
-      !item.sale_price &&
-      !promotionsContext.some((promo) =>
-        promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id)
-      )
-  );
+  // Filter products that count towards the threshold
+  const getEligibleProducts = useCallback((allowWithDiscount = false) => {
+    return cartProducts.filter(
+      (item) =>
+        !item.is_gift &&
+        (allowWithDiscount || (!item.discount && !item.sale_price)) &&
+        !promotionsContext.some((promo) =>
+          promo.buy_products?.some((buyItem) => buyItem.product_id === item.product_id)
+        )
+    );
+  }, [cartProducts, promotionsContext]);
 
   const currentUTC = new Date();
   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
   const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
 
-  // Total price of non-Collections products
-  const nonCollectionTotalPrice = nonCollectionProducts.reduce(
-    (acc, item) => {
-      const actualPrice = item.sale_price || item.price;
-      if (couponData?.code && new Date(current_date_time) >= new Date(item.coupon[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon[couponData?.code.toLowerCase()]?.end_date) && item.coupon[couponData?.code.toLowerCase().toLowerCase()].code == couponData?.code.toLowerCase()) {
-        return acc + (parseFloat(actualPrice - (actualPrice / 100 * item.coupon[couponData?.code.toLowerCase().toLowerCase()]?.value)) * item.quantity);
-      } else if (
-        isLoggedIn &&
-        couponData &&
-        couponData.type === "customer" &&
-        (!couponData.start_date ||
-          !couponData.end_date ||
-          (new Date(current_date_time) >= new Date(couponData.start_date) &&
-            new Date(current_date_time) <= new Date(couponData.end_date)))
-      ) {
-        let itemPrice = actualPrice - (actualPrice / 100) * couponData.value;
-        return acc + (parseFloat(itemPrice) * item.quantity);
-      } else {
-        return acc + (parseFloat(actualPrice) * item.quantity);
-      }
-    },
-    0
-  );
+  // Total price of eligible products
+  const calculateEligibleTotalPrice = useCallback((allowWithDiscount = false) => {
+    const products = getEligibleProducts(allowWithDiscount);
+    return products.reduce(
+      (acc, item) => {
+        const actualPrice = item.sale_price || item.price;
+        if (couponData?.code && new Date(current_date_time) >= new Date(item.coupon?.[couponData?.code.toLowerCase()]?.start_date) && new Date(current_date_time) <= new Date(item.coupon?.[couponData?.code.toLowerCase()]?.end_date) && item.coupon?.[couponData?.code.toLowerCase()]?.code == couponData?.code.toLowerCase()) {
+          return acc + (parseFloat(actualPrice - (actualPrice / 100 * item.coupon[couponData?.code.toLowerCase()]?.value)) * item.quantity);
+        } else if (
+          isLoggedIn &&
+          couponData &&
+          couponData.type === "customer" &&
+          (!couponData.start_date ||
+            !couponData.end_date ||
+            (new Date(current_date_time) >= new Date(couponData.start_date) &&
+              new Date(current_date_time) <= new Date(couponData.end_date)))
+        ) {
+          let itemPrice = actualPrice - (actualPrice / 100) * couponData.value;
+          return acc + (parseFloat(itemPrice) * item.quantity);
+        } else {
+          return acc + (parseFloat(actualPrice) * item.quantity);
+        }
+      },
+      0
+    );
+  }, [getEligibleProducts, couponData, current_date_time, isLoggedIn]);
 
-  // Active threshold based on non-Collection product price
+  // Active threshold based on eligible product price
   const activeThreshold = thresholds.find(
-    (threshold) =>
-      nonCollectionTotalPrice >= parseFloat(threshold.min) &&
-      (!threshold.max || nonCollectionTotalPrice <= parseFloat(threshold.max))
+    (threshold) => {
+      const allowWithDiscount = Boolean(Number(threshold.allow_with_discount));
+      const total = calculateEligibleTotalPrice(allowWithDiscount);
+      return (
+        total >= parseFloat(threshold.min) &&
+        (!threshold.max || total <= parseFloat(threshold.max))
+      );
+    }
   );
 
   // fetchThresholds: isInitial=true only on mount, so re-fetches on modal open don't flash loading=true
@@ -225,34 +234,45 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
 
   // Calculate next threshold info
   const getNextThreshold = () => {
-    return thresholds.find((threshold) => nonCollectionTotalPrice < parseFloat(threshold.min));
+    return thresholds.find((threshold) => {
+      const allowWithDiscount = Boolean(Number(threshold.allow_with_discount));
+      const total = calculateEligibleTotalPrice(allowWithDiscount);
+      return total < parseFloat(threshold.min);
+    });
   };
 
-  // Hide Free Gift if all products are from Collections (and clean up any existing FOC gifts)
+  const nextThreshold = getNextThreshold();
+  const nextThresholdAllowDiscount = nextThreshold ? Boolean(Number(nextThreshold.allow_with_discount)) : false;
+  const currentTotalForNext = calculateEligibleTotalPrice(nextThresholdAllowDiscount);
+
+  // Check if any cart product is eligible under any threshold
+  const anyThresholdAllowsDiscount = thresholds.some((t) => Boolean(Number(t.allow_with_discount)));
+  const hasEligibleCartProducts = getEligibleProducts(anyThresholdAllowsDiscount).length > 0;
+
+  // Hide Free Gift if no eligible products in cart (and clean up any existing FOC gifts)
   useEffect(() => {
-    if (!loading && nonCollectionProducts.length === 0) {
+    if (!loading && !hasEligibleCartProducts) {
       cartProducts.forEach((item) => {
         if (item.is_gift && item.type === 'foc') {
           removeGiftFromCart(item.product_id, item.campaign);
         }
       });
     }
-  }, [nonCollectionProducts.length, loading]);
+  }, [hasEligibleCartProducts, loading]);
 
-  if (nonCollectionProducts.length === 0) return null;
+  if (!hasEligibleCartProducts) return null;
   if (loading) return <></>;
 
   const giftsInCart = cartProducts.filter((item) => item.is_gift && item.type === 'foc');
   const giftLimit = activeThreshold?.gift_limit || 1;
-  const nextThreshold = getNextThreshold();
 
   // Progress towards next threshold
   const progressPercent = nextThreshold
-    ? Math.min(100, (nonCollectionTotalPrice / nextThreshold.min) * 100)
+    ? Math.min(100, (currentTotalForNext / nextThreshold.min) * 100)
     : 100;
 
   const amountNeeded = nextThreshold
-    ? (nextThreshold.min - nonCollectionTotalPrice).toFixed(2)
+    ? (nextThreshold.min - currentTotalForNext).toFixed(2)
     : 0;
 
 

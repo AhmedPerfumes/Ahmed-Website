@@ -13,6 +13,7 @@ import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import CompleteOrderSlider from "./CompleteOrderSlider";
 
 
 // In your ProductAccordion.js file
@@ -705,6 +706,9 @@ const ProductAccordion = ({ product }) => {
                     ))}
                 </div>
             </AccordionItem>
+
+            {/* --- Complete Your Order With --- */}
+            <CompleteOrderSlider products={product?.complete_order_products} />
             {showLoader && (
                 <div className="loader-overlay">
                     <div className="loader-spinner"></div>
