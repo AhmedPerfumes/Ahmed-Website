@@ -137,7 +137,6 @@ export default function CustomerLogin() {
         setSuccess(data.message);
         setError(null);
         setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
-        debugger
         localStorage.setItem('user', btoa(JSON.stringify(data.data)));
         setTimeout(() => window.location.href = '/', 1000);
       }

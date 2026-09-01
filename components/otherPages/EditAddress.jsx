@@ -133,17 +133,11 @@ export default function EditAddress() {
   const deleteAddress = async (addr, idx) => {
     if (!window.confirm(`Delete this address? This cannot be undone.`)) return;
 
-    const token = localStorage.getItem("token");
     try {
-      const resp = await fetch(`${API_BASE}api/customerAddressDelete`, {
+      const resp = await apiClient('api/customerAddressDelete', {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: JSON.stringify({
           address_id: addr.id,
-          customer_id: customerId,
         }),
       });
 
@@ -153,13 +147,18 @@ export default function EditAddress() {
       // Remove from local state
       setAddresses((prev) => prev.filter((_, i) => i !== idx));
 
-      // If the deleted address was stored as the default in localStorage, clear it
+      // If the deleted address was stored as the default in localStorage, update/clear it
       try {
         const stored = localStorage.getItem("address");
         if (stored) {
           const parsed = JSON.parse(atob(stored));
           if (parsed?.id === addr.id) {
-            localStorage.removeItem("address");
+            if (res.addresses && res.addresses.length > 0) {
+              const defaultAddr = res.addresses.find((a) => a.is_default) || res.addresses[0];
+              localStorage.setItem("address", btoa(JSON.stringify(defaultAddr)));
+            } else {
+              localStorage.removeItem("address");
+            }
           }
         }
       } catch { }
