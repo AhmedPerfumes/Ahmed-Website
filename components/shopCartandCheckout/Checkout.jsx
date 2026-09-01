@@ -1054,7 +1054,6 @@ export default function Checkout() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`,
         {
           method: "POST",
-          // credentials: "include",
           body: JSON.stringify({ mobile: targetMobile, otp: formData.otp, flag: "checkout", }),
           headers: { "Content-Type": "application/json" },
         }

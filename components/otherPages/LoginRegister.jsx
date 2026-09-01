@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useUser } from "@/context/UserContext";
-import { setAccessToken } from "@/lib/apiClient";
+import { setAuthTokens, setAccessToken } from "@/lib/apiClient";
 
 export default function LoginRegister() {
   const locale = useLocale();
@@ -170,7 +170,6 @@ export default function LoginRegister() {
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`, {
         method: "POST",
-        // credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -181,7 +180,7 @@ export default function LoginRegister() {
         setError(data.message || "Invalid OTP");
       } else {
         setSuccess("Account verified successfully.");
-        setAccessToken(data.access_token);
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
         setUser(data.data);
         setIsLoggedIn(true);
@@ -222,8 +221,6 @@ export default function LoginRegister() {
       formData.append("voucher", decodedCoupon);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/signin`, {
         method: "POST",
-        // credentials: "include",
-        origin: process.env.NEXT_PUBLIC_DEFAULT_ORIGIN,
         body: formData,
       });
 
@@ -243,7 +240,7 @@ export default function LoginRegister() {
           localStorage.removeItem("remembered_mobile");
         }
 
-        setAccessToken(data.access_token);
+        setAuthTokens({ access_token: data.access_token, refresh_token: data.refresh_token });
         localStorage.setItem("user", btoa(JSON.stringify(data.data)));
         const defaultAddr = data?.data?.addresses?.find((addr) => addr.is_default);
         if (defaultAddr) {

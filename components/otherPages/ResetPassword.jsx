@@ -142,7 +142,6 @@ export default function ResetPasswordOTP() {
     try {
       const res = await fetch(`${baseUrl}api/verifyOTP`, {
         method: "POST",
-        // credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mobile: mobile.trim(),
@@ -198,7 +197,6 @@ export default function ResetPasswordOTP() {
 
       const res = await fetch(`${baseUrl}api/customerUpdate`, {
         method: "POST",
-        // credentials: "include",
         headers,
         body: JSON.stringify({
           customer_id: customerId,
