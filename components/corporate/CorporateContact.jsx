@@ -49,7 +49,7 @@ const translations = {
         ],
         budgets: ["Under AED 5,000", "AED 5,000–15,000", "AED 15,000–50,000", "AED 50,000–100,000", "AED 100,000+"],
         submit: "Send Inquiry",
-        whatsapp: "WhatsApp Us",
+        whatsapp: "WhatsApp for Corporate Orders",
         wa_text: "Hello, I would like to place an order for customized corporate gifts from Ahmed Al Maghribi.",
         success: "Your inquiry has been received! Our corporate gifting team will be in touch within 24 hours.",
         why_title: "Why Ahmed Al Maghribi?",

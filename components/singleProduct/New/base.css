@@ -160,3 +160,22 @@
   transform: rotate(180deg);
   /* Up */
 }
+
+.product-description-content a {
+  color: #BF953F;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  display: inline;
+}
+
+.product-description-content span {
+  display: inline;
+}
+
+.product-description-content p {
+  margin-bottom: 0.5rem;
+}
+.product-description-content p:last-child {
+  margin-bottom: 0;
+}

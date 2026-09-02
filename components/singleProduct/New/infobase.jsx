@@ -42,7 +42,7 @@ const InfoBase = ({ images, product, onThumbnailClick }) => {
         <Top product={product} />
       </div>
       <div className="h1"></div>
-      <Description description={<span dangerouslySetInnerHTML={{ __html: description }} />} />
+      <Description description={<div dangerouslySetInnerHTML={{ __html: description }} />} />
       <ThumbLarge images={images} onThumbnailClick={onThumbnailClick} />
       <Checkout product={product} />
     </div>

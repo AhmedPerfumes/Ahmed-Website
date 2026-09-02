@@ -33,6 +33,7 @@ const Description = ({ description }) => {
       
       <div
         ref={contentRef}
+        className="product-description-content"
         style={{
           maxHeight: height,
           transition: "max-height 0.5s ease-in-out",
