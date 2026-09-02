@@ -13,6 +13,7 @@ const MenuContext = createContext({
   topHeader: [],
 });
 
+
 export function MenuProvider({ children, initialData }) {
   const value = useMemo(() => ({
     categoriesSubCategories: initialData?.productCategories || [],
@@ -26,6 +27,7 @@ export function MenuProvider({ children, initialData }) {
     error: null,
   }), [initialData]);
 
+  console.log("🚀 ~ MenuContext ~ MenuContext:", value)
   return (
     <MenuContext.Provider value={value}>
       {children}
