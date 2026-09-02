@@ -46,7 +46,7 @@ const HeaderSkeleton = () => {
     return (
         <div className="header bg-white">
             {/* Top Bar Skeleton */}
-            <div className="bg-black" style={{ height: "2.5rem" }}>
+            <div className="bg-black header-marquee-bar">
                 <div className="container h-100 d-flex align-items-center justify-content-center">
                     <Skeleton
                         variant="text"
@@ -322,7 +322,7 @@ export default function Header14() {
                 {/* Top Swiper */}
                 <div
                     className="bg-black header-marquee-bar"
-                    style={{ height: "2.5rem", overflow: "hidden" }}
+                    style={{ overflow: "hidden" }}
                 >
                     {/* Marquee Container - Overflow Hidden */}
                     {/* d-flex align-items-center ensures vertical alignment within the 2.5rem height */}
