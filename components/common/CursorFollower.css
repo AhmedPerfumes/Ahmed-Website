@@ -1,0 +1,135 @@
+/* ===== Default: Bin Shaikh ===== */
+@media (hover: hover) and (pointer: fine) {
+
+  html,
+  body,
+  *,
+  *::before,
+  *::after {
+    cursor: url('/bin-shaikh-cursor.png') 16 1, auto !important;
+  }
+
+  a,
+  a *,
+  button,
+  button *,
+  [role="button"],
+  [role="button"] *,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"],
+  select,
+  label,
+  [tabindex],
+  .cursor-pointer,
+  .cursor-pointer *,
+  [data-cursor-pointer] {
+    cursor: url('/bin-shaikh-cursor.png') 16 1, pointer !important;
+  }
+
+  html:active,
+  html:active *,
+  body:active,
+  body:active *,
+  body.is-spraying,
+  body.is-spraying *,
+  body.is-spraying a,
+  body.is-spraying button {
+    cursor: url('/bin-shaikh-cursor-angled.png') 5 2, pointer !important;
+  }
+
+  /* ===== Marj Theme (/shop/perfumes/oriental-fragrance/marj) ===== */
+  html[data-cursor-theme="marj"],
+  html[data-cursor-theme="marj"] body,
+  html[data-cursor-theme="marj"] *,
+  html[data-cursor-theme="marj"] *::before,
+  html[data-cursor-theme="marj"] *::after,
+  body[data-cursor-theme="marj"],
+  body[data-cursor-theme="marj"] * {
+    cursor: url('/marj-cursor.png') 16 0, auto !important;
+  }
+
+  html[data-cursor-theme="marj"] a,
+  html[data-cursor-theme="marj"] a *,
+  html[data-cursor-theme="marj"] button,
+  html[data-cursor-theme="marj"] button *,
+  html[data-cursor-theme="marj"] [role="button"],
+  html[data-cursor-theme="marj"] [role="button"] *,
+  html[data-cursor-theme="marj"] input[type="button"],
+  html[data-cursor-theme="marj"] input[type="submit"],
+  html[data-cursor-theme="marj"] select,
+  html[data-cursor-theme="marj"] label,
+  html[data-cursor-theme="marj"] [tabindex],
+  html[data-cursor-theme="marj"] .cursor-pointer,
+  html[data-cursor-theme="marj"] .cursor-pointer * {
+    cursor: url('/marj-cursor.png') 16 0, pointer !important;
+  }
+
+  html[data-cursor-theme="marj"]:active,
+  html[data-cursor-theme="marj"]:active *,
+  html[data-cursor-theme="marj"] body:active,
+  html[data-cursor-theme="marj"] body:active *,
+  body[data-cursor-theme="marj"].is-spraying,
+  body[data-cursor-theme="marj"].is-spraying *,
+  body[data-cursor-theme="marj"].is-spraying a,
+  body[data-cursor-theme="marj"].is-spraying button {
+    cursor: url('/marj-cursor-angled.png') 6 0, pointer !important;
+  }
+
+  /* ===== Kawkab Theme (/shop/perfumes/oriental-fragrance/kawkab) ===== */
+  html[data-cursor-theme="kawkab"],
+  html[data-cursor-theme="kawkab"] body,
+  html[data-cursor-theme="kawkab"] *,
+  html[data-cursor-theme="kawkab"] *::before,
+  html[data-cursor-theme="kawkab"] *::after,
+  body[data-cursor-theme="kawkab"],
+  body[data-cursor-theme="kawkab"] * {
+    cursor: url('/kawkab-cursor.png') 11 1, auto !important;
+  }
+
+  html[data-cursor-theme="kawkab"] a,
+  html[data-cursor-theme="kawkab"] a *,
+  html[data-cursor-theme="kawkab"] button,
+  html[data-cursor-theme="kawkab"] button *,
+  html[data-cursor-theme="kawkab"] [role="button"],
+  html[data-cursor-theme="kawkab"] [role="button"] *,
+  html[data-cursor-theme="kawkab"] input[type="button"],
+  html[data-cursor-theme="kawkab"] input[type="submit"],
+  html[data-cursor-theme="kawkab"] select,
+  html[data-cursor-theme="kawkab"] label,
+  html[data-cursor-theme="kawkab"] [tabindex],
+  html[data-cursor-theme="kawkab"] .cursor-pointer,
+  html[data-cursor-theme="kawkab"] .cursor-pointer * {
+    cursor: url('/kawkab-cursor.png') 11 1, pointer !important;
+  }
+
+  html[data-cursor-theme="kawkab"]:active,
+  html[data-cursor-theme="kawkab"]:active *,
+  html[data-cursor-theme="kawkab"] body:active,
+  html[data-cursor-theme="kawkab"] body:active *,
+  body[data-cursor-theme="kawkab"].is-spraying,
+  body[data-cursor-theme="kawkab"].is-spraying *,
+  body[data-cursor-theme="kawkab"].is-spraying a,
+  body[data-cursor-theme="kawkab"].is-spraying button {
+    cursor: url('/kawkab-cursor-angled.png') 6 1, pointer !important;
+  }
+}
+
+/* ===== Luxury Perfume Spray Canvas ===== */
+.perfume-spray-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+@media (max-width: 768px) {
+  .perfume-spray-canvas {
+    display: none !important;
+  }
+}

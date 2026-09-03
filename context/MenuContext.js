@@ -27,7 +27,7 @@ export function MenuProvider({ children, initialData }) {
     error: null,
   }), [initialData]);
 
-  console.log("🚀 ~ MenuContext ~ MenuContext:", value)
+  // console.log("🚀 ~ MenuContext ~ MenuContext:", value)
   return (
     <MenuContext.Provider value={value}>
       {children}
