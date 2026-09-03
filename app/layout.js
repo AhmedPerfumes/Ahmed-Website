@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import CursorFollower from "@/components/common/CursorFollower";
+// import CursorFollower from "@/components/common/CursorFollower";
 
 export default async function RootLayout({ children }) {
   const headersList = headers();
@@ -11,7 +11,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body>
-        <CursorFollower />
+        {/* <CursorFollower /> */}
         {children}
       </body>
     </html>
