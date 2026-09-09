@@ -956,7 +956,9 @@ export default function Checkout() {
           billingAddress: {first_name: "", last_name: "", mobile: "", email: "", area: "", building: "", emirates: "" },
           shippingAdd: false,
         });
-        setTimeout(() => router.push(`/${locale}/shop-order-complete`), 1000);
+        const orderCode = data.order_id || data.code;
+        const queryParam = orderCode ? `?q=${btoa(orderCode)}` : "";
+        setTimeout(() => router.push(`/${locale}/shop-order-payment-complete${queryParam}`), 1000);
       } else if (data.message && data.message.split(" ")[0] == "Redirecting") {
         setSuccess(data.message);
         setError(null);

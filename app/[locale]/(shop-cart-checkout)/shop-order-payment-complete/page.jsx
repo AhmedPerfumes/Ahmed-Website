@@ -55,31 +55,36 @@ async function getOrderDetails(order_id) {
   return response.json();
 }
 
-const ShopOrderPaymentComplete = async ({ searchParams  }) => {
+const ShopOrderPaymentComplete = async ({ searchParams }) => {
   const { q } = searchParams;
-  // console.log(q);
+  let orderCode = null;
+  if (q) {
+    try {
+      orderCode = atob(q);
+    } catch {
+      orderCode = q;
+    }
+  }
+
   try {
-    const data = await getOrderDetails(q && atob(q));
-    // console.log(data);
-      return data && (
-        <>
-          <Header14 />
-          <main className="page-wrapper">
-            <div className="mb-4 pb-4"></div>
-            <section className="shop-checkout container">
-              {/* <h2 className="page-title">{data.payment_status != 'failed' ? 'ORDER RECEIVED' : 'ORDER FAILED'}</h2> */}
-              <OrderPaymentCompleted orderDetails={ data } initialOrderCode={q && atob(q)}/>
-            </section>
-          </main>
-          <section className="d-none d-lg-block" style={{ height: "100%" }}>
-            <Footer14 />
+    const data = orderCode ? await getOrderDetails(orderCode) : null;
+    return (
+      <>
+        <Header14 />
+        <main className="page-wrapper">
+          <section className="shop-checkout container">
+            <OrderPaymentCompleted orderDetails={data} initialOrderCode={orderCode} />
           </section>
-          <section className="d-sm-block d-md-none bg-dark pt-5  ">
+        </main>
+        <section className="d-none d-lg-block" style={{ height: "100%" }}>
+          <Footer14 />
+        </section>
+        <section className="d-sm-block d-md-none bg-dark pt-5">
           <div className="MobileFooter">
-            <MobileFooter2/>
+            <MobileFooter2 />
           </div>
-          </section>
-        </>
+        </section>
+      </>
     );
   } catch (error) {
     // console.error(error);

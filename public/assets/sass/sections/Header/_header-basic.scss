@@ -239,3 +239,135 @@
     border-bottom: 1px solid rgba(255, 255, 255, .2);
   }
 }
+
+/* ==========================================================================
+   Header Account Hover Menu (Global)
+   ========================================================================== */
+
+.hover-account {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.account-hover-menu {
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  min-width: 240px;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* animation + hover/focus behavior */
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 1100;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 18px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-left: 1px solid #eeeeee;
+    border-top: 1px solid #eeeeee;
+    transform: rotate(45deg);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .menu-title {
+    padding: 12px 18px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #000000;
+    background: #fcfcfc;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 700;
+  }
+
+  li {
+    margin: 2px 6px;
+    border-radius: 6px;
+    overflow: hidden;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #444444;
+      text-decoration: none;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #f8f9fa;
+        color: #000000;
+      }
+    }
+
+    &.active a {
+      background: #fffbf2;
+      color: #a87a35;
+      font-weight: 600;
+      border-left: 3px solid #a87a35;
+      padding-left: 11px;
+    }
+  }
+
+  .divider {
+    height: 1px;
+    background: #eeeeee;
+    margin: 8px 0;
+  }
+
+  .logout a {
+    color: #dc3545;
+
+    &:hover {
+      background: #fff5f5;
+    }
+  }
+}
+
+.hover-account:hover .account-hover-menu,
+.hover-account:focus-within .account-hover-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+[dir="rtl"] {
+  .account-hover-menu {
+    right: auto;
+    left: 0;
+
+    &::before {
+      right: auto;
+      left: 18px;
+    }
+
+    li.active a {
+      border-left: none;
+      border-right: 3px solid #a87a35;
+      padding-left: 14px;
+      padding-right: 11px;
+    }
+  }
+}

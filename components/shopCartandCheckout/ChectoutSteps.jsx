@@ -63,9 +63,17 @@ export default function ChectoutSteps() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const activeTab = steps.filter((elm) => elm.href == "/" + pathname.split("/")[2])[0];
-    const activeTabIndex = steps.indexOf(activeTab);
-    setactivePathIndex(activeTabIndex);
+    const currentSegment = "/" + (pathname.split("/")[2] || "");
+    const activeTabIndex = steps.findIndex((elm) => {
+      if (elm.id === 3) {
+        return (
+          currentSegment === "/shop-order-complete" ||
+          currentSegment === "/shop-order-payment-complete"
+        );
+      }
+      return elm.href === currentSegment;
+    });
+    setactivePathIndex(activeTabIndex !== -1 ? activeTabIndex : 0);
   }, [pathname]);
 
   return (
