@@ -102,7 +102,7 @@ export default function MobileHeader() {
           <span className="btn-close-lg position-absolute top-0 start-0 w-100"></span>
         </Link>
 
-        <div 
+        <div
           className="logo"
           style={{
             position: "absolute",

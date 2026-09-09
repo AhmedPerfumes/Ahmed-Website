@@ -10,7 +10,7 @@ import { currencyOptions, languageOptions2 } from "@/data/footer";
 import Image from "next/image";
 
 import { useRef, useState, useEffect } from "react";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiUser, FiShoppingBag } from "react-icons/fi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { IoLocationOutline } from "react-icons/io5";
 import { useMenu } from "../../context/MenuContext";
@@ -44,7 +44,7 @@ const HeaderSkeleton = () => {
         // router.push(pathname, { locale: e.target.value })
     };
     return (
-        <div className="header bg-white">
+        <div className="header">
             {/* Top Bar Skeleton */}
             <div className="bg-black header-marquee-bar">
                 <div className="container h-100 d-flex align-items-center justify-content-center">
@@ -62,7 +62,7 @@ const HeaderSkeleton = () => {
                 <div className="container-fluid d-flex align-items-center px-5 py-2">
                     {/* Left: Currency/Language */}
                     <div className="flex-1 d-flex gap-3">
-                        <select className="form-select form-select-sm bg-transparent color-black" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
+                        <select className="form-select form-select-sm bg-transparent border-0" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
                             {currencyOptions.map((option, index) => (
                                 <option key={index} value={option.link} >
                                     {t(option.text)}
@@ -70,7 +70,7 @@ const HeaderSkeleton = () => {
                             )
                             )}
                         </select>
-                        <select className="form-select form-select-sm bg-transparent text-dark border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: "pointer", outline: "none", }} >
+                        <select className="form-select form-select-sm bg-transparent border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: "pointer", outline: "none", }} >
                             {languageOptions2.map((option, index) => (
                                 <option key={index} value={option.value} >
                                     {option.text}
@@ -127,6 +127,7 @@ export default function Header14() {
     const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname();
+    const isHomePage = pathname === "/" || pathname === "" || pathname === "/en" || pathname === "/ar";
     const { isLoggedIn, logout, couponCount } = useUser();
 
 
@@ -306,7 +307,7 @@ export default function Header14() {
             {/* <HeaderSkeleton /> */}
             <header
                 id="header"
-                className="header bg-white"
+                className={`header ${isHomePage ? "header-theme-home" : ""}`}
             >
                 {/* <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
                     {topHeader.map((elm, i) => (
@@ -382,7 +383,7 @@ export default function Header14() {
                 {/* Search Popup */}
                 <div
                     ref={containerRef}
-                    className={`header-tools__item hover-container ${isPopupOpen ? "js-content_visible" : "js-content_hidden"
+                    className={`search-popup-wrapper hover-container ${isPopupOpen ? "js-content_visible" : "js-content_hidden"
                         }`}
                 >
                     <div className="search-popup js-hidden-content">
@@ -595,7 +596,7 @@ export default function Header14() {
                             <div className="flex-1 d-flex align-items-center gap-3">
                                 <div className="heeader-top__right flex-1 d-flex gap-1">
                                     <select
-                                        className="form-select form-select-sm bg-transparent color-black"
+                                        className="form-select form-select-sm bg-transparent border-0"
                                         name="store-currency"
                                         onChange={(e) =>
                                             window.open(
@@ -616,7 +617,7 @@ export default function Header14() {
                                         )}
                                     </select>
                                     <select
-                                        className="form-select form-select-sm bg-transparent text-dark border-0"
+                                        className="form-select form-select-sm bg-transparent border-0"
                                         name="store-language"
                                         value={locale}
                                         onChange={handleLangChange}
@@ -668,8 +669,8 @@ export default function Header14() {
                                         />
                                         <span className="search-icon">
                                             <svg
-                                                width="20"
-                                                height="20"
+                                                width="18"
+                                                height="18"
                                                 viewBox="0 0 24 24"
                                                 aria-hidden="true"
                                             >
@@ -679,7 +680,7 @@ export default function Header14() {
                                                     r="6.5"
                                                     fill="none"
                                                     stroke="currentColor"
-                                                    strokeWidth="1.8"
+                                                    strokeWidth="1.5"
                                                 />
                                                 <line
                                                     x1="16"
@@ -687,7 +688,7 @@ export default function Header14() {
                                                     x2="21"
                                                     y2="21"
                                                     stroke="currentColor"
-                                                    strokeWidth="1.8"
+                                                    strokeWidth="1.5"
                                                     strokeLinecap="round"
                                                 />
                                             </svg>
@@ -700,17 +701,19 @@ export default function Header14() {
                                     {!isLoggedIn ? (
                                         <Link
                                             href="/login_register"
-                                            className="account-icon-link"
+                                            className="account-icon-link d-flex align-items-center justify-content-center"
+                                            aria-label="Account"
                                         >
-                                            <User />
+                                            <FiUser size={19} strokeWidth={1.5} />
                                         </Link>
                                     ) : (
                                         <Link
                                             href="/account_dashboard"
-                                            className="account-icon-link"
+                                            className="account-icon-link d-flex align-items-center justify-content-center"
                                             aria-haspopup="true"
+                                            aria-label="Account Dashboard"
                                         >
-                                            <UserLoggedIn />
+                                            <FiUser size={19} strokeWidth={1.5} />
                                         </Link>
                                     )}
                                     <div
@@ -734,7 +737,7 @@ export default function Header14() {
                                                 <ul className="list-unstyled mb-0 text-start">
                                                     {items.map((it) => (
                                                         <li
-                                                            key={it.href}
+                                                             key={it.href}
                                                             className={
                                                                 isActive(
                                                                     it.href
@@ -834,22 +837,14 @@ export default function Header14() {
                                     title={t("Store Locator") || "Store Locator"}
                                     aria-label="Store Locator"
                                 >
-                                    <IoLocationOutline size={18} />
+                                    <IoLocationOutline size={19} />
                                 </Link>
                                 <a
                                     onClick={() => openCart()}
                                     className="header-tools__item header-tools__cart js-open-aside"
                                     aria-label="Cart"
                                 >
-                                    <svg
-                                        className="d-block"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                    >
-                                        <use href="#icon_cart" />
-                                    </svg>
+                                    <FiShoppingBag size={19} strokeWidth={1.5} />
                                     <span className="cart-amount d-block position-absolute js-cart-items-count">
                                         <CartLength />
                                     </span>
@@ -862,7 +857,7 @@ export default function Header14() {
             </header>
 
             {/* Bottom navigation is natively sticky exactly where it usually rests. */}
-            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''}`}>
+            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''} ${isHomePage ? 'header-theme-home' : ''}`}>
                 <div className="header-bottom">
                     <div className="container">
                         <div className="sticky-logo align-items-center">
@@ -895,9 +890,7 @@ export default function Header14() {
                                 style={{ cursor: 'pointer' }}
                                 aria-label="Cart"
                             >
-                                <svg className="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none">
-                                    <use href="#icon_cart" />
-                                </svg>
+                                <FiShoppingBag size={19} strokeWidth={1.5} />
                                 <span className="cart-amount d-block position-absolute js-cart-items-count" style={{ top: '-6px', right: '-8px' }}>
                                     <CartLength />
                                 </span>
