@@ -75,7 +75,7 @@ export default function CompleteOrderSlider({ products: propProducts }) {
 
   // Get current cart quantity for a specific product
   const getProductCartQty = (productId) => {
-    const item = cartProducts.find((p) => p.product_id === productId);
+    const item = cartProducts.find((p) => p.product_id === productId && !p.is_gift);
     return item ? (item.quantity || 1) : 0;
   };
 
@@ -93,6 +93,7 @@ export default function CompleteOrderSlider({ products: propProducts }) {
         ...elm,
         product_id: elm.product_id,
         quantity: 1,
+        is_gift: false,
         category_name: elm.category_name || "Perfumes",
         subcategory_name: elm.subcategory?.subcategory_name || "Oriental Fragrance",
       };
@@ -118,16 +119,17 @@ export default function CompleteOrderSlider({ products: propProducts }) {
     }
 
     const items = [...cartProducts];
-    const index = items.findIndex((p) => p.product_id === elm.product_id);
+    const index = items.findIndex((p) => p.product_id === elm.product_id && !p.is_gift);
 
     if (index !== -1) {
-      items[index] = { ...items[index], quantity: newQty };
+      items[index] = { ...items[index], quantity: newQty, is_gift: false };
       setCartProducts(items);
     } else {
       const formattedItem = {
         ...elm,
         product_id: elm.product_id,
         quantity: newQty,
+        is_gift: false,
         category_name: elm.category_name || "Perfumes",
         subcategory_name: elm.subcategory?.subcategory_name || "Oriental Fragrance",
       };

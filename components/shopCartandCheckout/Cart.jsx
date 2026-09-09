@@ -181,7 +181,7 @@ export default function Cart() {
       const items = [...cartProducts];
       const itemIndex = items.findIndex(
         (elm) =>
-          elm.product_id == id && !elm.is_gift_card
+          elm.product_id == id && !elm.is_gift_card && !elm.is_gift
       );
 
       if (itemIndex !== -1) {
@@ -207,7 +207,7 @@ export default function Cart() {
       prev.filter((elm) =>
         uniqueKey
           ? elm.unique_key !== uniqueKey
-          : elm.product_id !== id
+          : (elm.product_id !== id || elm.is_gift)
       )
     );
   };

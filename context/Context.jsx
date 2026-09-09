@@ -28,7 +28,8 @@ const cartReducer = (state, action) => {
 
         return (
           p.product_id === action.payload.product_id &&
-          p.campaign === action.payload.campaign
+          p.campaign === action.payload.campaign &&
+          Boolean(p.is_gift) === Boolean(action.payload.is_gift)
         );
       });
 
@@ -37,7 +38,8 @@ const cartReducer = (state, action) => {
       if (existingProduct) {
         updatedProducts = state.products.map((p) =>
           p.product_id === action.payload.product_id &&
-            p.campaign === action.payload.campaign
+            p.campaign === action.payload.campaign &&
+            Boolean(p.is_gift) === Boolean(action.payload.is_gift)
             ? { ...p, quantity: (p.quantity || 0) + (action.payload.quantity || 1) }
             : p
         );
@@ -82,7 +84,7 @@ const cartReducer = (state, action) => {
         products: state.products.filter((p) =>
           p.unique_key
             ? p.unique_key !== action.payload.uniqueKey
-            : p.product_id !== action.payload.productId
+            : (p.product_id !== action.payload.productId || Boolean(p.is_gift))
         ),
         isProcessing: false,
       };
@@ -417,7 +419,10 @@ export default function Context({ children }) {
       // 🚨 Gift cards should NEVER merge
       if (product.is_gift_card) return false;
 
-      return p.product_id === product.product_id;
+      return (
+        p.product_id === product.product_id &&
+        Boolean(p.is_gift) === Boolean(product.is_gift)
+      );
     });
 
 
@@ -621,7 +626,7 @@ export default function Context({ children }) {
   };
 
   const isAddedToCartProducts = (id) => {
-    return state.products.some((elm) => elm.product_id === id);
+    return state.products.some((elm) => elm.product_id === id && !elm.is_gift);
   };
 
   const toggleWishlist = (id) => {

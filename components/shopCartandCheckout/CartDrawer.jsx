@@ -79,12 +79,13 @@ export default function CartDrawer() {
         items[paidItemIndex].quantity = quantity;
       }
 
-      // Update the related gift item
+      // Update the related gift item (exclude FOC gifts)
       const giftItemIndex = items.findIndex(
         (item) =>
           item.product_id == id &&
           item.is_gift &&
-          item.selection_rule != "least_expensive"
+          item.selection_rule != "least_expensive" &&
+          item.type !== "foc"
       );
 
       if (giftItemIndex !== -1) {
@@ -107,7 +108,7 @@ export default function CartDrawer() {
       prev.filter((elm) =>
         uniqueKey
           ? elm.unique_key !== uniqueKey
-          : elm.product_id !== id
+          : (elm.product_id !== id || elm.is_gift)
       )
     );
   };
