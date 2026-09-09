@@ -111,7 +111,8 @@ export default async function LocaleLayout({ children, params: { locale } }) {
         'Referer': `${origin}/`,
       },
       body: JSON.stringify({}),
-      next: { revalidate: 604800 } // Cache for 7 days
+      next: { tags: ["home-sliders"], revalidate: 604800 }
+
     });
     if (res.ok) {
       initialMenuData = await res.json();
