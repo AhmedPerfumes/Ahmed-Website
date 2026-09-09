@@ -14,6 +14,9 @@ import { renderPrice } from "@/utlis/priceRenderer";
 import LabelIcon from "@/components/labels/LabelIcon";
 import he from "he";
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
+
+const MAX_QTY_PER_PRODUCT = 5;
 
 export default function CompleteOrderSlider({ products: propProducts }) {
   const uniqueProducts = (items) => {
@@ -67,12 +70,6 @@ export default function CompleteOrderSlider({ products: propProducts }) {
     };
   }, []);
 
-  // Compute number of selected products in this slider
-  const selectedCount = useMemo(() => {
-    if (!products || !products.length) return 0;
-    return products.filter((p) => isAddedToCartProducts(p.product_id)).length;
-  }, [products, cartProducts]);
-
   // Get current cart quantity for a specific product
   const getProductCartQty = (productId) => {
     const item = cartProducts.find((p) => p.product_id === productId && !p.is_gift);
@@ -89,10 +86,15 @@ export default function CompleteOrderSlider({ products: propProducts }) {
     } else {
       if (elm.product_qty <= 0) return;
 
+      const stock = Number(elm.product_qty || 999);
+      const rawMax = Number(elm.maximum_order_quantity) || MAX_QTY_PER_PRODUCT;
+      const limit = Math.min(stock, rawMax > 0 ? Math.min(rawMax, MAX_QTY_PER_PRODUCT) : MAX_QTY_PER_PRODUCT);
+
       const formattedItem = {
         ...elm,
         product_id: elm.product_id,
         quantity: 1,
+        maximum_order_quantity: limit,
         is_gift: false,
         category_name: elm.category_name || "Perfumes",
         subcategory_name: elm.subcategory?.subcategory_name || "Oriental Fragrance",
@@ -106,8 +108,8 @@ export default function CompleteOrderSlider({ products: propProducts }) {
     if (e) e.stopPropagation();
 
     const stock = Number(elm.product_qty || 999);
-    const maxOrder = Number(elm.maximum_order_quantity || stock);
-    const limit = maxOrder > 0 ? Math.min(maxOrder, stock) : stock;
+    const rawMax = Number(elm.maximum_order_quantity) || MAX_QTY_PER_PRODUCT;
+    const limit = Math.min(stock, rawMax > 0 ? Math.min(rawMax, MAX_QTY_PER_PRODUCT) : MAX_QTY_PER_PRODUCT);
 
     if (newQty <= 0) {
       removeProduct(elm.product_id);
@@ -115,6 +117,11 @@ export default function CompleteOrderSlider({ products: propProducts }) {
     }
 
     if (newQty > limit) {
+      toast.error(
+        locale === "ar"
+          ? `الحد الأقصى للكمية لهذا المنتج هو ${limit}`
+          : `Maximum quantity limit for this product is ${limit}`
+      );
       return;
     }
 
@@ -122,13 +129,14 @@ export default function CompleteOrderSlider({ products: propProducts }) {
     const index = items.findIndex((p) => p.product_id === elm.product_id && !p.is_gift);
 
     if (index !== -1) {
-      items[index] = { ...items[index], quantity: newQty, is_gift: false };
+      items[index] = { ...items[index], quantity: newQty, maximum_order_quantity: limit, is_gift: false };
       setCartProducts(items);
     } else {
       const formattedItem = {
         ...elm,
         product_id: elm.product_id,
         quantity: newQty,
+        maximum_order_quantity: limit,
         is_gift: false,
         category_name: elm.category_name || "Perfumes",
         subcategory_name: elm.subcategory?.subcategory_name || "Oriental Fragrance",
@@ -273,22 +281,6 @@ export default function CompleteOrderSlider({ products: propProducts }) {
             {locale === "ar" ? "اكتشف المزيد، اعثر على ما تفضله" : "Explore More, Find Your Favorite"}
           </h5>
         </div>
-
-        <span
-          className="badge rounded-pill"
-          style={{
-            fontSize: "0.75rem",
-            fontWeight: 600,
-            backgroundColor: selectedCount > 0 ? "#111" : "#f1f0ee",
-            color: selectedCount > 0 ? "#fff" : "#666",
-            padding: "4px 10px",
-            transition: "all 0.2s ease",
-          }}
-        >
-          {locale === "ar"
-            ? `${selectedCount} تم إضافته`
-            : `${selectedCount} added`}
-        </span>
       </div>
 
       {/* Slider Carousel Container */}
@@ -314,6 +306,10 @@ export default function CompleteOrderSlider({ products: propProducts }) {
             const isAdded = isAddedToCartProducts(elm.product_id);
             const currentQty = getProductCartQty(elm.product_id);
             const isOutOfStock = elm.product_qty <= 0;
+            const stock = Number(elm.product_qty || 999);
+            const rawMax = Number(elm.maximum_order_quantity) || MAX_QTY_PER_PRODUCT;
+            const productLimit = Math.min(stock, rawMax > 0 ? Math.min(rawMax, MAX_QTY_PER_PRODUCT) : MAX_QTY_PER_PRODUCT);
+            const isMaxQtyReached = currentQty >= productLimit;
             const displayName =
               locale === "ar" && elm.product_name_ar
                 ? elm.product_name_ar
@@ -463,9 +459,18 @@ export default function CompleteOrderSlider({ products: propProducts }) {
                         <button
                           type="button"
                           aria-label="Increase quantity"
+                          disabled={isMaxQtyReached}
                           onClick={(e) => handleUpdateQuantity(elm, currentQty + 1, e)}
                           className="btn btn-sm text-white p-0 d-flex align-items-center justify-content-center border-0 bg-transparent"
-                          style={{ width: "22px", height: "22px", fontSize: "1rem", lineHeight: 1, cursor: "pointer" }}
+                          title={isMaxQtyReached ? (locale === "ar" ? `الحد الأقصى ${productLimit}` : `Maximum limit is ${productLimit}`) : ""}
+                          style={{
+                            width: "22px",
+                            height: "22px",
+                            fontSize: "1rem",
+                            lineHeight: 1,
+                            cursor: isMaxQtyReached ? "not-allowed" : "pointer",
+                            opacity: isMaxQtyReached ? 0.35 : 1,
+                          }}
                         >
                           +
                         </button>
