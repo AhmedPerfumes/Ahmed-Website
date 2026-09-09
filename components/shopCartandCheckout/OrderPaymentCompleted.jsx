@@ -128,6 +128,7 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
 
 
 
+  const subTotalPrice = (elm) => {
     const isGift = Boolean(elm.is_gift && elm.is_gift !== "0" && elm.is_gift !== 0 && elm.is_gift !== "false");
     if (isGift) {
       return <td>0.00{currency.symbol} (Free Gift)</td>;
@@ -287,3 +288,5 @@ export default function OrderPaymentCompleted({ orderDetails: initialOrderDetail
     </div></> :  <a href='/' className="btn btn-primary w-100 text-uppercase mb-3">Continue Shopping</a> }
     </>
   );
+}
+
