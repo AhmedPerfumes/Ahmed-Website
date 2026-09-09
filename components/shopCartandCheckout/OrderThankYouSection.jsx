@@ -308,7 +308,11 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
     );
   }
 
-  const isFailed = orderData.payment_status === "failed";
+  const isFailed =
+    orderData?.payment_status === "failed" ||
+    orderData?.payment_status === "canceled" ||
+    orderData?.status === "canceled" ||
+    orderData?.status === "failed";
 
   return (
     <div className={styles.pageContainer}>
@@ -317,23 +321,35 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
           ==================================================================== */}
       <div
         className={`${styles.heroWrapper} ${stage === "initial" ? styles.heroInitial : styles.heroDocked
-          }`}
+          } ${stage !== "initial" && isFailed ? styles.heroDockedFailed : ""}`}
         onClick={() => stage === "initial" && setStage("docked")}
         style={{ cursor: stage === "initial" ? "pointer" : "default" }}
       >
         {stage === "initial" ? (
           <div>
-            {/* Animated Large SVG Tick */}
+            {/* Animated Large SVG Tick or Cross */}
             <div className={styles.tickWrapper}>
-              <svg className={styles.tickSvg} viewBox="0 0 100 100">
-                <circle className={styles.tickCircle} cx="50" cy="50" r="45" pathLength="100" />
-                <polyline className={styles.tickCheck} points="28,52 44,68 72,34" pathLength="100" />
-              </svg>
+              {isFailed ? (
+                <svg className={styles.tickSvg} viewBox="0 0 100 100">
+                  <circle className={styles.crossCircle} cx="50" cy="50" r="45" pathLength="100" />
+                  <line className={styles.crossLine1} x1="34" y1="34" x2="66" y2="66" pathLength="100" />
+                  <line className={styles.crossLine2} x1="66" y1="34" x2="34" y2="66" pathLength="100" />
+                </svg>
+              ) : (
+                <svg className={styles.tickSvg} viewBox="0 0 100 100">
+                  <circle className={styles.tickCircle} cx="50" cy="50" r="45" pathLength="100" />
+                  <polyline className={styles.tickCheck} points="28,52 44,68 72,34" pathLength="100" />
+                </svg>
+              )}
             </div>
 
-            <h1 className={styles.initialHeading}>Your order is completed!</h1>
+            <h1 className={styles.initialHeading} style={isFailed ? { color: "#dc2626" } : undefined}>
+              {isFailed ? "Order Payment Failed" : "Your order is completed!"}
+            </h1>
             <p className={styles.initialSubtitle}>
-              Thank you. We have received your order.
+              {isFailed
+                ? "Your payment could not be processed. No charges were made."
+                : "Thank you. We have received your order."}
             </p>
 
             <div className={styles.orderCodePill}>
@@ -354,14 +370,29 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
         ) : (
           <>
             <div className={styles.heroDockedLeft}>
-              <div className={styles.tickIconSmall}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </div>
+              {isFailed ? (
+                <div className={styles.crossIconSmall}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </div>
+              ) : (
+                <div className={styles.tickIconSmall}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+              )}
               <div>
-                <h2 className={styles.dockedTitle}>Your order is completed! Thank you.</h2>
-                <p className={styles.dockedSubtitle}>We have received your order and are preparing it with care.</p>
+                <h2 className={styles.dockedTitle} style={isFailed ? { color: "#b91c1c" } : undefined}>
+                  {isFailed ? "Order Payment Failed" : "Your order is completed! Thank you."}
+                </h2>
+                <p className={styles.dockedSubtitle}>
+                  {isFailed
+                    ? "Payment was unsuccessful. Your cart items are preserved."
+                    : "We have received your order and are preparing it with care."}
+                </p>
               </div>
             </div>
 

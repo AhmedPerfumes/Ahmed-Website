@@ -132,6 +132,58 @@
   }
 }
 
+/* ==========================================================================
+   Failed Order Cross & Animation
+   ========================================================================== */
+
+.heroDockedFailed {
+  border-left-color: #ef4444 !important;
+}
+
+.crossCircle {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  stroke-width: 3.5;
+  stroke-miterlimit: 10;
+  stroke: #ef4444;
+  fill: none;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  animation: strokeCircle 0.75s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.crossLine1 {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke: #ef4444;
+  fill: none;
+  animation: strokeCheck 0.35s cubic-bezier(0.65, 0, 0.45, 1) 0.5s forwards;
+}
+
+.crossLine2 {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke: #ef4444;
+  fill: none;
+  animation: strokeCheck 0.35s cubic-bezier(0.65, 0, 0.45, 1) 0.65s forwards;
+}
+
+.crossIconSmall {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fef2f2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .initialHeading {
   font-size: 2.1rem;
   font-weight: 700;
