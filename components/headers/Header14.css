@@ -81,6 +81,9 @@
     opacity: 0.85;
 }
 
+.header-desk_type_8 .logo a img,
+.header-desk_type_8 .logo img,
+.header-middle .logo img,
 .logo a img,
 .logo img {
     display: block;
@@ -816,8 +819,9 @@ a.header-tools__item:hover svg,
     }
 
     /* Typography Logo */
-    .logo a img,
-    .logo img {
+    .header-desk_type_8 .logo a img,
+    .header-desk_type_8 .logo img,
+    .header-middle .logo img {
         width: 78px !important;
         height: 78px !important;
         max-width: 78px;
@@ -955,12 +959,14 @@ a.header-tools__item:hover svg,
     }
 
     /* Typography Logo */
-    .logo a img,
-    .logo img {
-        width: 170px !important;
-        height: 170px !important;
-        max-width: 170px;
-        max-height: 170px;
+    .header-desk_type_8 .logo a img,
+    .header-desk_type_8 .logo img,
+    .header-middle .logo img {
+        width: 70px !important;
+        height: 70px !important;
+        max-width: 70px;
+        max-height: 70px;
+        object-fit: contain;
     }
 
     /* Select Dropdowns */
@@ -1075,6 +1081,17 @@ a.header-tools__item:hover svg,
         margin-right: 1.25rem !important;
     }
 
+    /* Typography Logo */
+    .header-desk_type_8 .logo a img,
+    .header-desk_type_8 .logo img,
+    .header-middle .logo img {
+        width: 65px !important;
+        height: 65px !important;
+        max-width: 65px;
+        max-height: 65px;
+        object-fit: contain;
+    }
+
     /* Bottom Navigation Links */
     .header-bottom-wrapper .container {
         padding-left: 1rem;
@@ -1139,5 +1156,18 @@ a.header-tools__item:hover svg,
     .mega-menu .sub-menu__item .menu-link {
         font-size: 10px !important;
         padding: 2.5px 0 !important;
+    }
+}
+
+/* ─── Mobile Header Logo (Screens <= 991px) ─── */
+@media (max-width: 991px) {
+    .header-mobile .logo a img,
+    .header-mobile .logo img {
+        width: 170px !important;
+        height: auto !important;
+        max-width: 170px !important;
+        max-height: 48px !important;
+        object-fit: contain !important;
+        display: block;
     }
 }
