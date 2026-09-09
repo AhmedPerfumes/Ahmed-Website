@@ -127,7 +127,6 @@ export default function Header14() {
     const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname();
-    const isHomePage = pathname === "/" || pathname === "" || pathname === "/en" || pathname === "/ar";
     const { isLoggedIn, logout, couponCount } = useUser();
 
 
@@ -307,7 +306,7 @@ export default function Header14() {
             {/* <HeaderSkeleton /> */}
             <header
                 id="header"
-                className={`header ${isHomePage ? "header-theme-home" : ""}`}
+                className="header"
             >
                 {/* <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
                     {topHeader.map((elm, i) => (
@@ -857,7 +856,7 @@ export default function Header14() {
             </header>
 
             {/* Bottom navigation is natively sticky exactly where it usually rests. */}
-            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''} ${isHomePage ? 'header-theme-home' : ''}`}>
+            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''}`}>
                 <div className="header-bottom">
                     <div className="container">
                         <div className="sticky-logo align-items-center">
