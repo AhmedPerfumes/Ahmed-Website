@@ -936,7 +936,21 @@ export default function Checkout() {
       if (data.message && data.message.split(" ")[0] == "Order") {
         setSuccess(data.message);
         setError(null);
-        setOrderDetails(data);
+
+        // Sanitize data.products using cartProducts to accurately preserve is_gift for each line item
+        const sanitizedProducts = data.products?.map((item, idx) => {
+          const originalCartItem = cartProducts[idx] || cartProducts.find((cp) => cp.product_id === item.product_id);
+          return {
+            ...item,
+            is_gift: originalCartItem ? Boolean(originalCartItem.is_gift) : Boolean(item.is_gift),
+            type: originalCartItem?.type || item.type,
+          };
+        });
+
+        setOrderDetails({
+          ...data,
+          products: sanitizedProducts || data.products,
+        });
         setFormData({
           shippingAddress: { first_name: "", last_name: "", mobile: "", email: "", area: "", building: "", emirates: "" },
           billingAddress: {first_name: "", last_name: "", mobile: "", email: "", area: "", building: "", emirates: "" },

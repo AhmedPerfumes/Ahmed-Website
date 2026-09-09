@@ -76,8 +76,8 @@ export default function OrderCompleted() {
   const subTotalPrice = (elm) => {
     // Check if the product is a BOGO product or marked as a gift
     // console.log('commonn', elm);
-    if (elm.is_gift) {
-      // console.log('common FOC', elm);
+    const isGift = Boolean(elm.is_gift && elm.is_gift !== "0" && elm.is_gift !== 0 && elm.is_gift !== "false");
+    if (isGift) {
       return <td>0.00{currency.symbol} (Free Gift)</td>;
     }
 
