@@ -42,15 +42,26 @@ export default function AccountOrders() {
   const [reviewError, setReviewError] = useState("");
   const [reviewSuccessMessage, setReviewSuccessMessage] = useState("");
 
+  const FILTER_TABS = [
+    { key: "all", label: "All Orders", status: null },
+    { key: "processing", label: "Processing", status: "processing" },
+    { key: "shipped", label: "Shipped", status: "shipped" },
+    { key: "delivered", label: "Delivered", status: "delivered,completed" },
+    { key: "cancelled", label: "Cancelled", status: "cancelled,canceled" },
+  ];
+
   const fetchOrders = async () => {
     setLoading(true);
+    const activeTab = FILTER_TABS.find(t => t.key === activeStatus);
+    const statusQuery = activeTab?.status;
+
     const params = new URLSearchParams({
       page: String(pagination.pageIndex + 1),
       pageSize: String(pagination.pageSize),
       orderBy: "created_at",
       orderDir: "desc",
       with_products: "1",
-      ...(activeStatus !== "all" && { status: activeStatus }),
+      ...(statusQuery ? { status: statusQuery } : {}),
     });
 
     try {
@@ -191,16 +202,30 @@ export default function AccountOrders() {
   const filteredData = data;
 
   const StatusBadge = ({ status }) => {
-    const val = status?.value;
-    const label = status?.label || "";
+    const rawVal = status?.value || (typeof status === "string" ? status : "");
+    const val = String(rawVal).toLowerCase().trim();
+    const rawLabel = status?.label || (typeof status === "string" ? status : "") || "";
+    const displayLabel = val === "completed" ? "Delivered" : (rawLabel || val);
+
     let color = "#6B7280";
     let bg = "#F3F4F6";
 
-    if (val === "processing") { color = "#0284C7"; bg = "#F0F9FF"; }
-    else if (val === "shipped") { color = "#4F46E5"; bg = "#EEF2FF"; }
-    else if (val === "completed") { color = "#059669"; bg = "#ECFDF5"; }
-    else if (val === "returned") { color = "#D97706"; bg = "#FFFBEB"; }
-    else if (val === "cancelled") { color = "#DC2626"; bg = "#FEF2F2"; }
+    if (val === "processing") {
+      color = "#0284C7";
+      bg = "#F0F9FF";
+    } else if (val === "shipped") {
+      color = "#4F46E5";
+      bg = "#EEF2FF";
+    } else if (val === "delivered" || val === "completed") {
+      color = "#059669";
+      bg = "#ECFDF5";
+    } else if (val === "returned") {
+      color = "#D97706";
+      bg = "#FFFBEB";
+    } else if (val === "cancelled" || val === "canceled") {
+      color = "#DC2626";
+      bg = "#FEF2F2";
+    }
 
     return (
       <span style={{
@@ -214,7 +239,7 @@ export default function AccountOrders() {
         backgroundColor: bg,
         textTransform: "capitalize"
       }}>
-        {label}
+        {displayLabel}
       </span>
     );
   };
@@ -224,13 +249,7 @@ export default function AccountOrders() {
 
       <div className="section-header">
         <div className="filter-tabs">
-          {[
-            { key: "all", label: "All Orders" },
-            { key: "processing", label: "Processing" },
-            { key: "shipped", label: "Shipped" },
-            { key: "completed", label: "Completed" },
-            { key: "cancelled", label: "Cancelled" },
-          ].map(tab => (
+          {FILTER_TABS.map(tab => (
             <button
               key={tab.key}
               className={`filter-tab ${activeStatus === tab.key ? 'active' : ''}`}
@@ -391,8 +410,8 @@ export default function AccountOrders() {
 
                   <div className="item-list">
                     {modalDetails.order_products.map((item, idx) => {
-                      const orderStatusVal = (selectedOrder?.status?.value || selectedOrder?.status || "").toLowerCase();
-                      const isCompletedOrder = orderStatusVal === "completed";
+                      const orderStatusVal = (selectedOrder?.status?.value || selectedOrder?.status || "").toLowerCase().trim();
+                      const isCompletedOrder = orderStatusVal === "completed" || orderStatusVal === "delivered";
                       const isReviewed = item.product_id && reviewedProductIds.includes(Number(item.product_id));
                       const isDrawerOpen = activeReviewProductId === item.product_id;
 
