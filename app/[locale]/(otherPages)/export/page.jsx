@@ -12,26 +12,24 @@ import React from "react";
 
 export async function generateMetadata({ params }) {
   const { locale } = params;
+  const isArabic = locale === "ar";
 
   const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
-
   const canonicalUrl = `${baseUrl}/${locale}/export`;
 
   return {
     metadataBase: new URL(baseUrl),
-
-    title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
-
-    description:
-      "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes.",
-
+    title: isArabic
+      ? "كن شريكنا: التصدير العالمي وتوزيع العطور"
+      : "Become Our Partner: Global Exports & Perfume Distribution",
+    description: isArabic
+      ? "انضم كشريك لـ «أحمد المغربي للعطور» في مجالات التصدير العالمي وتوزيع العطور. نقوم بتوريد العطور العربية الفاخرة إلى أكثر من 100 دولة حول العالم. تواصل معنا اليوم!"
+      : "Partner with Ahmed Al Maghribi Perfumes for global exports & perfume distribution. Supplying luxury Arabian perfumes to 100+ countries. Contact us today!",
     icons: {
       icon: "/assets/images/ahmed-favicon.png",
     },
-
     alternates: {
       canonical: canonicalUrl,
-
       languages: {
         en: `${baseUrl}/en/export`,
         ar: `${baseUrl}/ar/export`,
@@ -53,7 +51,7 @@ const ExportPage = () => {
       </section>
       <section className="d-sm-block d-md-none bg-dark pt-5  ">
         <div className="MobileFooter">
-          <MobileFooter2/>
+          <MobileFooter2 />
         </div>
       </section>
     </>

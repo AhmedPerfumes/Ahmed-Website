@@ -30,7 +30,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { FacebookPixelEvents } from "@/components/Metapixel";
 import GTMPageView from "@/components/common/GTMPageView";
-// const CountryMismatchPopup = dynamic(() => import('@/components/otherPages/CountryMismatchPopup'), { ssr: false });
+const CountryMismatchPopup = dynamic(() => import('@/components/otherPages/CountryMismatchPopup'), { ssr: false });
 import { ShopFilterProvider } from "@/context/ShopFilterContext";
 import { Toaster } from "react-hot-toast";
 import IntlProviderClient from './IntlProviderClient';
@@ -302,7 +302,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
         </MenuProvider>
         <div className="page-overlay" id="pageOverlay"></div>
         <ScrollTop />
-        {/* <CountryMismatchPopup /> */}
+        <CountryMismatchPopup />
       </IntlProviderClient>
     </div>
   );

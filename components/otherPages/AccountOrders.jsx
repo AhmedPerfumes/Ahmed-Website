@@ -6,6 +6,7 @@ import {
   Modal,
   Badge,
 } from "react-bootstrap";
+import he from "he";
 import { useMenu } from "@/context/MenuContext";
 import { apiClient } from "@/lib/apiClient";
 
@@ -30,6 +31,16 @@ export default function AccountOrders() {
   const [modalLoading, setModalLoading] = useState(false);
   const [modalDetails, setModalDetails] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  // Product review states
+  const [reviewedProductIds, setReviewedProductIds] = useState([]);
+  const [activeReviewProductId, setActiveReviewProductId] = useState(null);
+  const [currentRating, setCurrentRating] = useState(5);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState("");
+  const [submittingReview, setSubmittingReview] = useState(false);
+  const [reviewError, setReviewError] = useState("");
+  const [reviewSuccessMessage, setReviewSuccessMessage] = useState("");
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -69,6 +80,12 @@ export default function AccountOrders() {
     setSelectedOrder(order);
     setShowModal(true);
     setModalLoading(true);
+    setActiveReviewProductId(null);
+    setReviewComment("");
+    setReviewError("");
+    setReviewSuccessMessage("");
+    setCurrentRating(5);
+    setHoveredRating(0);
     try {
       const resp = await apiClient(`api/customerOrderDetails`, {
         method: "POST",
@@ -79,10 +96,95 @@ export default function AccountOrders() {
       if (json.order) {
         setSelectedOrder(json.order);
       }
+      if (Array.isArray(json.reviewed_product_ids)) {
+        setReviewedProductIds(json.reviewed_product_ids.map(Number));
+      }
     } catch (e) {
       setModalDetails(null);
     }
     setModalLoading(false);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setActiveReviewProductId(null);
+    setReviewComment("");
+    setReviewError("");
+    setReviewSuccessMessage("");
+  };
+
+  const toggleReviewDrawer = (productId) => {
+    if (activeReviewProductId === productId) {
+      setActiveReviewProductId(null);
+      setReviewComment("");
+      setReviewError("");
+    } else {
+      setActiveReviewProductId(productId);
+      setReviewComment("");
+      setReviewError("");
+      setCurrentRating(5);
+      setHoveredRating(0);
+    }
+  };
+
+  const handleReviewSubmit = async (productId) => {
+    if (!currentRating || currentRating < 1 || currentRating > 5) {
+      setReviewError("Please select a rating.");
+      return;
+    }
+    if (!reviewComment.trim()) {
+      setReviewError("Please write a review comment.");
+      return;
+    }
+
+    setSubmittingReview(true);
+    setReviewError("");
+
+    try {
+      const customerName = modalDetails?.order_address?.[0]?.name || "Customer";
+      const customerEmail = modalDetails?.order_address?.[0]?.email || "";
+      const customerPhone = modalDetails?.order_address?.[0]?.phone || "";
+
+      const resp = await apiClient("api/reviews", {
+        method: "POST",
+        body: JSON.stringify({
+          product_id: productId,
+          order_id: selectedOrder?.id,
+          star: currentRating,
+          comment: reviewComment.trim(),
+          customer_name: customerName,
+          customer_email: customerEmail,
+          customer_phone: customerPhone,
+        }),
+      });
+
+      const json = await resp.json();
+
+      if (resp.ok) {
+        setReviewedProductIds((prev) => [...new Set([...prev, Number(productId)])]);
+        setActiveReviewProductId(null);
+        setReviewComment("");
+        setReviewSuccessMessage("Review submitted for approval. Thank you for your feedback.");
+        setTimeout(() => setReviewSuccessMessage(""), 5000);
+      } else {
+        setReviewError(json.message || "Failed to submit review. Please try again.");
+      }
+    } catch (err) {
+      setReviewError("An error occurred while submitting your review.");
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+
+  const getRatingLabel = (star) => {
+    switch (star) {
+      case 5: return "Excellent (5/5)";
+      case 4: return "Very Good (4/5)";
+      case 3: return "Average (3/5)";
+      case 2: return "Below Average (2/5)";
+      case 1: return "Poor (1/5)";
+      default: return "";
+    }
   };
 
 
@@ -235,7 +337,7 @@ export default function AccountOrders() {
       {/* Modal Details */}
       <Modal
         show={showModal}
-        onHide={() => setShowModal(false)}
+        onHide={closeModal}
         centered
         className="order-modal"
         size="lg"
@@ -281,17 +383,119 @@ export default function AccountOrders() {
                     </div>
                   </div>
 
+                  {reviewSuccessMessage && (
+                    <div className="review-success-alert">
+                      {reviewSuccessMessage}
+                    </div>
+                  )}
+
                   <div className="item-list">
                     {modalDetails.order_products.map((item, idx) => {
-                      // console.log("Order Item:", item);
+                      const orderStatusVal = (selectedOrder?.status?.value || selectedOrder?.status || "").toLowerCase();
+                      const isCompletedOrder = orderStatusVal === "completed";
+                      const isReviewed = item.product_id && reviewedProductIds.includes(Number(item.product_id));
+                      const isDrawerOpen = activeReviewProductId === item.product_id;
+
                       return (
-                        <div key={idx} className="order-item">
-                          <img className="item-img" src={item.product_image ? `${IMG_BASE}storage/${item.product_image}` : "/no-img.png"} alt="" />
-                          <div className="item-info">
-                            <div className="item-name">{item.product_name}</div>
-                            <div className="item-price">{item.qty} × {Number(item.gross_amount / item.qty).toFixed(currency.decimals)} {currency.symbol}</div>
-                            <div className="item-price">Total - {Number(item.gross_amount).toFixed(currency.decimals)} {currency.symbol}</div>
+                        <div key={idx} className="order-item-card">
+                          <div className="order-item-main">
+                            <img
+                              className="item-img"
+                              src={item.product_image ? `${IMG_BASE}storage/${item.product_image}` : "/no-img.png"}
+                              alt=""
+                            />
+                            <div className="item-info">
+                              <div className="item-name">{he.decode(item.product_name || "")}</div>
+                              <div className="item-price">
+                                {item.qty} × {Number(item.gross_amount / item.qty).toFixed(currency.decimals)} {currency.symbol}
+                              </div>
+                            </div>
+                            {isCompletedOrder && item.product_id && (
+                              <div className="item-action">
+                                {isReviewed ? (
+                                  <span className="badge-reviewed">Reviewed</span>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className="btn-review-trigger"
+                                    onClick={() => toggleReviewDrawer(item.product_id)}
+                                  >
+                                    {isDrawerOpen ? "Cancel" : "Review Product"}
+                                  </button>
+                                )}
+                              </div>
+                            )}
                           </div>
+
+                          {isDrawerOpen && (
+                            <div className="review-drawer">
+                              <div className="review-drawer-header">
+                                <span className="review-drawer-title">Rate this product</span>
+                                <span className="star-rating-label">
+                                  {getRatingLabel(hoveredRating || currentRating)}
+                                </span>
+                                <div className="star-rating-group">
+                                  {[1, 2, 3, 4, 5].map((star) => {
+                                    const isActive = star <= (hoveredRating || currentRating);
+                                    return (
+                                      <button
+                                        key={star}
+                                        type="button"
+                                        className="star-btn"
+                                        onMouseEnter={() => setHoveredRating(star)}
+                                        onMouseLeave={() => setHoveredRating(0)}
+                                        onClick={() => setCurrentRating(star)}
+                                        aria-label={`Rate ${star} of 5`}
+                                      >
+                                        <svg
+                                          width="16"
+                                          height="16"
+                                          viewBox="0 0 24 24"
+                                          fill={isActive ? "#111" : "none"}
+                                          stroke={isActive ? "#111" : "#D1D5DB"}
+                                          strokeWidth="1.5"
+                                        >
+                                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                        </svg>
+                                      </button>
+                                    );
+                                  })}
+
+                                </div>
+                              </div>
+
+                              <textarea
+                                className="review-textarea"
+                                placeholder="Share your experience regarding fragrance, longevity, and quality..."
+                                value={reviewComment}
+                                onChange={(e) => setReviewComment(e.target.value)}
+                                rows={3}
+                              />
+
+                              {reviewError && (
+                                <div className="review-error-msg">{reviewError}</div>
+                              )}
+
+                              <div className="review-drawer-actions">
+                                <button
+                                  type="button"
+                                  className="btn-review-cancel"
+                                  onClick={() => setActiveReviewProductId(null)}
+                                  disabled={submittingReview}
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn-review-submit"
+                                  onClick={() => handleReviewSubmit(item.product_id)}
+                                  disabled={submittingReview}
+                                >
+                                  {submittingReview ? "Submitting..." : "Submit Review"}
+                                </button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -395,7 +599,7 @@ export default function AccountOrders() {
           )}
         </Modal.Body>
         <Modal.Footer className="border-0">
-          <button className="btn-minimal w-100" onClick={() => setShowModal(false)}>Close</button>
+          <button className="btn-minimal w-100" onClick={closeModal}>Close</button>
         </Modal.Footer>
       </Modal>
     </div>
