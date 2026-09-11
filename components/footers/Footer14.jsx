@@ -24,8 +24,21 @@ export default function Footer14() {
   const pathname = usePathname();
 
   const handleLangChange = (e) => {
-    // console.log(pathname, e.target.value);
-    router.push(pathname, { locale: e.target.value });
+    const newLocale = e.target.value;
+    if (!newLocale) return;
+    const currentPath = window.location.pathname;
+    const currentSearch = window.location.search || "";
+    const currentHash = window.location.hash || "";
+
+    const match = currentPath.match(/^\/(en|ar)(\/.*)?$/);
+    let newPath;
+    if (match) {
+      newPath = `/${newLocale}${match[2] || ""}`;
+    } else {
+      const cleanPath = currentPath === "/" ? "" : currentPath;
+      newPath = `/${newLocale}${cleanPath}`;
+    }
+    window.location.href = `${newPath}${currentSearch}${currentHash}`;
   };
 
   const {

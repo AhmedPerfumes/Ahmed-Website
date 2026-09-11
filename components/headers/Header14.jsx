@@ -27,21 +27,20 @@ const HeaderSkeleton = () => {
 
     const handleLangChange = (e) => {
         const newLocale = e.target.value;
+        if (!newLocale) return;
         const currentPath = window.location.pathname;
-        const localeRegex = new RegExp(`^/${locale}`);
+        const currentSearch = window.location.search || "";
+        const currentHash = window.location.hash || "";
+
+        const match = currentPath.match(/^\/(en|ar)(\/.*)?$/);
         let newPath;
-        if (localeRegex.test(currentPath)) {
-            // If path has the locale (e.g. /en/about), swap it -> /ar/about
-            newPath = currentPath.replace(localeRegex, `/${newLocale}`);
+        if (match) {
+            newPath = `/${newLocale}${match[2] || ""}`;
         } else {
-            // If path has no locale (e.g. default /about), prepend it -> /ar/about
-            // Handle root "/" gracefully
             const cleanPath = currentPath === "/" ? "" : currentPath;
             newPath = `/${newLocale}${cleanPath}`;
         }
-        window.location.href = newPath;
-
-        // router.push(pathname, { locale: e.target.value })
+        window.location.href = `${newPath}${currentSearch}${currentHash}`;
     };
     return (
         <div className="header">
@@ -271,21 +270,20 @@ export default function Header14() {
     // --- Language change ---
     const handleLangChange = (e) => {
         const newLocale = e.target.value;
+        if (!newLocale) return;
         const currentPath = window.location.pathname;
-        const localeRegex = new RegExp(`^/${locale}`);
+        const currentSearch = window.location.search || "";
+        const currentHash = window.location.hash || "";
+
+        const match = currentPath.match(/^\/(en|ar)(\/.*)?$/);
         let newPath;
-        if (localeRegex.test(currentPath)) {
-            // If path has the locale (e.g. /en/about), swap it -> /ar/about
-            newPath = currentPath.replace(localeRegex, `/${newLocale}`);
+        if (match) {
+            newPath = `/${newLocale}${match[2] || ""}`;
         } else {
-            // If path has no locale (e.g. default /about), prepend it -> /ar/about
-            // Handle root "/" gracefully
             const cleanPath = currentPath === "/" ? "" : currentPath;
             newPath = `/${newLocale}${cleanPath}`;
         }
-        window.location.href = newPath;
-
-        // router.push(pathname, { locale: e.target.value })
+        window.location.href = `${newPath}${currentSearch}${currentHash}`;
     };
 
     // --- Menu context ---

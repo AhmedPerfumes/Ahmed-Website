@@ -1,0 +1,616 @@
+/* ==========================================================================
+   ReviewOrderLanding.module.css
+   Luxury Minimalist Post-Purchase Review Experience
+   Ahmed Al Maghribi Perfumes
+   ========================================================================== */
+
+.pageContainer {
+  min-height: calc(100vh - 200px);
+  background: #FAFAFA;
+  padding: 48px 16px 80px 16px;
+  animation: pageFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contentWrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+.headerBlock {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8B8B8B;
+  margin-bottom: 10px;
+}
+
+.mainHeading {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111827;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.subHeading {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6B7280;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── Order Summary Card ───────────────────────────────────────────────── */
+.orderMetaCard {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.orderMetaTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.orderLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9CA3AF;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.orderNumber {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F3F4F6;
+  color: #1F2937;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #E5E7EB;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+.orderMetaBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #F3F4F6;
+  font-size: 12px;
+  color: #6B7280;
+}
+
+.customerTag strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* ── Progress Bar ─────────────────────────────────────────────────────── */
+.progressContainer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.progressLabelRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6B7280;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 4px;
+  background: #E5E7EB;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #111827;
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Product Review Cards ─────────────────────────────────────────────── */
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.productCard {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.25s ease, box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.productCard:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.05);
+}
+
+.productHeaderRow {
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.productLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.thumbnailWrapper {
+  width: 92px;
+  height: 92px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #F9FAFB;
+  border: none;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.productThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover .productThumb {
+  transform: scale(1.05);
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.productTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.productQty {
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0;
+}
+
+.productRight {
+  flex-shrink: 0;
+}
+
+/* ── Buttons (Zero Icons on Text) ─────────────────────────────────────── */
+.btnReview {
+  background: #111827;
+  color: #FFFFFF;
+  border: 1px solid #111827;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 9px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btnReview:hover {
+  background: #1F2937;
+  border-color: #1F2937;
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.12);
+}
+
+.btnReview:active {
+  transform: scale(0.98);
+}
+
+.btnCancelToggle {
+  background: #F3F4F6;
+  color: #374151;
+  border: 1px solid #E5E7EB;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 9px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnCancelToggle:hover {
+  background: #E5E7EB;
+  color: #111827;
+}
+
+.badgeReviewed {
+  display: inline-block;
+  background: #F3F4F6;
+  color: #6B7280;
+  border: 1px solid #E5E7EB;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 6px;
+  user-select: none;
+}
+
+/* ── Accordion Drawer ─────────────────────────────────────────────────── */
+.drawerWrapper {
+  border-top: 1px solid #F3F4F6;
+  background: #FAFAFA;
+  padding: 20px 22px;
+  animation: drawerSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top center;
+}
+
+@keyframes drawerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.drawerRatingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rateHeaderTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #111827;
+}
+
+.ratingLabelText {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4B5563;
+  transition: opacity 0.15s ease;
+}
+
+.starsContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.starBtn {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.starBtn:hover {
+  transform: scale(1.22);
+}
+
+.starBtn:active {
+  transform: scale(0.92);
+}
+
+.starSvg {
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+
+.reviewTextarea {
+  width: 100%;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #111827;
+  background: #FFFFFF;
+  min-height: 84px;
+  resize: vertical;
+  font-family: inherit;
+  outline: none;
+  margin-bottom: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reviewTextarea:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.06);
+}
+
+.reviewTextarea::placeholder {
+  color: #9CA3AF;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: #DC2626;
+  margin-bottom: 12px;
+  animation: pageFadeIn 0.2s ease forwards;
+}
+
+.drawerActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btnDrawerCancel {
+  background: transparent;
+  border: 1px solid #E5E7EB;
+  color: #6B7280;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnDrawerCancel:hover {
+  background: #F3F4F6;
+  color: #111827;
+}
+
+.btnDrawerSubmit {
+  background: #111827;
+  border: 1px solid #111827;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.btnDrawerSubmit:hover:not(:disabled) {
+  background: #1F2937;
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.12);
+}
+
+.btnDrawerSubmit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Toast / Success State ────────────────────────────────────────────── */
+.successToast {
+  background: #111827;
+  color: #FFFFFF;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Complete / Empty Notice ─────────────────────────────────────────── */
+.completeBanner {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.completeHeading {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.completeSub {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* ── Error / Loading Fallbacks ────────────────────────────────────────── */
+.stateCard {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  margin: 24px 0;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.03);
+}
+
+.stateHeading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.stateSub {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto 20px auto;
+}
+
+.btnReturnHome {
+  display: inline-block;
+  background: #111827;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 12px 28px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btnReturnHome:hover {
+  background: #1F2937;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Responsive Refinements ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .pageContainer {
+    padding: 28px 12px 60px 12px;
+  }
+
+  .mainHeading {
+    font-size: 22px;
+  }
+
+  .orderMetaCard {
+    padding: 18px 16px;
+  }
+
+  .productHeaderRow {
+    padding: 14px 16px;
+  }
+
+  .thumbnailWrapper {
+    width: 76px;
+    height: 76px;
+  }
+
+  .drawerWrapper {
+    padding: 16px;
+  }
+}
+
+/* ── RTL Refinements (Arabic Typography) ──────────────────────────────── */
+[dir="rtl"] .eyebrow,
+[dir="rtl"] .orderLabel,
+[dir="rtl"] .statusPill,
+[dir="rtl"] .btnReview,
+[dir="rtl"] .btnCancelToggle,
+[dir="rtl"] .badgeReviewed,
+[dir="rtl"] .btnDrawerSubmit,
+[dir="rtl"] .rateHeaderTitle,
+[dir="rtl"] .btnReturnHome {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .mainHeading,
+[dir="rtl"] .orderNumber {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .reviewTextarea {
+  text-align: right;
+  direction: rtl;
+}
