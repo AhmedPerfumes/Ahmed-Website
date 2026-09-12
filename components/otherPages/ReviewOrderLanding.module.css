@@ -1,13 +1,16 @@
 /* ==========================================================================
    ReviewOrderLanding.module.css
-   Luxury Minimalist Post-Purchase Review Experience
+   Shop Checkout Complete Design for Post-Purchase Review Page
    Ahmed Al Maghribi Perfumes
    ========================================================================== */
 
 .pageContainer {
+  width: 100%;
   min-height: calc(100vh - 200px);
-  background: #FAFAFA;
-  padding: 48px 16px 80px 16px;
+  background: #fafafa;
+  padding: 32px 16px 72px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1a1a1a;
   animation: pageFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -23,456 +26,730 @@
 }
 
 .contentWrapper {
-  max-width: 720px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* ── Header ───────────────────────────────────────────────────────────── */
-.headerBlock {
-  text-align: center;
-  margin-bottom: 36px;
-}
+/* ==========================================================================
+   Top Docked Header Bar (Matching OrderThankYou heroDocked)
+   ========================================================================== */
 
-.eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #8B8B8B;
-  margin-bottom: 10px;
-}
-
-.mainHeading {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #111827;
-  margin: 0 0 10px 0;
-  line-height: 1.25;
-}
-
-.subHeading {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #6B7280;
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-/* ── Order Summary Card ───────────────────────────────────────────────── */
-.orderMetaCard {
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  padding: 24px 28px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.03);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.orderMetaTop {
+.heroDocked {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
+  padding: 18px 24px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #10b981;
+  border-radius: 12px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
 }
 
-.orderLabel {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #9CA3AF;
-  font-weight: 500;
-  margin-bottom: 4px;
+.heroDockedLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.orderNumber {
-  font-size: 20px;
+.tickIconSmall {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dockedTitle {
+  font-size: 1.15rem;
   font-weight: 700;
   color: #111827;
-  letter-spacing: -0.01em;
-  margin: 0;
+  margin: 0 0 2px;
+  line-height: 1.3;
 }
 
-.statusPill {
+.dockedSubtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.orderCodePill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: #F3F4F6;
-  color: #1F2937;
-  font-size: 11px;
+  gap: 8px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  color: #1f2937;
+  letter-spacing: 0.02em;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #6b7280;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  transition: color 0.15s ease;
+}
+
+.copyButton:hover {
+  color: #111827;
+}
+
+/* ==========================================================================
+   70-30 Responsive Grid Layout
+   ========================================================================== */
+
+.mainGridLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .mainGridLayout {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+    gap: 28px;
+  }
+}
+
+.orderColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarColumn {
+  min-width: 0;
+}
+
+@media (min-width: 992px) {
+  .sidebarColumn {
+    position: sticky;
+    top: 96px;
+    z-index: 20;
+  }
+}
+
+/* ==========================================================================
+   Order Card Styling (Unified card matching OrderThankYou orderCard)
+   ========================================================================== */
+
+.orderCard {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* Metadata Grid */
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 22px 24px;
+  background: #fafaf9;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 768px) {
+  .metaGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 16px;
+  }
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metaLabel {
+  font-size: 0.75rem;
   text-transform: uppercase;
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid #E5E7EB;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  font-weight: 600;
 }
 
-.statusDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10B981;
+.metaValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+  word-break: break-word;
 }
 
-.orderMetaBottom {
+.badgeSuccess {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   Products Section Inside Order Card
+   ========================================================================== */
+
+.productsSection {
+  padding: 24px;
+}
+
+.sectionHeaderRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 16px;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid #F3F4F6;
-  font-size: 12px;
-  color: #6B7280;
+  gap: 8px;
 }
 
-.customerTag strong {
+.sectionHeading {
+  font-size: 1.15rem;
+  font-weight: 700;
   color: #111827;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.progressCounter {
+  font-size: 0.8rem;
   font-weight: 600;
+  color: #c7944b;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  padding: 3px 10px;
+  border-radius: 9999px;
 }
 
-/* ── Progress Bar ─────────────────────────────────────────────────────── */
-.progressContainer {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid #F3F4F6;
-}
-
-.progressLabelRow {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: #6B7280;
-  font-weight: 500;
-  margin-bottom: 6px;
+.progressBarWrapper {
+  margin-bottom: 20px;
 }
 
 .progressBarTrack {
   width: 100%;
-  height: 4px;
-  background: #E5E7EB;
+  height: 5px;
+  background: #e5e7eb;
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progressBarFill {
   height: 100%;
-  background: #111827;
+  background: #c7944b;
   border-radius: 4px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Product Review Cards ─────────────────────────────────────────────── */
+.completeBanner {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.completeHeading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #065f46;
+  margin-bottom: 4px;
+}
+
+.completeSub {
+  font-size: 0.825rem;
+  color: #047857;
+  margin: 0;
+}
+
 .productList {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 36px;
-}
-
-.productCard {
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-  transition: border-color 0.25s ease, box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.productCard:hover {
-  border-color: #D1D5DB;
-  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.05);
-}
-
-.productHeaderRow {
-  padding: 18px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 16px;
 }
 
-.productLeft {
+/* Product Card */
+.productCard {
+  border: 1px solid #f0f0ee;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+  border-color: #e5e7eb;
+}
+
+.productHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+}
+
+.productInfoLeft {
   display: flex;
   align-items: center;
   gap: 16px;
   flex: 1;
-  min-width: 240px;
-}
-
-.thumbnailWrapper {
-  width: 92px;
-  height: 92px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #F9FAFB;
-  border: none;
-  flex-shrink: 0;
-  position: relative;
+  min-width: 0;
 }
 
 .productThumb {
-  width: 100%;
-  height: 100%;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
   object-fit: cover;
-  border: none;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.productCard:hover .productThumb {
-  transform: scale(1.05);
+  background: #f9f9f8;
+  border: 1px solid #eee;
+  flex-shrink: 0;
 }
 
 .productDetails {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
+  min-width: 0;
 }
 
 .productTitle {
-  font-size: 14px;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #111827;
   margin: 0;
   line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.productQty {
-  font-size: 12px;
-  color: #6B7280;
-  margin: 0;
+.productMeta {
+  font-size: 0.825rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.productRight {
+.productPrice {
+  font-weight: 600;
+  color: #111827;
+}
+
+.productActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-shrink: 0;
 }
 
-/* ── Buttons (Zero Icons on Text) ─────────────────────────────────────── */
-.btnReview {
-  background: #111827;
-  color: #FFFFFF;
-  border: 1px solid #111827;
-  font-size: 12px;
+/* Drop a Review Button */
+.dropReviewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #c7944b;
+  color: #a47125;
+  font-size: 0.825rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 9px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-}
-
-.btnReview:hover {
-  background: #1F2937;
-  border-color: #1F2937;
-  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.12);
-}
-
-.btnReview:active {
-  transform: scale(0.98);
-}
-
-.btnCancelToggle {
-  background: #F3F4F6;
-  color: #374151;
-  border: 1px solid #E5E7EB;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 9px 18px;
-  border-radius: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.btnCancelToggle:hover {
-  background: #E5E7EB;
-  color: #111827;
+.dropReviewBtn:hover {
+  background: #fdfaf6;
+  border-color: #a47125;
 }
 
-.badgeReviewed {
-  display: inline-block;
-  background: #F3F4F6;
-  color: #6B7280;
-  border: 1px solid #E5E7EB;
-  font-size: 11px;
+.dropReviewBtnActive {
+  background: #a47125;
+  color: #ffffff;
+}
+
+.dropReviewBtnActive:hover {
+  background: #8b5f1f;
+  color: #ffffff;
+}
+
+.reviewedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.825rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 6px 14px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #a7f3d0;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Inline Review Drawer (Accordion)
+   ========================================================================== */
+
+.reviewDrawer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  opacity: 0;
+  background: #fafaf9;
+  border-top: 1px solid #f0f0ee;
+}
+
+.reviewDrawerOpen {
+  max-height: 520px;
+  opacity: 1;
+}
+
+.drawerInner {
+  padding: 20px;
+}
+
+.rewardNotice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  font-size: 0.825rem;
+  padding: 8px 12px;
   border-radius: 6px;
-  user-select: none;
+  margin-bottom: 16px;
 }
 
-/* ── Accordion Drawer ─────────────────────────────────────────────────── */
-.drawerWrapper {
-  border-top: 1px solid #F3F4F6;
-  background: #FAFAFA;
-  padding: 20px 22px;
-  animation: drawerSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: top center;
+.ratingRow {
+  margin-bottom: 16px;
 }
 
-@keyframes drawerSlideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.drawerRatingRow {
+.ratingLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 12px;
 }
 
-.rateHeaderTitle {
-  font-size: 11px;
+.ratingDescription {
+  font-size: 0.825rem;
+  color: #c7944b;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #111827;
 }
 
-.ratingLabelText {
-  font-size: 12px;
-  font-weight: 500;
-  color: #4B5563;
-  transition: opacity 0.15s ease;
-}
-
-.starsContainer {
+.starGroup {
   display: flex;
-  align-items: center;
   gap: 4px;
 }
 
 .starBtn {
   background: none;
   border: none;
-  padding: 2px;
-  cursor: pointer;
+  padding: 0;
+  font-size: 1.5rem;
   line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #d1d5db;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
 .starBtn:hover {
-  transform: scale(1.22);
+  transform: scale(1.15);
 }
 
-.starBtn:active {
-  transform: scale(0.92);
+.starActive {
+  color: #c7944b;
 }
 
-.starSvg {
-  transition: fill 0.15s ease, stroke 0.15s ease;
-}
-
-.reviewTextarea {
+.textareaField {
   width: 100%;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
-  padding: 12px 14px;
-  font-size: 13px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
   color: #111827;
-  background: #FFFFFF;
-  min-height: 84px;
-  resize: vertical;
+  background: #ffffff;
+  resize: none;
+  min-height: 75px;
   font-family: inherit;
-  outline: none;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.reviewTextarea:focus {
-  border-color: #111827;
-  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.06);
+.textareaField:focus {
+  outline: none;
+  border-color: #c7944b;
+  box-shadow: 0 0 0 3px rgba(199, 148, 75, 0.15);
 }
 
-.reviewTextarea::placeholder {
-  color: #9CA3AF;
-}
-
-.errorMessage {
-  font-size: 12px;
-  color: #DC2626;
-  margin-bottom: 12px;
-  animation: pageFadeIn 0.2s ease forwards;
-}
-
-.drawerActions {
+.drawerFooter {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
 }
 
-.btnDrawerCancel {
-  background: transparent;
-  border: 1px solid #E5E7EB;
-  color: #6B7280;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 8px 16px;
+.cancelBtn {
+  background: none;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 7px 14px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.btnDrawerCancel:hover {
-  background: #F3F4F6;
+.cancelBtn:hover {
+  background: #f3f4f6;
   color: #111827;
 }
 
-.btnDrawerSubmit {
+.submitReviewBtn {
   background: #111827;
-  border: 1px solid #111827;
-  color: #FFFFFF;
-  font-size: 11px;
+  color: #ffffff;
+  border: none;
+  font-size: 0.8rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 8px 20px;
+  padding: 7px 16px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s ease;
 }
 
-.btnDrawerSubmit:hover:not(:disabled) {
-  background: #1F2937;
-  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.12);
+.submitReviewBtn:hover:not(:disabled) {
+  background: #000000;
 }
 
-.btnDrawerSubmit:disabled {
-  opacity: 0.6;
+.submitReviewBtn:disabled {
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-/* ── Toast / Success State ────────────────────────────────────────────── */
+/* ==========================================================================
+   Bottom Action Bar
+   ========================================================================== */
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.continueShoppingBtn {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.continueShoppingBtn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+/* ==========================================================================
+   Sticky 30% Rate Your Experience Card (matching OrderThankYou feedbackCardSticky)
+   ========================================================================== */
+
+.feedbackCardSticky {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.feedbackCardSticky::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #c7944b, #e0ba7b, #c7944b);
+}
+
+.feedbackHeader {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.feedbackTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.feedbackSubtitle {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.feedbackStarRow {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.feedbackStar {
+  font-size: 1.85rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e5e7eb;
+  transition: color 0.15s ease, transform 0.15s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.feedbackStar:hover {
+  transform: scale(1.15);
+}
+
+.feedbackStarActive {
+  color: #c7944b;
+}
+
+.feedbackRatingLabel {
+  font-size: 0.8rem;
+  color: #c7944b;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.feedbackFormWrapper {
+  width: 100%;
+}
+
+.feedbackTextarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #111827;
+  background: #ffffff;
+  resize: none;
+  min-height: 75px;
+  font-family: inherit;
+  margin-bottom: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feedbackTextarea:focus {
+  outline: none;
+  border-color: #c7944b;
+  box-shadow: 0 0 0 3px rgba(199, 148, 75, 0.15);
+}
+
+.feedbackSubmitBtn {
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s ease;
+  width: 100%;
+}
+
+.feedbackSubmitBtn:hover:not(:disabled) {
+  background: #000000;
+}
+
+.feedbackSubmitBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.feedbackSuccessAlert {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 14px 12px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Toast & Error Notifications
+   ========================================================================== */
+
 .successToast {
   background: #111827;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 14px 20px;
   border-radius: 8px;
   font-size: 13px;
@@ -494,34 +771,20 @@
   }
 }
 
-/* ── Complete / Empty Notice ─────────────────────────────────────────── */
-.completeBanner {
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+.errorMessage {
+  font-size: 12px;
+  color: #dc2626;
+  margin-bottom: 10px;
+  animation: pageFadeIn 0.2s ease forwards;
 }
 
-.completeHeading {
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 6px;
-}
+/* ==========================================================================
+   Error / Loading States
+   ========================================================================== */
 
-.completeSub {
-  font-size: 13px;
-  color: #6B7280;
-  margin: 0;
-}
-
-/* ── Error / Loading Fallbacks ────────────────────────────────────────── */
 .stateCard {
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 48px 24px;
   text-align: center;
@@ -538,7 +801,7 @@
 
 .stateSub {
   font-size: 14px;
-  color: #6B7280;
+  color: #6b7280;
   line-height: 1.6;
   max-width: 440px;
   margin: 0 auto 20px auto;
@@ -547,7 +810,7 @@
 .btnReturnHome {
   display: inline-block;
   background: #111827;
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   font-size: 11px;
   font-weight: 600;
@@ -559,58 +822,26 @@
 }
 
 .btnReturnHome:hover {
-  background: #1F2937;
-  color: #FFFFFF;
+  background: #1f2937;
+  color: #ffffff;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
-/* ── Responsive Refinements ───────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .pageContainer {
-    padding: 28px 12px 60px 12px;
-  }
+/* ==========================================================================
+   RTL Adjustments (Arabic)
+   ========================================================================== */
 
-  .mainHeading {
-    font-size: 22px;
-  }
-
-  .orderMetaCard {
-    padding: 18px 16px;
-  }
-
-  .productHeaderRow {
-    padding: 14px 16px;
-  }
-
-  .thumbnailWrapper {
-    width: 76px;
-    height: 76px;
-  }
-
-  .drawerWrapper {
-    padding: 16px;
-  }
+[dir="rtl"] .heroDocked {
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 4px solid #10b981;
 }
 
-/* ── RTL Refinements (Arabic Typography) ──────────────────────────────── */
-[dir="rtl"] .eyebrow,
-[dir="rtl"] .orderLabel,
-[dir="rtl"] .statusPill,
-[dir="rtl"] .btnReview,
-[dir="rtl"] .btnCancelToggle,
-[dir="rtl"] .badgeReviewed,
-[dir="rtl"] .btnDrawerSubmit,
-[dir="rtl"] .rateHeaderTitle,
-[dir="rtl"] .btnReturnHome {
-  letter-spacing: normal;
-}
-
-[dir="rtl"] .mainHeading,
-[dir="rtl"] .orderNumber {
-  letter-spacing: normal;
-}
-
-[dir="rtl"] .reviewTextarea {
+[dir="rtl"] .textareaField,
+[dir="rtl"] .feedbackTextarea {
   text-align: right;
   direction: rtl;
+}
+
+[dir="rtl"] .metaLabel {
+  letter-spacing: normal;
 }

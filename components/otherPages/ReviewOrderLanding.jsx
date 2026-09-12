@@ -6,6 +6,7 @@ import Link from "next/link";
 import he from "he";
 import { useLocale, useTranslations } from "next-intl";
 import { apiClient } from "@/lib/apiClient";
+import { useMenu } from "@/context/MenuContext";
 import Header14 from "../headers/Header14";
 import Footer14 from "../footers/Footer14";
 import MobileFooter2 from "../footers/MobileFooter2";
@@ -15,9 +16,8 @@ const IMG_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 const TRANSLATIONS = {
   en: {
-    eyebrow: "Verified Purchase Experience",
-    mainHeading: "Share Your Experience",
-    subHeading: "Your honest feedback helps perfume connoisseurs discover their signature scent and helps us continually refine our art.",
+    heroTitle: "Share Your Fragrance Experience",
+    heroSubtitle: "We would love to hear your feedback on your fragrance purchase.",
     verifyingOrder: "Verifying Order",
     validatingLink: "Validating your secure review link...",
     incompleteLink: "This review invitation link is incomplete or missing security credentials.",
@@ -25,41 +25,53 @@ const TRANSLATIONS = {
     networkError: "Unable to verify review credentials. Please try again later.",
     unableToAccess: "Unable to Access Review",
     returnHome: "Return to Home",
-    orderReference: "Order Reference",
+    orderNumber: "Order Number",
     order: "Order",
-    reviewingAs: "Reviewing as",
-    placedOn: "Placed on",
+    reviewingAs: "Reviewing As",
+    datePlaced: "Date Placed",
+    orderStatus: "Order Status",
     reviewProgress: "Review Progress",
     progressFormat: (reviewed, total) => `${reviewed} of ${total} reviewed`,
-    allItemsReviewed: "All Items Reviewed",
-    allItemsReviewedSub: "Thank you! You have reviewed all products in this order.",
-    quantity: "Quantity",
-    reviewProduct: "Review Product",
+    allItemsReviewed: "All Fragrances Reviewed",
+    allItemsReviewedSub: "Thank you! You have submitted reviews for all fragrances in this order.",
+    purchasedFragrances: "Purchased Fragrances",
+    quantity: "Qty",
+    reviewProduct: "★ Drop a Review",
     cancel: "Cancel",
-    reviewed: "Reviewed",
-    rateThisProduct: "Rate this product",
+    reviewed: "Review Submitted",
+    rateThisProduct: "Rate this perfume:",
+    rewardTitle: "Verified Review Reward",
+    rewardDesc: "Leave your feedback to receive an exclusive discount coupon for your next fragrance order!",
     ratingLabels: {
-      5: "Excellent (5/5)",
+      5: "Loved it! (5/5)",
       4: "Very Good (4/5)",
       3: "Average (3/5)",
       2: "Below Average (2/5)",
       1: "Poor (1/5)",
     },
-    reviewPlaceholder: "Share your experience regarding fragrance notes, sillage, longevity, and quality...",
+    reviewPlaceholder: "What did you think of the scent notes, longevity, and sillage? Share your honest experience...",
     selectRatingError: "Please select a rating.",
-    writeCommentError: "Please write a review comment.",
+    writeCommentError: "Please write a brief comment about this fragrance.",
     submitting: "Submitting...",
     submitReview: "Submit Review",
-    submitSuccess: "Your review has been submitted for approval. Thank you for your feedback.",
+    submitSuccess: "Your product review has been submitted for approval. Thank you!",
     submitErrorFallback: "Failed to submit review. Please try again.",
     submitErrorGeneral: "An error occurred while submitting your review.",
     statusDelivered: "Delivered",
     statusCompleted: "Completed",
+    copied: "✓ Copied",
+    copyCode: "Copy Order Code",
+    // Overall Experience Review Form
+    experienceTitle: "Rate Your Experience",
+    experienceSubtitle: "How was your overall shopping, packaging, and delivery experience today?",
+    experiencePlaceholder: "Tell us about delivery speed, fragrance packaging, or customer service...",
+    submitFeedback: "Submit Feedback",
+    feedbackSuccessAlert: "✓ Thank you! Your overall experience feedback has been submitted. We appreciate your insights!",
+    continueShopping: "← Continue Shopping",
   },
   ar: {
-    eyebrow: "تجربة شراء موثّقة",
-    mainHeading: "شاركنا تجربتك",
-    subHeading: "تقييمك الصادق يساعد عشاق العطور في اكتشاف عطرهم المميز ويساعدنا على تطوير إبداعاتنا باستمرار.",
+    heroTitle: "شاركنا تجربتك في تقييم العطور",
+    heroSubtitle: "يسعدنا معرفة رأيك وتقييمك للعطور التي استلمتها.",
     verifyingOrder: "جاري التحقق من الطلب",
     validatingLink: "جاري التحقق من أمان رابط التقييم الخاص بك...",
     incompleteLink: "رابط دعوة التقييم غير مكتمل أو تنقصه بيانات التحقق الأمنية.",
@@ -67,29 +79,33 @@ const TRANSLATIONS = {
     networkError: "تعذر التحقق من بيانات التقييم. يرجى المحاولة مرة أخرى لاحقاً.",
     unableToAccess: "تعذر الوصول إلى صفحة التقييم",
     returnHome: "العودة إلى الرئيسية",
-    orderReference: "مرجع الطلب",
+    orderNumber: "رقم الطلب",
     order: "طلب رقم",
     reviewingAs: "التقييم باسم",
-    placedOn: "تاريخ الطلب",
+    datePlaced: "تاريخ الطلب",
+    orderStatus: "حالة الطلب",
     reviewProgress: "مستوى التقييم",
     progressFormat: (reviewed, total) => `تم تقييم ${reviewed} من أصل ${total}`,
     allItemsReviewed: "تم تقييم جميع المنتجات",
-    allItemsReviewedSub: "شكراً لك! لقد قمت بتقييم جميع المنتجات في هذا الطلب.",
+    allItemsReviewedSub: "شكراً لك! لقد قمت بتقييم جميع العطور في هذا الطلب.",
+    purchasedFragrances: "العطور المشتراة",
     quantity: "الكمية",
-    reviewProduct: "تقييم المنتج",
+    reviewProduct: "★ قيّم المنتج",
     cancel: "إلغاء",
-    reviewed: "تم التقييم",
-    rateThisProduct: "قيّم هذا المنتج",
+    reviewed: "تم التقييم بنجاح",
+    rateThisProduct: "قيّم هذا العطر:",
+    rewardTitle: "مكافأة التقييم الموثّق",
+    rewardDesc: "شاركنا تقييمك لتحصل على كوبون خصم حصري لطلبك القادم فور اعتماد التقييم!",
     ratingLabels: {
-      5: "ممتاز (5/5)",
+      5: "ممتاز جداً (5/5)",
       4: "جيد جداً (4/5)",
       3: "متوسط (3/5)",
       2: "أقل من المتوسط (2/5)",
       1: "ضعيف (1/5)",
     },
-    reviewPlaceholder: "شاركنا تجربتك حول نفحات العطر، الفوحان، الثبات، والجودة...",
+    reviewPlaceholder: "ما رأيك في نفحات العطر، الفوحان، والثبات؟ شاركنا تجربتك بكل صدق...",
     selectRatingError: "يرجى تحديد تقييم بالنجوم.",
-    writeCommentError: "يرجى كتابة تعليق التقييم.",
+    writeCommentError: "يرجى كتابة تعليق موجز حول هذا العطر.",
     submitting: "جاري الإرسال...",
     submitReview: "إرسال التقييم",
     submitSuccess: "تم إرسال تقييمك بنجاح للمراجعة. شكراً لمشاركتنا رأيك القيّم.",
@@ -97,6 +113,15 @@ const TRANSLATIONS = {
     submitErrorGeneral: "حدث خطأ أثناء إرسال التقييم. يرجى المحاولة لاحقاً.",
     statusDelivered: "تم التوصيل",
     statusCompleted: "مكتمل",
+    copied: "✓ تم النسخ",
+    copyCode: "نسخ رقم الطلب",
+    // Overall Experience Review Form
+    experienceTitle: "قيّم تجربتك",
+    experienceSubtitle: "كيف كانت تجربتك العامة في الطلب والتغليف والتوصيل اليوم؟",
+    experiencePlaceholder: "شاركنا رأيك حول سرعة التوصيل، تغليف العطور، أو خدمة العملاء...",
+    submitFeedback: "إرسال التقييم",
+    feedbackSuccessAlert: "✓ شكراً لك! تم إرسال تقييمك العام بنجاح. نحن نقدر ملاحظاتك القيّمة!",
+    continueShopping: "← متابعة التسوق",
   },
 };
 
@@ -108,21 +133,31 @@ export default function ReviewOrderLanding() {
   const currentLang = locale === "ar" ? "ar" : "en";
   const t = TRANSLATIONS[currentLang];
   const tt = useTranslations();
+  const { currency } = useMenu() || {};
 
   const [loading, setLoading] = useState(true);
   const [errorCode, setErrorCode] = useState(null);
   const [customErrorMessage, setCustomErrorMessage] = useState("");
   const [orderDetails, setOrderDetails] = useState(null);
   const [reviewedProductIds, setReviewedProductIds] = useState([]);
+  const [copied, setCopied] = useState(false);
 
-  // Active review drawer state
+  // Per-Product Review Drawer States (matching OrderThankYouSection maps)
   const [activeReviewProductId, setActiveReviewProductId] = useState(null);
-  const [currentRating, setCurrentRating] = useState(5);
-  const [hoveredRating, setHoveredRating] = useState(0);
-  const [reviewComment, setReviewComment] = useState("");
-  const [submittingReview, setSubmittingReview] = useState(false);
-  const [reviewError, setReviewError] = useState("");
+  const [ratingMap, setRatingMap] = useState({});
+  const [hoverRatingMap, setHoverRatingMap] = useState({});
+  const [commentMap, setCommentMap] = useState({});
+  const [submittingMap, setSubmittingMap] = useState({});
+  const [reviewErrorMap, setReviewErrorMap] = useState({});
   const [reviewSuccessMessage, setReviewSuccessMessage] = useState("");
+
+  // Overall Website / Experience Feedback States
+  const [feedbackRating, setFeedbackRating] = useState(5);
+  const [hoverFeedbackRating, setHoverFeedbackRating] = useState(0);
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [feedbackError, setFeedbackError] = useState("");
 
   useEffect(() => {
     if (!q || !s) {
@@ -164,35 +199,42 @@ export default function ReviewOrderLanding() {
   }, [q, s]);
 
   const toggleReviewDrawer = (productId) => {
-    if (activeReviewProductId === productId) {
-      setActiveReviewProductId(null);
-      setReviewComment("");
-      setReviewError("");
-    } else {
-      setActiveReviewProductId(productId);
-      setReviewComment("");
-      setReviewError("");
-      setCurrentRating(5);
-      setHoveredRating(0);
+    setActiveReviewProductId((prev) => (prev === productId ? null : productId));
+    if (!ratingMap[productId]) {
+      setRatingMap((prev) => ({ ...prev, [productId]: 5 }));
     }
   };
 
-  const getRatingLabel = (star) => {
+  const getRatingDescription = (star) => {
     return t.ratingLabels[star] || "";
   };
 
-  const handleReviewSubmit = async (productId) => {
-    if (!currentRating || currentRating < 1 || currentRating > 5) {
-      setReviewError(t.selectRatingError);
+  // Copy order code to clipboard
+  const handleCopyCode = () => {
+    const code = orderDetails?.order_code || orderDetails?.order_id;
+    if (!code) return;
+    navigator.clipboard.writeText(code.toString().replace(/^#/, ""));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Submit Product Review
+  const handleProductReviewSubmit = async (e, productId) => {
+    e.preventDefault();
+    const star = ratingMap[productId] || 5;
+    const comment = (commentMap[productId] || "").trim();
+
+    if (!star || star < 1 || star > 5) {
+      setReviewErrorMap((prev) => ({ ...prev, [productId]: t.selectRatingError }));
       return;
     }
-    if (!reviewComment.trim()) {
-      setReviewError(t.writeCommentError);
+    if (!comment) {
+      setReviewErrorMap((prev) => ({ ...prev, [productId]: t.writeCommentError }));
       return;
     }
 
-    setSubmittingReview(true);
-    setReviewError("");
+    setSubmittingMap((prev) => ({ ...prev, [productId]: true }));
+    setReviewErrorMap((prev) => ({ ...prev, [productId]: "" }));
 
     try {
       const resp = await apiClient("api/reviews", {
@@ -200,8 +242,8 @@ export default function ReviewOrderLanding() {
         body: JSON.stringify({
           product_id: productId,
           order_id: orderDetails?.order_id,
-          star: currentRating,
-          comment: reviewComment.trim(),
+          star,
+          comment,
           customer_name: orderDetails?.customer_name || "Valued Customer",
           customer_email: orderDetails?.customer_email || "",
           customer_phone: orderDetails?.customer_phone || "",
@@ -213,16 +255,57 @@ export default function ReviewOrderLanding() {
       if (resp.ok) {
         setReviewedProductIds((prev) => [...new Set([...prev, Number(productId)])]);
         setActiveReviewProductId(null);
-        setReviewComment("");
+        setCommentMap((prev) => ({ ...prev, [productId]: "" }));
         setReviewSuccessMessage(t.submitSuccess);
         setTimeout(() => setReviewSuccessMessage(""), 6000);
       } else {
-        setReviewError(json.message || t.submitErrorFallback);
+        setReviewErrorMap((prev) => ({
+          ...prev,
+          [productId]: json.message || t.submitErrorFallback,
+        }));
       }
     } catch (err) {
-      setReviewError(t.submitErrorGeneral);
+      setReviewErrorMap((prev) => ({
+        ...prev,
+        [productId]: t.submitErrorGeneral,
+      }));
     } finally {
-      setSubmittingReview(false);
+      setSubmittingMap((prev) => ({ ...prev, [productId]: false }));
+    }
+  };
+
+  // Submit Overall Website / Experience Feedback
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    if (!feedbackRating || feedbackRating === 0) {
+      setFeedbackError(t.selectRatingError);
+      return;
+    }
+
+    setFeedbackSubmitting(true);
+    setFeedbackError("");
+
+    try {
+      const resp = await apiClient("api/submitReview", {
+        method: "POST",
+        body: JSON.stringify({
+          order_id: orderDetails?.order_id,
+          customer_name: orderDetails?.customer_name || "Valued Customer",
+          star: feedbackRating,
+          comment: feedbackComment.trim(),
+        }),
+      });
+
+      if (resp.ok) {
+        setFeedbackSubmitted(true);
+      } else {
+        const json = await resp.json();
+        setFeedbackError(json.message || t.submitErrorFallback);
+      }
+    } catch (err) {
+      setFeedbackError(t.submitErrorGeneral);
+    } finally {
+      setFeedbackSubmitting(false);
     }
   };
 
@@ -239,9 +322,11 @@ export default function ReviewOrderLanding() {
       : `#${orderDetails.order_code}`
     : "";
 
-  const rawStatus = typeof orderDetails?.order_status === "object"
-    ? orderDetails.order_status?.label || orderDetails.order_status?.value || "Delivered"
-    : orderDetails?.order_status || "Delivered";
+  const statusStr = typeof orderDetails?.order_status === "object"
+    ? (orderDetails.order_status?.label || orderDetails.order_status?.value || "")
+    : (orderDetails?.order_status || "");
+
+  const rawStatus = statusStr.trim() || "Delivered";
 
   let displayStatus = rawStatus;
   if (rawStatus.toLowerCase() === "delivered") {
@@ -264,19 +349,6 @@ export default function ReviewOrderLanding() {
 
       <main className={styles.pageContainer} dir={currentLang === "ar" ? "rtl" : "ltr"}>
         <div className={styles.contentWrapper}>
-
-          {/* Luxury Header */}
-          <div className={styles.headerBlock}>
-            <span className={styles.eyebrow}>
-              {t.eyebrow}
-            </span>
-            <h1 className={styles.mainHeading}>
-              {t.mainHeading}
-            </h1>
-            <p className={styles.subHeading}>
-              {t.subHeading}
-            </p>
-          </div>
 
           {/* Loading State */}
           {loading && (
@@ -304,191 +376,386 @@ export default function ReviewOrderLanding() {
             </div>
           )}
 
-          {/* Order Content */}
+          {/* Active Order Content: Shop Checkout Complete Style */}
           {!loading && !displayedError && orderDetails && (
-            <div>
-              {/* Order Meta Card */}
-              <div className={styles.orderMetaCard}>
-                <div className={styles.orderMetaTop}>
+            <>
+              {/* Top Docked Header Bar (matching OrderThankYou heroDocked) */}
+              <div className={styles.heroDocked}>
+                <div className={styles.heroDockedLeft}>
+                  <div className={styles.tickIconSmall}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
                   <div>
-                    <div className={styles.orderLabel}>{t.orderReference}</div>
-                    <h3 className={styles.orderNumber}>
-                      {t.order} {formattedOrderCode}
-                    </h3>
-                  </div>
-
-                  <div className={styles.statusPill}>
-                    <span className={styles.statusDot} />
-                    <span>{displayStatus}</span>
+                    <h2 className={styles.dockedTitle}>
+                      {t.heroTitle}
+                    </h2>
+                    <p className={styles.dockedSubtitle}>
+                      {t.heroSubtitle}
+                    </p>
                   </div>
                 </div>
 
-                <div className={styles.orderMetaBottom}>
-                  {orderDetails.customer_name && (
-                    <div className={styles.customerTag}>
-                      {t.reviewingAs} <strong>{orderDetails.customer_name}</strong>
-                    </div>
-                  )}
-                  {orderDetails.created_at && (
-                    <div>
-                      {t.placedOn}{" "}
-                      {new Date(orderDetails.created_at).toLocaleDateString(currentLang === "ar" ? "ar-AE" : "en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </div>
-                  )}
+                <div className={styles.orderCodePill}>
+                  <span>{t.order} {formattedOrderCode}</span>
+                  <button
+                    type="button"
+                    className={styles.copyButton}
+                    onClick={handleCopyCode}
+                    title={t.copyCode}
+                  >
+                    {copied ? t.copied : "📋"}
+                  </button>
                 </div>
-
-                {/* Progress Indicator */}
-                {totalProducts > 1 && (
-                  <div className={styles.progressContainer}>
-                    <div className={styles.progressLabelRow}>
-                      <span>{t.reviewProgress}</span>
-                      <span>{t.progressFormat(reviewedCount, totalProducts)}</span>
-                    </div>
-                    <div className={styles.progressBarTrack}>
-                      <div
-                        className={styles.progressBarFill}
-                        style={{ width: `${progressPercent}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
 
-              {/* All Items Completed Notice */}
-              {unreviewedCount === 0 && (
-                <div className={styles.completeBanner}>
-                  <h4 className={styles.completeHeading}>{t.allItemsReviewed}</h4>
-                  <p className={styles.completeSub}>
-                    {t.allItemsReviewedSub}
-                  </p>
-                </div>
-              )}
+              {/* Main 70-30 Grid Layout */}
+              <div className={styles.mainGridLayout}>
 
-              {/* Product Review List */}
-              <div className={styles.productList}>
-                {(orderDetails.products || []).map((item, idx) => {
-                  const isReviewed = item.product_id && reviewedProductIds.includes(Number(item.product_id));
-                  const isDrawerOpen = activeReviewProductId === item.product_id;
+                {/* 70% Left Column: Unified Order Card & Product Reviews */}
+                <div className={styles.orderColumn}>
 
-                  const imgSrc = item.product_image
-                    ? item.product_image.startsWith("http")
-                      ? item.product_image
-                      : `${IMG_BASE}storage/${item.product_image.replace(/^\//, "")}`
-                    : "/no-img.png";
+                  {/* Unified Order Card (matching OrderThankYou orderCard) */}
+                  <div className={styles.orderCard}>
 
-                  return (
-                    <div key={idx} className={styles.productCard}>
-                      <div className={styles.productHeaderRow}>
-                        <div className={styles.productLeft}>
-                          <div className={styles.thumbnailWrapper}>
-                            <img
-                              src={imgSrc}
-                              alt=""
-                              className={styles.productThumb}
-                            />
-                          </div>
-                          <div className={styles.productDetails}>
-                            <h4 className={styles.productTitle}>
-                              {tt(he.decode(item.product_name || ""))}
-                            </h4>
-                            <div className={styles.productQty}>
-                              {t.quantity}: {item.qty}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className={styles.productRight}>
-                          {isReviewed ? (
-                            <span className={styles.badgeReviewed}>
-                              {t.reviewed}
-                            </span>
-                          ) : (
-                            <button
-                              type="button"
-                              onClick={() => toggleReviewDrawer(item.product_id)}
-                              className={isDrawerOpen ? styles.btnCancelToggle : styles.btnReview}
-                            >
-                              {isDrawerOpen ? t.cancel : t.reviewProduct}
-                            </button>
-                          )}
-                        </div>
+                    {/* Metadata Grid (4 Columns) */}
+                    <div className={styles.metaGrid}>
+                      <div className={styles.metaItem}>
+                        <span className={styles.metaLabel}>{t.orderNumber}</span>
+                        <span className={styles.metaValue}>{formattedOrderCode}</span>
                       </div>
 
-                      {/* Smooth Accordion Drawer */}
-                      {isDrawerOpen && (
-                        <div className={styles.drawerWrapper}>
-                          <div className={styles.drawerRatingRow}>
-                            <span className={styles.rateHeaderTitle}>
-                              {t.rateThisProduct}
-                            </span>
-                            <span className={styles.ratingLabelText}>
-                              {getRatingLabel(hoveredRating || currentRating)}
-                            </span>
-                            <div className={styles.starsContainer}>
-                              {[1, 2, 3, 4, 5].map((star) => {
-                                const isActive = star <= (hoveredRating || currentRating);
-                                return (
-                                  <button
-                                    key={star}
-                                    type="button"
-                                    className={styles.starBtn}
-                                    onMouseEnter={() => setHoveredRating(star)}
-                                    onMouseLeave={() => setHoveredRating(0)}
-                                    onClick={() => setCurrentRating(star)}
-                                    aria-label={`Rate ${star} of 5`}
-                                  >
-                                    <svg
-                                      width="20"
-                                      height="20"
-                                      viewBox="0 0 24 24"
-                                      className={styles.starSvg}
-                                      fill={isActive ? "#111827" : "none"}
-                                      stroke={isActive ? "#111827" : "#D1D5DB"}
-                                      strokeWidth="1.5"
-                                    >
-                                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                                    </svg>
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
+                      <div className={styles.metaItem}>
+                        <span className={styles.metaLabel}>{t.datePlaced}</span>
+                        <span className={styles.metaValue}>
+                          {orderDetails.created_at
+                            ? new Date(orderDetails.created_at).toLocaleDateString(currentLang === "ar" ? "ar-AE" : "en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })
+                            : "-"}
+                        </span>
+                      </div>
 
-                          <textarea
-                            className={styles.reviewTextarea}
-                            placeholder={t.reviewPlaceholder}
-                            value={reviewComment}
-                            onChange={(e) => setReviewComment(e.target.value)}
-                            rows={3}
-                          />
+                      <div className={styles.metaItem}>
+                        <span className={styles.metaLabel}>{t.reviewingAs}</span>
+                        <span className={styles.metaValue}>
+                          {orderDetails.customer_name || "Valued Customer"}
+                        </span>
+                      </div>
 
-                          {reviewError && (
-                            <div className={styles.errorMessage}>
-                              {reviewError}
-                            </div>
-                          )}
+                      <div className={styles.metaItem}>
+                        <span className={styles.metaLabel}>{t.orderStatus}</span>
+                        <div>
+                          <span className={styles.badgeSuccess}>
+                            ✓ {displayStatus}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
 
-                          <div className={styles.drawerActions}>
-                            <button
-                              type="button"
-                              onClick={() => handleReviewSubmit(item.product_id)}
-                              disabled={submittingReview}
-                              className={styles.btnDrawerSubmit}
-                            >
-                              {submittingReview ? t.submitting : t.submitReview}
-                            </button>
+                    {/* Purchased Products Section with Inline Review Drawer */}
+                    <div className={styles.productsSection}>
+                      <div className={styles.sectionHeaderRow}>
+                        <h3 className={styles.sectionHeading}>{t.purchasedFragrances}</h3>
+                        {totalProducts > 1 && (
+                          <span className={styles.progressCounter}>
+                            {t.progressFormat(reviewedCount, totalProducts)}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Progress Bar for multiple products */}
+                      {totalProducts > 1 && (
+                        <div className={styles.progressBarWrapper}>
+                          <div className={styles.progressBarTrack}>
+                            <div
+                              className={styles.progressBarFill}
+                              style={{ width: `${progressPercent}%` }}
+                            />
                           </div>
                         </div>
                       )}
+
+                      {/* All Items Reviewed Callout */}
+                      {unreviewedCount === 0 && (
+                        <div className={styles.completeBanner}>
+                          <h4 className={styles.completeHeading}>{t.allItemsReviewed}</h4>
+                          <p className={styles.completeSub}>{t.allItemsReviewedSub}</p>
+                        </div>
+                      )}
+
+                      {/* Product Review Cards List */}
+                      <div className={styles.productList}>
+                        {(orderDetails.products || []).map((item, idx) => {
+                          const productId = item.product_id;
+                          const isReviewed = productId && reviewedProductIds.includes(Number(productId));
+                          const isOpen = activeReviewProductId === productId;
+                          const rating = ratingMap[productId] || 5;
+                          const hoverRating = hoverRatingMap[productId] || 0;
+                          const isSubmitting = Boolean(submittingMap[productId]);
+                          const itemError = reviewErrorMap[productId] || "";
+
+                          const imgSrc = item.product_image
+                            ? item.product_image.startsWith("http")
+                              ? item.product_image
+                              : `${IMG_BASE}storage/${item.product_image.replace(/^\//, "")}`
+                            : "/no-img.png";
+
+                          return (
+                            <div key={productId || idx} className={styles.productCard}>
+                              {/* Product Header Row */}
+                              <div className={styles.productHeaderRow}>
+                                <div className={styles.productInfoLeft}>
+                                  <img
+                                    src={imgSrc}
+                                    alt={item.product_name ? he.decode(item.product_name) : "Product"}
+                                    className={styles.productThumb}
+                                    onError={(e) => {
+                                      e.currentTarget.src = "/no-img.png";
+                                    }}
+                                  />
+                                  <div className={styles.productDetails}>
+                                    <h4 className={styles.productTitle}>
+                                      {tt(he.decode(item.product_name || ""))}
+                                    </h4>
+                                    <div className={styles.productMeta}>
+                                      <span>{t.quantity}: {item.qty || 1}</span>
+                                      {item.price && (
+                                        <>
+                                          <span>·</span>
+                                          <span className={styles.productPrice}>
+                                            {parseFloat(item.price).toFixed(2)} {currency?.symbol || "AED"}
+                                          </span>
+                                        </>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className={styles.productActions}>
+                                  {isReviewed ? (
+                                    <span className={styles.reviewedBadge}>
+                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="20 6 9 17 4 12" />
+                                      </svg>
+                                      {t.reviewed}
+                                    </span>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleReviewDrawer(productId)}
+                                      className={`${styles.dropReviewBtn} ${isOpen ? styles.dropReviewBtnActive : ""}`}
+                                    >
+                                      <span>{isOpen ? t.cancel : t.reviewProduct}</span>
+                                      <svg
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        style={{
+                                          transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                          transition: "transform 0.2s ease",
+                                        }}
+                                      >
+                                        <polyline points="6 9 12 15 18 9" />
+                                      </svg>
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Inline Review Drawer (Collapsible) */}
+                              {!isReviewed && (
+                                <div
+                                  className={`${styles.reviewDrawer} ${
+                                    isOpen ? styles.reviewDrawerOpen : ""
+                                  }`}
+                                >
+                                  <div className={styles.drawerInner}>
+                                    <div className={styles.rewardNotice}>
+                                      <span>🎁</span>
+                                      <span>
+                                        <strong>{t.rewardTitle}:</strong> {t.rewardDesc}
+                                      </span>
+                                    </div>
+
+                                    <form onSubmit={(e) => handleProductReviewSubmit(e, productId)}>
+                                      <div className={styles.ratingRow}>
+                                        <div className={styles.ratingLabel}>
+                                          <span>{t.rateThisProduct}</span>
+                                          <span className={styles.ratingDescription}>
+                                            {getRatingDescription(hoverRating || rating)}
+                                          </span>
+                                        </div>
+                                        <div className={styles.starGroup}>
+                                          {[1, 2, 3, 4, 5].map((starVal) => (
+                                            <button
+                                              key={starVal}
+                                              type="button"
+                                              className={`${styles.starBtn} ${
+                                                starVal <= (hoverRating || rating)
+                                                  ? styles.starActive
+                                                  : ""
+                                              }`}
+                                              onClick={() =>
+                                                setRatingMap((prev) => ({
+                                                  ...prev,
+                                                  [productId]: starVal,
+                                                }))
+                                              }
+                                              onMouseEnter={() =>
+                                                setHoverRatingMap((prev) => ({
+                                                  ...prev,
+                                                  [productId]: starVal,
+                                                }))
+                                              }
+                                              onMouseLeave={() =>
+                                                setHoverRatingMap((prev) => ({
+                                                  ...prev,
+                                                  [productId]: 0,
+                                                }))
+                                              }
+                                              aria-label={`Rate ${starVal} of 5`}
+                                            >
+                                              ★
+                                            </button>
+                                          ))}
+                                        </div>
+                                      </div>
+
+                                      <textarea
+                                        className={styles.textareaField}
+                                        placeholder={t.reviewPlaceholder}
+                                        value={commentMap[productId] || ""}
+                                        onChange={(e) =>
+                                          setCommentMap((prev) => ({
+                                            ...prev,
+                                            [productId]: e.target.value,
+                                          }))
+                                        }
+                                        rows={3}
+                                        required
+                                      />
+
+                                      {itemError && (
+                                        <div className={styles.errorMessage}>
+                                          {itemError}
+                                        </div>
+                                      )}
+
+                                      <div className={styles.drawerFooter}>
+                                        <button
+                                          type="button"
+                                          className={styles.cancelBtn}
+                                          onClick={() => setActiveReviewProductId(null)}
+                                        >
+                                          {t.cancel}
+                                        </button>
+                                        <button
+                                          type="submit"
+                                          className={styles.submitReviewBtn}
+                                          disabled={
+                                            isSubmitting ||
+                                            !(commentMap[productId] || "").trim()
+                                          }
+                                        >
+                                          {isSubmitting ? t.submitting : t.submitReview}
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  );
-                })}
+                  </div>
+
+                  {/* Bottom Action Row (Under Order Card in 70% column) */}
+                  <div className={styles.actionRow}>
+                    <Link href={`/${currentLang}`} className={styles.continueShoppingBtn}>
+                      {t.continueShopping}
+                    </Link>
+                  </div>
+                </div>
+
+                {/* 30% Right Column: Sticky Rate Your Website Experience Card */}
+                <div className={styles.sidebarColumn}>
+                  <div className={styles.feedbackCardSticky}>
+                    <div className={styles.feedbackHeader}>
+                      <h3 className={styles.feedbackTitle}>{t.experienceTitle}</h3>
+                      <p className={styles.feedbackSubtitle}>
+                        {t.experienceSubtitle}
+                      </p>
+                    </div>
+
+                    {feedbackSubmitted ? (
+                      <div className={styles.feedbackSuccessAlert}>
+                        {t.feedbackSuccessAlert}
+                      </div>
+                    ) : (
+                      <form onSubmit={handleFeedbackSubmit} className={styles.feedbackFormWrapper}>
+                        <div className={styles.feedbackStarRow}>
+                          {[1, 2, 3, 4, 5].map((starVal) => (
+                            <button
+                              key={starVal}
+                              type="button"
+                              className={`${styles.feedbackStar} ${
+                                starVal <= (hoverFeedbackRating || feedbackRating)
+                                  ? styles.feedbackStarActive
+                                  : ""
+                              }`}
+                              onClick={() => setFeedbackRating(starVal)}
+                              onMouseEnter={() => setHoverFeedbackRating(starVal)}
+                              onMouseLeave={() => setHoverFeedbackRating(0)}
+                              aria-label={`Rate ${starVal} of 5`}
+                            >
+                              ★
+                            </button>
+                          ))}
+                        </div>
+
+                        {feedbackRating > 0 && (
+                          <div className={styles.feedbackRatingLabel}>
+                            {getRatingDescription(hoverFeedbackRating || feedbackRating)}
+                          </div>
+                        )}
+
+                        <textarea
+                          className={styles.feedbackTextarea}
+                          placeholder={t.experiencePlaceholder}
+                          rows={3}
+                          value={feedbackComment}
+                          onChange={(e) => setFeedbackComment(e.target.value)}
+                        />
+
+                        {feedbackError && (
+                          <div className={styles.errorMessage}>{feedbackError}</div>
+                        )}
+
+                        <button
+                          type="submit"
+                          className={styles.feedbackSubmitBtn}
+                          disabled={feedbackSubmitting || feedbackRating === 0}
+                        >
+                          {feedbackSubmitting ? t.submitting : t.submitFeedback}
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                </div>
+
               </div>
-            </div>
+            </>
           )}
 
         </div>
@@ -505,3 +772,4 @@ export default function ReviewOrderLanding() {
     </div>
   );
 }
+
