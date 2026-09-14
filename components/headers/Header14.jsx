@@ -155,13 +155,17 @@ export default function Header14() {
             label: locale === "ar" ? "العناوين" : "Addresses",
         },
         {
+            href: "/account_reviews",
+            label: locale === "ar" ? "تقييماتي" : "My Reviews",
+        },
+        {
             href: "/account_coupons",
             label: locale === "ar" ? "كوبوناتي" : "My Coupons",
         },
-        {
-            href: "/account_loyalty",
-            label: locale === "ar" ? "نقاط الولاء" : "Loyalty Points",
-        },
+        // {
+        //     href: "/account_loyalty",
+        //     label: locale === "ar" ? "نقاط الولاء" : "Loyalty Points",
+        // },
         {
             href: "/account_devices",
             label: locale === "ar" ? "الأجهزة النشطة" : "Active Devices",
@@ -734,7 +738,7 @@ export default function Header14() {
                                                 <ul className="list-unstyled mb-0 text-start">
                                                     {items.map((it) => (
                                                         <li
-                                                             key={it.href}
+                                                            key={it.href}
                                                             className={
                                                                 isActive(
                                                                     it.href

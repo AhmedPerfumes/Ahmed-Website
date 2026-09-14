@@ -69,7 +69,7 @@ export default function AccountOrders() {
       if (!res.ok) throw new Error("Failed to fetch orders");
       const json = await res.json();
       setData(json.data || []);
-      setPageCount(Math.ceil((json.total || 0) / pagination.pageSize));
+      setPageCount(json.last_page || Math.ceil((json.total || 0) / pagination.pageSize) || 1);
 
       // Map products eagerly loaded from backend
       const summaryResults = {};

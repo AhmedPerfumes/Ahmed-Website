@@ -17,6 +17,7 @@ export default function DashboardLayout({ children }) {
     if (path.includes("account_edit_address")) return "Addresses";
     if (path.includes("account_edit")) return "Account Details";
     if (path.includes("account_coupons")) return "Your Coupons";
+    if (path.includes("account_reviews")) return "My Reviews";
     if (path.includes("account_loyalty")) return "Loyalty Points";
     if (path.includes("account_devices")) return "Active Devices & Security";
     return "Dashboard";
