@@ -185,10 +185,7 @@ const NewHero = () => {
 
         const activeSlide = swiper.slides[swiper.activeIndex];
 
-        if (!activeSlide) return;
-
         const texts = activeSlide.querySelectorAll(".gsap-text");
-        const bg = activeSlide.querySelector(".gsap-bg");
 
         if (texts && texts.length > 0) {
             gsap.fromTo(
@@ -204,21 +201,6 @@ const NewHero = () => {
                     stagger: 0.12,
                     ease: "power4.out",
                     delay: 0.4,
-                }
-            );
-        }
-
-        if (bg) {
-            gsap.fromTo(
-                bg,
-                {
-                    scale: isMobile ? 1.15 : 1.12,
-                    transformOrigin: "center center",
-                },
-                {
-                    scale: 1,
-                    duration: 6,
-                    ease: "power1.out",
                 }
             );
         }
@@ -623,6 +605,8 @@ const NewHero = () => {
                 .gsap-bg {
                     object-fit: cover !important;
                     object-position: center center !important;
+                    transform: none !important;
+                    will-change: auto !important;
                 }
 
                 .unique-btn-modern {
@@ -676,15 +660,16 @@ const NewHero = () => {
                 }
 
                 /* ═══════════════════════════════════════════════════════════════════
-                   HERO SECTION - LAPTOP COMPACT STYLING & SCALING (992px to 1536px)
+                   HERO SECTION - LAPTOP STYLING & SCALING (992px to 1536px)
                    ═══════════════════════════════════════════════════════════════════ */
 
                 @media (min-width: 992px) and (max-width: 1536px) {
-                    /* Compact hero container height on laptops */
+                    /* Ensure full height without cutting the banner */
                     .new-hero-wrapper {
-                        height: 80vh !important;
-                        min-height: 520px !important;
-                        max-height: 640px !important;
+                        height: 100vh !important;
+                        height: 100dvh !important;
+                        min-height: 100vh !important;
+                        max-height: none !important;
                     }
 
                     /* Season typography & spacing */
@@ -785,9 +770,10 @@ const NewHero = () => {
                 /* Mid-size laptops (≤1366px e.g. standard 13", 14" laptops) */
                 @media (min-width: 992px) and (max-width: 1366px) {
                     .new-hero-wrapper {
-                        height: 78vh !important;
-                        min-height: 490px !important;
-                        max-height: 590px !important;
+                        height: 100vh !important;
+                        height: 100dvh !important;
+                        min-height: 100vh !important;
+                        max-height: none !important;
                     }
                     h1.gsap-text {
                         font-size: clamp(1.85rem, 3.3vw, 2.8rem) !important;
@@ -815,9 +801,10 @@ const NewHero = () => {
                 /* Smaller laptops & Landscape Tablets (≤1200px) */
                 @media (min-width: 992px) and (max-width: 1200px) {
                     .new-hero-wrapper {
-                        height: 75vh !important;
-                        min-height: 460px !important;
-                        max-height: 540px !important;
+                        height: 100vh !important;
+                        height: 100dvh !important;
+                        min-height: 100vh !important;
+                        max-height: none !important;
                     }
                     h1.gsap-text {
                         font-size: clamp(1.7rem, 3vw, 2.4rem) !important;
@@ -851,9 +838,10 @@ const NewHero = () => {
                 /* Compact laptops (≤1050px) */
                 @media (min-width: 992px) and (max-width: 1050px) {
                     .new-hero-wrapper {
-                        height: 72vh !important;
-                        min-height: 430px !important;
-                        max-height: 500px !important;
+                        height: 100vh !important;
+                        height: 100dvh !important;
+                        min-height: 100vh !important;
+                        max-height: none !important;
                     }
                     h1.gsap-text {
                         font-size: clamp(1.5rem, 2.6vw, 2.1rem) !important;
