@@ -9,12 +9,13 @@ import { currencyOptions, languageOptions2 } from "@/data/footer";
 
 import Image from "next/image";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { FiLogOut, FiUser, FiShoppingBag } from "react-icons/fi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { IoLocationOutline } from "react-icons/io5";
 import { useMenu } from "../../context/MenuContext";
 import { useUser } from "../../context/UserContext";
+import { useContextElement } from "@/context/Context";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { renderPrice } from "@/utlis/priceRenderer";
@@ -127,7 +128,7 @@ export default function Header14() {
     const router = useRouter();
     const pathname = usePathname();
     const { isLoggedIn, logout, couponCount } = useUser();
-
+    const { addProductToCart, isAddedToCartProducts, cartProducts = [] } = useContextElement();
 
     const [scrollState, setScrollState] = useState("visible");
     const [isScrolled, setIsScrolled] = useState(false);
@@ -136,6 +137,7 @@ export default function Header14() {
     const [searchKeyWord, setSearchKeyWord] = useState("");
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [addedId, setAddedId] = useState(null);
 
     const containerRef = useRef(null);
     const inputRef = useRef(null);
@@ -262,6 +264,42 @@ export default function Header14() {
         cleanedStr = cleanedStr.replace(/[^\w\s-]/g, "");
         return cleanedStr.replace(/\s+/g, " ").trim();
     }
+
+    const isProductInCart = useCallback(
+        (productId) => {
+            if (!productId) return false;
+            if (typeof isAddedToCartProducts === "function" && isAddedToCartProducts(productId)) {
+                return true;
+            }
+            return (cartProducts || []).some(
+                (p) => String(p.product_id) === String(productId) && !p.is_gift
+            );
+        },
+        [isAddedToCartProducts, cartProducts]
+    );
+
+    const handleAddToCart = (product) => {
+        const prodId = product?.product_id || product?.id;
+        if (!product || product.in_stock === false || isProductInCart(prodId)) return;
+        const cartItem = {
+            ...product,
+            id: prodId,
+            product_id: prodId,
+            product_name: product.product_name || product.name,
+            name: product.name || product.product_name,
+            price: product.price,
+            sale_price: product.sale_price || null,
+            image: product.image || (Array.isArray(product.images) ? product.images[0] : (product.product_image || "")),
+            images: Array.isArray(product.images) ? JSON.stringify(product.images) : (product.images || "[]"),
+            quantity: 1,
+            category_name: product.category_name || "",
+            subcategory: product.subcategory || (product.subcategory_name ? { subcategory_name: product.subcategory_name } : null),
+            subcategory_name: product.subcategory_name || product.subcategory?.subcategory_name || "",
+        };
+        addProductToCart(cartItem);
+        // openCart();
+        setAddedId(prodId);
+    };
 
     // --- Logout ---
     const handleLogout = async (e) => {
@@ -470,55 +508,103 @@ export default function Header14() {
                                             </h6>
                                             <ul className="list-unstyled mb-0">
                                                 {searchSuggestions.map(
-                                                    (item, index) => (
-                                                        <li
-                                                            key={index}
-                                                            className="suggestion-item"
-                                                        >
-                                                            <Link
-                                                                href={`/${locale}${item.url_path}`}
-                                                                className="d-flex align-items-center gap-3 text-decoration-none"
-                                                                onClick={() =>
-                                                                    setIsPopupOpen(
-                                                                        false
-                                                                    )
-                                                                }
+                                                    (item, index) => {
+                                                        const prodId = item.product_id || item.id;
+                                                        const isInCart = isProductInCart(prodId);
+                                                        const isAdded = isInCart || addedId === prodId;
+                                                        const isOutOfStock = item.in_stock === false;
+                                                        return (
+                                                            <li
+                                                                key={prodId || index}
+                                                                className="suggestion-item d-flex align-items-center justify-content-between gap-3"
                                                             >
-                                                                <img
-                                                                    src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`}
-                                                                    alt={
-                                                                        item.name
+                                                                <Link
+                                                                    href={`/${locale}${item.url_path}`}
+                                                                    className="d-flex align-items-center gap-3 text-decoration-none flex-grow-1 min-w-0"
+                                                                    onClick={() =>
+                                                                        setIsPopupOpen(
+                                                                            false
+                                                                        )
                                                                     }
-                                                                    className="suggestion-image"
-                                                                    onError={(
-                                                                        e
-                                                                    ) => {
-                                                                        e.target.src =
-                                                                            "/assets/images/placeholder.png";
-                                                                    }}
-                                                                />
-                                                                <div className="flex-grow-1">
-                                                                    <span className="suggestion-name">{item.name}</span>
-                                                                    <div className="suggestion-price-wrapper">
-                                                                        {/* Pass the item (product) and the global currency context */}
-                                                                        {renderPrice(item, currency)}
+                                                                >
+                                                                    <img
+                                                                        src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`}
+                                                                        alt={
+                                                                            item.name
+                                                                        }
+                                                                        className="suggestion-image flex-shrink-0"
+                                                                        onError={(
+                                                                            e
+                                                                        ) => {
+                                                                            e.target.src =
+                                                                                "/assets/images/placeholder.png";
+                                                                        }}
+                                                                    />
+                                                                    <div className="flex-grow-1 min-w-0">
+                                                                        <span className="suggestion-name text-truncate">{item.name}</span>
+                                                                        <div className="suggestion-price-wrapper">
+                                                                            {/* Pass the item (product) and the global currency context */}
+                                                                            {renderPrice(item, currency)}
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="text-secondary">
-                                                                    <svg
-                                                                        width="12"
-                                                                        height="12"
-                                                                        viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        strokeWidth="2"
-                                                                    >
-                                                                        <path d="M9 18l6-6-6-6" />
-                                                                    </svg>
-                                                                </div>
-                                                            </Link>
-                                                        </li>
-                                                    )
+                                                                </Link>
+
+                                                                <button
+                                                                    type="button"
+                                                                    className={`suggestion-add-cart-btn flex-shrink-0 ${isAdded ? "added" : ""} ${isOutOfStock ? "disabled" : ""}`}
+                                                                    disabled={isOutOfStock || isAdded}
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        e.stopPropagation();
+                                                                        handleAddToCart(item);
+                                                                    }}
+                                                                    title={
+                                                                        isOutOfStock
+                                                                            ? t("Out Of Stock")
+                                                                            : isAdded
+                                                                                ? (locale === "ar" ? "تمت الإضافة" : "Added")
+                                                                                : t("Add To Cart")
+                                                                    }
+                                                                >
+                                                                    {isAdded ? (
+                                                                        <>
+                                                                            <svg
+                                                                                width="14"
+                                                                                height="14"
+                                                                                viewBox="0 0 24 24"
+                                                                                fill="none"
+                                                                                stroke="currentColor"
+                                                                                strokeWidth="2.5"
+                                                                            >
+                                                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                                                            </svg>
+                                                                            <span>{locale === "ar" ? "تمت الإضافة" : "Added"}</span>
+                                                                        </>
+                                                                    ) : isOutOfStock ? (
+                                                                        <span>{t("Out Of Stock")}</span>
+                                                                    ) : (
+                                                                        <>
+                                                                            <svg
+                                                                                width="14"
+                                                                                height="14"
+                                                                                viewBox="0 0 24 24"
+                                                                                fill="none"
+                                                                                stroke="currentColor"
+                                                                                strokeWidth="2"
+                                                                                strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                            >
+                                                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                                                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                                                            </svg>
+                                                                            <span>{t("Add To Cart")}</span>
+                                                                        </>
+                                                                    )}
+                                                                </button>
+                                                            </li>
+                                                        );
+                                                    }
                                                 )}
                                             </ul>
                                             <div className="search-results__footer">

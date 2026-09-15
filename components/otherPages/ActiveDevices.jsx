@@ -1,14 +1,85 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 import { apiClient } from "@/lib/apiClient";
-import { Alert, Button, Card, Spinner, Badge } from "react-bootstrap";
+import styles from "./ActiveDevices.module.css";
+
+const TRANSLATIONS = {
+  en: {
+    hintText: "Review devices currently authenticated with your Ahmed Al Maghribi account. Sign out of any unfamiliar sessions immediately.",
+    headerTitle: "Active Device Sessions",
+    sessionCount: "{count} Active Sessions",
+    singleSessionCount: "1 Active Session",
+    signOutAll: "Sign Out All Other Devices",
+    signingOut: "Signing Out…",
+    thisDevice: "This Device",
+    activeSession: "Active Session",
+    signOut: "Sign Out",
+    ipAddress: "IP: {ip}",
+    unknownIp: "Unknown",
+    lastActive: "Last active: {time}",
+    justNow: "Just now",
+    noDevices: "No Active Sessions",
+    noDevicesSub: "No device sessions found for your account.",
+    confirmSignOutAllTitle: "Sign Out Other Devices?",
+    confirmSignOutAllSub: "Are you sure you want to sign out of all other active devices? You will remain signed in on this current device.",
+    confirmSignOutSingleTitle: "Sign Out Device?",
+    confirmSignOutSingleSub: "Are you sure you want to terminate this active device session?",
+    cancel: "Cancel",
+    confirmSignOut: "Yes, Sign Out",
+    successRevokeSingle: "Device session signed out successfully.",
+    successRevokeAll: "All other device sessions have been signed out.",
+    errorGeneric: "An error occurred. Please try again.",
+    errorFetch: "Failed to load active device sessions.",
+  },
+  ar: {
+    hintText: "راجع الأجهزة المتصلة بحسابك في أحمد المغربي للعطور. يُرجى تسجيل الخروج من أي جلسات غير مألوفة لحماية حسابك.",
+    headerTitle: "جلسات الأجهزة النشطة",
+    sessionCount: "{count} جلسات نشطة",
+    singleSessionCount: "جلسة واحدة نشطة",
+    signOutAll: "تسجيل الخروج من جميع الأجهزة الأخرى",
+    signingOut: "جاري تسجيل الخروج…",
+    thisDevice: "هذا الجهاز",
+    activeSession: "جلسة نشطة",
+    signOut: "تسجيل الخروج",
+    ipAddress: "عنوان IP: {ip}",
+    unknownIp: "غير معروف",
+    lastActive: "آخر نشاط: {time}",
+    justNow: "الآن",
+    noDevices: "لا توجد جلسات نشطة",
+    noDevicesSub: "لم يتم العثور على أي جلسات نشطة مسجلة لحسابك.",
+    confirmSignOutAllTitle: "تسجيل الخروج من الأجهزة الأخرى؟"
+      ,
+    confirmSignOutAllSub: "هل أنت متأكد من رغبتك في تسجيل الخروج من جميع الأجهزة الأخرى؟ ستبقى مسجل الدخول على هذا الجهاز الحالي.",
+    confirmSignOutSingleTitle: "تسجيل الخروج من هذا الجهاز؟",
+    confirmSignOutSingleSub: "هل أنت متأكد من رغبتك في إنهاء هذه الجلسة وتسجيل خروج الجهاز؟",
+    cancel: "إلغاء",
+    confirmSignOut: "نعم، تسجيل الخروج",
+    successRevokeSingle: "تم تسجيل خروج الجهاز بنجاح.",
+    successRevokeAll: "تم تسجيل الخروج من جميع الأجهزة الأخرى بنجاح.",
+    errorGeneric: "حدث خطأ. يرجى المحاولة مرة أخرى.",
+    errorFetch: "تعذر تحميل جلسات الأجهزة النشطة.",
+  },
+};
 
 export default function ActiveDevices() {
+  const locale = useLocale();
+  const t = TRANSLATIONS[locale] || TRANSLATIONS.en;
+  const isRtl = locale === "ar";
+
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // Confirmation modal state
+  const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    type: "single", // "single" | "all"
+    sessionId: null,
+  });
 
   const fetchSessions = async () => {
     setLoading(true);
@@ -19,10 +90,10 @@ export default function ActiveDevices() {
       if (res.ok && data.status === "success") {
         setSessions(data.sessions || []);
       } else {
-        setError(data.message || "Failed to load active device sessions.");
+        setError(data.message || t.errorFetch);
       }
     } catch {
-      setError("Network error. Could not fetch device sessions.");
+      setError(t.errorGeneric);
     } finally {
       setLoading(false);
     }
@@ -43,22 +114,20 @@ export default function ActiveDevices() {
       });
       const data = await res.json();
       if (res.ok && data.status === "success") {
-        setSuccess("Device session signed out successfully.");
+        setSuccess(t.successRevokeSingle);
+        setConfirmModal({ open: false, type: "single", sessionId: null });
         fetchSessions();
       } else {
-        setError(data.message || "Failed to sign out device.");
+        setError(data.message || t.errorGeneric);
       }
     } catch {
-      setError("Network error. Please try again.");
+      setError(t.errorGeneric);
     } finally {
       setActionLoading(false);
     }
   };
 
   const handleRevokeOthers = async () => {
-    if (!window.confirm("Are you sure you want to sign out of all other devices?")) {
-      return;
-    }
     setActionLoading(true);
     setError("");
     setSuccess("");
@@ -68,121 +137,332 @@ export default function ActiveDevices() {
       });
       const data = await res.json();
       if (res.ok && data.status === "success") {
-        setSuccess(data.message || "All other device sessions signed out.");
+        setSuccess(data.message || t.successRevokeAll);
+        setConfirmModal({ open: false, type: "all", sessionId: null });
         fetchSessions();
       } else {
-        setError(data.message || "Failed to sign out other devices.");
+        setError(data.message || t.errorGeneric);
       }
     } catch {
-      setError("Network error. Please try again.");
+      setError(t.errorGeneric);
     } finally {
       setActionLoading(false);
     }
   };
 
-  const getDeviceIcon = (type) => {
+  const openConfirmSingle = (sessionId) => {
+    setConfirmModal({
+      open: true,
+      type: "single",
+      sessionId,
+    });
+  };
+
+  const openConfirmAll = () => {
+    setConfirmModal({
+      open: true,
+      type: "all",
+      sessionId: null,
+    });
+  };
+
+  const closeConfirmModal = () => {
+    if (actionLoading) return;
+    setConfirmModal({ open: false, type: "single", sessionId: null });
+  };
+
+  const formatTimestamp = (dateStr) => {
+    if (!dateStr) return t.justNow;
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return new Intl.DateTimeFormat(isRtl ? "ar-AE" : "en-GB", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(d);
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const renderDeviceIcon = (type) => {
     if (type === "mobile") {
       return (
-        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+          <line x1="12" y1="18" x2="12.01" y2="18" />
         </svg>
       );
     }
     if (type === "tablet") {
       return (
-        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19 0H5C3.34 0 2 1.34 2 3v18c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zm-7 23c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7-4H5V3h14v16z" />
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+          <line x1="12" y1="18" x2="12.01" y2="18" />
         </svg>
       );
     }
     return (
-      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 5h16v11H4V5z" />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
       </svg>
     );
   };
 
+  const sessionCountText =
+    sessions.length === 1
+      ? t.singleSessionCount
+      : t.sessionCount.replace("{count}", sessions.length);
+
   return (
-    <div className="w-100" style={{ maxWidth: 750, margin: "0 auto", fontFamily: "'Kanit-Regular', sans-serif" }}>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h4 className="fw-bold mb-1">Active Device Sessions</h4>
-          <p className="text-muted fs-14 mb-0">Manage devices currently logged into your account.</p>
+    <div className={styles.container} dir={isRtl ? "rtl" : "ltr"}>
+      {/* Top Security Hint Banner */}
+      <div className={styles.hintBanner}>
+        <div className={styles.hintIcon}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
         </div>
+        <p className={styles.hintText}>{t.hintText}</p>
+      </div>
+
+      {/* Header & Bulk Action */}
+      <div className={styles.headerRow}>
+        <div className={styles.headerLeft}>
+          <h3 className={styles.headerTitle}>{t.headerTitle}</h3>
+          {!loading && sessions.length > 0 && (
+            <span className={styles.sessionCountBadge}>{sessionCountText}</span>
+          )}
+        </div>
+
         {sessions.length > 1 && (
-          <Button
-            variant="outline-danger"
-            size="sm"
-            className="rounded-pill px-3"
-            onClick={handleRevokeOthers}
-            disabled={actionLoading}
+          <button
+            type="button"
+            className={styles.btnRevokeAll}
+            onClick={openConfirmAll}
+            disabled={actionLoading || loading}
           >
-            Sign Out All Other Devices
-          </Button>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span>{t.signOutAll}</span>
+          </button>
         )}
       </div>
 
-      {error && <Alert variant="danger" onClose={() => setError("")} dismissible>{error}</Alert>}
-      {success && <Alert variant="success" onClose={() => setSuccess("")} dismissible>{success}</Alert>}
+      {/* Error Alert */}
+      {error && (
+        <div className={`${styles.alertBanner} ${styles.alertError}`}>
+          <div className={styles.alertContent}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span>{error}</span>
+          </div>
+          <button
+            type="button"
+            className={styles.alertCloseBtn}
+            onClick={() => setError("")}
+            aria-label="Dismiss error"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      )}
 
+      {/* Success Alert */}
+      {success && (
+        <div className={`${styles.alertBanner} ${styles.alertSuccess}`}>
+          <div className={styles.alertContent}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>{success}</span>
+          </div>
+          <button
+            type="button"
+            className={styles.alertCloseBtn}
+            onClick={() => setSuccess("")}
+            aria-label="Dismiss success"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      )}
+
+      {/* Loading Skeleton */}
       {loading ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" variant="dark" />
-          <p className="mt-2 text-muted fs-14">Loading device sessions...</p>
+        <div className={styles.deviceList}>
+          {[1, 2, 3].map((i) => (
+            <div key={i} className={styles.skeletonCard}>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: 1 }}>
+                <div className={styles.skeletonRow} style={{ width: "44px", height: "44px", borderRadius: "12px" }} />
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
+                  <div className={styles.skeletonRow} style={{ width: "160px", height: "16px" }} />
+                  <div className={styles.skeletonRow} style={{ width: "220px", height: "12px" }} />
+                </div>
+              </div>
+              <div className={styles.skeletonRow} style={{ width: "80px", height: "30px", borderRadius: "8px" }} />
+            </div>
+          ))}
         </div>
       ) : sessions.length === 0 ? (
-        <Alert variant="info">No active device sessions found.</Alert>
+        /* Empty State */
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <h4 className={styles.emptyTitle}>{t.noDevices}</h4>
+          <p className={styles.emptySub}>{t.noDevicesSub}</p>
+        </div>
       ) : (
-        <div className="d-flex flex-column gap-3">
-          {sessions.map((session) => (
-            <Card key={session.session_id} className="border-0 shadow-sm rounded-3 p-3">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-3">
-                  <div
-                    className="p-3 rounded-circle text-dark d-flex align-items-center justify-content-center"
-                    style={{ backgroundColor: "#f8f9fa" }}
-                  >
-                    {getDeviceIcon(session.device_type)}
+        /* Sessions List */
+        <div className={styles.deviceList}>
+          {sessions.map((session) => {
+            const isCurrent = session.is_current;
+            const cardClass = `${styles.deviceCard} ${isCurrent ? styles.deviceCardCurrent : ""}`;
+
+            return (
+              <div key={session.session_id} className={cardClass}>
+                <div className={styles.deviceLeft}>
+                  <div className={styles.deviceIconCircle}>
+                    {renderDeviceIcon(session.device_type)}
                   </div>
-                  <div>
-                    <div className="d-flex align-items-center gap-2">
-                      <h6 className="fw-bold mb-0">{session.device_name}</h6>
-                      {session.is_current && (
-                        <Badge bg="success" className="px-2 py-1 fs-12 fw-normal">
-                          This Device
-                        </Badge>
+
+                  <div className={styles.deviceInfo}>
+                    <div className={styles.deviceTitleRow}>
+                      <h4 className={styles.deviceName}>
+                        {session.device_name || "Device"}
+                      </h4>
+                      {isCurrent && (
+                        <span className={styles.badgeCurrent}>
+                          <span className={styles.currentDot} />
+                          {t.thisDevice}
+                        </span>
                       )}
                     </div>
-                    <div className="text-muted fs-13 mt-1">
-                      <span>IP: {session.ip_address || "Unknown"}</span>
-                      <span className="mx-2">•</span>
-                      <span>
-                        Last active:{" "}
+
+                    <div className={styles.deviceMeta}>
+                      <span className={styles.metaItem}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="2" y1="12" x2="22" y2="12" />
+                          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                        {t.ipAddress.replace("{ip}", session.ip_address || t.unknownIp)}
+                      </span>
+                      <span className={styles.metaSeparator}>•</span>
+                      <span className={styles.metaItem}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg>
                         {session.last_active_at
-                          ? new Date(session.last_active_at).toLocaleString()
-                          : "Just now"}
+                          ? t.lastActive.replace("{time}", formatTimestamp(session.last_active_at))
+                          : t.justNow}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  {!session.is_current ? (
-                    <Button
-                      variant="link"
-                      className="text-danger p-0 fw-medium text-decoration-underline fs-14"
-                      onClick={() => handleRevokeSession(session.session_id)}
+                <div className={styles.deviceRight}>
+                  {!isCurrent ? (
+                    <button
+                      type="button"
+                      className={styles.btnRevoke}
+                      onClick={() => openConfirmSingle(session.session_id)}
                       disabled={actionLoading}
                     >
-                      Sign Out
-                    </Button>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                      </svg>
+                      <span>{t.signOut}</span>
+                    </button>
                   ) : (
-                    <span className="text-muted fs-13 fst-italic">Active Session</span>
+                    <span className={styles.currentDeviceTag}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>{t.activeSession}</span>
+                    </span>
                   )}
                 </div>
               </div>
-            </Card>
-          ))}
+            );
+          })}
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {confirmModal.open && (
+        <div className={styles.modalBackdrop} onClick={closeConfirmModal}>
+          <div
+            className={styles.modalWindow}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modalIconCircle}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+            </div>
+
+            <h4 className={styles.modalTitle}>
+              {confirmModal.type === "all"
+                ? t.confirmSignOutAllTitle
+                : t.confirmSignOutSingleTitle}
+            </h4>
+
+            <p className={styles.modalSub}>
+              {confirmModal.type === "all"
+                ? t.confirmSignOutAllSub
+                : t.confirmSignOutSingleSub}
+            </p>
+
+            <div className={styles.modalActions}>
+              <button
+                type="button"
+                className={styles.btnModalCancel}
+                onClick={closeConfirmModal}
+                disabled={actionLoading}
+              >
+                {t.cancel}
+              </button>
+
+              <button
+                type="button"
+                className={styles.btnModalConfirm}
+                onClick={() => {
+                  if (confirmModal.type === "all") {
+                    handleRevokeOthers();
+                  } else {
+                    handleRevokeSession(confirmModal.sessionId);
+                  }
+                }}
+                disabled={actionLoading}
+              >
+                {actionLoading && <span className={styles.spinnerSmall} />}
+                <span>{actionLoading ? t.signingOut : t.confirmSignOut}</span>
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
