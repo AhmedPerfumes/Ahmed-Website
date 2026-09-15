@@ -150,23 +150,25 @@ export default function NewsLetter({popUp}) {
                                         className="section-title fw-normal mb-2 mb-lg-3"
                                         style={{ color: "#1D1B19", fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem, 5vw, 1.8rem)" }}
                                     >
-                                        {locale === 'ar' ? "سجّل ووفّر ۱۰٪" : elm.name}
+                                        {(locale === 'ar' && elm.name_ar) ? elm.name_ar : elm.name}
                                     </h3>
 
                                     <p
                                         className="mb-2 mb-lg-3"
                                         style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: "#5A554A", fontFamily: "'Inter', sans-serif", lineHeight: "1.5" }}
                                     >
-                                        {locale === 'ar' ? "سجّل الآن واستمتع بخصم ۱۰٪ على طلبك الأول!" : elm.description}
+                                        {(locale === 'ar' && elm.description_ar) ? elm.description_ar : elm.description}
                                     </p>
 
-                                    <div
-                                        className="mb-3 mb-lg-4"
-                                        style={{ fontSize: "clamp(0.8rem, 3vw, 0.95rem)", color: "#555" }}
-                                        dangerouslySetInnerHTML={{
-                                            __html: locale === 'ar' ? '<span style="color:hsl(0,75%,60%);"><strong>ملاحظة: سيتم تطبيق جميع العروض والخصومات عند الدفع</strong></span>' : elm.content?.replace(/<\/?p>/g, ""),
-                                        }}
-                                    />
+                                    {((locale === 'ar' && elm.content_ar) ? elm.content_ar : elm.content) && (
+                                        <div
+                                            className="mb-3 mb-lg-4"
+                                            style={{ fontSize: "clamp(0.8rem, 3vw, 0.95rem)", color: "#555" }}
+                                            dangerouslySetInnerHTML={{
+                                                __html: ((locale === 'ar' && elm.content_ar) ? elm.content_ar : elm.content)?.replace(/<\/?p>/g, ""),
+                                            }}
+                                        />
+                                    )}
 
                                     <div className="d-flex justify-content-center mt-2">
                                         <a href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark w-100 text-center justify-content-center">
