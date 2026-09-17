@@ -287,18 +287,50 @@ export default function Context({ children }) {
     return "/placeholder.png";
   };
 
-  const triggerToast = ({ name = "", image = "/placeholder.png", message = "", type = "success" }) => {
+  const triggerToast = ({
+    product = null,
+    name = "",
+    image = "",
+    message = "",
+    type = "success",
+    duration = 3000
+  }) => {
+    const rawTitle = name || product?.product_name || product?.name || product?.title || "";
+    const title = removeSpecialCharactersAndAmp(rawTitle);
+    const img = (image && image !== "/placeholder.png")
+      ? image
+      : (product ? buildToastImageUrl(product) : "/assets/images/placeholder.png");
+
     toast.custom((toastObj) => (
-      <div className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'} ${type}`}>
-        <img src={image} alt={name} className="toast-image" />
+      <div
+        className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'} ${type}`}
+        onClick={() => toast.dismiss(toastObj.id)}
+      >
+        <img
+          src={img}
+          alt={title || "Notification"}
+          className="toast-image"
+          onError={(e) => {
+            e.target.src = "/assets/images/placeholder.png";
+          }}
+        />
         <div className="toast-details">
-          <p className="toast-title">{name}</p>
-          <p className="toast-msg">{message}</p>
+          {title && <p className="toast-title">{title}</p>}
+          {message && <p className="toast-msg">{message}</p>}
         </div>
-        <button className="close-toast" onClick={() => toast.dismiss(toastObj.id)}>×</button>
+        <button
+          className="close-toast"
+          onClick={(e) => {
+            e.stopPropagation();
+            toast.dismiss(toastObj.id);
+          }}
+          aria-label="Close"
+        >
+          ×
+        </button>
       </div>
     ), {
-      duration: 3000,
+      duration,
       position: 'bottom-right',
     });
   };
@@ -431,11 +463,10 @@ export default function Context({ children }) {
 
       if (currentQty >= MAX_LIMIT) {
         triggerToast({
-          name: "Maximum Quantity Reached",
-          message: `You cannot add more than ${MAX_LIMIT} of this product.`,
-          image: "/assets/images/danger.png",
+          product,
+          name: removeSpecialCharactersAndAmp(product.product_name),
+          message: `You cannot add more than ${MAX_LIMIT} of ${removeSpecialCharactersAndAmp(product.product_name)}.`,
           type: "error",
-          showButton: false
         });
         return;
       }
@@ -452,11 +483,10 @@ export default function Context({ children }) {
     // Ensure first quantity does not exceed MAX_LIMIT (just in case stock = 0)
     if (!product.is_gift && product.quantity > MAX_LIMIT) {
       triggerToast({
-        name: "Maximum Quantity Reached",
-        message: `You cannot add more than ${MAX_LIMIT} of this product.`,
-        image: "/assets/images/danger.png",
+        product,
+        name: removeSpecialCharactersAndAmp(product.product_name),
+        message: `You cannot add more than ${MAX_LIMIT} of ${removeSpecialCharactersAndAmp(product.product_name)}.`,
         type: "error",
-        showButton: false
       });
       return;
     }
@@ -503,14 +533,18 @@ export default function Context({ children }) {
     const imageUrl = buildToastImageUrl(product);
 
     toast.custom((toastObj) => (
-      <div className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'}`}>
+      <div
+        className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'}`}
+        onClick={() => toast.dismiss(toastObj.id)}
+      >
         <Image width={50} height={50} src={imageUrl} alt={removeSpecialCharactersAndAmp(product.product_name)} className="toast-image" />
         <div className="toast-details">
           <p className="toast-title">{removeSpecialCharactersAndAmp(product.product_name)}</p>
           <div className="toast-actions">
             <button
               className="view-cart-btn"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
                 document.getElementById("cartDrawer")?.classList.add("aside_visible");
                 toast.dismiss(toastObj.id);
@@ -520,7 +554,16 @@ export default function Context({ children }) {
             </button>
           </div>
         </div>
-        <button className="close-toast" onClick={() => toast.dismiss(toastObj.id)}>×</button>
+        <button
+          className="close-toast"
+          onClick={(e) => {
+            e.stopPropagation();
+            toast.dismiss(toastObj.id);
+          }}
+          aria-label="Close"
+        >
+          ×
+        </button>
       </div>
     ), {
       duration: 3000,
@@ -591,14 +634,18 @@ export default function Context({ children }) {
         const productName = addedItem.product_name || addedItem.title || "Product";
 
         toast.custom((toastObj) => (
-          <div className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'}`}>
+          <div
+            className={`custom-cart-toast ${toastObj.visible ? 'animate-enter' : 'animate-leave'}`}
+            onClick={() => toast.dismiss(toastObj.id)}
+          >
             <img src={imageUrl} alt={productName} className="toast-image" />
             <div className="toast-details">
               <p className="toast-title">{productName}</p>
               <div className="toast-actions">
                 <button
                   className="view-cart-btn"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
                     document.getElementById("cartDrawer")?.classList.add("aside_visible");
                     toast.dismiss(toastObj.id);
@@ -608,7 +655,16 @@ export default function Context({ children }) {
                 </button>
               </div>
             </div>
-            <button className="close-toast" onClick={() => toast.dismiss(toastObj.id)}>×</button>
+            <button
+              className="close-toast"
+              onClick={(e) => {
+                e.stopPropagation();
+                toast.dismiss(toastObj.id);
+              }}
+              aria-label="Close"
+            >
+              ×
+            </button>
           </div>
         ), {
           duration: 3000,

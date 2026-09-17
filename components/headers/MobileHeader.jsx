@@ -3,7 +3,7 @@ import { currencyOptions, languageOptions } from "@/data/footer";
 
 import { socialLinks } from "@/data/socials";
 
-import React, { use, useEffect, useState, useRef } from "react";
+import React, { use, useEffect, useState, useRef, useCallback } from "react";
 import { FiLogOut } from "react-icons/fi";
 import CartLength from "./components/CartLength";
 import UserLoggedIn from "./components/UserLoggedIn";
@@ -15,13 +15,16 @@ import User from "./components/User";
 
 
 import { useUser } from "../../context/UserContext";
+import { useContextElement } from "@/context/Context";
+import { renderPrice } from "@/utlis/priceRenderer";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoReorderTwoSharp } from "react-icons/io5";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { useMenu } from "@/context/MenuContext";
 export default function MobileHeader() {
-  const { topHeader } = useMenu();
+  const { topHeader, currency } = useMenu();
+  const { addProductToCart, isAddedToCartProducts, cartProducts = [] } = useContextElement();
   const { logout } = useUser();
   const locale = useLocale();
   const router = useRouter();
@@ -39,6 +42,7 @@ export default function MobileHeader() {
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [addedId, setAddedId] = useState(null);
   const searchInputRef = useRef(null);
   const [currentCountryLink, setCurrentCountryLink] = useState("");
 
@@ -92,6 +96,42 @@ export default function MobileHeader() {
 
   const handleChange = (event) => {
     setSearchKeyWord(event.target.value);
+  };
+
+  const isProductInCart = useCallback(
+    (productId) => {
+      if (!productId) return false;
+      if (typeof isAddedToCartProducts === "function" && isAddedToCartProducts(productId)) {
+        return true;
+      }
+      return (cartProducts || []).some(
+        (p) => String(p.product_id) === String(productId) && !p.is_gift
+      );
+    },
+    [isAddedToCartProducts, cartProducts]
+  );
+
+  const handleAddToCart = (product) => {
+    const prodId = product?.product_id || product?.id;
+    if (!product || product.in_stock === false || isProductInCart(prodId)) return;
+    const cartItem = {
+      ...product,
+      id: prodId,
+      product_id: prodId,
+      product_name: product.product_name || product.name,
+      name: product.name || product.product_name,
+      price: product.price,
+      sale_price: product.sale_price || null,
+      image: product.image || (Array.isArray(product.images) ? product.images[0] : (product.product_image || "")),
+      images: Array.isArray(product.images) ? JSON.stringify(product.images) : (product.images || "[]"),
+      quantity: 1,
+      category_name: product.category_name || "",
+      subcategory: product.subcategory || (product.subcategory_name ? { subcategory_name: product.subcategory_name } : null),
+      subcategory_name: product.subcategory_name || product.subcategory?.subcategory_name || "",
+    };
+    addProductToCart(cartItem);
+    // openCart();
+    setAddedId(prodId);
   };
 
   const handleLogout = async (e) => {
@@ -348,32 +388,70 @@ export default function MobileHeader() {
               </div>
             )}
 
-            {!isSearching && searchSuggestions.map((item, index) => (
-              <Link
-                key={index}
-                href={`/${locale}${item.url_path}`}
-                className="mobile-suggestion-item d-flex align-items-center gap-3 p-3 border-bottom text-decoration-none text-dark"
-                onClick={() => {
-                  setSearchKeyWord("");
-                  setSearchSuggestions([]);
-                  setIsSearchActive(false);
-                }}
-              >
-                <img
-                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`}
-                  alt={item.name}
-                  className="mobile-suggestion-img"
-                  style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '4px' }}
-                />
-                <div className="mobile-suggestion-info flex-grow-1">
-                  <span className="mobile-suggestion-name d-block fw-medium fs-14 text-start">{item.name}</span>
-                  <span className="mobile-suggestion-price text-muted fs-13 text-start d-block">{item.price} {t("AED")}</span>
+            {!isSearching && searchSuggestions.map((item, index) => {
+              const prodId = item.product_id || item.id;
+              const isInCart = isProductInCart(prodId);
+              const isAdded = isInCart || addedId === prodId;
+              const isOutOfStock = item.in_stock === false;
+              return (
+                <div
+                  key={prodId || index}
+                  className="mobile-suggestion-item d-flex align-items-center justify-content-between gap-3 p-3 border-bottom"
+                >
+                  <Link
+                    href={`/${locale}${item.url_path}`}
+                    className="d-flex align-items-center gap-3 text-decoration-none text-dark flex-grow-1 min-w-0"
+                    onClick={() => {
+                      setSearchKeyWord("");
+                      setSearchSuggestions([]);
+                      setIsSearchActive(false);
+                    }}
+                  >
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.image}`}
+                      alt={item.name}
+                      className="mobile-suggestion-img flex-shrink-0"
+                      style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px' }}
+                      onError={(e) => {
+                        e.target.src = "/assets/images/placeholder.png";
+                      }}
+                    />
+                    <div className="mobile-suggestion-info flex-grow-1 min-w-0">
+                      <span className="mobile-suggestion-name d-block fw-medium fs-14 text-start text-truncate">{item.name}</span>
+                      <div className="suggestion-price-wrapper text-start">
+                        {renderPrice(item, currency)}
+                      </div>
+                    </div>
+                  </Link>
+
+                  <button
+                    type="button"
+                    className={`mobile-suggestion-cart-btn flex-shrink-0 ${isAdded ? "added" : ""} ${isOutOfStock ? "disabled" : ""}`}
+                    disabled={isOutOfStock || isAdded}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleAddToCart(item);
+                    }}
+                    title={isOutOfStock ? t("Out Of Stock") : isAdded ? (locale === "ar" ? "تمت الإضافة" : "Added") : t("Add To Cart")}
+                  >
+                    {isAdded ? (
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    ) : isOutOfStock ? (
+                      <span className="out-of-stock-label">{locale === "ar" ? "نفذت" : "Out"}</span>
+                    ) : (
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                      </svg>
+                    )}
+                  </button>
                 </div>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </Link>
-            ))}
+              );
+            })}
 
             {/* "View All" Link for Mobile */}
             {!isSearching && searchSuggestions.length > 0 && (

@@ -4065,6 +4065,7 @@ footer {
   max-width: 350px;
   gap: 12px;
   pointer-events: auto;
+  cursor: pointer;
 
   &.animate-enter {
     animation: slideInRight 0.3s ease-out forwards;
@@ -4096,6 +4097,15 @@ footer {
       color: #000;
     }
 
+    .toast-msg {
+      font-size: 11.5px;
+      color: #666;
+      margin: 0;
+      line-height: 1.35;
+      white-space: normal;
+      word-break: break-word;
+    }
+
     .toast-actions {
       display: flex;
       gap: 10px;
@@ -4119,6 +4129,14 @@ footer {
     }
   }
 
+  &.error {
+    border-left: 3px solid #dc3545;
+  }
+
+  &.delete {
+    border-left: 3px solid #6c757d;
+  }
+
   .close-toast {
     background: none;
     border: none;
@@ -4130,6 +4148,19 @@ footer {
 
     &:hover {
       color: #333;
+    }
+  }
+}
+
+[dir="rtl"] {
+  .custom-cart-toast {
+    &.error {
+      border-left: 1px solid #eee;
+      border-right: 3px solid #dc3545;
+    }
+    &.delete {
+      border-left: 1px solid #eee;
+      border-right: 3px solid #6c757d;
     }
   }
 }

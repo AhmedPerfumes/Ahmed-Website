@@ -98,7 +98,7 @@ export default function AccountReviews() {
   const t = TRANSLATIONS[currentLang];
   const { isLoggedIn, authLoading } = useUser();
   const { currency } = useMenu();
-  const { addProductToCart } = useContextElement();
+  const { addProductToCart, isAddedToCartProducts, cartProducts = [] } = useContextElement();
 
   const [reviews, setReviews] = useState([]);
   const [counts, setCounts] = useState({ all: 0, published: 0, pending: 0 });
@@ -117,8 +117,21 @@ export default function AccountReviews() {
   const [editError, setEditError] = useState("");
   const [successToast, setSuccessToast] = useState("");
 
+  const isProductInCart = useCallback(
+    (productId) => {
+      if (!productId) return false;
+      if (typeof isAddedToCartProducts === "function" && isAddedToCartProducts(productId)) {
+        return true;
+      }
+      return (cartProducts || []).some(
+        (p) => String(p.product_id) === String(productId) && !p.is_gift
+      );
+    },
+    [isAddedToCartProducts, cartProducts]
+  );
+
   const handleBuyAgain = (review) => {
-    if (!review.product_id || review.in_stock === false) return;
+    if (!review.product_id || review.in_stock === false || isProductInCart(review.product_id)) return;
 
     const baseProduct = review.product || {};
     const primaryImage =
@@ -146,9 +159,6 @@ export default function AccountReviews() {
     openCart();
 
     setAddedReviewId(review.id);
-    setTimeout(() => {
-      setAddedReviewId(null);
-    }, 2000);
   };
 
   // Redirect if unauthenticated
@@ -496,52 +506,59 @@ export default function AccountReviews() {
 
                     <div className={`${styles.actionButtonsWrapper} ${review.can_edit ? styles.hasEditBtn : ""}`}>
                       {/* Buy Again Button */}
-                      <button
-                        type="button"
-                        className={`${styles.buyAgainBtn} ${addedReviewId === review.id ? styles.buyAgainBtnAdded : ""
-                          }`}
-                        onClick={() => handleBuyAgain(review)}
-                        disabled={review.in_stock === false}
-                        title={review.in_stock === false ? t.outOfStock : t.buyAgain}
-                      >
-                        {addedReviewId === review.id ? (
-                          <>
-                            <svg
-                              width="13"
-                              height="13"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                            <span>{t.addedToCart}</span>
-                          </>
-                        ) : review.in_stock === false ? (
-                          <span>{t.outOfStock}</span>
-                        ) : (
-                          <>
-                            <svg
-                              width="13"
-                              height="13"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                              <line x1="3" y1="6" x2="21" y2="6" />
-                              <path d="M16 10a4 4 0 0 1-8 0" />
-                            </svg>
-                            <span>{t.buyAgain}</span>
-                          </>
-                        )}
-                      </button>
+                      {(() => {
+                        const isInCart = isProductInCart(review.product_id);
+                        const isAdded = isInCart || addedReviewId === review.id;
+                        const isOos = review.in_stock === false;
+
+                        return (
+                          <button
+                            type="button"
+                            className={`${styles.buyAgainBtn} ${isAdded ? styles.buyAgainBtnAdded : ""}`}
+                            onClick={() => handleBuyAgain(review)}
+                            disabled={isOos || isAdded}
+                            title={isOos ? t.outOfStock : isAdded ? t.addedToCart : t.buyAgain}
+                          >
+                            {isAdded ? (
+                              <>
+                                <svg
+                                  width="13"
+                                  height="13"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                <span>{t.addedToCart}</span>
+                              </>
+                            ) : isOos ? (
+                              <span>{t.outOfStock}</span>
+                            ) : (
+                              <>
+                                <svg
+                                  width="13"
+                                  height="13"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                  <line x1="3" y1="6" x2="21" y2="6" />
+                                  <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg>
+                                <span>{t.buyAgain}</span>
+                              </>
+                            )}
+                          </button>
+                        );
+                      })()}
 
                       {review.can_edit && (
                         <button

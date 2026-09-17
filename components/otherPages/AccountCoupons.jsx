@@ -1,16 +1,63 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocale } from "next-intl";
+import styles from "./AccountCoupons.module.css";
+
+const TRANSLATIONS = {
+  en: {
+    hintText: "Manage and apply your exclusive discount codes at checkout.",
+    tabAll: "All Coupons",
+    tabActive: "Active",
+    tabRedeemed: "Redeemed",
+    tabExpired: "Expired",
+    off: "OFF",
+    validUntil: "Valid until",
+    expiredOn: "Expired on",
+    redeemedOn: "Redeemed",
+    statusActive: "Active",
+    statusExpired: "Expired",
+    statusRedeemed: "Redeemed",
+    copyCode: "Copy Code",
+    copied: "Copied!",
+    clickToCopy: "Click to copy code",
+    noCoupons: "No Coupons Available",
+    noCouponsSub: "You don't have any vouchers in this category at the moment.",
+    specialCoupon: "Exclusive Offer",
+  },
+  ar: {
+    hintText: "أدر واستخدم كوبونات الخصم الحصرية الخاصة بك عند إتمام الطلب.",
+    tabAll: "جميع الكوبونات",
+    tabActive: "النشطة",
+    tabRedeemed: "المستخدمة",
+    tabExpired: "المنتهية",
+    off: "خصم",
+    validUntil: "صالح حتى",
+    expiredOn: "انتهى في",
+    redeemedOn: "تم الاستخدام",
+    statusActive: "نشط",
+    statusExpired: "منتهي",
+    statusRedeemed: "مستخدم",
+    copyCode: "نسخ الكود",
+    copied: "تم النسخ!",
+    clickToCopy: "انقر لنسخ الكود",
+    noCoupons: "لا توجد قسائم متاحة",
+    noCouponsSub: "ليس لديك أي قسائم أو كوبونات في هذا القسم حالياً.",
+    specialCoupon: "عرض خاص",
+  },
+};
 
 export default function MyCoupons() {
+  const locale = useLocale();
+  const t = TRANSLATIONS[locale] || TRANSLATIONS.en;
+  const isRtl = locale === "ar";
+
   const [coupons, setCoupons] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
   const [copiedId, setCopiedId] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+  // Fetch coupons from SmartView API
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -19,9 +66,9 @@ export default function MyCoupons() {
 
     if (raw) {
       try {
-        user = JSON.parse(atob(raw)); // decode base64 JSON
+        user = JSON.parse(atob(raw));
       } catch (e) {
-        // console.error("Failed to decode user:", e);
+        // failed to decode
       }
     }
 
@@ -32,7 +79,6 @@ export default function MyCoupons() {
 
     const email = encodeURIComponent(user.email || "");
     const mobileNo = encodeURIComponent(user.phone || user.mobile || "");
-
     const apiUrl = `${process.env.NEXT_PUBLIC_SMARTVIEW_API_URL}Coupon/AllCoupons`;
 
     setLoading(true);
@@ -52,10 +98,13 @@ export default function MyCoupons() {
       .then((json) => {
         const data = json.data || [];
 
+        // Sort: Active first, then Expired, then Redeemed
         const sortedData = data.sort((a, b) => {
           const getWeight = (c) => {
-            if (c.status === 'Active' || c.active) return 1;
-            if (c.status === 'Expired') return 2;
+            const isRedeemed = c.status?.toLowerCase() === "redeemed";
+            const isExp = c.validTo && new Date(c.validTo) < new Date();
+            if (!isRedeemed && !isExp) return 1;
+            if (isExp && !isRedeemed) return 2;
             return 3;
           };
           return getWeight(a) - getWeight(b);
@@ -67,273 +116,301 @@ export default function MyCoupons() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Copy logic
-  const handleCopy = (code, id) => {
+  // Copy code handler
+  const handleCopy = (code) => {
+    if (!code) return;
     navigator.clipboard.writeText(code);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1400);
+    setCopiedId(code);
+    setTimeout(() => {
+      setCopiedId(null);
+    }, 1800);
   };
 
-  // Helpers
-  const isExpired = (validTo) => new Date(validTo) < new Date();
-  const isRedeemed = (status) => status?.toLowerCase() === "redeemed";
-
-  const getColors = (status, idx) => {
-    const golds = ["#BB8502", "#D44F35", "#726060"];
-    const bgs = ["#FFF7E7", "#FFF3F0", "#F6F6F6"];
-
-    if (status === "expired") {
-      return { color: "#9A9A9A", bg: "#F6F6F6" };
-    }
-    if (status === "redeemed") {
-      return { color: "#9A9A9A", bg: "#F0F0F3" };
-    }
-    return { color: golds[idx % golds.length], bg: bgs[idx % bgs.length] };
+  // Status helper
+  const getCouponStatus = (coupon) => {
+    if (coupon.status?.toLowerCase() === "redeemed") return "redeemed";
+    if (coupon.validTo && new Date(coupon.validTo) < new Date()) return "expired";
+    return "active";
   };
+
+  // Format date helper
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr.slice(0, 10);
+      return d.toLocaleDateString(isRtl ? "ar-AE" : "en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    } catch {
+      return dateStr.slice(0, 10);
+    }
+  };
+
+  // Counts for tabs
+  const tabCounts = useMemo(() => {
+    const counts = { all: coupons.length, active: 0, redeemed: 0, expired: 0 };
+    coupons.forEach((c) => {
+      const status = getCouponStatus(c);
+      if (counts[status] !== undefined) {
+        counts[status] += 1;
+      }
+    });
+    return counts;
+  }, [coupons]);
+
+  // Filtered coupons
+  const filteredCoupons = useMemo(() => {
+    if (activeTab === "all") return coupons;
+    return coupons.filter((c) => getCouponStatus(c) === activeTab);
+  }, [coupons, activeTab]);
 
   return (
-    <div style={{ maxWidth: 520, margin: "15px auto", padding: 12 }}>
-      <div style={{ textAlign: "center", marginBottom: 24 }}>
-        <p style={{ color: "#6B7280", fontSize: "14px", margin: 0 }}>
-          Manage and apply your available discount codes
-        </p>
+    <div className={styles.container} dir={isRtl ? "rtl" : "ltr"}>
+      {/* Top Hint Banner */}
+      <div className={styles.hintBanner}>
+        <div className={styles.hintIcon}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+            <path d="M13 5v2" />
+            <path d="M13 17v2" />
+            <path d="M13 11v2" />
+          </svg>
+        </div>
+        <p className={styles.hintText}>{t.hintText}</p>
       </div>
 
+      {/* Filter Tabs Navigation */}
+      <div className={styles.tabsWrapper}>
+        <button
+          type="button"
+          onClick={() => setActiveTab("all")}
+          className={`${styles.tabBtn} ${activeTab === "all" ? styles.tabBtnActive : ""}`}
+        >
+          <span>{t.tabAll}</span>
+          <span className={styles.tabBadge}>{tabCounts.all}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab("active")}
+          className={`${styles.tabBtn} ${activeTab === "active" ? styles.tabBtnActive : ""}`}
+        >
+          <span>{t.tabActive}</span>
+          <span className={styles.tabBadge}>{tabCounts.active}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab("redeemed")}
+          className={`${styles.tabBtn} ${activeTab === "redeemed" ? styles.tabBtnActive : ""}`}
+        >
+          <span>{t.tabRedeemed}</span>
+          <span className={styles.tabBadge}>{tabCounts.redeemed}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab("expired")}
+          className={`${styles.tabBtn} ${activeTab === "expired" ? styles.tabBtnActive : ""}`}
+        >
+          <span>{t.tabExpired}</span>
+          <span className={styles.tabBadge}>{tabCounts.expired}</span>
+        </button>
+      </div>
+
+      {/* Loading Skeleton */}
       {loading ? (
-        <div className="d-flex flex-column gap-3">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="dashboard-skeleton" style={{ height: 110, borderRadius: 20, width: '100%' }}></div>
+        <div className={styles.couponList}>
+          {[1, 2, 3].map((i) => (
+            <div key={i} className={styles.skeletonCard}>
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
+                <div className={styles.skeletonRow} style={{ width: "90px", height: "18px" }} />
+                <div className={styles.skeletonRow} style={{ width: "140px", height: "28px" }} />
+                <div className={styles.skeletonRow} style={{ width: "180px", height: "14px" }} />
+              </div>
+              <div style={{ width: "160px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                <div className={styles.skeletonRow} style={{ width: "100%", height: "36px" }} />
+                <div className={styles.skeletonRow} style={{ width: "100%", height: "32px" }} />
+              </div>
+            </div>
           ))}
         </div>
-      ) : coupons.length === 0 ? (
-        <div style={{ textAlign: "center", color: "#888", padding: 30 }}>
-          You have no coupons yet.
+      ) : filteredCoupons.length === 0 ? (
+        /* Empty State */
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <h3 className={styles.emptyTitle}>{t.noCoupons}</h3>
+          <p className={styles.emptySub}>{t.noCouponsSub}</p>
         </div>
       ) : (
-        <div className="d-flex flex-column gap-3 coupons-scroll-container">
-          {coupons.map((c, idx) => {
-            const expired = isExpired(c.validTo);
-            const redeemed = isRedeemed(c.status);
-            const { color, bg } = getColors(
-              expired ? "expired" : redeemed ? "redeemed" : "active",
-              idx
-            );
+        /* Coupon Cards List */
+        <div className={styles.couponList}>
+          {filteredCoupons.map((c) => {
+            const status = getCouponStatus(c);
+            const isActive = status === "active";
+            const isRedeemed = status === "redeemed";
+            const isExpired = status === "expired";
+            const isCopied = copiedId === c.couponCode;
+
+            const cardClass = `${styles.couponCard} ${
+              isActive
+                ? styles.couponCardActive
+                : isExpired
+                ? styles.couponCardExpired
+                : styles.couponCardRedeemed
+            }`;
 
             return (
-              <div
-                key={c.couponCode}
-                className={`coupon-card position-relative stagger-item ${mounted ? 'is-visible' : ''}`}
-                style={{
-                  background: bg,
-                  borderRadius: 20,
-                  minHeight: 98,
-                  boxShadow: "0 1px 10px 0 #ededed",
-                  display: "flex",
-                  alignItems: "stretch",
-                  overflow: "hidden",
-                  position: "relative",
-                  '--index': idx,
-                  cursor: expired || redeemed ? "not-allowed" : "pointer",
-                  transition: "transform 0.2s ease",
-                  transform: copiedId === c.couponCode ? "scale(0.96)" : "scale(1)",
-                }}
-                onClick={() =>
-                  !expired &&
-                  !redeemed &&
-                  handleCopy(c.couponCode, c.couponCode)
-                }
-                onMouseLeave={() => setCopiedId(null)}
-              >
-                {/* Main info */}
-                <div
-                  style={{
-                    flex: 2.2,
-                    padding: "18px 18px 18px 22px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      fontSize: 13,
-                      color,
-                      letterSpacing: 0.7,
-                    }}
-                  >
-                    {c.promotionName || "Special Coupon"}
+              <div key={c.couponCode} className={cardClass}>
+                {/* Left: Offer details */}
+                <div className={styles.cardLeft}>
+                  <div className={styles.cardTopRow}>
+                    <span
+                      className={`${styles.statusBadge} ${
+                        isActive
+                          ? styles.badgeActive
+                          : isExpired
+                          ? styles.badgeExpired
+                          : styles.badgeRedeemed
+                      }`}
+                    >
+                      <span className={styles.statusDot} />
+                      {isActive
+                        ? t.statusActive
+                        : isExpired
+                        ? t.statusExpired
+                        : t.statusRedeemed}
+                    </span>
+                    <h4 className={styles.promoTitle}>
+                      {c.promotionName || t.specialCoupon}
+                    </h4>
                   </div>
-                  <div
-                    style={{
-                      fontWeight: 600,
-                      fontSize: 17,
-                      marginTop: 2,
-                      color: "#222",
-                    }}
-                  >
-                    {c.baseOn === "Percent"
-                      ? `${c.value}% OFF`
-                      : `AED${c.value} OFF`}
+
+                  <div className={styles.discountValue}>
+                    {c.baseOn === "Percent" ? (
+                      <>
+                        <span>{c.value}%</span>
+                        <span className={styles.discountUnit}>{t.off}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>AED {c.value}</span>
+                        <span className={styles.discountUnit}>{t.off}</span>
+                      </>
+                    )}
                   </div>
-                  <div style={{ fontSize: 13, color: "#aaa" }}>
-                    {expired
-                      ? `Expired: ${c.validTo?.slice(0, 10)}`
-                      : `Valid until: ${c.validTo?.slice(0, 10)}`}
+
+                  <div className={styles.validityRow}>
+                    <svg
+                      className={styles.validityIcon}
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>
+                      {isExpired
+                        ? `${t.expiredOn} ${formatDate(c.validTo)}`
+                        : isRedeemed
+                        ? `${t.redeemedOn}`
+                        : `${t.validUntil} ${formatDate(c.validTo)}`}
+                    </span>
                   </div>
                 </div>
 
-                {/* Coupon Code Box */}
-                <div
-                  style={{
-                    flex: 1,
-                    background: color,
-                    color: "#fff",
-                    fontWeight: 700,
-                    fontSize: 17,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: 120,
-                    position: "relative",
-                    userSelect: "none",
-                  }}
-                  className={`coupon-code-area${expired || redeemed ? " disabled" : ""
-                    }${copiedId === c.couponCode ? " copied" : ""}`}
-                >
-                  <span
-                    className="coupon-code-text"
-                    style={{
-                      fontSize: 15,
-                      letterSpacing: 2,
-                      fontFamily: "monospace",
-                      background:
-                        copiedId === c.couponCode
-                          ? "#fff"
-                          : "rgba(255,255,255,0.10)",
-                      color: copiedId === c.couponCode ? color : "#fff",
-                      padding: "4px 14px",
-                      borderRadius: 18,
-                      border: `2px dashed ${copiedId === c.couponCode ? color : "#fff"
-                        }`,
-                      transition: ".13s",
-                    }}
+                {/* Perforation Divider */}
+                <div className={styles.perforationDivider}>
+                  <span className={styles.notchTop} />
+                  <span className={styles.notchBottom} />
+                </div>
+
+                {/* Right: Code & Copy Action */}
+                <div className={styles.cardRight}>
+                  <div
+                    className={`${styles.codeBox} ${
+                      !isActive ? styles.codeBoxDisabled : ""
+                    }`}
+                    onClick={() => isActive && handleCopy(c.couponCode)}
+                    title={isActive ? t.clickToCopy : ""}
                   >
-                    {c.couponCode}
-                  </span>
-                  <span
-                    className="coupon-value-text"
-                    style={{
-                      fontWeight: 400,
-                      fontSize: 14,
-                      color: "#fff",
-                      marginTop: 3,
-                      letterSpacing: ".5px",
-                    }}
+                    <span className={styles.codeText}>{c.couponCode}</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={`${styles.btnCopy} ${
+                      isCopied ? styles.btnCopied : ""
+                    }`}
+                    onClick={() => handleCopy(c.couponCode)}
+                    disabled={!isActive}
                   >
-                    {c.baseOn === "Percent"
-                      ? `${c.value}% OFF`
-                      : `AED${c.value} OFF`}
-                  </span>
-                  {!expired && !redeemed && (
-                    <span
-                      className={`copy-hint${copiedId === c.couponCode ? " copied" : ""
-                        }`}
-                    >
-                      {copiedId === c.couponCode
-                        ? "Copied!"
-                        : "Click to Copy"}
-                    </span>
+                    {isCopied ? (
+                      <>
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span>{t.copied}</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          width="13"
+                          height="13"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <rect
+                            x="9"
+                            y="9"
+                            width="13"
+                            height="13"
+                            rx="2"
+                            ry="2"
+                          />
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                        <span>{t.copyCode}</span>
+                      </>
+                    )}
+                  </button>
+
+                  {isActive && (
+                    <p className={styles.copyHintText}>{t.clickToCopy}</p>
                   )}
                 </div>
-
-                {/* Overlays */}
-                {expired && <div className="coupon-overlay">Expired Coupon</div>}
-                {!expired && redeemed && (
-                  <div className="coupon-overlay">Redeemed Coupon</div>
-                )}
               </div>
             );
           })}
         </div>
       )}
-
-      {/* Styles */}
-      <style jsx>{`
-        .coupon-card {
-          transition: box-shadow 0.16s;
-        }
-        .coupon-card:hover {
-          box-shadow: 0 3px 18px rgba(90, 90, 80, 0.1);
-        }
-        .coupon-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(110, 110, 110, 0.33);
-          color: #fff;
-          font-size: 21px;
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 20px;
-          z-index: 2;
-          letter-spacing: 0.5px;
-        }
-        .coupon-code-area {
-          position: relative;
-          transition: background 0.14s;
-        }
-        .coupon-code-area:hover .copy-hint {
-          opacity: 1;
-          pointer-events: all;
-        }
-        .coupon-code-area .copy-hint {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: rgba(0, 0, 0, 0.69);
-          color: #fff;
-          padding: 2px 16px;
-          border-radius: 14px;
-          font-size: 14px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.15s;
-          font-weight: 500;
-        }
-        .coupon-code-area.copied .copy-hint {
-          background: #fff;
-          color: #bb8502;
-          font-weight: 700;
-        }
-        .coupon-code-area.copied .coupon-code-text {
-          background: #fff !important;
-          color: #bb8502 !important;
-          border-color: #bb8502 !important;
-        }
-        .coupon-code-area.disabled {
-          opacity: 0.67;
-          pointer-events: none;
-        }
-        @media (max-width: 600px) {
-          .coupon-card {
-            min-height: 84px;
-          }
-          h2 {
-            font-size: 18px !important;
-          }
-          .coupon-code-area {
-            font-size: 14px;
-            min-width: 84px;
-          }
-        }
-      `}</style>
     </div>
   );
 }

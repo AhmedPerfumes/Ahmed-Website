@@ -6,10 +6,10 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
 
-export default function NewsLetter({popUp}) {
+export default function NewsLetter({ popUp }) {
     const modalElement = useRef(null);
     const locale = useLocale();
-    
+
     const t = useTranslations();
 
     // --- NEW: Use a ref to track if the modal has been shown in this session ---
@@ -60,7 +60,7 @@ export default function NewsLetter({popUp}) {
                 // 1. Immediately set the ref to true. This is critical.
                 //    It ensures this block can never run again in this session.
                 hasShownThisSession.current = true;
-                
+
                 // 2. Then, show the modal.
                 showModal();
             }
@@ -77,7 +77,7 @@ export default function NewsLetter({popUp}) {
 
         window.addEventListener("scroll", handleScroll);
         closeButton.addEventListener("click", closeHandler);
-        
+
         const modalRef = modalElement.current;
         if (modalRef) {
             modalRef.addEventListener("hide.bs.modal", handleHide);
@@ -116,30 +116,30 @@ export default function NewsLetter({popUp}) {
                             <div className="col-md-8 p-0">
                                 <div className="newsletter-popup__bg w-100 position-relative">
                                     <div className="d-none d-lg-block">
-                                       
-                                            <Image
-                                                width={550}
-                                                height={650}
-                                                style={{ height: "fit-content", objectFit: "cover" }}
-                                                loading="lazy"
-                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
-                                                className="w-100 d-block newsletter-popup-img"
-                                                alt="image"
-                                            />
-                                       
+
+                                        <Image
+                                            width={550}
+                                            height={650}
+                                            style={{ height: "fit-content", objectFit: "cover" }}
+                                            loading="lazy"
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.image}`}
+                                            className="w-100 d-block newsletter-popup-img"
+                                            alt="image"
+                                        />
+
                                     </div>
                                     <div className="d-block d-lg-none">
-                                       
-                                            <Image
-                                                width={550}
-                                                height={400}
-                                                style={{ height: "30vh", minHeight: "220px", maxHeight: "300px", objectFit: "cover" }}
-                                                loading="lazy"
-                                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
-                                                className="w-100 d-block hover-effect"
-                                                alt="image"
-                                            />
-                                      
+
+                                        <Image
+                                            width={550}
+                                            height={400}
+                                            style={{ height: "30vh", minHeight: "220px", maxHeight: "300px", objectFit: "cover" }}
+                                            loading="lazy"
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${elm.mobile_image}`}
+                                            className="w-100 d-block hover-effect"
+                                            alt="image"
+                                        />
+
                                     </div>
                                     <div className="d-block d-lg-none position-absolute bottom-0 w-100" style={{ height: "80px", background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)", pointerEvents: "none" }}></div>
                                 </div>
@@ -172,7 +172,7 @@ export default function NewsLetter({popUp}) {
 
                                     <div className="d-flex justify-content-center mt-2">
                                         <a href={`/${locale}/${elm.link}`} className="bs-cta bs-cta--dark w-100 text-center justify-content-center">
-                                            {t("Enquire Now")}
+                                            {t("Discover More")}
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M5 12h14M12 5l7 7-7 7" />
                                             </svg>

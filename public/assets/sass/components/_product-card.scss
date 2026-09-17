@@ -8,17 +8,32 @@ $card-image-height: 121.212122%;
     display: none;
   }
 
-  &:hover {
-    .pc__img-next,
-    .pc__img-prev,
-    .pc__img-second {
-      opacity: 1;
-    }
+  // Desktop hover effects only (mouse / fine pointer)
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      .pc__img-next,
+      .pc__img-prev,
+      .pc__img-second {
+        opacity: 1;
+      }
 
-    .hover-container::before {
-      display: none;
+      .hover-container::before {
+        display: none;
+      }
     }
   }
+
+  // Suppress/remove on mobile & touch devices
+  @media (hover: none), (pointer: coarse), (max-width: 991.98px) {
+    .pc__img-second {
+      display: none !important;
+    }
+    .pc__img-next,
+    .pc__img-prev {
+      display: none !important;
+    }
+  }
+
   &.hover-overlay {
     .pc__img-wrapper {
       &::before {
@@ -37,11 +52,13 @@ $card-image-height: 121.212122%;
       }
     }
 
-    &:hover {
-      .pc__img-wrapper {
-        &::before {
-          opacity: 0.8;
-          visibility: visible;
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        .pc__img-wrapper {
+          &::before {
+            opacity: 0.8;
+            visibility: visible;
+          }
         }
       }
     }

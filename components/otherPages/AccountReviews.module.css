@@ -335,13 +335,16 @@
   transform: translateY(0);
 }
 
-.buyAgainBtnAdded {
+.buyAgainBtnAdded,
+.buyAgainBtnAdded:disabled {
   background: #059669 !important;
   border-color: #059669 !important;
   color: #ffffff !important;
+  opacity: 0.95 !important;
+  cursor: default !important;
 }
 
-.buyAgainBtn:disabled {
+.buyAgainBtn:disabled:not(.buyAgainBtnAdded) {
   background: #f3f4f6;
   border-color: #e5e7eb;
   color: #9ca3af;
