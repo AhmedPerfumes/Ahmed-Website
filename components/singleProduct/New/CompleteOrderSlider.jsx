@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -19,6 +20,8 @@ import toast from "react-hot-toast";
 const MAX_QTY_PER_PRODUCT = 5;
 
 export default function CompleteOrderSlider({ products: propProducts }) {
+  const router = useRouter();
+
   const uniqueProducts = (items) => {
     if (!Array.isArray(items)) return [];
     const seen = new Set();
@@ -36,6 +39,46 @@ export default function CompleteOrderSlider({ products: propProducts }) {
   const { currency } = useMenu();
   const locale = useLocale();
   const t = useTranslations();
+
+  const cleanSlug = (s = "") =>
+    String(s || "")
+      .replace(/&amp;/g, "")
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .split(" ")
+      .join("-")
+      .toLowerCase();
+
+  const getSubcategorySlug = (category, subcategory) => {
+    if (subcategory) {
+      const subName = typeof subcategory === "string" ? subcategory : subcategory?.subcategory_name;
+      if (subName) return cleanSlug(subName);
+    }
+    const cleanCat = cleanSlug(category);
+    if (["gift-sets", "hair-mist", "extrait-de-parfum"].includes(cleanCat)) {
+      return cleanCat;
+    }
+    return "online-exclusive";
+  };
+
+  const getProductHref = (elm) => {
+    const categorySlug = cleanSlug(elm.category_name || "fragrances");
+    const subcategorySlug = getSubcategorySlug(elm.category_name, elm.subcategory);
+    const rawName = elm.original_product_name || elm.product_name || "";
+    const productSlug = cleanSlug(rawName);
+    return `/${locale}/shop/${categorySlug}/${subcategorySlug}/${productSlug}`;
+  };
+
+  const handleCardClick = (e, href) => {
+    if (e.target.closest(".cos-actions") || e.target.closest("button")) {
+      return;
+    }
+    if (e.target.closest("a")) {
+      return;
+    }
+    router.push(href);
+  };
 
   // Always live-fetch fresh complete-order products on client to bypass any SSR / page cache
   useEffect(() => {
@@ -317,24 +360,26 @@ export default function CompleteOrderSlider({ products: propProducts }) {
                   ? he.decode(elm.product_name)
                   : "Product";
             const imageUrl = getProductImage(elm);
+            const productHref = getProductHref(elm);
 
             return (
               <SwiperSlide key={elm.product_id || elm.id}>
                 <div
                   className={`complete-order-card position-relative p-2 rounded-3 d-flex flex-column justify-content-between text-center ${isAdded ? "is-selected shadow-sm" : ""
                     } ${isOutOfStock ? "is-out-of-stock" : ""}`}
+                  onClick={(e) => handleCardClick(e, productHref)}
                   style={{
                     backgroundColor: isAdded ? "#FAFAF8" : "#FFFFFF",
                     border: isAdded ? "1.5px solid #111111" : "1px solid #EAE7E2",
                     borderRadius: "8px",
-                    cursor: "default",
+                    cursor: "pointer",
                     minHeight: "205px",
                     transition: "all 0.2s ease-in-out",
                     userSelect: "none",
                   }}
                 >
                   {/* Top Left: Sale / Out of Stock Badge */}
-                  <div className="position-absolute top-0 start-0 m-1.5 d-flex flex-column gap-1" style={{ zIndex: 4 }}>
+                  <div className="position-absolute top-0 start-0 m-1.5 d-flex flex-column gap-1" style={{ zIndex: 4, pointerEvents: "none" }}>
                     {isOutOfStock ? (
                       <span
                         className="badge text-white px-2 py-1"
@@ -369,7 +414,7 @@ export default function CompleteOrderSlider({ products: propProducts }) {
 
                   {/* Top Right: Label Icons (e.g. Best Seller, Exclusive) */}
                   {Array.isArray(elm.labels) && elm.labels.length > 0 && (
-                    <div className="position-absolute top-0 end-0 m-1 d-flex flex-column gap-1" style={{ zIndex: 4 }}>
+                    <div className="position-absolute top-0 end-0 m-1 d-flex flex-column gap-1" style={{ zIndex: 4, pointerEvents: "none" }}>
                       {elm.labels.map((lbl, idx) => (
                         <LabelIcon
                           key={idx}
@@ -382,47 +427,54 @@ export default function CompleteOrderSlider({ products: propProducts }) {
                     </div>
                   )}
 
-                  {/* Compact Product Image Container */}
-                  <div
-                    className="cos-img-wrapper d-flex align-items-center justify-content-center mt-1 mb-1"
-                    style={{ height: "80px", width: "100%", overflow: "hidden" }}
+                  {/* Clickable Product Content (Image, Title, Price) */}
+                  <Link
+                    href={productHref}
+                    className="d-flex flex-column align-items-center text-decoration-none text-reset w-100 flex-grow-1"
+                    style={{ color: "inherit", textDecoration: "none", cursor: "pointer" }}
                   >
-                    <Image
-                      src={imageUrl}
-                      alt={displayName}
-                      width={80}
-                      height={80}
-                      className="img-fluid"
-                      style={{
-                        maxHeight: "80px",
-                        objectFit: "contain",
-                        transition: "transform 0.25s ease",
-                      }}
-                    />
-                  </div>
-
-                  {/* Product Title & Price */}
-                  <div className="cos-info mb-1">
+                    {/* Compact Product Image Container */}
                     <div
-                      className="cos-title fw-semibold text-dark mb-1 text-truncate-2"
-                      style={{
-                        fontSize: "0.78rem",
-                        lineHeight: "1.2",
-                        minHeight: "2.4em",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                      title={displayName}
+                      className="cos-img-wrapper d-flex align-items-center justify-content-center mt-1 mb-1"
+                      style={{ height: "80px", width: "100%", overflow: "hidden" }}
                     >
-                      {displayName}
+                      <Image
+                        src={imageUrl}
+                        alt={displayName}
+                        width={80}
+                        height={80}
+                        className="img-fluid"
+                        style={{
+                          maxHeight: "80px",
+                          objectFit: "contain",
+                          transition: "transform 0.25s ease",
+                        }}
+                      />
                     </div>
 
-                    <div className="cos-price mb-1">
-                      {renderCardPrice(elm)}
+                    {/* Product Title & Price */}
+                    <div className="cos-info mb-1 w-100">
+                      <div
+                        className="cos-title fw-semibold text-dark mb-1 text-truncate-2"
+                        style={{
+                          fontSize: "0.78rem",
+                          lineHeight: "1.2",
+                          minHeight: "2.4em",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                        title={displayName}
+                      >
+                        {displayName}
+                      </div>
+
+                      <div className="cos-price mb-1">
+                        {renderCardPrice(elm)}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Quantity Option / Add Button Controls */}
                   <div className="cos-actions mt-auto pt-1 w-100" onClick={(e) => e.stopPropagation()}>
