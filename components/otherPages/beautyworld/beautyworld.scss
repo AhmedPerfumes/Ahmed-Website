@@ -583,9 +583,27 @@ $bw-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     position: absolute;
     inset: 0;
     opacity: 0;
+    background: #000000;
     transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 
     &.is-active { opacity: 1; }
+  }
+
+  &__img-wrap {
+    position: absolute;
+    inset: 0;
+
+    &--desktop {
+      display: block;
+    }
+
+    &--mobile {
+      display: none;
+    }
+  }
+
+  &__img--booth-2026 {
+    object-position: center clamp(50px, 7.5vh, 85px) !important;
   }
 
   // Gradient scrim — transparent top, dark at bottom
@@ -1111,6 +1129,16 @@ $bw-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   .bw-reveal__content {
     text-align: left;
+  }
+
+  .bw-journey__img-wrap {
+    &--desktop {
+      display: none !important;
+    }
+
+    &--mobile {
+      display: block !important;
+    }
   }
 
   .bw-timeline {

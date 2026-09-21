@@ -14,31 +14,36 @@ const timelineYears = [
     label: "First Presence",
     desc: "Ahmed Al Maghribi makes its debut at Beautyworld Middle East, introducing the brand on the global fragrance stage.",
     image: "/assets/images/2022-booth.jpeg",
+    mobileImage: "/assets/images/2022-mobile.jpg",
   },
   {
     year: "2023",
     label: "Growing Reach",
     desc: "Expanded collection showcased with key trade partnerships established across the GCC and beyond.",
     image: "/assets/images/2023-booth.jpeg",
+    mobileImage: "/assets/images/2023-mobile.jpg",
   },
   {
     year: "2024",
     label: "New Creations",
     desc: "Launch of exclusive Arabian and niche fragrance lines, drawing international wholesale and retail interest.",
     image: "/assets/images/2024-booth.jpeg",
+    mobileImage: "/assets/images/2024-mobile.jpg",
   },
   {
     year: "2025",
     label: "Global Expansion",
     desc: "A record year — new markets entered, distribution channels widened, presence across multiple continents.",
     image: "/assets/images/2025-booth.jpeg",
+    mobileImage: "/assets/images/2025-mobile.jpg",
   },
   {
     year: "2026",
     label: "A New Chapter",
     desc: "Beautyworld Dubai 2026 marks the unveiling of our boldest fragrance creation yet. Be part of the moment.",
     active: true,
-    image: "/assets/images/2026booth.png",
+    image: "/assets/images/2026-booth.jpeg",
+    mobileImage: "/assets/images/2026-mobile.jpg",
   },
 ];
 
@@ -301,13 +306,36 @@ export default function BeautyworldLanding() {
             key={item.year}
             className={"bw-journey__img-slot" + (activeYear === item.year ? " is-active" : "")}
           >
-            <Image
-              src={item.image || JOURNEY_FALLBACK}
-              alt={item.year + " - " + item.label + " · Ahmed Al Maghribi at Beautyworld"}
-              fill
-              sizes="100vw"
-              style={{ objectFit: "cover", objectPosition: "center top" }}
-            />
+            {/* Desktop Image */}
+            <div className="bw-journey__img-wrap bw-journey__img-wrap--desktop">
+              <Image
+                src={item.image || JOURNEY_FALLBACK}
+                alt={item.year + " - " + item.label + " · Ahmed Al Maghribi at Beautyworld"}
+                fill
+                sizes="(min-width: 769px) 100vw, 1px"
+                priority={item.year === "2026"}
+                className={item.year === "2026" ? "bw-journey__img--booth-2026" : ""}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: item.year === "2026" ? "center clamp(50px, 7.5vh, 85px)" : "center top",
+                }}
+              />
+            </div>
+
+            {/* Mobile Image */}
+            <div className="bw-journey__img-wrap bw-journey__img-wrap--mobile">
+              <Image
+                src={item.mobileImage || item.image || JOURNEY_FALLBACK}
+                alt={item.year + " - " + item.label + " · Ahmed Al Maghribi at Beautyworld"}
+                fill
+                sizes="(max-width: 768px) 100vw, 1px"
+                priority={item.year === "2026"}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center top",
+                }}
+              />
+            </div>
           </div>
         ))}
 
