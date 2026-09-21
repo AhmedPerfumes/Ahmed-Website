@@ -243,14 +243,21 @@ export default function ProductCard({
       onAddToCart(elm);
       return;
     }
+    const catName =
+      (typeof category === "object" ? category?.category_name || category?.name : category) ||
+      elm?.category_name;
+
     const subcatName =
+      (typeof subcategory === "object" ? subcategory?.subcategory_name : subcategory) ||
       elm?.subcategory?.subcategory_name ||
       elm?.subcategory_name ||
       (typeof elm?.subcategory === "string" ? elm.subcategory : undefined);
 
     addProductToCart({
       ...elm,
-      category_name: elm?.category_name,
+      category: catName,
+      subcategory: subcatName,
+      category_name: catName,
       subcategory_name: subcatName,
     });
   };
