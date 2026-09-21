@@ -5,23 +5,6 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-// ── Calendar helper ──────────────────────────────────────────────────────────
-function buildICSLink() {
-  const ics = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "BEGIN:VEVENT",
-    "SUMMARY:Beautyworld Dubai 2026 – Ahmed Al Maghribi Perfumes",
-    "DTSTART:20261006T090000Z",
-    "DTEND:20261008T180000Z",
-    "LOCATION:Dubai World Trade Centre, Dubai, UAE",
-    "DESCRIPTION:Visit Ahmed Al Maghribi Perfumes at Beautyworld Dubai 2026.",
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\n");
-  return "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
-}
-
 // ── Timeline data ────────────────────────────────────────────────────────────
 const JOURNEY_FALLBACK = "/assets/images/beautyworld-journey-hero.jpg";
 
@@ -55,7 +38,7 @@ const timelineYears = [
     label: "A New Chapter",
     desc: "Beautyworld Dubai 2026 marks the unveiling of our boldest fragrance creation yet. Be part of the moment.",
     active: true,
-    image: "/assets/images/2026-booth.jpeg",
+    image: "/assets/images/2026booth.png",
   },
 ];
 
@@ -161,8 +144,20 @@ export default function BeautyworldLanding() {
     setSubmitted(true);
   }
 
-  function scrollTo(ref) {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  function scrollTo(ref, targetId) {
+    if (typeof window === "undefined") return;
+    const el = (ref && ref.current) ? ref.current : (targetId ? document.getElementById(targetId) : null);
+    if (!el) return;
+
+    const header = document.querySelector("header") || document.querySelector(".header") || document.querySelector(".tf-header");
+    const headerHeight = header ? header.offsetHeight : 80;
+    const elementTop = el.getBoundingClientRect().top + window.pageYOffset;
+    const targetPosition = Math.max(0, elementTop - headerHeight - 20);
+
+    window.scrollTo({
+      top: targetPosition,
+      behavior: "smooth",
+    });
   }
 
   // ── Timeline progress width ──────────────────────────────────────────────
@@ -221,28 +216,17 @@ export default function BeautyworldLanding() {
 
           <div className="bw-hero__actions bw-animate">
             <button
+              type="button"
               className="bw-btn bw-btn--primary"
-              onClick={() => scrollTo(meetingRef)}
+              onClick={() => scrollTo(meetingRef, "book-a-meeting")}
               id="hero-book-meeting-btn"
             >
               Book a Meeting
             </button>
-            <a
-              className="bw-btn bw-btn--ghost"
-              href={buildICSLink()}
-              download="beautyworld-dubai-2026.ics"
-              id="hero-add-to-calendar-btn"
-            >
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="18" rx="2"/>
-                <path d="M16 2v4M8 2v4M3 10h18"/>
-              </svg>
-              Add to Calendar
-            </a>
           </div>
         </div>
 
-        <div className="bw-hero__scroll" onClick={() => scrollTo(revealRef)} role="button" aria-label="Scroll to next section">
+        <div className="bw-hero__scroll" onClick={() => scrollTo(revealRef, "the-reveal")} role="button" aria-label="Scroll to next section">
           <span />
         </div>
       </section>
@@ -252,39 +236,33 @@ export default function BeautyworldLanding() {
       ════════════════════════════════════════ */}
       <section className="bw-reveal" ref={revealRef} id="the-reveal">
 
-        {/* Mobile-only: full-bleed artwork image */}
-        <div className="bw-reveal__mobile-image">
+        {/* Mobile Background Image (Portrait) */}
+        <div className="bw-reveal__image-wrap bw-reveal__image-wrap--mobile">
           <Image
-            src="/assets/images/beautyworld-reveal-mobile.png"
+            src="/assets/images/auric-mobile-view.png"
             alt="A New Chapter in Fragrance – Ahmed Al Maghribi at Beautyworld Dubai 2026"
             fill
             priority
-            style={{ objectFit: "cover", objectPosition: "center top" }}
-          />
-          <div className="bw-reveal__mobile-cta">
-            <button
-              className="bw-btn bw-btn--outline"
-              onClick={() => scrollTo(meetingRef)}
-              id="reveal-mobile-experience-btn"
-            >
-              Experience the Reveal
-            </button>
-          </div>
-        </div>
-
-        {/* Desktop: bg image + text overlay */}
-        <div className="bw-reveal__image-wrap bw-reveal__desktop-only">
-          <Image
-            src="/assets/images/Auric.png"
-            alt="A new fragrance creation — coming soon"
-            fill
-            priority
+            sizes="(max-width: 768px) 100vw, 1px"
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
           <div className="bw-reveal__veil" />
         </div>
 
-        <div className="bw-reveal__content bw-reveal__desktop-only">
+        {/* Desktop Background Image (Landscape) */}
+        <div className="bw-reveal__image-wrap bw-reveal__image-wrap--desktop">
+          <Image
+            src="/assets/images/Auric.png"
+            alt="A new fragrance creation — coming soon"
+            fill
+            priority
+            sizes="(min-width: 769px) 100vw, 1px"
+            style={{ objectFit: "cover", objectPosition: "center" }}
+          />
+          <div className="bw-reveal__veil" />
+        </div>
+
+        <div className="bw-reveal__content">
           <div className="bw-reveal__center">
             <h2 className="bw-reveal__title bw-animate">
               A New Chapter<br />in Fragrance
@@ -292,13 +270,13 @@ export default function BeautyworldLanding() {
           </div>
 
           <div className="bw-reveal__bottom">
-            <p className="bw-reveal__eyebrow bw-animate">02 · The Reveal</p>
             <p className="bw-reveal__tease bw-animate">
               Until then, the reveal remains under wraps.
             </p>
             <button
+              type="button"
               className="bw-btn bw-btn--reveal bw-animate"
-              onClick={() => scrollTo(meetingRef)}
+              onClick={() => scrollTo(meetingRef, "book-a-meeting")}
               id="reveal-experience-btn"
             >
               Experience the Reveal
@@ -354,21 +332,29 @@ export default function BeautyworldLanding() {
 
           <div className="bw-timeline">
             <div className="bw-timeline__track">
+              <div className="bw-timeline__bar" aria-hidden="true">
+                <div className="bw-timeline__bar-bg" />
+                <div
+                  className="bw-timeline__bar-fill"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+
               {timelineYears.map((item) => (
                 <button
                   key={item.year}
+                  type="button"
                   className={"bw-timeline__node" + (activeYear === item.year ? " is-active" : "") + (item.active ? " is-current" : "")}
                   onClick={() => setActiveYear(item.year)}
                   id={"timeline-" + item.year + "-btn"}
+                  aria-label={`${item.year}: ${item.label}`}
                 >
-                  <span className="bw-timeline__dot" />
+                  <span className="bw-timeline__dot">
+                    <span className="bw-timeline__dot-core" />
+                  </span>
                   <span className="bw-timeline__year">{item.year}</span>
                 </button>
               ))}
-              <div
-                className="bw-timeline__progress"
-                style={{ width: progressPct + "%" }}
-              />
             </div>
           </div>
 
