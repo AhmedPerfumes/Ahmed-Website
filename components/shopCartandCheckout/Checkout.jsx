@@ -1819,7 +1819,41 @@ export default function Checkout() {
                     </div>
                   </div>
 
-                  {error ? ( <div style={{ backgroundColor: "#ffebe9", color: "#cf1e1e", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px",}}>{error}</div>) : success ? ( <div style={{ backgroundColor: "#e8f5e9", color: "#2e7d32", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px", }} > {success} </div>) : null}
+                  {error ? (
+                    <div
+                      style={{
+                        backgroundColor: "#ffebe9",
+                        color: "#cf1e1e",
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                        width: "22rem",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {error}
+                    </div>
+                  ) : success ? (
+                    <div
+                      style={{
+                        backgroundColor: "#e8f5e9",
+                        color: "#2e7d32",
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                        width: "22rem",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {success}
+                    </div>
+                  ) : null}
                   <div className="mobile_fixed-btn_wrapper">
                     <div className="button-wrapper container">
                       <button className="btn btn-primary w-100 text-uppercase btn-checkout" type="submit" disabled={disablePlaceOrder} > {isLoading ? "Loading..." : "Place Order"} </button>
