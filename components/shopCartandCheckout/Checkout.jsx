@@ -304,7 +304,6 @@ export default function Checkout() {
         const data = await response.json();
         const transformedData = transformCouponData(data.data);
         setCoupons(transformedData);
-        setCouponDataContext(transformedData); // This context is used by FreeGiftFeature
       } catch (err) {
         // console.error("Failed to fetch coupons:", err);
         setCoupons([]);
@@ -570,7 +569,7 @@ export default function Checkout() {
     setCouponDataContext(null);
 
     const cleanedCart = cartProducts.map((item) => {
-      const { is_coupon, value, ...rest } = item;
+      const { is_coupon, value, coupon_type, ...rest } = item;
       return rest;
     });
 
@@ -598,7 +597,7 @@ export default function Checkout() {
     setCouponDataContext(null);
 
     const cleanedCart = cartProducts.map((item) => {
-      const { is_coupon, value, ...rest } = item;
+      const { is_coupon, value, coupon_type, ...rest } = item;
       return rest;
     });
 
@@ -655,7 +654,7 @@ export default function Checkout() {
 
     // Normalize API coupon if present
     if (apiCoupon && !validCoupon) {
-      apiCoupon = {  id: apiCoupon.couponCode, code: apiCoupon.couponCode, title: apiCoupon.promotionName, description: apiCoupon.promotionName, value: apiCoupon.value, coupon_type: apiCoupon.baseOn === "P" ? "percent" : "amount", type: "customer", end_date: apiCoupon.validTo, start_date: apiCoupon.registrationDate, couponRegistrationId: apiCoupon.couponRegistrationId, salesType: apiCoupon.salesType, company: apiCoupon.company, whsCode: apiCoupon.whsCode, };
+      apiCoupon = {  id: apiCoupon.couponCode, code: apiCoupon.couponCode, title: apiCoupon.promotionName, description: apiCoupon.promotionName, value: apiCoupon.value, coupon_type: (apiCoupon.baseOn === "P" || apiCoupon.baseOn === "Percent" || apiCoupon.baseOn?.toLowerCase() === "percent") ? "percent" : "amount", type: "customer", end_date: apiCoupon.validTo, start_date: apiCoupon.registrationDate, couponRegistrationId: apiCoupon.couponRegistrationId, salesType: apiCoupon.salesType, company: apiCoupon.company, whsCode: apiCoupon.whsCode, };
     }
     const couponToApply = validCoupon || apiCoupon;
     if (!couponToApply) {
@@ -710,8 +709,10 @@ export default function Checkout() {
     }
 
     if ( couponData && couponData.type === "customer" && elm.is_coupon ) {
-      if (couponData.coupon_type == "percent") { itemPrice = elm.price - (elm.price / 100) * couponData.value; } 
-      else if (couponData.coupon_type == "amount") { itemPrice = elm.price - couponData.value; }
+      const cType = (couponData.coupon_type || elm.coupon_type || "percent").toString().toLowerCase();
+      const cVal = Number(couponData.value ?? elm.value ?? 0);
+      if (cType === "percent" || cType === "p") { itemPrice = elm.price - (elm.price / 100) * cVal; } 
+      else if (cType === "amount" || cType === "a") { itemPrice = Math.max(0, elm.price - cVal); }
       return (
         <td>
           <span className="money price price-sale"> {currency.symbol} {(itemPrice * elm.quantity).toFixed(2)} </span>

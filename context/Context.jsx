@@ -163,8 +163,7 @@ export default function Context({ children }) {
     const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
     const codeLower = couponDataContext?.code?.toLowerCase();
-    const isCustomerCoupon = couponDataContext && couponDataContext.type === "customer";
-    const isCustomerCouponActive = isCustomerCoupon && (!couponDataContext.start_date || !couponDataContext.end_date || (new Date(current_date_time) >= new Date(couponDataContext.start_date) && new Date(current_date_time) <= new Date(couponDataContext.end_date)));
+    const isCustomerCoupon = couponDataContext && !Array.isArray(couponDataContext) && couponDataContext.type === "customer";
     const subtotal = state.products.reduce((accumuLator, product) => {
       // 🚨 NEVER apply discounts/coupons on gift cards
       if (product?.is_gift_card) {
@@ -177,7 +176,6 @@ export default function Context({ children }) {
       const bogoFreeQty = Number(product?.bogo_free_qty || 0);
       const paidQty = Math.max(0, qty - bogoFreeQty); // BOGO free units don't get charged
       const basePrice = Number(product?.price || 0);
-      // console.log('0000', couponDataContext, isCustomerCoupon, isCustomerCouponActive);
       // Skip free gifts entirely (FOC, etc.)
       if (product?.is_gift) return accumuLator;
 
@@ -185,7 +183,6 @@ export default function Context({ children }) {
       if (paidQty <= 0) return accumuLator;
 
       if (product?.discount) {
-        // console.log('discountC', product?.discount);
         let discounted = basePrice;
         if (
           new Date(current_date_time) >= new Date(product.discount.start_date) &&
@@ -193,52 +190,34 @@ export default function Context({ children }) {
         ) {
           if (product.discount.discount_type === 'percent') {
             discounted = basePrice - (basePrice * Number(product.discount.value || 0)) / 100;
-            // return accumuLator + product.quantity * discount_price;
           } else if (product.discount.discount_type === 'amount') {
             discounted = Number(product.discount.final_price || 0);
-            // return accumuLator + product.quantity * discount_price;
           }
           return accumuLator + paidQty * Number(discounted.toFixed(2));
         }
       }
 
-      // if (
-      //   product?.coupon &&
-      //   !Array.isArray(product.coupon) &&
-      //   codeLower &&
-      //   product.coupon[codeLower]?.code?.toLowerCase() === codeLower
-      // ) {
-      //   console.log('couponC', product);
-      //   const c = product.coupon[codeLower];
-      //   const start = new Date(c?.start_date);
-      //   const end = new Date(c?.end_date);
-      //   if (c?.value != null && new Date(current_date_time) >= start && new Date(current_date_time) <= end) {
-      //     const discounted = basePrice - (basePrice * Number(c.value)) / 100;
-      //     return accumuLator + paidQty * Number(discounted.toFixed(2));
-      //   }
-      // }
+      // 3) Coupon discount (either product-level coupon flag or active coupon context)
+      const hasProductCoupon = Boolean(product?.is_coupon);
+      const isContextCouponActive = Boolean(
+        isCustomerCoupon &&
+        !product.discount &&
+        !promotionsContext.some((promo) => promo.buy_products?.some((item) => item.product_id === product.product_id))
+      );
 
-      // 3) Customer/global coupon (apply across all products)
-      // if (isCustomerCouponActive && !product.sale_price && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id)))
-      if (isCustomerCouponActive && !product.discount && !promotionsContext.some((promo) => promo.buy_products.some((item) => item.product_id === product.product_id))) {
-        // console.log('customer couponC', product, isCustomerCouponActive, couponDataContext);
-        const value = Number(couponDataContext?.value || 0);
-        let discounted = basePrice; // fallback if no discount
+      if (hasProductCoupon || isContextCouponActive) {
+        const rawType = (product?.coupon_type || couponDataContext?.coupon_type || "percent").toString().toLowerCase();
+        const value = Number(product?.value ?? couponDataContext?.value ?? 0);
+        let discounted = basePrice;
 
-        if (couponDataContext.coupon_type === "percent") {
+        if (rawType === "percent" || rawType === "p" || rawType === "percentage") {
           discounted = basePrice - (basePrice * value) / 100;
-        } else if (couponDataContext.coupon_type === "amount") {
-          discounted = basePrice - value;
+        } else if (rawType === "amount" || rawType === "a") {
+          discounted = Math.max(0, basePrice - value);
         }
 
         return accumuLator + paidQty * Number(discounted.toFixed(2));
       }
-
-      // 4) Sale price fallback
-      // if (product?.sale_price != null) {
-      //   console.log('product', 'sale price', product);
-      //   return accumuLator + paidQty * Number(Number(product.sale_price).toFixed(2));
-      // }
 
       // 5) Default
       return accumuLator + paidQty * basePrice;
@@ -248,7 +227,7 @@ export default function Context({ children }) {
 
     const freeShippingThreshold = shippingServiceCharges?.[3]?.price ?? 400;
     setFreeShippingFlag(Number(subtotal.toFixed(2)) >= freeShippingThreshold);
-  }, [state.products, couponDataContext, shippingServiceCharges]);
+  }, [state.products, couponDataContext, shippingServiceCharges, promotionsContext]);
 
   // useEffect(() => {
   // if (state.toastMeta) {
