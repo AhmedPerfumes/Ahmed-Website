@@ -23,8 +23,18 @@ import { setAccessToken, apiClient } from "@/lib/apiClient";
 
 const countries = [ "Abu Dhabi", "Ajman", "Al Ain", "Dubai", "Fujairah", "Ras Al Khaymah", "Sharjah", "Umm Al Quwain", ];
 
+const TABBY_COOLDOWN_KEY = "ahmed_tabby_cooldown_until";
+const TABBY_COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes
+
+const formatTabbyCountdown = (totalSeconds) => {
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+};
+
 export default function Checkout() {
   // STATES
+  const [tabbyRemainingSeconds, setTabbyRemainingSeconds] = useState(0);
   const [coupons, setCoupons] = useState([]);
   const [couponLoading, setCouponLoading] = useState(false);
   const [showCouponModal, setShowCouponModal] = useState(false);
@@ -88,6 +98,68 @@ export default function Checkout() {
   useEffect(() => {
     if (hasPreBookItem) { setSelectedOption("paytabs"); }
   }, [hasPreBookItem]);
+
+  const triggerTabbyCooldown = (customMessage) => {
+    const until = Date.now() + TABBY_COOLDOWN_MS;
+    try {
+      localStorage.setItem(TABBY_COOLDOWN_KEY, until.toString());
+    } catch (e) {}
+    setTabbyRemainingSeconds(Math.ceil(TABBY_COOLDOWN_MS / 1000));
+
+    // Auto-switch payment method away from Tabby to prevent dead-ends
+    setSelectedOption((prev) => {
+      if (prev === "tabby") {
+        return hasPreBookItem ? "paytabs" : "cod";
+      }
+      return prev;
+    });
+
+    const msg = customMessage || (locale === "ar"
+      ? "تم إيقاف خدمة تابي مؤقتاً لمدة 10 دقائق. يُرجى الدفع بالبطاقة أو الدفع عند الاستلام."
+      : "Tabby has been paused for 10 minutes. Please select Card or Cash on Delivery.");
+
+    toast.warn(msg, {
+      position: "bottom-right",
+      autoClose: 6000,
+    });
+  };
+
+  // Initialize and tick down Tabby cooldown
+  useEffect(() => {
+    const calculateRemaining = () => {
+      try {
+        const storedUntil = localStorage.getItem(TABBY_COOLDOWN_KEY);
+        if (!storedUntil) return 0;
+        const remainingMs = Number(storedUntil) - Date.now();
+        if (remainingMs <= 0) {
+          localStorage.removeItem(TABBY_COOLDOWN_KEY);
+          return 0;
+        }
+        return Math.ceil(remainingMs / 1000);
+      } catch (e) {
+        return 0;
+      }
+    };
+
+    const initialRemaining = calculateRemaining();
+    setTabbyRemainingSeconds(initialRemaining);
+
+    const interval = setInterval(() => {
+      const remaining = calculateRemaining();
+      setTabbyRemainingSeconds(remaining);
+      if (remaining <= 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (tabbyRemainingSeconds > 0 && selectedOption === "tabby") {
+      setSelectedOption(hasPreBookItem ? "paytabs" : "cod");
+    }
+  }, [tabbyRemainingSeconds, selectedOption, hasPreBookItem]);
 
   // Capture removeGiftFromCart in a ref so it can be called on unmount without re-subscribing to renders
   const removeGiftFromCartRef = useRef(removeGiftFromCart);
@@ -319,24 +391,67 @@ export default function Checkout() {
   }, [selectedOption]);
 
   useEffect(() => {
+    if (selectedOption !== "tabby" || tabbyRemainingSeconds > 0) return;
     const tabbyCardScript = document.createElement("script");
     tabbyCardScript.src = "https://checkout.tabby.ai/tabby-card.js";
     tabbyCardScript.async = true;
     document.body.appendChild(tabbyCardScript);
     const finalPrice = !freeShippingFlag ? parseFloat(shippingServiceCharges[0]?.price) + totalPrice + parseFloat(shippingServiceCharges[1]?.price) : 0 + totalPrice + parseFloat(shippingServiceCharges[1]?.price);
     tabbyCardScript.onload = () => { new window.TabbyCard({selector: "#tabbyCard", currency: "AED", lang: locale, price: finalPrice, size: "wide", theme: "black", header: true, });};
-    return () => { document.body.removeChild(tabbyCardScript); };
-  }, [selectedOption]);
+    return () => { 
+      if (document.body.contains(tabbyCardScript)) {
+        document.body.removeChild(tabbyCardScript);
+      }
+    };
+  }, [selectedOption, tabbyRemainingSeconds, freeShippingFlag, shippingServiceCharges, totalPrice, locale]);
 
   useEffect(() => {
+    // 1) QA / Dev reset bypass
+    if (searchParams.get("reset_tabby") === "1") {
+      try {
+        localStorage.removeItem(TABBY_COOLDOWN_KEY);
+      } catch (e) {}
+      setTabbyRemainingSeconds(0);
+      toast.info(locale === "ar" ? "تمت إعادة تفعيل تابي" : "Tabby has been reset and re-enabled.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+      return;
+    }
+
     const errorMsg = searchParams.get("error");
-    if (errorMsg) {
+    const paymentMethod = searchParams.get("payment_method");
+    const paymentStatus = searchParams.get("payment_status");
+
+    const isTabbyFailure =
+      paymentMethod === "tabby" ||
+      paymentStatus === "cancel" ||
+      paymentStatus === "failure" ||
+      (errorMsg && (
+        errorMsg.toLowerCase().includes("tabby") ||
+        errorMsg.toLowerCase().includes("aborted the payment") ||
+        errorMsg.toLowerCase().includes("canceled the payment") ||
+        errorMsg.includes("ألغيت الدفعة") ||
+        errorMsg.includes("تابي")
+      ));
+
+    if (isTabbyFailure) {
+      triggerTabbyCooldown(errorMsg);
+      if (errorMsg) {
+        setError(errorMsg);
+        toast.error(errorMsg, { position: "bottom-right", autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, });
+      }
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+    } else if (errorMsg) {
       setError(errorMsg);
       toast.error(errorMsg, { position: "bottom-right", autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, });
       const newUrl = window.location.pathname;
       window.history.replaceState({}, '', newUrl);
     }
-  }, [searchParams]);
+  }, [searchParams, locale]);
 
   // Auto-scroll to top when mobile summary is opened
   useEffect(() => {
@@ -373,7 +488,19 @@ export default function Checkout() {
   }, [cartProducts]);
 
 
-  const handleRadioChange = (event) => { setSelectedOption(event.target.value); };
+  const handleRadioChange = (event) => {
+    const value = event.target.value;
+    if (value === "tabby" && tabbyRemainingSeconds > 0) {
+      toast.warn(
+        locale === "ar"
+          ? `خدمة تابي متوقفة مؤقتاً (متبقي ${formatTabbyCountdown(tabbyRemainingSeconds)}). يُرجى اختيار وسيلة دفع أخرى.`
+          : `Tabby is currently paused (${formatTabbyCountdown(tabbyRemainingSeconds)} remaining). Please choose Card or Cash on Delivery.`,
+        { position: "bottom-right", autoClose: 4000 }
+      );
+      return;
+    }
+    setSelectedOption(value);
+  };
 
   const updateAddress = async () => {
     const billing = formData.billingAddress;
@@ -930,6 +1057,9 @@ export default function Checkout() {
       }
       const data = await response.json();
       if (!response.ok) {
+        if (selectedOption === 'tabby' || data.tabby_rejected || data.payment_method === 'tabby') {
+          triggerTabbyCooldown(data.message || data.error);
+        }
         const errorMessage = data.message || data.error || "Failed to submit the data. Please try again.";
         throw new Error(errorMessage);
       }
@@ -991,6 +1121,9 @@ export default function Checkout() {
         setSuccess(null);
       }
     } catch (error) {
+      if (selectedOption === 'tabby') {
+        triggerTabbyCooldown(error.message);
+      }
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -1608,16 +1741,65 @@ export default function Checkout() {
                       </label>
                     </div>
 
-                    <div className={`form-check premium-payment-card ${selectedOption === "tabby" ? "active" : ""}`}>
-                      <input  className="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method" id="checkout_payment_method_6" value={'tabby'} checked={selectedOption === 'tabby'} onChange={handleRadioChange} />
-                      <label className="form-check-label" htmlFor="checkout_payment_method_6" >
+                    <div 
+                      className={`form-check premium-payment-card ${selectedOption === "tabby" ? "active" : ""} ${tabbyRemainingSeconds > 0 ? "tabby-disabled" : ""}`}
+                      style={tabbyRemainingSeconds > 0 ? { opacity: 0.58, cursor: "not-allowed", position: "relative" } : {}}
+                      onClick={() => {
+                        if (tabbyRemainingSeconds > 0) {
+                          toast.warn(
+                            locale === "ar"
+                              ? `خدمة تابي متوقفة مؤقتاً (متبقي ${formatTabbyCountdown(tabbyRemainingSeconds)}). يُرجى اختيار وسيلة دفع أخرى.`
+                              : `Tabby is currently paused (${formatTabbyCountdown(tabbyRemainingSeconds)} remaining). Please choose Card or Cash on Delivery.`,
+                            { position: "bottom-right", autoClose: 4000 }
+                          );
+                        }
+                      }}
+                    >
+                      <input 
+                        className="form-check-input form-check-input_fill" 
+                        type="radio" 
+                        name="checkout_payment_method" 
+                        id="checkout_payment_method_6" 
+                        value={'tabby'} 
+                        checked={selectedOption === 'tabby'} 
+                        onChange={handleRadioChange}
+                        disabled={tabbyRemainingSeconds > 0}
+                        style={{ cursor: tabbyRemainingSeconds > 0 ? "not-allowed" : "pointer" }}
+                      />
+                      <label className="form-check-label" htmlFor="checkout_payment_method_6" style={{ cursor: tabbyRemainingSeconds > 0 ? "not-allowed" : "pointer" }}>
                         <div style={{display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap"}}>
                           <Image src="/assets/images/paymentGateway/Tabby.png" width="60" height="25" alt="Tabby Logo" />
                           <span>{t("CheckoutTitle")} <sup style={{fontSize: "0.7em"}}><strong>ⓘ</strong></sup></span>
+                          {tabbyRemainingSeconds > 0 && (
+                            <span 
+                              style={{
+                                fontSize: "0.78rem",
+                                fontWeight: "600",
+                                color: "#b45309",
+                                backgroundColor: "#fef3c7",
+                                border: "1px solid #fde68a",
+                                borderRadius: "12px",
+                                padding: "2px 8px",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "4px"
+                              }}
+                            >
+                              ⏳ {locale === "ar" ? "موقف مؤقتاً" : "Paused"} ({formatTabbyCountdown(tabbyRemainingSeconds)})
+                            </span>
+                          )}
                         </div>
-                        <span style={{fontWeight: "normal", fontSize: "0.8rem", color: "#666", marginTop: "4px"}}>{t("CheckoutDescription")}</span>
+                        {tabbyRemainingSeconds > 0 ? (
+                          <span style={{ fontWeight: "500", fontSize: "0.8rem", color: "#b45309", marginTop: "4px", display: "block", lineHeight: "1.4" }}>
+                            {locale === "ar"
+                              ? "تم إيقاف تابي مؤقتاً لمدة 10 دقائق بعد محاولة ملغاة أو غير مكتملة. يمكنك المحاولة مجدداً بعد انتهاء المؤقت، أو الدفع بالبطاقة / عند الاستلام لإتمام طلبك الآن."
+                              : "Temporarily paused for 10 minutes following an incomplete or declined attempt. You may try again when the timer ends, or select Card / COD to complete your order now."}
+                          </span>
+                        ) : (
+                          <span style={{fontWeight: "normal", fontSize: "0.8rem", color: "#666", marginTop: "4px"}}>{t("CheckoutDescription")}</span>
+                        )}
                       </label>
-                      {selectedOption == 'tabby' && <div id="tabbyCard" style={{marginTop: "12px"}}></div>}
+                      {selectedOption == 'tabby' && tabbyRemainingSeconds === 0 && <div id="tabbyCard" style={{marginTop: "12px"}}></div>}
                     </div> 
 
                     <div className="policy-wrapper mt-3">
@@ -1638,7 +1820,41 @@ export default function Checkout() {
                     </div>
                   </div>
 
-                  {error ? ( <div style={{ backgroundColor: "#ffebe9", color: "#cf1e1e", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px",}}>{error}</div>) : success ? ( <div style={{ backgroundColor: "#e8f5e9", color: "#2e7d32", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px", }} > {success} </div>) : null}
+                  {error ? (
+                    <div
+                      style={{
+                        backgroundColor: "#ffebe9",
+                        color: "#cf1e1e",
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                        width: "22rem",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {error}
+                    </div>
+                  ) : success ? (
+                    <div
+                      style={{
+                        backgroundColor: "#e8f5e9",
+                        color: "#2e7d32",
+                        padding: "14px 20px",
+                        marginBottom: "1rem",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        borderRadius: "2px",
+                        width: "22rem",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {success}
+                    </div>
+                  ) : null}
                   <div className="mobile_fixed-btn_wrapper">
                     <div className="button-wrapper container">
                       <button className="btn btn-primary w-100 text-uppercase btn-checkout" type="submit" disabled={disablePlaceOrder} > {isLoading ? "Loading..." : "Place Order"} </button>
