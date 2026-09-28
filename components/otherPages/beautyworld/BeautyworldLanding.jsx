@@ -244,7 +244,7 @@ export default function BeautyworldLanding() {
         {/* Mobile Background Image (Portrait) */}
         <div className="bw-reveal__image-wrap bw-reveal__image-wrap--mobile">
           <Image
-            src="/assets/images/auric-mobile-view.png"
+            src="/assets/images/swirl-mobile.png"
             alt="A New Chapter in Fragrance – Ahmed Al Maghribi at Beautyworld Dubai 2026"
             fill
             priority
@@ -257,7 +257,7 @@ export default function BeautyworldLanding() {
         {/* Desktop Background Image (Landscape) */}
         <div className="bw-reveal__image-wrap bw-reveal__image-wrap--desktop">
           <Image
-            src="/assets/images/Auric.png"
+            src="/assets/images/swirls.png"
             alt="A new fragrance creation — coming soon"
             fill
             priority
