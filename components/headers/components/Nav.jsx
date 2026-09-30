@@ -35,7 +35,10 @@ export default function Nav({ categoriesSubCategories }) {
   const isMenuActive = (menu) => {
     return menu.split("/")[3] == pathname.split("/")[4];
   };
-  const isActiveParentMenu = (menu) => {
+  const isActiveParentMenu = (menu, itemName) => {
+    if (itemName === 'Gift Sets' && pathname?.includes('/corporate-gifting')) {
+      return true;
+    }
     return menu.split("/")[2] == pathname.split("/")[3];
   };
   const isActiveExportMenu = (menu) => {
@@ -89,17 +92,20 @@ export default function Nav({ categoriesSubCategories }) {
   }
 
   let categoriesSubCategoriesBody = categoriesSubCategories?.map((item, i) => {
+    const isGiftSets = item.name === 'Gift Sets';
+    const hasSubCategories = (item.productSubCategories && item.productSubCategories.length > 0) || isGiftSets;
+
     return (
       <li className="navigation__item" key={i}>
         <Link
-          href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
+          href={!isGiftSets ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
           className={`navigation__link
-          ${isActiveParentMenu(`/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""}
+          ${isActiveParentMenu(`/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}`, item.name) ? "menu-active" : ""}
           `}
         >
           {t(item.name)}
         </Link>
-        {item.productSubCategories.length > 0 ?
+        {hasSubCategories ?
           <div className="mega-menu">
             <div className="container d-flex justify-content-center">
               <div className="col pe-4">
@@ -107,10 +113,20 @@ export default function Nav({ categoriesSubCategories }) {
                   {t("PRODUCT TYPES")}
                 </p>
                 <ul className="sub-menu__list list-unstyled">
-                  {item.productSubCategories.map((elm, ind) => (
+                  {(!item.productSubCategories || item.productSubCategories.length === 0) && isGiftSets && (
+                    <li className="sub-menu__item">
+                      <Link
+                        href={`/${locale}/product-category/gift-sets`}
+                        className={`menu-link menu-link_us-s ${pathname?.includes('/product-category/gift-sets') ? "menu-active" : ""}`}
+                      >
+                        {t("Gift Sets")}
+                      </Link>
+                    </li>
+                  )}
+                  {item.productSubCategories?.map((elm, ind) => (
                     <li key={ind} className="sub-menu__item">
                       <Link
-                        href={item.name != 'Gift Sets' ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
+                        href={!isGiftSets ? `/${locale}/product-category/${removeSpecialCharactersAndAmp(item.name).split(' ').join('-').toLowerCase()}/${removeSpecialCharactersAndAmp(elm.name).split(' ').join('-').toLowerCase()}` : `/${locale}/product-category/gift-sets`}
                         className={`menu-link menu-link_us-s ${isMenuActive(`/product-category/${item.name.split(' ').join('-').toLowerCase()}/${elm.name.split(' ').join('-').toLowerCase()}`) ? "menu-active" : ""
                           }`}
                       >
@@ -118,6 +134,16 @@ export default function Nav({ categoriesSubCategories }) {
                       </Link>
                     </li>
                   ))}
+                  {isGiftSets && (
+                    <li className="sub-menu__item">
+                      <Link
+                        href={`/${locale}/corporate-gifting`}
+                        className={`menu-link menu-link_us-s ${pathname?.includes('/corporate-gifting') ? "menu-active" : ""}`}
+                      >
+                        {t("Corporate Gift Sets")}
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </div>
 

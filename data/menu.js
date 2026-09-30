@@ -123,6 +123,11 @@ export const blogmenuItems = [
     href: "/product-category/gift-sets?category=gift-sets&subcategory=gift-sets",
     title: "Gift Sets",
   },
+  {
+    id: 2,
+    href: "/corporate-gifting",
+    title: "Corporate Gift Sets",
+  },
   // {
   //   id: 2,
   //   href: "/blog_list2",

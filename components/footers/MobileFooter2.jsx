@@ -128,6 +128,14 @@ export default function MobileFooter2() {
                 </a>
               </li>
             ))}
+            <li className="sub-menu__item">
+              <a
+                href={`/${locale}/corporate-gifting`}
+                className="menu-link menu-link_us-s text-white"
+              >
+                {t("Corporate Gift Sets")}
+              </a>
+            </li>
           </ul>
         </AccordionDetails>
       </Accordion>

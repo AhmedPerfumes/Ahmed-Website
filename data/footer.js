@@ -5,6 +5,7 @@ export const footerLinks1 = [
   { href: "/export", text: "Worldwide Distributions" },
   { href: "/faq", text: "FAQs" },
   { href: "/wedding-promotion", text: "Wedding Promotion" },
+  { href: "/beautyworld-dubai-2026", text: "Beautyworld Dubai 2026" },
   { href: "/privacy", text: "Privacy Policy" },
   { href: "/terms", text: "Terms & Conditions" },
   { href: "/contact", text: "Contact Us" },
@@ -16,6 +17,7 @@ export const footerLinks2 = [
   { href: "/shop-3", text: "Concentrated Parfum" },
   { href: "/shop-4", text: "Dhakoon" },
   { href: "/product-category/gift-sets", text: "Gift Sets" },
+  { href: "/corporate-gifting", text: "Corporate Gift Sets" },
   { href: "/shop", text: "Collections" },
 ];
 export const footerLinks3 = [

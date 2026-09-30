@@ -236,6 +236,14 @@ export default function Footer14() {
                   </Link>
                 </li>
               ))}
+              <li className="sub-menu__item">
+                <Link
+                  href={`/${locale}/corporate-gifting`}
+                  className="menu-link menu-link_us-s"
+                >
+                  {t("Corporate Gift Sets")}
+                </Link>
+              </li>
             </ul>
           </div>
           {/* <!-- /.footer-column --> */}

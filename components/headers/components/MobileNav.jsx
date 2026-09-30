@@ -24,7 +24,12 @@ export default function MobileNav() {
     : null;
 
   const isMenuActive = (menu) => menu.split("/")[3] === pathname.split("/")[4];
-  const isActiveParentMenu = (menu) => menu.split("/")[2] === pathname.split("/")[3];
+  const isActiveParentMenu = (menu, itemName) => {
+    if (itemName === "Gift Sets" && pathname?.includes("/corporate-gifting")) {
+      return true;
+    }
+    return menu.split("/")[2] === pathname.split("/")[3];
+  };
   const isActiveExportMenu = (menu) => menu.split("/")[1] === pathname.split("/")[2];
 
   useEffect(() => {
@@ -100,8 +105,9 @@ export default function MobileNav() {
 
       {categoriesSubCategories?.map((item, i) => {
         const isOpen = openCategoryIndex === i;
-        const hasSubCategories = item.productSubCategories?.length > 0;
-        const categorySlug = item.name !== "Gift Sets"
+        const isGiftSets = item.name === "Gift Sets";
+        const hasSubCategories = (item.productSubCategories?.length > 0) || isGiftSets;
+        const categorySlug = !isGiftSets
           ? `/${locale}/product-category/${item.name.split(" ").join("-").toLowerCase()}`
           : `/${locale}/product-category/gift-sets`;
 
@@ -110,7 +116,7 @@ export default function MobileNav() {
             <div className="d-flex align-items-center w-100 py-2">
               <Link
                 href={categorySlug}
-                className={`navigation__link text-start flex-grow-1 ${isActiveParentMenu(categorySlug) ? "menu-active fw-bold" : ""
+                className={`navigation__link text-start flex-grow-1 ${isActiveParentMenu(categorySlug, item.name) ? "menu-active fw-bold" : ""
                   }`}
                 style={{ textAlign: locale === 'ar' ? 'right' : 'left' }}
               >
@@ -134,11 +140,25 @@ export default function MobileNav() {
             <div className={`sub-menu ${isOpen && hasSubCategories ? "open" : ""}`}>
               {isOpen && hasSubCategories && (
                 <ul className="list-unstyled mb-0 pb-2">
-                  {hasSubCategories && item.productSubCategories.map((elm, j) => (
+                  {(!item.productSubCategories || item.productSubCategories.length === 0) && isGiftSets && (
+                    <li className="sub-menu__item">
+                      <Link
+                        href={`/${locale}/product-category/gift-sets`}
+                        className={`menu-link d-block py-1 text-secondary ${pathname?.includes('/product-category/gift-sets') ? "menu-active text-dark fw-medium" : ""}`}
+                        style={{
+                          textAlign: locale === 'ar' ? 'right' : 'left',
+                          fontSize: '0.825rem'
+                        }}
+                      >
+                        {t("Gift Sets")}
+                      </Link>
+                    </li>
+                  )}
+                  {item.productSubCategories?.map((elm, j) => (
                     <li key={j} className="sub-menu__item">
                       <Link
                         href={
-                          item.name !== "Gift Sets"
+                          !isGiftSets
                             ? `/${locale}/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`
                             : `/${locale}/product-category/gift-sets`
                         }
@@ -155,6 +175,23 @@ export default function MobileNav() {
                       </Link>
                     </li>
                   ))}
+                  {isGiftSets && (
+                    <li className="sub-menu__item">
+                      <Link
+                        href={`/${locale}/corporate-gifting`}
+                        className={`menu-link d-block py-1 text-secondary ${pathname?.includes("/corporate-gifting")
+                          ? "menu-active text-dark fw-medium"
+                          : ""
+                          }`}
+                        style={{
+                          textAlign: locale === 'ar' ? 'right' : 'left',
+                          fontSize: '0.825rem'
+                        }}
+                      >
+                        {t("Corporate Gift Sets")}
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               )}
             </div>
