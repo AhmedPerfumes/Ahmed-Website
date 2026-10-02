@@ -1,0 +1,252 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  /* Seamless black to charcoal gradient that matches VideoSection */
+  background: linear-gradient(180deg, #000000 0%, #040304 40%, #080608 100%);
+  overflow: hidden;
+  padding: 30px 20px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-section .overlay {
+  position: absolute;
+  inset: 0;
+  /* Subtle dark vignette with warm maroon mid-tones to preserve bottle radiance */
+  background:
+    radial-gradient(circle at 25% 45%, rgba(138, 30, 48, 0.09) 0%, transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(223, 186, 115, 0.06) 0%, transparent 45%),
+    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Colors */
+.text-maroon { color: #c2596c; font-weight: 500; }
+.text-maroon-dark { color: #800020; font-weight: 600; }
+.text-cream { color: #f7ecef; }
+.text-gold { color: #d4af37; }
+
+.auric-gold-text {
+  color: #d4af37;
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Text */
+.hero-section h1,
+.hero-section h2 { 
+  letter-spacing: 0.03em; 
+  font-weight: 400;
+  line-height: 1.22;
+}
+
+.hero-section .lead { 
+  color: rgba(255, 255, 255, 0.82); 
+  font-size: 1.1rem; 
+  line-height: 1.85; 
+  font-weight: 300;
+  letter-spacing: 0.015em;
+}
+
+/* Center Bottle */
+.center-bottle {
+  position: relative;
+  perspective: 1000px;
+}
+
+.perfume-bottle {
+  width: 320px;
+  max-width: 340px;
+  height: auto;
+  filter: drop-shadow(0px 20px 60px rgba(138, 30, 48, 0.35)) drop-shadow(0px 0px 80px rgba(92, 19, 32, 0.2));
+  animation: floatCenter 6s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.perfume-bottle:hover {
+  transform: translateY(-10px);
+}
+
+.perfume-comparison-wrapper {
+  animation: floatCenter 6s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 440px;
+}
+
+.perfume-comparison-wrapper:hover {
+  animation-play-state: paused;
+}
+
+/* Side Bottles */
+.side-bottle {
+  width: 180px;
+  max-width: 200px;
+  height: auto;
+  filter: drop-shadow(0px 0px 40px rgba(255, 255, 255, 0.15));
+}
+
+.left-bottle .side-bottle {
+  animation: floatLeft 8s ease-in-out infinite;
+}
+
+.right-bottle .side-bottle {
+  animation: floatRight 8s ease-in-out infinite;
+}
+
+/* Glow */
+.bottle-glow {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  width: 380px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(138, 30, 48, 0.38), rgba(92, 19, 32, 0.18), transparent);
+  transform: translateX(-50%);
+  filter: blur(85px);
+  z-index: 1;
+  opacity: 0.6;
+  border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+.bottle-glow-small {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  width: 260px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(223, 186, 115, 0.18), transparent);
+  transform: translateX(-50%);
+  filter: blur(65px);
+  z-index: 0;
+  opacity: 0.35;
+  border-radius: 50%;
+  animation: glowPulse 5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.65; transform: translateX(-50%) scale(1.1); }
+}
+
+/* Fade-in text */
+.fade-in-top { opacity: 0; transform: translateY(20px); animation: fadeInTop 1s forwards; }
+.fade-in-top.delay-1 { animation-delay: 0.4s; }
+.fade-in-top.delay-2 { animation-delay: 0.7s; }
+.fade-in-top.delay-3 { animation-delay: 1s; }
+
+@keyframes fadeInTop { to { opacity: 1; transform: translateY(0); } }
+
+@keyframes floatCenter {
+  0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+  50% { transform: translateY(-15px) rotateZ(0.5deg); }
+}
+
+@keyframes floatLeft {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(-8px) translateY(-12px); }
+}
+
+@keyframes floatRight {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(8px) translateY(-12px); }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .left-bottle, .right-bottle { display: none; }
+  .perfume-bottle { width: 260px; }
+  .hero-section h1 { font-size: 2.5rem; }
+  .hero-section .lead { font-size: 1.1rem; }
+  .hero-section { padding: 80px 15px; min-height: auto; }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 15px;
+    min-height: auto;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-section .lead {
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .perfume-bottle {
+    width: 220px;
+    max-width: 220px;
+  }
+
+  .bottle-glow {
+    width: 200px;
+    height: 100px;
+  }
+
+  .bottle-glow-small {
+    width: 140px;
+    height: 70px;
+  }
+
+  .hero-message {
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 50px 12px;
+    min-height: auto;
+  }
+
+  .hero-section h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+
+  .hero-section .lead {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .perfume-bottle {
+    width: 180px;
+    max-width: 180px;
+  }
+
+  .bottle-glow {
+    width: 150px;
+    height: 80px;
+    bottom: 5%;
+  }
+
+  .bottle-glow-small {
+    width: 100px;
+    height: 50px;
+  }
+
+  .container {
+    padding: 0 !important;
+  }
+
+  .row {
+    row-gap: 2rem;
+  }
+}
+
