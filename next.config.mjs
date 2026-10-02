@@ -6,7 +6,9 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   reactStrictMode: false,
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
+      { protocol: 'https', hostname: 'flagcdn.com' },
       { protocol: 'https', hostname: 'phpstack-667016-4904984.cloudwaysapps.com' },
       { protocol: 'https', hostname: 'admin.ahmedalmaghribi.com' },
       { protocol: 'https', hostname: 'ae.ahmedalmaghribi.com' },
