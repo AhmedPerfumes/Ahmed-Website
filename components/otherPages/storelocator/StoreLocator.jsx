@@ -48,7 +48,7 @@ export default function StoreLocator({ initialStores = [], locale }) {
   const isArabic = currentLocale === "ar";
 
   const [stores, setStores] = useState(initialStores);
-  const [selectedCountry, setSelectedCountry] = useState("ALL");
+  const [selectedCountry, setSelectedCountry] = useState("AE");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStore, setSelectedStore] = useState(null);
   const [reviewStore, setReviewStore] = useState(null);
