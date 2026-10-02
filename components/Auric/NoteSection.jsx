@@ -7,9 +7,7 @@ import Image from "next/image";
 const NOTE_TIERS = [
   {
     tier: "01",
-    subtitle: "THE OPENING",
     title: "Top Notes",
-    highlight: "Cardamom & Saffron",
     glowColor: "rgba(230, 149, 66, 0.28)",
     borderColor: "rgba(230, 149, 66, 0.35)",
     tagBg: "rgba(230, 149, 66, 0.1)",
@@ -18,9 +16,7 @@ const NOTE_TIERS = [
   },
   {
     tier: "02",
-    subtitle: "THE HEART",
     title: "Heart Notes",
-    highlight: "Rose & Orris",
     glowColor: "rgba(194, 24, 91, 0.28)",
     borderColor: "rgba(219, 68, 126, 0.35)",
     tagBg: "rgba(194, 24, 91, 0.1)",
@@ -29,9 +25,7 @@ const NOTE_TIERS = [
   },
   {
     tier: "03",
-    subtitle: "THE SOUL",
     title: "Base Notes",
-    highlight: "Oud & Vanilla",
     glowColor: "rgba(212, 175, 55, 0.28)",
     borderColor: "rgba(212, 175, 55, 0.35)",
     tagBg: "rgba(212, 175, 55, 0.1)",
@@ -135,28 +129,11 @@ export default function NoteSection({ data = {} }) {
               letterSpacing: "0.03em",
               lineHeight: 1.2,
               color: "#ffffff",
-              marginBottom: "16px",
+              marginBottom: 0,
             }}
           >
             {data?.notesHeading || "The Fragrance Notes"}
           </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            style={{
-              fontSize: "1.05rem",
-              color: "rgba(255, 255, 255, 0.76)",
-              lineHeight: 1.8,
-              fontWeight: 300,
-              margin: "0 auto",
-            }}
-          >
-            {data?.notesSubtitle ||
-              "A luminous composition crafted in three distinct olfactory movements — from radiant spice to opulent florals and sacred amber woods."}
-          </motion.p>
         </div>
 
         {/* 3-Column Botanical Art Cards */}
@@ -199,12 +176,12 @@ export default function NoteSection({ data = {} }) {
                       overflow: "hidden",
                       backgroundColor: "#0d0b0e",
                       boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
-                      marginBottom: "22px",
+                      marginBottom: "20px",
                     }}
                   >
                     <Image
                       src={item.img}
-                      alt={`${item.title} - ${item.highlight}`}
+                      alt={item.title}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
                       priority={index === 0}
@@ -217,55 +194,19 @@ export default function NoteSection({ data = {} }) {
                     />
                   </div>
 
-                  {/* Tier Label & Subtitle */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-                    <span
-                      style={{
-                        fontSize: "0.72rem",
-                        letterSpacing: "0.22em",
-                        textTransform: "uppercase",
-                        color: item.tagColor,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {item.tier} · {item.subtitle}
-                    </span>
-                    <span
-                      style={{
-                        fontSize: "0.76rem",
-                        color: "rgba(255, 255, 255, 0.4)",
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Movement
-                    </span>
-                  </div>
-
-                  {/* Main Title & Highlight */}
+                  {/* Main Title */}
                   <h3
                     style={{
                       fontSize: "1.35rem",
-                      fontWeight: 400,
+                      fontWeight: 500,
                       color: "#ffffff",
                       letterSpacing: "0.02em",
-                      marginBottom: "4px",
+                      marginBottom: "12px",
                     }}
                   >
                     {item.title}
                   </h3>
 
-                  <div
-                    style={{
-                      fontSize: "0.92rem",
-                      color: item.tagColor,
-                      fontStyle: "italic",
-                      letterSpacing: "0.02em",
-                      marginBottom: "14px",
-                    }}
-                  >
-                    {item.highlight}
-                  </div>
 
                   {/* Description Paragraph */}
                   <p
