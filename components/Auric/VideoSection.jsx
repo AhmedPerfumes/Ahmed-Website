@@ -35,26 +35,12 @@ function VideoSection({ data = {} }) {
         height: "auto",
         background: "#000000",
         color: "#ffffff",
-        padding: "70px 20px 25px",
+        padding: "100px 24px",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Decorative ambient maroon glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: "10%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "600px",
-          height: "300px",
-          background: "radial-gradient(circle, rgba(138, 30, 48, 0.12), transparent 70%)",
-          filter: "blur(90px)",
-          pointerEvents: "none",
-        }}
-      />
 
       {/* CONTENT WRAPPER */}
       <motion.div
@@ -81,7 +67,7 @@ function VideoSection({ data = {} }) {
             overflow: "hidden",
             aspectRatio: "16/9",
             backgroundColor: "#000",
-            boxShadow: "0 20px 60px rgba(138, 30, 48, 0.2)",
+            boxShadow: "0 25px 70px rgba(0, 0, 0, 0.6)",
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -141,41 +127,12 @@ function VideoSection({ data = {} }) {
         <motion.div
           variants={itemVariants}
           style={{
-            marginTop: "36px",
+            marginTop: "44px",
             textAlign: "center",
             color: textColor,
           }}
         >
-          <p
-            style={{
-              letterSpacing: "0.28em",
-              fontSize: "clamp(0.78rem, 1.2vw, 0.92rem)",
-              fontWeight: 500,
-              textTransform: "uppercase",
-              color: "#e6d5d8",
-              opacity: 0.9,
-              marginBottom: "10px",
-            }}
-          >
-            {data?.videoTopText || "SECOND CHAPTER OF AN ICON"}
-          </p>
           <div style={{ position: "relative", display: "inline-block" }}>
-            {/* Soft golden aura behind AURIC */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "240px",
-                height: "90px",
-                background:
-                  "radial-gradient(ellipse, rgba(212, 175, 55, 0.22), transparent 70%)",
-                filter: "blur(32px)",
-                pointerEvents: "none",
-                zIndex: 0,
-              }}
-            />
             <h2
               style={{
                 position: "relative",

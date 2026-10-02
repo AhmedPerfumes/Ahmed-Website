@@ -8,28 +8,28 @@ const NOTE_TIERS = [
   {
     tier: "01",
     title: "Top Notes",
-    glowColor: "rgba(230, 149, 66, 0.28)",
-    borderColor: "rgba(230, 149, 66, 0.35)",
-    tagBg: "rgba(230, 149, 66, 0.1)",
-    tagColor: "#f3b576",
+    glowColor: "rgba(212, 175, 55, 0.22)",
+    borderColor: "rgba(212, 175, 55, 0.28)",
+    tagBg: "rgba(212, 175, 55, 0.08)",
+    tagColor: "#e6cf94",
     notes: ["Bright Orange", "Cardamom", "Black Pepper", "Saffron", "Leather"],
   },
   {
     tier: "02",
     title: "Heart Notes",
-    glowColor: "rgba(194, 24, 91, 0.28)",
-    borderColor: "rgba(219, 68, 126, 0.35)",
-    tagBg: "rgba(194, 24, 91, 0.1)",
-    tagColor: "#f48fb1",
+    glowColor: "rgba(212, 175, 55, 0.22)",
+    borderColor: "rgba(212, 175, 55, 0.28)",
+    tagBg: "rgba(212, 175, 55, 0.08)",
+    tagColor: "#e6cf94",
     notes: ["Turkish Rose", "Orris Root", "Balkan Immortelle", "Heliotrope"],
   },
   {
     tier: "03",
     title: "Base Notes",
-    glowColor: "rgba(212, 175, 55, 0.28)",
-    borderColor: "rgba(212, 175, 55, 0.35)",
-    tagBg: "rgba(212, 175, 55, 0.1)",
-    tagColor: "#f0d8a8",
+    glowColor: "rgba(212, 175, 55, 0.22)",
+    borderColor: "rgba(212, 175, 55, 0.28)",
+    tagBg: "rgba(212, 175, 55, 0.08)",
+    tagColor: "#e6cf94",
     notes: ["Sacred Oud", "Vanilla Bean", "Patchouli", "Musk", "Incense", "Ambroxan"],
   },
 ];
@@ -76,7 +76,7 @@ export default function NoteSection({ data = {} }) {
       style={{
         background: "radial-gradient(circle at 50% 30%, #0d0a0d 0%, #050405 50%, #000000 100%)",
         color: "#ffffff",
-        padding: "90px 20px 110px",
+        padding: "100px 24px",
         position: "relative",
         overflow: "hidden",
         borderTop: "1px solid rgba(212, 175, 55, 0.12)",
@@ -100,23 +100,7 @@ export default function NoteSection({ data = {} }) {
 
       <div className="container" style={{ maxWidth: "1240px", position: "relative", zIndex: 1 }}>
         {/* Section Header */}
-        <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto 56px" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            style={{
-              fontSize: "0.78rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#d4af37",
-              fontWeight: 500,
-              marginBottom: "12px",
-            }}
-          >
-            OLFACTORY ARCHITECTURE
-          </motion.div>
+        <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto 52px" }}>
 
           <motion.h2
             initial={{ opacity: 0, y: 16 }}

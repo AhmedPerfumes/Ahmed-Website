@@ -166,50 +166,11 @@ function BottleComparisonSlider({
     }
   };
 
-  const isRoseReveal =
-    slideDirection === "rose" || (isDragging && sliderPos > 52);
-  const isGoldReveal =
-    slideDirection === "gold" || (isDragging && sliderPos < 48);
-
-  // Compute ambient color based on slider position & direction
-  const ambientColor = (() => {
-    if (isRoseReveal) return "rgba(138, 30, 48, 0.35)";
-    if (isGoldReveal) return "rgba(235, 210, 120, 0.3)";
-    // Positional fallback: lean towards whichever side is more revealed
-    if (sliderPos > 60) return "rgba(138, 30, 48, 0.18)";
-    if (sliderPos < 40) return "rgba(235, 210, 120, 0.15)";
-    return "rgba(138, 30, 48, 0.1)";
-  })();
-
-  const borderAccent = (() => {
-    if (isRoseReveal) return "rgba(138, 30, 48, 0.5)";
-    if (isGoldReveal) return "rgba(235, 210, 120, 0.5)";
-    return "rgba(255, 255, 255, 0.08)";
-  })();
-
   return (
     <div
       className="perfume-comparison-wrapper"
       style={{ width: "100%", maxWidth: "440px", margin: "0 auto", position: "relative" }}
     >
-      {/* Ambient color wash behind the slider */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "130%",
-          height: "130%",
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${ambientColor} 0%, transparent 70%)`,
-          filter: "blur(60px)",
-          pointerEvents: "none",
-          zIndex: 0,
-          transition: "background 0.5s ease",
-        }}
-      />
-
       <div
         ref={containerRef}
         onPointerDown={handlePointerDown}
@@ -227,8 +188,7 @@ function BottleComparisonSlider({
           cursor: isDragging ? "grabbing" : "ew-resize",
           userSelect: "none",
           touchAction: "none",
-          border: `1px solid ${borderAccent}`,
-          transition: "border-color 0.4s ease",
+          border: "1px solid rgba(255, 255, 255, 0.12)",
           zIndex: 1,
         }}
       >
@@ -254,7 +214,7 @@ function BottleComparisonSlider({
               width: "100%",
               height: "100%",
               objectFit: "contain",
-              filter: "drop-shadow(0px 20px 50px rgba(138, 30, 48, 0.35))",
+              filter: "drop-shadow(0px 15px 35px rgba(0, 0, 0, 0.5))",
             }}
           />
         </div>
@@ -281,26 +241,10 @@ function BottleComparisonSlider({
               width: "100%",
               height: "100%",
               objectFit: "contain",
-              filter: "drop-shadow(0px 20px 50px rgba(212, 175, 55, 0.35))",
+              filter: "drop-shadow(0px 15px 35px rgba(0, 0, 0, 0.5))",
             }}
           />
         </div>
-
-        {/* Directional color overlay wash inside the frame */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            pointerEvents: "none",
-            zIndex: 2,
-            background: isRoseReveal
-              ? "radial-gradient(circle at 30% 50%, rgba(138, 30, 48, 0.2) 0%, transparent 60%)"
-              : isGoldReveal
-              ? "radial-gradient(circle at 70% 50%, rgba(235, 210, 120, 0.2) 0%, transparent 60%)"
-              : "none",
-            transition: "background 0.4s ease",
-          }}
-        />
 
         {/* Label 1: Oud & Roses (Left) */}
         <span
@@ -308,24 +252,21 @@ function BottleComparisonSlider({
             position: "absolute",
             top: "14px",
             left: "14px",
-            fontSize: "0.72rem",
+            fontSize: "0.7rem",
             fontWeight: 600,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            padding: "5px 12px",
+            padding: "5px 14px",
             borderRadius: "20px",
-            background: isRoseReveal
-              ? "rgba(138, 30, 48, 0.7)"
-              : "rgba(0, 0, 0, 0.7)",
-            backdropFilter: "blur(6px)",
-            border: isRoseReveal
-              ? "1px solid rgba(194, 89, 108, 0.5)"
-              : "1px solid rgba(255, 255, 255, 0.2)",
+            background: "rgba(0, 0, 0, 0.65)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            border: "1px solid rgba(255, 255, 255, 0.16)",
             color: "#ffffff",
             pointerEvents: "none",
             zIndex: 3,
             opacity: sliderPos < 12 ? 0 : 0.9,
-            transition: "opacity 0.2s ease, background 0.4s ease, border-color 0.4s ease",
+            transition: "opacity 0.25s ease",
           }}
         >
           {beforeLabel}
@@ -337,24 +278,21 @@ function BottleComparisonSlider({
             position: "absolute",
             top: "14px",
             right: "14px",
-            fontSize: "0.72rem",
-            fontWeight: 700,
+            fontSize: "0.7rem",
+            fontWeight: 600,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            padding: "5px 12px",
+            padding: "5px 14px",
             borderRadius: "20px",
-            background: isGoldReveal
-              ? "rgba(180, 140, 50, 0.45)"
-              : "rgba(0, 0, 0, 0.7)",
-            backdropFilter: "blur(6px)",
-            border: isGoldReveal
-              ? "1px solid rgba(235, 210, 120, 0.75)"
-              : "1px solid rgba(212, 175, 55, 0.45)",
-            color: "#eed28d",
+            background: "rgba(0, 0, 0, 0.65)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            border: "1px solid rgba(255, 255, 255, 0.16)",
+            color: "#f5e6c8",
             pointerEvents: "none",
             zIndex: 3,
             opacity: sliderPos > 88 ? 0 : 0.95,
-            transition: "opacity 0.2s ease, background 0.4s ease, border-color 0.4s ease",
+            transition: "opacity 0.25s ease",
           }}
         >
           {afterLabel}
@@ -369,19 +307,10 @@ function BottleComparisonSlider({
             left: `${sliderPos}%`,
             width: "1.5px",
             transform: "translateX(-50%)",
-            background: isRoseReveal
-              ? "rgba(194, 89, 108, 0.9)"
-              : isGoldReveal
-              ? "rgba(235, 210, 120, 0.9)"
-              : "rgba(255, 255, 255, 0.85)",
-            boxShadow: isRoseReveal
-              ? "0 0 14px rgba(138, 30, 48, 0.6)"
-              : isGoldReveal
-              ? "0 0 14px rgba(235, 210, 120, 0.5)"
-              : "0 0 10px rgba(0, 0, 0, 0.8)",
+            background: "rgba(255, 255, 255, 0.85)",
+            boxShadow: "0 0 8px rgba(0, 0, 0, 0.7)",
             pointerEvents: "none",
             zIndex: 6,
-            transition: "background 0.3s ease, box-shadow 0.3s ease",
           }}
         >
           {/* Tactile Circular Knob */}
@@ -395,21 +324,12 @@ function BottleComparisonSlider({
               height: "36px",
               borderRadius: "50%",
               background: "#ffffff",
-              boxShadow: isRoseReveal
-                ? "0 4px 18px rgba(138, 30, 48, 0.6), 0 0 20px rgba(138, 30, 48, 0.3)"
-                : isGoldReveal
-                ? "0 4px 18px rgba(235, 210, 120, 0.5), 0 0 20px rgba(235, 210, 120, 0.25)"
-                : "0 4px 18px rgba(0, 0, 0, 0.7)",
-              border: isRoseReveal
-                ? "1.5px solid rgba(194, 89, 108, 0.7)"
-                : isGoldReveal
-                ? "1.5px solid rgba(235, 210, 120, 0.75)"
-                : "1.5px solid rgba(212, 175, 55, 0.65)",
+              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.6)",
+              border: "1.5px solid rgba(255, 255, 255, 0.8)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               pointerEvents: "none",
-              transition: "box-shadow 0.3s ease, border-color 0.3s ease",
             }}
           >
             <svg
@@ -451,11 +371,6 @@ function BottleComparisonSlider({
 }
 
 function HeroSection({ data = {}, onBookNow }) {
-  const accentColor = data?.accentColor || "#c2596c";
-  const textColor = data?.textColor || "#ffffff";
-  const buttonColor = data?.buttonColor || "#800020";
-  const buttonTextColor = data?.buttonTextColor || "#ffffff";
-  const maroonGradient = data?.dividerGradient || "linear-gradient(to right, #800020, transparent)";
 
   return (
     <section className="hero-section text-white">
@@ -478,8 +393,6 @@ function HeroSection({ data = {}, onBookNow }) {
                 beforeLabel={data?.comparisonBeforeLabel || "Oud & Roses"}
                 afterLabel={data?.title || "Auric"}
               />
-              <div className="bottle-glow"></div>
-              <div className="bottle-glow-small"></div>
             </motion.div>
           </div>
 
@@ -494,25 +407,14 @@ function HeroSection({ data = {}, onBookNow }) {
             >
               <div
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  fontSize: "clamp(0.72rem, 0.85vw, 0.82rem)",
-                  letterSpacing: "0.28em",
+                  fontSize: "clamp(0.72rem, 0.85vw, 0.8rem)",
+                  letterSpacing: "0.24em",
                   textTransform: "uppercase",
-                  fontWeight: 600,
-                  marginBottom: "16px",
+                  fontWeight: 500,
+                  marginBottom: "14px",
                   color: "#d4af37",
                 }}
               >
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "28px",
-                    height: "1px",
-                    background: "linear-gradient(90deg, transparent, #d4af37)",
-                  }}
-                />
                 THE EVOLUTION OF AN ICON
               </div>
 
@@ -557,38 +459,19 @@ function HeroSection({ data = {}, onBookNow }) {
                   "Some fragrances become successful. Others change the direction of a house forever. Oud & Roses became a signature fragrance whose story reached far beyond its origins. Auric honours that legacy and the people who carried the story forward."}
               </p>
 
-              <div
+              <p
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
+                  fontSize: "0.92rem",
+                  color: "rgba(240, 226, 196, 0.85)",
+                  letterSpacing: "0.02em",
+                  fontStyle: "italic",
                   marginBottom: "36px",
+                  lineHeight: "1.65",
                   maxWidth: "560px",
                 }}
               >
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "24px",
-                    height: "1px",
-                    background: "#d4af37",
-                    opacity: 0.85,
-                    flexShrink: 0,
-                  }}
-                />
-                <p
-                  style={{
-                    fontSize: "0.95rem",
-                    color: "rgba(240, 226, 196, 0.9)",
-                    letterSpacing: "0.025em",
-                    fontStyle: "italic",
-                    margin: 0,
-                    lineHeight: "1.65",
-                  }}
-                >
-                  {data?.founderCredit || "Inspired by the vision of our founder, Mr. Kafeel Ahmed"}
-                </p>
-              </div>
+                {data?.founderCredit || "Inspired by the vision of our founder, Mr. Kafeel Ahmed"}
+              </p>
 
               <motion.div
                 initial={{ opacity: 0, y: 15 }}

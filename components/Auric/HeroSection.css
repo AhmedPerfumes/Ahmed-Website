@@ -24,9 +24,6 @@
 }
 
 /* Colors */
-.text-maroon { color: #c2596c; font-weight: 500; }
-.text-maroon-dark { color: #800020; font-weight: 600; }
-.text-cream { color: #f7ecef; }
 .text-gold { color: #d4af37; }
 
 .auric-gold-text {
@@ -54,25 +51,6 @@
   letter-spacing: 0.015em;
 }
 
-/* Center Bottle */
-.center-bottle {
-  position: relative;
-  perspective: 1000px;
-}
-
-.perfume-bottle {
-  width: 320px;
-  max-width: 340px;
-  height: auto;
-  filter: drop-shadow(0px 20px 60px rgba(138, 30, 48, 0.35)) drop-shadow(0px 0px 80px rgba(92, 19, 32, 0.2));
-  animation: floatCenter 6s ease-in-out infinite;
-  transition: transform 0.3s ease;
-}
-
-.perfume-bottle:hover {
-  transform: translateY(-10px);
-}
-
 .perfume-comparison-wrapper {
   animation: floatCenter 6s ease-in-out infinite;
   transition: transform 0.3s ease;
@@ -85,58 +63,6 @@
 
 .perfume-comparison-wrapper:hover {
   animation-play-state: paused;
-}
-
-/* Side Bottles */
-.side-bottle {
-  width: 180px;
-  max-width: 200px;
-  height: auto;
-  filter: drop-shadow(0px 0px 40px rgba(255, 255, 255, 0.15));
-}
-
-.left-bottle .side-bottle {
-  animation: floatLeft 8s ease-in-out infinite;
-}
-
-.right-bottle .side-bottle {
-  animation: floatRight 8s ease-in-out infinite;
-}
-
-/* Glow */
-.bottle-glow {
-  position: absolute;
-  bottom: 8%;
-  left: 50%;
-  width: 380px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(138, 30, 48, 0.38), rgba(92, 19, 32, 0.18), transparent);
-  transform: translateX(-50%);
-  filter: blur(85px);
-  z-index: 1;
-  opacity: 0.6;
-  border-radius: 50%;
-  animation: glowPulse 4s ease-in-out infinite;
-}
-
-.bottle-glow-small {
-  position: absolute;
-  bottom: 4%;
-  left: 50%;
-  width: 260px;
-  height: 130px;
-  background: radial-gradient(circle, rgba(223, 186, 115, 0.18), transparent);
-  transform: translateX(-50%);
-  filter: blur(65px);
-  z-index: 0;
-  opacity: 0.35;
-  border-radius: 50%;
-  animation: glowPulse 5s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%,100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
-  50% { opacity: 0.65; transform: translateX(-50%) scale(1.1); }
 }
 
 /* Fade-in text */
@@ -152,23 +78,11 @@
   50% { transform: translateY(-15px) rotateZ(0.5deg); }
 }
 
-@keyframes floatLeft {
-  0%, 100% { transform: translateX(0px) translateY(0px); }
-  50% { transform: translateX(-8px) translateY(-12px); }
-}
-
-@keyframes floatRight {
-  0%, 100% { transform: translateX(0px) translateY(0px); }
-  50% { transform: translateX(8px) translateY(-12px); }
-}
-
 /* Responsive */
 @media (max-width: 991px) {
-  .left-bottle, .right-bottle { display: none; }
-  .perfume-bottle { width: 260px; }
   .hero-section h1 { font-size: 2.5rem; }
   .hero-section .lead { font-size: 1.1rem; }
-  .hero-section { padding: 80px 15px; min-height: auto; }
+  .hero-section { padding: 70px 15px; min-height: auto; }
 }
 
 @media (max-width: 768px) {
@@ -186,21 +100,6 @@
   .hero-section .lead {
     font-size: 0.95rem;
     line-height: 1.8;
-  }
-
-  .perfume-bottle {
-    width: 220px;
-    max-width: 220px;
-  }
-
-  .bottle-glow {
-    width: 200px;
-    height: 100px;
-  }
-
-  .bottle-glow-small {
-    width: 140px;
-    height: 70px;
   }
 
   .hero-message {
@@ -223,22 +122,6 @@
   .hero-section .lead {
     font-size: 0.9rem;
     line-height: 1.7;
-  }
-
-  .perfume-bottle {
-    width: 180px;
-    max-width: 180px;
-  }
-
-  .bottle-glow {
-    width: 150px;
-    height: 80px;
-    bottom: 5%;
-  }
-
-  .bottle-glow-small {
-    width: 100px;
-    height: 50px;
   }
 
   .container {

@@ -76,19 +76,6 @@ export default function FamilySection({ data = {}, onBookNow }) {
                 paddingBottom: "40px",
               }}
             >
-              {/* Thin gold rule */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={isInView ? { scaleX: 1 } : {}}
-                transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  width: "40px",
-                  height: "1px",
-                  background: "#d4af37",
-                  transformOrigin: "left",
-                  marginBottom: "24px",
-                }}
-              />
 
               <motion.p
                 initial={{ opacity: 0 }}
@@ -103,7 +90,7 @@ export default function FamilySection({ data = {}, onBookNow }) {
                   marginBottom: "16px",
                 }}
               >
-                Extrait de Parfum · 60ml
+                Extrait de Parfum
               </motion.p>
 
               <motion.h2
@@ -244,34 +231,6 @@ export default function FamilySection({ data = {}, onBookNow }) {
                 />
               </div>
 
-              {/* Thin gold border accent — top-left corner lines */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "-1px",
-                  left: "-1px",
-                  width: "50px",
-                  height: "50px",
-                  borderTop: "1.5px solid rgba(212, 175, 55, 0.5)",
-                  borderLeft: "1.5px solid rgba(212, 175, 55, 0.5)",
-                  pointerEvents: "none",
-                  zIndex: 2,
-                }}
-              />
-              {/* Bottom-right corner lines */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-1px",
-                  right: "-1px",
-                  width: "50px",
-                  height: "50px",
-                  borderBottom: "1.5px solid rgba(212, 175, 55, 0.5)",
-                  borderRight: "1.5px solid rgba(212, 175, 55, 0.5)",
-                  pointerEvents: "none",
-                  zIndex: 2,
-                }}
-              />
             </motion.div>
           </div>
         </div>

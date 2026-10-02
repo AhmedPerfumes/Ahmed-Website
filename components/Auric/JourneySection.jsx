@@ -5,8 +5,6 @@ import VideoPanel from "../VideoPanel";
 function JourneySection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const accentColor = data?.accentColor || "#c2596c";
-
   const containerVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -28,7 +26,7 @@ function JourneySection({ data = {} }) {
         color: "#f2f2f2",
         position: "relative",
         overflow: "hidden",
-        padding: "80px 20px",
+        padding: "100px 24px",
       }}
     >
       <motion.div
@@ -44,37 +42,6 @@ function JourneySection({ data = {} }) {
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
       >
-        {/* Label */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "6px 18px",
-            borderRadius: "999px",
-            border: "1px solid rgba(212, 175, 55, 0.35)",
-            background: "rgba(10, 10, 10, 0.85)",
-            fontSize: "0.76rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#ffffff",
-            marginBottom: "20px",
-          }}
-        >
-          <span
-            style={{
-              width: "6px",
-              height: "6px",
-              background: "#d4af37",
-              borderRadius: "50%",
-            }}
-          />
-          {data?.journeyTag || "SIGNATURE COLLECTION"}
-        </motion.div>
 
         {/* Heading */}
         <motion.h2
