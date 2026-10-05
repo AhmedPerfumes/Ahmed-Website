@@ -1,244 +1,82 @@
 "use client";
 
-import React, { useRef, useState, useCallback } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import "./auric.css";
 
-export default function FamilySection({ data = {}, onBookNow }) {
-  const router = useRouter();
+export default function FamilySection({ data = {} }) {
   const containerRef = useRef(null);
-  const imageRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-80px" });
+  const isInView = useInView(containerRef, { once: true, margin: "-60px" });
 
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const sectionTag = data?.familyTag || "REIMAGINED";
+  const sectionHeading = data?.familyHeading || "A Bouquet That Unfolds";
 
-  // Parallax scroll on the image
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], [30, -30]);
-
-  const handleMouseMove = useCallback((e) => {
-    if (!imageRef.current) return;
-    const rect = imageRef.current.getBoundingClientRect();
-    setMousePos({
-      x: (e.clientX - rect.left) / rect.width,
-      y: (e.clientY - rect.top) / rect.height,
-    });
-  }, []);
-
-  const handleCtaClick = () => {
-    if (onBookNow) {
-      onBookNow();
-    } else {
-      router.push("/en/shop");
+  // Render title with gold accent on the last word if it's the default or standard phrase
+  const renderHeading = () => {
+    if (sectionHeading === "A Bouquet That Unfolds") {
+      return (
+        <>
+          <span>A Bouquet That </span>
+          <span className="auric-gold-text">Unfolds</span>
+        </>
+      );
     }
+    const words = sectionHeading.split(" ");
+    if (words.length > 1) {
+      const lastWord = words.pop();
+      return (
+        <>
+          <span>{words.join(" ")} </span>
+          <span className="auric-gold-text">{lastWord}</span>
+        </>
+      );
+    }
+    return <span className="auric-gold-text">{sectionHeading}</span>;
   };
 
-  const sectionHeading = data?.familyHeading || "A Bouquet That Unfolds";
-  const sectionDescription =
-    data?.familyDescription ||
-    "Like a bouquet opening one bloom at a time, the fragrance reveals new facets as its notes unfold. One composition offers the depth and complexity of fragrance layering, without combining multiple scents.";
-
-  const artworkSrc =
-    "/assets/images/auric/auric bottle transformation.jpg.jpeg";
-
   return (
-    <section
-      ref={containerRef}
-      style={{
-        position: "relative",
-        background: "#080507",
-        color: "#ffffff",
-        padding: "100px 24px",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1140px",
-          margin: "0 auto",
-        }}
-      >
-        {/* Two-column editorial layout */}
-        <div
-          className="row align-items-center g-0"
-          style={{ minHeight: "520px" }}
+    <section ref={containerRef} className="auric-family-section">
+      {/* Ambient background glow */}
+      <div className="auric-family-ambient-glow" />
+
+      {/* Luxury watermark typography */}
+      <div className="auric-family-watermark" aria-hidden="true">
+        EXTRAIT DE PARFUM
+      </div>
+
+      <div className="auric-family-container">
+        {/* Simple elegant text overline */}
+        <motion.p
+          className="auric-family-tag"
+          initial={{ opacity: 0, y: 14 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          {/* Left: Typography */}
-          <div className="col-lg-5 col-md-12">
-            <div
-              style={{
-                paddingRight: "clamp(20px, 4vw, 60px)",
-                paddingBottom: "40px",
-              }}
-            >
+          {sectionTag}
+        </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.25em",
-                  textTransform: "uppercase",
-                  color: "rgba(212, 175, 55, 0.85)",
-                  fontWeight: 500,
-                  marginBottom: "16px",
-                }}
-              >
-                Extrait de Parfum
-              </motion.p>
+        {/* Section Heading */}
+        <motion.h2
+          className="auric-family-heading"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {renderHeading()}
+        </motion.h2>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  fontSize: "clamp(2rem, 3.8vw, 3rem)",
-                  fontWeight: 400,
-                  letterSpacing: "0.01em",
-                  lineHeight: 1.15,
-                  color: "#ffffff",
-                  marginBottom: "22px",
-                }}
-              >
-                {sectionHeading}
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 14 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  fontSize: "0.96rem",
-                  color: "rgba(255, 255, 255, 0.62)",
-                  lineHeight: 1.8,
-                  fontWeight: 300,
-                  marginBottom: "34px",
-                  maxWidth: "420px",
-                }}
-              >
-                {sectionDescription}
-              </motion.p>
-
-              {/* CTA */}
-              <motion.button
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleCtaClick}
-                style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  background: "transparent",
-                  color: "#d4af37",
-                  border: "1px solid rgba(212, 175, 55, 0.45)",
-                  borderRadius: "0",
-                  padding: "13px 38px",
-                  fontSize: "0.72rem",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  fontWeight: 500,
-                  cursor: "pointer",
-                  transition: "all 0.35s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#d4af37";
-                  e.currentTarget.style.color = "#080507";
-                  e.currentTarget.style.borderColor = "#d4af37";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.color = "#d4af37";
-                  e.currentTarget.style.borderColor = "rgba(212, 175, 55, 0.45)";
-                }}
-              >
-                Discover Auric
-              </motion.button>
-            </div>
-          </div>
-
-          {/* Right: Artwork with contained sizing & interactive hover */}
-          <div className="col-lg-7 col-md-12">
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "6px",
-              }}
-            >
-              {/* Image container with overflow hidden for zoom effect */}
-              <div
-                ref={imageRef}
-                onMouseMove={handleMouseMove}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => {
-                  setIsHovered(false);
-                  setMousePos({ x: 0.5, y: 0.5 });
-                }}
-                style={{
-                  position: "relative",
-                  overflow: "hidden",
-                  borderRadius: "6px",
-                  cursor: "crosshair",
-                }}
-              >
-                <motion.div
-                  style={{ y: imageY }}
-                >
-                  <motion.div
-                    animate={{
-                      scale: isHovered ? 1.05 : 1,
-                      transformOrigin: `${mousePos.x * 100}% ${mousePos.y * 100}%`,
-                    }}
-                    transition={{
-                      scale: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                    }}
-                  >
-                    <Image
-                      src={artworkSrc}
-                      alt="Auric — The Evolution of Oud & Roses"
-                      width={7476}
-                      height={5842}
-                      sizes="(max-width: 768px) 100vw, 60vw"
-                      priority
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        display: "block",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  </motion.div>
-                </motion.div>
-
-                {/* Subtle vignette overlay */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    pointerEvents: "none",
-                    borderRadius: "6px",
-                    boxShadow: "inset 0 0 80px rgba(8, 5, 7, 0.3)",
-                  }}
-                />
-              </div>
-
-            </motion.div>
-          </div>
-        </div>
+        {/* Main Narrative Card */}
+        <motion.div
+          className="auric-family-narrative-card"
+          style={{ marginBottom: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.85, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <blockquote className="auric-family-quote" style={{ marginBottom: 0 }}>
+            “Like a bouquet opening one bloom at a time, the fragrance reveals new facets as its notes unfold. One composition offers the depth and complexity of fragrance layering, without combining multiple scents.”
+          </blockquote>
+        </motion.div>
       </div>
     </section>
   );

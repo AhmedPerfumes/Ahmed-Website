@@ -64,7 +64,7 @@ const AURIC_CONFIG = {
   familyTag: "REIMAGINED",
   familyHeading: "A Bouquet That Unfolds",
   familyDescription:
-    "Like a bouquet opening one bloom at a time, the fragrance reveals new facets as its notes unfold. One composition offers the depth and complexity of fragrance layering, without combining multiple scents.",
+    "One composition offers the depth and complexity of fragrance layering, without combining multiple scents.",
   journeyVideoSrc: "/assets/videos/auric/test.mp4",
   journeyTag: "SIGNATURE COLLECTION",
   journeyHeading: "The Story Continues",
@@ -89,7 +89,7 @@ export default function AuricPage() {
         <HeroSection data={data} onBookNow={handleBookNow} />
         <JourneySection data={data} />
         <NoteSection data={data} />
-        {/* <FamilySection data={data} onBookNow={handleBookNow} /> */}
+        <FamilySection data={data} onBookNow={handleBookNow} />
       </div>
 
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
