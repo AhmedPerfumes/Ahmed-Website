@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import VideoPanel from "../VideoPanel";
+import "./auric.css";
 
 function VideoSection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -132,22 +133,25 @@ function VideoSection({ data = {} }) {
             color: textColor,
           }}
         >
+          {/* Main Heading */}
           <div style={{ position: "relative", display: "inline-block" }}>
             <h2
               style={{
+                fontFamily: "'Wonderful Melanesia', Georgia, serif",
                 position: "relative",
                 zIndex: 1,
-                fontSize: "clamp(2.6rem, 5.8vw, 4.4rem)",
-                lineHeight: 1.1,
+                fontSize: "clamp(2.4rem, 5.2vw, 4rem)",
+                lineHeight: 1.15,
                 marginTop: "4px",
-                marginBottom: "16px",
+                marginBottom: "8px",
                 fontWeight: 600,
-                letterSpacing: "0.2em",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
               }}
             >
               <span
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   background:
                     "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
                   WebkitBackgroundClip: "text",
@@ -158,9 +162,42 @@ function VideoSection({ data = {} }) {
                   fontWeight: 600,
                 }}
               >
-                {(data?.videoTitle || "AURIC").toUpperCase()}
+                {(data?.videoTitle || "Oud & Roses Auric").toUpperCase()}
               </span>
             </h2>
+          </div>
+
+          {/* Subheading in same gold color */}
+          <div style={{ marginTop: "4px", marginBottom: "24px" }}>
+            <h3
+              className="auric-subheading"
+              style={{
+                fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                fontSize: "clamp(1.15rem, 1.9vw, 1.55rem)",
+                lineHeight: 1.25,
+                letterSpacing: "0.22em",
+                fontWeight: 500,
+                textTransform: "uppercase",
+                fontStyle: "normal",
+                margin: 0,
+                display: "inline-block",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                  background:
+                    "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "#d4af37",
+                  display: "inline-block",
+                  filter: "drop-shadow(0 2px 14px rgba(212, 175, 55, 0.25))",
+                }}
+              >
+                {(data?.subtitle || data?.videoTopText || "Evolution of an Icon").toUpperCase()}
+              </span>
+            </h3>
           </div>
           <p
             style={{

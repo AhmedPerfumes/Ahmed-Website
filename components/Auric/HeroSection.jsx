@@ -5,7 +5,7 @@ import "./HeroSection.css";
 
 function BottleComparisonSlider({
   beforeImg = "/assets/images/oud-roses.png",
-  afterImg = "/assets/auric-bottle.png",
+  afterImg = "/assets/auric-bottle1.png",
   beforeLabel = "Oud & Roses",
   afterLabel = "Auric",
 }) {
@@ -147,7 +147,7 @@ function BottleComparisonSlider({
     if (e.currentTarget && e.currentTarget.setPointerCapture) {
       try {
         e.currentTarget.setPointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch (err) { }
     }
     handleMove(e.clientX);
   };
@@ -162,7 +162,7 @@ function BottleComparisonSlider({
     if (e.currentTarget && e.currentTarget.releasePointerCapture) {
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 
@@ -246,58 +246,6 @@ function BottleComparisonSlider({
           />
         </div>
 
-        {/* Label 1: Oud & Roses (Left) */}
-        <span
-          style={{
-            position: "absolute",
-            top: "14px",
-            left: "14px",
-            fontSize: "0.7rem",
-            fontWeight: 600,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            padding: "5px 14px",
-            borderRadius: "20px",
-            background: "rgba(0, 0, 0, 0.65)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            border: "1px solid rgba(255, 255, 255, 0.16)",
-            color: "#ffffff",
-            pointerEvents: "none",
-            zIndex: 3,
-            opacity: sliderPos < 12 ? 0 : 0.9,
-            transition: "opacity 0.25s ease",
-          }}
-        >
-          {beforeLabel}
-        </span>
-
-        {/* Label 2: Auric (Right) */}
-        <span
-          style={{
-            position: "absolute",
-            top: "14px",
-            right: "14px",
-            fontSize: "0.7rem",
-            fontWeight: 600,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            padding: "5px 14px",
-            borderRadius: "20px",
-            background: "rgba(0, 0, 0, 0.65)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            border: "1px solid rgba(255, 255, 255, 0.16)",
-            color: "#f5e6c8",
-            pointerEvents: "none",
-            zIndex: 3,
-            opacity: sliderPos > 88 ? 0 : 0.95,
-            transition: "opacity 0.25s ease",
-          }}
-        >
-          {afterLabel}
-        </span>
-
         {/* Clean Physical Divider Line & Tactile Knob */}
         <div
           style={{
@@ -349,23 +297,44 @@ function BottleComparisonSlider({
         </div>
       </div>
 
-      {/* Helper caption */}
-      <p
+      {/* Prominent Helper Caption */}
+      <div
         style={{
-          fontSize: "0.74rem",
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          color: "rgba(255, 255, 255, 0.45)",
-          marginTop: "14px",
-          marginBottom: 0,
           textAlign: "center",
-          fontWeight: 400,
+          marginTop: "18px",
           position: "relative",
           zIndex: 1,
         }}
       >
-        Slide to compare Oud &amp; Roses and Auric
-      </p>
+        <span
+          style={{
+            fontFamily: "'Wonderful Melanesia', Georgia, serif",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "10px",
+            fontSize: "0.85rem",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            fontWeight: 500,
+            color: "#e6cf94",
+            padding: "8px 22px",
+            borderRadius: "30px",
+            background: "rgba(212, 175, 55, 0.12)",
+            border: "1px solid rgba(212, 175, 55, 0.35)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(212, 175, 55, 0.15)",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dfba73" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Slide to Reveal
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dfba73" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </span>
+      </div>
     </div>
   );
 }
@@ -405,21 +374,9 @@ function HeroSection({ data = {}, onBookNow }) {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.15 }}
             >
-              <div
-                style={{
-                  fontSize: "clamp(0.72rem, 0.85vw, 0.8rem)",
-                  letterSpacing: "0.24em",
-                  textTransform: "uppercase",
-                  fontWeight: 500,
-                  marginBottom: "14px",
-                  color: "#d4af37",
-                }}
-              >
-                THE EVOLUTION OF AN ICON
-              </div>
-
               <h2
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
                   lineHeight: "1.18",
                   letterSpacing: "0.015em",
@@ -428,24 +385,26 @@ function HeroSection({ data = {}, onBookNow }) {
                   marginBottom: "24px",
                 }}
               >
-                <span style={{ display: "block" }}>A Story That Changed</span>
+                <span style={{ display: "block", fontFamily: "'Wonderful Melanesia', Georgia, serif" }}>A Story That Changed</span>
                 <span
                   className="auric-gold-text"
                   style={{
-                    fontStyle: "italic",
+                    fontFamily: "'Wonderful Melanesia', Georgia, serif",
                     fontWeight: 400,
-                    fontSize: "clamp(2.5rem, 4.4vw, 3.8rem)",
-                    lineHeight: "1.15",
+                    fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
+                    lineHeight: "1.18",
                     marginTop: "6px",
+                    display: "inline-block",
                   }}
                 >
-                  the House
+                  The House
                 </span>
               </h2>
 
               <p
                 className="lead mb-4"
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   fontSize: "clamp(1.02rem, 1.15vw, 1.12rem)",
                   lineHeight: "1.9",
                   color: "rgba(255, 255, 255, 0.82)",
@@ -461,10 +420,11 @@ function HeroSection({ data = {}, onBookNow }) {
 
               <p
                 style={{
-                  fontSize: "0.92rem",
-                  color: "rgba(240, 226, 196, 0.85)",
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                  fontSize: "0.95rem",
+                  color: "rgba(240, 226, 196, 0.9)",
                   letterSpacing: "0.02em",
-                  fontStyle: "italic",
+                  fontStyle: "normal",
                   marginBottom: "36px",
                   lineHeight: "1.65",
                   maxWidth: "560px",
@@ -483,6 +443,7 @@ function HeroSection({ data = {}, onBookNow }) {
                   whileHover={{ scale: 1.02, boxShadow: "0 10px 30px rgba(128, 0, 32, 0.5), 0 0 20px rgba(212, 175, 55, 0.3)" }}
                   whileTap={{ scale: 0.98 }}
                   style={{
+                    fontFamily: "'Wonderful Melanesia', Georgia, serif",
                     background: "#800020",
                     color: "#ffffff",
                     borderRadius: "40px",

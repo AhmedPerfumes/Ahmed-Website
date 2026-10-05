@@ -3,6 +3,24 @@
   src: url(/assets/fonts/kanit/Kanit-Regular.ttf);
 }
 
+@font-face {
+  font-family: "Wonderful Melanesia";
+  src: url("/assets/fonts/wonderful-melanesia/wonderful-melanesia.ttf") format("truetype"),
+       url("/wonderful-melanesia-font-duo-1790667480-0/wonderful-melanesia.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Wonderful Melanesia Signature";
+  src: url("/assets/fonts/wonderful-melanesia/wonderful-melanesia-signature.otf") format("opentype"),
+       url("/wonderful-melanesia-font-duo-1790667480-0/wonderful-melanesia-signature.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   color: $body-color;
   font-family: var(--font-family-base);

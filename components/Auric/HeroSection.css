@@ -1,7 +1,10 @@
+@import "./auric.css";
+
 .hero-section {
   position: relative;
   width: 100%;
   min-height: auto;
+  font-family: 'Wonderful Melanesia', Georgia, serif;
   /* Seamless black to charcoal gradient that matches VideoSection */
   background: linear-gradient(180deg, #000000 0%, #040304 40%, #080608 100%);
   overflow: hidden;
@@ -38,6 +41,7 @@
 /* Text */
 .hero-section h1,
 .hero-section h2 { 
+  font-family: 'Wonderful Melanesia', Georgia, serif !important;
   letter-spacing: 0.03em; 
   font-weight: 400;
   line-height: 1.22;

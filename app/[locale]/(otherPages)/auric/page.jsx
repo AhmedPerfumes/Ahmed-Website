@@ -9,17 +9,18 @@ import NoteSection from "@/components/Auric/NoteSection";
 import FamilySection from "@/components/Auric/FamilySection";
 import HeroSection from "@/components/Auric/HeroSection";
 import JourneySection from "@/components/Auric/JourneySection";
+import "@/components/Auric/auric.css";
 import { useRouter } from "next/navigation";
 
 // Central config for Auric Landing Page with subtle premium maroon theme
 const AURIC_CONFIG = {
   edition: "imperial",
-  title: "Auric",
-  subtitle: "The Royal Essence",
+  title: "Oud & Roses Auric",
+  subtitle: "Evolution of an Icon",
   description:
     "An embodiment of majestic opulence and royal craftsmanship — Auric unites the depth of precious oud with velvet amber and intoxicating florals.",
-  videoTopText: "SECOND CHAPTER OF AN ICON",
-  videoTitle: "AURIC",
+  videoTopText: "Evolution of an Icon",
+  videoTitle: "Oud & Roses Auric",
   videoDescription:
     "A founder’s signature. A house’s evolution. A gift to the people who made the journey possible.",
   storyTitle: "A Story That Changed the House",
@@ -83,11 +84,13 @@ export default function AuricPage() {
     <>
       <Header14 />
 
-      <VideoSection data={data} />
-      <HeroSection data={data} onBookNow={handleBookNow} />
-      <JourneySection data={data} />
-      <NoteSection data={data} />
-      <FamilySection data={data} onBookNow={handleBookNow} />
+      <div className="auric-landing-page">
+        <VideoSection data={data} />
+        <HeroSection data={data} onBookNow={handleBookNow} />
+        <JourneySection data={data} />
+        <NoteSection data={data} />
+        <FamilySection data={data} onBookNow={handleBookNow} />
+      </div>
 
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />

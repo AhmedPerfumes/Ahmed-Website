@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import VideoPanel from "../VideoPanel";
+import "./auric.css";
 
 function JourneySection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -47,6 +48,7 @@ function JourneySection({ data = {} }) {
         <motion.h2
           variants={itemVariants}
           style={{
+            fontFamily: "'Wonderful Melanesia', Georgia, serif",
             fontSize: "clamp(2.2rem, 5vw, 3.6rem)",
             fontWeight: "400",
             marginBottom: "18px",
@@ -56,6 +58,7 @@ function JourneySection({ data = {} }) {
         >
           <span
             style={{
+              fontFamily: "'Wonderful Melanesia', Georgia, serif",
               background:
                 "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
               WebkitBackgroundClip: "text",
@@ -73,6 +76,7 @@ function JourneySection({ data = {} }) {
         <motion.p
           variants={itemVariants}
           style={{
+            fontFamily: "'Wonderful Melanesia', Georgia, serif",
             fontSize: "clamp(1rem, 1.4vw, 1.15rem)",
             color: "rgba(255, 255, 255, 0.78)",
             marginBottom: "40px",

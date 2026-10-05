@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Wonderful Melanesia Font Duo for Auric Landing Page
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Wonderful Melanesia';
+  src: url('/assets/fonts/wonderful-melanesia/wonderful-melanesia.ttf') format('truetype'),
+       url('/wonderful-melanesia-font-duo-1790667480-0/wonderful-melanesia.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wonderful Melanesia Signature';
+  src: url('/assets/fonts/wonderful-melanesia/wonderful-melanesia-signature.otf') format('opentype'),
+       url('/wonderful-melanesia-font-duo-1790667480-0/wonderful-melanesia-signature.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Scoped Auric Landing Page Typography */
+.auric-landing-page {
+  font-family: 'Wonderful Melanesia', Georgia, 'Times New Roman', serif;
+}
+
+.auric-landing-page h1,
+.auric-landing-page h2,
+.auric-landing-page h3,
+.auric-landing-page h4,
+.auric-landing-page h5,
+.auric-landing-page h6,
+.auric-landing-page .auric-font-serif,
+.auric-landing-page .hero-section h1,
+.auric-landing-page .hero-section h2 {
+  font-family: 'Wonderful Melanesia', Georgia, 'Times New Roman', serif !important;
+}
+
+.auric-landing-page .auric-gold-text {
+  font-family: 'Wonderful Melanesia', Georgia, serif;
+}
+
+/* Signature script font utility class only when explicitly requested */
+.auric-font-signature {
+  font-family: 'Wonderful Melanesia Signature', cursive, serif !important;
+}
+
+/* Auric landing page buttons and controls */
+.auric-landing-page button,
+.auric-landing-page .btn {
+  font-family: 'Wonderful Melanesia', Georgia, serif;
+}

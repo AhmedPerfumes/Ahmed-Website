@@ -104,7 +104,7 @@ export default function Export() {
             </div>
 
             <div className="row align-items-center g-4 g-lg-5">
-              {/* Image: on mobile order-1 (after mobile header), on desktop order-lg-2 (right column) */}
+              {/* Video: on mobile order-1 (after mobile header), on desktop order-lg-2 (right column) */}
               <div className="col-lg-6 order-1 order-lg-2">
                 <div
                   className="position-relative overflow-hidden rounded-4 shadow-sm"
@@ -112,12 +112,13 @@ export default function Export() {
                     border: "1px solid rgba(166, 123, 48, 0.2)",
                   }}
                 >
-                  <Image
-                    loading="lazy"
-                    src="/assets/images/export/PressRelease.jpeg"
-                    alt="Beautyworld Dubai 2026 - Ahmed Al Maghribi Perfumes"
-                    width={1200}
-                    height={900}
+                  <video
+                    src="/assets/videos/bw-video.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
                     className="w-100 h-auto object-fit-cover d-block"
                   />
                 </div>

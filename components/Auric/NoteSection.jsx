@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import "./auric.css";
 
 const NOTE_TIERS = [
   {
@@ -108,6 +109,7 @@ export default function NoteSection({ data = {} }) {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             style={{
+              fontFamily: "'Wonderful Melanesia', Georgia, serif",
               fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)",
               fontWeight: 400,
               letterSpacing: "0.03em",
@@ -181,6 +183,7 @@ export default function NoteSection({ data = {} }) {
                   {/* Main Title */}
                   <h3
                     style={{
+                      fontFamily: "'Wonderful Melanesia', Georgia, serif",
                       fontSize: "1.35rem",
                       fontWeight: 500,
                       color: "#ffffff",
@@ -195,9 +198,10 @@ export default function NoteSection({ data = {} }) {
                   {/* Description Paragraph */}
                   <p
                     style={{
-                      fontSize: "0.92rem",
+                      fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                      fontSize: "0.95rem",
                       lineHeight: 1.75,
-                      color: "rgba(255, 255, 255, 0.76)",
+                      color: "rgba(255, 255, 255, 0.78)",
                       fontWeight: 300,
                       marginBottom: "20px",
                       flexGrow: 1,
@@ -212,7 +216,8 @@ export default function NoteSection({ data = {} }) {
                       <span
                         key={note}
                         style={{
-                          fontSize: "0.74rem",
+                          fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                          fontSize: "0.76rem",
                           letterSpacing: "0.04em",
                           padding: "4px 12px",
                           borderRadius: "16px",

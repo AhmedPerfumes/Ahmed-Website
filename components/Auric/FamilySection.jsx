@@ -4,6 +4,7 @@ import React, { useRef, useState, useCallback } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import "./auric.css";
 
 export default function FamilySection({ data = {}, onBookNow }) {
   const router = useRouter();
@@ -82,6 +83,7 @@ export default function FamilySection({ data = {}, onBookNow }) {
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.6, delay: 0.15 }}
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   fontSize: "0.68rem",
                   letterSpacing: "0.25em",
                   textTransform: "uppercase",
@@ -98,6 +100,7 @@ export default function FamilySection({ data = {}, onBookNow }) {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   fontSize: "clamp(2rem, 3.8vw, 3rem)",
                   fontWeight: 400,
                   letterSpacing: "0.01em",
@@ -114,6 +117,7 @@ export default function FamilySection({ data = {}, onBookNow }) {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   fontSize: "0.96rem",
                   color: "rgba(255, 255, 255, 0.62)",
                   lineHeight: 1.8,
@@ -134,6 +138,7 @@ export default function FamilySection({ data = {}, onBookNow }) {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleCtaClick}
                 style={{
+                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   background: "transparent",
                   color: "#d4af37",
                   border: "1px solid rgba(212, 175, 55, 0.45)",
