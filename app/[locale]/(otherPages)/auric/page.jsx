@@ -34,9 +34,9 @@ const AURIC_CONFIG = {
   comparisonAfterLabel: "Auric",
   videoSrc: "/assets/videos/auric/auric-video.mp4",
   notesImages: {
-    top: "/assets/images/auric/top-notes.png",
-    mid: "/assets/images/auric/heart-notes.png",
-    base: "/assets/images/auric/base-notes.png",
+    top: "/assets/images/auric/top.jpeg",
+    mid: "/assets/images/auric/heart.jpeg",
+    base: "/assets/images/auric/base.jpeg",
   },
   notesDescription: {
     top: "Bright orange opens the fragrance, warmed by cardamom, pepper and saffron, with an unexpected touch of leather",
@@ -65,7 +65,7 @@ const AURIC_CONFIG = {
   familyHeading: "A Bouquet That Unfolds",
   familyDescription:
     "Like a bouquet opening one bloom at a time, the fragrance reveals new facets as its notes unfold. One composition offers the depth and complexity of fragrance layering, without combining multiple scents.",
-  journeyVideoSrc: "/assets/videos/kseries/present_journey.mp4",
+  journeyVideoSrc: "/assets/videos/auric/test.mp4",
   journeyTag: "SIGNATURE COLLECTION",
   journeyHeading: "The Story Continues",
   journeyDescription:
@@ -89,7 +89,7 @@ export default function AuricPage() {
         <HeroSection data={data} onBookNow={handleBookNow} />
         <JourneySection data={data} />
         <NoteSection data={data} />
-        <FamilySection data={data} onBookNow={handleBookNow} />
+        {/* <FamilySection data={data} onBookNow={handleBookNow} /> */}
       </div>
 
       <section className="d-none d-lg-block" style={{ height: "100%" }}>

@@ -114,11 +114,24 @@ export default function NoteSection({ data = {} }) {
               fontWeight: 400,
               letterSpacing: "0.03em",
               lineHeight: 1.2,
-              color: "#ffffff",
               marginBottom: 0,
             }}
           >
-            {data?.notesHeading || "The Fragrance Notes"}
+            <span
+              className="auric-gold-text"
+              style={{
+                fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                background:
+                  "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                color: "#d4af37",
+                display: "inline-block",
+                filter: "drop-shadow(0 2px 20px rgba(212, 175, 55, 0.35))",
+              }}
+            >
+              {data?.notesHeading || "The Fragrance Notes"}
+            </span>
           </motion.h2>
         </div>
 

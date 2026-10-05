@@ -80,7 +80,6 @@
   position: relative;
   width: 100%;
   aspect-ratio: 432 / 560;
-  border-radius: 26px;
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 85%, rgba(138, 30, 48, 0.16) 0%, rgba(212, 175, 55, 0.1) 40%, #080608 85%);
   border: 1px solid rgba(212, 175, 55, 0.24);
