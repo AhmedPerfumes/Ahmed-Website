@@ -32,7 +32,7 @@ const AURIC_CONFIG = {
   comparisonAfterImg: "/assets/auric-bottle.png",
   comparisonBeforeLabel: "Oud & Roses",
   comparisonAfterLabel: "Auric",
-  videoSrc: "/assets/videos/kseries/present.mp4",
+  videoSrc: "/assets/videos/auric/auric-video.mp4",
   notesImages: {
     top: "/assets/images/auric/top-notes.png",
     mid: "/assets/images/auric/heart-notes.png",

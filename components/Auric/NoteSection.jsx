@@ -203,34 +203,12 @@ export default function NoteSection({ data = {} }) {
                       lineHeight: 1.75,
                       color: "rgba(255, 255, 255, 0.78)",
                       fontWeight: 300,
-                      marginBottom: "20px",
+                      marginBottom: 0,
                       flexGrow: 1,
                     }}
                   >
                     {item.description}
                   </p>
-
-                  {/* Individual Ingredient Pills */}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "auto" }}>
-                    {item.notes.map((note) => (
-                      <span
-                        key={note}
-                        style={{
-                          fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                          fontSize: "0.76rem",
-                          letterSpacing: "0.04em",
-                          padding: "4px 12px",
-                          borderRadius: "16px",
-                          background: item.tagBg,
-                          border: `1px solid ${item.borderColor}`,
-                          color: item.tagColor,
-                          fontWeight: 400,
-                        }}
-                      >
-                        {note}
-                      </span>
-                    ))}
-                  </div>
                 </motion.div>
               </div>
             );

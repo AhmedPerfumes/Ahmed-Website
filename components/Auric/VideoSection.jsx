@@ -26,7 +26,7 @@ function VideoSection({ data = {} }) {
     subtitle = "The Regal Expression",
     year = "Exclusive Edition",
     description = "Discover the artistry and opulence behind Auric, crafted with rare essences, precious amber, and sublime woods.",
-    videoSrc = "/assets/videos/kseries/present.mp4",
+    videoSrc = "/assets/videos/auric/auric-video.mp4",
   } = data || {};
 
   return (

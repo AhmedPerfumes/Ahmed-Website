@@ -5,22 +5,28 @@ import "./HeroSection.css";
 
 function BottleComparisonSlider({
   beforeImg = "/assets/images/oud-roses.png",
-  afterImg = "/assets/auric-bottle1.png",
+  afterImg = "/assets/auric-bottle.png",
   beforeLabel = "Oud & Roses",
   afterLabel = "Auric",
 }) {
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
-  const [slideDirection, setSlideDirection] = useState("neutral"); // "rose" | "gold" | "neutral"
   const containerRef = useRef(null);
-  const lastXRef = useRef(0);
-  const directionTimeoutRef = useRef(null);
+  const touchStartRef = useRef({ x: 0, y: 0, determined: false, isHorizontal: false });
 
   // Auto-slide 1-time onboarding hint refs
   const teaseAnimationRef = useRef(null);
   const teaseTimeoutRef = useRef(null);
   const hasTeasedRef = useRef(false);
   const userInteractedRef = useRef(false);
+
+  const cancelTease = useCallback(() => {
+    if (teaseTimeoutRef.current) clearTimeout(teaseTimeoutRef.current);
+    if (teaseAnimationRef.current) {
+      cancelAnimationFrame(teaseAnimationRef.current);
+      teaseAnimationRef.current = null;
+    }
+  }, []);
 
   const startTeaseAnimation = useCallback(() => {
     if (hasTeasedRef.current || userInteractedRef.current) return;
@@ -30,14 +36,10 @@ function BottleComparisonSlider({
     teaseTimeoutRef.current = setTimeout(() => {
       if (userInteractedRef.current) return;
 
-      // 3-phase smooth demonstration:
-      // Phase 1: Center (50%) -> Left (30%) revealing Auric
-      // Phase 2: Left (30%) -> Right (70%) revealing Oud & Roses
-      // Phase 3: Right (70%) -> Center (50%) settling back
       const phases = [
-        { from: 50, to: 30, duration: 650, dir: "gold" },
-        { from: 30, to: 70, duration: 850, dir: "rose" },
-        { from: 70, to: 50, duration: 650, dir: "gold" },
+        { from: 50, to: 32, duration: 650 },
+        { from: 32, to: 68, duration: 800 },
+        { from: 68, to: 50, duration: 650 },
       ];
 
       let phaseIndex = 0;
@@ -47,10 +49,7 @@ function BottleComparisonSlider({
         t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
       const tick = (now) => {
-        if (userInteractedRef.current) {
-          setSlideDirection("neutral");
-          return;
-        }
+        if (userInteractedRef.current) return;
 
         const currentPhase = phases[phaseIndex];
         const elapsed = now - phaseStartTime;
@@ -60,7 +59,6 @@ function BottleComparisonSlider({
         const currentPos =
           currentPhase.from + (currentPhase.to - currentPhase.from) * eased;
         setSliderPos(currentPos);
-        setSlideDirection(currentPhase.dir);
 
         if (progress < 1) {
           teaseAnimationRef.current = requestAnimationFrame(tick);
@@ -71,7 +69,6 @@ function BottleComparisonSlider({
             teaseAnimationRef.current = requestAnimationFrame(tick);
           } else {
             setSliderPos(50);
-            setSlideDirection("neutral");
             teaseAnimationRef.current = null;
           }
         }
@@ -105,93 +102,169 @@ function BottleComparisonSlider({
 
     return () => {
       observer.disconnect();
-      if (teaseTimeoutRef.current) clearTimeout(teaseTimeoutRef.current);
-      if (teaseAnimationRef.current) cancelAnimationFrame(teaseAnimationRef.current);
+      cancelTease();
     };
-  }, [startTeaseAnimation]);
+  }, [startTeaseAnimation, cancelTease]);
 
   const handleMove = useCallback((clientX) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
     const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
-
-    // Detect slide direction:
-    // Sliding right (expanding Oud & Roses) -> rose
-    // Sliding left (expanding Auric) -> gold
-    if (clientX > lastXRef.current + 1) {
-      setSlideDirection("rose");
-    } else if (clientX < lastXRef.current - 1) {
-      setSlideDirection("gold");
-    }
-    lastXRef.current = clientX;
-
-    if (directionTimeoutRef.current) clearTimeout(directionTimeoutRef.current);
-    directionTimeoutRef.current = setTimeout(() => {
-      setSlideDirection("neutral");
-    }, 450);
-
     setSliderPos(percent);
   }, []);
 
-  const handlePointerDown = (e) => {
-    // Instantly cancel auto-slide animation if user interacts
+  // Smooth glide animation when clicking buttons or track
+  const glideTo = (targetPos) => {
     userInteractedRef.current = true;
-    if (teaseTimeoutRef.current) clearTimeout(teaseTimeoutRef.current);
-    if (teaseAnimationRef.current) {
-      cancelAnimationFrame(teaseAnimationRef.current);
-      teaseAnimationRef.current = null;
-    }
+    cancelTease();
+
+    const startPos = sliderPos;
+    const startTime = performance.now();
+    const duration = 520;
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    const animateGlide = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const current = startPos + (targetPos - startPos) * easeOutCubic(progress);
+      setSliderPos(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(animateGlide);
+      }
+    };
+
+    requestAnimationFrame(animateGlide);
+  };
+
+  // Dedicated Handle pointer drag (works smoothly with pointer capture)
+  const handleHandlePointerDown = (e) => {
+    userInteractedRef.current = true;
+    cancelTease();
     setIsDragging(true);
-    lastXRef.current = e.clientX;
     if (e.currentTarget && e.currentTarget.setPointerCapture) {
       try {
         e.currentTarget.setPointerCapture(e.pointerId);
-      } catch (err) { }
+      } catch (err) {}
     }
     handleMove(e.clientX);
   };
 
-  const handlePointerMove = (e) => {
+  const handleHandlePointerMove = (e) => {
     if (!isDragging) return;
     handleMove(e.clientX);
   };
 
-  const handlePointerUp = (e) => {
+  const handleHandlePointerUp = (e) => {
     setIsDragging(false);
     if (e.currentTarget && e.currentTarget.releasePointerCapture) {
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch (err) { }
+      } catch (err) {}
     }
   };
 
+  // Desktop mouse click & drag anywhere on the container
+  const handleContainerPointerDown = (e) => {
+    if (e.pointerType === "mouse") {
+      userInteractedRef.current = true;
+      cancelTease();
+      setIsDragging(true);
+      handleMove(e.clientX);
+    }
+  };
+
+  const handleContainerPointerMove = (e) => {
+    if (e.pointerType === "mouse" && isDragging) {
+      handleMove(e.clientX);
+    }
+  };
+
+  const handleContainerPointerUp = (e) => {
+    if (e.pointerType === "mouse") {
+      setIsDragging(false);
+    }
+  };
+
+  // Native non-passive touch listener for slope-aware mobile gestures
+  // Ensures vertical scrolling on mobile is NEVER blocked!
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onTouchStart = (e) => {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      touchStartRef.current = {
+        x: t.clientX,
+        y: t.clientY,
+        determined: false,
+        isHorizontal: false,
+      };
+    };
+
+    const onTouchMove = (e) => {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartRef.current.x;
+      const dy = t.clientY - touchStartRef.current.y;
+
+      if (!touchStartRef.current.determined) {
+        if (Math.abs(dx) > 7 || Math.abs(dy) > 7) {
+          touchStartRef.current.determined = true;
+          // Only capture if gesture is distinctly horizontal:
+          if (Math.abs(dx) > Math.abs(dy) * 1.15) {
+            touchStartRef.current.isHorizontal = true;
+            setIsDragging(true);
+            userInteractedRef.current = true;
+            cancelTease();
+          } else {
+            touchStartRef.current.isHorizontal = false;
+          }
+        }
+        return;
+      }
+
+      if (touchStartRef.current.isHorizontal) {
+        if (e.cancelable) e.preventDefault();
+        handleMove(t.clientX);
+      }
+      // If isHorizontal is false, DO NOTHING: native vertical page scrolling continues seamlessly!
+    };
+
+    const onTouchEnd = () => {
+      touchStartRef.current.determined = false;
+      setIsDragging(false);
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+    };
+  }, [handleMove, cancelTease]);
+
   return (
-    <div
-      className="perfume-comparison-wrapper"
-      style={{ width: "100%", maxWidth: "440px", margin: "0 auto", position: "relative" }}
-    >
+    <div className="perfume-comparison-wrapper">
+      {/* Master Atelier Showcase Frame */}
       <div
         ref={containerRef}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-        style={{
-          position: "relative",
-          width: "100%",
-          maxWidth: "440px",
-          aspectRatio: "432 / 578",
-          margin: "0 auto",
-          overflow: "hidden",
-          borderRadius: "20px",
-          cursor: isDragging ? "grabbing" : "ew-resize",
-          userSelect: "none",
-          touchAction: "none",
-          border: "1px solid rgba(255, 255, 255, 0.12)",
-          zIndex: 1,
-        }}
+        className="auric-compare-showcase"
+        onPointerDown={handleContainerPointerDown}
+        onPointerMove={handleContainerPointerMove}
+        onPointerUp={handleContainerPointerUp}
       >
+        {/* Illuminated Base Pedestal */}
+        <div className="auric-compare-pedestal" />
+        <div className="auric-compare-pedestal-light" />
+
         {/* Layer 1 (Left / Base): Oud & Roses */}
         <div
           style={{
@@ -202,6 +275,7 @@ function BottleComparisonSlider({
             pointerEvents: "none",
             clipPath: `inset(0 ${100 - sliderPos}% 0 0)`,
             WebkitClipPath: `inset(0 ${100 - sliderPos}% 0 0)`,
+            padding: "24px 20px 38px",
           }}
         >
           <Image
@@ -214,7 +288,7 @@ function BottleComparisonSlider({
               width: "100%",
               height: "100%",
               objectFit: "contain",
-              filter: "drop-shadow(0px 15px 35px rgba(0, 0, 0, 0.5))",
+              filter: "drop-shadow(0px 18px 40px rgba(0, 0, 0, 0.65))",
             }}
           />
         </div>
@@ -229,6 +303,7 @@ function BottleComparisonSlider({
             pointerEvents: "none",
             clipPath: `inset(0 0 0 ${sliderPos}%)`,
             WebkitClipPath: `inset(0 0 0 ${sliderPos}%)`,
+            padding: "24px 20px 38px",
           }}
         >
           <Image
@@ -241,99 +316,47 @@ function BottleComparisonSlider({
               width: "100%",
               height: "100%",
               objectFit: "contain",
-              filter: "drop-shadow(0px 15px 35px rgba(0, 0, 0, 0.5))",
+              filter: "drop-shadow(0px 18px 40px rgba(0, 0, 0, 0.65))",
             }}
           />
         </div>
 
-        {/* Clean Physical Divider Line & Tactile Knob */}
+        {/* Luminous Gold Seam Divider Line */}
         <div
           style={{
             position: "absolute",
             top: 0,
             bottom: 0,
             left: `${sliderPos}%`,
-            width: "1.5px",
+            width: "2px",
             transform: "translateX(-50%)",
-            background: "rgba(255, 255, 255, 0.85)",
-            boxShadow: "0 0 8px rgba(0, 0, 0, 0.7)",
             pointerEvents: "none",
             zIndex: 6,
           }}
         >
-          {/* Tactile Circular Knob */}
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              background: "#ffffff",
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.6)",
-              border: "1.5px solid rgba(255, 255, 255, 0.8)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              pointerEvents: "none",
-            }}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#1a1114"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="8 7 3 12 8 17" />
-              <polyline points="16 7 21 12 16 17" />
-            </svg>
+          <div className="auric-compare-divider-line" />
+        </div>
+
+        {/* Interactive Drag Handle Box featuring Ahmed Al Maghribi Logo */}
+        <div
+          className="auric-compare-handle-wrap"
+          style={{ left: `${sliderPos}%` }}
+          onPointerDown={handleHandlePointerDown}
+          onPointerMove={handleHandlePointerMove}
+          onPointerUp={handleHandlePointerUp}
+          onPointerCancel={handleHandlePointerUp}
+        >
+          <div className="auric-compare-handle-box">
+            <Image
+              src="/assets/images/logo/Desktop.svg"
+              alt="Ahmed Al Maghribi Logo"
+              width={30}
+              height={30}
+              priority
+              className="auric-compare-handle-logo"
+            />
           </div>
         </div>
-      </div>
-
-      {/* Prominent Helper Caption */}
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "18px",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Wonderful Melanesia', Georgia, serif",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "10px",
-            fontSize: "0.85rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            fontWeight: 500,
-            color: "#e6cf94",
-            padding: "8px 22px",
-            borderRadius: "30px",
-            background: "rgba(212, 175, 55, 0.12)",
-            border: "1px solid rgba(212, 175, 55, 0.35)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(212, 175, 55, 0.15)",
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dfba73" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Slide to Reveal
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dfba73" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </span>
       </div>
     </div>
   );
