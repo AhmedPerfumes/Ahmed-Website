@@ -36,9 +36,6 @@ export default function FamilySection({ data = {} }) {
 
   return (
     <section ref={containerRef} className="auric-family-section">
-      {/* Ambient background glow */}
-      <div className="auric-family-ambient-glow" />
-
       {/* Luxury watermark typography */}
       <div className="auric-family-watermark" aria-hidden="true">
         EXTRAIT DE PARFUM

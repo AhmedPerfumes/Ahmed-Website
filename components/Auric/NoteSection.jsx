@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import "./auric.css";
@@ -37,11 +37,13 @@ const NOTE_TIERS = [
 
 export default function NoteSection({ data = {} }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const trackRef = useRef(null);
 
   const defaultNoteImgs = {
-    top: "/assets/images/auric/top-notes.png",
-    mid: "/assets/images/auric/heart-notes.png",
-    base: "/assets/images/auric/base-notes.png",
+    top: "/assets/images/auric/top.jpeg",
+    mid: "/assets/images/auric/heart.jpeg",
+    base: "/assets/images/auric/base.jpeg",
   };
 
   const noteImgs = Object.assign({}, defaultNoteImgs, data?.notesImages || {});
@@ -72,50 +74,43 @@ export default function NoteSection({ data = {} }) {
     },
   ];
 
+  const scrollToCard = (index) => {
+    setActiveIndex(index);
+    if (!trackRef.current) return;
+    const cards = trackRef.current.children;
+    if (cards[index]) {
+      cards[index].scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  };
+
+  const handleTrackScroll = (e) => {
+    const el = e.currentTarget;
+    if (!el) return;
+    const cardWidth = el.scrollWidth / cardsData.length;
+    const newIdx = Math.round(el.scrollLeft / cardWidth);
+    if (newIdx !== activeIndex && newIdx >= 0 && newIdx < cardsData.length) {
+      setActiveIndex(newIdx);
+    }
+  };
+
   return (
-    <section
-      style={{
-        background: "radial-gradient(circle at 50% 30%, #0d0a0d 0%, #050405 50%, #000000 100%)",
-        color: "#ffffff",
-        padding: "100px 24px",
-        position: "relative",
-        overflow: "hidden",
-        borderTop: "1px solid rgba(212, 175, 55, 0.12)",
-      }}
-    >
+    <section className="auric-notes-section">
       {/* Background ambient lighting */}
-      <div
-        style={{
-          position: "absolute",
-          top: "20%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "800px",
-          height: "400px",
-          background: "radial-gradient(circle, rgba(138, 30, 48, 0.12), transparent 70%)",
-          filter: "blur(120px)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
+      <div className="auric-notes-ambient-glow" />
 
-      <div className="container" style={{ maxWidth: "1240px", position: "relative", zIndex: 1 }}>
+      <div className="auric-notes-container">
         {/* Section Header */}
-        <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto 52px" }}>
-
+        <div className="auric-notes-header">
           <motion.h2
+            className="auric-notes-title"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{
-              fontFamily: "'Wonderful Melanesia', Georgia, serif",
-              fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)",
-              fontWeight: 400,
-              letterSpacing: "0.03em",
-              lineHeight: 1.2,
-              marginBottom: 0,
-            }}
           >
             <span
               className="auric-gold-text"
@@ -133,99 +128,106 @@ export default function NoteSection({ data = {} }) {
               {data?.notesHeading || "The Fragrance Notes"}
             </span>
           </motion.h2>
+
+          <motion.p
+            className="auric-notes-subtitle"
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {data?.notesSubtitle ||
+              "A refined journey from radiant spice and rose to warm oud, crafted with depth, character and enduring elegance."}
+          </motion.p>
         </div>
 
-        {/* 3-Column Botanical Art Cards */}
-        <div className="row g-4 g-lg-5 justify-content-center">
+        {/* Mobile Quick Selector Tabs (< 992px) */}
+        <div className="auric-notes-mobile-tabs" role="tablist">
+          {cardsData.map((item, idx) => (
+            <button
+              key={item.tier}
+              type="button"
+              role="tab"
+              aria-selected={activeIndex === idx}
+              className={`auric-notes-tab-btn ${activeIndex === idx ? "active" : ""}`}
+              onClick={() => scrollToCard(idx)}
+            >
+              {item.tier} {item.title.replace(" Notes", "")}
+            </button>
+          ))}
+        </div>
+
+        {/* 3 Botanical Art Cards (Desktop Grid / Mobile Snap Carousel) */}
+        <div
+          ref={trackRef}
+          className="auric-notes-grid"
+          onScroll={handleTrackScroll}
+        >
           {cardsData.map((item, index) => {
             const isHovered = hoveredIndex === index;
 
             return (
-              <div className="col-12 col-md-6 col-lg-4" key={item.tier}>
+              <div className="auric-note-card-col" key={item.tier}>
                 <motion.div
+                  className="auric-note-card"
                   initial={{ opacity: 0, y: 35 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.7, delay: index * 0.15 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.7, delay: index * 0.12 }}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    background: "rgba(18, 14, 16, 0.6)",
-                    borderRadius: "28px",
-                    border: `1px solid ${isHovered ? item.borderColor : "rgba(255, 255, 255, 0.08)"}`,
-                    padding: "20px 20px 28px",
-                    backdropFilter: "blur(14px)",
+                    borderColor: isHovered
+                      ? item.borderColor
+                      : "rgba(255, 255, 255, 0.08)",
                     boxShadow: isHovered
                       ? `0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px ${item.glowColor}`
                       : "0 14px 36px rgba(0, 0, 0, 0.6)",
-                    transition: "border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease",
-                    transform: isHovered ? "translateY(-6px)" : "translateY(0)",
                   }}
                 >
-                  {/* Botanical Card Image Frame (True Portrait Aspect Ratio 9/14) */}
-                  <div
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      aspectRatio: "9 / 14",
-                      borderRadius: "20px",
-                      overflow: "hidden",
-                      backgroundColor: "#0d0b0e",
-                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
-                      marginBottom: "20px",
-                    }}
-                  >
+                  {/* Botanical Card Image Frame (Square 1:1 matching 828x828 source) */}
+                  <div className="auric-note-img-wrap">
                     <Image
                       src={item.img}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
+                      sizes="(max-width: 768px) 85vw, (max-width: 1200px) 33vw, 380px"
                       priority={index === 0}
                       style={{
                         objectFit: "contain",
-                        borderRadius: "20px",
                         transition: "transform 0.5s ease",
-                        transform: isHovered ? "scale(1.03)" : "scale(1)",
+                        transform: isHovered ? "scale(1.04)" : "scale(1)",
                       }}
                     />
                   </div>
 
-                  {/* Main Title */}
-                  <h3
-                    style={{
-                      fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                      fontSize: "1.35rem",
-                      fontWeight: 500,
-                      color: "#ffffff",
-                      letterSpacing: "0.02em",
-                      marginBottom: "12px",
-                    }}
-                  >
-                    {item.title}
-                  </h3>
+                  {/* Tier Label */}
+                  <span className="auric-note-card-tier">
+                    {item.tier} · {item.title}
+                  </span>
 
+                  {/* Main Title */}
+                  <h3 className="auric-note-card-title">{item.title}</h3>
 
                   {/* Description Paragraph */}
-                  <p
-                    style={{
-                      fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                      fontSize: "0.95rem",
-                      lineHeight: 1.75,
-                      color: "rgba(255, 255, 255, 0.78)",
-                      fontWeight: 300,
-                      marginBottom: 0,
-                      flexGrow: 1,
-                    }}
-                  >
-                    {item.description}
-                  </p>
+                  <p className="auric-note-card-desc">{item.description}</p>
                 </motion.div>
               </div>
             );
           })}
+        </div>
+
+        {/* Mobile Pagination Indicators (< 992px) */}
+        <div className="auric-notes-dots" aria-hidden="true">
+          {cardsData.map((item, idx) => (
+            <button
+              key={item.tier}
+              type="button"
+              className={`auric-notes-dot ${activeIndex === idx ? "active" : ""}`}
+              onClick={() => scrollToCard(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
