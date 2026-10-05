@@ -11,15 +11,16 @@ import HeroSection from "@/components/Auric/HeroSection";
 import JourneySection from "@/components/Auric/JourneySection";
 import "@/components/Auric/auric.css";
 import { useRouter } from "next/navigation";
+import HeroSection2 from '@/components/otherPages/oud-roses-auric/HeroSection';
 
 // Central config for Auric Landing Page with subtle premium maroon theme
 const AURIC_CONFIG = {
   edition: "imperial",
   title: "Oud & Roses Auric",
-  subtitle: "Evolution of an Icon",
+  subtitle: "The Evolution of an Icon",
   description:
     "An embodiment of majestic opulence and royal craftsmanship — Auric unites the depth of precious oud with velvet amber and intoxicating florals.",
-  videoTopText: "Evolution of an Icon",
+  videoTopText: "The Evolution of an Icon",
   videoTitle: "Oud & Roses Auric",
   videoDescription:
     "A founder’s signature. A house’s evolution. A gift to the people who made the journey possible.",
@@ -77,7 +78,7 @@ export default function AuricPage() {
   const data = AURIC_CONFIG;
 
   const handleBookNow = () => {
-    router.push(`/en/shop`);
+    router.push(`/en/shop/perfumes/occidental-fragrance/oud-roses-auric`);
   };
 
   return (
@@ -85,6 +86,7 @@ export default function AuricPage() {
       <Header14 />
 
       <div className="auric-landing-page">
+        <HeroSection2 />
         <VideoSection data={data} />
         <HeroSection data={data} onBookNow={handleBookNow} />
         <JourneySection data={data} />

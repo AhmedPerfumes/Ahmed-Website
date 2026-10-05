@@ -36,7 +36,7 @@ function VideoSection({ data = {} }) {
         height: "auto",
         background: "#000000",
         color: "#ffffff",
-        padding: "100px 24px",
+        padding: "clamp(48px, 8vw, 100px) clamp(10px, 3.5vw, 24px)",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
@@ -50,6 +50,7 @@ function VideoSection({ data = {} }) {
           zIndex: 1,
           maxWidth: "1200px",
           margin: "0 auto",
+          width: "100%",
         }}
         initial="hidden"
         whileInView="visible"
@@ -64,7 +65,7 @@ function VideoSection({ data = {} }) {
             maxWidth: "1200px",
             margin: "0 auto",
             position: "relative",
-            borderRadius: "20px",
+            borderRadius: "clamp(12px, 3vw, 20px)",
             overflow: "hidden",
             aspectRatio: "16/9",
             backgroundColor: "#000",
@@ -79,14 +80,17 @@ function VideoSection({ data = {} }) {
         >
           <VideoPanel
             src={videoSrc}
+            section="hundred"
+            className="w-100 h-100"
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "contain",
+              display: "block",
+              objectFit: "cover",
               border: "none",
               outline: "none",
               transition: "opacity 0.4s ease",
-              opacity: 0.95,
+              opacity: 0.98,
             }}
           />
 
@@ -128,57 +132,50 @@ function VideoSection({ data = {} }) {
         <motion.div
           variants={itemVariants}
           style={{
-            marginTop: "44px",
+            marginTop: "clamp(36px, 5.5vw, 56px)",
             textAlign: "center",
-            color: textColor,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          {/* Main Heading */}
+          {/* Eyebrow Subheading: Refined, delicate, wide-tracked couture label */}
+          <div style={{ marginBottom: "12px" }}>
+            <span
+              className="auric-subheading"
+              style={{
+                fontFamily:
+                  "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)",
+                fontSize: "clamp(0.76rem, 1.0vw, 0.92rem)",
+                lineHeight: 1.3,
+                letterSpacing: "0.32em",
+                marginRight: "-0.32em",
+                fontWeight: 500,
+                textTransform: "uppercase",
+                display: "inline-block",
+                background:
+                  "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 40%, #DDA136 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                filter: "drop-shadow(0 1px 8px rgba(221, 161, 54, 0.2))",
+              }}
+            >
+              {(data?.subtitle || data?.videoTopText || "The Evolution of an Icon").toUpperCase()}
+            </span>
+          </div>
+
+          {/* Main Monumental Heading: Regal 24K Imperial Gold Serif */}
           <div style={{ position: "relative", display: "inline-block" }}>
             <h2
               style={{
                 fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                position: "relative",
-                zIndex: 1,
-                fontSize: "clamp(2.4rem, 5.2vw, 4rem)",
+                fontSize: "clamp(2.3rem, 5.8vw, 4.2rem)",
                 lineHeight: 1.15,
-                marginTop: "4px",
-                marginBottom: "8px",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
+                fontWeight: 400,
+                letterSpacing: "0.14em",
+                marginRight: "-0.14em",
                 textTransform: "uppercase",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  background:
-                    "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  color: "#d4af37",
-                  display: "inline-block",
-                  filter: "drop-shadow(0 2px 20px rgba(212, 175, 55, 0.35))",
-                  fontWeight: 600,
-                }}
-              >
-                {(data?.videoTitle || "Oud & Roses Auric").toUpperCase()}
-              </span>
-            </h2>
-          </div>
-
-          {/* Subheading in same gold color */}
-          <div style={{ marginTop: "4px", marginBottom: "24px" }}>
-            <h3
-              className="auric-subheading"
-              style={{
-                fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                fontSize: "clamp(1.15rem, 1.9vw, 1.55rem)",
-                lineHeight: 1.25,
-                letterSpacing: "0.22em",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                fontStyle: "normal",
                 margin: 0,
                 display: "inline-block",
               }}
@@ -187,27 +184,42 @@ function VideoSection({ data = {} }) {
                 style={{
                   fontFamily: "'Wonderful Melanesia', Georgia, serif",
                   background:
-                    "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
+                    "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%)",
                   WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                  color: "#d4af37",
                   display: "inline-block",
-                  filter: "drop-shadow(0 2px 14px rgba(212, 175, 55, 0.25))",
+                  filter: "drop-shadow(0 2px 22px rgba(221, 161, 54, 0.3))",
                 }}
               >
-                {(data?.subtitle || data?.videoTopText || "Evolution of an Icon").toUpperCase()}
+                {(data?.videoTitle || "Oud & Roses Auric").toUpperCase()}
               </span>
-            </h3>
+            </h2>
           </div>
+
+          {/* Subtle Haute-Parfumerie Hairline Accent */}
+          <div
+            style={{
+              width: "48px",
+              height: "1px",
+              background: "linear-gradient(90deg, transparent, #DDA136, transparent)",
+              margin: "18px auto 20px",
+              opacity: 0.7,
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Poetic Narrative Description: Warm Silk Ivory with balanced cadence */}
           <p
             style={{
-              maxWidth: "720px",
+              maxWidth: "640px",
               margin: "0 auto",
-              lineHeight: 1.8,
-              fontSize: "clamp(0.95rem, 1.3vw, 1.12rem)",
+              lineHeight: 1.85,
+              fontSize: "clamp(0.95rem, 1.25vw, 1.1rem)",
               fontWeight: 400,
-              color: "rgba(255, 255, 255, 0.88)",
-              letterSpacing: "0.015em",
+              color: "rgba(235, 230, 218, 0.82)",
+              letterSpacing: "0.025em",
+              textWrap: "balance",
             }}
           >
             {data?.videoDescription ||

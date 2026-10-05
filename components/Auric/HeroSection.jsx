@@ -146,7 +146,7 @@ function BottleComparisonSlider({
     if (e.currentTarget && e.currentTarget.setPointerCapture) {
       try {
         e.currentTarget.setPointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch (err) { }
     }
     handleMove(e.clientX);
   };
@@ -161,7 +161,7 @@ function BottleComparisonSlider({
     if (e.currentTarget && e.currentTarget.releasePointerCapture) {
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 
@@ -391,49 +391,70 @@ function HeroSection({ data = {}, onBookNow }) {
           {/* Right Column: Story & Heritage */}
           <div className="col-lg-6 order-1 order-lg-2">
             <motion.div
-              className="hero-message ps-0 ps-lg-5"
+              className="hero-message text-center px-0 px-lg-3"
+              style={{
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.15 }}
             >
+              {/* Main Headline */}
               <h2
                 style={{
                   fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
-                  lineHeight: "1.18",
-                  letterSpacing: "0.015em",
+                  fontSize: "clamp(2.3rem, 4.4vw, 3.6rem)",
+                  lineHeight: "1.16",
+                  letterSpacing: "0.06em",
                   fontWeight: 400,
                   color: "#ffffff",
                   marginBottom: "24px",
+                  textAlign: "center",
+                  textWrap: "balance",
                 }}
               >
-                <span style={{ display: "block", fontFamily: "'Wonderful Melanesia', Georgia, serif" }}>A Story That Changed</span>
+                <span style={{ display: "block", fontFamily: "'Wonderful Melanesia', Georgia, serif", fontSize: "clamp(2rem, 3vw, 3.3rem)" }}>
+                  A Story That Changed
+                </span>
                 <span
                   className="auric-gold-text"
                   style={{
                     fontFamily: "'Wonderful Melanesia', Georgia, serif",
                     fontWeight: 400,
-                    fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
-                    lineHeight: "1.18",
-                    marginTop: "6px",
+                    fontSize: "clamp(2.3rem, 4.4vw, 3.6rem)",
+                    lineHeight: "1.16",
+                    marginTop: "4px",
                     display: "inline-block",
+                    background:
+                      "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    filter: "drop-shadow(0 2px 20px rgba(221, 161, 54, 0.3))",
                   }}
                 >
                   The House
                 </span>
               </h2>
 
+              {/* Story Narrative Paragraph: Soft silk ivory, editorial cadence */}
               <p
                 className="lead mb-4"
                 style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  fontSize: "clamp(1.02rem, 1.15vw, 1.12rem)",
+                  fontFamily: "Georgia, 'Times New Roman', serif",
+                  fontSize: "clamp(0.98rem, 1.15vw, 1.08rem)",
                   lineHeight: "1.9",
-                  color: "rgba(255, 255, 255, 0.82)",
+                  color: "rgba(240, 235, 222, 0.82)",
                   fontWeight: 300,
-                  letterSpacing: "0.012em",
-                  maxWidth: "560px",
+                  letterSpacing: "0.02em",
+                  maxWidth: "540px",
+                  margin: "0 auto",
+                  textAlign: "center",
+                  textWrap: "balance",
                 }}
               >
                 {data?.storyText ||
@@ -441,44 +462,84 @@ function HeroSection({ data = {}, onBookNow }) {
                   "Some fragrances become successful. Others change the direction of a house forever. Oud & Roses became a signature fragrance whose story reached far beyond its origins. Auric honours that legacy and the people who carried the story forward."}
               </p>
 
-              <p
+              {/* Founder Dedication Quote Plaque */}
+              <div
                 style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                  fontSize: "0.95rem",
-                  color: "rgba(240, 226, 196, 0.9)",
-                  letterSpacing: "0.02em",
-                  fontStyle: "normal",
-                  marginBottom: "36px",
-                  lineHeight: "1.65",
-                  maxWidth: "560px",
+                  margin: "0 auto 36px",
+                  maxWidth: "540px",
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
-                {data?.founderCredit || "Inspired by the vision of our founder, Mr. Kafeel Ahmed"}
-              </p>
+                <div
+                  style={{
+                    width: "48px",
+                    height: "1px",
+                    background: "linear-gradient(90deg, transparent, #dda136, transparent)",
+                    margin: "0 auto 14px",
+                    opacity: 0.8,
+                  }}
+                  aria-hidden="true"
+                />
+                <p
+                  style={{
+                    margin: 0,
+                    fontFamily: "Georgia, 'Times New Roman', serif",
+                    fontSize: "clamp(0.88rem, 1.0vw, 0.95rem)",
+                    color: "#f5cb6c",
+                    letterSpacing: "0.04em",
+                    fontWeight: 400,
+                    fontStyle: "italic",
+                    lineHeight: "1.6",
+                    textAlign: "center",
+                  }}
+                >
+                  {data?.founderCredit || "Inspired by the vision of our founder, Mr. Kafeel Ahmed"}
+                </p>
+                <div
+                  style={{
+                    width: "48px",
+                    height: "1px",
+                    background: "linear-gradient(90deg, transparent, #dda136, transparent)",
+                    margin: "14px auto 0",
+                    opacity: 0.8,
+                  }}
+                  aria-hidden="true"
+                />
+              </div>
 
+              {/* Baccarat Ruby CTA Button */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.25, duration: 0.5 }}
+                style={{ display: "flex", justifyContent: "center", width: "100%" }}
               >
                 <motion.button
-                  whileHover={{ scale: 1.02, boxShadow: "0 10px 30px rgba(128, 0, 32, 0.5), 0 0 20px rgba(212, 175, 55, 0.3)" }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{
+                    scale: 1.03,
+                    boxShadow:
+                      "0 12px 34px rgba(196, 30, 58, 0.45), 0 0 20px rgba(221, 161, 54, 0.3)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
                   style={{
                     fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                    background: "#800020",
+                    background: "linear-gradient(135deg, #c41e3a 0%, #9e1b32 50%, #6e0c1b 100%)",
                     color: "#ffffff",
                     borderRadius: "40px",
-                    border: "1px solid rgba(212, 175, 55, 0.55)",
-                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)",
-                    padding: "14px 38px",
-                    fontSize: "0.82rem",
-                    letterSpacing: "0.18em",
+                    border: "1px solid rgba(245, 203, 108, 0.6)",
+                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(196, 30, 58, 0.25)",
+                    padding: "15px 42px",
+                    fontSize: "0.84rem",
+                    letterSpacing: "0.2em",
+                    marginRight: "-0.2em",
                     textTransform: "uppercase",
-                    fontWeight: 600,
+                    fontWeight: 500,
                     cursor: "pointer",
-                    transition: "all 0.3s ease",
+                    transition: "all 0.35s ease",
                   }}
                   onClick={onBookNow}
                 >

@@ -30,8 +30,8 @@
 .text-gold { color: #d4af37; }
 
 .auric-gold-text {
-  color: #d4af37;
-  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  color: #f5cb6c;
+  background: linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
