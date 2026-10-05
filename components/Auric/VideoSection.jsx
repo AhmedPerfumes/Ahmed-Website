@@ -141,8 +141,8 @@ function VideoSection({ data = {} }) {
                 lineHeight: 1.1,
                 marginTop: "4px",
                 marginBottom: "16px",
-                fontWeight: 400,
-                letterSpacing: "0.22em",
+                fontWeight: 600,
+                letterSpacing: "0.2em",
                 textTransform: "uppercase",
               }}
             >
@@ -155,6 +155,7 @@ function VideoSection({ data = {} }) {
                   color: "#d4af37",
                   display: "inline-block",
                   filter: "drop-shadow(0 2px 20px rgba(212, 175, 55, 0.35))",
+                  fontWeight: 600,
                 }}
               >
                 {(data?.videoTitle || "AURIC").toUpperCase()}
@@ -167,8 +168,8 @@ function VideoSection({ data = {} }) {
               margin: "0 auto",
               lineHeight: 1.8,
               fontSize: "clamp(0.95rem, 1.3vw, 1.12rem)",
-              fontWeight: 300,
-              color: "rgba(255, 255, 255, 0.78)",
+              fontWeight: 400,
+              color: "rgba(255, 255, 255, 0.88)",
               letterSpacing: "0.015em",
             }}
           >

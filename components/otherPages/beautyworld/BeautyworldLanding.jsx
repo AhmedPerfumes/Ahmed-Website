@@ -47,24 +47,9 @@ const timelineYears = [
   },
 ];
 
-// ── Form options ─────────────────────────────────────────────────────────────
-const businessTypes  = ["Distributor", "Importer", "Wholesaler", "Retailer", "E-commerce", "Travel Retail", "Other"];
-const categories     = ["Finished Fragrances", "Arabian Fragrances", "Oud", "Niche Fragrances", "Premium Fragrances"];
-const preferredDates = ["6 October 2026", "7 October 2026", "8 October 2026"];
-const preferredTimes = ["09:00 – 11:00", "11:00 – 13:00", "13:00 – 15:00", "15:00 – 17:00"];
-
 // ─────────────────────────────────────────────────────────────────────────────
 export default function BeautyworldLanding() {
   const [activeYear, setActiveYear] = useState("2026");
-  const [submitted,  setSubmitted]  = useState(false);
-  const [loading,    setLoading]    = useState(false);
-  const [formStep,   setFormStep]   = useState(1);   // 1 = Contact Details, 2 = Business + Message
-  const [form, setForm] = useState({
-    fullName: "", company: "", jobTitle: "", country: "",
-    email: "", mobile: "",
-    businessType: "", category: "",
-    message: "",
-  });
 
   const heroRef         = useRef(null);
   const revealRef       = useRef(null);
@@ -136,18 +121,6 @@ export default function BeautyworldLanding() {
 
     return () => obs.disconnect();
   }, []);
-
-  function handleChange(e) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1400));
-    setLoading(false);
-    setSubmitted(true);
-  }
 
   function scrollTo(ref, targetId) {
     if (typeof window === "undefined") return;
@@ -394,149 +367,14 @@ export default function BeautyworldLanding() {
       ════════════════════════════════════════ */}
       <section className="bw-meeting" ref={meetingRef} id="book-a-meeting">
         <div className="bw-container">
-
-          {submitted ? (
-            /* ── Full-section thank you ── */
-            <div className="bw-meeting__thankyou bw-animate" id="meeting-success-message">
-              <div className="bw-meeting__thankyou-icon">
-                <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.2">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-              </div>
-              <p className="bw-eyebrow">Confirmed</p>
-              <h2 className="bw-section-title">Thank You.</h2>
-              <p className="bw-meeting__copy">
-                Your meeting request has been received.<br />
-                Our team will be in touch shortly to confirm the details.
-              </p>
-            </div>
-          ) : (
-            /* ── Normal: header + form ── */
-            <>
-              <div className="bw-meeting__header">
-                <p className="bw-eyebrow bw-animate">Book a Meeting</p>
-                <h2 className="bw-section-title bw-animate">Meet Us in Dubai</h2>
-                <p className="bw-meeting__copy bw-animate">
-                 We warmly invite our existing international partners and potential new business partners to visit us at Beautyworld Dubai 2026.
-                 Whether you are already part of the Ahmed Al Maghribi family or looking to explore a new fragrance partnership, come meet our team, discover our latest launches, and discuss exciting opportunities to grow together in your market.
-                </p>
-              </div>
-            <form className="bw-form bw-animate" onSubmit={handleSubmit} id="beautyworld-meeting-form" noValidate>
-
-              {/* ── Step indicator ── */}
-              <div className="bw-form__steps">
-                <button
-                  type="button"
-                  className={"bw-form__step" + (formStep === 1 ? " is-active" : " is-done")}
-                  onClick={() => setFormStep(1)}
-                  aria-current={formStep === 1 ? "step" : undefined}
-                >
-                  <span className="bw-form__step-num">1</span>
-                  <span className="bw-form__step-label">Contact Details</span>
-                </button>
-                <span className="bw-form__step-rule" />
-                <button
-                  type="button"
-                  className={"bw-form__step" + (formStep === 2 ? " is-active" : "")}
-                  onClick={() => formStep > 1 && setFormStep(2)}
-                  aria-current={formStep === 2 ? "step" : undefined}
-                >
-                  <span className="bw-form__step-num">2</span>
-                  <span className="bw-form__step-label">Business &amp; Message</span>
-                </button>
-              </div>
-
-              {/* ════ STEP 1 — Contact Details ════ */}
-              {formStep === 1 && (
-                <div className="bw-form__panel">
-                  <div className="bw-form__grid bw-form__grid--2">
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-fullName">Full Name <span aria-hidden="true">*</span></label>
-                      <input id="bw-fullName" name="fullName" type="text" value={form.fullName} onChange={handleChange} placeholder="Your full name" required />
-                    </div>
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-company">Company <span aria-hidden="true">*</span></label>
-                      <input id="bw-company" name="company" type="text" value={form.company} onChange={handleChange} placeholder="Company name" required />
-                    </div>
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-jobTitle">Job Title</label>
-                      <input id="bw-jobTitle" name="jobTitle" type="text" value={form.jobTitle} onChange={handleChange} placeholder="Your role" />
-                    </div>
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-country">Country <span aria-hidden="true">*</span></label>
-                      <input id="bw-country" name="country" type="text" value={form.country} onChange={handleChange} placeholder="Country of operation" required />
-                    </div>
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-email">Email <span aria-hidden="true">*</span></label>
-                      <input id="bw-email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="business@email.com" required />
-                    </div>
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-mobile">Mobile / WhatsApp <span aria-hidden="true">*</span></label>
-                      <input id="bw-mobile" name="mobile" type="tel" value={form.mobile} onChange={handleChange} placeholder="+971 xx xxx xxxx" required />
-                    </div>
-                  </div>
-
-                  <div className="bw-form__actions">
-                    <button
-                      type="button"
-                      className="bw-btn bw-btn--primary"
-                      id="form-step1-next-btn"
-                      onClick={() => {
-                        if (!form.fullName || !form.company || !form.email || !form.mobile || !form.country) return;
-                        setFormStep(2);
-                      }}
-                    >
-                      Next &rarr;
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* ════ STEP 2 — Business & Message ════ */}
-              {formStep === 2 && (
-                <div className="bw-form__panel">
-                  <div className="bw-form__grid bw-form__grid--2">
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-businessType">Business Type <span aria-hidden="true">*</span></label>
-                      <select id="bw-businessType" name="businessType" value={form.businessType} onChange={handleChange} required>
-                        <option value="">Select type</option>
-                        {businessTypes.map((t) => <option key={t} value={t}>{t}</option>)}
-                      </select>
-                    </div>
-                    <div className="bw-form__field">
-                      <label htmlFor="bw-category">Category of Interest <span aria-hidden="true">*</span></label>
-                      <select id="bw-category" name="category" value={form.category} onChange={handleChange} required>
-                        <option value="">Select category</option>
-                        {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="bw-form__field bw-form__field--full">
-                    <label htmlFor="bw-message">Message</label>
-                    <textarea id="bw-message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Share anything you'd like our team to know before the meeting…" />
-                  </div>
-
-                  <div className="bw-form__actions bw-form__actions--spread">
-                    <button type="button" className="bw-btn bw-btn--ghost" id="form-step2-back-btn" onClick={() => setFormStep(1)}>
-                      &larr; Back
-                    </button>
-                    <button
-                      className={"bw-btn bw-btn--primary bw-btn--submit" + (loading ? " is-loading" : "")}
-                      type="submit"
-                      id="meeting-submit-btn"
-                      disabled={loading}
-                    >
-                      {loading ? <span className="bw-spinner" aria-hidden="true" /> : "Request a Meeting"}
-                    </button>
-                  </div>
-                </div>
-              )}
-
-            </form>
-            </>
-          )}
+          <div className="bw-meeting__header">
+            <p className="bw-eyebrow bw-animate">Book a Meeting</p>
+            <h2 className="bw-section-title bw-animate">Meet Us in Dubai</h2>
+            <p className="bw-meeting__copy bw-animate">
+              We warmly invite our existing international partners and potential new business partners to visit us at Beautyworld Dubai 2026.
+              Whether you are already part of the Ahmed Al Maghribi family or looking to explore a new fragrance partnership, come meet our team, discover our latest launches, and discuss exciting opportunities to grow together in your market.
+            </p>
+          </div>
         </div>
       </section>
 
