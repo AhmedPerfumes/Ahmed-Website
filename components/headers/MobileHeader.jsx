@@ -433,7 +433,15 @@ export default function MobileHeader() {
                       e.stopPropagation();
                       handleAddToCart(item);
                     }}
-                    title={isOutOfStock ? t("Out Of Stock") : isAdded ? (locale === "ar" ? "تمت الإضافة" : "Added") : t("Add To Cart")}
+                    title={
+                      isOutOfStock
+                        ? t("Out Of Stock")
+                        : isAdded
+                          ? (locale === "ar" ? "تمت الإضافة" : "Added")
+                          : (item?.collection_name?.trim()?.toLowerCase() === "pre book" || item?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                            ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                            : t("Add To Cart")
+                    }
                   >
                     {isAdded ? (
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

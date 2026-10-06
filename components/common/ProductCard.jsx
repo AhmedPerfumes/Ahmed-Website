@@ -481,7 +481,9 @@ export default function ProductCard({
               className="btn btn-primary js-add-cart"
               onClick={handleAddToCart}
             >
-              {t("Add To Cart")}
+              {(elm?.collection_name?.trim()?.toLowerCase() === "pre book" || elm?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                : t("Add To Cart")}
             </button>
           ) : (
             <button className="btn btn-out-of-stock" disabled>
@@ -524,9 +526,15 @@ export default function ProductCard({
           <button
             className="pc__atc-mobile"
             onClick={handleAddToCart}
-            aria-label={t("Add {name} to cart", { name: displayName })}
+            aria-label={
+              (elm?.collection_name?.trim()?.toLowerCase() === "pre book" || elm?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                ? `Pre-book ${displayName}`
+                : t("Add {name} to cart", { name: displayName })
+            }
           >
-            {t("Add To Cart")}
+            {(elm?.collection_name?.trim()?.toLowerCase() === "pre book" || elm?.collection_name?.trim()?.toLowerCase() === "pre-book")
+              ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+              : t("Add To Cart")}
           </button>
         ) : (
           <button className="pc__atc-mobile pc__atc-mobile--oos" disabled>

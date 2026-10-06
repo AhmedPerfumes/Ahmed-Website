@@ -1396,7 +1396,11 @@ const MasterPerfumerGallery = () => {
                                             }
                                         }}
                                     >
-                                        {slides[activeIndex]?.product ? t("Add To Cart") : t("Discover the Note")}
+                                        {slides[activeIndex]?.product
+                                            ? ((slides[activeIndex]?.product?.collection_name?.trim()?.toLowerCase() === "pre book" || slides[activeIndex]?.product?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                                                ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                                                : t("Add To Cart"))
+                                            : t("Discover the Note")}
                                     </button>
                                 )}
                             </div>

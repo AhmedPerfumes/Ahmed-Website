@@ -233,9 +233,9 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
                                                                   .subcategory_name,
                                                       })
                                                   }
-                                                  title="Add to Cart"
+                                                  title={(elm?.collection_name?.trim()?.toLowerCase() === "pre book" || elm?.collection_name?.trim()?.toLowerCase() === "pre-book") ? "Pre Book" : "Add to Cart"}
                                               >
-                                                  Add To Cart
+                                                  {(elm?.collection_name?.trim()?.toLowerCase() === "pre book" || elm?.collection_name?.trim()?.toLowerCase() === "pre-book") ? "Pre Book" : "Add To Cart"}
                                               </button>
                                           )}
                                 </div>

@@ -604,8 +604,8 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
                                             key={starVal}
                                             type="button"
                                             className={`${styles.starBtn} ${starVal <= (hoverRating || rating)
-                                                ? styles.starActive
-                                                : ""
+                                              ? styles.starActive
+                                              : ""
                                               }`}
                                             onClick={() =>
                                               setRatingMap((prev) => ({ ...prev, [productId]: starVal }))
@@ -770,8 +770,8 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
                             key={starVal}
                             type="button"
                             className={`${styles.feedbackStar} ${starVal <= (hoverFeedbackRating || feedbackRating)
-                                ? styles.feedbackStarActive
-                                : ""
+                              ? styles.feedbackStarActive
+                              : ""
                               }`}
                             onClick={() => setFeedbackRating(starVal)}
                             onMouseEnter={() => setHoverFeedbackRating(starVal)}

@@ -130,7 +130,11 @@ const Sticky = ({ image, product }) => {
                 id="product-detail-sticky-btn"
                 type="button"
                 className={btnClass}
-                aria-label={t("addToCartLabel", { name: productName })}
+                aria-label={
+                    (product?.collection_name?.trim()?.toLowerCase() === "pre book" || product?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                        ? `Pre-book ${productName}`
+                        : t("addToCartLabel", { name: productName })
+                }
                 disabled={disabled}
                 onClick={() => !disabled && addToCart()}
             >
@@ -144,7 +148,9 @@ const Sticky = ({ image, product }) => {
                 ) : (
                     <>
                         <ShoppingCart size={15} />
-                        {t("addToCart")}
+                        {(product?.collection_name?.trim()?.toLowerCase() === "pre book" || product?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                            ? (t.has("preBook") ? t("preBook") : "Pre Book")
+                            : t("addToCart")}
                     </>
                 )}
             </button>

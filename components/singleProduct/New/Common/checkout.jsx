@@ -385,7 +385,7 @@ const Checkout = ({ product }) => {
                 {/* <tamara-widget type="tamara-summary" lang="en" amount={price(product)} inline-type='2' inline-variant='outlined' config='{"theme":"light","badgePosition":"","showExtraContent":"","hidePayInX":false}'></tamara-widget> */}
                 {product.product_qty > 0 ? (
                     <div className="d-flex w-100 gap-2 mt-3" style={{ height: 48 }}>
-                        {/* Left Pill (Add to Cart → Already Added) */}
+                        {/* Left Pill (Add to Cart / Pre Book → Already Added) */}
                         <motion.button
                             layout
                             type="button"
@@ -397,7 +397,11 @@ const Checkout = ({ product }) => {
                             animate={{ width: !!isIncludeCard() ? "60%" : "100%", }}
                             transition={{ type: "tween", duration: 0.1, }}
                         >
-                            {!!isIncludeCard() ? t("Already Added") : t("Add to Cart")}
+                            {!!isIncludeCard()
+                                ? t("Already Added")
+                                : (product?.collection_name?.trim()?.toLowerCase() === "pre book" || product?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                                ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                                : t("Add to Cart")}
                         </motion.button>
 
                         {/* Right Pill (Quantity Selector) */}

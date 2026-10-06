@@ -354,7 +354,9 @@ function ProductCard({ rec, rank, locale, isReversed, scentProfileTitle }) {
                 } catch (e) {}
               }}
             >
-              ADD TO BAG
+              {(product?.collection_name?.trim()?.toLowerCase() === "pre book" || product?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                ? (locale === "ar" ? "حجز مسبق" : "PRE BOOK")
+                : "ADD TO BAG"}
             </button>
           </div>
         </div>

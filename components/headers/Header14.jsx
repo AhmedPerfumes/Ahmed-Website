@@ -563,7 +563,9 @@ export default function Header14() {
                                                                             ? t("Out Of Stock")
                                                                             : isAdded
                                                                                 ? (locale === "ar" ? "تمت الإضافة" : "Added")
-                                                                                : t("Add To Cart")
+                                                                                : (item?.collection_name?.trim()?.toLowerCase() === "pre book" || item?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                                                                                    ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                                                                                    : t("Add To Cart")
                                                                     }
                                                                 >
                                                                     {isAdded ? (
@@ -598,7 +600,11 @@ export default function Header14() {
                                                                                 <line x1="3" y1="6" x2="21" y2="6"></line>
                                                                                 <path d="M16 10a4 4 0 0 1-8 0"></path>
                                                                             </svg>
-                                                                            <span>{t("Add To Cart")}</span>
+                                                                            <span>
+                                                                                {(item?.collection_name?.trim()?.toLowerCase() === "pre book" || item?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                                                                                    ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                                                                                    : t("Add To Cart")}
+                                                                            </span>
                                                                         </>
                                                                     )}
                                                                 </button>

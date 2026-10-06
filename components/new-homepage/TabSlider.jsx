@@ -438,7 +438,9 @@ export default function PopularProducts() {
                                     });
                                   }}
                                 >
-                                  {t("addToCart")}
+                                  {(item?.collection_name?.trim()?.toLowerCase() === "pre book" || item?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                                    ? (t.has("preBook") ? t("preBook") : (t.has("Pre Book") ? t("Pre Book") : "Pre Book"))
+                                    : t("addToCart")}
                                 </button>
                               ) : (
                                 <button

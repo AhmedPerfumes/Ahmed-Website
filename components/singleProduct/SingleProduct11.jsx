@@ -241,7 +241,11 @@ export default function SingleProduct11({ category, subcategory, product: initia
                   className="btn btn-primary btn-addtocart js-open-aside"
                   onClick={() => addToCart()}
                 >
-                  {isIncludeCard() ? t("Already Added") : t("Add to Cart")}
+                  {isIncludeCard()
+                    ? t("Already Added")
+                    : (product?.collection_name?.trim()?.toLowerCase() === "pre book" || product?.collection_name?.trim()?.toLowerCase() === "pre-book")
+                    ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
+                    : t("Add to Cart")}
                 </button>
               </div>
             ) : (

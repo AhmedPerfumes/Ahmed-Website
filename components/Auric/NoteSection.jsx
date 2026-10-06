@@ -201,11 +201,6 @@ export default function NoteSection({ data = {} }) {
                     />
                   </div>
 
-                  {/* Tier Label */}
-                  <span className="auric-note-card-tier">
-                    {item.tier} · {item.title}
-                  </span>
-
                   {/* Main Title */}
                   <h3 className="auric-note-card-title">{item.title}</h3>
 
