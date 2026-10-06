@@ -1,6 +1,5 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
+import Script from "next/script";
 import Header14 from "@/components/headers/Header14";
 import Footer14 from "@/components/footers/Footer14";
 import MobileFooter2 from "@/components/footers/MobileFooter2";
@@ -9,9 +8,8 @@ import NoteSection from "@/components/Auric/NoteSection";
 import FamilySection from "@/components/Auric/FamilySection";
 import HeroSection from "@/components/Auric/HeroSection";
 import JourneySection from "@/components/Auric/JourneySection";
-import "@/components/Auric/auric.css";
-import { useRouter } from "next/navigation";
-import HeroSection2 from '@/components/otherPages/oud-roses-auric/HeroSection';
+import HeroSection2 from "@/components/otherPages/oud-roses-auric/HeroSection";
+import "@/components/Auric/auric.scss";
 
 // Central config for Auric Landing Page with subtle premium maroon theme
 const AURIC_CONFIG = {
@@ -49,7 +47,6 @@ const AURIC_CONFIG = {
     "A refined journey from radiant spice and rose to warm oud, crafted with depth, character and enduring elegance.",
   heroQuote:
     "Some fragrances become successful. Others change the direction of a house forever. Oud & Roses became a signature fragrance whose story reached far beyond its origins. Auric honours that legacy and the people who carried the story forward.",
-  // Subtle and premium maroon theme palette
   accentColor: "#c2596c",
   maroonDark: "#800020",
   textColor: "#ffffff",
@@ -73,26 +70,144 @@ const AURIC_CONFIG = {
     "Discover Auric’s story from the signature that came before it to its new expression.",
 };
 
-export default function AuricPage() {
-  const router = useRouter();
-  const data = AURIC_CONFIG;
+export async function generateMetadata({ params }) {
+  const { locale } = params || {};
+  const isArabic = locale === "ar";
 
-  const handleBookNow = () => {
-    router.push(`/en/shop/perfumes/occidental-fragrance/oud-roses-auric`);
+  const title = isArabic
+    ? "عود آند روزيز أوريك | تطور أيقونة العطور | عطور أحمد المغربي"
+    : "Oud & Roses Auric | The Evolution of an Icon | Ahmed Al Maghribi Perfumes";
+
+  const description = isArabic
+    ? "اكتشف عطر عود آند روزيز أوريك من عطور أحمد المغربي. تجسيد للفخامة المهيبة وحرفية العطور الاستثنائية التي تجمع بين العود النادر والورد والعنبر."
+    : "Experience Oud & Roses Auric by Ahmed Al Maghribi Perfumes. An embodiment of majestic opulence and royal craftsmanship, uniting rare oud, Turkish rose, and amber.";
+
+  const canonicalUrl = `https://ae.ahmedalmaghribi.com/${locale || "en"}/auric`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      "Oud & Roses Auric",
+      "Ahmed Al Maghribi",
+      "Ahmed Al Maghribi Perfumes",
+      "Oud and Roses",
+      "Extrait de Parfum",
+      "Luxury Arabic Perfume",
+      "Oud Perfume UAE",
+      "Turkish Rose Perfume",
+    ],
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        en: "https://ae.ahmedalmaghribi.com/en/auric",
+        ar: "https://ae.ahmedalmaghribi.com/ar/auric",
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
+      images: [
+        {
+          url: "/assets/auric-bottle.png",
+          width: 800,
+          height: 1000,
+          alt: "Oud & Roses Auric Luxury Flacon",
+        },
+      ],
+      type: "website",
+      locale: isArabic ? "ar_AE" : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/assets/auric-bottle.png"],
+    },
+    icons: {
+      icon: "/assets/images/ahmed-favicon.png",
+    },
+  };
+}
+
+export default function AuricPage({ params }) {
+  const { locale } = params || {};
+  const currentLocale = locale || "en";
+  const data = AURIC_CONFIG;
+  const shopUrl = `/${currentLocale}/shop/perfumes/occidental-fragrance/oud-roses-auric`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/auric#product`,
+        name: "Oud & Roses Auric",
+        image: "https://ae.ahmedalmaghribi.com/assets/auric-bottle.png",
+        description:
+          "An embodiment of majestic opulence and royal craftsmanship — Auric unites the depth of precious oud with Turkish rose, immortelle, velvet amber, and warm woods.",
+        brand: {
+          "@type": "Brand",
+          name: "Ahmed Al Maghribi Perfumes",
+        },
+        category: "Extrait de Parfum",
+        offers: {
+          "@type": "Offer",
+          url: `https://ae.ahmedalmaghribi.com${shopUrl}`,
+          priceCurrency: "AED",
+          availability: "https://schema.org/InStock",
+          seller: {
+            "@type": "Organization",
+            name: "Ahmed Al Maghribi Perfumes",
+          },
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `https://ae.ahmedalmaghribi.com/${currentLocale}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Fragrances",
+            item: `https://ae.ahmedalmaghribi.com/${currentLocale}/shop`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Oud & Roses Auric",
+            item: `https://ae.ahmedalmaghribi.com/${currentLocale}/auric`,
+          },
+        ],
+      },
+    ],
   };
 
   return (
     <>
+      <Script
+        id="auric-schema-ldjson"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Header14 />
 
-      <div className="auric-landing-page">
+      <main className="auric-landing-page">
         <HeroSection2 />
         <VideoSection data={data} />
-        <HeroSection data={data} onBookNow={handleBookNow} />
+        <HeroSection data={data} shopUrl={shopUrl} />
         <JourneySection data={data} />
         <NoteSection data={data} />
-        <FamilySection data={data} onBookNow={handleBookNow} />
-      </div>
+        <FamilySection data={data} shopUrl={shopUrl} />
+      </main>
 
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />

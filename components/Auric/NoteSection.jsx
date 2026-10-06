@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import "./auric.css";
 
 const NOTE_TIERS = [
   {
@@ -201,9 +200,9 @@ export default function NoteSection({ data = {} }) {
                     />
                   </div>
 
-                  {/* Tier Label */}
+                  {/* Tier Label (Clean Gold Number: 01, 02, 03) */}
                   <span className="auric-note-card-tier">
-                    {item.tier} · {item.title}
+                    {item.tier}
                   </span>
 
                   {/* Main Title */}
