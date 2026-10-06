@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import "./HeroSection.css";
+import Link from "next/link";
 
 function BottleComparisonSlider({
   beforeImg = "/assets/images/oud-roses.png",
@@ -362,7 +364,8 @@ function BottleComparisonSlider({
   );
 }
 
-function HeroSection({ data = {}, onBookNow }) {
+function HeroSection({ data = {}, onBookNow, shopUrl }) {
+  const defaultShopUrl = shopUrl || "/en/shop/perfumes/occidental-fragrance/oud-roses-auric";
 
   return (
     <section className="hero-section text-white">
@@ -518,33 +521,64 @@ function HeroSection({ data = {}, onBookNow }) {
                 transition={{ delay: 0.25, duration: 0.5 }}
                 style={{ display: "flex", justifyContent: "center", width: "100%" }}
               >
-                <motion.button
-                  whileHover={{
-                    scale: 1.03,
-                    boxShadow:
-                      "0 12px 34px rgba(196, 30, 58, 0.45), 0 0 20px rgba(221, 161, 54, 0.3)",
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  style={{
-                    fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                    background: "linear-gradient(135deg, #c41e3a 0%, #9e1b32 50%, #6e0c1b 100%)",
-                    color: "#ffffff",
-                    borderRadius: "40px",
-                    border: "1px solid rgba(245, 203, 108, 0.6)",
-                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(196, 30, 58, 0.25)",
-                    padding: "15px 42px",
-                    fontSize: "0.84rem",
-                    letterSpacing: "0.2em",
-                    marginRight: "-0.2em",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    transition: "all 0.35s ease",
-                  }}
-                  onClick={onBookNow}
-                >
-                  Explore Auric
-                </motion.button>
+                {onBookNow ? (
+                  <motion.button
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow:
+                        "0 12px 34px rgba(196, 30, 58, 0.45), 0 0 20px rgba(221, 161, 54, 0.3)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                    style={{
+                      fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                      background: "linear-gradient(135deg, #c41e3a 0%, #9e1b32 50%, #6e0c1b 100%)",
+                      color: "#ffffff",
+                      borderRadius: "40px",
+                      border: "1px solid rgba(245, 203, 108, 0.6)",
+                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(196, 30, 58, 0.25)",
+                      padding: "15px 42px",
+                      fontSize: "0.84rem",
+                      letterSpacing: "0.2em",
+                      marginRight: "-0.2em",
+                      textTransform: "uppercase",
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      transition: "all 0.35s ease",
+                    }}
+                    onClick={onBookNow}
+                  >
+                    Explore Auric
+                  </motion.button>
+                ) : (
+                  <Link href={defaultShopUrl} style={{ textDecoration: "none" }}>
+                    <motion.button
+                      whileHover={{
+                        scale: 1.03,
+                        boxShadow:
+                          "0 12px 34px rgba(196, 30, 58, 0.45), 0 0 20px rgba(221, 161, 54, 0.3)",
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                      style={{
+                        fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                        background: "linear-gradient(135deg, #c41e3a 0%, #9e1b32 50%, #6e0c1b 100%)",
+                        color: "#ffffff",
+                        borderRadius: "40px",
+                        border: "1px solid rgba(245, 203, 108, 0.6)",
+                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(196, 30, 58, 0.25)",
+                        padding: "15px 42px",
+                        fontSize: "0.84rem",
+                        letterSpacing: "0.2em",
+                        marginRight: "-0.2em",
+                        textTransform: "uppercase",
+                        fontWeight: 500,
+                        cursor: "pointer",
+                        transition: "all 0.35s ease",
+                      }}
+                    >
+                      Explore Auric
+                    </motion.button>
+                  </Link>
+                )}
               </motion.div>
             </motion.div>
           </div>

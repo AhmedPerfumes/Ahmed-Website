@@ -2,7 +2,6 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import "./auric.css";
 
 export default function FamilySection({ data = {} }) {
   const containerRef = useRef(null);

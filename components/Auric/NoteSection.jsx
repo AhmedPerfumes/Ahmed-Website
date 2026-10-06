@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import "./auric.css";
 
 const NOTE_TIERS = [
   {

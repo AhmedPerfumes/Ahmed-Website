@@ -1,7 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import VideoPanel from "../VideoPanel";
-import "./auric.css";
 
 function VideoSection({ data = {} }) {
   const [isHovered, setIsHovered] = useState(false);
