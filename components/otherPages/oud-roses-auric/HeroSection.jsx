@@ -13,13 +13,16 @@ import "./HeroSection.scss";
 
 export default function HeroSection({
   title = "Oud & Roses Auric",
-  titleLine1 = "OUD & ROSES",
-  titleLine2 = "AURIC",
+  titleLine1,
+  titleLine2,
   classicBottleImage = "/assets/oud-roses-tilt.png",
   auricBottleImage = "/assets/auric-bottle-tilt.png",
   bottleImage,
   scrollTarget = "#story",
+  isArabic = false,
 }) {
+  const line1 = titleLine1 || (isArabic ? "عود آند روزز" : "OUD & ROSES");
+  const line2 = titleLine2 || (isArabic ? "أوريك" : "AURIC");
   const classicImg = classicBottleImage || "/assets/oud-roses-tilt.png";
   const auricImg = auricBottleImage || bottleImage || "/assets/auric-bottle-tilt.png";
 
@@ -137,15 +140,27 @@ export default function HeroSection({
         <div className="auric-monolith__stage">
           {/* 1. Top Element: OUD & ROSES (Order 1) */}
           <div
-            className="auric-monolith__title-block auric-monolith__title-block--primary"
+            className={`auric-monolith__title-block auric-monolith__title-block--primary ${
+              isArabic ? "auric-monolith__title-block--ar" : ""
+            }`}
             style={{ order: 1 }}
           >
             {/* Back Fill */}
             <motion.span
               className="title-line title-line--primary title-line--back"
-              style={{ y: line1Y }}
+              style={{
+                y: line1Y,
+                ...(isArabic
+                  ? {
+                      fontFamily: "inherit",
+                      letterSpacing: "normal",
+                      marginRight: 0,
+                      textTransform: "none",
+                    }
+                  : {}),
+              }}
             >
-              {titleLine1}
+              {line1}
             </motion.span>
             {/* Front 3D Outline */}
             <motion.span
@@ -153,10 +168,18 @@ export default function HeroSection({
               style={{
                 y: line1Y,
                 WebkitTextStrokeColor: "#f5cb6c",
+                ...(isArabic
+                  ? {
+                      fontFamily: "inherit",
+                      letterSpacing: "normal",
+                      marginRight: 0,
+                      textTransform: "none",
+                    }
+                  : {}),
               }}
               aria-hidden="true"
             >
-              {titleLine1}
+              {line1}
             </motion.span>
           </div>
 
@@ -213,7 +236,9 @@ export default function HeroSection({
 
           {/* 3. Bottom Element: AURIC (Order 3) */}
           <div
-            className="auric-monolith__title-block auric-monolith__title-block--auric"
+            className={`auric-monolith__title-block auric-monolith__title-block--auric ${
+              isArabic ? "auric-monolith__title-block--ar" : ""
+            }`}
             style={{ order: 3 }}
           >
             {/* Back Fill */}
@@ -222,9 +247,17 @@ export default function HeroSection({
               style={{
                 opacity: auricTextOpacity,
                 y: auricTextY,
+                ...(isArabic
+                  ? {
+                      fontFamily: "inherit",
+                      letterSpacing: "normal",
+                      marginRight: 0,
+                      textTransform: "none",
+                    }
+                  : {}),
               }}
             >
-              {titleLine2}
+              {line2}
             </motion.span>
             {/* Front 3D Outline */}
             <motion.span
@@ -233,10 +266,18 @@ export default function HeroSection({
                 opacity: auricTextOpacity,
                 y: auricTextY,
                 WebkitTextStrokeColor: "#f5cb6c",
+                ...(isArabic
+                  ? {
+                      fontFamily: "inherit",
+                      letterSpacing: "normal",
+                      marginRight: 0,
+                      textTransform: "none",
+                    }
+                  : {}),
               }}
               aria-hidden="true"
             >
-              {titleLine2}
+              {line2}
             </motion.span>
           </div>
         </div>
@@ -251,7 +292,11 @@ export default function HeroSection({
           transition={{ duration: 1.0, delay: 1.2 }}
           aria-label={isEvolved ? "Scroll down to explore story" : "Scroll down to evolve into Auric"}
         >
-          <span>{isEvolved ? "Discover The Legacy" : "Scroll to Evolve"}</span>
+          <span style={{ fontFamily: isArabic ? "inherit" : undefined, letterSpacing: isArabic ? "normal" : undefined }}>
+            {isEvolved
+              ? (isArabic ? "اكتشف الإرث" : "Discover The Legacy")
+              : (isArabic ? "مرّر لاكتشاف التطور" : "Scroll to Evolve")}
+          </span>
           <span className="scroll-arrow" aria-hidden="true">↓</span>
         </motion.a>
       </section>

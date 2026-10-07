@@ -205,6 +205,18 @@ $font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, san
       margin-top: clamp(-16px, -1.5vh, 0px);
     }
 
+    // Arabic typography overrides
+    &--ar,
+    [dir="rtl"] & {
+      .title-line {
+        font-family: inherit !important;
+        letter-spacing: normal !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        text-transform: none !important;
+      }
+    }
+
     .title-line {
       display: block;
       font-family: $font-serif;

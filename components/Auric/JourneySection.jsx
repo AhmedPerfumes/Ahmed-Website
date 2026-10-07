@@ -21,6 +21,8 @@ function JourneySection({ data = {} }) {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
+  const isArabic = Boolean(data?.isArabic);
+
   return (
     <section
       style={{
@@ -49,17 +51,17 @@ function JourneySection({ data = {} }) {
         <motion.h2
           variants={itemVariants}
           style={{
-            fontFamily: "'Wonderful Melanesia', Georgia, serif",
+            fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
             fontSize: "clamp(2.2rem, 5vw, 3.6rem)",
             fontWeight: "400",
             marginBottom: "18px",
-            letterSpacing: "0.04em",
-            lineHeight: "1.2",
+            letterSpacing: isArabic ? "normal" : "0.04em",
+            lineHeight: isArabic ? "1.3" : "1.2",
           }}
         >
           <span
             style={{
-              fontFamily: "'Wonderful Melanesia', Georgia, serif",
+              fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
               background:
                 "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
               WebkitBackgroundClip: "text",
@@ -77,7 +79,7 @@ function JourneySection({ data = {} }) {
         <motion.p
           variants={itemVariants}
           style={{
-            fontFamily: "'Wonderful Melanesia', Georgia, serif",
+            fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
             fontSize: "clamp(1rem, 1.4vw, 1.15rem)",
             color: "rgba(255, 255, 255, 0.78)",
             marginBottom: "40px",
@@ -85,7 +87,7 @@ function JourneySection({ data = {} }) {
             margin: "0 auto 40px",
             lineHeight: "1.8",
             fontWeight: 300,
-            letterSpacing: "0.015em",
+            letterSpacing: isArabic ? "normal" : "0.015em",
           }}
         >
           {data?.journeyDescription ||
