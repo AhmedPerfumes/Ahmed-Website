@@ -261,11 +261,17 @@
 /* Meta Grid */
 .metaGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   padding: 24px;
   background: #fafaf9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .metaGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .metaItem {
@@ -939,6 +945,10 @@
     grid-template-columns: repeat(2, 1fr);
     padding: 16px;
     gap: 14px;
+  }
+
+  .deliveryMetaItem {
+    grid-column: span 2;
   }
 
   .productsSection {

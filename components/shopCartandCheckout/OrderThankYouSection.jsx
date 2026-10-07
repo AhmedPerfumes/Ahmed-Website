@@ -280,6 +280,35 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
     return method.toUpperCase();
   };
 
+  // Campaign determination & Estimated Delivery
+  const getOrderCampaign = () => {
+    const rawVal =
+      orderData?.campaign ||
+      orderData?.campaign_name ||
+      orderData?.campaign_slug ||
+      initialOrderDetails?.campaign ||
+      initialOrderDetails?.campaign_name ||
+      initialOrderDetails?.campaign_slug ||
+      orderData?.products?.map((p) => p?.campaign || p?.bogo_campaign || p?.campaign_name).find(Boolean) ||
+      initialOrderDetails?.products?.map((p) => p?.campaign || p?.bogo_campaign || p?.campaign_name).find(Boolean) ||
+      "";
+
+    if (typeof rawVal === "string") return rawVal;
+    if (typeof rawVal === "object" && rawVal !== null) {
+      return rawVal.slug || rawVal.name || rawVal.campaign || "";
+    }
+    return String(rawVal || "");
+  };
+
+  const detectedCampaign = getOrderCampaign().toLowerCase().trim().replace(/[_\s]+/g, "-");
+  const isAuricCampaign =
+    detectedCampaign === "oud-roses-auric" ||
+    detectedCampaign.includes("oud-roses-auric");
+
+  const estimatedDeliveryText = isAuricCampaign
+    ? (locale === "ar" ? "5 إلى 7 أيام" : "5 to 7 Days")
+    : (locale === "ar" ? "1 إلى 3 أيام" : "1 - 3 Days");
+
   // Star label description
   const getRatingDescription = (star) => {
     switch (star) {
@@ -487,6 +516,31 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
                           <span className={styles.badgeSuccess}>✓ Payment Confirmed</span>
                         )}
                       </div>
+                    </div>
+
+                    <div className={`${styles.metaItem} ${styles.deliveryMetaItem}`}>
+                      <span className={styles.metaLabel}>
+                        {locale === "ar" ? "توقيت التوصيل المتوقع" : "Estimated Delivery"}
+                      </span>
+                      <span className={styles.metaValue} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          style={{ opacity: 0.75, flexShrink: 0 }}
+                        >
+                          <rect x="1" y="3" width="15" height="13" />
+                          <polygon points="16 8 20 8 23 11 23 16 16 16 8" />
+                          <circle cx="5.5" cy="18.5" r="2.5" />
+                          <circle cx="18.5" cy="18.5" r="2.5" />
+                        </svg>
+                        <span>{estimatedDeliveryText}</span>
+                      </span>
                     </div>
                   </div>
 

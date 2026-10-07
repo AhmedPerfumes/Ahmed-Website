@@ -168,7 +168,7 @@ function VideoSection({ data = {} }) {
 
           {/* Main Monumental Heading: Regal 24K Imperial Gold Serif */}
           <div style={{ position: "relative", display: "inline-block" }}>
-            <h2
+            <h1
               style={{
                 fontFamily: "'Wonderful Melanesia', Georgia, serif",
                 fontSize: "clamp(2.3rem, 5.8vw, 4.2rem)",
@@ -195,7 +195,7 @@ function VideoSection({ data = {} }) {
               >
                 {(data?.videoTitle || "Oud & Roses Auric").toUpperCase()}
               </span>
-            </h2>
+            </h1>
           </div>
 
           {/* Subtle Haute-Parfumerie Hairline Accent */}

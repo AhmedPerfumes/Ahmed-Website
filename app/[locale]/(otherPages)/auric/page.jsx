@@ -82,7 +82,7 @@ export async function generateMetadata({ params }) {
     ? "اكتشف عطر عود آند روزيز أوريك من عطور أحمد المغربي. تجسيد للفخامة المهيبة وحرفية العطور الاستثنائية التي تجمع بين العود النادر والورد والعنبر."
     : "Experience Oud & Roses Auric by Ahmed Al Maghribi Perfumes. An embodiment of majestic opulence and royal craftsmanship, uniting rare oud, Turkish rose, and amber.";
 
-  const canonicalUrl = `https://ae.ahmedalmaghribi.com/${locale || "en"}/auric`;
+  const canonicalUrl = `https://ae.ahmedalmaghribi.com/${locale || "en"}/shop/perfumes/occidental-fragrance/oud-roses-auric`;
 
   return {
     title,
@@ -100,8 +100,9 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        en: "https://ae.ahmedalmaghribi.com/en/auric",
-        ar: "https://ae.ahmedalmaghribi.com/ar/auric",
+        en: "https://ae.ahmedalmaghribi.com/en/shop/perfumes/occidental-fragrance/oud-roses-auric",
+        ar: "https://ae.ahmedalmaghribi.com/ar/shop/perfumes/occidental-fragrance/oud-roses-auric",
+        "x-default": "https://ae.ahmedalmaghribi.com/en/shop/perfumes/occidental-fragrance/oud-roses-auric",
       },
     },
     openGraph: {
