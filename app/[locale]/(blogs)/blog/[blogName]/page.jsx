@@ -55,17 +55,22 @@ async function getBlog(blogName) {
 }
 
 async function getBlogSEO(blogName) {
-  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     category: categoryName.split("-").join(" ").toUpperCase(),
-  //     subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
-  //     product: product.split("-").join(" ").toUpperCase(),
-  //   })
-  // });
+  // const origin = getRequestOrigin();
+  // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/blogSEO`,
+  //     {
+  //         method: "POST",
+  //         headers: {
+  //             "Content-Type": "application/json",
+  //             'origin': origin,
+  //         },
+  //         body: JSON.stringify({
+  //           blog: blogName,
+  //         }),
+  //         next: {
+  //           tags: ["blogSEO"],
+  //           revalidate: 604800 // 7 days
+  //         },
+  //     });
   const origin = getRequestOrigin();
   // console.log('Origin:----------------------------------------------------------------------------------------------------------------------------------------------------------', origin);
   const response = await fetch(
@@ -77,7 +82,7 @@ async function getBlogSEO(blogName) {
               'origin': origin,
           },
           body: JSON.stringify({
-            blog: blogName.split("-").join(" ").toUpperCase(),
+            blog: blogName,
           }),
           next: {
             tags: ["blogSEO"],
