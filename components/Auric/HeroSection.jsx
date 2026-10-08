@@ -366,6 +366,7 @@ function BottleComparisonSlider({
 
 function HeroSection({ data = {}, onBookNow, shopUrl }) {
   const defaultShopUrl = shopUrl || "/en/shop/perfumes/occidental-fragrance/oud-roses-auric";
+  const isArabic = Boolean(data?.isArabic);
 
   return (
     <section className="hero-section text-white">
@@ -409,10 +410,10 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
               {/* Main Headline */}
               <h2
                 style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                  fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
                   fontSize: "clamp(2.3rem, 4.4vw, 3.6rem)",
-                  lineHeight: "1.16",
-                  letterSpacing: "0.06em",
+                  lineHeight: isArabic ? "1.3" : "1.16",
+                  letterSpacing: isArabic ? "normal" : "0.06em",
                   fontWeight: 400,
                   color: "#ffffff",
                   marginBottom: "24px",
@@ -420,40 +421,63 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
                   textWrap: "balance",
                 }}
               >
-                <span style={{ display: "block", fontFamily: "'Wonderful Melanesia', Georgia, serif", fontSize: "clamp(2rem, 3vw, 3.3rem)" }}>
-                  A Story That Changed
-                </span>
-                <span
-                  className="auric-gold-text"
-                  style={{
-                    fontFamily: "'Wonderful Melanesia', Georgia, serif",
-                    fontWeight: 400,
-                    fontSize: "clamp(2.3rem, 4.4vw, 3.6rem)",
-                    lineHeight: "1.16",
-                    marginTop: "4px",
-                    display: "inline-block",
-                    background:
-                      "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    filter: "drop-shadow(0 2px 20px rgba(221, 161, 54, 0.3))",
-                  }}
-                >
-                  The House
-                </span>
+                {data?.storyTitlePart1 && data?.storyTitlePart2 ? (
+                  <>
+                    <span style={{ display: "block", fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif", fontSize: "clamp(2rem, 3vw, 3.3rem)" }}>
+                      {data.storyTitlePart1}
+                    </span>
+                    <span
+                      className="auric-gold-text"
+                      style={{
+                        fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
+                        fontWeight: 400,
+                        fontSize: "clamp(2.3rem, 4.4vw, 3.6rem)",
+                        lineHeight: isArabic ? "1.3" : "1.16",
+                        marginTop: "4px",
+                        display: "inline-block",
+                        background:
+                          "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        filter: "drop-shadow(0 2px 20px rgba(221, 161, 54, 0.3))",
+                      }}
+                    >
+                      {data.storyTitlePart2}
+                    </span>
+                  </>
+                ) : (
+                  <span
+                    className="auric-gold-text"
+                    style={{
+                      fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
+                      fontWeight: 400,
+                      fontSize: "clamp(2.3rem, 4.4vw, 3.6rem)",
+                      lineHeight: isArabic ? "1.3" : "1.16",
+                      display: "inline-block",
+                      background:
+                        "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%)",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      filter: "drop-shadow(0 2px 20px rgba(221, 161, 54, 0.3))",
+                    }}
+                  >
+                    {data?.storyTitle || "A Story That Changed The House"}
+                  </span>
+                )}
               </h2>
 
               {/* Story Narrative Paragraph: Soft silk ivory, editorial cadence */}
               <p
                 className="lead mb-4"
                 style={{
-                  fontFamily: "Georgia, 'Times New Roman', serif",
+                  fontFamily: isArabic ? "inherit" : "Georgia, 'Times New Roman', serif",
                   fontSize: "clamp(0.98rem, 1.15vw, 1.08rem)",
                   lineHeight: "1.9",
                   color: "rgba(240, 235, 222, 0.82)",
                   fontWeight: 300,
-                  letterSpacing: "0.02em",
+                  letterSpacing: isArabic ? "normal" : "0.02em",
                   maxWidth: "540px",
                   margin: "0 auto",
                   textAlign: "center",
@@ -489,12 +513,12 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
                 <p
                   style={{
                     margin: 0,
-                    fontFamily: "Georgia, 'Times New Roman', serif",
+                    fontFamily: isArabic ? "inherit" : "Georgia, 'Times New Roman', serif",
                     fontSize: "clamp(0.88rem, 1.0vw, 0.95rem)",
                     color: "#f5cb6c",
-                    letterSpacing: "0.04em",
+                    letterSpacing: isArabic ? "normal" : "0.04em",
                     fontWeight: 400,
-                    fontStyle: "italic",
+                    fontStyle: isArabic ? "normal" : "italic",
                     lineHeight: "1.6",
                     textAlign: "center",
                   }}
@@ -530,7 +554,7 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
                     }}
                     whileTap={{ scale: 0.97 }}
                     style={{
-                      fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                      fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
                       background: "linear-gradient(135deg, #c41e3a 0%, #9e1b32 50%, #6e0c1b 100%)",
                       color: "#ffffff",
                       borderRadius: "40px",
@@ -538,16 +562,16 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
                       boxShadow: "0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(196, 30, 58, 0.25)",
                       padding: "15px 42px",
                       fontSize: "0.84rem",
-                      letterSpacing: "0.2em",
-                      marginRight: "-0.2em",
-                      textTransform: "uppercase",
+                      letterSpacing: isArabic ? "normal" : "0.2em",
+                      marginRight: isArabic ? "0" : "-0.2em",
+                      textTransform: isArabic ? "none" : "uppercase",
                       fontWeight: 500,
                       cursor: "pointer",
                       transition: "all 0.35s ease",
                     }}
                     onClick={onBookNow}
                   >
-                    Explore Auric
+                    {data?.ctaButtonText || "Explore Auric"}
                   </motion.button>
                 ) : (
                   <Link href={defaultShopUrl} style={{ textDecoration: "none" }}>
@@ -559,7 +583,7 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
                       }}
                       whileTap={{ scale: 0.97 }}
                       style={{
-                        fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                        fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
                         background: "linear-gradient(135deg, #c41e3a 0%, #9e1b32 50%, #6e0c1b 100%)",
                         color: "#ffffff",
                         borderRadius: "40px",
@@ -567,15 +591,15 @@ function HeroSection({ data = {}, onBookNow, shopUrl }) {
                         boxShadow: "0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(196, 30, 58, 0.25)",
                         padding: "15px 42px",
                         fontSize: "0.84rem",
-                        letterSpacing: "0.2em",
-                        marginRight: "-0.2em",
-                        textTransform: "uppercase",
+                        letterSpacing: isArabic ? "normal" : "0.2em",
+                        marginRight: isArabic ? "0" : "-0.2em",
+                        textTransform: isArabic ? "none" : "uppercase",
                         fontWeight: 500,
                         cursor: "pointer",
                         transition: "all 0.35s ease",
                       }}
                     >
-                      Explore Auric
+                      {data?.ctaButtonText || "Explore Auric"}
                     </motion.button>
                   </Link>
                 )}

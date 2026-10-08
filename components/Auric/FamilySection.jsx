@@ -10,8 +10,16 @@ export default function FamilySection({ data = {} }) {
   const sectionTag = data?.familyTag || "REIMAGINED";
   const sectionHeading = data?.familyHeading || "A Bouquet That Unfolds";
 
-  // Render title with gold accent on the last word if it's the default or standard phrase
+  // Render title with gold accent on the last word or custom parts
   const renderHeading = () => {
+    if (data?.familyHeadingPart1 && data?.familyHeadingPart2) {
+      return (
+        <>
+          <span>{data.familyHeadingPart1} </span>
+          <span className="auric-gold-text">{data.familyHeadingPart2}</span>
+        </>
+      );
+    }
     if (sectionHeading === "A Bouquet That Unfolds") {
       return (
         <>
@@ -33,17 +41,20 @@ export default function FamilySection({ data = {} }) {
     return <span className="auric-gold-text">{sectionHeading}</span>;
   };
 
+  const isArabic = Boolean(data?.isArabic);
+
   return (
     <section ref={containerRef} className="auric-family-section">
       {/* Luxury watermark typography */}
       <div className="auric-family-watermark" aria-hidden="true">
-        EXTRAIT DE PARFUM
+        {data?.watermarkText || "EXTRAIT DE PARFUM"}
       </div>
 
       <div className="auric-family-container">
         {/* Simple elegant text overline */}
         <motion.p
           className="auric-family-tag"
+          style={{ letterSpacing: isArabic ? "normal" : undefined }}
           initial={{ opacity: 0, y: 14 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -54,6 +65,11 @@ export default function FamilySection({ data = {} }) {
         {/* Section Heading */}
         <motion.h2
           className="auric-family-heading"
+          style={{
+            fontFamily: isArabic ? "inherit" : undefined,
+            letterSpacing: isArabic ? "normal" : undefined,
+            lineHeight: isArabic ? "1.3" : undefined,
+          }}
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -69,8 +85,17 @@ export default function FamilySection({ data = {} }) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.85, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <blockquote className="auric-family-quote" style={{ marginBottom: 0 }}>
-            “Like a bouquet opening one bloom at a time, the fragrance reveals new facets as its notes unfold. One composition offers the depth and complexity of fragrance layering, without combining multiple scents.”
+          <blockquote
+            className="auric-family-quote"
+            style={{
+              marginBottom: 0,
+              fontFamily: isArabic ? "inherit" : undefined,
+              letterSpacing: isArabic ? "normal" : undefined,
+              lineHeight: isArabic ? "1.85" : undefined,
+            }}
+          >
+            {data?.familyDescription ||
+              "“Like a bouquet opening one bloom at a time, the fragrance reveals new facets as its notes unfold. One composition offers the depth and complexity of fragrance layering, without combining multiple scents.”"}
           </blockquote>
         </motion.div>
       </div>

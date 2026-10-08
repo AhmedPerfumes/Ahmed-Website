@@ -30,6 +30,8 @@ function VideoSection({ data = {} }) {
     videoSrc = "/assets/videos/auric/auric-video.mp4",
   } = data || {};
 
+  const isArabic = Boolean(data?.isArabic);
+
   return (
     <section
       style={{
@@ -145,14 +147,15 @@ function VideoSection({ data = {} }) {
             <span
               className="auric-subheading"
               style={{
-                fontFamily:
-                  "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)",
+                fontFamily: isArabic
+                  ? "inherit"
+                  : "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)",
                 fontSize: "clamp(0.76rem, 1.0vw, 0.92rem)",
                 lineHeight: 1.3,
-                letterSpacing: "0.32em",
-                marginRight: "-0.32em",
+                letterSpacing: isArabic ? "normal" : "0.32em",
+                marginRight: isArabic ? "0" : "-0.32em",
                 fontWeight: 500,
-                textTransform: "uppercase",
+                textTransform: isArabic ? "none" : "uppercase",
                 display: "inline-block",
                 background:
                   "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 40%, #DDA136 100%)",
@@ -162,28 +165,30 @@ function VideoSection({ data = {} }) {
                 filter: "drop-shadow(0 1px 8px rgba(221, 161, 54, 0.2))",
               }}
             >
-              {(data?.subtitle || data?.videoTopText || "The Evolution of an Icon").toUpperCase()}
+              {isArabic
+                ? (data?.subtitle || data?.videoTopText || "تطور الأيقونة")
+                : (data?.subtitle || data?.videoTopText || "The Evolution of an Icon").toUpperCase()}
             </span>
           </div>
 
-          {/* Main Monumental Heading: Regal 24K Imperial Gold Serif */}
+          {/* Main Monumental Heading: Regal 24K Imperial Gold */}
           <div style={{ position: "relative", display: "inline-block" }}>
             <h1
               style={{
-                fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
                 fontSize: "clamp(2.3rem, 5.8vw, 4.2rem)",
-                lineHeight: 1.15,
+                lineHeight: isArabic ? 1.3 : 1.15,
                 fontWeight: 400,
-                letterSpacing: "0.14em",
-                marginRight: "-0.14em",
-                textTransform: "uppercase",
+                letterSpacing: isArabic ? "normal" : "0.14em",
+                marginRight: isArabic ? "0" : "-0.14em",
+                textTransform: isArabic ? "none" : "uppercase",
                 margin: 0,
                 display: "inline-block",
               }}
             >
               <span
                 style={{
-                  fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                  fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
                   background:
                     "linear-gradient(135deg, #FFF3D0 0%, #FAD06C 25%, #DDA136 50%, #FDE28A 75%, #B37B22 100%)",
                   WebkitBackgroundClip: "text",
@@ -193,7 +198,9 @@ function VideoSection({ data = {} }) {
                   filter: "drop-shadow(0 2px 22px rgba(221, 161, 54, 0.3))",
                 }}
               >
-                {(data?.videoTitle || "Oud & Roses Auric").toUpperCase()}
+                {isArabic
+                  ? (data?.videoTitle || "عود آند روزيز أوريك")
+                  : (data?.videoTitle || "Oud & Roses Auric").toUpperCase()}
               </span>
             </h1>
           </div>
@@ -219,7 +226,7 @@ function VideoSection({ data = {} }) {
               fontSize: "clamp(0.95rem, 1.25vw, 1.1rem)",
               fontWeight: 400,
               color: "rgba(235, 230, 218, 0.82)",
-              letterSpacing: "0.025em",
+              letterSpacing: isArabic ? "normal" : "0.025em",
               textWrap: "balance",
             }}
           >

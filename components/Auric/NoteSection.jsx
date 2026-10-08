@@ -55,19 +55,24 @@ export default function NoteSection({ data = {} }) {
     data?.notesDescription || {}
   );
 
+  const isArabic = Boolean(data?.isArabic);
+
   const cardsData = [
     {
       ...NOTE_TIERS[0],
+      title: data?.notesTiers?.[0] || NOTE_TIERS[0].title,
       img: noteImgs.top,
       description: notesDescription.top,
     },
     {
       ...NOTE_TIERS[1],
+      title: data?.notesTiers?.[1] || NOTE_TIERS[1].title,
       img: noteImgs.mid,
       description: notesDescription.mid,
     },
     {
       ...NOTE_TIERS[2],
+      title: data?.notesTiers?.[2] || NOTE_TIERS[2].title,
       img: noteImgs.base,
       description: notesDescription.base,
     },
@@ -114,7 +119,9 @@ export default function NoteSection({ data = {} }) {
             <span
               className="auric-gold-text"
               style={{
-                fontFamily: "'Wonderful Melanesia', Georgia, serif",
+                fontFamily: isArabic ? "inherit" : "'Wonderful Melanesia', Georgia, serif",
+                letterSpacing: isArabic ? "normal" : undefined,
+                lineHeight: isArabic ? "1.3" : undefined,
                 background:
                   "linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)",
                 WebkitBackgroundClip: "text",
@@ -130,6 +137,11 @@ export default function NoteSection({ data = {} }) {
 
           <motion.p
             className="auric-notes-subtitle"
+            style={{
+              fontFamily: isArabic ? "inherit" : undefined,
+              letterSpacing: isArabic ? "normal" : undefined,
+              lineHeight: isArabic ? "1.85" : undefined,
+            }}
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -201,10 +213,27 @@ export default function NoteSection({ data = {} }) {
                   </div>
 
                   {/* Main Title */}
-                  <h3 className="auric-note-card-title">{item.title}</h3>
+                  <h3
+                    className="auric-note-card-title"
+                    style={{
+                      fontFamily: isArabic ? "inherit" : undefined,
+                      letterSpacing: isArabic ? "normal" : undefined,
+                    }}
+                  >
+                    {item.title}
+                  </h3>
 
                   {/* Description Paragraph */}
-                  <p className="auric-note-card-desc">{item.description}</p>
+                  <p
+                    className="auric-note-card-desc"
+                    style={{
+                      fontFamily: isArabic ? "inherit" : undefined,
+                      letterSpacing: isArabic ? "normal" : undefined,
+                      lineHeight: isArabic ? "1.85" : undefined,
+                    }}
+                  >
+                    {item.description}
+                  </p>
                 </motion.div>
               </div>
             );
