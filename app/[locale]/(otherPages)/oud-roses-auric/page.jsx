@@ -237,16 +237,16 @@ export default function AuricPage({ params }) {
           name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
         },
         category: "Extrait de Parfum",
-        offers: {
-          "@type": "Offer",
-          url: `https://ae.ahmedalmaghribi.com${shopUrl}`,
-          priceCurrency: "AED",
-          availability: "https://schema.org/InStock",
-          seller: {
-            "@type": "Organization",
-            name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
-          },
-        },
+        // offers: {
+        //   "@type": "Offer",
+        //   url: `https://ae.ahmedalmaghribi.com${shopUrl}`,
+        //   priceCurrency: "AED",
+        //   availability: "https://schema.org/InStock",
+        //   seller: {
+        //     "@type": "Organization",
+        //     name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
+        //   },
+        // },
       },
       {
         "@type": "BreadcrumbList",
