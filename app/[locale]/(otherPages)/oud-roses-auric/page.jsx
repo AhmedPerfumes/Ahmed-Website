@@ -225,7 +225,7 @@ export default function AuricPage({ params }) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Product",
+        // "@type": "Product",
         "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric#product`,
         name: isArabic ? "عود آند روزز أوريك" : "Oud & Roses Auric",
         image: "https://ae.ahmedalmaghribi.com/assets/auric-bottle.png",
