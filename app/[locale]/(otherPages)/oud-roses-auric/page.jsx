@@ -224,32 +224,51 @@ export default function AuricPage({ params }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
+      // {
+      //   "@type": "Product",
+      //   "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric#product`,
+      //   name: isArabic ? "عود آند روزز أوريك" : "Oud & Roses Auric",
+      //   image: "https://ae.ahmedalmaghribi.com/assets/auric-bottle.png",
+      //   description: isArabic
+      //     ? "تجسيد للفخامة المهيبة وحرفية العطور الاستثنائية التي تجمع بين العود النادر والورد والعنبر."
+      //     : "An embodiment of majestic opulence and royal craftsmanship — Auric unites the depth of precious oud with Turkish rose, immortelle, velvet amber, and warm woods.",
+      //   brand: {
+      //     "@type": "Brand",
+      //     name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
+      //   },
+      //   category: "Extrait de Parfum",
+      //   // offers: {
+      //   //   "@type": "Offer",
+      //   //   url: `https://ae.ahmedalmaghribi.com${shopUrl}`,
+      //   //   priceCurrency: "AED",
+      //   //   availability: "https://schema.org/InStock",
+      //   //   seller: {
+      //   //     "@type": "Organization",
+      //   //     name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
+      //   //   },
+      //   // },
+      // },
       {
-        // "@type": "Product",
-        "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric#product`,
+        "@type": "WebPage",
+        "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric#Webpage`,
+        url: `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric`,
         name: isArabic ? "عود آند روزز أوريك" : "Oud & Roses Auric",
-        image: "https://ae.ahmedalmaghribi.com/assets/auric-bottle.png",
+        inLanguage: isArabic ? "ar" : "en",
         description: isArabic
           ? "تجسيد للفخامة المهيبة وحرفية العطور الاستثنائية التي تجمع بين العود النادر والورد والعنبر."
           : "An embodiment of majestic opulence and royal craftsmanship — Auric unites the depth of precious oud with Turkish rose, immortelle, velvet amber, and warm woods.",
-        brand: {
-          "@type": "Brand",
+        isPartOf: {
+          "@type": "WebSite",
           name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
+          url: isArabic ? "https://ae.ahmedalmaghribi.com/ar" : "https://ae.ahmedalmaghribi.com/en",
         },
-        category: "Extrait de Parfum",
-        // offers: {
-        //   "@type": "Offer",
-        //   url: `https://ae.ahmedalmaghribi.com${shopUrl}`,
-        //   priceCurrency: "AED",
-        //   availability: "https://schema.org/InStock",
-        //   seller: {
-        //     "@type": "Organization",
-        //     name: isArabic ? "عطور أحمد المغربي" : "Ahmed Al Maghribi Perfumes",
-        //   },
-        // },
+        breadcrumb: {
+          "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric#breadcrumb`,
+        },
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `https://ae.ahmedalmaghribi.com/${currentLocale}/oud-roses-auric#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
