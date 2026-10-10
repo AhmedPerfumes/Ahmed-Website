@@ -68,7 +68,7 @@ const NewHomePage = () => {
             <NewHero />
             <TabSlider />
             <ProductShowcase />
-            <FindYourScentEntry />
+            {/* <FindYourScentEntry /> */}
             <Section2 />
             <NewProductSlider />
             <GiftSetBanner />
