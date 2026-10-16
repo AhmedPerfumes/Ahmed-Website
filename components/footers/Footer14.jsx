@@ -43,9 +43,17 @@ export default function Footer14() {
 
   const {
     categoriesSubCategories,
+    countries,
     isLoading: isMenuLoading,
     error,
   } = useMenu();
+
+  const activeCountryOptions = (countries && countries.length > 0)
+    ? countries.map(c => ({
+        text: c.name,
+        link: c.link || "#",
+      }))
+    : currencyOptions;
 
   if (isMenuLoading) {
     return <div></div>;
@@ -389,7 +397,7 @@ export default function Footer14() {
                 onChange={(e) => window.open(e.target.value, "_blank")}
                 style={{ cursor: 'pointer', minWidth: 'auto' }}
               >
-                {currencyOptions.map((option, index) => (
+                {activeCountryOptions.map((option, index) => (
                   <option
                     key={index}
                     className="footer-select__option"

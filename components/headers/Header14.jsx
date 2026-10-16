@@ -332,10 +332,16 @@ export default function Header14() {
     const {
         categoriesSubCategories,
         topHeader,
+        countries,
         isLoading: isMenuLoading,
         error,
         currency,
     } = useMenu();
+
+    const activeCountryOptions = (countries && countries.length > 0)
+        ? countries.map(c => ({ text: c.name, link: c.link || "#" }))
+        : currencyOptions;
+
     if (isMenuLoading) return <HeaderSkeleton />;
     if (error) return <div>{error}</div>;
 
@@ -698,7 +704,7 @@ export default function Header14() {
                                             )
                                         }
                                     >
-                                        {currencyOptions.map(
+                                        {activeCountryOptions.map(
                                             (option, index) => (
                                                 <option
                                                     key={index}

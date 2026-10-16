@@ -23,7 +23,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { useMenu } from "@/context/MenuContext";
 export default function MobileHeader() {
-  const { topHeader, currency } = useMenu();
+  const { topHeader, currency, countries } = useMenu();
+  const activeCountryOptions = (countries && countries.length > 0)
+    ? countries.map(c => ({ text: c.name, link: c.link || "#" }))
+    : currencyOptions;
+
   const { addProductToCart, isAddedToCartProducts, cartProducts = [] } = useContextElement();
   const { logout } = useUser();
   const locale = useLocale();
@@ -49,16 +53,16 @@ export default function MobileHeader() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const currentOrigin = window.location.origin;
-      const matchedOption = currencyOptions.find(option =>
+      const matchedOption = activeCountryOptions.find(option =>
         option.link && (currentOrigin.includes(option.link) || option.link.includes(currentOrigin))
       );
       if (matchedOption) {
         setCurrentCountryLink(matchedOption.link);
       } else {
-        setCurrentCountryLink(currencyOptions[0].link);
+        setCurrentCountryLink(activeCountryOptions[0]?.link || "");
       }
     }
-  }, []);
+  }, [countries]);
 
   useEffect(() => {
     if (isSearchActive && searchInputRef.current) {
@@ -578,7 +582,7 @@ export default function MobileHeader() {
                     onChange={(e) => window.open(e.target.value, "_self")}
                     style={{ fontSize: '11px', cursor: 'pointer', outline: 'none', width: '100%', maxWidth: '100%', textOverflow: 'ellipsis', overflow: 'hidden' }}
                   >
-                    {currencyOptions.map((option, index) => (
+                    {activeCountryOptions.map((option, index) => (
                       <option key={index} className="text-dark bg-white" value={option.link}>
                         {t(option.text)}
                       </option>

@@ -23,6 +23,7 @@ export function MenuProvider({ children, initialData }) {
     homeSliders: initialData?.home_sliders || [],
     popUp: initialData?.pop_up || [],
     topHeader: initialData?.top_header || [],
+    countries: initialData?.countries || [],
     isLoading: !initialData,
     error: null,
   }), [initialData]);
