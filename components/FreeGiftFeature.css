@@ -589,6 +589,76 @@
   color: #ffffff;
 }
 
+/* ── Out of Stock States ── */
+.foc-strip--oos {
+  background: #fdfaf7;
+  border-color: #ecd9d9;
+}
+
+.foc-strip--oos .foc-gift-icon {
+  background: #fbeeed;
+  border-color: #f1cfce;
+  color: #c0392b;
+}
+
+.foc-strip--oos .foc-locked-text {
+  color: #6d4b4b;
+}
+
+.foc-oos-badge {
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 8px;
+  background: #c0392b;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3.5px 8px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.foc-gift-card--oos {
+  cursor: not-allowed !important;
+  border-color: #e5e0d8;
+  background: #faf8f5;
+}
+
+.foc-gift-card--oos:hover {
+  border-color: #e5e0d8 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  transform: none !important;
+}
+
+.foc-gift-card--oos .foc-gift-card-img img {
+  filter: grayscale(70%) opacity(0.65);
+}
+
+.foc-gift-card--oos:hover .foc-gift-card-img img {
+  transform: none !important;
+}
+
+.foc-gift-card--oos .foc-gift-card-name {
+  color: #8c8275;
+}
+
+.foc-gift-select-btn--oos,
+.foc-gift-select-btn--oos:disabled {
+  background: #ece8e1 !important;
+  border-color: #dcd6cc !important;
+  color: #9c9387 !important;
+  cursor: not-allowed !important;
+}
+
+.foc-gift-select-btn--oos:hover {
+  background: #ece8e1 !important;
+  border-color: #dcd6cc !important;
+  color: #9c9387 !important;
+}
+
 /* Modal Footer */
 .foc-modal-footer {
   padding: 14px 16px;
@@ -780,7 +850,14 @@
     font-size: 8px;
     padding: 2px 6px;
     top: 6px;
-    left: 6px;
+    inset-inline-start: 6px;
+  }
+
+  .foc-oos-badge {
+    font-size: 7.5px;
+    padding: 2px 5px;
+    top: 6px;
+    inset-inline-start: 6px;
   }
 
   .foc-selected-check-icon {
