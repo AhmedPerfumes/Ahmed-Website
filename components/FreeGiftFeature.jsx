@@ -9,18 +9,23 @@ import { useLocale } from "next-intl";
 
 export const isProductOutOfStock = (product) => {
   if (!product) return false;
-  if (product.is_out_of_stock === true || product.is_out_of_stock === 1 || product.is_out_of_stock === '1') {
-    return true;
+
+  const qty = product.product_qty !== undefined && product.product_qty !== null
+    ? Number(product.product_qty)
+    : (product.quantity !== undefined && product.quantity !== null ? Number(product.quantity) : null);
+
+  if (qty !== null && !isNaN(qty)) {
+    return qty <= 0;
   }
+
+  if (product.is_out_of_stock !== undefined && product.is_out_of_stock !== null) {
+    return Boolean(product.is_out_of_stock);
+  }
+
   if (product.stock_status === 'out_of_stock') {
     return true;
   }
-  if (product.product_qty !== undefined && product.product_qty !== null && Number(product.product_qty) <= 0) {
-    return true;
-  }
-  if (product.quantity !== undefined && product.quantity !== null && Number(product.quantity) <= 0) {
-    return true;
-  }
+
   return false;
 };
 
