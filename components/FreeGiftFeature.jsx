@@ -476,17 +476,16 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
             {/* Body – Gift Grid */}
             <div className="foc-modal-body">
               <div className="foc-gifts-grid">
-                {activeThreshold.gifts.map((product, i) => {
-                  const isOutOfStock = isProductOutOfStock(product);
+                {inStockGifts.map((product, i) => {
                   const isSelected = giftsInCart.some(item => item.product_id === product.product_id);
                   const isMaxedOut = giftsInCart.length >= effectiveGiftLimit;
-                  const isSelectionDisabled = isOutOfStock ? !isSelected : (isMaxedOut && !isSelected);
+                  const isSelectionDisabled = isMaxedOut && !isSelected;
                   const displayName = (isArabic && product.product_name_ar) || product.product_name || '';
 
                   return (
                     <div
-                      key={i}
-                      className={`foc-gift-card ${isSelected ? 'foc-gift-card--selected' : ''} ${isOutOfStock ? 'foc-gift-card--oos' : ''} ${isSelectionDisabled && !isOutOfStock ? 'foc-gift-card--disabled' : ''}`}
+                      key={product.product_id || i}
+                      className={`foc-gift-card ${isSelected ? 'foc-gift-card--selected' : ''} ${isSelectionDisabled ? 'foc-gift-card--disabled' : ''}`}
                       onClick={() => {
                         if (!isSelectionDisabled) {
                           handleGiftSelect(product);
@@ -504,15 +503,9 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
                           loading="lazy"
                           style={{ objectFit: 'cover' }}
                         />
-                        {isOutOfStock ? (
-                          <span className="foc-oos-badge">
-                            {isArabic ? 'غير متوفر' : 'Out of Stock'}
-                          </span>
-                        ) : (
-                          <span className="foc-free-badge">
-                            {isArabic ? 'مجاناً' : 'FREE'}
-                          </span>
-                        )}
+                        <span className="foc-free-badge">
+                          {isArabic ? 'مجاناً' : 'FREE'}
+                        </span>
                         {isSelected && (
                           <div className="foc-selected-check">
                             <div className="foc-selected-check-icon">✓</div>
@@ -524,7 +517,7 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
                       <div className="foc-gift-card-info">
                         <p className="foc-gift-card-name">{he.decode(displayName)}</p>
                         <button
-                          className={`foc-gift-select-btn ${isSelected ? 'foc-gift-select-btn--selected' : ''} ${isOutOfStock ? 'foc-gift-select-btn--oos' : ''}`}
+                          className={`foc-gift-select-btn ${isSelected ? 'foc-gift-select-btn--selected' : ''}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             if (!isSelectionDisabled) {
@@ -533,16 +526,12 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
                           }}
                           disabled={isSelectionDisabled}
                           aria-label={
-                            isOutOfStock
-                              ? `${he.decode(displayName)} ${isArabic ? 'غير متوفر' : 'is out of stock'}`
-                              : isSelected
+                            isSelected
                               ? `${isArabic ? 'إزالة' : 'Remove'} ${he.decode(displayName)}`
                               : `${isArabic ? 'اختيار' : 'Select'} ${he.decode(displayName)}`
                           }
                         >
-                          {isOutOfStock
-                            ? (isArabic ? 'غير متوفر' : 'Out of Stock')
-                            : isSelected
+                          {isSelected
                             ? (isArabic ? 'إزالة' : 'Remove')
                             : (isArabic ? 'اختيار' : 'Select')}
                         </button>
