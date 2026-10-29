@@ -793,7 +793,7 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
                       <button
                         type="submit"
                         className={styles.feedbackSubmitBtn}
-                        disabled={feedbackSubmitting || feedbackRating === 0}
+                        disabled={feedbackSubmitting || feedbackRating === 0 || feedbackComment.length < 3}
                       >
                         {feedbackSubmitting ? "Submitting..." : "Submit Feedback"}
                       </button>
