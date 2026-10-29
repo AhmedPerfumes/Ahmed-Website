@@ -878,6 +878,7 @@ export default function Checkout() {
             quantity: paidQty,
             category_name: item.category_name,
             subcategory_name: item.subcategory_name,
+            collection_name: item.collection_name || null,
             coupon: item.coupon,
             discount: null,
             _original_discount: item._original_discount || null,
@@ -894,6 +895,7 @@ export default function Checkout() {
           quantity: item.bogo_free_qty,
           category_name: item.category_name,
           subcategory_name: item.subcategory_name,
+          collection_name: item.collection_name || null,
           coupon: [],
           discount: null,
           is_gift: true,
@@ -908,6 +910,7 @@ export default function Checkout() {
           quantity: item.quantity,
           category_name: item.category_name,
           subcategory_name: item.subcategory_name,
+          collection_name: item.collection_name || null,
           coupon: item.coupon,
           discount: item.discount,
           ...('_original_discount' in item && { _original_discount: item._original_discount }),
@@ -1028,7 +1031,27 @@ export default function Checkout() {
       ...cleanFormData
     } = formData;
 
-    const additionalFields = {...cleanFormData, products: mapProductsFromFormData(cartProducts), payment_method: selectedOption, shippingPrice, shippingPriceVat, servicePrice, servicePriceVat, vatTax: vatTax.percentage, totalPrice, finalPrice, customer_id: isLoggedIn && userJson ? userJson.id : null, locale, couponCode, codPrice, codPriceVat, couponData, };
+    const primaryCollection = cartProducts.find((p) => p.collection_name)?.collection_name || null;
+
+    const additionalFields = {
+      ...cleanFormData,
+      collection_name: primaryCollection,
+      products: mapProductsFromFormData(cartProducts),
+      payment_method: selectedOption,
+      shippingPrice,
+      shippingPriceVat,
+      servicePrice,
+      servicePriceVat,
+      vatTax: vatTax.percentage,
+      totalPrice,
+      finalPrice,
+      customer_id: isLoggedIn && userJson ? userJson.id : null,
+      locale,
+      couponCode,
+      codPrice,
+      codPriceVat,
+      couponData,
+    };
     try {
       const response = await apiClient("api/storeOrder", {
         method: "POST",
@@ -1078,8 +1101,11 @@ export default function Checkout() {
           };
         });
 
+        const orderCampaign = data.campaign || cartProducts?.map((cp) => cp.campaign || cp.bogo_campaign).find(Boolean) || null;
+
         setOrderDetails({
           ...data,
+          campaign: orderCampaign,
           products: sanitizedProducts || data.products,
         });
         setFormData({

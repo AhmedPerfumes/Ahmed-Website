@@ -208,8 +208,22 @@ export default function OrderTrack() {
             <span>{orderDetails.total}{ currency.symbol } (includes { orderDetails.tax_amount }{ currency.symbol } VAT)</span>
           </div>
           <div className="order-info__item">
-            <label>Paymetn Method</label>
+            <label>Payment Method</label>
             <span>{ orderDetails.payment_method }</span>
+          </div>
+          <div className="order-info__item">
+            <label>Estimated Delivery</label>
+            <span>
+              {(() => {
+                const c = (
+                  orderDetails?.campaign ||
+                  orderDetails?.campaign_name ||
+                  orderDetails?.products?.map((p) => p?.campaign || p?.bogo_campaign).find(Boolean) ||
+                  ""
+                ).toString().toLowerCase().trim().replace(/[_\s]+/g, "-");
+                return c.includes("oud-roses-auric") ? "5 to 7 Days" : "1 - 3 Days";
+              })()}
+            </span>
           </div>
         </div>
 
