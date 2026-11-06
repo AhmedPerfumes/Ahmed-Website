@@ -574,9 +574,8 @@ export default function ReviewOrderLanding() {
                               {/* Inline Review Drawer (Collapsible) */}
                               {!isReviewed && (
                                 <div
-                                  className={`${styles.reviewDrawer} ${
-                                    isOpen ? styles.reviewDrawerOpen : ""
-                                  }`}
+                                  className={`${styles.reviewDrawer} ${isOpen ? styles.reviewDrawerOpen : ""
+                                    }`}
                                 >
                                   <div className={styles.drawerInner}>
                                     <div className={styles.rewardNotice}>
@@ -599,11 +598,10 @@ export default function ReviewOrderLanding() {
                                             <button
                                               key={starVal}
                                               type="button"
-                                              className={`${styles.starBtn} ${
-                                                starVal <= (hoverRating || rating)
+                                              className={`${styles.starBtn} ${starVal <= (hoverRating || rating)
                                                   ? styles.starActive
                                                   : ""
-                                              }`}
+                                                }`}
                                               onClick={() =>
                                                 setRatingMap((prev) => ({
                                                   ...prev,
@@ -709,11 +707,10 @@ export default function ReviewOrderLanding() {
                             <button
                               key={starVal}
                               type="button"
-                              className={`${styles.feedbackStar} ${
-                                starVal <= (hoverFeedbackRating || feedbackRating)
+                              className={`${styles.feedbackStar} ${starVal <= (hoverFeedbackRating || feedbackRating)
                                   ? styles.feedbackStarActive
                                   : ""
-                              }`}
+                                }`}
                               onClick={() => setFeedbackRating(starVal)}
                               onMouseEnter={() => setHoverFeedbackRating(starVal)}
                               onMouseLeave={() => setHoverFeedbackRating(0)}
@@ -745,7 +742,7 @@ export default function ReviewOrderLanding() {
                         <button
                           type="submit"
                           className={styles.feedbackSubmitBtn}
-                          disabled={feedbackSubmitting || feedbackRating === 0}
+                          disabled={feedbackSubmitting || feedbackRating === 0 || feedbackComment.length < 3}
                         >
                           {feedbackSubmitting ? t.submitting : t.submitFeedback}
                         </button>
