@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -78,23 +78,179 @@ export const parseProductImages = (images) => {
 };
 
 /**
+ * Cross-browser helper to parse GST datetime strings (e.g. 'YYYY-MM-DD HH:mm:ss').
+ * Assumes Gulf Standard Time (+04:00) unless a timezone offset is already present.
+ */
+export const parseGSTDate = (dateStr) => {
+  if (!dateStr) return null;
+  if (dateStr instanceof Date) return isNaN(dateStr.getTime()) ? null : dateStr;
+  if (typeof dateStr !== "string") return null;
+  const clean = dateStr.trim();
+  if (!clean) return null;
+  const iso = clean.replace(" ", "T");
+  const hasTz =
+    iso.includes("+") || iso.endsWith("Z") || /-\d{2}:\d{2}$/.test(iso);
+  const d = new Date(hasTz ? iso : `${iso}+04:00`);
+  return isNaN(d.getTime()) ? new Date(clean.replace(/-/g, "/")) : d;
+};
+
+/**
+ * Checks if a product's discount is currently active based on start_date and end_date.
+ */
+export const isDiscountCurrentlyActive = (discount) => {
+  if (!discount) return false;
+  const now = Date.now();
+
+  if (discount.start_date) {
+    const start = parseGSTDate(discount.start_date);
+    if (start && now < start.getTime()) return false;
+  }
+
+  if (discount.end_date) {
+    const end = parseGSTDate(discount.end_date);
+    if (end && now > end.getTime()) return false;
+  }
+
+  return true;
+};
+
+/**
+ * Live countdown timer displayed on product cards.
+ * Computes remaining time until discount end_date, omits 0 hours/minutes,
+ * increases font size when only minutes/seconds remain, and creates urgency
+ * when less than 3 minutes are left.
+ */
+export function ProductCardCountdown({
+  endDate,
+  startDate,
+  locale = "en",
+  onExpire,
+}) {
+  const [mounted, setMounted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(null);
+  const onExpireRef = useRef(onExpire);
+
+  useEffect(() => {
+    onExpireRef.current = onExpire;
+  }, [onExpire]);
+
+  useEffect(() => {
+    setMounted(true);
+
+    const calculate = () => {
+      if (!endDate) {
+        setTimeLeft(null);
+        return false;
+      }
+
+      const end = parseGSTDate(endDate);
+      if (!end) {
+        setTimeLeft(null);
+        return false;
+      }
+
+      const now = Date.now();
+
+      if (startDate) {
+        const start = parseGSTDate(startDate);
+        if (start && now < start.getTime()) {
+          setTimeLeft(null);
+          return false;
+        }
+      }
+
+      const diff = end.getTime() - now;
+      if (diff <= 0) {
+        setTimeLeft(null);
+        if (onExpireRef.current) {
+          onExpireRef.current();
+        }
+        return false;
+      }
+
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+
+      setTimeLeft({ days, hours, mins, secs, totalMs: diff });
+      return true;
+    };
+
+    const hasTime = calculate();
+    if (!hasTime) return;
+
+    const timer = setInterval(() => {
+      const running = calculate();
+      if (!running) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [endDate, startDate]);
+
+  if (!mounted || !timeLeft) return null;
+
+  const { days, hours, mins, secs, totalMs } = timeLeft;
+
+  const dayUnit = locale === "ar" ? "ي" : "d";
+  const hourUnit = locale === "ar" ? "س" : "h";
+  const minUnit = locale === "ar" ? "د" : "m";
+  const secUnit = locale === "ar" ? "ث" : "s";
+
+  // Build time parts omitting 0 hours or 0 minutes
+  const parts = [];
+  if (days > 0) parts.push(`${days}${dayUnit}`);
+  if (hours > 0) parts.push(`${hours}${hourUnit}`);
+  if (mins > 0) parts.push(`${mins}${minUnit}`);
+  const formattedSecs =
+    days === 0 && hours === 0 && mins === 0
+      ? `${secs}${secUnit}`
+      : `${String(secs).padStart(2, "0")}${secUnit}`;
+  parts.push(formattedSecs);
+
+  const timeString = parts.join(" ");
+  const isOnlyMinSec = days === 0 && hours === 0;
+  const isUrgent = totalMs <= 3 * 60 * 1000; // Less than 3 minutes
+  const labelText = locale === "ar" ? "ينتهي العرض خلال" : "Sale ends in";
+
+  return (
+    <div
+      className={`product-countdown-box ${isOnlyMinSec ? "product-countdown-box--min-sec" : ""
+        } ${isUrgent ? "product-countdown-box--urgent" : ""}`}
+      aria-label={`${labelText}: ${timeString}`}
+    >
+      <span className="product-countdown-box__label">{labelText}</span>
+      <span className="product-countdown-box__timer" dir="ltr">
+        <svg
+          width="11"
+          height="11"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ flexShrink: 0 }}
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span>{timeString}</span>
+      </span>
+    </div>
+  );
+}
+
+/**
  * Component to display regular, discounted, or sale price for a product.
  */
 export const ProductPrice = ({ elm, currency: propCurrency }) => {
   const menuContext = useMenu();
   const currency = propCurrency || menuContext?.currency;
 
-  const currentUTC = new Date();
-  const currentGST = new Date(currentUTC.getTime() + 4 * 60 * 60 * 1000);
-  const current_date_time = currentGST
-    .toISOString()
-    .slice(0, 19)
-    .replace("T", " ");
-
-  const isDiscountActive =
-    elm?.discount &&
-    new Date(current_date_time) >= new Date(elm.discount.start_date) &&
-    new Date(current_date_time) <= new Date(elm.discount.end_date);
+  const isDiscountActive = isDiscountCurrentlyActive(elm?.discount);
 
   if (isDiscountActive) {
     let discountedPrice = elm.price;
@@ -204,6 +360,21 @@ export default function ProductCard({
     setCartProducts,
     triggerToast,
   } = useContextElement();
+
+  const [isDiscountExpired, setIsDiscountExpired] = useState(false);
+
+  useEffect(() => {
+    setIsDiscountExpired(false);
+  }, [elm?.discount?.end_date, elm?.discount?.start_date, elm?.product_id]);
+
+  const handleDiscountExpired = useCallback(() => {
+    setIsDiscountExpired(true);
+  }, []);
+
+  const isDiscountActive = useMemo(() => {
+    if (isDiscountExpired) return false;
+    return isDiscountCurrentlyActive(elm?.discount);
+  }, [elm?.discount, isDiscountExpired]);
 
   const category = categoryProp || elm?.category_name;
   const subcategory =
@@ -374,46 +545,60 @@ export default function ProductCard({
               )}
             </Link>
 
-            {showLabels && (
-              <>
-                {Array.isArray(elm?.labels) && elm.labels.length > 0 && (
-                  <div
-                    className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2"
-                    style={{ gap: "4px", zIndex: 5 }}
-                  >
-                    {elm.labels.map((lbl, idx) => (
-                      <LabelIcon
-                        key={idx}
-                        name={lbl.label_name}
-                        title={lbl.label_name}
-                        icon={lbl.label_color}
-                        size={labelIconSize}
-                      />
-                    ))}
-                  </div>
+            {/* Top-Right: Countdown Box + Optional Labels */}
+            <div
+              className="position-absolute top-0 end-0 mt-2 me-2 d-flex flex-column align-items-end"
+              style={{ gap: "4px", zIndex: 6, pointerEvents: "none" }}
+            >
+              {isDiscountActive &&
+                elm.discount?.end_date &&
+                Boolean(
+                  elm.discount?.show_timer &&
+                  elm.discount?.show_timer !== "1" &&
+                  elm.discount?.show_timer !== 1
+                ) && (
+                  <ProductCardCountdown
+                    endDate={elm.discount.end_date}
+                    startDate={elm.discount.start_date}
+                    locale={locale}
+                    onExpire={handleDiscountExpired}
+                  />
                 )}
-                {!Array.isArray(elm?.labels) && elm?.label_name && (
-                  <div
-                    className="position-absolute top-0 end-0 mt-2 me-2"
-                    style={{ zIndex: 5 }}
-                  >
+
+              {showLabels && (
+                <>
+                  {Array.isArray(elm?.labels) && elm.labels.length > 0 && (
+                    <div className="d-flex flex-column" style={{ gap: "4px" }}>
+                      {elm.labels.map((lbl, idx) => (
+                        <LabelIcon
+                          key={idx}
+                          name={lbl.label_name}
+                          title={lbl.label_name}
+                          icon={lbl.label_color}
+                          size={labelIconSize}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  {!Array.isArray(elm?.labels) && elm?.label_name && (
                     <LabelIcon
                       name={elm.label_name}
                       title={elm.label_name}
                       icon={elm.label_color}
                       size={labelIconSize}
                     />
-                  </div>
-                )}
-              </>
-            )}
+                  )}
+                </>
+              )}
+            </div>
 
+            {/* Top-Left: Sale or Out-of-Stock Badge */}
             {elm?.product_qty <= 0 ? (
               <div className="product-label label--out-of-stock">
                 {t("Out Of Stock")}
               </div>
             ) : (
-              elm?.discount && (
+              isDiscountActive && (
                 <div className="product-label label--sale">
                   {elm.discount.discount_type === "percent"
                     ? `Sale ${elm.discount.value}%`

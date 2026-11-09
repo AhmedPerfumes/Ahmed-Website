@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Navigation, EffectFade } from "swiper/modules";
+"use client";
+
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
@@ -9,9 +9,26 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Navigation } from "swiper/modules";
 import "./carousel.css";
 import Badge from "./Badge";
+import { useLocale } from "next-intl";
+import { ProductCardCountdown, isDiscountCurrentlyActive } from "@/components/common/ProductCard";
 
 const Carousel = ({ images, activeIndex, setActiveIndex, product }) => {
     const swiperRef = useRef(null);
+    const locale = useLocale();
+    const [isDiscountExpired, setIsDiscountExpired] = useState(false);
+
+    useEffect(() => {
+        setIsDiscountExpired(false);
+    }, [product?.discount?.end_date, product?.discount?.start_date, product?.product_id]);
+
+    const handleDiscountExpired = useCallback(() => {
+        setIsDiscountExpired(true);
+    }, []);
+
+    const isDiscountActive =
+        Number(product?.product_qty) > 0 &&
+        !isDiscountExpired &&
+        isDiscountCurrentlyActive(product?.discount);
 
     useEffect(() => {
         if (swiperRef.current && swiperRef.current.swiper) {
@@ -60,16 +77,7 @@ const Carousel = ({ images, activeIndex, setActiveIndex, product }) => {
                     );
                 }
 
-                // Discount badge
-                const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000);
-                const parseUTC = (dt) => (dt ? new Date(dt.replace(' ', 'T') + 'Z') : null);
-
-                const start = parseUTC(product?.discount?.start_date);
-                const end = parseUTC(product?.discount?.end_date);
-
-                const isActive = product?.discount && start && end && now >= start && now <= end;
-
-                if (!isActive) return null;
+                if (!isDiscountActive) return null;
 
                 const { discount_type, value } = product.discount;
 
@@ -107,6 +115,32 @@ const Carousel = ({ images, activeIndex, setActiveIndex, product }) => {
                     </div>
                 );
             })()}
+
+            {/* Top-Right Sale Countdown Timer */}
+            {isDiscountActive &&
+              product?.discount?.end_date &&
+              Boolean(
+                product.discount?.show_timer &&
+                  product.discount?.show_timer !== "0" &&
+                  product.discount?.show_timer !== 0
+              ) && (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: "16px",
+                        right: "16px",
+                        zIndex: 10,
+                        pointerEvents: "none",
+                    }}
+                >
+                    <ProductCardCountdown
+                        endDate={product.discount.end_date}
+                        startDate={product.discount.start_date}
+                        locale={locale}
+                        onExpire={handleDiscountExpired}
+                    />
+                </div>
+            )}
 
             {images.map((image, index) => (
                 <SwiperSlide key={index}>

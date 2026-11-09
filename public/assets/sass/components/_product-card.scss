@@ -233,9 +233,141 @@ $card-image-height: 121.212122%;
   }
 }
 
+.product-card__labels-group {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: calc(100% - 56px);
+  pointer-events: none;
+
+  .product-label {
+    position: static;
+    max-width: 100%;
+  }
+
+  [dir="rtl"] & {
+    left: auto;
+    right: 8px;
+  }
+}
+
 .label--sale {
   background-color: #1a6847;
   color: #fff;
+}
+
+.label--countdown {
+  background-color: #1a1a1a;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.02em;
+
+  svg {
+    color: #bf953f;
+  }
+}
+
+// Countdown box aligned in top-right with urgency and adaptive font sizing
+.product-countdown-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: rgba(20, 20, 20, 0.92);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+
+  [dir="rtl"] & {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  &__label {
+    font-size: 0.5625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.1;
+    margin-bottom: 2px;
+    white-space: nowrap;
+  }
+
+  &__timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+
+    svg {
+      color: #bf953f;
+      flex-shrink: 0;
+    }
+  }
+
+  // Increased font size when only minutes and seconds remaining
+  &--min-sec {
+    padding: 5px 9px;
+
+    .product-countdown-box__timer {
+      font-size: 0.8125rem;
+      font-weight: 800;
+
+      @include media-breakpoint-up(md) {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  // Urgency state when less than 3 minutes remaining
+  &--urgent {
+    background-color: #dc2626 !important;
+    color: #fff !important;
+    animation: countdownUrgencyPulse 1.2s ease-in-out infinite;
+
+    .product-countdown-box__label {
+      color: #fee2e2;
+    }
+
+    .product-countdown-box__timer {
+      font-size: 0.875rem;
+      font-weight: 900;
+      color: #fff;
+
+      svg {
+        color: #fff;
+      }
+    }
+  }
+}
+
+@keyframes countdownUrgencyPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.45);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 3px 12px rgba(220, 38, 38, 0.75);
+  }
 }
 
 .label--out-of-stock {
