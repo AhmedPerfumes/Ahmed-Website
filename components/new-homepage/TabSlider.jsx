@@ -40,6 +40,18 @@ const clean = (s = "") =>
 
 const decodeHtml = (s = "") => s.replace(/&amp;/g, "&");
 
+// True only while now is within the discount's start/end window
+const isDiscountActive = (d) => {
+  if (!d) return false;
+  const parse = (v) => (v ? new Date(String(v).replace(" ", "T")) : null);
+  const now = new Date();
+  const start = parse(d.start_date);
+  const end = parse(d.end_date);
+  if (start && !isNaN(start) && now < start) return false;
+  if (end && !isNaN(end) && now > end) return false;
+  return true;
+};
+
 const isSubcat = (cat, sub) =>
   sub
     ? clean(sub.subcategory_name)
@@ -387,7 +399,7 @@ export default function PopularProducts() {
                               {t("outOfStock")}
                             </div>
                           ) : (
-                            item.discount && item.discount.discount_type === 'percent' && (
+                            isDiscountActive(item.discount) && item.discount.discount_type === 'percent' && (
                               <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
                                 {t("sale", { value: item.discount.value })}
                               </div>
