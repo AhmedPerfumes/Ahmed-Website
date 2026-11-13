@@ -328,6 +328,18 @@ const GiftSetBanner = () => {
                     .gsb-bottom { padding: 0 14px 24px; }
                 }
 
+                /* Mobile: CTA moves down, just above the features card, clear of the artwork */
+                .gsb-cta-wrap--mobile { display: none; }
+                @media (max-width: 768px) {
+                    .gsb-cta-wrap--desktop { display: none; }
+                    .gsb-bottom {
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 14px;
+                    }
+                    .gsb-cta-wrap--mobile { display: block; }
+                }
+
                 .gsb-features {
                     display: flex;
                     align-items: stretch;
@@ -569,6 +581,7 @@ const GiftSetBanner = () => {
                     </motion.p>
 
                     <motion.div
+                        className="gsb-cta-wrap--desktop"
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -585,6 +598,15 @@ const GiftSetBanner = () => {
 
                 {/* Bottom Features */}
                 <div className="gsb-bottom">
+                    {/* Mobile-only CTA, sits directly above the features card */}
+                    <div className="gsb-cta-wrap--mobile">
+                        <Link href={`/${locale}/product-category/gift-sets`} className="gsb-cta">
+                            {t("Explore Gift Sets")}
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+                    </div>
                     <motion.div
                         className="gsb-features"
                         initial={{ opacity: 0, y: 20 }}
