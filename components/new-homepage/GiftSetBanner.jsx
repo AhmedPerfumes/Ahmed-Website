@@ -31,31 +31,29 @@ const GiftSetBanner = () => {
                     z-index: 0;
                 }
 
-                .gsb-bg img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    object-position: center;
-                }
+                /* Desktop / mobile artwork swap */
+                .gsb-img--desktop { object-fit: cover; object-position: 50% 0%; }
+                .gsb-img--mobile { object-fit: cover; object-position: 50% 100%; display: none !important; }
                 @media (max-width: 768px) {
-                    .gsb-bg img {
-                        object-position: right 50%;
-                    }
+                    .gsb-img--desktop { display: none !important; }
+                    .gsb-img--mobile { display: block !important; }
                 }
 
-                /* Very subtle overlay — just enough for text readability */
+                /* Soft warm veil on the empty wall area only — keeps products untouched */
                 .gsb-bg::after {
                     content: '';
                     position: absolute;
                     inset: 0;
                     background:
-                        radial-gradient(ellipse 55% 60% at 50% 45%, rgba(10,8,6,0.52) 0%, rgba(10,8,6,0.15) 65%, transparent 100%),
-                        linear-gradient(to bottom, rgba(10,8,6,0.1) 0%, transparent 20%, transparent 75%, rgba(10,8,6,0.45) 100%);
+                        radial-gradient(ellipse 42% 48% at 14% 14%, rgba(250,236,214,0.38) 0%, rgba(250,236,214,0.12) 60%, transparent 100%),
+                        linear-gradient(to bottom, rgba(60,40,20,0.10) 0%, transparent 25%);
                     z-index: 1;
                 }
                 @media (max-width: 768px) {
                     .gsb-bg::after {
-                        background: radial-gradient(circle at 50% 50%, rgba(10,8,6,0.8) 0%, rgba(10,8,6,0.45) 65%, rgba(10,8,6,0.2) 100%);
+                        background:
+                            radial-gradient(ellipse 90% 34% at 50% 18%, rgba(250,236,214,0.40) 0%, rgba(250,236,214,0.10) 70%, transparent 100%),
+                            linear-gradient(to top, rgba(60,40,20,0.22) 0%, transparent 22%);
                     }
                 }
 
@@ -64,14 +62,14 @@ const GiftSetBanner = () => {
                     position: relative;
                     z-index: 2;
                     margin: 44px 24px 24px;
-                    border: 1px solid rgba(185,161,107,0.2);
+                    border: 1px solid rgba(255,248,235,0.55);
                     border-top-color: transparent;
                     border-radius: 6px;
                     min-height: calc(100vh - 68px);
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
+                    justify-content: flex-start;
+                    align-items: flex-start;
                 }
                 .gsb-frame::before {
                     content: '';
@@ -79,7 +77,7 @@ const GiftSetBanner = () => {
                     top: -1px; left: 6px;
                     width: calc(50% - 130px);
                     height: 1px;
-                    background: rgba(185,161,107,0.2);
+                    background: rgba(255,248,235,0.55);
                 }
                 .gsb-frame::after {
                     content: '';
@@ -87,13 +85,14 @@ const GiftSetBanner = () => {
                     top: -1px; right: 6px;
                     width: calc(50% - 130px);
                     height: 1px;
-                    background: rgba(185,161,107,0.2);
+                    background: rgba(255,248,235,0.55);
                 }
 
                 @media (max-width: 768px) {
                     .gsb-frame {
                         margin: 32px 12px 12px;
-                        min-height: 65vh;
+                        min-height: max(620px, calc(100svh - 80px));
+                        align-items: center;
                     }
                     .gsb-frame::before, .gsb-frame::after { width: calc(50% - 90px); }
                 }
@@ -102,7 +101,7 @@ const GiftSetBanner = () => {
                 .gsb-frame-inner {
                     position: absolute;
                     inset: 6px;
-                    border: 1px solid rgba(185,161,107,0.09);
+                    border: 1px solid rgba(255,248,235,0.25);
                     border-top-color: transparent;
                     border-radius: 3px;
                     pointer-events: none;
@@ -113,7 +112,7 @@ const GiftSetBanner = () => {
                     top: -1px; left: 3px;
                     width: calc(50% - 124px);
                     height: 1px;
-                    background: rgba(185,161,107,0.09);
+                    background: rgba(255,248,235,0.25);
                 }
                 .gsb-frame-inner::after {
                     content: '';
@@ -121,7 +120,7 @@ const GiftSetBanner = () => {
                     top: -1px; right: 3px;
                     width: calc(50% - 124px);
                     height: 1px;
-                    background: rgba(185,161,107,0.09);
+                    background: rgba(255,248,235,0.25);
                 }
 
                 @media (max-width: 768px) {
@@ -167,66 +166,72 @@ const GiftSetBanner = () => {
                 }
 
                 /* ── Center Content ── */
+                /* Text sits on the empty wall: top-left on desktop, top-centre on mobile */
                 .gsb-center {
                     position: relative;
                     z-index: 3;
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                    padding: 80px 40px 160px;
-                    max-width: 600px;
+                    align-items: flex-start;
+                    text-align: left;
+                    padding: 56px 40px 0 clamp(32px, 4.5vw, 72px);
+                    max-width: 440px;
                 }
+                [dir='rtl'] .gsb-center { text-align: right; }
 
                 @media (max-width: 768px) {
-                    .gsb-center { padding: 60px 24px 140px; }
-                }
-
-                @media (max-width: 576px) {
-                    .gsb-center { padding: 50px 18px 40px; }
+                    .gsb-center {
+                        align-items: center;
+                        text-align: center;
+                        padding: 56px 24px 0;
+                        max-width: 480px;
+                    }
+                    [dir='rtl'] .gsb-center { text-align: center; }
                 }
 
                 /* Decorative horizontal lines flanking the tagline */
                 .gsb-tagline-wrap {
                     display: flex;
                     align-items: center;
-                    gap: 16px;
-                    margin-bottom: 24px;
+                    gap: 14px;
+                    margin-bottom: 16px;
                 }
 
                 .gsb-tagline-line {
-                    width: 40px;
+                    width: 36px;
                     height: 1px;
-                    background: linear-gradient(to right, transparent, #b9a16b);
+                    background: linear-gradient(to right, transparent, #7a5a22);
                 }
 
                 .gsb-tagline-line--r {
-                    background: linear-gradient(to left, transparent, #b9a16b);
+                    background: linear-gradient(to left, transparent, #7a5a22);
+                }
+                @media (min-width: 769px) {
+                    .gsb-tagline-line:not(.gsb-tagline-line--r) { display: none; }
                 }
 
                 .gsb-tagline {
-                    font-size: 0.6rem;
+                    font-size: 0.62rem;
                     letter-spacing: 6px;
-                    color: #b9a16b;
+                    color: #6b4c1a;
                     text-transform: uppercase;
-                    font-weight: 500;
-                    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+                    font-weight: 600;
                 }
 
                 .gsb-heading {
                     font-family: 'Playfair Display', serif;
-                    font-size: clamp(2rem, 5vw, 3.6rem);
+                    font-size: clamp(2rem, 3.4vw, 3.1rem);
                     font-weight: 400;
-                    color: #f5f0e8;
+                    color: #2b1d10;
                     line-height: 1.1;
-                    letter-spacing: 2px;
-                    margin: 0 0 16px;
-                    text-shadow: 0 4px 12px rgba(0,0,0,0.7);
+                    letter-spacing: 1px;
+                    margin: 0 0 14px;
+                    text-shadow: 0 1px 14px rgba(250,236,214,0.55);
                 }
 
                 .gsb-heading em {
                     font-style: italic;
-                    color: #b9a16b;
+                    color: #8a5f17;
                 }
 
                 /* Diamond ornament */
@@ -234,35 +239,39 @@ const GiftSetBanner = () => {
                     display: flex;
                     align-items: center;
                     gap: 10px;
-                    margin-bottom: 22px;
+                    margin-bottom: 18px;
+                }
+                @media (min-width: 769px) {
+                    /* desktop wall area is short — drop the ornament and description */
+                    .gsb-diamond-row, .gsb-description { display: none !important; }
+                    .gsb-heading { margin-bottom: 22px; }
                 }
 
                 .gsb-diamond-row__line {
                     width: 35px;
                     height: 1px;
-                    background: linear-gradient(to right, transparent, rgba(185,161,107,0.5));
+                    background: linear-gradient(to right, transparent, rgba(122,90,34,0.6));
                 }
 
                 .gsb-diamond-row__line--r {
-                    background: linear-gradient(to left, transparent, rgba(185,161,107,0.5));
+                    background: linear-gradient(to left, transparent, rgba(122,90,34,0.6));
                 }
 
                 .gsb-diamond-row__gem {
                     width: 6px;
                     height: 6px;
-                    background: #b9a16b;
+                    background: #8a5f17;
                     transform: rotate(45deg);
-                    opacity: 0.8;
+                    opacity: 0.9;
                 }
 
                 .gsb-description {
-                    font-size: 0.88rem;
-                    color: rgba(245,240,232,0.5);
-                    line-height: 1.75;
-                    margin: 0 0 30px;
-                    max-width: 420px;
-                    font-weight: 300;
-                    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+                    font-size: 0.86rem;
+                    color: rgba(43,29,16,0.82);
+                    line-height: 1.65;
+                    margin: 0 0 22px;
+                    max-width: 380px;
+                    font-weight: 400;
                 }
 
                 /* ── CTA ── */
@@ -270,26 +279,28 @@ const GiftSetBanner = () => {
                     display: inline-flex;
                     align-items: center;
                     gap: 10px;
-                    padding: 13px 32px;
-                    border: 1.5px solid #b9a16b;
+                    padding: 14px 32px;
+                    min-height: 44px;
+                    border: 1.5px solid #2b1d10;
                     border-radius: 50px;
-                    background: transparent;
-                    color: #f5f0e8;
-                    font-size: 0.62rem;
+                    background: #2b1d10;
+                    color: #f8efe0;
+                    font-size: 0.64rem;
                     letter-spacing: 3px;
                     font-weight: 600;
                     text-transform: uppercase;
                     text-decoration: none;
                     cursor: pointer;
-                    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 }
 
                 .gsb-cta:hover {
-                    background: #b9a16b;
-                    color: #0a0806;
+                    background: transparent;
+                    color: #2b1d10;
                     transform: translateY(-2px);
-                    box-shadow: 0 8px 28px rgba(185,161,107,0.25);
+                    box-shadow: 0 8px 24px rgba(43,29,16,0.18);
                 }
+                .gsb-cta:focus-visible { outline: 2px solid #8a5f17; outline-offset: 3px; }
 
                 .gsb-cta svg {
                     transition: transform 0.4s ease;
@@ -317,19 +328,13 @@ const GiftSetBanner = () => {
                     .gsb-bottom { padding: 0 14px 24px; }
                 }
 
-                @media (max-width: 576px) {
-                    .gsb-bottom { 
-                        position: relative;
-                        padding: 0 14px 40px;
-                    }
-                }
-
                 .gsb-features {
                     display: flex;
                     align-items: stretch;
-                    border: 1px solid rgba(185,161,107,0.2);
+                    border: 1px solid rgba(255,248,235,0.6);
                     border-radius: 10px;
-                    background: rgba(10,8,6,0.4);
+                    background: rgba(255,248,236,0.5);
+                    box-shadow: 0 8px 30px rgba(60,40,20,0.15);
                     backdrop-filter: blur(14px);
                     -webkit-backdrop-filter: blur(14px);
                     overflow: hidden;
@@ -349,7 +354,7 @@ const GiftSetBanner = () => {
                 .gsb-feat-divider {
                     width: 1px;
                     align-self: stretch;
-                    background: linear-gradient(to bottom, transparent 10%, rgba(185,161,107,0.28) 50%, transparent 90%);
+                    background: linear-gradient(to bottom, transparent 10%, rgba(122,90,34,0.35) 50%, transparent 90%);
                     flex-shrink: 0;
                 }
 
@@ -363,14 +368,13 @@ const GiftSetBanner = () => {
                 }
 
                 .gsb-feat__icon svg {
-                    filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.8));
                 }
 
                 .gsb-feat__label {
-                    font-size: 0.54rem;
+                    font-size: 0.58rem;
                     letter-spacing: 1px;
                     font-weight: 600;
-                    color: rgba(245,240,232,0.82);
+                    color: #2b1d10;
                     text-transform: uppercase;
                     line-height: 1.4;
                 }
@@ -427,7 +431,8 @@ const GiftSetBanner = () => {
                 .gsb-side-text span {
                     font-size: 0.55rem;
                     letter-spacing: 5px;
-                    color: rgba(185,161,107,0.4);
+                    color: rgba(255,248,235,0.85);
+                    text-shadow: 0 1px 6px rgba(60,40,20,0.45);
                     text-transform: uppercase;
                     font-weight: 500;
                 }
@@ -435,9 +440,9 @@ const GiftSetBanner = () => {
                 .gsb-side-text .gsb-side-dot {
                     width: 3px;
                     height: 3px;
-                    background: #b9a16b;
+                    background: #fff8eb;
                     border-radius: 50%;
-                    opacity: 0.45;
+                    opacity: 0.8;
                 }
 
                 @media (max-width: 991px) {
@@ -471,12 +476,20 @@ const GiftSetBanner = () => {
             {/* Background */}
             <div className="gsb-bg">
                 <Image
-                    src="/assets/images/home/demo8/avif/giftset-bnr.avif"
+                    className="gsb-img--desktop"
+                    src="/assets/images/home/demo8/avif/gift_Set.avif"
                     alt="Premium Gift Sets Collection"
                     loading="lazy"
                     fill
                     sizes="100vw"
-                    style={{ objectFit: "cover", objectPosition: "center" }}
+                />
+                <Image
+                    className="gsb-img--mobile"
+                    src="/assets/images/home/demo8/avif/giftSetMobile.avif"
+                    alt="Premium Gift Sets Collection"
+                    loading="lazy"
+                    fill
+                    sizes="100vw"
                 />
             </div>
 
@@ -493,8 +506,8 @@ const GiftSetBanner = () => {
                 {['tl', 'tr', 'bl', 'br'].map((pos) => (
                     <div key={pos} className={`gsb-corner gsb-corner--${pos}`}>
                         <svg width="100%" height="100%" viewBox="0 0 28 28" fill="none">
-                            <path d="M0 0h10v1H1v9H0z" fill="#b9a16b" opacity="0.55" />
-                            <rect x="3.5" y="3.5" width="3" height="3" rx="0.3" transform="rotate(45 5 5)" fill="none" stroke="#b9a16b" strokeWidth="0.7" opacity="0.35" />
+                            <path d="M0 0h10v1H1v9H0z" fill="#fff8eb" opacity="0.85" />
+                            <rect x="3.5" y="3.5" width="3" height="3" rx="0.3" transform="rotate(45 5 5)" fill="none" stroke="#fff8eb" strokeWidth="0.7" opacity="0.6" />
                         </svg>
                     </div>
                 ))}
@@ -581,7 +594,7 @@ const GiftSetBanner = () => {
                     >
                         <div className="gsb-feat">
                             <div className="gsb-feat__icon">
-                                <PiGiftLight size={20} color="#b9a16b" />
+                                <PiGiftLight size={20} color="#8a5f17" />
                             </div>
                             <div className="gsb-feat__label">
                                 {t("Premium")}<br />{t("Packaging")}
@@ -592,7 +605,7 @@ const GiftSetBanner = () => {
 
                         <div className="gsb-feat">
                             <div className="gsb-feat__icon">
-                                <PiSparkleLight size={20} color="#b9a16b" />
+                                <PiSparkleLight size={20} color="#8a5f17" />
                             </div>
                             <div className="gsb-feat__label">
                                 {t("Luxury")}<br />{t("Selection")}
@@ -603,7 +616,7 @@ const GiftSetBanner = () => {
 
                         <div className="gsb-feat">
                             <div className="gsb-feat__icon">
-                                <PiHeartLight size={20} color="#b9a16b" />
+                                <PiHeartLight size={20} color="#8a5f17" />
                             </div>
                             <div className="gsb-feat__label">
                                 {t("Made with")}<br />{t("Love")}

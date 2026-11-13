@@ -731,6 +731,11 @@ export default function Checkout() {
     setCartProducts(cleanedCart);
   };
 
+  // Coupons can never be applied to products in the "Gift Sets" category.
+  const isGiftSetItem = (item) =>
+    Number(item?.category_id) === 4 ||
+    String(item?.category_name || "").toLowerCase().replace(/[\s_-]+/g, "").includes("giftset");
+
   const applyCoupon = async (e) => {
     e.preventDefault();
 
@@ -749,7 +754,7 @@ export default function Checkout() {
 
     const eligibleItems = cartProducts.filter((item) => {
       const isBogoProduct = promotionsContext.some((promo) => promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id));
-      return !item.discount && !isBogoProduct && !item.is_gift && !item.collection_name;
+      return !item.discount && !isBogoProduct && !item.is_gift && !item.collection_name && !isGiftSetItem(item);
     });
 
     if (eligibleItems.length === 0) {
@@ -792,7 +797,7 @@ export default function Checkout() {
 
     const updatedCartProducts = cartProducts.map((item) => {
       const isBogoProduct = promotionsContext.some((promo) => promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id));
-      const isEligible = !item.discount && !isBogoProduct && !item.is_gift;
+      const isEligible = !item.discount && !isBogoProduct && !item.is_gift && !isGiftSetItem(item);
       return { ...item, ...(isEligible ? { is_coupon: true, value: couponToApply.value, coupon_type: couponToApply.coupon_type, } : {}), };
     });
 

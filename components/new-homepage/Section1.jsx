@@ -16,11 +16,19 @@ const DakhoonSection = () => {
             {/* ── Background Image ── */}
             <div className="dk-bg">
                 <Image
-                    src="/assets/images/home/demo8/avif/dakhoon-bnr.avif"
-                    alt="Arabic Dakhoon Collection"
+                    className="dk-img--desktop"
+                    src="/assets/images/home/demo8/avif/bakhoor_1.avif"
+                    alt="Bakhoor Ahmed, Oudh Ma'attar Malki and Marj incense collection"
                     fill
                     sizes="100vw"
-                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
+                />
+                <Image
+                    className="dk-img--mobile"
+                    src="/assets/images/home/demo8/avif/bakhoor-mobile.avif"
+                    alt="Bakhoor Ahmed, Oudh Ma'attar Malki and Marj incense collection"
+                    fill
+                    sizes="100vw"
                     loading="lazy"
                 />
             </div>
@@ -31,9 +39,10 @@ const DakhoonSection = () => {
                 <div className="dk-inner-frame" />
 
                 {/* ── Logo ── */}
+                {/* Hidden: overlaps the tagline on the new artwork
                 <div className="dk-logo-wrap">
                     <Image src="/assets/images/AhmedLogo.png" alt="Ahmed Perfumes" width={120} height={40} style={{ objectFit: 'contain' }} />
-                </div>
+                </div> */}
 
                 {/* Gold corner ornaments */}
                 {['tl', 'tr', 'bl', 'br'].map((pos) => (
@@ -78,7 +87,7 @@ const DakhoonSection = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.1 }}
                         >
-                            {t("Ancient Aromas")}
+                            {t("Bakhoor & Oudh Maattar")}
                         </motion.div>
 
                         <motion.h2
@@ -110,7 +119,7 @@ const DakhoonSection = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.4 }}
                         >
-                            {t("Experience the heritage of Arabic Dakhoon made from natural ingredients Enjoy rich longlasting aromas that bring warmth and tradition to your home")}
+                            {t("Dakhoon Banner Description")}
                         </motion.p>
 
                         <motion.div
@@ -120,7 +129,7 @@ const DakhoonSection = () => {
                             transition={{ duration: 0.6, delay: 0.5 }}
                         >
                             <Link href={`/${locale}/product-category/dakhoon`} className="dk-cta">
-                                {t("Shop Now")}
+                                {t("Shop Dakhoon")}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
