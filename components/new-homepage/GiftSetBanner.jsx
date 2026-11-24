@@ -17,18 +17,42 @@ const GiftSetBanner = () => {
                    GIFT SET BANNER SECTION
                    ═══════════════════════════════════════ */
                 .gsb-section {
+                    /* Wall colours sampled from the top edge of the artwork, so the extra
+                       "text band" above the image blends into it seamlessly */
+                    --gsb-wall: linear-gradient(to right, #c9a885, #be9a76, #a07e5d, #987759, #917255, #8a6b4e, #826348, #795b3f);
+                    --gsb-band: clamp(150px, 13vw, 220px);
+                    --gsb-img-h: min(56.25vw, 1100px);
                     position: relative;
                     width: 100%;
-                    background: #0a0806;
+                    background: var(--gsb-wall);
                     overflow: hidden;
                     font-family: 'Inter', sans-serif;
                 }
+                @media (max-width: 768px) {
+                    .gsb-section {
+                        --gsb-wall: linear-gradient(to right, #95795f, #dab993, #ac8a69, #a18063, #9b7c60, #98795c, #947559, #907055);
+                        --gsb-band: 110px;
+                        --gsb-img-h: min(177.78vw, 820px);
+                    }
+                }
 
-                /* ── Background ── */
+                /* ── Background: artwork is pinned to the bottom, the band above is plain wall ── */
                 .gsb-bg {
                     position: absolute;
-                    inset: 0;
+                    left: 0; right: 0; bottom: 0;
+                    height: var(--gsb-img-h);
                     z-index: 0;
+                }
+                /* fade the artwork's top edge into the wall band */
+                .gsb-bg::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    background: var(--gsb-wall);
+                    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 24%);
+                    mask-image: linear-gradient(to bottom, #000 0%, transparent 24%);
+                    z-index: 2;
+                    pointer-events: none;
                 }
 
                 /* Desktop / mobile artwork swap */
@@ -51,9 +75,7 @@ const GiftSetBanner = () => {
                 }
                 @media (max-width: 768px) {
                     .gsb-bg::after {
-                        background:
-                            radial-gradient(ellipse 90% 34% at 50% 18%, rgba(250,236,214,0.40) 0%, rgba(250,236,214,0.10) 70%, transparent 100%),
-                            linear-gradient(to top, rgba(60,40,20,0.22) 0%, transparent 22%);
+                        background: linear-gradient(to top, rgba(60,40,20,0.22) 0%, transparent 22%);
                     }
                 }
 
@@ -65,7 +87,7 @@ const GiftSetBanner = () => {
                     border: 1px solid rgba(255,248,235,0.55);
                     border-top-color: transparent;
                     border-radius: 6px;
-                    min-height: calc(100vh - 68px);
+                    min-height: calc(var(--gsb-img-h) + var(--gsb-band) - 68px);
                     display: flex;
                     flex-direction: column;
                     justify-content: flex-start;
@@ -91,7 +113,7 @@ const GiftSetBanner = () => {
                 @media (max-width: 768px) {
                     .gsb-frame {
                         margin: 32px 12px 12px;
-                        min-height: max(620px, calc(100svh - 80px));
+                        min-height: calc(var(--gsb-img-h) + var(--gsb-band) - 44px);
                         align-items: center;
                     }
                     .gsb-frame::before, .gsb-frame::after { width: calc(50% - 90px); }
@@ -240,11 +262,6 @@ const GiftSetBanner = () => {
                     align-items: center;
                     gap: 10px;
                     margin-bottom: 18px;
-                }
-                @media (min-width: 769px) {
-                    /* desktop wall area is short — drop the ornament and description */
-                    .gsb-diamond-row, .gsb-description { display: none !important; }
-                    .gsb-heading { margin-bottom: 22px; }
                 }
 
                 .gsb-diamond-row__line {
@@ -426,44 +443,8 @@ const GiftSetBanner = () => {
                     }
                 }
 
-                /* ── Vertical Side Text ── */
-                .gsb-side-text {
-                    position: absolute;
-                    right: 28px;
-                    top: 50%;
-                    transform: translateY(-50%) rotate(90deg);
-                    transform-origin: center center;
-                    z-index: 5;
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    white-space: nowrap;
-                }
-
-                .gsb-side-text span {
-                    font-size: 0.55rem;
-                    letter-spacing: 5px;
-                    color: rgba(255,248,235,0.85);
-                    text-shadow: 0 1px 6px rgba(60,40,20,0.45);
-                    text-transform: uppercase;
-                    font-weight: 500;
-                }
-
-                .gsb-side-text .gsb-side-dot {
-                    width: 3px;
-                    height: 3px;
-                    background: #fff8eb;
-                    border-radius: 50%;
-                    opacity: 0.8;
-                }
-
-                @media (max-width: 991px) {
-                    .gsb-side-text { display: none; }
-                }
-
                 /* RTL TYPOGRAPHY IMPROVEMENTS */
                 [dir='rtl'] .gsb-tagline,
-                [dir='rtl'] .gsb-side-text span,
                 [dir='rtl'] .gsb-feat__label {
                     letter-spacing: 0 !important;
                     font-size: 0.9rem !important;
@@ -523,15 +504,6 @@ const GiftSetBanner = () => {
                         </svg>
                     </div>
                 ))}
-
-                {/* Side text */}
-                <div className="gsb-side-text">
-                    <span>{t("Elegance")}</span>
-                    <div className="gsb-side-dot" />
-                    <span>{t("Craftsmanship")}</span>
-                    <div className="gsb-side-dot" />
-                    <span>{t("Luxury")}</span>
-                </div>
 
                 {/* Center Content */}
                 <div className="gsb-center">

@@ -10,6 +10,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import { useContextElement } from "@/context/Context";
 import LabelIcon from "@/components/labels/LabelIcon";
+import { useBogoCampaigns, getCampaignForProduct } from "@/utils/bogo";
 import { Skeleton } from "@mui/material";
 import {
   removeSpecialCharactersAndAmp,
@@ -361,6 +362,12 @@ export default function ProductCard({
     triggerToast,
   } = useContextElement();
 
+  const bogoCampaigns = useBogoCampaigns();
+  const bogoCampaign = useMemo(
+    () => getCampaignForProduct(bogoCampaigns, elm?.product_id),
+    [bogoCampaigns, elm?.product_id]
+  );
+
   const [isDiscountExpired, setIsDiscountExpired] = useState(false);
 
   useEffect(() => {
@@ -598,13 +605,33 @@ export default function ProductCard({
                 {t("Out Of Stock")}
               </div>
             ) : (
-              isDiscountActive && (
-                <div className="product-label label--sale">
-                  {elm.discount.discount_type === "percent"
-                    ? `Sale ${elm.discount.value}%`
-                    : "Sale"}
-                </div>
-              )
+              <>
+                {isDiscountActive && (
+                  <div className="product-label label--sale">
+                    {elm.discount.discount_type === "percent"
+                      ? `Sale ${elm.discount.value}%`
+                      : "Sale"}
+                  </div>
+                )}
+                {bogoCampaign && (
+                  <div
+                    className="product-label label--bogo"
+                    style={{
+                      backgroundColor: "#D4AF37",
+                      color: "#fff",
+                      // sit under the Sale badge when both apply
+                      ...(isDiscountActive ? { top: "34px" } : {}),
+                    }}
+                  >
+                    {bogoCampaign.name
+                      ? he.decode(bogoCampaign.name)
+                      : t("Buy {buy} Get {get} Free", {
+                        buy: Number(bogoCampaign.buy_quantity) || 1,
+                        get: Number(bogoCampaign.get_quantity) || 1,
+                      })}
+                  </div>
+                )}
+              </>
             )}
           </SwiperSlide>
 

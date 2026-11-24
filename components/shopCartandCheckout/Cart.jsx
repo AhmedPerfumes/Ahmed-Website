@@ -10,6 +10,7 @@ import Pagination1 from "../common/Pagination1";
 
 import { renderPrice } from "@/utlis/priceRenderer";
 import TamaraWidget from "@/components/TamaraWidget";
+import BogoProgress from "@/components/common/BogoProgress";
 
 export default function Cart() {
   const { shippingServiceCharges, vatTax, isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -353,6 +354,7 @@ export default function Cart() {
         {cartProducts.length ? (
           <>
             <h6 style={{ color: "red" }}>{error && error}</h6>
+            <BogoProgress className="mb-4" />
             <table className="cart-table">
               <thead>
                 <tr>

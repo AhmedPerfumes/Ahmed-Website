@@ -9,6 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '../../context/MenuContext';
 import VideoPanel from "../VideoPanel";
 import { useUser } from "@/context/UserContext";
+import BogoProgress from "@/components/common/BogoProgress";
 // import FreeGiftFeature from "../FreeGiftFeature";
 // import RamadanOffersModal from "../ramadan/RamadanOffersModal";
 
@@ -345,6 +346,8 @@ export default function CartDrawer() {
             )}
           </div>
           {/* <FreeGiftFeature /> */}
+
+          <BogoProgress className="mt-2" />
 
           {/* {
             (() => {
