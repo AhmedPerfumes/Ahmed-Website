@@ -69,7 +69,7 @@ const ShopOrderPaymentComplete = async ({ searchParams }) => {
 
   try {
     const data = orderCode ? await getOrderDetails(orderCode) : null;
-    console.log("data", data)  
+    // console.log("data", data)  
     return (
       <>
         <Header14 />
