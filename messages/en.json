@@ -1579,5 +1579,8 @@
   "Dakhoon Banner Description": "Handcrafted bakhoor and oudh maattar rich in natural resins and long lasting aroma, bringing the warmth of Arabian tradition into your home",
   "Shop Dakhoon": "Shop Dakhoon",
   "Explore Product": "Explore Product",
-  "View Full Collection": "View Full Collection"
+  "View Full Collection": "View Full Collection",
+  "Buy {buy} Get {get} Free": "Buy {buy} Get {get} Free",
+  "Add {count} more to get your free item": "Add {count, plural, one {# more product} other {# more products}} to get your free item",
+  "Free item unlocked! It is applied at checkout": "Free item unlocked! It is applied at checkout"
 }

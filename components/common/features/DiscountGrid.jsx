@@ -16,6 +16,7 @@ import {
 import { sortingOptions } from "@/data/products/productCategories";
 import ProductFilter from "../../shoplist/ProductFilter";
 import ProductCard, { ProductCardSkeleton } from "@/components/common/ProductCard";
+import { useBogoCampaigns } from "@/utils/bogo";
 
 function DiscountGrid({ title, onlyDiscounted = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -147,6 +148,12 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     setSearchTerm('');
   };
 
+  const bogoCampaigns = useBogoCampaigns();
+  const bogoProductIds = useMemo(
+    () => new Set(bogoCampaigns.flatMap((c) => c.buy_products.map((p) => String(p.product_id)))),
+    [bogoCampaigns]
+  );
+
   const filteredProducts = useMemo(() => {
     const [low, high] = priceRange;
 
@@ -167,8 +174,9 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
       if (p.price < low || p.price > high) return false;
 
       // 4. Campaign/Promotional Filter (Reverted to old logic)
+      // Sale page shows discounted products AND Buy X Get Y products
       if (onlyDiscounted) {
-        if (!p.discount) return false;
+        if (!p.discount && !bogoProductIds.has(String(p.product_id))) return false;
       }
 
       // 5. Category/Label Filter
@@ -192,7 +200,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     });
 
     return sortItems(filtered, sortOption);
-  }, [rawProducts, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
+  }, [rawProducts, bogoProductIds, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
 
   const totalPages = Math.ceil(filteredProducts.length / perPage);
   const currentProducts = filteredProducts.slice((page - 1) * perPage, page * perPage);

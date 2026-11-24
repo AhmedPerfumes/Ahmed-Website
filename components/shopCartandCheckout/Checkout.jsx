@@ -13,6 +13,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Pagination1 from "../common/Pagination1";
 import FreeGiftFeature from "@/components/FreeGiftFeature";
 import BogoFeature from "@/components/BogoFeature";
+import BogoProgress from "@/components/common/BogoProgress";
 import { data } from "jquery";
 import { useSearchParams } from "next/navigation";
 import { toast } from 'react-toastify';
@@ -1289,6 +1290,9 @@ export default function Checkout() {
     <>
       {cartProducts.length ? (
         <>
+          <div className="mb-3">
+            <BogoProgress />
+          </div>
           <BogoFeature />
           <form onSubmit={onOrder}>
             <div className="checkout-form">

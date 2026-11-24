@@ -586,7 +586,7 @@ export default function OrderThankYouSection({ orderDetails: initialOrderDetails
                                     <span>Qty: {item.qty || 1}</span>
                                     <span>·</span>
                                     <span>
-                                      {isGift ? "Free Gift" : `${parseFloat(item.price || 0).toFixed(2)} ${currency?.symbol || "AED"}`}
+                                      {isGift ? "Free Gift" : `${parseFloat(item.gross_amount || 0).toFixed(2)} ${currency?.symbol || "AED"}`}
                                     </span>
                                     {isGift && <span className={styles.freeGiftBadge}>Free Gift</span>}
                                   </div>
