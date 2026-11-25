@@ -7,6 +7,7 @@ import Image from "next/image";
 import he from "he";
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
+import BogoBadge from "@/components/common/BogoBadge";
 
 import { renderPrice } from "@/utlis/priceRenderer";
 
@@ -210,6 +211,13 @@ export default function ItemFamilySlider({ product, itemFamilyProds }) {
                                                 Sale {elm.discount.value}%
                                             </div>
                                         )
+                                    )}
+                                    {elm.product_qty > 0 && (
+                                        <BogoBadge
+                                            productId={elm.product_id}
+                                            getLabel={(buy, get) => t("Buy {buy} Get {get} Free", { buy, get })}
+                                            stacked={Boolean(elm.discount)}
+                                        />
                                     )}
                                     {isAddedToCartProducts(elm?.product_id)
                                         ? elm.product_qty > 0 && (
