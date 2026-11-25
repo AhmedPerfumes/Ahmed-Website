@@ -9,6 +9,7 @@ import he from 'he';
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from '@/context/MenuContext';
 import LabelIcon from "@/components/labels/LabelIcon";
+import BogoBadge from "@/components/common/BogoBadge";
 
 import { renderPrice } from "@/utlis/priceRenderer";
 
@@ -190,6 +191,13 @@ export default function RelatedSlider({ relatedProds }) {
                       Sale {elm.discount.value}%
                     </div>
                   )
+                )}
+                {elm.product_qty > 0 && (
+                  <BogoBadge
+                    productId={elm.product_id}
+                    getLabel={(buy, get) => t("Buy {buy} Get {get} Free", { buy, get })}
+                    stacked={Boolean(elm.discount && elm.discount.discount_type == 'percent')}
+                  />
                 )}
                 {
                   isAddedToCartProducts(elm?.product_id) ? 

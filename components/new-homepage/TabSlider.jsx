@@ -15,6 +15,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Skeleton from "@mui/material/Skeleton";
 import LabelIcon from "@/components/labels/LabelIcon";
+import BogoBadge from "@/components/common/BogoBadge";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -97,6 +98,7 @@ const TabSliderSkeleton = () => {
 
 export default function PopularProducts() {
   const t = useTranslations("PopularProducts");
+  const tRoot = useTranslations();
   const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
   const locale = useLocale();
 
@@ -404,6 +406,13 @@ export default function PopularProducts() {
                                 {t("sale", { value: item.discount.value })}
                               </div>
                             )
+                          )}
+                          {item.product_qty > 0 && (
+                            <BogoBadge
+                              productId={item.product_id}
+                              getLabel={(buy, get) => tRoot("Buy {buy} Get {get} Free", { buy, get })}
+                              stacked={isDiscountActive(item.discount) && item.discount.discount_type === 'percent'}
+                            />
                           )}
                           {/* --- END LABEL LOGIC --- */}
 
