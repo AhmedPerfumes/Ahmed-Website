@@ -429,6 +429,16 @@ const NewHero = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* National Day T&C link, bottom-right of the first banner only */}
+                        {i === 0 && (
+                            <Link
+                                href={`/${locale}/national-day-terms`}
+                                className="hero-tnc-link"
+                            >
+                                {locale === "ar" ? "تطبق الشروط والأحكام" : "T&C Apply"}
+                            </Link>
+                        )}
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -488,6 +498,42 @@ const NewHero = () => {
             </div>
 
             <style jsx global>{`
+                .hero-tnc-link {
+                    position: absolute;
+                    z-index: 5;
+                    bottom: 28px;
+                    inset-inline-end: 30px;
+                    padding: 7px 14px;
+                    border-radius: 999px;
+                    background: rgba(0, 0, 0, 0.5);
+                    border: 1px solid rgba(255, 255, 255, 0.45);
+                    color: #fff;
+                    font-family: sans-serif;
+                    font-size: 0.72rem;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    pointer-events: auto;
+                    transition: background 0.25s ease, color 0.25s ease;
+                }
+                .hero-tnc-link:hover,
+                .hero-tnc-link:focus-visible {
+                    background: #fff;
+                    color: #000;
+                }
+                .hero-tnc-link:focus-visible {
+                    outline: 2px solid #c5a059;
+                    outline-offset: 2px;
+                }
+                @media (max-width: 767px) {
+                    .hero-tnc-link {
+                        bottom: 20px;
+                        inset-inline-end: 16px;
+                        padding: 6px 12px;
+                        font-size: 0.66rem;
+                    }
+                }
+
                 .hero-thumb-strip {
                     position: absolute;
                     right: 30px;
