@@ -4331,3 +4331,40 @@ footer {
     margin-bottom: 1rem !important;
   }
 }
+
+
+/* UAE National Day Theme Mobile Quantity Selector Override */
+.product-card--uae-theme {
+  .pc__qty-selector {
+    border: 1px solid rgba(191, 149, 63, 0.55) !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-radius: 8px !important;
+    overflow: hidden;
+
+    .qty-btn {
+      background: rgba(191, 149, 63, 0.22) !important;
+      color: #1c1915 !important;
+      transition: background-color 0.2s ease;
+
+      &:active {
+        background: rgba(191, 149, 63, 0.38) !important;
+      }
+    }
+
+    .qty-value {
+      background: rgba(255, 252, 245, 0.25) !important;
+      color: #1c1915 !important;
+    }
+  }
+
+  .pc__qty-selector--desktop {
+    .qty-btn {
+      font-size: 1.25rem !important;
+    }
+    .qty-value {
+      font-size: 0.9375rem !important;
+    }
+  }
+}

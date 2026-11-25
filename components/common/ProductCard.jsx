@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
+import React, { useMemo, useState, useEffect, useRef, useCallback, useId } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import he from "he";
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import { useContextElement } from "@/context/Context";
 import LabelIcon from "@/components/labels/LabelIcon";
 import { useBogoCampaigns, getCampaignForProduct } from "@/utils/bogo";
+import { useUaeTheme } from "@/utils/uaeTheme";
 import { Skeleton } from "@mui/material";
 import {
   removeSpecialCharactersAndAmp,
@@ -321,6 +320,156 @@ export const ProductCardSkeleton = ({ className = "" }) => (
 );
 
 /**
+ * Decorative UAE National Day top-right curved flag ribbon SVG.
+ */
+export const UaeRibbonTopRight = () => {
+  const uid = useId().replace(/:/g, "");
+  return (
+    <svg
+      className="pc__uae-ribbon-tr"
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={`uaeTrRed-${uid}`} x1="15" y1="0" x2="95" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#9E0B14" />
+          <stop offset="45%" stopColor="#DC1F2A" />
+          <stop offset="78%" stopColor="#B8121C" />
+          <stop offset="100%" stopColor="#7A070E" />
+        </linearGradient>
+        <linearGradient id={`uaeTrGreen-${uid}`} x1="52" y1="0" x2="120" y2="48" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#005A2B" />
+          <stop offset="50%" stopColor="#00843D" />
+          <stop offset="100%" stopColor="#004D24" />
+        </linearGradient>
+        <linearGradient id={`uaeTrWhite-${uid}`} x1="42" y1="0" x2="120" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#DFDCD5" />
+          <stop offset="45%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#D6D1C7" />
+        </linearGradient>
+        <linearGradient id={`uaeTrBlack-${uid}`} x1="34" y1="6" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#141414" />
+          <stop offset="50%" stopColor="#333333" />
+          <stop offset="100%" stopColor="#0D0D0D" />
+        </linearGradient>
+        <linearGradient id={`uaeTrShadow-${uid}`} x1="25" y1="10" x2="115" y2="115" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#B89F72" stopOpacity="0.28" />
+          <stop offset="100%" stopColor="#B89F72" stopOpacity="0.06" />
+        </linearGradient>
+      </defs>
+      {/* Soft drop shadow on card */}
+      <path
+        d="M12 0 C38 8, 56 38, 72 64 C86 86, 102 104, 120 114 L120 0 Z"
+        fill={`url(#uaeTrShadow-${uid})`}
+      />
+      {/* Green top/outer stripe */}
+      <path
+        d="M66 0 L120 0 L120 44 C102 32, 86 18, 66 0 Z"
+        fill={`url(#uaeTrGreen-${uid})`}
+      />
+      {/* White middle stripe */}
+      <path
+        d="M46 0 L68 0 C87 18, 103 33, 120 43 L120 69 C98 56, 78 36, 46 0 Z"
+        fill={`url(#uaeTrWhite-${uid})`}
+      />
+      {/* Black inner stripe */}
+      <path
+        d="M36 0 L48 0 C78 36, 98 55, 120 68 L120 92 C94 78, 74 54, 56 26 C49 15, 43 6, 36 0 Z"
+        fill={`url(#uaeTrBlack-${uid})`}
+      />
+      {/* Glossy crimson red left sweeping fold */}
+      <path
+        d="M12 0 L40 0 C54 14, 65 34, 78 55 C90 73, 104 84, 120 90 L120 98 C98 92, 82 77, 67 54 C53 32, 40 9, 12 0 Z"
+        fill={`url(#uaeTrRed-${uid})`}
+      />
+      {/* Subtle silk sheen highlight */}
+      <path
+        d="M24 0 L32 0 C47 16, 59 38, 73 59 C85 77, 100 88, 118 93"
+        stroke="rgba(255,255,255,0.22)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
+/**
+ * Decorative UAE National Day bottom-left corner ribbon SVG.
+ */
+export const UaeRibbonBottomLeft = () => {
+  const uid = useId().replace(/:/g, "");
+  return (
+    <svg
+      className="pc__uae-ribbon-bl"
+      viewBox="0 0 84 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={`uaeBlRed-${uid}`} x1="0" y1="8" x2="62" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#9E0B14" />
+          <stop offset="50%" stopColor="#D61F2A" />
+          <stop offset="100%" stopColor="#7C0810" />
+        </linearGradient>
+        <linearGradient id={`uaeBlBlack-${uid}`} x1="0" y1="24" x2="46" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#1A1A1A" />
+          <stop offset="50%" stopColor="#353535" />
+          <stop offset="100%" stopColor="#0E0E0E" />
+        </linearGradient>
+        <linearGradient id={`uaeBlGreen-${uid}`} x1="0" y1="36" x2="36" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#005A2B" />
+          <stop offset="55%" stopColor="#00843D" />
+          <stop offset="100%" stopColor="#004D24" />
+        </linearGradient>
+      </defs>
+      {/* Soft shadow */}
+      <path
+        d="M0 10 C22 20, 44 38, 72 64 L0 64 Z"
+        fill="rgba(180, 154, 108, 0.2)"
+      />
+      {/* Red top curve */}
+      <path
+        d="M0 14 C18 22, 36 38, 60 64 L48 64 C29 44, 15 31, 0 24 Z"
+        fill={`url(#uaeBlRed-${uid})`}
+      />
+      {/* White curve */}
+      <path
+        d="M0 24 C15 31, 29 44, 48 64 L36 64 C21 48, 11 38, 0 33 Z"
+        fill="#F7F5F0"
+      />
+      {/* Black curve */}
+      <path
+        d="M0 33 C11 38, 21 48, 36 64 L24 64 C14 53, 7 46, 0 42 Z"
+        fill={`url(#uaeBlBlack-${uid})`}
+      />
+      {/* Green corner */}
+      <path
+        d="M0 42 C7 46, 14 53, 24 64 L0 64 Z"
+        fill={`url(#uaeBlGreen-${uid})`}
+      />
+    </svg>
+  );
+};
+
+/**
+ * Decorative champagne-gold UAE / Dubai skyline shadow backdrop.
+ */
+export const UaeSkylineBackdrop = () => (
+  <div className="pc__uae-skyline" aria-hidden="true">
+    <img
+      src="/assets/images/uae-skyline-shadow.png"
+      alt=""
+      loading="lazy"
+      decoding="async"
+      className="pc__uae-skyline-img"
+    />
+  </div>
+);
+
+/**
  * Standard reusable Product Card helper component.
  * References the canonical design and logic from Shop1.jsx.
  */
@@ -363,6 +512,7 @@ export default function ProductCard({
   } = useContextElement();
 
   const bogoCampaigns = useBogoCampaigns();
+  const isUaeTheme = useUaeTheme();
   const bogoCampaign = useMemo(
     () => getCampaignForProduct(bogoCampaigns, elm?.product_id),
     [bogoCampaigns, elm?.product_id]
@@ -502,172 +652,142 @@ export default function ProductCard({
     });
   };
 
-  const uniqueId = elm?.product_id ?? index;
-  const prevClass = `pc-prev-${uniqueId}`;
-  const nextClass = `pc-next-${uniqueId}`;
+  const displayCategory = useMemo(() => {
+    const rawCat =
+      (typeof category === "object"
+        ? category?.category_name || category?.name
+        : category) || elm?.category_name;
+    return rawCat ? t(rawCat) : "";
+  }, [category, elm?.category_name, t]);
+
+  const resolvedCardClassName = isUaeTheme
+    ? `${cardClassName} product-card--uae-theme`
+    : cardClassName;
 
   const cardContent = (
-    <div className={cardClassName}>
+    <div className={resolvedCardClassName}>
+      {/* Decorative UAE themed corner ribbons & skyline backdrop (active until env end date) */}
+      {isUaeTheme && (
+        <>
+          <UaeRibbonTopRight />
+          <UaeRibbonBottomLeft />
+          <UaeSkylineBackdrop />
+        </>
+      )}
+
       <div className="pc__img-wrapper">
-        <Swiper
-          className="swiper swiper-container background-img js-swiper-slider"
-          slidesPerView={1}
-          modules={[Navigation]}
-          allowTouchMove={false}
-          preventClicks={false}
-          preventClicksPropagation={false}
-          navigation={
-            showNavigation
-              ? {
-                prevEl: `.${prevClass}`,
-                nextEl: `.${nextClass}`,
-              }
-              : false
-          }
+        <Link href={productLink} className="pc__img-link">
+          {firstImage && (
+            <Image
+              loading={priority ? "eager" : "lazy"}
+              priority={priority}
+              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${firstImage}`}
+              width={imageWidth}
+              height={imageHeight}
+              alt={elm?.product_name || "img"}
+              className="pc__img"
+              sizes={sizes}
+            />
+          )}
+          {secondImage && (
+            <Image
+              loading="lazy"
+              src={`${process.env.NEXT_PUBLIC_API_URL}storage/${secondImage}`}
+              width={imageWidth}
+              height={imageHeight}
+              alt={elm?.product_name || "img"}
+              className="pc__img pc__img-second"
+              sizes={sizes}
+            />
+          )}
+        </Link>
+
+        {/* Top-Right: Countdown Box + Optional Labels */}
+        <div
+          className={`position-absolute top-0 end-0 mt-2 me-2 d-flex flex-column align-items-end${isUaeTheme ? " pc__top-right-meta" : ""}`}
+          style={{ gap: "4px", zIndex: 6, pointerEvents: "none" }}
         >
-          <SwiperSlide className="swiper-slide">
-            <Link href={productLink}>
-              {firstImage && (
-                <Image
-                  loading={priority ? "eager" : "lazy"}
-                  priority={priority}
-                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${firstImage}`}
-                  width={imageWidth}
-                  height={imageHeight}
-                  alt={elm?.product_name || "img"}
-                  className="pc__img"
-                  sizes={sizes}
-                />
-              )}
-              {secondImage && (
-                <Image
-                  loading="lazy"
-                  src={`${process.env.NEXT_PUBLIC_API_URL}storage/${secondImage}`}
-                  width={imageWidth}
-                  height={imageHeight}
-                  alt={elm?.product_name || "img"}
-                  className="pc__img pc__img-second"
-                  sizes={sizes}
-                />
-              )}
-            </Link>
+          {isDiscountActive &&
+            elm.discount?.end_date &&
+            Boolean(
+              elm.discount?.show_timer &&
+              elm.discount?.show_timer !== "1" &&
+              elm.discount?.show_timer !== 1
+            ) && (
+              <ProductCardCountdown
+                endDate={elm.discount.end_date}
+                startDate={elm.discount.start_date}
+                locale={locale}
+                onExpire={handleDiscountExpired}
+              />
+            )}
 
-            {/* Top-Right: Countdown Box + Optional Labels */}
-            <div
-              className="position-absolute top-0 end-0 mt-2 me-2 d-flex flex-column align-items-end"
-              style={{ gap: "4px", zIndex: 6, pointerEvents: "none" }}
-            >
-              {isDiscountActive &&
-                elm.discount?.end_date &&
-                Boolean(
-                  elm.discount?.show_timer &&
-                  elm.discount?.show_timer !== "1" &&
-                  elm.discount?.show_timer !== 1
-                ) && (
-                  <ProductCardCountdown
-                    endDate={elm.discount.end_date}
-                    startDate={elm.discount.start_date}
-                    locale={locale}
-                    onExpire={handleDiscountExpired}
-                  />
-                )}
-
-              {showLabels && (
-                <>
-                  {Array.isArray(elm?.labels) && elm.labels.length > 0 && (
-                    <div className="d-flex flex-column" style={{ gap: "4px" }}>
-                      {elm.labels.map((lbl, idx) => (
-                        <LabelIcon
-                          key={idx}
-                          name={lbl.label_name}
-                          title={lbl.label_name}
-                          icon={lbl.label_color}
-                          size={labelIconSize}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  {!Array.isArray(elm?.labels) && elm?.label_name && (
+          {showLabels && (
+            <>
+              {Array.isArray(elm?.labels) && elm.labels.length > 0 && (
+                <div className="d-flex flex-column" style={{ gap: "4px" }}>
+                  {elm.labels.map((lbl, idx) => (
                     <LabelIcon
-                      name={elm.label_name}
-                      title={elm.label_name}
-                      icon={elm.label_color}
+                      key={idx}
+                      name={lbl.label_name}
+                      title={lbl.label_name}
+                      icon={lbl.label_color}
                       size={labelIconSize}
                     />
-                  )}
-                </>
+                  ))}
+                </div>
               )}
-            </div>
-
-            {/* Top-Left: Sale or Out-of-Stock Badge */}
-            {elm?.product_qty <= 0 ? (
-              <div className="product-label label--out-of-stock">
-                {t("Out Of Stock")}
-              </div>
-            ) : (
-              <>
-                {isDiscountActive && (
-                  <div className="product-label label--sale">
-                    {elm.discount.discount_type === "percent"
-                      ? `Sale ${elm.discount.value}%`
-                      : "Sale"}
-                  </div>
-                )}
-                {bogoCampaign && (
-                  <div
-                    className="product-label label--bogo"
-                    style={{
-                      backgroundColor: "#D4AF37",
-                      color: "#fff",
-                      // sit under the Sale badge when both apply
-                      ...(isDiscountActive ? { top: "34px" } : {}),
-                    }}
-                  >
-                    {bogoCampaign.name
-                      ? he.decode(bogoCampaign.name)
-                      : t("Buy {buy} Get {get} Free", {
-                        buy: Number(bogoCampaign.buy_quantity) || 1,
-                        get: Number(bogoCampaign.get_quantity) || 1,
-                      })}
-                  </div>
-                )}
-              </>
-            )}
-          </SwiperSlide>
-
-          {showNavigation && (
-            <>
-              <span
-                className={`cursor-pointer pc__img-prev ${prevClass}`}
-                aria-label={t("Previous Image")}
-                role="button"
-              >
-                <svg
-                  width="7"
-                  height="11"
-                  viewBox="0 0 7 11"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_prev_sm" />
-                </svg>
-              </span>
-              <span
-                className={`cursor-pointer pc__img-next ${nextClass}`}
-                aria-label={t("Next Image")}
-                role="button"
-              >
-                <svg
-                  width="7"
-                  height="11"
-                  viewBox="0 0 7 11"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <use href="#icon_next_sm" />
-                </svg>
-              </span>
+              {!Array.isArray(elm?.labels) && elm?.label_name && (
+                <LabelIcon
+                  name={elm.label_name}
+                  title={elm.label_name}
+                  icon={elm.label_color}
+                  size={labelIconSize}
+                />
+              )}
             </>
           )}
-        </Swiper>
+        </div>
+
+        {/* Top-Left: Sale, BOGO, or Out-of-Stock Badge */}
+        {elm?.product_qty <= 0 ? (
+          <div className="product-label label--out-of-stock">
+            {t("Out Of Stock")}
+          </div>
+        ) : (
+          <>
+            {isDiscountActive && (
+              <div className="product-label label--sale">
+                {elm.discount.discount_type === "percent"
+                  ? `Sale ${elm.discount.value}%`
+                  : "Sale"}
+              </div>
+            )}
+            {bogoCampaign && (
+              <div
+                className="product-label label--bogo"
+                style={
+                  isUaeTheme
+                    ? isDiscountActive
+                      ? { top: "38px" }
+                      : undefined
+                    : {
+                        backgroundColor: "#D4AF37",
+                        color: "#fff",
+                        ...(isDiscountActive ? { top: "34px" } : {}),
+                      }
+                }
+              >
+                {bogoCampaign.name
+                  ? he.decode(bogoCampaign.name)
+                  : t("Buy {buy} Get {get} Free", {
+                    buy: Number(bogoCampaign.buy_quantity) || 1,
+                    get: Number(bogoCampaign.get_quantity) || 1,
+                  })}
+              </div>
+            )}
+          </>
+        )}
 
         <div className="product-card__actions">
           {quantity > 0 ? (
@@ -706,8 +826,16 @@ export default function ProductCard({
       </div>
 
       <div className="pc__info position-relative">
-        {showCategory && elm?.category_name && (
-          <p className="pc__category">{t(elm.category_name)}</p>
+        {showCategory && displayCategory && (
+          isUaeTheme ? (
+            <div className="pc__category-wrap">
+              <span className="pc__category-line pc__category-line--left" aria-hidden="true" />
+              <p className="pc__category">{displayCategory}</p>
+              <span className="pc__category-line pc__category-line--right" aria-hidden="true" />
+            </div>
+          ) : (
+            <p className="pc__category">{displayCategory}</p>
+          )
         )}
         <h6 className="pc__title">
           <Link href={productLink}>{displayName}</Link>

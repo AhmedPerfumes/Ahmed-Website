@@ -955,3 +955,385 @@ $card-image-height: 121.212122%;
     }
   }
 }
+
+
+/* ==========================================================================
+   UAE National Day Product Card Theme (active until NEXT_PUBLIC_UAE_THEME_END_DATE)
+   ========================================================================== */
+
+.products-grid:has(.product-card--uae-theme) {
+  --bs-gutter-x: 12px;
+  --bs-gutter-y: 14px;
+
+  @include media-breakpoint-up(md) {
+    --bs-gutter-x: 16px;
+    --bs-gutter-y: 20px;
+  }
+}
+
+.product-card-wrapper:has(.product-card--uae-theme) {
+  border: none;
+}
+
+.product-card--uae-theme:not(.featured-card) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  isolation: isolate;
+  border-radius: 12px;
+  background: radial-gradient(
+    ellipse 88% 68% at 50% 36%,
+    #ffffff 0%,
+    #fdfbf6 54%,
+    #f6efe2 100%
+  );
+  border: 1px solid rgba(196, 168, 114, 0.42);
+  box-shadow:
+    0 4px 16px rgba(120, 96, 52, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+
+  @include media-breakpoint-up(md) {
+    border-radius: 16px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: translateY(-3px);
+      border-color: rgba(191, 149, 63, 0.68);
+      box-shadow:
+        0 10px 26px rgba(120, 96, 52, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    &:has(.pc__img-second):hover {
+      .pc__img:not(.pc__img-second) {
+        opacity: 0;
+      }
+    }
+  }
+
+  .pc__uae-ribbon-tr {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 34%;
+    max-width: 108px;
+    min-width: 62px;
+    height: auto;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .pc__uae-ribbon-bl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24%;
+    max-width: 72px;
+    min-width: 44px;
+    height: auto;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .pc__uae-skyline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(246, 239, 226, 0.55) 0%,
+        rgba(246, 239, 226, 0.08) 45%,
+        transparent 100%
+      );
+      pointer-events: none;
+    }
+  }
+
+  .pc__uae-skyline-img {
+    display: block;
+    width: 104%;
+    max-width: none;
+    height: auto;
+    object-fit: contain;
+    object-position: center bottom;
+    opacity: 0.34;
+    mix-blend-mode: multiply;
+    user-select: none;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.45) 14%,
+      #000 32%,
+      #000 88%,
+      rgba(0, 0, 0, 0.65) 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.45) 14%,
+      #000 32%,
+      #000 88%,
+      rgba(0, 0, 0, 0.65) 100%
+    );
+  }
+
+  .pc__img-wrapper {
+    aspect-ratio: 4 / 4.35;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .pc__img-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pc__img {
+    height: 100%;
+    object-fit: contain;
+    padding: 26px 14px 6px;
+    mix-blend-mode: multiply;
+    transition: opacity 0.3s linear, transform 0.35s ease;
+
+    @include media-breakpoint-up(md) {
+      padding: 30px 18px 8px;
+    }
+  }
+
+  .pc__top-right-meta {
+    top: 44px !important;
+  }
+
+  .product-label {
+    top: 10px;
+    left: 10px;
+    right: auto;
+    z-index: 5;
+    justify-content: center;
+    max-width: calc(100% - 76px);
+    padding: 4px 11px;
+    border-radius: 999px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+
+    @include media-breakpoint-up(md) {
+      top: 12px;
+      left: 12px;
+      padding: 5px 13px;
+      font-size: 0.6875rem;
+    }
+  }
+
+  .label--sale {
+    background: linear-gradient(135deg, #1b6d4a 0%, #124d34 100%);
+    color: #fff;
+  }
+
+  .label--bogo {
+    background: linear-gradient(135deg, #c19b37 0%, #9b771e 100%);
+    color: #fff;
+  }
+
+  .label--out-of-stock {
+    background: linear-gradient(135deg, #5d5d5d 0%, #424242 100%);
+    color: #fff;
+  }
+
+  .pc__info {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding: 6px 12px 18px;
+
+    @include media-breakpoint-up(md) {
+      padding: 8px 16px 24px;
+    }
+  }
+
+  .pc__category-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .pc__category-line {
+    flex: 1;
+    max-width: 56px;
+    height: 1px;
+
+    &--left {
+      background: linear-gradient(to right, transparent, rgba(191, 149, 63, 0.72));
+    }
+
+    &--right {
+      background: linear-gradient(to left, transparent, rgba(191, 149, 63, 0.72));
+    }
+  }
+
+  .pc__category {
+    margin: 0;
+    color: #b08b3e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.25;
+    white-space: nowrap;
+
+    @include media-breakpoint-up(md) {
+      font-size: 0.8125rem;
+    }
+  }
+
+  .pc__title {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1c1915;
+
+    @include media-breakpoint-up(md) {
+      font-size: 1.1875rem;
+      margin: 0 0 6px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  .product-card__price {
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+    color: #1c1915;
+  }
+
+  .price {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #1c1915;
+
+    @include media-breakpoint-up(md) {
+      font-size: 1.0625rem;
+    }
+  }
+
+  .price-sale {
+    color: #c41e3a;
+  }
+
+  .pc__atc-mobile {
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid rgba(191, 149, 63, 0.55);
+    color: #1c1915;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+    &:active {
+      background: rgba(191, 149, 63, 0.24);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      border-color: rgba(191, 149, 63, 0.85);
+      color: #1c1915;
+    }
+
+    &--oos {
+      border-color: rgba(166, 123, 48, 0.28) !important;
+      color: #8f887d !important;
+      background: transparent !important;
+    }
+  }
+
+  .product-card__actions {
+    bottom: 8px;
+    left: 16px;
+    right: 16px;
+    background: rgba(255, 252, 245, 0.35);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    backdrop-filter: blur(8px) saturate(140%);
+    border: 1px solid rgba(191, 149, 63, 0.55);
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: transform 200ms ease-out, opacity 200ms ease-out, background-color 0.2s ease, border-color 0.2s ease;
+
+    @media (hover: hover) and (pointer: fine) {
+      .product-card:hover & {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+    }
+
+    .btn {
+      color: #1c1915;
+      font-size: 0.72rem;
+      height: 38px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+
+      &:hover {
+        background: rgba(191, 149, 63, 0.22);
+        color: #1c1915;
+      }
+
+      &:active {
+        background: rgba(191, 149, 63, 0.34);
+      }
+    }
+
+    .pc__qty-selector--desktop {
+      height: 38px;
+
+      .qty-btn {
+        background: rgba(191, 149, 63, 0.2);
+        color: #1c1915;
+        font-size: 1.15rem;
+        font-weight: 500;
+
+        &:hover {
+          color: #1c1915;
+          background: rgba(191, 149, 63, 0.34);
+        }
+
+        &:active {
+          background: rgba(191, 149, 63, 0.44);
+        }
+      }
+
+      .qty-value {
+        flex: 0 0 44px;
+        color: #1c1915;
+      }
+    }
+  }
+}

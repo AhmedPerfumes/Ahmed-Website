@@ -16,6 +16,12 @@ import { useMenu } from "@/context/MenuContext";
 import Skeleton from "@mui/material/Skeleton";
 import LabelIcon from "@/components/labels/LabelIcon";
 import BogoBadge from "@/components/common/BogoBadge";
+import {
+  UaeRibbonTopRight,
+  UaeRibbonBottomLeft,
+  UaeSkylineBackdrop,
+} from "@/components/common/ProductCard";
+import { useUaeTheme } from "@/utils/uaeTheme";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -101,6 +107,7 @@ export default function PopularProducts() {
   const tRoot = useTranslations();
   const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
   const locale = useLocale();
+  const isUaeTheme = useUaeTheme();
 
   const { currency, isLoading: isMenuLoading } = useMenu();
 
@@ -305,7 +312,7 @@ export default function PopularProducts() {
 
           {/* ===== SLIDER ===== */}
           {/* ===== SLIDER ===== */}
-          <div className={`popularProductsGutter ${styles.sliderContainer}`}>
+          <div className={`popularProductsGutter ${styles.sliderContainer} ${isUaeTheme ? styles.sliderContainerUae : ""}`}>
             <Swiper
               key={currentCategory}
               modules={[Keyboard]}
@@ -340,8 +347,22 @@ export default function PopularProducts() {
                 return (
                   <SwiperSlide key={item.product_id}>
                     <div className="product-card-wrapper">
-                      <div className="product-card" style={{ background: "#f5f1eb" }}>
-                        <div className="pc__img-wrapper" style={{ mixBlendMode: "multiply" }}>
+                      <div
+                        className={`product-card${isUaeTheme ? " product-card--uae-theme" : ""}`}
+                        style={isUaeTheme ? undefined : { background: "#f5f1eb" }}
+                      >
+                        {isUaeTheme && (
+                          <>
+                            <UaeRibbonTopRight />
+                            <UaeRibbonBottomLeft />
+                            <UaeSkylineBackdrop />
+                          </>
+                        )}
+
+                        <div
+                          className="pc__img-wrapper"
+                          style={isUaeTheme ? undefined : { mixBlendMode: "multiply" }}
+                        >
                           <Link
                             href={`/${locale}/shop/${clean(
                               item.category_name
@@ -349,6 +370,7 @@ export default function PopularProducts() {
                               item.category_name,
                               item.subcategory
                             )}/${clean(item.product_name)}`}
+                            className={isUaeTheme ? "pc__img-link" : undefined}
                           >
                             {imgs[0] && (
                               <Image
@@ -370,10 +392,12 @@ export default function PopularProducts() {
                             )}
                           </Link>
 
-
                           {/* --- ADDED LABEL LOGIC --- */}
                           {Array.isArray(item.labels) && item.labels.length > 0 && (
-                            <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 10 }}>
+                            <div
+                              className={`d-flex flex-column position-absolute top-0 end-0 mt-2 me-2${isUaeTheme ? " pc__top-right-meta" : ""}`}
+                              style={{ gap: "4px", zIndex: 10, pointerEvents: "none" }}
+                            >
                               {item.labels.map((lbl, idx) => (
                                 <LabelIcon
                                   key={idx}
@@ -386,7 +410,10 @@ export default function PopularProducts() {
                             </div>
                           )}
                           {!Array.isArray(item.labels) && item.label_name && (
-                            <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 10 }}>
+                            <div
+                              className={`position-absolute top-0 end-0 mt-2 me-2${isUaeTheme ? " pc__top-right-meta" : ""}`}
+                              style={{ zIndex: 10, pointerEvents: "none" }}
+                            >
                               <LabelIcon
                                 name={item.label_name}
                                 title={item.label_name}
@@ -397,14 +424,26 @@ export default function PopularProducts() {
                           )}
 
                           {item.product_qty <= 0 ? (
-                            <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
-                              {t("outOfStock")}
-                            </div>
+                            isUaeTheme ? (
+                              <div className="product-label label--out-of-stock">
+                                {t("outOfStock")}
+                              </div>
+                            ) : (
+                              <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                                {t("outOfStock")}
+                              </div>
+                            )
                           ) : (
                             isDiscountActive(item.discount) && item.discount.discount_type === 'percent' && (
-                              <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
-                                {t("sale", { value: item.discount.value })}
-                              </div>
+                              isUaeTheme ? (
+                                <div className="product-label label--sale">
+                                  {t("sale", { value: item.discount.value })}
+                                </div>
+                              ) : (
+                                <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                                  {t("sale", { value: item.discount.value })}
+                                </div>
+                              )
                             )
                           )}
                           {item.product_qty > 0 && (
@@ -485,7 +524,7 @@ export default function PopularProducts() {
           </div>
 
           {/* ===== INFO BLOCK ===== */}
-          <div className={styles.infoBlock}>
+          <div className={`${styles.infoBlock} ${isUaeTheme ? styles.infoBlockUae : ""}`}>
             <AnimatePresence mode="popLayout">
               {activeProduct && (
                 <motion.div
