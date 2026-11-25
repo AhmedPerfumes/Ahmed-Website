@@ -1444,5 +1444,9 @@
   "OUD & ROSES AURIC - THE EVOLUTION OF AN ICON": "عود أند روزس أوريك – تطوّر أيقونة ",
   "Buy {buy} Get {get} Free": "اشترِ {buy} واحصل على {get} مجاناً",
   "Add {count} more to get your free item": "أضف {count, plural, one {منتجاً واحداً} two {منتجين} few {# منتجات} many {# منتجاً} other {# منتج}} آخر للحصول على منتجك المجاني",
-  "Free item unlocked! It is applied at checkout": "تم فتح المنتج المجاني! سيتم تطبيقه عند إتمام الطلب"
+  "Free item unlocked! It is applied at checkout": "تم فتح المنتج المجاني! سيتم تطبيقه عند إتمام الطلب",
+  "Discounts": "الخصومات",
+  "Current offers": "العروض الحالية",
+  "All offers": "كل العروض",
+  "Buy X Get Y": "اشترِ واحصل"
 }

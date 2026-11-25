@@ -1582,5 +1582,9 @@
   "View Full Collection": "View Full Collection",
   "Buy {buy} Get {get} Free": "Buy {buy} Get {get} Free",
   "Add {count} more to get your free item": "Add {count, plural, one {# more product} other {# more products}} to get your free item",
-  "Free item unlocked! It is applied at checkout": "Free item unlocked! It is applied at checkout"
+  "Free item unlocked! It is applied at checkout": "Free item unlocked! It is applied at checkout",
+  "Discounts": "Discounts",
+  "Current offers": "Current offers",
+  "All offers": "All offers",
+  "Buy X Get Y": "Buy X Get Y"
 }
