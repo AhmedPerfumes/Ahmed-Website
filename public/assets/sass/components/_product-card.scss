@@ -66,6 +66,12 @@ $card-image-height: 121.212122%;
 }
 
 // Product card image
+.pc__img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .pc__img {
   position: absolute;
   top: 0;

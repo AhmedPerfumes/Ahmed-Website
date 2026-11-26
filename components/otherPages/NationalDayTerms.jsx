@@ -10,7 +10,7 @@ const SECTIONS = [
     points: [
       "This offer is applicable only to selected products participating in the Buy 3, Get 1 Free promotion.",
       'Eligible products will be clearly identified with a "Buy 3 Get 1 Free" badge on the product listing.',
-      "Customers must add 3 eligible products to their cart to receive 1 free product, subject to the promotional offer.",
+      "Customers must Add 4 eligible products to your cart and get 1 product free. Pay for only 3 products and receive the 4th free, subject to the promotional offer.",
       "A maximum quantity of 2 units per product is allowed under this promotion.",
       "Products not displaying the Buy 3 Get 1 Free badge are not eligible for this offer.",
       "This promotion cannot be combined with other promotional offers unless explicitly stated.",

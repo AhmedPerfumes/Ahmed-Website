@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import "./SaleOffersBar.css";
 
 /**
- * Sale page tabs: All / Buy X Get Y / Discounts.
+ * Sale page tabs: All / Buy X Get Y / Percentage Off / Flat Discount.
  * Selecting a tab filters the product grid; a tab only appears when it has products.
  * Styling lives in SaleOffersBar.css.
  */
@@ -26,6 +26,8 @@ export default function SaleOffersBar({ offers, selectedKey, onSelect }) {
 
   const labels = {
     bogo: t("Buy X Get Y"),
+    percent: t("Percentage Off"),
+    amount: t("Flat Discount"),
     discounts: t("Discounts"),
   };
 
@@ -38,7 +40,7 @@ export default function SaleOffersBar({ offers, selectedKey, onSelect }) {
             key={o.key}
             selected={selectedKey === o.key}
             onClick={() => onSelect(o.key)}
-            label={labels[o.key]}
+            label={labels[o.key] || t("Discounts")}
           />
         ))}
       </div>

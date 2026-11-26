@@ -22,6 +22,7 @@ import {
   UaeSkylineBackdrop,
 } from "@/components/common/ProductCard";
 import { useUaeTheme } from "@/utils/uaeTheme";
+import { removeSpecialCharactersAndAmp } from "@/utils/shop";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -105,7 +106,7 @@ const TabSliderSkeleton = () => {
 export default function PopularProducts() {
   const t = useTranslations("PopularProducts");
   const tRoot = useTranslations();
-  const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
+  const { addProductToCart, cartProducts, setCartProducts, triggerToast } = useContextElement();
   const locale = useLocale();
   const isUaeTheme = useUaeTheme();
 
@@ -117,20 +118,76 @@ export default function PopularProducts() {
   const [loading, setLoading] = useState(true);
 
   const getProductQuantity = (id) => {
-    const item = (cartProducts || []).find(p => p.product_id === id);
+    const item = (cartProducts || []).find((p) => p.product_id === id && !p.is_gift);
     return item ? item.quantity : 0;
   };
 
-  const updateQuantity = (id, delta) => {
+  const updateQuantity = (productOrId, delta) => {
     if (!setCartProducts) return;
-    setCartProducts(prev => {
-      return prev.map(p => {
-        if (p.product_id === id) {
-          const newQty = (p.quantity || 1) + delta;
-          return newQty > 0 ? { ...p, quantity: newQty } : null;
-        }
-        return p;
-      }).filter(Boolean);
+
+    const product =
+      typeof productOrId === "object" && productOrId !== null
+        ? productOrId
+        : filtered.find((p) => p.product_id === productOrId);
+    const targetId = product?.product_id ?? productOrId;
+
+    setCartProducts((prev = []) => {
+      return prev
+        .map((p) => {
+          if (p.product_id === targetId && !p.is_gift) {
+            const effectiveProduct = product || p;
+            const stock = Number(effectiveProduct?.product_qty ?? p?.product_qty) || 0;
+            const maxOrder = Number(effectiveProduct?.maximum_order_quantity ?? p?.maximum_order_quantity) || 0;
+            const limit = maxOrder > 0 ? (stock > 0 ? Math.min(maxOrder, stock) : maxOrder) : stock;
+
+            const newQty = (p.quantity || 1) + delta;
+            const rawName =
+              locale === "ar"
+                ? effectiveProduct?.product_name_ar || effectiveProduct?.product_name
+                : effectiveProduct?.product_name;
+            const toastName = rawName
+              ? removeSpecialCharactersAndAmp(rawName)
+              : "";
+
+            if (newQty <= 0) {
+              if (triggerToast) {
+                triggerToast({
+                  product: effectiveProduct,
+                  name: toastName,
+                  message: tRoot("Removed from cart"),
+                  type: "delete",
+                  duration: 2500,
+                });
+              }
+              return null;
+            }
+
+            if (delta > 0 && newQty > limit) {
+              const msg =
+                maxOrder > 0 && newQty > maxOrder
+                  ? (tRoot.has("CartDrawer.MaxQuantityAllowed")
+                      ? tRoot("CartDrawer.MaxQuantityAllowed", { limit: maxOrder })
+                      : `${tRoot("Maximum allowed quantity is")} ${maxOrder}`)
+                  : (locale === "ar" && tRoot.has("CartDrawer.MaxQuantityAvailable")
+                      ? tRoot("CartDrawer.MaxQuantityAvailable")
+                      : `${tRoot("Only")} ${stock} ${tRoot("left in stock")}`);
+              if (triggerToast) {
+                triggerToast({
+                  product: effectiveProduct,
+                  name: toastName,
+                  message: msg,
+                  type: "error",
+                  duration: 3000,
+                });
+              }
+              return p;
+            }
+
+            return { ...p, quantity: newQty };
+          }
+          return p;
+        })
+        .filter(Boolean);
     });
   };
 
@@ -465,7 +522,7 @@ export default function PopularProducts() {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      updateQuantity(item.product_id, -1);
+                                      updateQuantity(item, -1);
                                     }}
                                     aria-label="Decrease quantity"
                                   >
@@ -477,7 +534,7 @@ export default function PopularProducts() {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      updateQuantity(item.product_id, 1);
+                                      updateQuantity(item, 1);
                                     }}
                                     aria-label="Increase quantity"
                                   >

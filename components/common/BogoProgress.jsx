@@ -45,7 +45,7 @@ export default function BogoProgress({ className = "" }) {
               color: "#2C2C2C",
             }}
           >
-            {t("Buy {buy} Get {get} Free", { buy: p.buy, get: p.get })}
+            {t("Buy {buy} Get {get} Free", { buy: p.buy - 1, get: p.get })}
           </strong>
 
           <div style={{ fontSize: "13px", color: "#666", margin: "4px 0 8px" }}>

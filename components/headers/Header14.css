@@ -1280,3 +1280,1081 @@ a.header-tools__item:hover svg,
         display: block;
     }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UAE NATIONAL DAY HEADER REDESIGN (active until NEXT_PUBLIC_UAE_THEME_END_DATE)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.header--uae-theme {
+    background-color: #fdfaf3 !important;
+}
+
+/* Shared canvas wrapping Top Greeting Bar + Middle Skyline/Logo/Tools Row */
+.header--uae-theme .uae-header-canvas {
+    position: relative;
+    background: radial-gradient(
+        ellipse 48% 85% at 50% 60%,
+        #ffffff 0%,
+        #fdfaf2 48%,
+        #f7efe0 100%
+    );
+    /* Allow account hover menu & search popup to overflow vertically while clipping bg art via inner clip */
+    overflow: visible;
+}
+
+/* 3D Billowing Silk UAE Flag spanning Top Bar + Middle Row, sweeping far left towards center */
+.header--uae-theme .uae-header-flag-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44%;
+    max-width: none;
+    height: 100%;
+    object-fit: fill;
+    object-position: right top;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+}
+
+[dir="rtl"] .header--uae-theme .uae-header-flag-bg {
+    right: auto;
+    left: 0;
+    transform: scaleX(-1);
+}
+
+/* Row 1: Warm Ivory Top Bar with Dynamic Marquee */
+.header--uae-theme .uae-top-bar {
+    position: relative;
+    height: 38px;
+    background: transparent;
+    z-index: 3;
+}
+
+/* Gold hairline divider beneath Top Bar (passes neatly beneath the silk flag at z-index 1) */
+.header--uae-theme .uae-top-bar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(197, 155, 39, 0.35) 0%,
+        rgba(208, 168, 60, 0.85) 38%,
+        rgba(226, 194, 102, 0.95) 50%,
+        rgba(197, 155, 39, 0.55) 75%,
+        rgba(197, 155, 39, 0.2) 100%
+    );
+    pointer-events: none;
+}
+
+.header--uae-theme .uae-top-bar__flag-badge {
+    position: relative;
+    z-index: 4;
+}
+
+.header--uae-theme .uae-marquee-container {
+    position: relative;
+    z-index: 4;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 56%;
+    height: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 3%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 3%, #000 94%, transparent 100%);
+}
+
+.header--uae-theme .uae-marquee-track {
+    font-family: var(--font-heading, Georgia, "Times New Roman", serif);
+}
+
+.header--uae-theme .uae-marquee-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1f1a14 !important;
+    letter-spacing: 0.02em;
+    transition: color 0.25s ease;
+}
+
+.header--uae-theme .uae-marquee-link:hover {
+    color: #b8891e !important;
+}
+
+.header--uae-theme .uae-top-bar__sep {
+    color: rgba(166, 123, 48, 0.55);
+    font-weight: 300;
+    margin: 0 2px;
+}
+
+/* Row 2: Main Header Banner with Long Panoramic Dubai Skyline & Palms */
+.header--uae-theme .header-middle {
+    position: relative;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(198, 165, 92, 0.28);
+}
+
+.header--uae-theme .uae-header-skyline-bg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: auto;
+    max-width: 46%;
+    object-fit: contain;
+    object-position: left bottom;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}
+
+[dir="rtl"] .header--uae-theme .uae-header-skyline-bg {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+.header--uae-theme .uae-middle-inner {
+    min-height: 118px;
+    padding-top: 0.65rem !important;
+    padding-bottom: 0.65rem !important;
+    z-index: 4;
+}
+
+/* Left Currency & Language Selectors */
+.header--uae-theme .heeader-top__right {
+    position: relative;
+    z-index: 4;
+    gap: 0.65rem !important;
+}
+
+.header--uae-theme .heeader-top__right .form-select,
+.header--uae-theme .heeader-top__right select[name="store-language"],
+.header--uae-theme .heeader-top__right select[name="store-currency"] {
+    color: #1e1914 !important;
+    font-weight: 600 !important;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 8px rgba(253, 250, 242, 0.95);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%231e1914' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+.header--uae-theme .uae-select-divider {
+    display: inline-block;
+    width: 1px;
+    height: 14px;
+    background-color: rgba(130, 102, 52, 0.42);
+    flex-shrink: 0;
+}
+
+/* Center Gold Emblem Logo */
+.header--uae-theme .header-middle .logo {
+    position: relative;
+    z-index: 4;
+}
+
+.header--uae-theme .header-middle .logo::before {
+    content: "";
+    position: absolute;
+    inset: -16px -36px;
+    background: radial-gradient(
+        circle,
+        rgba(255, 253, 248, 0.92) 0%,
+        rgba(253, 250, 242, 0.55) 55%,
+        transparent 100%
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+
+.header--uae-theme .header-desk_type_8 .logo a img,
+.header--uae-theme .header-desk_type_8 .logo img,
+.header--uae-theme .header-middle .logo img {
+    width: 112px !important;
+    height: 112px !important;
+    max-width: 112px;
+    max-height: 112px;
+    filter: drop-shadow(0 2px 8px rgba(187, 140, 28, 0.14));
+}
+
+/* Luxury Perfumery Header Tools — Pearl-Ivory Glass & Brushed Champagne-Gold */
+.header--uae-theme .header-tools {
+    position: relative;
+    z-index: 5;
+    gap: 0.55rem !important;
+}
+
+.header--uae-theme .search-minimal {
+    margin-right: 0.35rem !important;
+}
+
+[dir="rtl"] .header--uae-theme .search-minimal {
+    margin-right: 0 !important;
+    margin-left: 0.35rem !important;
+}
+
+.header--uae-theme .search-minimal form {
+    width: 225px;
+}
+
+.header--uae-theme .search-minimal .form-control {
+    height: 38px !important;
+    border: 1px solid rgba(197, 155, 39, 0.62) !important;
+    border-bottom: 1px solid rgba(197, 155, 39, 0.62) !important;
+    border-radius: 999px !important;
+    padding: 0 40px 0 18px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 254, 251, 0.92) 0%,
+        rgba(250, 244, 232, 0.86) 100%
+    ) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
+    color: #241c12 !important;
+    font-size: 12px !important;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    box-shadow:
+        0 4px 16px rgba(24, 18, 8, 0.11),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+    transition: border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+}
+
+[dir="rtl"] .header--uae-theme .search-minimal .form-control {
+    padding: 0 18px 0 40px !important;
+}
+
+.header--uae-theme .search-minimal .form-control::placeholder {
+    color: #5c4d38 !important;
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.16em !important;
+    opacity: 0.9;
+}
+
+.header--uae-theme .search-minimal .search-icon {
+    right: 14px;
+    color: #8f6b1c !important;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+[dir="rtl"] .header--uae-theme .search-minimal .search-icon {
+    right: auto;
+    left: 14px;
+}
+
+.header--uae-theme .search-minimal .search-icon svg {
+    color: #8f6b1c !important;
+    width: 16px;
+    height: 16px;
+}
+
+.header--uae-theme .search-minimal .form-control:hover,
+.header--uae-theme .search-minimal .form-control:focus,
+.header--uae-theme .search-minimal .form-control:active {
+    border-color: #c59b27 !important;
+    border-bottom-color: #c59b27 !important;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.97) 0%,
+        rgba(253, 249, 240, 0.94) 100%
+    ) !important;
+    box-shadow:
+        0 6px 20px rgba(184, 137, 30, 0.20),
+        inset 0 1px 0 #ffffff !important;
+}
+
+.header--uae-theme .header-middle .header-tools__item {
+    width: 38px;
+    height: 38px;
+    padding: 0 !important;
+    border-radius: 50%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 254, 251, 0.92) 0%,
+        rgba(250, 244, 232, 0.86) 100%
+    );
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid rgba(197, 155, 39, 0.62);
+    box-shadow:
+        0 4px 14px rgba(24, 18, 8, 0.11),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    color: #241c12;
+    transition:
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        color 0.25s ease;
+}
+
+.header--uae-theme .header-middle .header-tools__item svg {
+    color: #241c12;
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.55;
+    filter: none;
+    transition: color 0.25s ease;
+}
+
+.header--uae-theme .header-middle .header-tools__item:hover {
+    transform: translateY(-1.5px);
+    background: linear-gradient(135deg, #ffffff 0%, #fcf7eb 100%);
+    border-color: #c59b27;
+    box-shadow:
+        0 7px 18px rgba(184, 137, 30, 0.24),
+        inset 0 1px 0 #ffffff;
+    color: #a67b1e;
+}
+
+.header--uae-theme .header-middle .header-tools__item:hover svg,
+.header--uae-theme .header-middle .header-tools__item .account-icon-link:hover svg {
+    color: #a67b1e;
+}
+
+.header--uae-theme .header-middle .header-tools__cart .cart-amount {
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    line-height: 16px;
+    border: 1.5px solid #fffdf8;
+    box-shadow: 0 2px 6px rgba(168, 124, 20, 0.35);
+}
+
+[dir="rtl"] .header--uae-theme .header-middle .header-tools__cart .cart-amount {
+    right: auto;
+    left: -4px;
+}
+
+@media (max-width: 1440px) {
+    .header--uae-theme .search-minimal form {
+        width: 195px;
+    }
+
+    .header--uae-theme .search-minimal .form-control {
+        height: 35px !important;
+    }
+
+    .header--uae-theme .header-middle .header-tools__item {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .header--uae-theme .search-minimal form {
+        width: 168px;
+    }
+
+    .header--uae-theme .search-minimal .form-control {
+        height: 33px !important;
+        padding: 0 34px 0 14px !important;
+    }
+
+    .header--uae-theme .header-middle .header-tools__item {
+        width: 33px;
+        height: 33px;
+    }
+
+    .header--uae-theme .header-middle .header-tools__item svg {
+        width: 15.5px;
+        height: 15.5px;
+    }
+}
+
+.header--uae-theme .header-tools__cart .cart-amount,
+.header-bottom-wrapper--uae-theme .sticky-actions .header-tools__cart .cart-amount {
+    background: linear-gradient(135deg, #d1a32c 0%, #a87c14 100%);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Row 3: Bottom Category Bar with Vertical Gold Pipe Separators & Gold Bottom Border */
+.header-bottom-wrapper--uae-theme,
+.header-bottom--uae-theme {
+    background-color: #fffefb !important;
+    border-top: 1px solid rgba(198, 165, 92, 0.25);
+    border-bottom: 2px solid #c59b27 !important;
+}
+
+.header-bottom-wrapper--uae-theme.is-stuck {
+    background-color: rgba(255, 254, 251, 0.96) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 24px rgba(120, 96, 52, 0.10);
+}
+
+.header-bottom-wrapper--uae-theme .header-bottom {
+    background: transparent !important;
+}
+
+/* Keep li.navigation__item position: static and ::before untouched so .mega-menu keeps its exact original full-width layout */
+.header-bottom-wrapper--uae-theme .navigation__list > li + li > a::before,
+.header-bottom-wrapper--uae-theme .navigation__list > li + li > .navigation__link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 13px;
+    background-color: rgba(197, 155, 39, 0.65);
+    pointer-events: none;
+}
+
+[dir="rtl"] .header-bottom-wrapper--uae-theme .navigation__list > li + li > a::before,
+[dir="rtl"] .header-bottom-wrapper--uae-theme .navigation__list > li + li > .navigation__link::before {
+    left: auto;
+    right: 0;
+}
+
+.header-bottom-wrapper--uae-theme .navigation__list > li > a,
+.header-bottom-wrapper--uae-theme .navigation__list > li > .navigation__link {
+    color: #1f1b16;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    padding: 11px 16px;
+}
+
+.header-bottom-wrapper--uae-theme .navigation__list > li > a:hover,
+.header-bottom-wrapper--uae-theme .navigation__list > li.active > a,
+.header-bottom-wrapper--uae-theme .navigation__list > li > .navigation__link.menu-active {
+    color: #b8891e;
+}
+
+/* Responsive scaling for laptops on UAE Header */
+@media (max-width: 1550px) {
+    .header-bottom-wrapper--uae-theme .navigation__list {
+        gap: 0 !important;
+    }
+
+    .header-bottom-wrapper--uae-theme .navigation__list > li > a,
+    .header-bottom-wrapper--uae-theme .navigation__list > li > .navigation__link {
+        padding: 10px 11px;
+        font-size: 11.5px;
+        letter-spacing: 0.035em;
+    }
+}
+
+@media (max-width: 1440px) {
+    .header--uae-theme .uae-middle-inner {
+        min-height: 102px;
+    }
+
+    .header--uae-theme .header-desk_type_8 .logo a img,
+    .header--uae-theme .header-desk_type_8 .logo img,
+    .header--uae-theme .header-middle .logo img {
+        width: 94px !important;
+        height: 94px !important;
+        max-width: 94px;
+        max-height: 94px;
+    }
+
+    .header-bottom-wrapper--uae-theme .navigation__list > li > a,
+    .header-bottom-wrapper--uae-theme .navigation__list > li > .navigation__link {
+        padding: 9px 9px;
+        font-size: 11px;
+        letter-spacing: 0.025em;
+    }
+}
+
+@media (max-width: 1280px) {
+    .header--uae-theme .uae-middle-inner {
+        min-height: 92px;
+    }
+
+    .header--uae-theme .header-desk_type_8 .logo a img,
+    .header--uae-theme .header-desk_type_8 .logo img,
+    .header--uae-theme .header-middle .logo img {
+        width: 82px !important;
+        height: 82px !important;
+        max-width: 82px;
+        max-height: 82px;
+    }
+
+    .header-bottom-wrapper--uae-theme .navigation__list > li > a,
+    .header-bottom-wrapper--uae-theme .navigation__list > li > .navigation__link {
+        padding: 8px 7px;
+        font-size: 10.5px;
+        letter-spacing: 0.015em;
+    }
+}
+
+@media (max-width: 1100px) {
+    .header-bottom-wrapper--uae-theme .navigation__list > li > a,
+    .header-bottom-wrapper--uae-theme .navigation__list > li > .navigation__link {
+        padding: 7px 5px;
+        font-size: 10px;
+        letter-spacing: 0.01em;
+    }
+}
+
+/* ─── Mobile UAE Header Theme (Screens <= 991px) ─── */
+.uae-mobile-top-bar {
+    height: 34px;
+    background: linear-gradient(90deg, #fdfaf2 0%, #f8f0df 100%);
+    border-bottom: 1px solid rgba(197, 155, 39, 0.55);
+    padding: 0 12px;
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: 11.5px;
+    color: #241e18;
+}
+
+.header-mobile--uae-theme {
+    background: radial-gradient(circle at 50% 50%, #ffffff 0%, #fdfaf2 55%, #f6eedc 100%) !important;
+    border-bottom: 2px solid #c59b27 !important;
+}
+
+.header-mobile--uae-theme .uae-mobile-skyline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 92%;
+    width: 44%;
+    object-fit: fill;
+    object-position: left bottom;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.header-mobile--uae-theme .uae-mobile-flag {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 44%;
+    object-fit: fill;
+    object-position: right top;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+
+/* ─── UAE National Day Mega-Menu Redesign (mapped to useUaeTheme env timer) ─── */
+.header-bottom-wrapper--uae-theme .mega-menu,
+.mega-menu--uae-theme {
+    position: absolute;
+    overflow: hidden;
+    background: radial-gradient(
+        ellipse 68% 92% at 46% 38%,
+        #fffefb 0%,
+        #fdfaf1 54%,
+        #f6eedc 100%
+    ) !important;
+    border-top: 1px solid rgba(197, 155, 39, 0.32) !important;
+    border-bottom: 2px solid #c59b27 !important;
+    box-shadow:
+        0 22px 48px rgba(28, 20, 8, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.mega-menu--uae-theme .uae-mega-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.mega-menu--uae-theme .uae-mega-decor__skyline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 92%;
+    width: auto;
+    max-width: 42%;
+    object-fit: contain;
+    object-position: left bottom;
+    opacity: 0.44;
+}
+
+[dir="rtl"] .mega-menu--uae-theme .uae-mega-decor__skyline {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+.mega-menu--uae-theme .uae-mega-decor__flag {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 92%;
+    width: auto;
+    max-width: 34%;
+    object-fit: contain;
+    object-position: right bottom;
+    opacity: 0.58;
+}
+
+[dir="rtl"] .mega-menu--uae-theme .uae-mega-decor__flag {
+    right: auto;
+    left: 0;
+    transform: scaleX(-1);
+}
+
+.mega-menu--uae-theme .uae-mega-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Sub-menu Column Title ("PRODUCT TYPES") */
+.header-bottom-wrapper--uae-theme .mega-menu .sub-menu__title,
+.mega-menu--uae-theme .sub-menu__title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9e7419 !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.16em !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 14px !important;
+    border-bottom: none !important;
+}
+
+.mega-menu--uae-theme .sub-menu__title::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #c59b27;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+}
+
+.mega-menu--uae-theme .sub-menu__title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(197, 155, 39, 0.78) 0%,
+        rgba(197, 155, 39, 0.25) 68%,
+        transparent 100%
+    );
+}
+
+[dir="rtl"] .mega-menu--uae-theme .sub-menu__title::after {
+    background: linear-gradient(
+        270deg,
+        rgba(197, 155, 39, 0.78) 0%,
+        rgba(197, 155, 39, 0.25) 68%,
+        transparent 100%
+    );
+}
+
+/* Sub-category Links */
+.mega-menu--uae-theme .sub-menu__item {
+    margin-bottom: 4px;
+}
+
+.header-bottom-wrapper--uae-theme .mega-menu .sub-menu__item .menu-link,
+.mega-menu--uae-theme .sub-menu__item .menu-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px !important;
+    border-radius: 6px;
+    color: #241c12 !important;
+    font-size: 12.5px !important;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Suppress default underline so pill-highlight + gold shift feels cleaner */
+.mega-menu--uae-theme .sub-menu__item .menu-link_us-s::after {
+    display: none !important;
+}
+
+.header-bottom-wrapper--uae-theme .mega-menu .sub-menu__item .menu-link:hover,
+.mega-menu--uae-theme .sub-menu__item .menu-link:hover,
+.mega-menu--uae-theme .sub-menu__item .menu-link.menu-active {
+    color: #9e7419 !important;
+    background-color: rgba(197, 155, 39, 0.11);
+    transform: translateX(4px);
+}
+
+[dir="rtl"] .header-bottom-wrapper--uae-theme .mega-menu .sub-menu__item .menu-link:hover,
+[dir="rtl"] .mega-menu--uae-theme .sub-menu__item .menu-link:hover,
+[dir="rtl"] .mega-menu--uae-theme .sub-menu__item .menu-link.menu-active {
+    transform: translateX(-4px);
+}
+
+/* Editorial Media Cards inside Mega-Menu */
+.mega-menu--uae-theme .mega-menu__media .position-relative {
+    border-radius: 12px !important;
+    border: 1px solid rgba(197, 155, 39, 0.50) !important;
+    background-color: #fdfaf2;
+    box-shadow:
+        0 8px 24px rgba(82, 60, 20, 0.11),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+.mega-menu--uae-theme .mega-menu__media .position-relative a,
+.mega-menu--uae-theme .mega-menu__img {
+    border-radius: 11px !important;
+}
+
+.mega-menu--uae-theme .mega-menu__media:hover .position-relative {
+    border-color: #c59b27 !important;
+    box-shadow:
+        0 14px 32px rgba(166, 123, 30, 0.22),
+        inset 0 1px 0 #ffffff !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE HEADER ICONS & MOBILE MEGA-MENU NAVIGATION DRAWER (UAE Theme)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Circular Pearl-Ivory & Brushed-Gold Medallions for Mobile Nav Toggle, Search & Cart */
+.header-mobile--uae-theme .uae-mobile-icon-btn,
+.header-mobile--uae-theme .mobile-nav-activator {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+    padding: 0 !important;
+    border-radius: 50%;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 254, 251, 0.94) 0%,
+        rgba(250, 244, 232, 0.88) 100%
+    );
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    backdrop-filter: blur(10px) saturate(150%);
+    border: 1px solid rgba(197, 155, 39, 0.65);
+    box-shadow:
+        0 3px 12px rgba(24, 18, 8, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.96);
+    color: #1e1810 !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-mobile--uae-theme .uae-mobile-icon-btn svg,
+.header-mobile--uae-theme .mobile-nav-activator svg {
+    color: #1e1810 !important;
+    fill: currentColor;
+}
+
+.header-mobile--uae-theme .mobile-nav-activator .btn-close-lg {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 13px 13px !important;
+}
+
+.header-mobile--uae-theme .uae-mobile-icon-btn:active,
+.header-mobile--uae-theme .mobile-nav-activator:active {
+    transform: scale(0.94);
+    border-color: #c59b27;
+}
+
+.header-mobile--uae-theme .header-tools__cart .cart-amount {
+    top: -4px;
+    right: -5px;
+    min-width: 18px;
+    height: 18px;
+    line-height: 15px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d1a32c 0%, #a87c14 100%);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    border: 1.5px solid #fffdf8;
+    box-shadow: 0 2px 6px rgba(168, 124, 20, 0.35);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+[dir="rtl"] .header-mobile--uae-theme .header-tools__cart .cart-amount {
+    right: auto;
+    left: -5px;
+}
+
+/* Expanded Mobile Search Input inside Header */
+.header-mobile--uae-theme form input.rounded-pill {
+    background: rgba(255, 254, 251, 0.96) !important;
+    border: 1px solid rgba(197, 155, 39, 0.68) !important;
+    color: #241c12 !important;
+    box-shadow: 0 3px 12px rgba(24, 18, 8, 0.10) !important;
+}
+
+/* Mobile Navigation Drawer — Redesigned to Match UAE Mega-Menu */
+.header-mobile--uae-theme .header-mobile__navigation {
+    background: linear-gradient(
+        180deg,
+        #fffefb 0%,
+        #fdfaf1 54%,
+        #f5ecda 100%
+    ) !important;
+    border-top: none !important;
+    border-bottom: 2px solid #c59b27;
+}
+
+.header-mobile--uae-theme .uae-mobile-nav-decor {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 260px;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-opened .header-mobile--uae-theme .uae-mobile-nav-decor {
+    opacity: 1;
+}
+
+.header-mobile--uae-theme .uae-mobile-nav-decor__left {
+    position: absolute;
+    left: 0;
+    bottom: 52px;
+    width: 62%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+    object-position: left bottom;
+    opacity: 0.30;
+}
+
+[dir="rtl"] .header-mobile--uae-theme .uae-mobile-nav-decor__left {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+.header-mobile--uae-theme .uae-mobile-nav-decor__right {
+    position: absolute;
+    right: 0;
+    bottom: 52px;
+    width: 54%;
+    max-width: 240px;
+    height: auto;
+    object-fit: contain;
+    object-position: right bottom;
+    opacity: 0.46;
+}
+
+[dir="rtl"] .header-mobile--uae-theme .uae-mobile-nav-decor__right {
+    right: auto;
+    left: 0;
+    transform: scaleX(-1);
+}
+
+/* Category Rows & Gold Hairlines */
+.header-mobile--uae-theme .header-mobile__navigation .navigation__item {
+    border-bottom: 1px solid rgba(197, 155, 39, 0.24) !important;
+}
+
+.header-mobile--uae-theme .header-mobile__navigation .navigation__link {
+    color: #221b13;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    transition: color 0.2s ease;
+}
+
+.header-mobile--uae-theme .header-mobile__navigation .navigation__item.is-expanded > div > .navigation__link,
+.header-mobile--uae-theme .header-mobile__navigation .navigation__link.menu-active {
+    color: #9e7419 !important;
+}
+
+/* Circular Pearl-Gold + / − Accordion Button */
+.header-mobile--uae-theme .header-mobile__navigation .toggle-button {
+    width: 28px;
+    height: 28px;
+    padding: 0 !important;
+    border-radius: 50%;
+    border: 1px solid rgba(197, 155, 39, 0.45) !important;
+    background: rgba(255, 254, 250, 0.85) !important;
+    color: #9e7419 !important;
+    font-size: 1.05rem !important;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.header-mobile--uae-theme .header-mobile__navigation .toggle-button.is-open {
+    background: rgba(197, 155, 39, 0.18) !important;
+    border-color: #c59b27 !important;
+}
+
+/* Expanded Sub-Menu Panel matching Desktop Mega-Menu */
+.header-mobile--uae-theme .uae-mobile-submenu-panel {
+    margin: 2px 0 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255, 253, 248, 0.78);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(197, 155, 39, 0.30);
+    box-shadow: 0 4px 16px rgba(120, 96, 52, 0.06);
+}
+
+.header-mobile--uae-theme .uae-mobile-submenu-heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #9e7419;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.header-mobile--uae-theme .uae-mobile-submenu-heading::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(197, 155, 39, 0.72) 0%,
+        rgba(197, 155, 39, 0.2) 70%,
+        transparent 100%
+    );
+}
+
+[dir="rtl"] .header-mobile--uae-theme .uae-mobile-submenu-heading::after {
+    background: linear-gradient(
+        270deg,
+        rgba(197, 155, 39, 0.72) 0%,
+        rgba(197, 155, 39, 0.2) 70%,
+        transparent 100%
+    );
+}
+
+.header-mobile--uae-theme .uae-mobile-submenu-diamond {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background-color: #c59b27;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+}
+
+.header-mobile--uae-theme .uae-mobile-submenu-panel .sub-menu__item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 2px;
+}
+
+.header-mobile--uae-theme .uae-mobile-submenu-panel .menu-link {
+    color: #2c2318 !important;
+    font-weight: 500;
+    font-size: 12px !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 6px 10px !important;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-mobile--uae-theme .uae-mobile-submenu-panel .menu-link:active,
+.header-mobile--uae-theme .uae-mobile-submenu-panel .menu-link.menu-active {
+    color: #9e7419 !important;
+    background: rgba(197, 155, 39, 0.12);
+}
+
+/* 2-Column Editorial Media Cards inside Mobile Accordion */
+.header-mobile--uae-theme .uae-mobile-mega-media {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.header-mobile--uae-theme .uae-mobile-mega-card {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(197, 155, 39, 0.48);
+    box-shadow: 0 4px 12px rgba(82, 60, 20, 0.10);
+    background: #fdfaf2;
+}
+
+.header-mobile--uae-theme .uae-mobile-mega-img {
+    display: block;
+    width: 100%;
+    height: 92px;
+    object-fit: cover;
+}
+
+/* Mobile Drawer Footer: Find a Store / Language / Country & Social Icons */
+.header-mobile--uae-theme .uae-mobile-nav-footer {
+    border-top: 1px solid rgba(197, 155, 39, 0.28) !important;
+}
+
+.header-mobile--uae-theme .uae-mobile-utility-wrap {
+    border-bottom: 1px solid rgba(197, 155, 39, 0.24) !important;
+}
+
+.header-mobile--uae-theme .uae-mobile-utility-card {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 254, 251, 0.90) 0%,
+        rgba(250, 244, 232, 0.82) 100%
+    ) !important;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(197, 155, 39, 0.48) !important;
+    border-radius: 8px !important;
+    color: #221b13 !important;
+    box-shadow: 0 3px 10px rgba(82, 60, 20, 0.06);
+}
+
+.header-mobile--uae-theme .uae-mobile-utility-label {
+    color: #9e7419 !important;
+}
+
+.header-mobile--uae-theme .social-links {
+    gap: 10px;
+    padding-top: 6px;
+}
+
+.header-mobile--uae-theme .social-links .footer__social-link {
+    width: 34px;
+    height: 34px;
+    padding: 0 !important;
+    border-radius: 50%;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 254, 250, 0.88);
+    border: 1px solid rgba(197, 155, 39, 0.48);
+    color: #221b13;
+    box-shadow: 0 2px 8px rgba(82, 60, 20, 0.08);
+}

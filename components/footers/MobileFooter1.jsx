@@ -8,12 +8,14 @@ import { useMenu } from "../../context/MenuContext";
 import UserLoggedIn from "../headers/components/UserLoggedIn";
 import User from "../headers/components/User";
 import { BsTruck } from "react-icons/bs";
+import { useUaeTheme } from "@/utils/uaeTheme";
 
 export default function MobileFooter1() {
     const locale = useLocale();
     const [showFooter, setShowFooter] = useState(false);
     const { isLoggedIn } = useUser();
     const { homeSliders } = useMenu();
+    const isUaeTheme = useUaeTheme();
 
     useEffect(() => {
         setShowFooter(true);
@@ -33,7 +35,9 @@ export default function MobileFooter1() {
 
     return (
         <footer
-            className={`footer-mobile container w-100 px-2 d-md-none bg-body ${
+            className={`footer-mobile container w-100 px-2 d-md-none ${
+                isUaeTheme ? "footer-mobile--uae-theme" : "bg-body"
+            } ${
                 showFooter ? "position-fixed footer-mobile_initialized" : ""
             }`}
         >
@@ -90,8 +94,10 @@ export default function MobileFooter1() {
                                     borderRadius: "50%",
                                     overflow: "hidden",
                                     position: "relative",
-                                    border: "2px solid #ffffff",
-                                    boxShadow: "0 3px 10px rgba(0,0,0,0.15)",
+                                    border: isUaeTheme ? "2px solid #c59b27" : "2px solid #ffffff",
+                                    boxShadow: isUaeTheme
+                                        ? "0 4px 14px rgba(184, 137, 30, 0.30), 0 0 0 2px #fffdf8"
+                                        : "0 3px 10px rgba(0,0,0,0.15)",
                                 }}
                             >
                                 <Image
