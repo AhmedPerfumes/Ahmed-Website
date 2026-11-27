@@ -6,7 +6,7 @@ import CityWalk from "@/components/campagin/Citywalk";
 
 export async function generateMetadata({ params }) {
   const { locale } = params;
-
+  const isArabic = locale === "ar";
   const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_ORIGIN || "https://ae.ahmedalmaghribi.com";
 
   const canonicalUrl = `${baseUrl}/${locale}/sale`;
@@ -14,9 +14,13 @@ export async function generateMetadata({ params }) {
   return {
     metadataBase: new URL(baseUrl),
 
-    title: "Perfumes | Buy Best Perfumes Online | Ahmed Perfume",
+    title: isArabic
+      ? "عروض اليوم الوطني الإماراتي على العطور | أحمد المغربي"
+      : "UAE National Day Offers & Perfume Sale | Ahmed Al Maghribi",
 
-    description: "Buy Best Perfumes Online Ahmed Perfume",
+    description: isArabic
+      ? "اكتشف عروض اليوم الوطني الإماراتي على العطور الفاخرة من أحمد المغربي. تسوق أفضل العروض والخصومات الحصرية على تشكيلة متنوعة من العطور."
+      : "Explore exclusive UAE National Day offers on luxury perfumes at Ahmed Al Maghribi. Discover special perfume deals and limited-time discounts. Shop Now!",
 
     icons: {
       icon: '/assets/images/ahmed-favicon.png',
