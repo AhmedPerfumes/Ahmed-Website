@@ -1,497 +1,279 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useReducedMotion, useInView } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import "./KSeriesShowcase.css";
 
-const backgroundVariants = {
-  initial: { opacity: 0.2 },
-  animate: { opacity: 1, transition: { duration: 1.2 } },
-  exit: { opacity: 0.2, transition: { duration: 0.6 } }
+// Each era has a background colour taken from its bottle.
+const ERAS = [
+  {
+    year: "2000",
+    label: "K 2000",
+    word: "THE ROOTS",
+    tag: "The Roots",
+    text: "Mr. Kafeel Ahmed’s beginnings: a return to authenticity, where every drop is a story of craftsmanship born from nature.",
+    img: "/assets/images/kseries/bottle/past_center.png",
+    bg: "radial-gradient(ellipse at 50% 55%, #ebcd9f 0%, #d5ab72 55%, #b8864c 100%)",
+    ink: "#2b1a0a",
+    accent: "#6b4420",
+    ghost: "rgba(120, 76, 30, 0.2)",
+  },
+  {
+    year: "2025",
+    label: "K 2025",
+    word: "THE ALCHEMY LAB",
+    tag: "The Alchemy Lab",
+    text: "Mr. Kafeel Ahmed’s creative evolution: science, soul and scent blended into a work of living art.",
+    img: "/assets/images/kseries/bottle/present_center.png",
+    bg: "radial-gradient(ellipse at 50% 55%, #f4e8c6 0%, #e3cc96 55%, #cbab63 100%)",
+    ink: "#2a2412",
+    accent: "#7a5d1c",
+    ghost: "rgba(140, 108, 34, 0.2)",
+  },
+  {
+    year: "2050",
+    label: "K 2050",
+    word: "THE BEYOND",
+    tag: "The Beyond",
+    text: "An olfactory glimpse into tomorrow, where scent becomes emotion: the ultimate expression of imagination and connection.",
+    img: "/assets/images/kseries/bottle/future_center.png",
+    bg: "radial-gradient(ellipse at 50% 55%, #dfe9f3 0%, #b5cadb 55%, #8ca7c0 100%)",
+    ink: "#0f1e2d",
+    accent: "#2d4a66",
+    ghost: "rgba(45, 74, 102, 0.18)",
+  },
+];
+
+const EASE = [0.22, 1, 0.36, 1];
+
+// dir: 1 = moving to the next era, -1 = previous
+// The big word is split into letters; each letter rises out of a mask.
+const wordV = {
+  enter: {},
+  center: { transition: { staggerChildren: 0.045, delayChildren: 0.25 } },
+  exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } },
+};
+const letterV = {
+  enter: { y: "115%" },
+  center: { y: "0%", transition: { duration: 0.9, ease: EASE } },
+  exit: { y: "-115%", transition: { duration: 0.5, ease: EASE } },
+};
+const fadeUp = (delay) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, ease: EASE, delay },
+});
+const bottleV = {
+  enter: (d) => ({ x: d * 180, y: d === 0 ? -90 : 0, opacity: 0, rotate: d * 22, scale: 0.88 }),
+  center: {
+    x: 0, y: 0, opacity: 1, rotate: 0, scale: 1,
+    transition: { type: "spring", stiffness: 70, damping: 16, mass: 1, delay: 0.15 },
+  },
+  exit: (d) => ({
+    x: d * -180, opacity: 0, rotate: d * -22, scale: 0.88,
+    transition: { duration: 0.5, ease: EASE },
+  }),
+};
+const copyV = {
+  enter: { opacity: 0, y: 24 },
+  center: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE, delay: 0.25 } },
+  exit: { opacity: 0, y: -12, transition: { duration: 0.3 } },
 };
 
-const GRADIENT_OVERLAY = "linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, rgba(26, 26, 26, 0.9) 100%)";
-const HIGHLIGHT_COLOR = "#e5d4b2";
-const GLOW_COLOR = HIGHLIGHT_COLOR;
-
-export default function FamilySection({ data = {} }) {
+export default function ProductShowcase() {
   const locale = useLocale();
   const t = useTranslations();
-  const baseUrl = `${process.env.NEXT_PUBLIC_DEFAULT_ORIGIN}/${locale}/k-series/`;
-  const [isMobile, setIsMobile] = useState(false);
-  const [deviceType, setDeviceType] = useState("desktop");
-  const [mounted, setMounted] = useState(false);
+  const reduce = useReducedMotion();
+  const [[i, dir], setState] = useState([1, 0]); // dir 0 = first entrance
+  const sectionRef = useRef(null);
+  const inView = useInView(sectionRef, { once: true, amount: 0.35 });
+  const era = ERAS[i];
+  const baseUrl = `/${locale}/k-series/`;
 
+  const go = (n, d) => setState([(n + ERAS.length) % ERAS.length, d]);
+  const next = () => go(i + 1, 1);
+  const prev = () => go(i - 1, -1);
+  const [paused, setPaused] = useState(false);
+  const AUTO_MS = 4500;
+
+  // auto-advance; any manual change (i) restarts the timer
   useEffect(() => {
-    setMounted(true);
+    if (!inView || paused || reduce) return;
+    const id = setTimeout(() => {
+      if (document.hidden) return;
+      setState(([cur]) => [(cur + 1) % ERAS.length, 1]);
+    }, AUTO_MS);
+    return () => clearTimeout(id);
+  }, [i, inView, paused, reduce]);
 
-    const handleResize = () => {
-      const w = window.innerWidth;
-      if (w < 768) {
-        setIsMobile(true);
-        setDeviceType("mobile");
-      } else if (w <= 1536) {
-        setIsMobile(false);
-        setDeviceType("laptop");
-      } else {
-        setIsMobile(false);
-        setDeviceType("desktop");
-      }
-    };
-    handleResize();
+  const jump = (n) => n !== i && go(n, n > i ? 1 : -1);
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const items = [
-    { 
-      label: "K 2000",
-      imgCenter: "/assets/images/kseries/bottle/past_center.png",
-      imgLeft: "/assets/images/kseries/bottle/past_left.png",
-      imgRight: "/assets/images/kseries/bottle/past_right.png",
-      nameImg: "/assets/images/2000.svg",
-      link: `${baseUrl}2000`,
-      bgImg: "https://admin.ahmedalmaghribi.com/public/storage/banners/the-roots-background.jpg"
-    },
-    { 
-      label: "K 2025",
-      imgCenter: "/assets/images/kseries/bottle/present_center.png",
-      imgLeft: "/assets/images/kseries/bottle/present_left.png",
-      imgRight: "/assets/images/kseries/bottle/present_right.png",
-      nameImg: "/assets/images/2025.svg",
-      link: `${baseUrl}2025`,
-      bgImg: "https://admin.ahmedalmaghribi.com/public/storage/banners/the-alchemy-lab-background.jpg"
-    },
-    { 
-      label: "K 2050",
-      imgCenter: "/assets/images/kseries/bottle/future_center.png",
-      imgLeft: "/assets/images/kseries/bottle/future_left.png",
-      imgRight: "/assets/images/kseries/bottle/future_right.png",
-      nameImg: "/assets/images/2050.svg",
-      link: `${baseUrl}2050`,
-      bgImg: "https://admin.ahmedalmaghribi.com/public/storage/banners/the-beyond-background.jpg"
-    }
-  ];
-
-  const [active, setActive] = useState(1);
-  const rotateRight = () => setActive((prev) => (prev + 1) % 3);
-  const rotateLeft = () => setActive((prev) => (prev + 2) % 3);
-
-  const handleDragEnd = (_, info) => {
-    if (info.offset.x < -60) rotateRight(); 
-    if (info.offset.x > 60) rotateLeft();   
+  const onDragEnd = (_, info) => {
+    if (info.offset.x < -60) next();
+    if (info.offset.x > 60) prev();
   };
 
-  const getPosition = (index) => {
-    if (index === active) return "center";
-    if ((active + 1) % 3 === index) return "right"; 
-    return "left";
+  // pointer parallax: text and bottle drift in opposite directions
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 20 });
+  const sy = useSpring(my, { stiffness: 60, damping: 20 });
+  const ghostX = useTransform(sx, (v) => v * -26);
+  const ghostY = useTransform(sy, (v) => v * -10);
+  const bottleX = useTransform(sx, (v) => v * 18);
+  const bottleY = useTransform(sy, (v) => v * 10);
+
+  const onMove = (e) => {
+    if (reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
   };
+  const onLeave = () => { mx.set(0); my.set(0); };
 
-  const xOffset = deviceType === "mobile" ? 120 : deviceType === "laptop" ? 210 : 300;
-  const centerScale = deviceType === "mobile" ? 1.1 : deviceType === "laptop" ? 1.15 : 1.3;
-  const sideScale = deviceType === "mobile" ? 0.8 : deviceType === "laptop" ? 0.75 : 0.8;
-
-  const positions = {
-    center: { x: 0, z: 0, rotateY: 0, scale: centerScale, opacity: 1, zIndex: 10 },
-    left: { x: -xOffset, z: -300, rotateY: 15, scale: sideScale, opacity: 0.4, zIndex: 5 },
-    right: { x: xOffset, z: -300, rotateY: -15, scale: sideScale, opacity: 0.4, zIndex: 5 }
-  };
-
-  const currentBgImg = items[active].bgImg;
-  const currentLabel = items[active].label;
-  if (!mounted) return null;
   return (
-    <>
-      <style>{`
-        .carousel-container-3d { 
-          perspective: 1500px; 
-          width: 100%; 
-          display: flex; 
-          justify-content: center; 
-          align-items: center; 
-        }
-        .carousel-wrapper { 
-          position: relative; 
-          width: 100%; 
-          height: 480px; 
-          display: flex; 
-          justify-content: center; 
-          align-items: center; 
-          transform-style: preserve-3d; 
-        }
-        .carousel-item-container { 
-          position: absolute; 
-          width: 260px; 
-          height: 420px; 
-          transform-style: preserve-3d; 
-        }
-        .carousel-item-container:not(.active) { 
-          pointer-events: none; 
-        }
-        .product-showcase-bottom {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 25px;
-          position: relative;
-          z-index: 20;
-        }
-        .product-showcase-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          background: rgba(229, 212, 178, 0.08);
-          border: 1px solid rgba(229, 212, 178, 0.55);
-          color: #e5d4b2;
-          padding: 12px 36px;
-          border-radius: 999px;
-          font-size: 0.78rem;
-          font-weight: 600;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          backdrop-filter: blur(8px);
-          cursor: pointer;
-          transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-          text-decoration: none;
-        }
-        .product-showcase-btn:hover {
-          background: #e5d4b2;
-          color: #121212;
-          border-color: #e5d4b2;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(229, 212, 178, 0.4);
-        }
-        .product-showcase-btn svg {
-          transition: transform 0.3s ease;
-        }
-        .product-showcase-btn:hover svg {
-          transform: translateX(4px);
-        }
-        [dir="rtl"] .product-showcase-btn:hover svg {
-          transform: translateX(-4px);
-        }
-        .swiper-like-button {
-          position: absolute;
-          top: 50%;
-          width: 44px;
-          height: 44px;
-          margin-top: -22px;
-          z-index: 50;
-          cursor: pointer;
-          background: none;
-          border: none;
-        }
-        .swiper-like-button::after {
-          font-size: 38px;
-          color: #e5d4b2;
-          font-weight: bold;
-        }
-        .swiper-like-prev {
-          left: 2%;
-        }
-        .swiper-like-prev::after {
-          content: "‹";
-        }
-        .swiper-like-next {
-          right: 2%;
-        }
-        .swiper-like-next::after {
-          content: "›";
-        }
+    <section
+      ref={sectionRef}
+      className="pks product-showcase-section"
+      style={{ "--ink": era.ink, "--accent": era.accent, "--ghost": era.ghost }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      onPointerEnter={(e) => e.pointerType === "mouse" && setPaused(true)}
+      onPointerLeave={(e) => e.pointerType === "mouse" && setPaused(false)}
+    >
+      {/* all backgrounds stay mounted and cross-fade */}
+      {ERAS.map((e, n) => (
+        <div
+          key={e.year}
+          className={`pks__bg${n === i ? " is-on" : ""}`}
+          style={{ background: e.bg }}
+          aria-hidden="true"
+        />
+      ))}
+      <div className="pks__pattern" aria-hidden="true" />
 
-        @media (max-width: 768px) { 
-          .carousel-item-container { 
-            width: 150px; 
-            height: 260px; 
-          } 
-          .carousel-wrapper { 
-            height: 280px; 
-          } 
-          .product-showcase-inner { 
-            padding-top: 2rem !important; 
-          }
-          .product-showcase-bottom {
-            margin-top: 15px !important;
-          }
-        }
+      <motion.div className="pks__head" {...(inView ? fadeUp(0.1) : { initial: { opacity: 0 } })}>
+        <h2 className="pks__title">K-Series</h2>
+        <p className="pks__sub">Three eras, one signature collection</p>
+      </motion.div>
 
-        /* ═══════════════════════════════════════════════════════════════════
-           PRODUCT SHOWCASE (K-SERIES) - LAPTOP COMPACT STYLING
-           ═══════════════════════════════════════════════════════════════════ */
+      {/* stage mounts when the section scrolls into view, so the entrance plays on screen */}
+      {inView && (
+        <div className="pks__stage">
+          {/* word behind the bottle: letters rise out of a mask */}
+          <AnimatePresence custom={dir} mode="popLayout">
+            <motion.div
+              key={"g-" + era.year}
+              className="pks__ghostPos"
+              variants={wordV}
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <motion.div className="pks__ghost" aria-hidden="true" style={{ x: ghostX, y: ghostY }}>
+                {era.word.split("").map((ch, n) => (
+                  <span className="pks__mask" key={n}>
+                    <motion.span className="pks__letter" variants={letterV}>
+                      {ch === " " ? " " : ch}
+                    </motion.span>
+                  </span>
+                ))}
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
 
-        @media (min-width: 992px) and (max-width: 1536px) {
-          .product-showcase-section {
-            height: auto !important;
-            min-height: 85vh !important;
-            padding: 3rem 0 3.5rem 0 !important;
-          }
-          .product-showcase-inner {
-            padding-top: 2rem !important;
-            margin-top: 0.5rem !important;
-          }
-          .carousel-wrapper {
-            height: 330px !important;
-            min-height: 330px !important;
-          }
-          .carousel-item-container {
-            width: 175px !important;
-            height: 280px !important;
-          }
-          .product-showcase-bottom {
-            margin-top: 28px !important;
-          }
-          .product-showcase-divider {
-            width: 45px !important;
-            margin: 0 auto 12px auto !important;
-          }
-          .product-showcase-name-img {
-            width: 140px !important;
-            height: 48px !important;
-          }
-          .product-showcase-btn-wrap {
-            margin-top: 14px !important;
-            padding: 0 !important;
-          }
-          .product-showcase-btn {
-            padding: 10px 30px !important;
-            font-size: 0.74rem !important;
-            letter-spacing: 2px !important;
-          }
-          .swiper-like-button {
-            width: 36px !important;
-            height: 36px !important;
-            margin-top: -18px !important;
-          }
-          .swiper-like-button::after {
-            font-size: 28px !important;
-          }
-        }
-
-        /* Mid-size laptops (≤1366px) */
-        @media (min-width: 992px) and (max-width: 1366px) {
-          .product-showcase-section {
-            padding: 2.5rem 0 3rem 0 !important;
-          }
-          .carousel-wrapper {
-            height: 300px !important;
-            min-height: 300px !important;
-          }
-          .carousel-item-container {
-            width: 160px !important;
-            height: 255px !important;
-          }
-          .product-showcase-bottom {
-            margin-top: 24px !important;
-          }
-          .product-showcase-name-img {
-            width: 125px !important;
-            height: 42px !important;
-          }
-          .product-showcase-btn-wrap {
-            margin-top: 12px !important;
-          }
-          .product-showcase-btn {
-            padding: 9px 26px !important;
-            font-size: 0.7rem !important;
-          }
-        }
-
-        /* Smaller laptops (≤1200px) */
-        @media (min-width: 992px) and (max-width: 1200px) {
-          .product-showcase-section {
-            padding: 2rem 0 2.5rem 0 !important;
-          }
-          .carousel-wrapper {
-            height: 280px !important;
-            min-height: 280px !important;
-          }
-          .carousel-item-container {
-            width: 145px !important;
-            height: 230px !important;
-          }
-          .product-showcase-bottom {
-            margin-top: 20px !important;
-          }
-          .product-showcase-name-img {
-            width: 110px !important;
-            height: 38px !important;
-          }
-          .product-showcase-btn-wrap {
-            margin-top: 10px !important;
-          }
-          .product-showcase-btn {
-            padding: 8px 22px !important;
-            font-size: 0.66rem !important;
-          }
-        }
-      `}</style>
-
-      <div className="product-showcase-section" style={{ position: "relative", color: "white", minHeight: "100vh", width: "100%", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        
-        {/* Background Layer */}
-        <AnimatePresence initial={false}>
-          <motion.div key={currentBgImg} variants={backgroundVariants} initial="initial" animate="animate" exit="exit" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }}>
-              <Image src={currentBgImg} alt="bg" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-          </motion.div>
-        </AnimatePresence>
-        
-        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 2, background: GRADIENT_OVERLAY }} />
-
-        <div className="container text-center product-showcase-inner" style={{ position: "relative", zIndex: 10, width: "100%", paddingTop: "3rem" }}>
-          <div className="carousel-container-3d">
-            <div className="carousel-wrapper">
-              {items.map((item, index) => {
-                const pos = getPosition(index);
-                const isCenter = index === active;
-                
-                return (
+          <AnimatePresence custom={dir} mode="popLayout">
+            <motion.div
+              key={"b-" + era.year}
+              className="pks__bottlePos"
+              custom={dir}
+              variants={bottleV}
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <motion.div style={{ x: bottleX, y: bottleY }}>
+                <motion.div
+                  className="pks__bottle"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.35}
+                  onDragStart={() => setPaused(true)}
+                  onDragEnd={(e, info) => { setPaused(false); onDragEnd(e, info); }}
+                  whileHover={reduce ? undefined : { scale: 1.04 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 18 }}
+                >
                   <motion.div
-                    key={index}
-                    className={`carousel-item-container ${isCenter ? 'active' : ''}`}
-                    drag={isCenter ? "x" : false}
-                    dragConstraints={{ left: 0, right: 0 }}
-                    onDragEnd={handleDragEnd}
-                    animate={positions[pos]}
-                    transition={{ type: "spring", stiffness: 90, damping: 20 }}
-                    style={{ cursor: isCenter ? "grab" : "default", userSelect: 'none' }}
+                    initial={{ rotate: 11 }}
+                    animate={reduce ? { rotate: 11 } : { y: [0, -12, 0], rotate: [11, 9.5, 11] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    {/* Glow Component */}
-                    {isCenter && (
-                      <motion.div 
-                        animate={{ opacity: 1 }} initial={{ opacity: 0 }}
+                    <Link href={baseUrl + era.year} draggable={false} className="pks__bottleLink">
+                      <Image
+                        src={era.img}
+                        alt={era.tag + " bottle"}
+                        width={300}
+                        height={600}
+                        priority
+                        draggable={false}
+                        className="pks__img"
+                      />
+                      {/* light sweep, clipped to the bottle's own silhouette */}
+                      <span
+                        className="pks__shine"
+                        aria-hidden="true"
                         style={{
-                          position: 'absolute', top: '10%', left: '10%', width: '80%', height: '80%',
-                          borderRadius: '50%', backgroundColor: GLOW_COLOR,
-                          filter: `blur(60px) opacity(0.25)`, zIndex: -1,
-                          transform: "translateZ(-50px)"
+                          WebkitMaskImage: "url(" + era.img + ")",
+                          maskImage: "url(" + era.img + ")",
                         }}
                       />
-                    )}
-
-                    <Link href={item.link} style={{ display: 'block', height: '100%', position: 'relative', transformStyle: "preserve-3d" }}>
-                      
-                      {/* CENTER IMAGE LAYER */}
-                      <motion.div
-                        initial={false}
-                        animate={{ opacity: pos === "center" ? 1 : 0 }}
-                        transition={{ duration: 0.6 }}
-                        style={{ position: "absolute", inset: 0 }}
-                      >
-                        <Image src={item.imgCenter} fill sizes="(max-width: 768px) 150px, (max-width: 1536px) 175px, 260px" style={{ objectFit: "contain" }} alt="center" priority />
-                      </motion.div>
-
-                      {/* LEFT IMAGE LAYER */}
-                      <motion.div
-                        initial={false}
-                        animate={{ opacity: pos === "left" ? 1 : 0 }}
-                        transition={{ duration: 0.6 }}
-                        style={{ position: "absolute", inset: 0 }}
-                      >
-                        <Image src={item.imgLeft} fill sizes="(max-width: 768px) 150px, (max-width: 1536px) 175px, 260px" style={{ objectFit: "contain" }} alt="left" />
-                      </motion.div>
-
-                      {/* RIGHT IMAGE LAYER */}
-                      <motion.div
-                        initial={false}
-                        animate={{ opacity: pos === "right" ? 1 : 0 }}
-                        transition={{ duration: 0.6 }}
-                        style={{ position: "absolute", inset: 0 }}
-                      >
-                        <Image src={item.imgRight} fill sizes="(max-width: 768px) 150px, (max-width: 1536px) 175px, 260px" style={{ objectFit: "contain" }} alt="right" />
-                      </motion.div>
-
                     </Link>
                   </motion.div>
-                );
-              })}
-
-              <button
-                className="swiper-like-button swiper-like-prev"
-                onClick={rotateLeft}
-                aria-label="Previous"
-              >
-              </button>
-
-              <button
-                className="swiper-like-button swiper-like-next"
-                onClick={rotateRight}
-                aria-label="Next"
-              >
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Details Section with Guaranteed Clearance */}
-          <div className="product-showcase-bottom">
-            <motion.div
-              className="product-showcase-divider"
-              style={{
-                width: "60px",
-                height: "1px",
-                background: `linear-gradient(to right, transparent, ${HIGHLIGHT_COLOR}, transparent)`,
-                margin: "0 auto 16px auto",
-              }}
-            />      
-
-            <motion.div
-              initial={{ y: 15, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              key={currentLabel}
-              transition={{ delay: 0.1 }}
-              className="d-flex flex-column align-items-center"
-            >
-              <div
-                className="product-showcase-name-img"
-                style={{
-                  position: "relative",
-                  width: isMobile ? "150px" : "220px",
-                  height: "70px",
-                }}
-              >
-                <Image
-                  src={items[active].nameImg}
-                  alt={currentLabel}
-                  fill
-                  unoptimized
-                  sizes="(max-width: 768px) 150px, (max-width: 1536px) 140px, 220px"
-                  style={{ objectFit: "contain" }}
-                />
-              </div>
+                </motion.div>
+              </motion.div>
+              <div className="pks__shadow" aria-hidden="true" />
             </motion.div>
+          </AnimatePresence>
 
+          <AnimatePresence mode="wait">
             <motion.div
-              initial={{ y: 15, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.15 }}
-              className="d-flex flex-column align-items-center product-showcase-btn-wrap"
-              style={{ marginTop: "16px" }}
+              key={"c-" + era.year}
+              className="pks__copy"
+              variants={copyV}
+              initial="enter"
+              animate="center"
+              exit="exit"
             >
-              <Link href={`/${locale}/k-series`}>
-                <button className="product-showcase-btn">
-                  <span>{t("Discover")}</span>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </Link>
+              <span className="pks__label">{era.label}</span>
+              <p className="pks__text">{era.text}</p>
             </motion.div>
+          </AnimatePresence>
+
+          <motion.div className="pks__ctaWrap" {...fadeUp(1.1)}>
+            <Link href={baseUrl + era.year} className="pks__cta">
+              <span>{t("Discover")} {era.tag}</span>
+            </Link>
+          </motion.div>
+        <motion.div className="pks__controls" dir="ltr" {...fadeUp(1.3)}>
+          <button type="button" className="pks__arrow" onClick={prev} aria-label="Previous">‹</button>
+          <div className="pks__dashes">
+            {ERAS.map((e, n) => (
+              <button
+                key={e.year}
+                type="button"
+                className={"pks__dash" + (n === i ? " is-active" : "")}
+                onClick={() => jump(n)}
+                aria-label={"Show " + e.tag}
+                aria-current={n === i}
+              />
+            ))}
           </div>
-          
+          <button type="button" className="pks__arrow" onClick={next} aria-label="Next">›</button>
+        </motion.div>
         </div>
-      </div>
-    </>
+      )}
+    </section>
   );
 }
