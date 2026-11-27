@@ -4,6 +4,7 @@ import React from "react";
 import OrderThankYouSection from "./OrderThankYouSection";
 
 export default function OrderPaymentCompleted({ orderDetails, initialOrderCode }) {
+  // console.log(orderDetails,"Oredrrr")
   return (
     <OrderThankYouSection
       orderDetails={orderDetails}

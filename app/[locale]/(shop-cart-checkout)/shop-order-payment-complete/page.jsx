@@ -31,6 +31,7 @@ async function getOrderDetails(order_id) {
   //   method: 'POST',
   //   headers: {
   //     'Content-Type': 'application/json',
+  //     'origin': origin,
   //   },
   //   body: JSON.stringify({
   //     order_number: order_id
@@ -68,6 +69,7 @@ const ShopOrderPaymentComplete = async ({ searchParams }) => {
 
   try {
     const data = orderCode ? await getOrderDetails(orderCode) : null;
+    // console.log("data", data)  
     return (
       <>
         <Header14 />

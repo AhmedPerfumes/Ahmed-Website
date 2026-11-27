@@ -38,3 +38,46 @@
 .footer-mobile__link {
   font-size: 0.8125rem;
 }
+
+
+/* UAE National Day Bottom Mobile Navigation Theme (mapped to useUaeTheme env timer) */
+.footer-mobile--uae-theme {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 254, 251, 0.96) 0%,
+    rgba(247, 239, 224, 0.98) 100%
+  ) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  border-top: 2px solid #c59b27 !important;
+  box-shadow: 0 -6px 22px rgba(28, 20, 8, 0.12);
+  padding-top: 0.5rem;
+  padding-bottom: calc(0.25rem + env(safe-area-inset-bottom, 0px));
+
+  .footer-mobile__link {
+    color: #221b13;
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    svg {
+      color: #221b13;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    span {
+      color: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      margin-top: 2px;
+    }
+
+    &:hover,
+    &:active {
+      color: #9e7419;
+
+      svg {
+        color: #9e7419;
+      }
+    }
+  }
+}

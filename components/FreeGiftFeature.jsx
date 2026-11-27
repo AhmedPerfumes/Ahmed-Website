@@ -30,7 +30,7 @@ export const isProductOutOfStock = (product) => {
 };
 
 const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, onForcedClose, onEligibilityChange }) => {
-  const { cartProducts, totalPrice, addProductToCart, setCartProducts, promotionsContext, removeGiftFromCart } = useContextElement();
+  const { cartProducts, totalPrice, addProductToCart, setCartProducts, removeGiftFromCart } = useContextElement();
   const [thresholds, setThresholds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,17 +46,15 @@ const FreeGiftFeature = ({ couponData, autoPopup = false, forcedOpen = false, on
 
   const { isLoggedIn } = useUser();
 
-  // Filter products that count towards the threshold
+  // Filter products that count towards the threshold.
+  // Buy X Get Y products count too, so the free-gift popup still appears when they are in the cart.
   const getEligibleProducts = useCallback((allowWithDiscount = false) => {
     return cartProducts.filter(
       (item) =>
         !item.is_gift &&
-        (allowWithDiscount || (!item.discount && !item.sale_price)) &&
-        !promotionsContext.some((promo) =>
-          promo.buy_products?.some((buyItem) => buyItem.product_id === item.product_id)
-        )
+        (allowWithDiscount || (!item.discount && !item.sale_price))
     );
-  }, [cartProducts, promotionsContext]);
+  }, [cartProducts]);
 
   const currentUTC = new Date();
   const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));

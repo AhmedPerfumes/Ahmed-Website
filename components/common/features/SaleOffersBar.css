@@ -1,0 +1,118 @@
+/* Sale page offer tabs — refined editorial style: black / bronze / hairline */
+
+.sale-tabs {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 2.25rem;
+  max-width: 100%;
+}
+
+/* Tabs sit on a fine hairline that fades out at both ends */
+.sale-tabs__track {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  width: 100%;
+  max-width: 960px;
+  background: linear-gradient(90deg, transparent, #dcdcdc 20%, #dcdcdc 80%, transparent) bottom / 100% 1px no-repeat;
+}
+
+.sale-tab {
+  position: relative;
+  padding: 0.5rem 0.1rem 1.25rem;
+  border: 0;
+  background: transparent;
+  color: #707070;
+  font-family: var(--font-heading, inherit);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  /* the trailing letter-space would push the text off-center */
+  margin-inline-end: -0.3em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sale-tab:hover {
+  color: #000;
+}
+
+.sale-tab:focus-visible {
+  outline: 2px solid #a67b30;
+  outline-offset: 4px;
+}
+
+/* short bronze line, centered on the hairline */
+.sale-tab::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: 0;
+  width: 44px;
+  height: 2px;
+  background: #a67b30;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[dir="rtl"] .sale-tab::after {
+  transform: translateX(50%) scaleX(0);
+}
+
+.sale-tab[aria-pressed="true"] {
+  color: #000;
+  font-weight: 600;
+}
+
+.sale-tab[aria-pressed="true"]::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+[dir="rtl"] .sale-tab[aria-pressed="true"]::after {
+  transform: translateX(50%) scaleX(1);
+}
+
+/* Arabic has no letter-spacing — keep it tight and natural */
+[dir="rtl"] .sale-tab {
+  letter-spacing: 0.02em;
+  margin-inline-end: 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 575.98px) {
+  .sale-tabs {
+    margin-bottom: 1.5rem;
+  }
+
+  .sale-tabs__track {
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    justify-content: space-between;
+    padding-inline: 0.5rem;
+  }
+
+  .sale-tabs__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sale-tab {
+    letter-spacing: 0.16em;
+    margin-inline-end: -0.16em;
+    font-size: 0.72rem;
+  }
+
+  .sale-tab::after {
+    width: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .sale-tab,
+  .sale-tab::after {
+    transition: none;
+  }
+}

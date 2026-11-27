@@ -15,6 +15,14 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
 import Skeleton from "@mui/material/Skeleton";
 import LabelIcon from "@/components/labels/LabelIcon";
+import BogoBadge from "@/components/common/BogoBadge";
+import {
+  UaeRibbonTopRight,
+  UaeRibbonBottomLeft,
+  UaeSkylineBackdrop,
+} from "@/components/common/ProductCard";
+import { useUaeTheme } from "@/utils/uaeTheme";
+import { removeSpecialCharactersAndAmp } from "@/utils/shop";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -97,8 +105,10 @@ const TabSliderSkeleton = () => {
 
 export default function PopularProducts() {
   const t = useTranslations("PopularProducts");
-  const { addProductToCart, cartProducts, setCartProducts } = useContextElement();
+  const tRoot = useTranslations();
+  const { addProductToCart, cartProducts, setCartProducts, triggerToast } = useContextElement();
   const locale = useLocale();
+  const isUaeTheme = useUaeTheme();
 
   const { currency, isLoading: isMenuLoading } = useMenu();
 
@@ -108,20 +118,76 @@ export default function PopularProducts() {
   const [loading, setLoading] = useState(true);
 
   const getProductQuantity = (id) => {
-    const item = (cartProducts || []).find(p => p.product_id === id);
+    const item = (cartProducts || []).find((p) => p.product_id === id && !p.is_gift);
     return item ? item.quantity : 0;
   };
 
-  const updateQuantity = (id, delta) => {
+  const updateQuantity = (productOrId, delta) => {
     if (!setCartProducts) return;
-    setCartProducts(prev => {
-      return prev.map(p => {
-        if (p.product_id === id) {
-          const newQty = (p.quantity || 1) + delta;
-          return newQty > 0 ? { ...p, quantity: newQty } : null;
-        }
-        return p;
-      }).filter(Boolean);
+
+    const product =
+      typeof productOrId === "object" && productOrId !== null
+        ? productOrId
+        : filtered.find((p) => p.product_id === productOrId);
+    const targetId = product?.product_id ?? productOrId;
+
+    setCartProducts((prev = []) => {
+      return prev
+        .map((p) => {
+          if (p.product_id === targetId && !p.is_gift) {
+            const effectiveProduct = product || p;
+            const stock = Number(effectiveProduct?.product_qty ?? p?.product_qty) || 0;
+            const maxOrder = Number(effectiveProduct?.maximum_order_quantity ?? p?.maximum_order_quantity) || 0;
+            const limit = maxOrder > 0 ? (stock > 0 ? Math.min(maxOrder, stock) : maxOrder) : stock;
+
+            const newQty = (p.quantity || 1) + delta;
+            const rawName =
+              locale === "ar"
+                ? effectiveProduct?.product_name_ar || effectiveProduct?.product_name
+                : effectiveProduct?.product_name;
+            const toastName = rawName
+              ? removeSpecialCharactersAndAmp(rawName)
+              : "";
+
+            if (newQty <= 0) {
+              if (triggerToast) {
+                triggerToast({
+                  product: effectiveProduct,
+                  name: toastName,
+                  message: tRoot("Removed from cart"),
+                  type: "delete",
+                  duration: 2500,
+                });
+              }
+              return null;
+            }
+
+            if (delta > 0 && newQty > limit) {
+              const msg =
+                maxOrder > 0 && newQty > maxOrder
+                  ? (tRoot.has("CartDrawer.MaxQuantityAllowed")
+                      ? tRoot("CartDrawer.MaxQuantityAllowed", { limit: maxOrder })
+                      : `${tRoot("Maximum allowed quantity is")} ${maxOrder}`)
+                  : (locale === "ar" && tRoot.has("CartDrawer.MaxQuantityAvailable")
+                      ? tRoot("CartDrawer.MaxQuantityAvailable")
+                      : `${tRoot("Only")} ${stock} ${tRoot("left in stock")}`);
+              if (triggerToast) {
+                triggerToast({
+                  product: effectiveProduct,
+                  name: toastName,
+                  message: msg,
+                  type: "error",
+                  duration: 3000,
+                });
+              }
+              return p;
+            }
+
+            return { ...p, quantity: newQty };
+          }
+          return p;
+        })
+        .filter(Boolean);
     });
   };
 
@@ -303,7 +369,7 @@ export default function PopularProducts() {
 
           {/* ===== SLIDER ===== */}
           {/* ===== SLIDER ===== */}
-          <div className={`popularProductsGutter ${styles.sliderContainer}`}>
+          <div className={`popularProductsGutter ${styles.sliderContainer} ${isUaeTheme ? styles.sliderContainerUae : ""}`}>
             <Swiper
               key={currentCategory}
               modules={[Keyboard]}
@@ -338,8 +404,22 @@ export default function PopularProducts() {
                 return (
                   <SwiperSlide key={item.product_id}>
                     <div className="product-card-wrapper">
-                      <div className="product-card" style={{ background: "#f5f1eb" }}>
-                        <div className="pc__img-wrapper" style={{ mixBlendMode: "multiply" }}>
+                      <div
+                        className={`product-card${isUaeTheme ? " product-card--uae-theme" : ""}`}
+                        style={isUaeTheme ? undefined : { background: "#f5f1eb" }}
+                      >
+                        {isUaeTheme && (
+                          <>
+                            <UaeRibbonTopRight />
+                            <UaeRibbonBottomLeft />
+                            <UaeSkylineBackdrop />
+                          </>
+                        )}
+
+                        <div
+                          className="pc__img-wrapper"
+                          style={isUaeTheme ? undefined : { mixBlendMode: "multiply" }}
+                        >
                           <Link
                             href={`/${locale}/shop/${clean(
                               item.category_name
@@ -347,6 +427,7 @@ export default function PopularProducts() {
                               item.category_name,
                               item.subcategory
                             )}/${clean(item.product_name)}`}
+                            className={isUaeTheme ? "pc__img-link" : undefined}
                           >
                             {imgs[0] && (
                               <Image
@@ -368,10 +449,12 @@ export default function PopularProducts() {
                             )}
                           </Link>
 
-
                           {/* --- ADDED LABEL LOGIC --- */}
                           {Array.isArray(item.labels) && item.labels.length > 0 && (
-                            <div className="d-flex flex-column position-absolute top-0 end-0 mt-2 me-2" style={{ gap: "4px", zIndex: 10 }}>
+                            <div
+                              className={`d-flex flex-column position-absolute top-0 end-0 mt-2 me-2${isUaeTheme ? " pc__top-right-meta" : ""}`}
+                              style={{ gap: "4px", zIndex: 10, pointerEvents: "none" }}
+                            >
                               {item.labels.map((lbl, idx) => (
                                 <LabelIcon
                                   key={idx}
@@ -384,7 +467,10 @@ export default function PopularProducts() {
                             </div>
                           )}
                           {!Array.isArray(item.labels) && item.label_name && (
-                            <div className="position-absolute top-0 end-0 mt-2 me-2" style={{ zIndex: 10 }}>
+                            <div
+                              className={`position-absolute top-0 end-0 mt-2 me-2${isUaeTheme ? " pc__top-right-meta" : ""}`}
+                              style={{ zIndex: 10, pointerEvents: "none" }}
+                            >
                               <LabelIcon
                                 name={item.label_name}
                                 title={item.label_name}
@@ -395,15 +481,34 @@ export default function PopularProducts() {
                           )}
 
                           {item.product_qty <= 0 ? (
-                            <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
-                              {t("outOfStock")}
-                            </div>
-                          ) : (
-                            isDiscountActive(item.discount) && item.discount.discount_type === 'percent' && (
-                              <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
-                                {t("sale", { value: item.discount.value })}
+                            isUaeTheme ? (
+                              <div className="product-label label--out-of-stock">
+                                {t("outOfStock")}
+                              </div>
+                            ) : (
+                              <div style={{ backgroundColor: "#dc3545", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                                {t("outOfStock")}
                               </div>
                             )
+                          ) : (
+                            isDiscountActive(item.discount) && item.discount.discount_type === 'percent' && (
+                              isUaeTheme ? (
+                                <div className="product-label label--sale">
+                                  {t("sale", { value: item.discount.value })}
+                                </div>
+                              ) : (
+                                <div style={{ backgroundColor: "#198754", zIndex: 10, position: 'absolute', fontSize: '0.68rem', fontWeight: 700, padding: '4px 10px', letterSpacing: '1px' }} className={`product-label text-uppercase text-white top-0 mt-2 mx-2 ${locale === 'ar' ? 'right-0' : 'left-0'}`}>
+                                  {t("sale", { value: item.discount.value })}
+                                </div>
+                              )
+                            )
+                          )}
+                          {item.product_qty > 0 && (
+                            <BogoBadge
+                              productId={item.product_id}
+                              getLabel={(buy, get) => tRoot("Buy {buy} Get {get} Free", { buy, get })}
+                              stacked={isDiscountActive(item.discount) && item.discount.discount_type === 'percent'}
+                            />
                           )}
                           {/* --- END LABEL LOGIC --- */}
 
@@ -417,7 +522,7 @@ export default function PopularProducts() {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      updateQuantity(item.product_id, -1);
+                                      updateQuantity(item, -1);
                                     }}
                                     aria-label="Decrease quantity"
                                   >
@@ -429,7 +534,7 @@ export default function PopularProducts() {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      updateQuantity(item.product_id, 1);
+                                      updateQuantity(item, 1);
                                     }}
                                     aria-label="Increase quantity"
                                   >
@@ -476,7 +581,7 @@ export default function PopularProducts() {
           </div>
 
           {/* ===== INFO BLOCK ===== */}
-          <div className={styles.infoBlock}>
+          <div className={`${styles.infoBlock} ${isUaeTheme ? styles.infoBlockUae : ""}`}>
             <AnimatePresence mode="popLayout">
               {activeProduct && (
                 <motion.div

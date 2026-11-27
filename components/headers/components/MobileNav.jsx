@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMenu } from "../../../context/MenuContext";
 import { useLocale, useTranslations } from "next-intl";
+import { useUaeTheme } from "@/utils/uaeTheme";
 
 export default function MobileNav() {
   const locale = useLocale();
@@ -12,6 +14,7 @@ export default function MobileNav() {
   const pathname = usePathname();
   const { categoriesSubCategories, isLoading: isMenuLoading, error, homeSliders } = useMenu();
   const [openCategoryIndex, setOpenCategoryIndex] = useState(null);
+  const isUaeTheme = useUaeTheme();
 
   const isSaleLink = (link) => {
     if (!link) return false;
@@ -112,7 +115,7 @@ export default function MobileNav() {
           : `/${locale}/product-category/gift-sets`;
 
         return (
-          <li key={i} className="navigation__item d-flex flex-column border-bottom">
+          <li key={i} className={`navigation__item d-flex flex-column border-bottom${isOpen ? " is-expanded" : ""}`}>
             <div className="d-flex align-items-center w-100 py-2">
               <Link
                 href={categorySlug}
@@ -129,70 +132,108 @@ export default function MobileNav() {
                     e.preventDefault(); // Prevent link click if nested
                     setOpenCategoryIndex(isOpen ? null : i);
                   }}
-                  className="toggle-button"
+                  className={`toggle-button${isOpen ? " is-open" : ""}`}
                   aria-label="Toggle sub-menu"
                 >
-                  {isOpen ? "-" : "+"}
+                  {isOpen ? "−" : "+"}
                 </button>
               )}
             </div>
 
             <div className={`sub-menu ${isOpen && hasSubCategories ? "open" : ""}`}>
               {isOpen && hasSubCategories && (
-                <ul className="list-unstyled mb-0 pb-2">
-                  {(!item.productSubCategories || item.productSubCategories.length === 0) && isGiftSets && (
-                    <li className="sub-menu__item">
-                      <Link
-                        href={`/${locale}/product-category/gift-sets`}
-                        className={`menu-link d-block py-1 text-secondary ${pathname?.includes('/product-category/gift-sets') ? "menu-active text-dark fw-medium" : ""}`}
-                        style={{
-                          textAlign: locale === 'ar' ? 'right' : 'left',
-                          fontSize: '0.825rem'
-                        }}
-                      >
-                        {t("Gift Sets")}
-                      </Link>
-                    </li>
+                <div className={isUaeTheme ? "uae-mobile-submenu-panel" : undefined}>
+                  {isUaeTheme && (
+                    <div className="uae-mobile-submenu-heading">
+                      <span className="uae-mobile-submenu-diamond" aria-hidden="true" />
+                      <span>{t("PRODUCT TYPES")}</span>
+                    </div>
                   )}
-                  {item.productSubCategories?.map((elm, j) => (
-                    <li key={j} className="sub-menu__item">
-                      <Link
-                        href={
-                          !isGiftSets
-                            ? `/${locale}/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`
-                            : `/${locale}/product-category/gift-sets`
-                        }
-                        className={`menu-link d-block py-1 text-secondary ${isMenuActive(`/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`)
-                          ? "menu-active text-dark fw-medium"
-                          : ""
-                          }`}
-                        style={{
-                          textAlign: locale === 'ar' ? 'right' : 'left',
-                          fontSize: '0.825rem'
-                        }}
-                      >
-                        {t(elm.name)}
-                      </Link>
-                    </li>
-                  ))}
-                  {isGiftSets && (
-                    <li className="sub-menu__item">
-                      <Link
-                        href={`/${locale}/corporate-gifting`}
-                        className={`menu-link d-block py-1 text-secondary ${pathname?.includes("/corporate-gifting")
-                          ? "menu-active text-dark fw-medium"
-                          : ""
-                          }`}
-                        style={{
-                          textAlign: locale === 'ar' ? 'right' : 'left',
-                          fontSize: '0.825rem'
-                        }}
-                      >
-                        {t("Corporate Gift Sets")}
-                      </Link>
-                    </li>
+                  <ul className="list-unstyled mb-0 pb-2">
+                    {(!item.productSubCategories || item.productSubCategories.length === 0) && isGiftSets && (
+                      <li className="sub-menu__item">
+                        <Link
+                          href={`/${locale}/product-category/gift-sets`}
+                          className={`menu-link d-block py-1 text-secondary ${pathname?.includes('/product-category/gift-sets') ? "menu-active text-dark fw-medium" : ""}`}
+                          style={{
+                            textAlign: locale === 'ar' ? 'right' : 'left',
+                            fontSize: '0.825rem'
+                          }}
+                        >
+                          {t("Gift Sets")}
+                        </Link>
+                      </li>
+                    )}
+                    {item.productSubCategories?.map((elm, j) => (
+                      <li key={j} className="sub-menu__item">
+                        <Link
+                          href={
+                            !isGiftSets
+                              ? `/${locale}/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`
+                              : `/${locale}/product-category/gift-sets`
+                          }
+                          className={`menu-link d-block py-1 text-secondary ${isMenuActive(`/product-category/${item.name.split(" ").join("-").toLowerCase()}/${elm.name.split(" ").join("-").toLowerCase()}`)
+                            ? "menu-active text-dark fw-medium"
+                            : ""
+                            }`}
+                          style={{
+                            textAlign: locale === 'ar' ? 'right' : 'left',
+                            fontSize: '0.825rem'
+                          }}
+                        >
+                          {t(elm.name)}
+                        </Link>
+                      </li>
+                    ))}
+                    {isGiftSets && (
+                      <li className="sub-menu__item">
+                        <Link
+                          href={`/${locale}/corporate-gifting`}
+                          className={`menu-link d-block py-1 text-secondary ${pathname?.includes("/corporate-gifting")
+                            ? "menu-active text-dark fw-medium"
+                            : ""
+                            }`}
+                          style={{
+                            textAlign: locale === 'ar' ? 'right' : 'left',
+                            fontSize: '0.825rem'
+                          }}
+                        >
+                          {t("Corporate Gift Sets")}
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
+
+                  {/* Mobile Mega-Menu Editorial Media Strip (when UAE theme is active) */}
+                  {isUaeTheme && (item.icon_image || item.menu_image2) && (
+                    <div className="uae-mobile-mega-media">
+                      {item.icon_image && (
+                        <Link href={categorySlug} className="uae-mobile-mega-card">
+                          <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.icon_image}`}
+                            width={320}
+                            height={220}
+                            alt={item.name}
+                            className="uae-mobile-mega-img"
+                          />
+                        </Link>
+                      )}
+                      {item.menu_image2 && (
+                        <Link href={categorySlug} className="uae-mobile-mega-card">
+                          <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${item.menu_image2}`}
+                            width={320}
+                            height={220}
+                            alt={item.name}
+                            className="uae-mobile-mega-img"
+                          />
+                        </Link>
+                      )}
+                    </div>
                   )}
-                </ul>
+                </div>
               )}
             </div>
           </li>

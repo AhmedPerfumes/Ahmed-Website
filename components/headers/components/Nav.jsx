@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 
 import { useLocale, useTranslations } from "next-intl";
 import { useMenu } from "@/context/MenuContext";
+import { useUaeTheme } from "@/utils/uaeTheme";
 
 export default function Nav({ categoriesSubCategories }) {
   // console.log('000000000', categoriesSubCategories);
@@ -22,6 +23,7 @@ export default function Nav({ categoriesSubCategories }) {
   const t = useTranslations();
   const pathname = usePathname();
   const { homeSliders } = useMenu();
+  const isUaeTheme = useUaeTheme();
 
   const isSaleLink = (link) => {
     if (!link) return false;
@@ -106,8 +108,24 @@ export default function Nav({ categoriesSubCategories }) {
           {t(item.name)}
         </Link>
         {hasSubCategories ?
-          <div className="mega-menu">
-            <div className="container d-flex justify-content-center">
+          <div className={`mega-menu${isUaeTheme ? " mega-menu--uae-theme" : ""}`}>
+            {isUaeTheme && (
+              <div className="uae-mega-decor" aria-hidden="true">
+                <img
+                  src="/assets/images/header/uae-megamenu-heritage.png"
+                  alt=""
+                  loading="lazy"
+                  className="uae-mega-decor__skyline"
+                />
+                <img
+                  src="/assets/images/header/uae-megamenu-ornament.png"
+                  alt=""
+                  loading="lazy"
+                  className="uae-mega-decor__flag"
+                />
+              </div>
+            )}
+            <div className="container d-flex justify-content-center position-relative uae-mega-content">
               <div className="col pe-4">
                 <p href="#" className="sub-menu__title border-bottom">
                   {t("PRODUCT TYPES")}

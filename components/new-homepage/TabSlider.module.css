@@ -597,3 +597,166 @@
     font-size: clamp(1rem, 1.4vw, 1.25rem) !important;
   }
 }
+
+
+/* ==========================================================================
+   UAE National Day TabSlider Theme (active until NEXT_PUBLIC_UAE_THEME_END_DATE)
+   ========================================================================== */
+
+.sliderContainerUae :global(.product-card--uae-theme) {
+  padding-bottom: 48px;
+}
+
+.sliderContainerUae :global(.product-card--uae-theme:hover) {
+  transform: none;
+}
+
+.sliderContainerUae :global(.swiper-slide-active .product-card--uae-theme) {
+  border-color: rgba(191, 149, 63, 0.65);
+  box-shadow:
+    0 12px 28px rgba(120, 96, 52, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions) {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -36px;
+  z-index: 10;
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(191, 149, 63, 0.55);
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions:hover),
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions:active) {
+  background: rgba(191, 149, 63, 0.22) !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-color: rgba(191, 149, 63, 0.85);
+}
+
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions .js-add-cart) {
+  color: #1c1915 !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  height: 36px !important;
+  padding: 0 12px;
+  transition: color 0.2s ease;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions:hover .js-add-cart),
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions:active .js-add-cart) {
+  color: #1c1915 !important;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions .btn-out-of-stock) {
+  color: #8f887d !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  height: 36px !important;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .pc__qty-selector--desktop) {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  height: 36px;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .pc__qty-selector--desktop .qty-btn) {
+  flex: 0 0 36px;
+  background: rgba(191, 149, 63, 0.22);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: none;
+  color: #1c1915;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .pc__qty-selector--desktop .qty-value) {
+  flex: 1;
+  color: #1c1915;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.sliderContainerUae :global(.product-card-wrapper .product-card__actions:hover .pc__qty-selector--desktop .qty-value) {
+  color: #1c1915;
+}
+
+@media (max-width: 767px) {
+  .sliderContainerUae :global(.product-card-wrapper .product-card__actions) {
+    display: flex !important;
+    left: 12px;
+    right: 12px;
+    bottom: -36px !important;
+    background: transparent !important;
+  }
+}
+
+.infoBlockUae .categoryLabelWrapper {
+  gap: 12px;
+}
+
+.infoBlockUae .categoryLabelLine {
+  display: block;
+  width: 44px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(191, 149, 63, 0.72));
+}
+
+.infoBlockUae .categoryLabelLine:last-child {
+  background: linear-gradient(to left, transparent, rgba(191, 149, 63, 0.72));
+}
+
+@media (min-width: 992px) and (max-width: 1536px) {
+  .sliderContainerUae :global(.pc__img-wrapper) {
+    max-height: 270px;
+  }
+
+  .sliderContainerUae :global(.pc__img) {
+    max-height: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1366px) {
+  .sliderContainerUae :global(.pc__img-wrapper) {
+    max-height: 245px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .sliderContainerUae :global(.pc__img-wrapper) {
+    max-height: 225px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1050px) {
+  .sliderContainerUae :global(.pc__img-wrapper) {
+    max-height: 205px;
+  }
+}

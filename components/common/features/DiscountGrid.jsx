@@ -16,6 +16,9 @@ import {
 import { sortingOptions } from "@/data/products/productCategories";
 import ProductFilter from "../../shoplist/ProductFilter";
 import ProductCard, { ProductCardSkeleton } from "@/components/common/ProductCard";
+import { useBogoCampaigns } from "@/utils/bogo";
+import { buildOffers } from "@/utils/saleOffers";
+import SaleOffersBar from "@/components/common/features/SaleOffersBar";
 
 function DiscountGrid({ title, onlyDiscounted = false }) {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
@@ -147,10 +150,52 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     setSearchTerm('');
   };
 
+  const bogoCampaigns = useBogoCampaigns();
+  const bogoProductIds = useMemo(
+    () => new Set(bogoCampaigns.flatMap((c) => c.buy_products.map((p) => String(p.product_id)))),
+    [bogoCampaigns]
+  );
+
+  // ── Sale offers strip (sale page only) ──────────────────────────────
+  const [selectedOffer, setSelectedOffer] = useState(null);
+
+  const offers = useMemo(
+    () => (onlyDiscounted ? buildOffers({ products: rawProducts, bogoCampaigns }) : []),
+    [onlyDiscounted, rawProducts, bogoCampaigns]
+  );
+
+  const selectedOfferIds = useMemo(
+    () => offers.find((o) => o.key === selectedOffer)?.productIds || null,
+    [offers, selectedOffer]
+  );
+
+  // Restore the selected offer from the URL (?offer=...) so a specific offer can be shared
+  useEffect(() => {
+    if (!onlyDiscounted) return;
+    try {
+      const key = new URLSearchParams(window.location.search).get("offer");
+      if (key) setSelectedOffer(key);
+    } catch (e) { /* ignore */ }
+  }, [onlyDiscounted]);
+
+  const handleSelectOffer = (key) => {
+    setSelectedOffer(key);
+    setPage(1);
+    try {
+      const url = new URL(window.location.href);
+      if (key) url.searchParams.set("offer", key);
+      else url.searchParams.delete("offer");
+      window.history.replaceState(null, "", url.toString());
+    } catch (e) { /* ignore */ }
+  };
+
   const filteredProducts = useMemo(() => {
     const [low, high] = priceRange;
 
     const filtered = rawProducts.filter((p) => {
+      // Selected offer card narrows the grid to that offer's products
+      if (selectedOfferIds && !selectedOfferIds.has(String(p.product_id))) return false;
+
       // "New Launch" items are never filtered out
       if (p.collection_name === 'New Launch') {
         return true;
@@ -167,8 +212,9 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
       if (p.price < low || p.price > high) return false;
 
       // 4. Campaign/Promotional Filter (Reverted to old logic)
+      // Sale page shows discounted products AND Buy X Get Y products
       if (onlyDiscounted) {
-        if (!p.discount) return false;
+        if (!p.discount && !bogoProductIds.has(String(p.product_id))) return false;
       }
 
       // 5. Category/Label Filter
@@ -192,7 +238,7 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
     });
 
     return sortItems(filtered, sortOption);
-  }, [rawProducts, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
+  }, [rawProducts, bogoProductIds, selectedOfferIds, priceRange, sortOption, onlyDiscounted, searchTerm, stockAvailability, selectedLabels, selectedSubcategories, selectedTags]);
 
   const totalPages = Math.ceil(filteredProducts.length / perPage);
   const currentProducts = filteredProducts.slice((page - 1) * perPage, page * perPage);
@@ -300,6 +346,14 @@ function DiscountGrid({ title, onlyDiscounted = false }) {
           )}
         </div>
       </div>
+
+      {onlyDiscounted && !loading && (
+        <SaleOffersBar
+          offers={offers}
+          selectedKey={selectedOfferIds ? selectedOffer : null}
+          onSelect={handleSelectOffer}
+        />
+      )}
 
       <div className={`products-grid row row-cols-2 row-cols-md-${selectedColView === 2 ? 2 : 3} row-cols-lg-${selectedColView}`}>
         {loading || isMenuLoading ? (

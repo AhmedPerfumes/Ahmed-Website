@@ -388,6 +388,72 @@ const MasterPerfumerGallery = () => {
 
     const currentThemeBg = slides[activeIndex]?.theme?.bg || "#FDFBF7";
 
+    // CTA (add to cart / quantity selector) for a given slide — used inside each slide on desktop
+    // and in the global block on mobile, so the button always sits right under its own text.
+    const renderCta = (slide) => {
+        if (!slide) return null;
+        const product = slide.product;
+        const isPreBook = product?.collection_name?.trim()?.toLowerCase() === "pre book" || product?.collection_name?.trim()?.toLowerCase() === "pre-book";
+
+        if (product && getProductQuantity(product.product_id) > 0) {
+            return (
+                <div className="slider-qty-selector">
+                    <button
+                        className="qty-btn dec-btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleDecrement(product.product_id);
+                        }}
+                        aria-label="Decrease quantity"
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                    </button>
+                    <span className="qty-value font-weight-bold">
+                        {getProductQuantity(product.product_id)}
+                    </span>
+                    <button
+                        className="qty-btn inc-btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleIncrement(product);
+                        }}
+                        aria-label="Increase quantity"
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                    </button>
+                </div>
+            );
+        }
+
+        return (
+            <button
+                className="master-btn"
+                onClick={(e) => {
+                    e.preventDefault();
+                    if (product) {
+                        addProductToCart(product);
+                    } else if (slide.link) {
+                        window.location.href = `/${locale}${slide.link}`;
+                    }
+                }}
+            >
+                <span className="master-btn__label">
+                    {product
+                        ? (isPreBook ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book") : t("Add To Cart"))
+                        : t("Discover the Note")}
+                </span>
+                <svg className="master-btn__arrow" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                    <path d="M1 6h15M11 1l5 5-5 5" />
+                </svg>
+            </button>
+        );
+    };
+
     return (
         <div
             ref={containerRef}
@@ -1259,6 +1325,164 @@ const MasterPerfumerGallery = () => {
                         letter-spacing: 2.5px !important;
                     }
                 }
+
+                /* ═══════════════════════════════════════════════════════════════════
+                   REDESIGN — desktop CTA lives inside each slide (no overlay, no overlap)
+                   ═══════════════════════════════════════════════════════════════════ */
+
+                .master-cta-desktop { margin-top: 22px; }
+
+                @media (max-width: 991px) {
+                    .master-cta-desktop { display: none; }
+                }
+
+                @media (min-width: 992px) {
+                    /* The old overlay only existed to hold the button — it is now inside the slide */
+                    .global-cta-wrap { display: none !important; }
+
+                    /* Reserve room under the text so it can never reach the pagination controls */
+                    .master-slide { padding: 24px 0 96px !important; }
+
+                    .master-text-col {
+                        gap: 14px !important;
+                        max-width: 520px;
+                        justify-content: center !important;
+                    }
+
+                    /* Tagline with a fine leading rule */
+                    .master-text-col .master-tagline {
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                    }
+                    .master-text-col .master-tagline::before {
+                        content: "";
+                        width: 36px;
+                        height: 1px;
+                        background: var(--accent-color, #1D1B19);
+                        flex: 0 0 auto;
+                    }
+
+                    .master-text-col .master-title-wrap { padding-bottom: 2px !important; }
+
+                    /* Price sits on a hairline, separating it from the story text */
+                    .master-text-col .price-anim-wrap {
+                        width: fit-content;
+                        min-width: 170px;
+                        padding-bottom: 16px;
+                        border-bottom: 1px solid rgba(29, 27, 25, 0.14);
+                    }
+                    .master-text-col .product-price-wrap { font-size: 1.45rem !important; }
+
+                    /* Long descriptions are clamped so the layout stays predictable */
+                    .master-text-col .master-desc {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 4;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        max-width: 440px !important;
+                        color: #4d483f;
+                    }
+
+                    .modern-pagination { bottom: 28px !important; }
+                }
+
+                @media (min-width: 992px) and (max-width: 1366px) {
+                    .master-slide { padding-bottom: 84px !important; }
+                    .master-text-col .product-price-wrap { font-size: 1.25rem !important; }
+                }
+
+                /* ═══════════════════════════════════════════════════════════════════
+                   BUTTON + QUANTITY SELECTOR — solid ink, gold sweep, arrow cue
+                   (all breakpoints; !important so it wins over the older size rules)
+                   ═══════════════════════════════════════════════════════════════════ */
+
+                .master-btn {
+                    display: inline-flex !important;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 16px;
+                    min-height: 54px;
+                    padding: 0 40px !important;
+                    background: #1D1B19 !important;
+                    color: #fff !important;
+                    border: 1px solid #1D1B19 !important;
+                    font-size: 0.72rem !important;
+                    font-weight: 600 !important;
+                    letter-spacing: 0.26em !important;
+                    box-shadow: 0 10px 24px rgba(29, 27, 25, 0.18);
+                    transition: color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 160ms ease-out !important;
+                }
+                .master-btn::before {
+                    background: #c5a059 !important;
+                    transition: width 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+                }
+                .master-btn__label { position: relative; white-space: nowrap; }
+                .master-btn__arrow {
+                    position: relative;
+                    flex: 0 0 auto;
+                    transition: transform 0.4s ease;
+                }
+                [dir="rtl"] .master-btn__arrow { transform: scaleX(-1); }
+
+                .master-btn:focus-visible {
+                    outline: 2px solid #c5a059;
+                    outline-offset: 3px;
+                }
+
+                @media (hover: hover) and (pointer: fine) {
+                    .master-btn:hover {
+                        color: #1D1B19 !important;
+                        border-color: #c5a059 !important;
+                        letter-spacing: 0.26em !important;
+                        box-shadow: 0 14px 30px rgba(197, 160, 89, 0.35);
+                    }
+                    .master-btn:hover .master-btn__arrow { transform: translateX(6px); }
+                    [dir="rtl"] .master-btn:hover .master-btn__arrow { transform: scaleX(-1) translateX(6px); }
+                }
+
+                .slider-qty-selector {
+                    min-width: 220px !important;
+                    height: 54px !important;
+                    border: 1px solid #1D1B19 !important;
+                    box-shadow: 0 10px 24px rgba(29, 27, 25, 0.12);
+                }
+                .slider-qty-selector .qty-btn {
+                    width: 54px !important;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                }
+                .slider-qty-selector .qty-btn:hover { background: #1D1B19 !important; color: #fff !important; }
+                .slider-qty-selector .qty-btn:focus-visible { outline: 2px solid #c5a059; outline-offset: -4px; }
+                .slider-qty-selector .qty-value {
+                    font-size: 0.9rem !important;
+                    letter-spacing: 0.1em !important;
+                }
+
+                @media (max-width: 991px) {
+                    .master-btn {
+                        width: 100%;
+                        max-width: 320px;
+                        min-height: 50px;
+                        padding: 0 28px !important;
+                        font-size: 0.7rem !important;
+                        letter-spacing: 0.2em !important;
+                    }
+                    .slider-qty-selector {
+                        min-width: 200px !important;
+                        height: 50px !important;
+                    }
+                    .slider-qty-selector .qty-btn { width: 48px !important; }
+                }
+
+                @media (min-width: 992px) and (max-width: 1366px) {
+                    .master-btn { min-height: 48px; padding: 0 32px !important; }
+                    .slider-qty-selector { height: 48px !important; min-width: 190px !important; }
+                    .slider-qty-selector .qty-btn { width: 46px !important; }
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .master-btn, .master-btn::before, .master-btn__arrow { transition: none !important; }
+                }
             `}</style>
 
                 <Swiper
@@ -1301,6 +1525,10 @@ const MasterPerfumerGallery = () => {
                                             {slide.subtitle}
                                         </p>
                                     )}
+                                    {/* Desktop CTA lives inside the slide so it can never collide with the text */}
+                                    <div className="master-cta-desktop">
+                                        {renderCta(slide)}
+                                    </div>
                                 </div>
 
                                 <div className="master-visual-col">
@@ -1352,57 +1580,7 @@ const MasterPerfumerGallery = () => {
                                 </p>
                             )}
                             <div className="global-cta-btn-container">
-                                {slides[activeIndex]?.product && getProductQuantity(slides[activeIndex].product.product_id) > 0 ? (
-                                    <div className="slider-qty-selector">
-                                        <button
-                                            className="qty-btn dec-btn"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleDecrement(slides[activeIndex].product.product_id);
-                                            }}
-                                            aria-label="Decrease quantity"
-                                        >
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <line x1="5" y1="12" x2="19" y2="12" />
-                                            </svg>
-                                        </button>
-                                        <span className="qty-value font-weight-bold">
-                                            {getProductQuantity(slides[activeIndex].product.product_id)}
-                                        </span>
-                                        <button
-                                            className="qty-btn inc-btn"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleIncrement(slides[activeIndex].product);
-                                            }}
-                                            aria-label="Increase quantity"
-                                        >
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <line x1="12" y1="5" x2="12" y2="19" />
-                                                <line x1="5" y1="12" x2="19" y2="12" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <button
-                                        className="master-btn"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            const activeSlide = slides[activeIndex];
-                                            if (activeSlide?.product) {
-                                                addProductToCart(activeSlide.product);
-                                            } else if (activeSlide?.link) {
-                                                window.location.href = `/${locale}${activeSlide.link}`;
-                                            }
-                                        }}
-                                    >
-                                        {slides[activeIndex]?.product
-                                            ? ((slides[activeIndex]?.product?.collection_name?.trim()?.toLowerCase() === "pre book" || slides[activeIndex]?.product?.collection_name?.trim()?.toLowerCase() === "pre-book")
-                                                ? (t.has("Pre Book") ? t("Pre Book") : "Pre Book")
-                                                : t("Add To Cart"))
-                                            : t("Discover the Note")}
-                                    </button>
-                                )}
+                                {renderCta(slides[activeIndex])}
                             </div>
                         </div>
                         <div className="global-cta-dummy-visual">

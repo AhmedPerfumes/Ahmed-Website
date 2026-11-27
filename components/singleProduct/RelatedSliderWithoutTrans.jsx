@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import he from 'he';
 import { useMenu } from '@/context/MenuContext';
+import BogoBadge from "@/components/common/BogoBadge";
 // import { useLocale } from "next-intl";
 
 import { renderPrice } from "@/utlis/priceRenderer";
@@ -147,6 +148,12 @@ export default function RelatedSlider({ relatedProds }) {
                       Sale {elm.discount.value}%
                     </div>
                   )
+                )}
+                {elm.product_qty > 0 && (
+                  <BogoBadge
+                    productId={elm.product_id}
+                    stacked={Boolean(elm.discount && elm.discount.discount_type == 'percent')}
+                  />
                 )}
                 {
                   isAddedToCartProducts(elm?.product_id) ? 

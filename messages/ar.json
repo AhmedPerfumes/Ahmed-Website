@@ -1441,5 +1441,17 @@
   "Shop Dakhoon": "تسوق الدخون",
   "Introducing Dulook Perfume": "نقدم لكم عطر دولوك",
   "Discover the All New - K Series": "اكتشف سلسلة K الجديدة كلياً",
-  "OUD & ROSES AURIC - THE EVOLUTION OF AN ICON": "عود أند روزس أوريك – تطوّر أيقونة "
+  "OUD & ROSES AURIC - THE EVOLUTION OF AN ICON": "عود أند روزس أوريك – تطوّر أيقونة ",
+  "Buy {buy} Get {get} Free": "اشترِ {buy} واحصل على {get} مجاناً",
+  "Add {count} more to get your free item": "أضف {count, plural, one {منتجاً واحداً} two {منتجين} few {# منتجات} many {# منتجاً} other {# منتج}} آخر للحصول على منتجك المجاني",
+  "Free item unlocked! It is applied at checkout": "تم فتح المنتج المجاني! سيتم تطبيقه عند إتمام الطلب",
+  "Discounts": "الخصومات",
+  "Percentage Off": "خصم بنسبة مئوية",
+  "Flat Discount": "خصم بمبلغ ثابت",
+  "Current offers": "العروض الحالية",
+  "All offers": "كل العروض",
+  "Buy X Get Y": "اشترِ واحصل",
+  "Happy UAE National Day": "اليوم الوطني الإماراتي السعيد",
+  "Together for a brighter tomorrow": "معاً نحو غدٍ أكثر إشراقاً",
+  "Search perfumes...": "ابحث عن العطور..."
 }

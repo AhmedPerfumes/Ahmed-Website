@@ -22,8 +22,10 @@ import { IoReorderTwoSharp } from "react-icons/io5";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { useMenu } from "@/context/MenuContext";
+import { useUaeTheme } from "@/utils/uaeTheme";
 export default function MobileHeader() {
   const { topHeader, currency, countries } = useMenu();
+  const isUaeTheme = useUaeTheme();
   const activeCountryOptions = (countries && countries.length > 0)
     ? countries.map(c => ({ text: c.name, link: c.link || "#" }))
     : currencyOptions;
@@ -194,48 +196,104 @@ export default function MobileHeader() {
 
   return (
     <>
-      <div className="bg-black d-flex align-items-center d-lg-none" style={{ height: "2.5rem", overflow: "hidden" }}>
-        <div
-          className="marquee-track marquee-ltr"
-          dir="ltr"
-        >
-          <div className="marquee-content d-flex align-items-center">
-            {topHeader.map((elm, i) => (
-              <span key={i} className="d-flex align-items-center flex-nowrap">
-                <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
-                  {t(elm.title)}
-                </Link>
-                <span className="text-white">-</span>
-              </span>
-            ))}
-          </div>
-          {/* Duplicate 1 */}
-          <div className="marquee-content d-flex align-items-center">
-            {topHeader.map((elm, i) => (
-              <span key={`dup1-${i}`} className="d-flex align-items-center flex-nowrap">
-                <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
-                  {t(elm.title)}
-                </Link>
-                <span className="text-white">-</span>
-              </span>
-            ))}
-          </div>
-          {/* Duplicate 2 */}
-          <div className="marquee-content d-flex align-items-center">
-            {topHeader.map((elm, i) => (
-              <span key={`dup2-${i}`} className="d-flex align-items-center flex-nowrap">
-                <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
-                  {t(elm.title)}
-                </Link>
-                <span className="text-white">-</span>
-              </span>
-            ))}
+      {isUaeTheme ? (
+        <div className="uae-mobile-top-bar d-flex align-items-center gap-2 d-lg-none" style={{ overflow: "hidden" }}>
+          <svg
+            width="18"
+            height="12"
+            viewBox="0 0 24 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="flex-shrink-0"
+          >
+            <rect width="24" height="16" rx="1.5" fill="#FFFFFF" />
+            <rect x="6" y="0" width="18" height="5.33" fill="#00732F" />
+            <rect x="6" y="5.33" width="18" height="5.34" fill="#FFFFFF" />
+            <rect x="6" y="10.67" width="18" height="5.33" fill="#111111" />
+            <rect x="0" y="0" width="6.5" height="16" fill="#CE1126" />
+          </svg>
+          <div className="overflow-hidden flex-grow-1">
+            <div className="marquee-track marquee-ltr" dir="ltr">
+              {[0, 1, 2].map((dup) => (
+                <div key={dup} className="marquee-content d-flex align-items-center">
+                  {topHeader.map((elm, i) => (
+                    <span key={`${dup}-${i}`} className="d-flex align-items-center flex-nowrap">
+                      <Link
+                        href={`/${locale}/${elm.color}`}
+                        className="text-decoration-none mx-3"
+                        style={{ color: "#1f1a14", fontSize: "11px", fontWeight: 500, whiteSpace: "nowrap" }}
+                      >
+                        {t(elm.title)}
+                      </Link>
+                      <span style={{ color: "rgba(166, 123, 48, 0.55)" }}>|</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-black d-flex align-items-center d-lg-none" style={{ height: "2.5rem", overflow: "hidden" }}>
+          <div
+            className="marquee-track marquee-ltr"
+            dir="ltr"
+          >
+            <div className="marquee-content d-flex align-items-center">
+              {topHeader.map((elm, i) => (
+                <span key={i} className="d-flex align-items-center flex-nowrap">
+                  <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
+                    {t(elm.title)}
+                  </Link>
+                  <span className="text-white">-</span>
+                </span>
+              ))}
+            </div>
+            {/* Duplicate 1 */}
+            <div className="marquee-content d-flex align-items-center">
+              {topHeader.map((elm, i) => (
+                <span key={`dup1-${i}`} className="d-flex align-items-center flex-nowrap">
+                  <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
+                    {t(elm.title)}
+                  </Link>
+                  <span className="text-white">-</span>
+                </span>
+              ))}
+            </div>
+            {/* Duplicate 2 */}
+            <div className="marquee-content d-flex align-items-center">
+              {topHeader.map((elm, i) => (
+                <span key={`dup2-${i}`} className="d-flex align-items-center flex-nowrap">
+                  <Link href={`/${locale}/${elm.color}`} className="text-white text-decoration-none mx-4" style={{ textTransform: "uppercase", fontSize: "10px", whiteSpace: "nowrap" }}>
+                    {t(elm.title)}
+                  </Link>
+                  <span className="text-white">-</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
-      <div className="header-mobile header_sticky header_sticky-active" style={{ position: 'sticky', top: 0, zIndex: 100 }} >
-        <div className="container position-relative h-100 overflow-hidden" style={{ minHeight: '60px' }}>
+      <div className={`header-mobile header_sticky header_sticky-active${isUaeTheme ? " header-mobile--uae-theme" : ""}`} style={{ position: 'sticky', top: 0, zIndex: 100 }} >
+        {isUaeTheme && (
+          <>
+            <img
+              src="/assets/images/header/uae-header-skyline.png"
+              alt=""
+              aria-hidden="true"
+              className="uae-mobile-skyline"
+            />
+            <img
+              src="/assets/images/header/uae-header-flag.png"
+              alt=""
+              aria-hidden="true"
+              className="uae-mobile-flag"
+            />
+          </>
+        )}
+        <div className="container position-relative h-100 overflow-hidden" style={{ minHeight: '60px', ...(isUaeTheme ? { zIndex: 2 } : {}) }}>
           {/* Default Header Content Wrapper */}
           <div
             className="w-100 h-100 d-flex align-items-center justify-content-between px-3"
@@ -283,17 +341,18 @@ export default function MobileHeader() {
               </a>
             </div>
 
-            <div className="d-flex align-items-center gap-3">
+            <div className={`d-flex align-items-center ${isUaeTheme ? "gap-2" : "gap-3"}`}>
               {/* Mobile Search Trigger Icon next to Cart */}
               <a
                 onClick={() => setIsSearchActive(true)}
-                className="header-tools__item"
+                className={`header-tools__item${isUaeTheme ? " uae-mobile-icon-btn" : ""}`}
                 style={{ cursor: "pointer" }}
+                aria-label="Search"
               >
                 <svg
                   className="d-block"
-                  width="18"
-                  height="18"
+                  width={isUaeTheme ? 17 : 18}
+                  height={isUaeTheme ? 17 : 18}
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -304,12 +363,13 @@ export default function MobileHeader() {
 
               <a
                 onClick={() => openCart()}
-                className="header-tools__item header-tools__cart js-open-aside"
+                className={`header-tools__item header-tools__cart js-open-aside${isUaeTheme ? " uae-mobile-icon-btn" : ""}`}
+                aria-label="Cart"
               >
                 <svg
                   className="d-block"
-                  width="18"
-                  height="18"
+                  width={isUaeTheme ? 17 : 18}
+                  height={isUaeTheme ? 17 : 18}
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -484,9 +544,24 @@ export default function MobileHeader() {
         {/* <!-- /.container --> */}
 
         <nav className="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
+          {isUaeTheme && (
+            <div className="uae-mobile-nav-decor" aria-hidden="true">
+              <img
+                src="/assets/images/header/uae-megamenu-heritage.png"
+                alt=""
+                loading="lazy"
+                className="uae-mobile-nav-decor__left"
+              />
+              <img
+                src="/assets/images/header/uae-megamenu-ornament.png"
+                alt=""
+                loading="lazy"
+                className="uae-mobile-nav-decor__right"
+              />
+            </div>
+          )}
 
-
-          <div className="container">
+          <div className="container position-relative" style={isUaeTheme ? { zIndex: 2 } : undefined}>
             <div className="overflow-hidden">
               <ul className="navigation__list list-unstyled position-relative">
                 <MobileNav />
@@ -497,7 +572,7 @@ export default function MobileHeader() {
           </div>
           {/* <!-- /.container --> */}
 
-          <div className="border-top mt-2 pb-2">
+          <div className="border-top mt-2 pb-3 position-relative uae-mobile-nav-footer" style={isUaeTheme ? { zIndex: 2 } : undefined}>
             {/* <div className="customer-links border-bottom container mt-2 mb-2 pb-2">
             {!isLoggedIn ? (
                 <Link
@@ -515,20 +590,24 @@ export default function MobileHeader() {
                 </Link>
             )}
           </div> */}
-            <div className="container mt-2 mb-2 pb-3 border-bottom">
+            <div className="container mt-2 mb-2 pb-3 border-bottom uae-mobile-utility-wrap">
               <div className="d-flex align-items-center justify-content-between gap-2">
                 {/* Find a Store Button */}
                 <Link
                   href={`/${locale}/store-locator`}
-                  className="d-flex align-items-center justify-content-center p-2 rounded text-decoration-none border"
-                  style={{
-                    backgroundColor: '#fcfcfc',
-                    color: '#111',
-                    borderColor: '#f0f0f0',
-                    height: '42px',
-                    flex: '1 1 0px',
-                    minWidth: '0'
-                  }}
+                  className="d-flex align-items-center justify-content-center p-2 rounded text-decoration-none border uae-mobile-utility-card"
+                  style={
+                    isUaeTheme
+                      ? { height: '44px', flex: '1 1 0px', minWidth: '0' }
+                      : {
+                          backgroundColor: '#fcfcfc',
+                          color: '#111',
+                          borderColor: '#f0f0f0',
+                          height: '42px',
+                          flex: '1 1 0px',
+                          minWidth: '0'
+                        }
+                  }
                 >
                   <IoLocationOutline size={16} className="text-warning me-1 flex-shrink-0" />
                   <span className="text-uppercase fw-bold text-truncate" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>
@@ -538,11 +617,15 @@ export default function MobileHeader() {
 
                 {/* Language Selector */}
                 <div
-                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded"
-                  style={{ borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }}
+                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded uae-mobile-utility-card"
+                  style={
+                    isUaeTheme
+                      ? { height: '44px', flex: '1 1 0px', minWidth: '0' }
+                      : { borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }
+                  }
                 >
                   <span
-                    className="text-uppercase fw-semibold text-muted text-start"
+                    className="text-uppercase fw-semibold text-muted text-start uae-mobile-utility-label"
                     style={{ fontSize: '8px', letterSpacing: '0.5px', display: 'block', lineHeight: '1', marginBottom: '2px' }}
                   >
                     {t("Language")}
@@ -565,11 +648,15 @@ export default function MobileHeader() {
 
                 {/* Country Selector */}
                 <div
-                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded"
-                  style={{ borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }}
+                  className="d-flex flex-column justify-content-center px-2 py-1 border rounded uae-mobile-utility-card"
+                  style={
+                    isUaeTheme
+                      ? { height: '44px', flex: '1 1 0px', minWidth: '0' }
+                      : { borderColor: '#f0f0f0', backgroundColor: '#fcfcfc', height: '42px', flex: '1 1 0px', minWidth: '0' }
+                  }
                 >
                   <span
-                    className="text-uppercase fw-semibold text-muted text-start"
+                    className="text-uppercase fw-semibold text-muted text-start uae-mobile-utility-label"
                     style={{ fontSize: '8px', letterSpacing: '0.5px', display: 'block', lineHeight: '1', marginBottom: '2px' }}
                   >
                     {t("Country")}

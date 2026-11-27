@@ -19,12 +19,41 @@ import { useContextElement } from "@/context/Context";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
 import { renderPrice } from "@/utlis/priceRenderer";
+import { useUaeTheme } from "@/utils/uaeTheme";
 import Skeleton from "@mui/material/Skeleton";
 import "./Header14.css";
+
+const UaeFlagMiniIcon = () => (
+    <svg
+        className="uae-mini-flag flex-shrink-0"
+        width="22"
+        height="15"
+        viewBox="0 0 24 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <rect width="24" height="16" rx="1.5" fill="#FFFFFF" />
+        <rect x="6" y="0" width="18" height="5.33" fill="#00732F" />
+        <rect x="6" y="5.33" width="18" height="5.34" fill="#FFFFFF" />
+        <rect x="6" y="10.67" width="18" height="5.33" fill="#111111" />
+        <rect x="0" y="0" width="6.5" height="16" fill="#CE1126" />
+        <rect
+            x="0.25"
+            y="0.25"
+            width="23.5"
+            height="15.5"
+            rx="1.25"
+            stroke="rgba(0,0,0,0.08)"
+            strokeWidth="0.5"
+        />
+    </svg>
+);
 
 const HeaderSkeleton = () => {
     const t = useTranslations();
     const locale = useLocale();
+    const isUaeTheme = useUaeTheme();
 
     const handleLangChange = (e) => {
         const newLocale = e.target.value;
@@ -44,69 +73,106 @@ const HeaderSkeleton = () => {
         window.location.href = `${newPath}${currentSearch}${currentHash}`;
     };
     return (
-        <div className="header">
-            {/* Top Bar Skeleton */}
-            <div className="bg-black header-marquee-bar">
-                <div className="container h-100 d-flex align-items-center justify-content-center">
-                    <Skeleton
-                        variant="text"
-                        width={300}
-                        height={20}
-                        sx={{ bgcolor: "rgba(255,255,255,0.2)" }}
+        <div className={`header${isUaeTheme ? " header--uae-theme" : ""}`}>
+            <div className={isUaeTheme ? "uae-header-canvas" : undefined}>
+                {isUaeTheme && (
+                    <img
+                        src="/assets/images/header/uae-header-flag.png"
+                        alt=""
+                        aria-hidden="true"
+                        className="uae-header-flag-bg"
                     />
-                </div>
-            </div>
-
-            {/* Middle Bar Skeleton */}
-            <div className="header-middle border-bottom">
-                <div className="container-fluid d-flex align-items-center px-5 py-2">
-                    {/* Left: Currency/Language */}
-                    <div className="flex-1 d-flex gap-3">
-                        <select className="form-select form-select-sm bg-transparent border-0" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
-                            {currencyOptions.map((option, index) => (
-                                <option key={index} value={option.link} >
-                                    {t(option.text)}
-                                </option>
-                            )
-                            )}
-                        </select>
-                        <select className="form-select form-select-sm bg-transparent border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: "pointer", outline: "none", }} >
-                            {languageOptions2.map((option, index) => (
-                                <option key={index} value={option.value} >
-                                    {option.text}
-                                </option>
-                            )
-                            )}
-                        </select>
+                )}
+                {/* Top Bar Skeleton */}
+                {isUaeTheme ? (
+                    <div className="uae-top-bar">
+                        <div className="container-fluid px-4 px-xl-5 h-100 d-flex align-items-center gap-3">
+                            <div className="d-flex align-items-center flex-shrink-0">
+                                <UaeFlagMiniIcon />
+                            </div>
+                            <div className="uae-marquee-container d-flex align-items-center">
+                                <Skeleton
+                                    variant="text"
+                                    width={320}
+                                    height={18}
+                                    sx={{ bgcolor: "rgba(166, 123, 48, 0.15)" }}
+                                />
+                            </div>
+                        </div>
                     </div>
-
-                    {/* Center: Logo */}
-                    <div className="logo">
-                        <Link href="/">
-                            <Image
-                                loading="eager"
-                                src="/assets/images/logo/Desktop.svg"
-                                width="100"
-                                height="100"
-                                alt="Ahmed Al Maghribi"
+                ) : (
+                    <div className="bg-black header-marquee-bar">
+                        <div className="container h-100 d-flex align-items-center justify-content-center">
+                            <Skeleton
+                                variant="text"
+                                width={300}
+                                height={20}
+                                sx={{ bgcolor: "rgba(255,255,255,0.2)" }}
                             />
-                        </Link>
+                        </div>
                     </div>
+                )}
 
-                    {/* Right: Search & Tools */}
-                    <div className="header-tools d-flex align-items-center flex-1 justify-content-end gap-3">
-                        <Skeleton variant="rounded" width={215} height={35} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} className="d-none d-lg-block" />
-                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
-                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
-                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
-                        <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                {/* Middle Bar Skeleton */}
+                <div className="header-middle border-bottom">
+                    {isUaeTheme && (
+                        <img
+                            src="/assets/images/header/uae-header-skyline-desktop.png"
+                            alt=""
+                            aria-hidden="true"
+                            className="uae-header-skyline-bg"
+                        />
+                    )}
+                    <div className={isUaeTheme ? "container-fluid d-flex align-items-center px-4 px-xl-5 py-2 position-relative uae-middle-inner" : "container-fluid d-flex align-items-center px-5 py-2"}>
+                        {/* Left: Currency/Language */}
+                        <div className="flex-1 d-flex gap-3 align-items-center">
+                            <select className="form-select form-select-sm bg-transparent border-0" name="store-currency" onChange={(e) => window.open(e.target.value, "_blank")}>
+                                {currencyOptions.map((option, index) => (
+                                    <option key={index} value={option.link} >
+                                        {t(option.text)}
+                                    </option>
+                                )
+                                )}
+                            </select>
+                            {isUaeTheme && <span className="uae-select-divider" aria-hidden="true" />}
+                            <select className="form-select form-select-sm bg-transparent border-0" name="store-language" value={locale} onChange={handleLangChange} style={{ cursor: "pointer", outline: "none", }} >
+                                {languageOptions2.map((option, index) => (
+                                    <option key={index} value={option.value} >
+                                        {option.text}
+                                    </option>
+                                )
+                                )}
+                            </select>
+                        </div>
+
+                        {/* Center: Logo */}
+                        <div className="logo">
+                            <Link href="/">
+                                <Image
+                                    loading="eager"
+                                    src="/assets/images/logo/Desktop.svg"
+                                    width={isUaeTheme ? 108 : 100}
+                                    height={isUaeTheme ? 108 : 100}
+                                    alt="Ahmed Al Maghribi"
+                                />
+                            </Link>
+                        </div>
+
+                        {/* Right: Search & Tools */}
+                        <div className="header-tools d-flex align-items-center flex-1 justify-content-end gap-3">
+                            <Skeleton variant="rounded" width={215} height={35} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} className="d-none d-lg-block" />
+                            <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                            <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                            <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                            <Skeleton variant="circular" width={22} height={22} sx={{ bgcolor: "rgba(0,0,0,0.05)" }} />
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Bottom Bar Skeleton */}
-            <div className="header-bottom border-top d-none d-lg-block">
-                <div className="container d-flex justify-content-center py-2" style={{ "gap": "5.5rem" }}>
+            <div className={`header-bottom border-top d-none d-lg-block${isUaeTheme ? " header-bottom--uae-theme" : ""}`}>
+                <div className="container d-flex justify-content-center py-2" style={{ gap: isUaeTheme ? "4rem" : "5.5rem" }}>
                     {[...Array(8)].map((_, i) => (
                         <Skeleton
                             key={i}
@@ -125,6 +191,7 @@ const HeaderSkeleton = () => {
 export default function Header14() {
     const locale = useLocale();
     const t = useTranslations();
+    const isUaeTheme = useUaeTheme();
     const router = useRouter();
     const pathname = usePathname();
     const { isLoggedIn, logout, couponCount } = useUser();
@@ -352,78 +419,117 @@ export default function Header14() {
             {/* <HeaderSkeleton /> */}
             <header
                 id="header"
-                className="header"
+                className={`header${isUaeTheme ? " header--uae-theme" : ""}`}
             >
-                {/* <Swiper className="swiper-container bg-black" {...swiperOptions} style={{ height: "2.5rem" }}>
-                    {topHeader.map((elm, i) => (
-                        <SwiperSlide key={i} style={{ textTransform: "uppercase", fontSize: "12px" }} className="swiper-slide text-center">
-                            <div className="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                                <Link href={`/${locale}/${elm.color}`} className="animate animate_fade animate_btt animate_delay-5 lh-2rem text-white">
-                                    {t(elm.title.split(" ").slice(0, 13).join(" "))}
-                                </Link>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper> */}
-                {/* Top Swiper */}
-                <div
-                    className="bg-black header-marquee-bar"
-                    style={{ overflow: "hidden" }}
-                >
-                    {/* Marquee Container - Overflow Hidden */}
-                    {/* d-flex align-items-center ensures vertical alignment within the 2.5rem height */}
-                    <div
-                        className="marquee-container d-flex align-items-center"
-                        dir="ltr"
-                    >
-                        {/* Animated Track - Animation applied here based on locale */}
-                        <div
-                            className="marquee-track"
-                            style={{
-                                animation:
-                                    locale === "ar"
-                                        ? "marquee-rtl 90s linear infinite"
-                                        : "marquee-ltr 90s linear infinite",
-                                height: "100%",
-                            }}
-                        >
-                            {/* 1. Create an array of items to animate.
-                                2. Repeat the entire 'topHeader' list 10-20 times (or a number large enough)
-                                to fill the screen and create a seamless loop effect.
-                            */}
-                            {[...Array(20)].map((_, idx) =>
-                                // Map over the original topHeader data inside the repetition loop
-                                topHeader.map((elm, i) => (
-                                    // Each full marquee item (Link + Separator)
-                                    <span
-                                        key={`${idx}-${i}`}
-                                        className="d-flex align-items-center"
+                <div className={isUaeTheme ? "uae-header-canvas" : undefined}>
+                    {isUaeTheme && (
+                        <img
+                            src="/assets/images/header/uae-header-flag.png"
+                            alt=""
+                            aria-hidden="true"
+                            className="uae-header-flag-bg"
+                        />
+                    )}
+
+                    {/* Top Bar: Dynamic marquee styled in UAE ivory-gold design when active, else default black marquee */}
+                    {isUaeTheme ? (
+                        <div className="uae-top-bar" style={{ overflow: "hidden" }}>
+                            <div className="container-fluid px-4 px-xl-5 h-100 d-flex align-items-center gap-3">
+                                <div className="uae-top-bar__flag-badge d-flex align-items-center flex-shrink-0">
+                                    <UaeFlagMiniIcon />
+                                </div>
+                                <div
+                                    className="uae-marquee-container d-flex align-items-center"
+                                    dir="ltr"
+                                >
+                                    <div
+                                        className="marquee-track uae-marquee-track"
+                                        style={{
+                                            animation:
+                                                locale === "ar"
+                                                    ? "marquee-rtl 90s linear infinite"
+                                                    : "marquee-ltr 90s linear infinite",
+                                            height: "100%",
+                                        }}
                                     >
-                                        <Link
-                                            href={`/${locale}/${elm.color}`}
-                                            className="text-white text-decoration-none text-uppercase fw-bold mx-5 marquee-link"
-                                            style={{
-                                                whiteSpace: "nowrap",
-                                            }}
-                                        >
-                                            {/* Truncated text using slice(0, 13) */}
-                                            {t(
-                                                elm.title
-                                                    .split(" ")
-                                                    .slice(0, 13)
-                                                    .join(" ")
-                                            )}
-                                        </Link>
-                                        {/* Separator - Keep it outside the Link but inside the span */}
-                                        <span className="text-white opacity-50">
-                                            -
-                                        </span>
-                                    </span>
-                                ))
-                            )}
+                                        {[...Array(20)].map((_, idx) =>
+                                            topHeader.map((elm, i) => (
+                                                <span
+                                                    key={`${idx}-${i}`}
+                                                    className="d-flex align-items-center"
+                                                >
+                                                    <Link
+                                                        href={`/${locale}/${elm.color}`}
+                                                        className="text-decoration-none mx-4 uae-marquee-link"
+                                                        style={{ whiteSpace: "nowrap" }}
+                                                    >
+                                                        {t(
+                                                            elm.title
+                                                                .split(" ")
+                                                                .slice(0, 13)
+                                                                .join(" ")
+                                                        )}
+                                                    </Link>
+                                                    <span className="uae-top-bar__sep" aria-hidden="true">
+                                                        |
+                                                    </span>
+                                                </span>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    ) : (
+                        <div
+                            className="bg-black header-marquee-bar"
+                            style={{ overflow: "hidden" }}
+                        >
+                            {/* Marquee Container - Overflow Hidden */}
+                            <div
+                                className="marquee-container d-flex align-items-center"
+                                dir="ltr"
+                            >
+                                <div
+                                    className="marquee-track"
+                                    style={{
+                                        animation:
+                                            locale === "ar"
+                                                ? "marquee-rtl 90s linear infinite"
+                                                : "marquee-ltr 90s linear infinite",
+                                        height: "100%",
+                                    }}
+                                >
+                                    {[...Array(20)].map((_, idx) =>
+                                        topHeader.map((elm, i) => (
+                                            <span
+                                                key={`${idx}-${i}`}
+                                                className="d-flex align-items-center"
+                                            >
+                                                <Link
+                                                    href={`/${locale}/${elm.color}`}
+                                                    className="text-white text-decoration-none text-uppercase fw-bold mx-5 marquee-link"
+                                                    style={{
+                                                        whiteSpace: "nowrap",
+                                                    }}
+                                                >
+                                                    {t(
+                                                        elm.title
+                                                            .split(" ")
+                                                            .slice(0, 13)
+                                                            .join(" ")
+                                                    )}
+                                                </Link>
+                                                <span className="text-white opacity-50">
+                                                    -
+                                                </span>
+                                            </span>
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                 {/* Search Popup */}
                 <div
@@ -691,9 +797,17 @@ export default function Header14() {
                 {/* Header middle */}
                 <div className="header-desk_type_8">
                     <div className="header-middle">
-                        <div className="container-fluid d-flex align-items-center px-5">
+                        {isUaeTheme && (
+                            <img
+                                src="/assets/images/header/uae-header-skyline-desktop.png"
+                                alt=""
+                                aria-hidden="true"
+                                className="uae-header-skyline-bg"
+                            />
+                        )}
+                        <div className={isUaeTheme ? "container-fluid d-flex align-items-center px-4 px-xl-5 position-relative uae-middle-inner" : "container-fluid d-flex align-items-center px-5"}>
                             <div className="flex-1 d-flex align-items-center gap-3">
-                                <div className="heeader-top__right flex-1 d-flex gap-1">
+                                <div className="heeader-top__right flex-1 d-flex gap-1 align-items-center">
                                     <select
                                         className="form-select form-select-sm bg-transparent border-0"
                                         name="store-currency"
@@ -715,6 +829,9 @@ export default function Header14() {
                                             )
                                         )}
                                     </select>
+                                    {isUaeTheme && (
+                                        <span className="uae-select-divider" aria-hidden="true" />
+                                    )}
                                     <select
                                         className="form-select form-select-sm bg-transparent border-0"
                                         name="store-language"
@@ -742,10 +859,11 @@ export default function Header14() {
                             <div className="logo">
                                 <Link href="/">
                                     <Image
-                                        loading="lazy"
+                                        loading="eager"
+                                        priority
                                         src="/assets/images/logo/Desktop.svg"
-                                        width="100"
-                                        height="100"
+                                        width={isUaeTheme ? 112 : 100}
+                                        height={isUaeTheme ? 112 : 100}
                                         alt="Ahmed Al Maghribi"
                                     />
                                 </Link>
@@ -953,10 +1071,11 @@ export default function Header14() {
                     </div>
 
                 </div>
+                </div>
             </header>
 
             {/* Bottom navigation is natively sticky exactly where it usually rests. */}
-            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''}`}>
+            <div className={`header-bottom-wrapper d-none d-lg-block ${isScrolled ? 'is-stuck' : ''}${isUaeTheme ? ' header-bottom-wrapper--uae-theme' : ''}`}>
                 <div className="header-bottom">
                     <div className="container">
                         <div className="sticky-logo align-items-center">
